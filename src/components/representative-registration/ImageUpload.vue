@@ -1,0 +1,497 @@
+<template>
+	<div class="upload-profile-image">
+		<a-collapse
+			:default-active-key="1"
+			:bordered="false"
+			expand-icon-position="right"
+		>
+			<template #expandIcon="props">
+				<a-icon type="caret-down" :rotate="props.isActive ? 180 : 0" />
+			</template>
+			<a-collapse-panel key="1" header="1. Upload Images">
+				<h5 class="text-left">Upload your Image</h5>
+				<div class="instruction">
+					<p>
+						* You are required to upload at least one Avatar and a Main Image.
+						All together you can upload 2 pictures.
+					</p>
+					<p>* Select images from your devices, Maximum file size 2 MB</p>
+				</div>
+
+				<!-- Image Upload Input -->
+				<div class="image-and-settings">
+					<form class="form-ma">
+						<a-row type="flex" align="top">
+							<a-col class="form-item py-3 border-bottom" :span="24">
+								<a-row type="flex" align="top" class="justify-content-around">
+									<a-col>
+										<!-- Avatar Image -->
+										<div class="col-md-4 text-center">
+											<div>
+												<div class="img-preview mb-2">
+													<img
+														:src="avatarSrc"
+														width="180"
+														height="200"
+														v-if="avatarSrc"
+													/>
+													<div class="mt-3">Avatar Image</div>
+													<div class="mt-4" v-if="!avatarSrc">
+														<a-icon
+															type="plus-circle"
+															:style="{ fontSize: '80px', color: '#aaa' }"
+														/>
+													</div>
+												</div>
+												<input
+													type="file"
+													class="input-image"
+													name="avatar"
+													@change="getAvatar"
+												/>
+											</div>
+										</div>
+									</a-col>
+									<a-col>
+										<!-- Main Image -->
+										<div class="col-md-4 text-center">
+											<div>
+												<div class="img-preview mb-2">
+													<img
+														:src="mainImageSrc"
+														width="180"
+														height="200"
+														v-if="mainImageSrc"
+													/>
+													<div class="mt-3">Main Profile Image</div>
+													<div class="mt-4" v-if="!mainImageSrc">
+														<a-icon
+															type="plus-circle"
+															:style="{ fontSize: '80px', color: '#aaa' }"
+														/>
+													</div>
+												</div>
+												<input
+													type="file"
+													class="input-image"
+													name="mainImage"
+													@change="getMainImage"
+												/>
+											</div>
+										</div>
+									</a-col>
+									<!-- <a-col :span="8"> -->
+									<!-- Additional Image -->
+									<!-- <div class="col-md-4 text-center">
+                    <div>
+                      <div class="img-preview mb-2">
+                        <img :src="additionalImageSrc" width="180" height="200" v-if="additionalImageSrc" />
+                        <div class="mt-3">Additional Image</div>
+                        <div class="mt-4" v-if="!additionalImageSrc">
+                          <a-icon type="plus-circle" :style="{ fontSize: '80px', color: '#aaa' }" />
+                        </div>
+                      </div>
+                      <input type="file" class="input-image" name="image" @change="getAdditionalImage" />
+                    </div>
+                  </div> -->
+									<!-- </a-col> -->
+								</a-row>
+							</a-col>
+						</a-row>
+					</form>
+				</div>
+				<!-- <button class="btn btn-info" @click="saveImages">Save</button> -->
+
+				<!-- Previous Image sharing setting starts here -->
+				<div class="share-settings">
+					<!-- <h3 class="text-center">Image Sharing Settings</h3>
+
+          <a-row type="flex" align="top">
+            <a-col :span="12">
+              <a-switch default-checked @change="onConfirmationSwitchChnaged1">
+                <a-icon slot="checkedChildren" type="check" />
+                <a-icon slot="unCheckedChildren" type="close" />
+              </a-switch>
+            </a-col>
+            <a-col :span="12">
+              <div class="mb-2">
+                <a-icon class="color-success mr-2 fs-18 fw-500" type="check" />I
+                don't want to share my images with anyone at this moment
+              </div>
+              <a-tooltip placement="bottom">
+                <template slot="title">
+                  Please provide tooltip texts so we can place it here</template
+                >
+                <span class="color-info fw-500">Need help?</span>
+              </a-tooltip>
+            </a-col>
+          </a-row>
+
+          <a-row type="flex" align="top">
+            <a-col :span="12">
+              <a-switch default-checked @change="onConfirmationSwitchChnaged2">
+                <a-icon slot="checkedChildren" type="check" />
+                <a-icon slot="unCheckedChildren" type="close" />
+              </a-switch>
+            </a-col>
+            <a-col :span="12">
+              <div class="mb-2">
+                <a-icon class="color-success mr-2 fs-18 fw-500" type="check" />I
+                would like to share all my images with my team
+              </div>
+              <a-tooltip placement="bottom">
+                <template slot="title">
+                  Please provide tooltip texts so we can place it here</template
+                >
+                <span class="color-info fw-500">Need help?</span>
+              </a-tooltip>
+            </a-col>
+          </a-row>
+
+          <a-row type="flex" align="top">
+            <a-col :span="12">
+              <a-switch default-checked @change="onConfirmationSwitchChnaged3">
+                <a-icon slot="checkedChildren" type="check" />
+                <a-icon slot="unCheckedChildren" type="close" />
+              </a-switch>
+            </a-col>
+            <a-col :span="12">
+              <div class="mb-2">
+                <a-icon class="color-success mr-2 fs-18 fw-500" type="check" />I
+                would like to share all my images with connected team(s)
+              </div>
+              <a-tooltip placement="bottom">
+                <template slot="title">
+                  Please provide tooltip texts so we can place it here</template
+                >
+                <span class="color-info fw-500">Need help?</span>
+              </a-tooltip>
+            </a-col>
+          </a-row> -->
+					<!-- Previous Image sharing setting ends here -->
+
+					<div class="share-settings">
+						<h3 class="text-center">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="50"
+								height="50"
+								fill="#3a3091"
+								class="bi bi-gear-fill"
+								viewBox="0 0 16 16"
+							>
+								<path
+									d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"
+								/>
+							</svg>
+							Image Sharing Settings
+						</h3>
+						<p>
+							<a-switch
+								v-model="repData.anybody_can_see"
+								@change="onConfirmationSwitchChnaged1"
+							>
+								<a-icon slot="checkedChildren" type="check" />
+								<a-icon slot="unCheckedChildren" type="close" />
+							</a-switch>
+							<span class="ml-4">
+								I don't want to share my images with anyone at this moment
+							</span>
+						</p>
+						<p>
+							<a-switch
+								v-model="repData.only_team_can_see"
+								:disabled="repData.anybody_can_see"
+								@change="onConfirmationSwitchChnaged2"
+							>
+								<a-icon slot="checkedChildren" type="check" />
+								<a-icon slot="unCheckedChildren" type="close" />
+							</a-switch>
+							<span class="ml-4">
+								I would like to share all my images with my team
+							</span>
+						</p>
+						<p>
+							<a-switch
+								v-model="repData.team_connection_can_see"
+								:disabled="repData.anybody_can_see"
+								@change="onConfirmationSwitchChnaged3"
+							>
+								<a-icon slot="checkedChildren" type="check" />
+								<a-icon slot="unCheckedChildren" type="close" />
+							</a-switch>
+							<span class="ml-4">
+								I would like to share all my images with connected team(s)
+							</span>
+						</p>
+					</div>
+					<!-- {{ repData }} -->
+
+					<!-- <p>I don't want to share my images with anyone at this moment</p>
+          <p>I would like to share all my images with my team</p>
+          <p>I would like to share all my images with connected team(s)</p> -->
+				</div>
+				<!-- <img alt="Image" /> -->
+			</a-collapse-panel>
+		</a-collapse>
+	</div>
+</template>
+
+<script>
+import axios from "axios";
+import JwtService from "../../services/jwt.service";
+export default {
+	name: "UploadImage",
+	components: {},
+	props: ["repData"],
+	data() {
+		return {
+			src: "",
+			avatar: "",
+			avatarSrc: "",
+			mainImage: "",
+			mainImageSrc: "",
+			additionalImage: "",
+			additionalImageSrc: "",
+			anybody_can_see: this.repData.anybody_can_see ? 1 : 0,
+			only_team_can_see: this.repData.only_team_can_see ? 1 : 0,
+			team_connection_can_see: this.repData.team_connection_can_see ? 1 : 0,
+		};
+	},
+	async mounted() {
+		this.avatarSrc = this.repData.per_avatar_url;
+		this.mainImageSrc = this.repData.per_main_image_url;
+
+		// this.mainImage = this.fetchFile(this.mainImageSrc, 'mainImage.jpg');
+
+		// this.avatar = this.getBase64Image(this.repData.per_avatar_url);
+		// this.mainImage = this.getBase64Image(this.repData.per_main_image_url);
+		console.log(this.repData);
+		console.log(this.avatar);
+		console.log("Content I wanna See");
+	},
+	methods: {
+		imageSizeCheck(file) {
+			if (file["size"] > 2111775) {
+				this.$error({
+					title: "Validation Error",
+					content: "Image size can't be more than 2 mb",
+					center: true,
+				});
+				return false;
+			}
+			return true;
+		},
+		getAvatar(e) {
+			let file = e.target.files[0];
+			if (!this.imageSizeCheck(file)) {
+				file = "";
+				return;
+			}
+			this.avatar = e.target.files[0];
+			let reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = (e) => {
+				this.avatarSrc = e.target.result;
+			};
+		},
+		getMainImage(e) {
+			let file = e.target.files[0];
+			if (!this.imageSizeCheck(file)) {
+				file = "";
+				return;
+			}
+			this.mainImage = e.target.files[0];
+			let reader = new FileReader();
+			reader.readAsDataURL(file);
+			reader.onload = (e) => {
+				this.mainImageSrc = e.target.result;
+			};
+			console.log(this.mainImageSrc);
+		},
+		onConfirmationSwitchChnaged1(checked) {
+			console.log(checked);
+			if (checked) {
+				this.repData.only_team_can_see = false;
+				this.repData.team_connection_can_see = false;
+				this.only_team_can_see = 0;
+				this.team_connection_can_see = 0;
+			}
+			checked == true ? (this.anybody_can_see = 1) : (this.anybody_can_see = 0);
+		},
+		onConfirmationSwitchChnaged2(checked) {
+			console.log(checked);
+			checked == true
+				? (this.only_team_can_see = 1)
+				: (this.only_team_can_see = 0);
+		},
+		onConfirmationSwitchChnaged3(checked) {
+			console.log(checked);
+			checked == true
+				? (this.team_connection_can_see = 1)
+				: (this.team_connection_can_see = 0);
+		},
+		// getAdditionalImage(e) {
+		//   this.additionalImage = e.target.files[0];
+		//   let file = e.target.files[0];
+		//   let reader = new FileReader();
+		//   reader.readAsDataURL(file);
+		//   reader.onload = (e) => {
+		//     this.additionalImageSrc = e.target.result;
+		//   };
+		// }
+		getBase64(img, callback) {
+			const reader = new FileReader();
+			reader.addEventListener("load", () => callback(reader.result));
+			reader.readAsDataURL(img);
+		},
+		saveImages() {
+			console.log("Save Images");
+			console.log(this.anybody_can_see);
+			console.log(this.only_team_can_see);
+			console.log(this.team_connection_can_see);
+
+			let formData = new FormData();
+			if (this.avatar || this.mainImage) {
+				formData.append("per_avatar_url", this.avatar);
+				formData.append("per_main_image_url", this.mainImage);
+				formData.append("anybody_can_see", this.anybody_can_see);
+				formData.append("only_team_can_see", this.only_team_can_see);
+				formData.append(
+					"team_connection_can_see",
+					this.team_connection_can_see
+				);
+			} else {
+				formData.append("anybody_can_see", this.anybody_can_see);
+				formData.append("only_team_can_see", this.only_team_can_see);
+				formData.append(
+					"team_connection_can_see",
+					this.team_connection_can_see
+				);
+			}
+
+			return axios.post("v1/representative/image/upload", formData, {
+				headers: {
+					"content-type": "multipart/form-data",
+					Authorization: `Bearer ${JwtService.getToken()}`,
+				},
+			});
+			// .then((response) => {
+			//   console.log(response);
+			//   if (response.data.status_code == 200) {
+			//     this.$emit('images-uploaded');
+			//   }
+			// })
+			// .catch((error) => {
+			//   console.log(error);
+			// 	this.$message.error(error.toString());
+			// });
+		},
+	},
+};
+</script>
+
+<style scoped lang="scss">
+@import "@/styles/base/_variables.scss";
+.upload-profile-image {
+	.section-heading {
+		text-align: center;
+		color: $color-brand;
+		h5 {
+			color: $color-brand;
+			margin-left: 35px;
+			margin-top: 10px;
+		}
+		p {
+			font-size: 14px;
+		}
+	}
+	.instruction {
+		text-align: left;
+		border: 1px solid $color-secondary;
+		padding: 10px;
+		border-radius: 5px;
+		width: 90%;
+		margin: 0 auto 10px;
+	}
+	.image-and-settings {
+		padding: 15px;
+		background: #f6f5fb;
+		.form-ma {
+			.add-icon {
+				svg {
+					width: 60px;
+					margin-top: 10px;
+				}
+			}
+		}
+		.share-settings {
+			border: 1px solid $color-secondary;
+			padding: 50px 15px;
+			border-radius: 5px;
+			position: relative;
+			margin-top: 50px;
+			h3 {
+				color: #3b3194;
+				font-size: 23px;
+				font-weight: bold;
+				position: absolute;
+				top: -25px;
+				left: 50%;
+				transform: translate(-50%, 0);
+				background: #f6f5fb;
+				padding: 0 20px;
+				svg {
+					margin-right: 9px;
+				}
+			}
+		}
+	}
+
+	img {
+		border-radius: 5px;
+	}
+	.img-preview {
+		width: 180px;
+		border: 1px solid $color-secondary;
+		border-radius: 5px;
+		margin: 0px auto;
+		height: 200px;
+	}
+	input[type="file"] {
+		cursor: pointer;
+		width: 180px;
+		height: 34px;
+		overflow: hidden;
+		border-radius: 5px !important;
+	}
+
+	input[type="file"]:before {
+		width: 180px;
+		height: 32px;
+		font-size: 16px;
+		line-height: 32px;
+		content: "Upload";
+		display: inline-block;
+		color: white;
+		background: #8781bd;
+		border: 1px solid #98a0e2;
+		padding: 0 10px;
+		text-align: center;
+		font-family: Helvetica, Arial, sans-serif;
+	}
+
+	input[type="file"]::-webkit-file-upload-button {
+		visibility: hidden;
+	}
+	.btn-primary {
+		margin-bottom: 5px;
+	}
+}
+</style>
+
+<style>
+.ant-tooltip-inner {
+	border-radius: 0px;
+}
+</style>
