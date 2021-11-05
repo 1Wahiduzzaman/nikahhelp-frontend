@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex align-items-center justify-content-center select-group">
     <a-select
-      :style="{ maxWidth: width + 'px' }"
+      :style="{ maxWidth: width + 'px',width: width + 'px' }"
       :id="uniqueNames[0]"
       @select="onSelect"
       show-search
@@ -25,7 +25,7 @@
     </a-select>
     <div class="mx-2" style="color: #7e7e7e">TO</div>
     <a-select
-      :style="{ maxWidth: width + 'px' }"
+      :style="{ maxWidth: width + 'px',width: width + 'px' }"
       @select="onSelect"
       size="large"
       show-search

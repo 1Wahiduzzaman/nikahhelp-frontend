@@ -37,7 +37,7 @@
           :uniqueNames="['heightMin', 'heightMax']"
           :options="heightTV"
           :placeholder="'Height'"
-          :width="'220'"
+          :width="'120'"
         />
       </div>
 

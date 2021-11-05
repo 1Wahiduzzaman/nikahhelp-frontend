@@ -27,17 +27,24 @@
         />
       </div>
       <div class="steps-content" v-show="current == 2">
+        <Verification
+          :candidateDetails="candidateDetails"
+          @disabled="onDataChange($event)"
+          ref="Verification"
+        />
+      </div>
+      <div class="steps-content" v-show="current == 3">
         <FamilyInfoTwo
           :candidateDetails="candidateDetails"
           @disabled="onDataChange($event)"
           ref="familyInfoTwo"
         />
       </div>
-      <div class="steps-content" v-show="current == 3">
+      <div class="steps-content" v-show="current == 4">
         <UploadProfile />
       </div>
-      <div class="steps-content" v-show="current == 4">
-        <Review />
+      <div class="steps-content" v-if="current == 5">
+        <Review :candidateDetails="candidateDetails" />
       </div>
 
       <div class="steps-action text-right pb-5 clearfix">
@@ -87,6 +94,7 @@
 <script>
 import Preference from "@/components/candidate-registration/Preference.vue";
 import PreferenceTwo from "@/components/candidate-registration/preference-two.vue";
+import Verification from "@/components/candidate-registration/verification.vue";
 import PersonalInfo from "@/components/candidate-registration/PersonalInfo.vue";
 import PersonalInfoTwo from "@/components/candidate-registration/personalinfo-two.vue";
 import FamilyInfoTwo from "@/components/candidate-registration/familyinfo-two.vue";
@@ -109,6 +117,7 @@ export default {
     FamilyInfoTwo,
     UploadProfile,
     Review,
+    Verification,
   },
   mounted() {
     this.getCandidateInitialInfo();
@@ -128,6 +137,10 @@ export default {
         {
           title: "Personal Information",
           content: "Second-content",
+        },
+        {
+          title: "Verification",
+          content: "Last-content",
         },
         {
           title: "Family Information",
@@ -179,8 +192,19 @@ export default {
               listThree: [],
             },
           },
+          personal: response.data.data.user.personal,
+          screen_name: response.data.data.user.screen_name,
+          user_id: response.data.data.user.user_id,
+          family: response.data.data.user.family,
+          first_name: response.data.data.user.first_name,
+          id: response.data.data.user.id,
+          last_name: response.data.data.user.last_name,
           studylevels: response.data.data.studylevels,
+          review: {
+            personal: {},
+          },
         };
+        console.log("details", details);
         this.candidateDetails = {
           ...details,
         };
