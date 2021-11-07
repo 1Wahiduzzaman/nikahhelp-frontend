@@ -176,11 +176,28 @@ export default {
           thankfulThings: thankfulThings,
           preferenceData: {
             ...this.nullToUndefined(response.data.data.user.preference),
-            prefReligions: [],
-            pre_height_min: 0,
-            pre_height_max: 0,
-            disAllowedCountry: false,
-            allowedCountry: false,
+            preferred_nationality:
+              response.data.data.user.preference.preferred_nationality.map(
+                (a) => a.id
+              ),
+            pre_partner_religion_id:
+              response.data.data.user.preference.pre_partner_religion_id.map(
+                function (v) {
+                  return parseInt(v, 10);
+                }
+              ),
+            pre_preferred_divorcee:
+              response.data.data.user.preference.pre_preferred_divorcee == 0
+                ? false
+                : true,
+                pre_preferred_divorcee_child: response.data.data.user.preference.pre_preferred_divorcee_child == 0
+                ? false
+                : true,
+            pre_height_min: 1,
+            pre_height_max: 1,
+            pre_partner_comes_from: [],
+            pre_disallow_preference: [],
+
             disAllowedCity: {
               listOne: [],
               listTwo: [],
