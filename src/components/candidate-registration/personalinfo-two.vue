@@ -18,6 +18,7 @@
       <a-collapse-panel key="1" header="1. Essential Information">
         <a-form-model
           ref="personalInfoFormOne"
+          v-if="personalInformation && personalInformation.essential"
           :model="personalInformation.essential"
           :rules="rules"
           class="form-ma"
@@ -39,7 +40,7 @@
                 <a-col :span="12">
                   <a-form-model-item ref="per_gender" prop="per_gender">
                     <a-select
-                      @change="onValueChange"
+                      @change="onValueChange($event, 'essential')"
                       id="per_gender"
                       ref="select"
                       placeholder="Select gender"
@@ -102,7 +103,7 @@
                       displayFormat="dmy"
                       dropdownClass="custom-select"
                       :key="default_date"
-                      :default-date="default_date"
+                      :default-date="personalInformation.essential.default_date"
                       v-model="personalInformation.essential.dob"
                       :on-change="onChangeDD"
                       :maxYear="new Date().getFullYear() - 18"
@@ -144,7 +145,7 @@
                 <a-col :span="12">
                   <div class="mb-2">
                     <a-icon
-                      v-if="personalInformation.essential.height"
+                      v-if="personalInformation.essential.per_height"
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
                     />What is your height?
@@ -152,12 +153,12 @@
                   <!-- <need-help title="Please provide height in cm"></need-help> -->
                 </a-col>
                 <a-col :span="12">
-                  <a-form-model-item ref="height" prop="height">
+                  <a-form-model-item ref="per_height" prop="per_height">
                     <a-input
-                      id="height"
+                      id="per_height"
                       suffix="cm"
-                      @blur="onValueChange"
-                      v-model.number="personalInformation.essential.height"
+                      @blur="onValueChange($event, 'essential')"
+                      v-model.number="personalInformation.essential.per_height"
                       placeholder="Enter your height"
                       type="number"
                     />
@@ -193,6 +194,60 @@
               </a-row>
             </a-col>
 
+            <!-- Tele -->
+            <!-- <a-col class="form-item py-3 border-bottom" :span="24">
+              <a-row type="flex" align="top">
+                <a-col :span="12">
+                  <div class="mb-2">
+                    <a-icon
+                      v-if="personalInformation.essential.per_telephone_no"
+                      class="color-success mr-2 fs-18 fw-500"
+                      type="check"
+                    />What is your Telephone No?
+                  </div>
+              
+                </a-col>
+                <a-col :span="12">
+                  <a-form-model-item ref="per_telephone_no" prop="per_telephone_no">
+                    <a-input
+                      id="per_telephone_no"
+                      @blur="onValueChange($event, 'essential')"
+                      v-model="personalInformation.essential.per_telephone_no"
+                      placeholder="Enter your Telephone no"
+                      type="text"
+                    />
+                  </a-form-model-item>
+                </a-col>
+                <a-col :span="12">
+                  <p>
+                    <a
+                      class="color-blue fw-700 fs-14"
+                      data-toggle="collapse"
+                      href="#collapsePersonalInfoHeight"
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      <span
+                        v-if="arr[25].first"
+                        @click="arr[25].first = !arr[25].first"
+                      >
+                        Need Help?
+                      </span>
+                      <span v-else @click="arr[25].first = !arr[25].first">
+                        Hide Help?
+                      </span>
+                    </a>
+                  </p>
+                  <div class="collapse" id="collapsePersonalInfoHeight">
+                    <div class="card card-body bubble">
+                      Please provide height in cm
+                    </div>
+                  </div>
+                </a-col>
+              </a-row>
+            </a-col> -->
+
             <!-- Employment status -->
             <a-col class="form-item py-3 border-bottom" :span="24">
               <a-row type="flex" align="top">
@@ -212,7 +267,7 @@
                     prop="per_employment_status"
                   >
                     <a-select
-                      @change="onValueChange"
+                      @change="onValueChange($event, 'essential')"
                       id="per_employment_status"
                       ref="select"
                       placeholder="Select your employment status"
@@ -283,7 +338,7 @@
                 <a-col :span="12">
                   <a-form-model-item ref="per_occupation" prop="per_occupation">
                     <a-select
-                      @change="onValueChange"
+                      @change="onValueChange($event, 'essential')"
                       id="per_occupation"
                       :showSearch="true"
                       option-filter-prop="children"
@@ -360,7 +415,7 @@
                     prop="per_education_level_id"
                   >
                     <a-select
-                      @change="onValueChange"
+                      @change="onValueChange($event, 'essential')"
                       id="per_education_level_id"
                       :showSearch="true"
                       :filter-option="filterOption"
@@ -438,7 +493,7 @@
                     prop="per_religion_id"
                   >
                     <a-select
-                      @change="onValueChange"
+                      @change="onValueChange($event, 'essential')"
                       id="per_religion_id"
                       :showSearch="true"
                       :filter-option="filterOption"
@@ -493,7 +548,7 @@
 
             <!-- Essential Information End -->
           </a-row>
-          <a-button
+          <!-- <a-button
             shape="round"
             type="primary"
             style="float: right"
@@ -501,7 +556,7 @@
             @click="handleSubmitFormOne"
           >
             Save & Continue
-          </a-button>
+          </a-button> -->
         </a-form-model>
       </a-collapse-panel>
 
@@ -513,6 +568,7 @@
       >
         <a-form-model
           ref="personalInfoFormTwo"
+          v-if="personalInformation && personalInformation.general"
           :model="personalInformation.general"
           :rules="rules"
           class="form-ma"
@@ -534,7 +590,7 @@
                 <a-col :span="12">
                   <a-form-model-item ref="per_ethnicity" prop="per_ethnicity">
                     <a-select
-                      @change="onValueChange"
+                      @change="onValueChange($event, 'general')"
                       id="per_ethnicity"
                       :showSearch="true"
                       option-filter-prop="children"
@@ -607,7 +663,7 @@
                     prop="per_mother_tongue"
                   >
                     <a-select
-                      @change="onValueChange"
+                      @change="onValueChange($event, 'general')"
                       id="per_mother_tongue"
                       :showSearch="true"
                       option-filter-prop="children"
@@ -683,7 +739,7 @@
                     prop="per_nationality"
                   >
                     <a-select
-                      @change="onValueChange"
+                      @change="onValueChange($event, 'general')"
                       id="per_nationality"
                       :filter-option="filterOption"
                       :showSearch="true"
@@ -753,7 +809,7 @@
                     prop="per_country_of_birth"
                   >
                     <a-select
-                      @change="onValueChange"
+                      @change="onValueChange($event, 'general')"
                       id="per_country_of_birth"
                       :filter-option="filterOption"
                       :showSearch="true"
@@ -825,7 +881,7 @@
                     prop="per_health_condition"
                   >
                     <a-textarea
-                      @blur="onValueChange"
+                      @blur="onValueChange($event, 'general')"
                       id="per_health_condition"
                       placeholder="Exp: Bangladesh"
                       cols="30"
@@ -868,7 +924,7 @@
               </a-row>
             </a-col>
           </a-row>
-          <a-button
+          <!-- <a-button
             shape="round"
             type="primary"
             style="float: right"
@@ -876,7 +932,7 @@
             @click="handleSubmitFormTwo"
           >
             Save & Continue
-          </a-button>
+          </a-button> -->
         </a-form-model>
       </a-collapse-panel>
 
@@ -888,6 +944,7 @@
       >
         <a-form-model
           ref="personalInfoFormThree"
+          v-if="personalInformation && personalInformation.contact"
           :model="personalInformation.contact"
           :rules="rules"
           class="form-ma"
@@ -921,7 +978,7 @@
                         prop="per_current_residence_country"
                       >
                         <a-select
-                          @change="onValueChange"
+                          @change="onValueChange($event, 'contact')"
                           id="per_current_residence_country"
                           style="width: 150px"
                           :filter-option="filterOption"
@@ -956,7 +1013,7 @@
                         prop="per_current_residence_city"
                       >
                         <a-select
-                          @change="onValueChange"
+                          @change="onValueChange($event, 'contact')"
                           id="per_current_residence_city"
                           style="width: 150px"
                           placeholder="City"
@@ -1031,7 +1088,7 @@
                 <a-col :span="12">
                   <div class="mb-2">
                     <a-icon
-                      v-if="personalInformation.contact.postCode"
+                      v-if="personalInformation.contact.per_permanent_post_code"
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
                     />Post Code
@@ -1041,12 +1098,17 @@
 									></need-help> -->
                 </a-col>
                 <a-col :span="12">
-                  <a-form-model-item ref="postCode" prop="postCode">
+                  <a-form-model-item
+                    ref="per_permanent_post_code"
+                    prop="per_permanent_post_code"
+                  >
                     <a-input
-                      @blur="onValueChange"
+                      @blur="onValueChange($event, 'contact')"
                       id="postCode"
                       placeholder="Post Code"
-                      v-model="personalInformation.contact.postCode"
+                      v-model="
+                        personalInformation.contact.per_permanent_post_code
+                      "
                     />
                   </a-form-model-item>
                 </a-col>
@@ -1107,7 +1169,7 @@
                         prop="per_permanent_country"
                       >
                         <a-select
-                          @change="onValueChange"
+                          @change="onValueChange($event, 'contact')"
                           id="per_permanent_country"
                           style="width: 150px"
                           placeholder="Country"
@@ -1140,7 +1202,7 @@
                         prop="per_permanent_city"
                       >
                         <a-select
-                          @change="onValueChange"
+                          @change="onValueChange($event, 'contact')"
                           id="per_permanent_city"
                           style="width: 150px"
                           placeholder="City"
@@ -1214,7 +1276,7 @@
                     prop="per_permanent_address"
                   >
                     <a-textarea
-                      @blur="onValueChange"
+                      @blur="onValueChange($event, 'contact')"
                       id="per_permanent_address"
                       cols="30"
                       rows="3"
@@ -1280,7 +1342,7 @@
                         prop="mobile_country_code"
                       >
                         <a-select
-                          @change="onValueChange"
+                          @change="onValueChange($event, 'contact')"
                           id="mobile_country_code"
                           ref="select"
                           v-model="
@@ -1302,7 +1364,7 @@
                         prop="mobile_number"
                       >
                         <a-input
-                          @blur="onValueChange"
+                          @blur="onValueChange($event, 'contact')"
                           id="mobile_number"
                           v-model="personalInformation.contact.mobile_number"
                           placeholder="Mobile Number"
@@ -1350,7 +1412,7 @@
                 <a-col :span="12">
                   <div class="mb-2">
                     <a-icon
-                      v-if="$store.state.user.user.email"
+                      v-if="personalInformation.contact.email"
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
                     />What is your email address?
@@ -1360,12 +1422,12 @@
 									></need-help> -->
                 </a-col>
                 <a-col :span="12">
-                  <a-form-model-item ref="email" prop="email">
+                  <a-form-model-item ref="per_email" prop="per_email">
                     <a-input
-                      @blur="onValueChange"
-                      id="email"
+                      @blur="onValueChange($event, 'contact')"
+                      id="per_email"
                       type="email"
-                      :value="$store.state.user.user.email"
+                      :value="personalInformation.contact.per_email"
                       placeholder="Sample email"
                       :disabled="true"
                     />
@@ -1401,7 +1463,7 @@
               </a-row>
             </a-col>
           </a-row>
-          <a-button
+          <!-- <a-button
             shape="round"
             type="primary"
             style="float: right"
@@ -1409,7 +1471,7 @@
             @click="handleSubmitFormThree"
           >
             Save & Continue
-          </a-button>
+          </a-button> -->
         </a-form-model>
       </a-collapse-panel>
 
@@ -1421,6 +1483,7 @@
       >
         <a-form-model
           ref="personalInfoFormFour"
+          v-if="personalInformation && personalInformation.more_about"
           :model="personalInformation.more_about"
           :rules="rules"
           class="form-ma"
@@ -1445,7 +1508,7 @@
                     prop="per_marital_status"
                   >
                     <a-select
-                      @change="onValueChange"
+                      @change="onValueChange($event, 'more_about')"
                       id="per_marital_status"
                       ref="select"
                       placeholder="Select your Marital Status"
@@ -1516,7 +1579,7 @@
                     prop="per_currently_living_with"
                   >
                     <a-select
-                      @change="onValueChange"
+                      @change="onValueChange($event, 'more_about')"
                       id="per_currently_living_with"
                       ref="select"
                       placeholder="Currently Living With"
@@ -1595,7 +1658,7 @@
                     prop="per_willing_to_relocate"
                   >
                     <a-select
-                      @change="onValueChange"
+                      @change="onValueChange($event, 'more_about')"
                       id="per_willing_to_relocate"
                       ref="select"
                       placeholder="Willing to relocate"
@@ -1662,7 +1725,7 @@
                 <a-col :span="12">
                   <a-form-model-item ref="per_smoker" prop="per_smoker">
                     <a-select
-                      @change="onValueChange"
+                      @change="onValueChange($event, 'more_about')"
                       id="per_smoker"
                       ref="select"
                       placeholder="Smoker"
@@ -1743,7 +1806,13 @@
                     prop="per_language_speak"
                   >
                     <a-select
-                      @change="onMultiValueChange($event, 'per_language_speak')"
+                      @change="
+                        onMultiValueChange(
+                          $event,
+                          'per_language_speak',
+                          'more_about'
+                        )
+                      "
                       id="per_language_speak"
                       option-filter-prop="children"
                       :showSearch="true"
@@ -1843,7 +1912,11 @@
                   >
                     <a-select
                       @change="
-                        onMultiValueChange($event, 'per_hobbies_interests')
+                        onMultiValueChange(
+                          $event,
+                          'per_hobbies_interests',
+                          'more_about'
+                        )
                       "
                       id="per_hobbies_interests"
                       :showSearch="true"
@@ -1924,7 +1997,11 @@
                   >
                     <a-select
                       @change="
-                        onMultiValueChange($event, 'per_food_cuisine_like')
+                        onMultiValueChange(
+                          $event,
+                          'per_food_cuisine_like',
+                          'more_about'
+                        )
                       "
                       id="per_food_cuisine_like"
                       :showSearch="true"
@@ -2020,7 +2097,13 @@
                     prop="per_things_enjoy"
                   >
                     <a-select
-                      @change="onMultiValueChange($event, 'per_things_enjoy')"
+                      @change="
+                        onMultiValueChange(
+                          $event,
+                          'per_things_enjoy',
+                          'more_about'
+                        )
+                      "
                       id="per_things_enjoy"
                       :showSearch="true"
                       option-filter-prop="children"
@@ -2100,7 +2183,13 @@
                     prop="per_thankfull_for"
                   >
                     <a-select
-                      @change="onMultiValueChange($event, 'per_thankfull_for')"
+                      @change="
+                        onMultiValueChange(
+                          $event,
+                          'per_thankfull_for',
+                          'more_about'
+                        )
+                      "
                       id="per_thankfull_for"
                       :showSearch="true"
                       option-filter-prop="children"
@@ -2173,7 +2262,7 @@
                 <a-col :span="12">
                   <a-form-model-item ref="per_about" prop="per_about">
                     <a-textarea
-                      @blur="onValueChange"
+                      @blur="onValueChange($event, 'more_about')"
                       id="per_about"
                       placeholder="Exp: 19/ burder way, england"
                       :rows="3"
@@ -2211,7 +2300,7 @@
               </a-row>
             </a-col>
           </a-row>
-          <a-button
+          <!-- <a-button
             shape="round"
             type="primary"
             style="float: right"
@@ -2219,7 +2308,7 @@
             @click="handleSubmitFormFour"
           >
             Save & Continue
-          </a-button>
+          </a-button> -->
         </a-form-model>
       </a-collapse-panel>
 
@@ -2262,13 +2351,15 @@ export default {
     candidateDetails: {
       type: Object,
     },
+    personalInformation: {
+      type: Object,
+    },
   },
   data() {
     return {
       activeKey: ["1"],
       default_date: null,
       rules: RULESPERSONALINFO,
-      personalInformation: this.getDefaultPersonalInfo(),
       languages: languages,
       hobbies: hobbies,
       foods: foods,
@@ -2282,9 +2373,10 @@ export default {
     this.checkDisabled();
   },
   methods: {
-    onValueChange(e) {
+    onValueChange(e, action) {
       console.log(this.personalInformation);
       this.checkDisabled();
+      this.save(action);
     },
     checkDisabled() {
       this.$emit("disabled", {
@@ -2340,8 +2432,10 @@ export default {
         }
       });
     },
-    onChangeDD(d, m, y) {},
-    onMultiValueChange(e, name) {
+    onChangeDD(d, m, y) {
+      this.save("essential");
+    },
+    onMultiValueChange(e, name, action) {
       this.personalInformation.more_about[name] =
         this.personalInformation.more_about[name][
           this.personalInformation.more_about[name].length - 1
@@ -2352,46 +2446,79 @@ export default {
             );
 
       this.checkDisabled();
+      this.save(action);
     },
-    getDefaultPersonalInfo() {
-      return {
-        essential: {
-          per_gender: undefined,
-          dob: "",
-          per_employment_status: undefined,
-          per_occupation: undefined,
-          per_education_level_id: undefined,
-          per_religion_id: undefined,
-        },
-        general: {
-          per_ethnicity: undefined,
-          per_mother_tongue: undefined,
-          per_nationality: undefined,
-          per_country_of_birth: undefined,
-          per_health_condition: undefined,
-        },
-        contact: {
-          per_current_residence_city: undefined,
-          postCode: "",
-          per_permanent_country: undefined,
-          per_permanent_city: "",
-          per_permanent_address: "",
-          mobile_number: undefined,
-          mobile_country_code: undefined,
-        },
-        more_about: {
-          per_marital_status: undefined,
-          per_currently_living_with: undefined,
-          per_willing_to_relocate: undefined,
-          per_smoker: undefined,
-          per_language_speak: undefined,
-          per_hobbies_interests: undefined,
-          per_food_cuisine_like: undefined,
-          per_things_enjoy: undefined,
-          per_thankfull_for: undefined,
-          per_about: "",
-        },
-      };
+
+    save(action) {
+      switch (action) {
+        case "essential":
+          this.saveEssentialInfo();
+          break;
+        case "general":
+          this.saveGeneralInfo();
+          break;
+        case "contact":
+          this.saveContactInfo();
+          break;
+        case "more_about":
+          this.saveMoreAboutInfo();
+          break;
+      }
+    },
+    async saveEssentialInfo() {
+      await this.$store
+        .dispatch(
+          "savePersonalEssentialInfo",
+          this.personalInformation.essential
+        )
+        .then((data) => {})
+        .catch((error) => {});
+    },
+    async saveGeneralInfo() {
+      await this.$store
+        .dispatch("savePersonalGeneralInfo", this.personalInformation.general)
+        .then((data) => {})
+        .catch((error) => {});
+    },
+    async saveContactInfo() {
+      await this.$store
+        .dispatch("savePersonalContactInfo", this.personalInformation.contact)
+        .then((data) => {})
+        .catch((error) => {});
+    },
+    async saveMoreAboutInfo() {
+      await this.$store
+        .dispatch("savePersonalMoreAboutInfo", {
+          ...this.personalInformation.more_about,
+          per_smoker: this.personalInformation.more_about.per_smoker
+            ? this.personalInformation.more_about.per_smoker.toString()
+            : "",
+          per_things_enjoy: this.personalInformation.more_about.per_things_enjoy
+            ? this.personalInformation.more_about.per_things_enjoy.join(",")
+            : this.personalInformation.more_about.per_things_enjoy,
+          per_hobbies_interests: this.personalInformation.more_about
+            .per_hobbies_interests
+            ? this.personalInformation.more_about.per_hobbies_interests.join(
+                ","
+              )
+            : this.personalInformation.more_about.per_hobbies_interests,
+          per_language_speak: this.personalInformation.more_about
+            .per_language_speak
+            ? this.personalInformation.more_about.per_language_speak.join(",")
+            : this.personalInformation.more_about.per_language_speak,
+          per_thankfull_for: this.personalInformation.more_about
+            .per_thankfull_for
+            ? this.personalInformation.more_about.per_thankfull_for.join(",")
+            : this.personalInformation.more_about.per_thankfull_for,
+          per_food_cuisine_like: this.personalInformation.more_about
+            .per_food_cuisine_like
+            ? this.personalInformation.more_about.per_food_cuisine_like.join(
+                ","
+              )
+            : this.personalInformation.more_about.per_food_cuisine_like,
+        })
+        .then((data) => {})
+        .catch((error) => {});
     },
 
     filterOption(input, option) {

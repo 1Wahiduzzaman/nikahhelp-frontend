@@ -45,6 +45,10 @@
                       'pre_partner_age_min',
                       'pre_partner_age_max',
                     ]"
+                    :values="[
+                      preferenceData.pre_partner_age_min,
+                      preferenceData.pre_partner_age_max,
+                    ]"
                     :options="ageTV"
                     :placeholder="'Age'"
                     :width="'120'"
@@ -100,6 +104,10 @@
                 <a-col :span="12">
                   <SelectGroup
                     @selected="onDropdownChange"
+                    :values="[
+                      preferenceData.pre_height_min,
+                      preferenceData.pre_height_max,
+                    ]"
                     :uniqueNames="['pre_height_min', 'pre_height_max']"
                     :options="heightTV"
                     :placeholder="'Height'"
@@ -606,7 +614,7 @@
                     prop="pre_partner_religion_id"
                   >
                     <a-select
-                      id="pre_ethnicities"
+                      id="pre_partner_religion_id"
                       :show-arrow="true"
                       :showSearch="true"
                       :filter-option="filterOption"
@@ -1232,7 +1240,7 @@
           </a-row>
         </a-form-model>
 
-        <a-button
+        <!-- <a-button
           shape="round"
           type="primary"
           style="float: right"
@@ -1240,7 +1248,7 @@
           @click="handleSubmitFormOne"
         >
           Save & Continue
-        </a-button>
+        </a-button> -->
       </a-collapse-panel>
       <!-- Important things for you (Ratings) -->
       <a-collapse-panel
@@ -1943,7 +1951,7 @@
               </a-row>
             </a-col>
 
-            <a-button
+            <!-- <a-button
               shape="round"
               type="primary"
               style="float: right"
@@ -1951,7 +1959,7 @@
               @click="handleSubmitFormTwo"
             >
               Save & Continue
-            </a-button>
+            </a-button> -->
           </a-row>
         </a-form-model>
       </a-collapse-panel>
@@ -1999,15 +2007,13 @@ export default {
       ethnicityList: ethnicities,
     };
   },
-  mounted() {
-    this.checkDisabled();
-  },
+  mounted() {},
   created() {},
+  computed: {},
 
   methods: {
     onDropdownChange({ name, value }) {
       this.preferenceData[name] = value;
-      this.checkDisabled();
       this.savePreference();
     },
     filterOption(input, option) {
@@ -2017,32 +2023,7 @@ export default {
           .indexOf(input.toLowerCase()) >= 0
       );
     },
-    checkDisabled(e) {
-      this.$emit("disabled", {
-        value: true,
-        // this.preferenceData.pre_partner_age_max &&
-        // this.preferenceData.pre_height_min &&
-        // this.preferenceData.pre_height_max &&
-        // this.preferenceData.pre_has_country_allow_prefference &&
-        // this.preferenceData.pre_countries &&
-        // this.preferenceData.pre_cities &&
-        // this.preferenceData.preferred_countries &&
-        // this.preferenceData.preferred_cities &&
-        // this.preferenceData.pre_strength_of_character_rate &&
-        // this.preferenceData.pre_look_and_appearance_rate &&
-        // this.preferenceData.pre_religiosity_or_faith_rate &&
-        // this.preferenceData.pre_manners_socialskill_ethics_rate &&
-        // this.preferenceData.pre_emotional_maturity_rate &&
-        // this.preferenceData.pre_good_listener_rate &&
-        // this.preferenceData.pre_good_talker_rate &&
-        // this.preferenceData.pre_wiling_to_learn_rate &&
-        // this.preferenceData.pre_family_social_status_rate &&
-        // this.preferenceData.pre_employment_wealth_rate &&
-        // this.preferenceData.pre_education_rate &&
-        // this.preferenceData.pre_description,
-        current: 0,
-      });
-    },
+
     handleSubmitFormOne() {
       this.$refs.preferenceFormOne.validate((valid) => {
         if (valid) {
@@ -2074,12 +2055,9 @@ export default {
           ? ["Don't Mind"]
           : this.preferenceData[name].filter((item) => item != "Don't Mind");
 
-      this.checkDisabled();
       this.savePreference();
     },
     onValueChange(e) {
-      console.log(this.preferenceData);
-      this.checkDisabled();
       this.savePreference();
     },
 
@@ -2093,7 +2071,7 @@ export default {
           (c) => {
             return {
               country: c,
-              city: 0,
+              city: null,
             };
           }
         ),
@@ -2101,17 +2079,21 @@ export default {
           (c) => {
             return {
               country: c,
-              city: 0,
+              city: null,
             };
           }
         ),
       });
       response
         .then((data) => {
-          console.log(data);
+       this.$emit("valueChange", {
+        value: this.preferenceData,
+        current: 0,
+      });
         })
         .catch((error) => {});
     },
+
     onChangeRate(value) {
       const {
         pre_education_rate,
@@ -2142,7 +2124,10 @@ export default {
       });
       response
         .then((data) => {
-          console.log(data);
+         this.$emit("valueChange", {
+        value: this.preferenceData,
+        current: 0,
+      });
         })
         .catch((error) => {});
     },
@@ -2171,7 +2156,7 @@ export default {
       this.savePreference();
     },
   },
-  computed: {},
+
   watch: {},
 };
 </script>

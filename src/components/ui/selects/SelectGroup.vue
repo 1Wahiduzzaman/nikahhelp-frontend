@@ -3,6 +3,7 @@
     <a-select
       :style="{ maxWidth: width + 'px',width: width + 'px' }"
       :id="uniqueNames[0]"
+      v-model="values[0]"
       @select="onSelect"
       show-search
       size="large"
@@ -25,6 +26,7 @@
     </a-select>
     <div class="mx-2" style="color: #7e7e7e">TO</div>
     <a-select
+      v-model="values[1]"
       :style="{ maxWidth: width + 'px',width: width + 'px' }"
       @select="onSelect"
       size="large"
@@ -57,7 +59,7 @@ export default {
       value: "",
     };
   },
-  props: ["placeholder", "options", "uniqueNames", "width"],
+  props: ["placeholder", "options", "uniqueNames", "width","values"],
   watch: {
     value(val) {
       console.log("value", val);

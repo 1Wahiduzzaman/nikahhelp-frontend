@@ -82,3 +82,29 @@
 
 }
 
+@mixin slim_scroll($value, $track) {
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+    background: $track;
+  }
+  &::-webkit-scrollbar-track {
+    -webkit-border-radius: 0.625rem;
+    border-radius: 0.625rem;
+    background: $track;
+  }
+  &::-webkit-scrollbar-thumb:window-inactive {
+    background: $value;
+  }
+  &::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 0.5rem;
+    border-radius: 0.5rem;
+    // width: 8px;
+    background: rgba($value, 0.5);
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    width: 1.25rem;
+  }
+}
+

@@ -13,3 +13,6 @@
 @import "components/stepper";
 @import "components/inputs";
 @import "components/need_help";
+* {
+    @include slim_scroll(#444, #ccc);
+}

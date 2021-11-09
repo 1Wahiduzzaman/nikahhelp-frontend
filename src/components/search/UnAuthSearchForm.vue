@@ -28,12 +28,14 @@
           :options="ageTV"
           :placeholder="'Age'"
           :width="'120'"
+          :values="[searchModel.min_age, searchModel.max_age]"
         />
       </div>
 
       <div class="my-4" v-if="useFor != 'home'">
         <SelectGroup
           @selected="onDropdownChange"
+          :values="[searchModel.heightMin, searchModel.heightMax]"
           :uniqueNames="['heightMin', 'heightMax']"
           :options="heightTV"
           :placeholder="'Height'"
@@ -142,8 +144,8 @@ export default {
         gender: 0,
         country: undefined,
         religion: undefined,
-        min_age: 0,
-        max_age: 0,
+        min_age: undefined,
+        max_age: undefined,
         heightMin: null,
         heightMax: null,
       },
