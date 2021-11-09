@@ -15,28 +15,24 @@
         <PreferenceTwo
           :candidateDetails="candidateDetails"
           :preferenceData="candidateDetails.preferenceData"
-          @disabled="onDataChange($event)"
+          @valueChange="onDataChange($event)"
           ref="PreferenceTwo"
         />
       </div>
       <div class="steps-content" v-show="current == 1">
         <PersonalInfoTwo
+          :personalInformation="candidateDetails.personalInformation"
           :candidateDetails="candidateDetails"
-          @disabled="onDataChange($event)"
           ref="personalInfoTwo"
         />
       </div>
       <div class="steps-content" v-show="current == 2">
-        <Verification
-          :candidateDetails="candidateDetails"
-          @disabled="onDataChange($event)"
-          ref="Verification"
-        />
+        <Verification :candidateDetails="candidateDetails" ref="Verification" />
       </div>
       <div class="steps-content" v-show="current == 3">
         <FamilyInfoTwo
+          :familyInformation="candidateDetails.familyInformation"
           :candidateDetails="candidateDetails"
-          @disabled="onDataChange($event)"
           ref="familyInfoTwo"
         />
       </div>
@@ -49,6 +45,7 @@
 
       <div class="steps-action text-right pb-5 clearfix">
         <a-button
+          :disabled="!enabledNextBtn"
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
@@ -124,8 +121,8 @@ export default {
   },
   data() {
     return {
-      current: 0,
-      disabledNextBtn: false,
+      current: 2,
+      enabledNextBtn: false,
       candidateDetails: {
         preferenceData: null,
       },
@@ -158,11 +155,18 @@ export default {
     };
   },
   methods: {
-    onDataChange(event) {
-      this.disabledNextBtn =
-        event.current === this.current ? event.value : false;
+    onDataChange(e) {
+      switch (e.current) {
+        case 1:
+          this.candidateDetails.preferenceData = {
+            ...e.value,
+          };
+          break;
+      }
+      this.checkExistData();
     },
-    getCandidateInitialInfo: async function () {
+       getCandidateInitialInfo: async function () {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
       const response = await ApiService.get("v1/candidate/initial-info");
       if (response.status === 200) {
         const details = {
@@ -174,13 +178,71 @@ export default {
           hobbies: hobbies,
           foods: foods,
           thankfulThings: thankfulThings,
+          personalInformation: {
+            contact: {
+              ...this.nullToUndefined(response.data.data.personal_info.contact),
+              per_current_residence_country: parseInt(
+                response.data.data.personal_info.contact
+                  .per_current_residence_country
+              ),
+              per_permanent_country: parseInt(
+                response.data.data.personal_info.contact.per_permanent_country
+              ),
+              per_email: userInfo.email,
+            },
+            essential: {
+              ...this.nullToUndefined(
+                response.data.data.personal_info.essential
+              ),
+              default_date: response.data.data.personal_info.essential.dob,
+              per_telephone_no: 1,
+            },
+            general: {
+              ...this.nullToUndefined(response.data.data.personal_info.general),
+            },
+            more_about: {
+              ...this.nullToUndefined(
+                response.data.data.personal_info.more_about
+              ),
+              per_smoker:
+                response.data.data.personal_info.more_about.per_smoker == 0
+                  ? undefined
+                  : response.data.data.personal_info.more_about.per_smoker,
+            },
+          },
           preferenceData: {
             ...this.nullToUndefined(response.data.data.user.preference),
-            prefReligions: [],
-            pre_height_min: 0,
-            pre_height_max: 0,
-            disAllowedCountry: false,
-            allowedCountry: false,
+            preferred_nationality:
+              response.data.data.user.preference.preferred_nationality.map(
+                (a) => a.id
+              ),
+            preferred_countries:
+              response.data.data.user.preference.preferred_countries.map(
+                (a) => a.id
+              ),
+            bloked_countries:
+              response.data.data.user.preference.bloked_countries.map(
+                (a) => a.id
+              ),
+            pre_partner_religion_id:
+              response.data.data.user.preference.pre_partner_religion_id.map(
+                function (v) {
+                  return parseInt(v, 10);
+                }
+              ),
+            pre_preferred_divorcee:
+              response.data.data.user.preference.pre_preferred_divorcee == 0
+                ? false
+                : true,
+            pre_preferred_divorcee_child:
+              response.data.data.user.preference.pre_preferred_divorcee_child ==
+              0
+                ? false
+                : true,
+            pre_partner_comes_from: [],
+            pre_disallow_preference: [],
+            // pre_partner_age_max: 1,
+            // pre_partner_age_min: 1,
             disAllowedCity: {
               listOne: [],
               listTwo: [],
@@ -195,7 +257,9 @@ export default {
           personal: response.data.data.user.personal,
           screen_name: response.data.data.user.screen_name,
           user_id: response.data.data.user.user_id,
-          family: response.data.data.user.family,
+          familyInformation: {
+            ...this.nullToUndefined(response.data.data.user.family),
+          },
           first_name: response.data.data.user.first_name,
           id: response.data.data.user.id,
           last_name: response.data.data.user.last_name,
@@ -208,8 +272,38 @@ export default {
         this.candidateDetails = {
           ...details,
         };
+        this.checkExistData();
       }
     },
+    checkExistData() {
+      let isEnabled = false;
+      switch (this.current) {
+        case 0:
+          isEnabled = Object.values(this.candidateDetails.preferenceData).every(
+            (x) => x !== undefined && x !== null && x !== ""
+          );
+          break;
+        case 1:
+          Object.values(this.candidateDetails.personalInformation).forEach(
+            (ob) => {
+              isEnabled = Object.values(ob).every(
+                (x) => x !== undefined && x !== null && x !== ""
+              );
+              if (!isEnabled) return;
+            }
+          );
+
+          break;
+           case 3:
+          isEnabled = Object.values(this.candidateDetails.familyInformation).every(
+            (x) => x !== undefined && x !== null && x !== ""
+          );
+          break;
+      }
+
+      this.enabledNextBtn = isEnabled;
+    },
+ 
     nullToUndefined(object) {
       Object.keys(object).forEach(function (k) {
         if (object[k] === null) {
@@ -247,13 +341,55 @@ export default {
           break;
         }
         default: {
-          // code block
           this.current = 0;
         }
       }
+      this.checkExistData();
     },
     prev() {
       this.current--;
+       this.checkExistData();
+    },
+    getDefaultPersonalInfo() {
+      return {
+        essential: {
+          per_gender: undefined,
+          dob: "",
+          per_employment_status: undefined,
+          per_occupation: undefined,
+          per_education_level_id: undefined,
+          per_religion_id: undefined,
+        },
+        general: {
+          per_ethnicity: undefined,
+          per_mother_tongue: undefined,
+          per_nationality: undefined,
+          per_country_of_birth: undefined,
+          per_health_condition: undefined,
+        },
+        contact: {
+          per_current_residence_city: undefined,
+          postCode: "",
+          per_permanent_country: undefined,
+          per_permanent_city: "",
+          per_permanent_address: "",
+          mobile_number: undefined,
+          mobile_country_code: undefined,
+          email: userInfo.email,
+        },
+        more_about: {
+          per_marital_status: undefined,
+          per_currently_living_with: undefined,
+          per_willing_to_relocate: undefined,
+          per_smoker: undefined,
+          per_language_speak: undefined,
+          per_hobbies_interests: undefined,
+          per_food_cuisine_like: undefined,
+          per_things_enjoy: undefined,
+          per_thankfull_for: undefined,
+          per_about: "",
+        },
+      };
     },
   },
 };

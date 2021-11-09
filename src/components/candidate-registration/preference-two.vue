@@ -45,6 +45,10 @@
                       'pre_partner_age_min',
                       'pre_partner_age_max',
                     ]"
+                    :values="[
+                      preferenceData.pre_partner_age_min,
+                      preferenceData.pre_partner_age_max,
+                    ]"
                     :options="ageTV"
                     :placeholder="'Age'"
                     :width="'120'"
@@ -100,6 +104,10 @@
                 <a-col :span="12">
                   <SelectGroup
                     @selected="onDropdownChange"
+                    :values="[
+                      preferenceData.pre_height_min,
+                      preferenceData.pre_height_max,
+                    ]"
                     :uniqueNames="['pre_height_min', 'pre_height_max']"
                     :options="heightTV"
                     :placeholder="'Height'"
@@ -156,14 +164,17 @@
                 <a-col :span="12">
                   <div>
                     <span class="ml-1 mr-1">No </span>
-                    <a-switch v-model="preferenceData.allowedCountry">
+                    <a-switch
+                      @change="onValueChange"
+                      v-model="preferenceData.pre_has_country_allow_preference"
+                    >
                       <a-icon slot="checkedChildren" type="check" />
                       <a-icon slot="unCheckedChildren" type="close" />
                     </a-switch>
                     <span class="ml-1">Yes</span>
                   </div>
 
-                  <div v-if="preferenceData.allowedCountry">
+                  <div v-if="preferenceData.pre_has_country_allow_preference">
                     <div class="row my-1">
                       <div class="col-md-6">
                         <a-select
@@ -374,14 +385,21 @@
                 <a-col :span="12">
                   <div>
                     <span class="ml-1 mr-1">No</span>
-                    <a-switch v-model="preferenceData.disAllowedCountry">
+                    <a-switch
+                      @change="onValueChange"
+                      v-model="
+                        preferenceData.pre_has_country_disallow_preference
+                      "
+                    >
                       <a-icon slot="checkedChildren" type="check" />
                       <a-icon slot="unCheckedChildren" type="close" />
                     </a-switch>
                     <span class="ml-1">Yes</span>
                   </div>
 
-                  <div v-if="preferenceData.disAllowedCountry">
+                  <div
+                    v-if="preferenceData.pre_has_country_disallow_preference"
+                  >
                     <div class="row my-1">
                       <div class="col-md-6">
                         <a-select
@@ -582,7 +600,7 @@
                 <a-col :span="10">
                   <div class="mb-2">
                     <a-icon
-                      v-if="preferenceData.prefReligions.length > 0"
+                      v-if="preferenceData.pre_partner_religion_id.length > 0"
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
                     />What is the preferred religion of your prospective
@@ -591,18 +609,23 @@
                 </a-col>
                 <a-col :span="2"></a-col>
                 <a-col :span="12">
-                  <a-form-model-item ref="prefReligions" prop="prefReligions">
+                  <a-form-model-item
+                    ref="pre_partner_religion_id"
+                    prop="pre_partner_religion_id"
+                  >
                     <a-select
-                      id="pre_ethnicities"
+                      id="pre_partner_religion_id"
                       :show-arrow="true"
                       :showSearch="true"
                       :filter-option="filterOption"
                       mode="multiple"
                       style="width: 150px"
                       placeholder="Select your preferred religion"
-                      @change="onMultiValueChange($event, 'prefReligions')"
+                      @change="
+                        onMultiValueChange($event, 'pre_partner_religion_id')
+                      "
                       class="select-ma w-100"
-                      v-model="preferenceData.prefReligions"
+                      v-model="preferenceData.pre_partner_religion_id"
                     >
                       <a-select-option value="Don't Mind"
                         >Don't Mind
@@ -1024,12 +1047,12 @@
                 <a-col :span="10">
                   <div class="mb-2">
                     <a-icon
-                      v-if="!preferenceData.divorceeSwitch"
+                      v-if="!preferenceData.pre_preferred_divorcee"
                       class="color-danger mr-2 fs-18 fw-500"
                       type="close"
                     />
                     <a-icon
-                      v-if="preferenceData.divorceeSwitch"
+                      v-if="preferenceData.pre_preferred_divorcee"
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
                     />Are you willing to accept a divorcee?
@@ -1039,21 +1062,27 @@
                 <a-col :span="12">
                   <div>
                     <span class="mr-1">No</span>
-                    <a-switch v-model="preferenceData.divorceeSwitch">
+                    <a-switch
+                      @change="onValueChange"
+                      v-model="preferenceData.pre_preferred_divorcee"
+                    >
                       <a-icon slot="checkedChildren" type="check" />
                       <a-icon slot="unCheckedChildren" type="close" />
                     </a-switch>
                     <span class="ml-1">Yes</span>
                   </div>
                   <div
-                    v-if="preferenceData.divorceeSwitch"
+                    v-if="preferenceData.pre_preferred_divorcee"
                     class="divorcee-child"
                   >
                     Are you willing to accept a divorcee with children?
                   </div>
-                  <div v-if="preferenceData.divorceeSwitch">
+                  <div v-if="preferenceData.pre_preferred_divorcee">
                     <span class="mr-1">No</span>
-                    <a-switch v-model="preferenceData.divorceeChildSwitch">
+                    <a-switch
+                      @change="onValueChange"
+                      v-model="preferenceData.pre_preferred_divorcee_child"
+                    >
                       <a-icon slot="checkedChildren" type="check" />
                       <a-icon slot="unCheckedChildren" type="close" />
                     </a-switch>
@@ -1211,7 +1240,7 @@
           </a-row>
         </a-form-model>
 
-        <a-button
+        <!-- <a-button
           shape="round"
           type="primary"
           style="float: right"
@@ -1219,7 +1248,7 @@
           @click="handleSubmitFormOne"
         >
           Save & Continue
-        </a-button>
+        </a-button> -->
       </a-collapse-panel>
       <!-- Important things for you (Ratings) -->
       <a-collapse-panel
@@ -1922,7 +1951,7 @@
               </a-row>
             </a-col>
 
-            <a-button
+            <!-- <a-button
               shape="round"
               type="primary"
               style="float: right"
@@ -1930,7 +1959,7 @@
               @click="handleSubmitFormTwo"
             >
               Save & Continue
-            </a-button>
+            </a-button> -->
           </a-row>
         </a-form-model>
       </a-collapse-panel>
@@ -1978,14 +2007,14 @@ export default {
       ethnicityList: ethnicities,
     };
   },
-  mounted() {
-    this.checkDisabled();
-  },
+  mounted() {},
   created() {},
+  computed: {},
 
   methods: {
     onDropdownChange({ name, value }) {
       this.preferenceData[name] = value;
+      this.savePreference();
     },
     filterOption(input, option) {
       return (
@@ -1994,32 +2023,7 @@ export default {
           .indexOf(input.toLowerCase()) >= 0
       );
     },
-    checkDisabled(e) {
-      this.$emit("disabled", {
-        value: true,
-        // this.preferenceData.pre_partner_age_max &&
-        // this.preferenceData.pre_height_min &&
-        // this.preferenceData.pre_height_max &&
-        // this.preferenceData.pre_has_country_allow_prefference &&
-        // this.preferenceData.pre_countries &&
-        // this.preferenceData.pre_cities &&
-        // this.preferenceData.preferred_countries &&
-        // this.preferenceData.preferred_cities &&
-        // this.preferenceData.pre_strength_of_character_rate &&
-        // this.preferenceData.pre_look_and_appearance_rate &&
-        // this.preferenceData.pre_religiosity_or_faith_rate &&
-        // this.preferenceData.pre_manners_socialskill_ethics_rate &&
-        // this.preferenceData.pre_emotional_maturity_rate &&
-        // this.preferenceData.pre_good_listener_rate &&
-        // this.preferenceData.pre_good_talker_rate &&
-        // this.preferenceData.pre_wiling_to_learn_rate &&
-        // this.preferenceData.pre_family_social_status_rate &&
-        // this.preferenceData.pre_employment_wealth_rate &&
-        // this.preferenceData.pre_education_rate &&
-        // this.preferenceData.pre_description,
-        current: 0,
-      });
-    },
+
     handleSubmitFormOne() {
       this.$refs.preferenceFormOne.validate((valid) => {
         if (valid) {
@@ -2051,32 +2055,81 @@ export default {
           ? ["Don't Mind"]
           : this.preferenceData[name].filter((item) => item != "Don't Mind");
 
-      this.checkDisabled();
+      this.savePreference();
     },
     onValueChange(e) {
-      this.preferenceData.prefReligions =
-        this.preferenceData.prefReligions[
-          this.preferenceData.prefReligions.length - 1
-        ] == "Don't Mind"
-          ? ["Don't Mind"]
-          : this.preferenceData.prefReligions.filter(
-              (item) => item != "Don't Mind"
-            );
-      console.log(this.preferenceData);
-      this.checkDisabled();
-      // const response = this.$store.dispatch(
-      //   "savePreferenceInfoAbout",
-      //   this.preferenceData
-      // );
-      // response
-      //   .then((data) => {
-      //     console.log(data);
-      //   })
-      //   .catch((error) => {});
+      this.savePreference();
     },
+
+    savePreference() {
+      const response = this.$store.dispatch("savePreferenceInfoAbout", {
+        ...this.preferenceData,
+        pre_nationality: this.preferenceData.preferred_nationality,
+        pre_partner_religions:
+          this.preferenceData.pre_partner_religion_id.join(","),
+        pre_partner_comes_from: this.preferenceData.preferred_countries.map(
+          (c) => {
+            return {
+              country: c,
+              city: null,
+            };
+          }
+        ),
+        pre_disallow_preference: this.preferenceData.bloked_countries.map(
+          (c) => {
+            return {
+              country: c,
+              city: null,
+            };
+          }
+        ),
+      });
+      response
+        .then((data) => {
+       this.$emit("valueChange", {
+        value: this.preferenceData,
+        current: 0,
+      });
+        })
+        .catch((error) => {});
+    },
+
     onChangeRate(value) {
-      console.log(this.preferenceData);
+      const {
+        pre_education_rate,
+        pre_emotional_maturity_rate,
+        pre_employment_wealth_rate,
+        pre_family_social_status_rate,
+        pre_good_listener_rate,
+        pre_good_talker_rate,
+        pre_look_and_appearance_rate,
+        pre_manners_socialskill_ethics_rate,
+        pre_religiosity_or_faith_rate,
+        pre_wiling_to_learn_rate,
+        pre_strength_of_character_rate,
+      } = this.preferenceData;
       this.checkDisabled();
+      const response = this.$store.dispatch("savePreferenceRatingInfo", {
+        pre_education_rate,
+        pre_emotional_maturity_rate,
+        pre_employment_wealth_rate,
+        pre_family_social_status_rate,
+        pre_good_listener_rate,
+        pre_good_talker_rate,
+        pre_look_and_appearance_rate,
+        pre_manners_socialskill_ethics_rate,
+        pre_religiosity_or_faith_rate,
+        pre_wiling_to_learn_rate,
+        pre_strength_of_character_rate,
+      });
+      response
+        .then((data) => {
+         this.$emit("valueChange", {
+        value: this.preferenceData,
+        current: 0,
+      });
+        })
+        .catch((error) => {});
     },
     onChangeCountry(e, name, action) {
       this.candidateDetails.countries.map((c) => {
@@ -2100,9 +2153,10 @@ export default {
           }
         }
       });
+      this.savePreference();
     },
   },
-  computed: {},
+
   watch: {},
 };
 </script>

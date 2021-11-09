@@ -16,6 +16,7 @@
       <a-collapse-panel key="1" header="1. Family Details">
         <a-form-model
           ref="familyInformationForm"
+          v-if="familyInformation"
           :model="familyInformation"
           :rules="rules"
           class="form-ma"
@@ -27,7 +28,7 @@
                 <a-col :span="12">
                   <div class="mb-2">
                     <a-icon
-                      v-if="familyInformation.fathersProfession"
+                      v-if="familyInformation.father_profession"
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
                     />What is your father's Profession?
@@ -35,18 +36,18 @@
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item
-                    ref="fathersProfession"
-                    prop="fathersProfession"
+                    ref="father_profession"
+                    prop="father_profession"
                   >
                     <a-select
                       @change="onValueChange"
-                      id="fathersProfession"
+                      id="father_profession"
                       :showSearch="true"
                       option-filter-prop="children"
                       :filter-option="filterOption"
                       :showArrow="true"
                       placeholder="Please select Fathet's Profession"
-                      v-model="familyInformation.fathersProfession"
+                      v-model="familyInformation.father_profession"
                       class="select-ma"
                     >
                       <a-select-option :value="null" disabled
@@ -99,7 +100,7 @@
                 <a-col :span="12">
                   <div class="mb-2">
                     <a-icon
-                      v-if="familyInformation.mothersProfession"
+                      v-if="familyInformation.mother_profession"
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
                     />What is your mother's Profession?
@@ -107,18 +108,18 @@
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item
-                    ref="mothersProfession"
-                    prop="mothersProfession"
+                    ref="mother_profession"
+                    prop="mother_profession"
                   >
                     <a-select
                       @change="onValueChange"
-                      id="mothersProfession"
+                      id="mother_profession"
                       :showSearch="true"
                       option-filter-prop="children"
                       :filter-option="filterOption"
                       :showArrow="true"
                       placeholder="Please select Fathet's Profession"
-                      v-model="familyInformation.mothersProfession"
+                      v-model="familyInformation.mother_profession"
                       class="select-ma"
                     >
                       <a-select-option :value="null" disabled
@@ -171,7 +172,7 @@
                 <a-col :span="12">
                   <div class="mb-2">
                     <a-icon
-                      v-if="familyInformation.siblings"
+                      v-if="familyInformation.siblings_desc"
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
                     />Do you have any siblings?
@@ -179,13 +180,13 @@
                   <!-- <need-help title="Siblings information"></need-help> -->
                 </a-col>
                 <a-col :span="12">
-                  <a-form-model-item ref="siblings" prop="siblings">
+                  <a-form-model-item ref="siblings_desc" prop="siblings_desc">
                     <a-textarea
                       @blur="onValueChange"
-                      id="siblings"
+                      id="siblings_desc"
                       placeholder="2 Brothers, 2 Sisters"
                       :rows="3"
-                      v-model="familyInformation.siblings"
+                      v-model="familyInformation.siblings_desc"
                     ></a-textarea>
                   </a-form-model-item>
                 </a-col>
@@ -225,7 +226,7 @@
                 <a-col :span="12">
                   <div class="mb-2">
                     <a-icon
-                      v-if="familyInformation.otherFamilyInfo"
+                      v-if="familyInformation.family_info"
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
                     />Would you like to share any other information about your
@@ -237,15 +238,15 @@
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item
-                    ref="otherFamilyInfo"
-                    prop="otherFamilyInfo"
+                    ref="family_info"
+                    prop="family_info"
                   >
                     <a-textarea
                       @blur="onValueChange"
-                      id="otherFamilyInfo"
+                      id="family_info"
                       placeholder="Would you like to share any other information about your family"
                       :rows="3"
-                      v-model="familyInformation.otherFamilyInfo"
+                      v-model="familyInformation.family_info"
                     ></a-textarea>
                   </a-form-model-item>
                 </a-col>
@@ -285,7 +286,7 @@
                 <a-col :span="12">
                   <div class="mb-2">
                     <a-icon
-                      v-if="familyInformation.countryOfOrigin"
+                      v-if="familyInformation.country_of_origin"
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
                     />Is your ancestral home same as your country of birth?
@@ -294,12 +295,12 @@
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item
-                    ref="countryOfOrigin"
-                    prop="countryOfOrigin"
+                    ref="country_of_origin"
+                    prop="country_of_origin"
                   >
                     <a-select
                       @change="onValueChange"
-                      id="countryOfOrigin"
+                      id="country_of_origin"
                       :showSearch="true"
                       option-filter-prop="children"
                       :filter-option="filterOption"
@@ -307,7 +308,7 @@
                       ref="select"
                       style="width: 150px"
                       placeholder="Please select country of origin"
-                      v-model="familyInformation.countryOfOrigin"
+                      v-model="familyInformation.country_of_origin"
                       class="select-ma w-100"
                     >
                       <a-select-option disabled :value="null">
@@ -355,7 +356,7 @@
               </a-row>
             </a-col>
           </a-row>
-          <a-button
+          <!-- <a-button
             shape="round"
             type="primary"
             style="float: right"
@@ -363,7 +364,7 @@
             @click="handleSubmitForm"
           >
             Save & Continue
-          </a-button>
+          </a-button> -->
         </a-form-model>
       </a-collapse-panel>
     </a-collapse>
@@ -383,12 +384,15 @@ export default {
     candidateDetails: {
       type: Object,
     },
+    familyInformation:{
+       type: Object,
+    }
   },
 
   data() {
     return {
       rules: RULES_FAMILY_INFO,
-      familyInformation: this.getDefaultFamilyInfo(),
+      // familyInformation: this.getDefaultFamilyInfo(),
       arr: ARR_FAMILY_INFO,
       professions: _PROFESSIONS,
     };
@@ -428,18 +432,30 @@ export default {
     onValueChange(e) {
       console.log(this.familyInformation);
       this.checkDisabled();
+      this.saveFamilyInfo();
     },
     getDefaultFamilyInfo() {
       return {
-        fathersName: "",
-        mothersName: "",
-        fathersProfession: undefined,
-        mothersProfession: undefined,
-        siblings: "",
-        otherFamilyInfo: "",
-        countryOfOrigin: undefined,
-        updateApiStatus: false,
+        country_of_origin: null,
+        family_info: null,
+        father_name: null,
+        father_profession: null,
+        is_publish: false,
+        mother_name: null,
+        mother_profession: null,
+        siblings_desc: null,
       };
+    },
+
+    saveFamilyInfo() {
+      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      this.$store
+        .dispatch("updateFamilyInfo", {
+          ...this.familyInformation,
+          uid: userInfo.id,
+        })
+        .then((data) => {})
+        .catch((error) => {});
     },
   },
 };
