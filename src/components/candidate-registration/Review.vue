@@ -61,7 +61,7 @@
                           v-for="(country) in candidateData.preference.preferred_countries"
                           :key="country.id"
                         >
-                          {{ country }}
+                          {{ country.name }}
                           <!-- {{ candidateDetails.preferred_countries[index].name }} -->
                         </div>
                       </span>
@@ -95,7 +95,7 @@
                           v-for="nationality in candidateData.preference.preferred_nationality"
                           :key="nationality.id"
                         >
-                          {{ nationality }}
+                          {{ nationality.name }}
                         </div>
                       </span></span
                     >
