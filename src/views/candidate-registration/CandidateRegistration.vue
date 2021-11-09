@@ -45,7 +45,7 @@
 
       <div class="steps-action text-right pb-5 clearfix">
         <a-button
-          :disabled="!enabledNextBtn"
+          :class="{ disabled: !enabledNextBtn }"
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
@@ -121,7 +121,7 @@ export default {
   },
   data() {
     return {
-      current: 2,
+      current: 5,
       enabledNextBtn: false,
       candidateDetails: {
         preferenceData: null,
@@ -165,7 +165,7 @@ export default {
       }
       this.checkExistData();
     },
-       getCandidateInitialInfo: async function () {
+    getCandidateInitialInfo: async function () {
       const userInfo = JSON.parse(localStorage.getItem("userInfo"));
       const response = await ApiService.get("v1/candidate/initial-info");
       if (response.status === 200) {
@@ -294,16 +294,16 @@ export default {
           );
 
           break;
-           case 3:
-          isEnabled = Object.values(this.candidateDetails.familyInformation).every(
-            (x) => x !== undefined && x !== null && x !== ""
-          );
+        case 3:
+          isEnabled = Object.values(
+            this.candidateDetails.familyInformation
+          ).every((x) => x !== undefined && x !== null && x !== "");
           break;
       }
 
       this.enabledNextBtn = isEnabled;
     },
- 
+
     nullToUndefined(object) {
       Object.keys(object).forEach(function (k) {
         if (object[k] === null) {
@@ -348,7 +348,7 @@ export default {
     },
     prev() {
       this.current--;
-       this.checkExistData();
+      this.checkExistData();
     },
     getDefaultPersonalInfo() {
       return {
