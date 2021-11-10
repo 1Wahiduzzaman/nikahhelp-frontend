@@ -4,15 +4,6 @@
     <Header />
     <div class="r-registration my-4">
       <div class="steps ma-steps">
-        <!-- <div class="steper-header text-center">
-          <h3 style="color: #e34184" class="text-uppercase">
-            Representative profile form
-          </h3>
-          <p style="color: #e34184">
-            Please answer all question accurately and in full
-          </p>
-         
-        </div> -->
         <div class="steper-header text-center heading-text">
           <h4>REPRESENTATIVE PROFILE FORM</h4>
           <p>Please answer all question accurately and in full</p>
