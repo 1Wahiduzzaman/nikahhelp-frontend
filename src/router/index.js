@@ -7,7 +7,7 @@ import About from "@/views/auth/About.vue";
 import AboutPage from "@/components/landing-page/about.vue";
 import HelpPage from "@/components/landing-page/help.vue";
 import TermsAndConditionPage from "@/components/landing-page/terms-condition.vue";
-import SafetyAndGuidancePage from "@/components/landing-page/safety-and-guidance.vue";
+import SafetyAndGuidancePage from "@/components/landing-page/safety-guidance.vue";
 import Signup from "@/views/auth/Signup.vue";
 import Login from "@/views/auth/Login.vue";
 import EmailVerification from "@/views/auth/EmailVerification.vue";
