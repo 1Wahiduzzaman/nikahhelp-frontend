@@ -2,8 +2,7 @@
   <div class="personal-info">
     <a-collapse
       accordion
-      :default-active-key="activePanel"
-      :key="activePanel"
+      :activeKey="activeKey"
       :bordered="false"
       @change="onChangePanel"
       expand-icon-position="right"
@@ -12,7 +11,13 @@
         <a-icon type="caret-down" :rotate="props.isActive ? 180 : 0" />
       </template>
       <a-collapse-panel key="1" header="1. Essential Information">
-        <form class="form-ma">
+        <a-form-model
+          ref="personalInfoFormOne"
+          v-if="representativeInfo"
+          :model="representativeInfo"
+          :rules="rules"
+          class="form-ma"
+        >
           <a-row>
             <a-col class="form-item py-3 border-bottom" :span="24">
               <!-- <a-row type="flex" justify="between" align="top"> -->
@@ -135,14 +140,20 @@
               </a-row>
             </a-col>
           </a-row>
-        </form>
+        </a-form-model>
       </a-collapse-panel>
       <a-collapse-panel
         key="2"
         header="2. Contact Details"
         style="margin-top: 5px"
       >
-        <form class="form-ma">
+        <a-form-model
+          ref="personalInfoFormTwo"
+          v-if="representativeResidence"
+          :model="representativeResidence"
+          :rules="rules"
+          class="form-ma"
+        >
           <a-row>
             <a-col class="form-item py-3 border-bottom" :span="24">
               <!-- <a-row :gutter="[16]" type="flex" justify="between" align="top"> -->
@@ -559,7 +570,7 @@
               </a-row>
             </a-col>
           </a-row>
-        </form>
+        </a-form-model>
       </a-collapse-panel>
     </a-collapse>
   </div>
@@ -575,6 +586,7 @@ export default {
   },
   data() {
     return {
+      rules: [],
       representativeInfo: {
         gender: undefined,
         dob: undefined,
@@ -596,7 +608,7 @@ export default {
       phoneNumber: undefined,
       emailAddress: this.$store.state.user.user.email,
       dobFromDatePicker: undefined,
-      activeKey: "",
+      activeKey: "1",
 
       default_date: undefined,
 
@@ -750,7 +762,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
+@import "@/styles/base/_variables.scss";
+
 .ant-tooltip-inner {
   border-radius: 0px;
 }

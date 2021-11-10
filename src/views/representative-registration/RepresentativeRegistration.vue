@@ -4,34 +4,9 @@
     <Header />
     <div class="r-registration my-4">
       <div class="steps ma-steps">
-        <div class="steper-header text-center">
-          <h3 style="color: #e34184" class="text-uppercase">
-            Representative profile form
-          </h3>
-          <p style="color: #e34184">
-            Please answer all question accurately and in full
-          </p>
-          <div
-            class="d-flex"
-            style="place-content: center; margin-bottom: 15px"
-          >
-            <!-- <p>Progress <a-spin v-if="netCalling" /></p>
-            <div v-if="!netCalling" style="width: 600px; margin-left: 15px">
-              <a-progress
-                status="active"
-                :stroke-color="{
-                  from: '#108ee9',
-                  to: '#87d068',
-                }"
-                :percent="
-                  parseInt(
-                    this.$store.state.representativeInfo.profilePercentage.toFixed()
-                  )
-                "
-              >
-              </a-progress>
-            </div> -->
-          </div>
+        <div class="steper-header text-center heading-text">
+          <h4>REPRESENTATIVE PROFILE FORM</h4>
+          <p>Please answer all question accurately and in full</p>
         </div>
         <div>
           <a-steps
@@ -47,129 +22,93 @@
           </a-steps>
         </div>
 
-        <div class="text-center" style="margin-top: 20px" v-if="current == 0">
+        <div class="text-center"  v-if="current == 0">
           <h5 style="color: #e34184">Personal Information</h5>
           <p style="color: #e34184; font-size: 14px">Details about you</p>
         </div>
 
-        <div class="text-center" style="margin-top: 20px" v-if="current == 1">
+        <div class="text-center"  v-if="current == 1">
           <h5 style="color: #e34184">Verification Information</h5>
           <p style="color: #e34184; font-size: 14px">Details about you</p>
         </div>
 
-        <div class="text-center" style="margin-top: 20px" v-if="current == 2">
+        <div class="text-center"  v-if="current == 2">
           <h5 style="color: #e34184">Image Upload</h5>
           <p style="color: #e34184; font-size: 14px">Details about you</p>
         </div>
 
-        <div class="text-center" style="margin-top: 0px" v-if="current == 3">
-          <!-- <h5 style="color: #e34184">Agree & Submit</h5>
-					<p style="color: #e34184; font-size: 14px">Details about you</p> -->
+        <div class="text-center" v-if="current == 3">
+          <h5 style="color: #e34184">Agree & Submit</h5>
+          <p style="color: #e34184; font-size: 14px">Details about you</p>
         </div>
 
-        <div class="steps-content" v-if="current == 0 && !dataLoading">
+        <div class="steps-content" v-if="current == 0">
           <PersonalInfoTwo ref="personInfoRefTwo" />
         </div>
-        <div class="steps-content" v-if="current == 1 && !dataLoading">
+        <div class="steps-content" v-if="current == 1">
           <!-- <VerificationInfo
-            :key="repData.mobile_number"
-            :repData="repData"
+           
             ref="verificationInfoRef"
             :handleChangeFromProp="handleChangeFromProp"
             :imageUrlFront="imageUrlFront"
             :imageUrlBack="imageUrlBack"
           /> -->
+          <VerificationInfo ref="verificationInfoRef" />
         </div>
-        <div class="steps-content" v-if="current == 2 && !dataLoading">
+        <div class="steps-content" v-if="current == 2">
           <!-- <ImageUpload
             v-on:images-uploaded="next"
             ref="imageUploadRef"
             :repData="repData"
           /> -->
+          <ImageUpload ref="imageUploadRef" />
         </div>
-        <div class="steps-content" v-if="current == 3 && !dataLoading">
+        <div class="steps-content" v-if="current == 3">
           <!-- <AgreementSubmit
             v-on:checked="agreementChecked = $event"
             :repData="repData"
           /> -->
+          <AgreementSubmit />
         </div>
-        <div class="steps-action text-right">
+        <div class="steps-action text-right pb-5 clearfix">
           <a-button
-            class=""
+            v-if="current < steps.length - 1"
             shape="round"
-            v-if="saveButtonOne == true && activeKey == 1"
             type="primary"
-            :loading="loading"
-            @click="onClickSubmit1"
+            style="float: right"
+            class="mt-3"
+            @click="next"
           >
-            Save
+            Next
           </a-button>
-          <!-- this is the button for Contact Detail -->
           <a-button
-            class=""
-            shape="round"
-            v-if="saveButtonTwo == true && activeKey == 2"
+            v-if="current == steps.length - 1"
             type="primary"
-            :loading="loading"
-            @click="onClickSubmit2"
+            shape="round"
+            style="float: right; margin-top: 15px"
+            @click="doneBtn"
           >
-            Save & Continue
+            Review and Publish
           </a-button>
-          <!-- this is the button for verification -->
           <a-button
-            class=""
+            v-if="current > 0"
             shape="round"
-            v-if="saveButtonThree"
-            type="primary"
-            :loading="loading"
-            @click="onClickSubmit3"
+            style="float: right; margin-right: 10px"
+            class="mt-3"
+            @click="prev"
           >
-            Save & Continue
+            Previous
           </a-button>
 
-          <a-button
-            class=""
-            shape="round"
-            v-if="saveButtonFour"
-            type="primary"
-            :loading="loading"
-            @click="onClickSubmit4"
-          >
-            Save & Continue
-          </a-button>
           <a-button
             v-if="current < steps.length - 1"
             shape="round"
             type="primary"
             style="float: left"
+            class="mt-3"
             @click="saveExit"
           >
-            Save and Exit
-          </a-button>
-
-          <!-- <a-button class="" shape="round" v-if="current == 2 && current < steps.length - 1" type="primary" @click="onClickSubmit2">
-          Save & Continue
-        </a-button> -->
-          <!-- <a-button class="" shape="round" v-if="current == steps.length - 1" type="primary" @click="$message.success('Processing complete!')"
-          >Done
-        </a-button> -->
-          <a-button
-            class=""
-            shape="round"
-            v-if="current == steps.length - 1"
-            type="primary"
-            :loading="loading"
-            @click="onDoneClick"
-            >Done
-          </a-button>
-          <a-button
-            class=""
-            shape="round"
-            v-if="current > 0"
-            style="margin-left: 8px"
-            @click="prevClick"
-          >
-            Previous
+            Exit
           </a-button>
         </div>
       </div>
@@ -238,7 +177,7 @@ export default {
     };
   },
   created() {
-   // this.$store.dispatch("getUser");
+    // this.$store.dispatch("getUser");
     // this.getPercentage();
   },
   async mounted() {
@@ -265,6 +204,38 @@ export default {
   methods: {
     saveExit() {
       this.$router.push("/");
+    },
+    doneBtn() {
+      this.$router.push("/dashboard");
+    },
+    async next() {
+      switch (this.current) {
+        case 0: {
+          this.current++;
+          break;
+        }
+        case 1: {
+          this.current++;
+          break;
+        }
+        case 2: {
+          this.current++;
+          break;
+        }
+        case 3: {
+          this.current++;
+          break;
+        }
+
+        default: {
+          this.current = 0;
+        }
+      }
+      this.checkExistData();
+    },
+    prev() {
+      this.current--;
+      this.checkExistData();
     },
     async getPercentage() {
       this.netCalling = true;

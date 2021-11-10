@@ -2,6 +2,7 @@
   <div class="verificationInfo p-3 rounded" style="background: #f4f4f9">
     <div class="verification-content" style="margin-top: 40px">
       <a-collapse
+       accordion
         default-active-key="1"
         :bordered="false"
         expand-icon-position="right"
@@ -56,37 +57,7 @@
             <hr />
 
             <a-row>
-              <!-- <a-col class="form-item py-3 border-bottom" :span="24">
-							
-								<a-row type="flex" align="top">
-									<a-col :span="12">
-										<div class="mb-2">
-											<a-icon
-												v-if="onConfirmationSwitchChnaged"
-												class="color-success mr-2 fs-18 fw-500"
-												type="check"
-											/>Do you want to upload your document now?
-										</div>
-										<a-tooltip placement="bottom">
-											<template slot="title">
-												Please provide tooltip texts so we can place it
-												here</template
-											>
-											<span class="color-info fw-500">Need help?</span>
-										</a-tooltip>
-									</a-col>
-									<a-col :span="12">
-										<a-switch
-											v-model="is_document_upload"
-											default-checked
-											@change="onConfirmationSwitchChnaged"
-										>
-											<a-icon slot="checkedChildren" type="check" />
-											<a-icon slot="unCheckedChildren" type="close" />
-										</a-switch>
-									</a-col>
-								</a-row>
-							</a-col> -->
+             
 
               <div v-if="is_document_upload">
                 <a-col :span="24">

@@ -1,9 +1,5 @@
 <template>
 	<div class="agreement">
-		<div class="section-heading">
-			<h4>Agree and Submit</h4>
-			<p>Details About You</p>
-		</div>
 		<div class="text">
 			<p>
 				To keep your account safe, we need to verify your identiy. This is a

@@ -4,6 +4,10 @@ import VueRouter from "vue-router";
 import DHome from "@/views/dashboard/DHome.vue";
 import Home from "@/views/auth/Home.vue";
 import About from "@/views/auth/About.vue";
+import AboutPage from "@/components/landing-page/about.vue";
+import HelpPage from "@/components/landing-page/help.vue";
+import TermsAndConditionPage from "@/components/landing-page/terms-condition.vue";
+import SafetyAndGuidancePage from "@/components/landing-page/safety-and-guidance.vue";
 import Signup from "@/views/auth/Signup.vue";
 import Login from "@/views/auth/Login.vue";
 import EmailVerification from "@/views/auth/EmailVerification.vue";
@@ -275,14 +279,15 @@ const routes = [
             requiresUnAuth: true,
         },
     },
-    {
-        path: "/about",
-        name: "About",
-        component: About,
-        meta: {
-            requiresAuth: true,
-        },
-    },
+
+    // {
+    //     path: "/about",
+    //     name: "About",
+    //     component: About,
+    //     meta: {
+    //         requiresAuth: true,
+    //     },
+    // },
     //Search Section
     {
         path: "/search",
@@ -384,6 +389,30 @@ const routes = [
         component: Logout,
     },
     {
+        path: "/about",
+        name: "About",
+        component: AboutPage,
+
+    },
+    {
+        path: "/help",
+        name: "Help",
+        component: HelpPage,
+
+    },
+    {
+        path: "/safety_guidance",
+        name: "Safety_Guidance",
+        component: SafetyAndGuidancePage,
+
+    },
+    {
+        path: "/terms_condition",
+        name: "Terms_Condition",
+        component: TermsAndConditionPage,
+
+    },
+    {
         path: "/settings",
         name: "Settings",
         component: Settings,
@@ -404,40 +433,40 @@ const routes = [
         component: AdminDashboard,
 
         children: [{
-                path: "",
-                component: AdminHome,
-                meta: {
-                    requiresAuth: true,
-                },
+            path: "",
+            component: AdminHome,
+            meta: {
+                requiresAuth: true,
             },
-            {
-                path: "add-admin",
-                component: AddAdmin,
-                meta: {
-                    requiresAuth: true,
-                },
+        },
+        {
+            path: "add-admin",
+            component: AddAdmin,
+            meta: {
+                requiresAuth: true,
             },
-            {
-                path: "user-report",
-                component: UserReport,
-                meta: {
-                    requiresAuth: true,
-                },
+        },
+        {
+            path: "user-report",
+            component: UserReport,
+            meta: {
+                requiresAuth: true,
             },
-            {
-                path: "pending-user-list",
-                component: PendingUserList,
-                meta: {
-                    requiresAuth: true,
-                },
+        },
+        {
+            path: "pending-user-list",
+            component: PendingUserList,
+            meta: {
+                requiresAuth: true,
             },
-            {
-                path: "subscription-report",
-                component: SubscriptionReport,
-                meta: {
-                    requiresAuth: true,
-                },
+        },
+        {
+            path: "subscription-report",
+            component: SubscriptionReport,
+            meta: {
+                requiresAuth: true,
             },
+        },
         ],
     },
 ];
