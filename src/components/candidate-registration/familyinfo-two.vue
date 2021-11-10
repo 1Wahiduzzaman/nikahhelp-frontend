@@ -22,6 +22,66 @@
           class="form-ma"
         >
           <a-row>
+            <!-- Father Name  -->
+            <a-col class="form-item py-3 border-bottom" :span="24">
+              <a-row type="flex" align="top">
+                <a-col :span="12">
+                  <div class="mb-2">
+                    <a-icon
+                      v-if="familyInformation.father_name"
+                      class="color-success mr-2 fs-18 fw-500"
+                      type="check"
+                    />Post Code
+                  </div>
+                  <!-- <need-help
+										title="Post Code for permanent address"
+									></need-help> -->
+                </a-col>
+                <a-col :span="12">
+                  <a-form-model-item
+                    ref="per_permanent_post_code"
+                    prop="per_permanent_post_code"
+                  >
+                    <a-input
+                      @blur="onValueChange"
+                      id="familyInformation.father_name"
+                      placeholder="Father Name"
+                      v-model="familyInformation.father_name"
+                    />
+                  </a-form-model-item>
+                </a-col>
+                <a-col :span="12">
+                  <p>
+                    <a
+                      class="color-blue fw-700 fs-14"
+                      data-toggle="collapse"
+                      href="#collapseFamilyInformationFatherName"
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      <span
+                        v-if="arr[6].first"
+                        @click="arr[6].first = !arr[6].first"
+                      >
+                        Need Help?
+                      </span>
+                      <span v-else @click="arr[6].first = !arr[6].first">
+                        Hide Help?
+                      </span>
+                    </a>
+                  </p>
+                  <div
+                    class="collapse"
+                    id="collapseFamilyInformationFatherName"
+                  >
+                    <div class="card card-body bubble">
+                      Post Code for permanent address
+                    </div>
+                  </div>
+                </a-col>
+              </a-row>
+            </a-col>
             <!-- Father's Profession -->
             <a-col class="form-item py-3 border-bottom" :span="24">
               <a-row type="flex" align="top">
@@ -75,12 +135,12 @@
                       aria-controls="collapseExample"
                     >
                       <span
-                        v-if="arr[4].first"
-                        @click="arr[4].first = !arr[4].first"
+                        v-if="arr[5].first"
+                        @click="arr[5].first = !arr[5].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[4].first = !arr[4].first">
+                      <span v-else @click="arr[5].first = !arr[5].first">
                         Hide Help?
                       </span>
                     </a>
@@ -93,7 +153,66 @@
                 </a-col>
               </a-row>
             </a-col>
-
+            <!-- Father Name  -->
+            <a-col class="form-item py-3 border-bottom" :span="24">
+              <a-row type="flex" align="top">
+                <a-col :span="12">
+                  <div class="mb-2">
+                    <a-icon
+                      v-if="familyInformation.mother_name"
+                      class="color-success mr-2 fs-18 fw-500"
+                      type="check"
+                    />Post Code
+                  </div>
+                  <!-- <need-help
+										title="Post Code for permanent address"
+									></need-help> -->
+                </a-col>
+                <a-col :span="12">
+                  <a-form-model-item
+                    ref="per_permanent_post_code"
+                    prop="per_permanent_post_code"
+                  >
+                    <a-input
+                      @blur="onValueChange"
+                      id="familyInformation.mother_name"
+                      placeholder="Father Name"
+                      v-model="familyInformation.mother_name"
+                    />
+                  </a-form-model-item>
+                </a-col>
+                <a-col :span="12">
+                  <p>
+                    <a
+                      class="color-blue fw-700 fs-14"
+                      data-toggle="collapse"
+                      href="#collapseFamilyInformationMotherName"
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      <span
+                        v-if="arr[4].first"
+                        @click="arr[4].first = !arr[4].first"
+                      >
+                        Need Help?
+                      </span>
+                      <span v-else @click="arr[4].first = !arr[4].first">
+                        Hide Help?
+                      </span>
+                    </a>
+                  </p>
+                  <div
+                    class="collapse"
+                    id="collapseFamilyInformationMotherName"
+                  >
+                    <div class="card card-body bubble">
+                      Post Code for permanent address
+                    </div>
+                  </div>
+                </a-col>
+              </a-row>
+            </a-col>
             <!-- Mother's Profession -->
             <a-col class="form-item py-3 border-bottom" :span="24">
               <a-row type="flex" align="top">
@@ -237,10 +356,7 @@
 									></need-help> -->
                 </a-col>
                 <a-col :span="12">
-                  <a-form-model-item
-                    ref="family_info"
-                    prop="family_info"
-                  >
+                  <a-form-model-item ref="family_info" prop="family_info">
                     <a-textarea
                       @blur="onValueChange"
                       id="family_info"
@@ -384,9 +500,9 @@ export default {
     candidateDetails: {
       type: Object,
     },
-    familyInformation:{
-       type: Object,
-    }
+    familyInformation: {
+      type: Object,
+    },
   },
 
   data() {
@@ -454,7 +570,12 @@ export default {
           ...this.familyInformation,
           uid: userInfo.id,
         })
-        .then((data) => {})
+        .then((data) => {
+          this.$emit("valueChange", {
+            value: this.familyInformation,
+            current: 3,
+          });
+        })
         .catch((error) => {});
     },
   },

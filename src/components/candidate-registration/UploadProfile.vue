@@ -536,19 +536,10 @@ export default {
         .catch((error) => {
           this.loadingButton = false;
           console.log(error);
-          //this.showError(error.response);
+        
         });
 
-      // try {
-      // 	await this.$store.dispatch("uploadImages", formData);
-
-      // 	this.openNotification();
-      // 	this.$store.state.candidateInfo.activePanel++;
-      // } catch (error) {
-      // 	this.$store.state.candidateInfo.successMessageTitle = "Failed!";
-      // 	this.$store.state.candidateInfo.successMessage =
-      // 		"Error: " + error.message;
-      // }
+     
     },
   },
 };

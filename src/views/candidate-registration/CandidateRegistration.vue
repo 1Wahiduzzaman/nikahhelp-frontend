@@ -23,6 +23,7 @@
         <PersonalInfoTwo
           :personalInformation="candidateDetails.personalInformation"
           :candidateDetails="candidateDetails"
+          @valueChange="onDataChange($event)"
           ref="personalInfoTwo"
         />
       </div>
@@ -31,6 +32,7 @@
       </div>
       <div class="steps-content" v-show="current == 3">
         <FamilyInfoTwo
+          @valueChange="onDataChange($event)"
           :familyInformation="candidateDetails.familyInformation"
           :candidateDetails="candidateDetails"
           ref="familyInfoTwo"
@@ -46,6 +48,7 @@
       <div class="steps-action text-right pb-5 clearfix">
         <a-button
           :class="{ disabled: !enabledNextBtn }"
+          :disabled="!enabledNextBtn"
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
@@ -121,7 +124,7 @@ export default {
   },
   data() {
     return {
-      current: 5,
+      current: 1,
       enabledNextBtn: false,
       candidateDetails: {
         preferenceData: null,
@@ -157,8 +160,16 @@ export default {
   methods: {
     onDataChange(e) {
       switch (e.current) {
-        case 1:
+        case 0:
           this.candidateDetails.preferenceData = {
+            ...e.value,
+          };
+        case 1:
+          this.candidateDetails.personalInformation = {
+            ...e.value,
+          };
+        case 3:
+          this.candidateDetails.familyInformation = {
             ...e.value,
           };
           break;
@@ -189,13 +200,16 @@ export default {
                 response.data.data.personal_info.contact.per_permanent_country
               ),
               per_email: userInfo.email,
+              per_county: "None",
+              per_current_residence_city: "None",
+              per_permanent_city: "None",
             },
             essential: {
               ...this.nullToUndefined(
                 response.data.data.personal_info.essential
               ),
               default_date: response.data.data.personal_info.essential.dob,
-              per_telephone_no: 1,
+              per_telephone_no: 111,
             },
             general: {
               ...this.nullToUndefined(response.data.data.personal_info.general),
@@ -208,6 +222,43 @@ export default {
                 response.data.data.personal_info.more_about.per_smoker == 0
                   ? undefined
                   : response.data.data.personal_info.more_about.per_smoker,
+              per_language_speak: !response.data.data.personal_info.more_about
+                .per_language_speak
+                ? undefined
+                : response.data.data.personal_info.more_about.per_language_speak.split(
+                    ","
+                  ),
+              per_thankfull_for: !response.data.data.personal_info.more_about
+                .per_thankfull_for
+                ? undefined
+                : response.data.data.personal_info.more_about.per_thankfull_for.split(
+                    ","
+                  ),
+              per_things_enjoy: !response.data.data.personal_info.more_about
+                .per_things_enjoy
+                ? undefined
+                : response.data.data.personal_info.more_about.per_things_enjoy.split(
+                    ","
+                  ),
+              per_hobbies_interests: !response.data.data.personal_info
+                .more_about.per_hobbies_interests
+                ? undefined
+                : response.data.data.personal_info.more_about.per_hobbies_interests.split(
+                    ","
+                  ),
+              per_food_cuisine_like: !response.data.data.personal_info
+                .more_about.per_food_cuisine_like
+                ? undefined
+                : response.data.data.personal_info.more_about.per_food_cuisine_like.split(
+                    ","
+                  ),
+              per_children: [
+                {
+                  type: 1,
+                  count: 1,
+                  age: 10,
+                },
+              ],
             },
           },
           preferenceData: {
@@ -293,6 +344,9 @@ export default {
             }
           );
 
+          break;
+        case 2:
+          isEnabled = true;
           break;
         case 3:
           isEnabled = Object.values(
