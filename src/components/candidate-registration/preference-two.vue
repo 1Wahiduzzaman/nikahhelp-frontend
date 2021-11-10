@@ -2086,10 +2086,10 @@ export default {
       });
       response
         .then((data) => {
-       this.$emit("valueChange", {
-        value: this.preferenceData,
-        current: 0,
-      });
+          this.$emit("valueChange", {
+            value: this.preferenceData,
+            current: 0,
+          });
         })
         .catch((error) => {});
     },
@@ -2124,10 +2124,10 @@ export default {
       });
       response
         .then((data) => {
-         this.$emit("valueChange", {
-        value: this.preferenceData,
-        current: 0,
-      });
+          this.$emit("valueChange", {
+            value: this.preferenceData,
+            current: 0,
+          });
         })
         .catch((error) => {});
     },

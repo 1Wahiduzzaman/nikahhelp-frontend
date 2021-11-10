@@ -15,7 +15,7 @@
             class="d-flex"
             style="place-content: center; margin-bottom: 15px"
           >
-            <p>Progress <a-spin v-if="netCalling" /></p>
+            <!-- <p>Progress <a-spin v-if="netCalling" /></p>
             <div v-if="!netCalling" style="width: 600px; margin-left: 15px">
               <a-progress
                 status="active"
@@ -30,7 +30,7 @@
                 "
               >
               </a-progress>
-            </div>
+            </div> -->
           </div>
         </div>
         <div>
@@ -68,39 +68,32 @@
         </div>
 
         <div class="steps-content" v-if="current == 0 && !dataLoading">
-          <PersonalInfo
-            ref="personInfoRef"
-            :repData="repData"
-            :activePanel="activePanel"
-            @pannelChanged="setActiveKey"
-          />
+          <PersonalInfoTwo ref="personInfoRefTwo" />
         </div>
         <div class="steps-content" v-if="current == 1 && !dataLoading">
-          <VerificationInfo
+          <!-- <VerificationInfo
             :key="repData.mobile_number"
             :repData="repData"
             ref="verificationInfoRef"
             :handleChangeFromProp="handleChangeFromProp"
             :imageUrlFront="imageUrlFront"
             :imageUrlBack="imageUrlBack"
-          />
+          /> -->
         </div>
         <div class="steps-content" v-if="current == 2 && !dataLoading">
-          <ImageUpload
+          <!-- <ImageUpload
             v-on:images-uploaded="next"
             ref="imageUploadRef"
             :repData="repData"
-          />
+          /> -->
         </div>
         <div class="steps-content" v-if="current == 3 && !dataLoading">
-          <AgreementSubmit
+          <!-- <AgreementSubmit
             v-on:checked="agreementChecked = $event"
             :repData="repData"
-          />
+          /> -->
         </div>
         <div class="steps-action text-right">
-          <!-- <a-button class="" shape="round" v-if="current < steps.length - 1" type="primary" @click="next"> Save & Continue </a-button> -->
-          <!-- this is the button for essential basic info input submittion -->
           <a-button
             class=""
             shape="round"
@@ -185,6 +178,7 @@
 </template>
 <script>
 import PersonalInfo from "@/components/representative-registration/PersonalInfo.vue";
+import PersonalInfoTwo from "@/components/representative-registration/personal-info-two.vue";
 import VerificationInfo from "@/components/representative-registration/VerificationInfo.vue";
 import ImageUpload from "@/components/representative-registration/ImageUpload.vue";
 import AgreementSubmit from "@/components/representative-registration/AgreementSubmit.vue";
@@ -199,6 +193,7 @@ export default {
 
   components: {
     PersonalInfo,
+    PersonalInfoTwo,
     VerificationInfo,
     ImageUpload,
     AgreementSubmit,
@@ -208,7 +203,7 @@ export default {
   data() {
     return {
       // dont forget to change this current value for testing purpose
-      current: 1,
+      current: 0,
       steps: [
         {
           title: "Personal Info",
@@ -243,28 +238,29 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch("getUser");
-    this.getPercentage();
+   // this.$store.dispatch("getUser");
+    // this.getPercentage();
   },
   async mounted() {
-    let repData;
-    await this.$store.dispatch("getRepresentativeData").then((data) => {
-      console.log(data);
-      repData = data.data.data[0];
-      this.repData = repData;
-      // console.log(this.repData);
-    });
-    // API_URL.substring(0, API_URL.length - 4)+
-    // API_URL.substring(0, API_URL.length - 4)+
-    this.imageUrlFront =
-      repData.ver_document_frontside != undefined
-        ? repData.ver_document_frontside
-        : "";
-    this.imageUrlBack =
-      repData.ver_document_backside != undefined
-        ? repData.ver_document_backside
-        : "";
-    this.dataLoading = false;
+    await this.$store.dispatch("getRepresentativeData");
+    // let repData;
+    // await this.$store.dispatch("getRepresentativeData").then((data) => {
+    //   console.log(data);
+    //   repData = data.data.data[0];
+    //   this.repData = repData;
+    //   // console.log(this.repData);
+    // });
+    // // API_URL.substring(0, API_URL.length - 4)+
+    // // API_URL.substring(0, API_URL.length - 4)+
+    // this.imageUrlFront =
+    //   repData.ver_document_frontside != undefined
+    //     ? repData.ver_document_frontside
+    //     : "";
+    // this.imageUrlBack =
+    //   repData.ver_document_backside != undefined
+    //     ? repData.ver_document_backside
+    //     : "";
+    // this.dataLoading = false;
   },
   methods: {
     saveExit() {
@@ -851,14 +847,14 @@ export default {
 <style scoped lang="scss">
 .r-registration-container {
   display: flex;
-    flex-direction: column;
+  flex-direction: column;
   height: calc(100vh);
   overflow: hidden;
   .r-registration {
     display: flex;
     flex-direction: column;
     justify-content: center;
-	align-items: center;
+    align-items: center;
     overflow: hidden;
   }
 }

@@ -2471,19 +2471,34 @@ export default {
           "savePersonalEssentialInfo",
           this.personalInformation.essential
         )
-        .then((data) => {})
+        .then((data) => {
+          this.$emit("valueChange", {
+            value: this.personalInformation,
+            current: 1,
+          });
+        })
         .catch((error) => {});
     },
     async saveGeneralInfo() {
       await this.$store
         .dispatch("savePersonalGeneralInfo", this.personalInformation.general)
-        .then((data) => {})
+        .then((data) => {
+          this.$emit("valueChange", {
+            value: this.personalInformation,
+            current: 1,
+          });
+        })
         .catch((error) => {});
     },
     async saveContactInfo() {
       await this.$store
         .dispatch("savePersonalContactInfo", this.personalInformation.contact)
-        .then((data) => {})
+        .then((data) => {
+          this.$emit("valueChange", {
+            value: this.personalInformation,
+            current: 1,
+          });
+        })
         .catch((error) => {});
     },
     async saveMoreAboutInfo() {
@@ -2517,7 +2532,12 @@ export default {
               )
             : this.personalInformation.more_about.per_food_cuisine_like,
         })
-        .then((data) => {})
+        .then((data) => {
+          this.$emit("valueChange", {
+            value: this.personalInformation,
+            current: 1,
+          });
+        })
         .catch((error) => {});
     },
 
