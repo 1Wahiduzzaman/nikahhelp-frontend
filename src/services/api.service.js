@@ -6,6 +6,7 @@ import Vue from "vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import JwtService from "./jwt.service";
+import router from '../router'
 
 // * So, we initiated a config so we can use it for now, but
 // * in future this config will take access from .env
@@ -34,9 +35,17 @@ const ApiService = {
   // * After succesfull login we will set token to header
   // * with this function so we can use it in every requests
   setHeader() {
-    Vue.axios.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${JwtService.getToken()}`; // using jwt service to get and set header
+  const user=JwtService.getUser();
+   //if (JwtService.getToken() && user && user.is_verified>0) {
+      Vue.axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${JwtService.getToken()}`; // using jwt service to get and set header
+    // }
+    // else {
+    //   JwtService.destroyTokenAndUser()
+    //   router.push('/login')
+    // }
+
   },
 
   // * we can also use this function to set token and
@@ -64,7 +73,7 @@ const ApiService = {
 
   // * same as get
   post(resource, params) {
-     this.setHeader();
+    this.setHeader();
     return Vue.axios.post(`${resource}`, params);
   },
 
@@ -85,7 +94,7 @@ const ApiService = {
 
   // * same as get
   patch(resource, params) {
-     this.setHeader();
+    this.setHeader();
     return Vue.axios.patch(`${resource}`, params);
   },
 

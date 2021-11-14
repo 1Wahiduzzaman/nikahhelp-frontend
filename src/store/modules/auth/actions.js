@@ -8,6 +8,7 @@ export default {
     const token = response.data.data.token.access_token;
     let data = { token: token };
     JwtService.saveTokenAndUser(data);
+    JwtService.setUser(response.data.data.user);
     context.commit("setUser", {
       token: response.data.data.access_token,
     });
@@ -32,6 +33,7 @@ export default {
       const token = response.data.data.token.access_token;
       let data = { token: token };
       JwtService.saveTokenAndUser(data);
+      JwtService.setUser(response.data.data.user);
       context.commit("setUser", {
         token: response.data.data.access_token,
       });

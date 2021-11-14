@@ -18,6 +18,7 @@ Vue.use(Storage, {
 
 const ID_TOKEN_KEY = "token";
 const ID_USER_ID = "userId";
+const USER = "user";
 const ID_TEAM_ID = "teamid";
 const ID_TEAM_ID_APP_WIDE = "teamidappwide";
 const COOKIES = "cookies";
@@ -31,6 +32,12 @@ const COOKIES = "cookies";
 // * to get Token
 export const getToken = () => {
   return Vue.$localStorage.get("token");
+};
+export const getUser = () => {
+  return Vue.$localStorage.get(USER);
+};
+export const setUser = (data) => {
+  return Vue.$localStorage.set(USER, data);
 };
 // * to get userId
 export const getUserId = () => {
@@ -51,6 +58,7 @@ export const destroyTokenAndUser = () => {
   Vue.$localStorage.remove(ID_USER_ID);
   Vue.$localStorage.remove(ID_TEAM_ID);
   Vue.$localStorage.remove(ID_TEAM_ID_APP_WIDE);
+  Vue.$localStorage.remove(USER);
   // Vue.$localStorage.remove(CHAT_CURRENTCONV);
   // Vue.$localStorage.remove(CHAT_CONVERSATIONS);
   // Vue.$localStorage.remove(CHAT_MSGS);
@@ -111,8 +119,9 @@ export default {
   saveTeamIDAppWide,
   getTeamIDAppWide,
   destroyTeamIDAppWide,
-
   saveCookies,
   getCookies,
   destroyCookies,
+  getUser,
+  setUser
 };

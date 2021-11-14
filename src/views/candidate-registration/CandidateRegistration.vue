@@ -3,14 +3,30 @@
     <header>
       <a href="/"><img src="@/assets/logo.png" alt="" /></a>
     </header>
+    <VueFixedHeader
+      v-show="fixedStatus.headerIsFixed"
+      @change="updateFixedStatus"
+      :threshold="propsData.threshold"
+      :headerClass="propsData.headerClass"
+      :fixedClass="propsData.fixedClass"
+      :hideScrollUp="propsData.hideScrollUp"
+    >
+      <div class="step-bar">
+        <a-steps :current="current" labelPlacement="vertical">
+          <a-step v-for="item in steps" :key="item.title" :title="item.title" />
+        </a-steps>
+      </div>
+    </VueFixedHeader>
     <div class="steps ma-steps">
       <div class="steper-header text-center heading-text">
         <h4>CANDIDATE PROFILE AND REQUIREMENT FORM</h4>
         <p>Please answer all question accurately and in full</p>
       </div>
+
       <a-steps :current="current" labelPlacement="vertical">
         <a-step v-for="item in steps" :key="item.title" :title="item.title" />
       </a-steps>
+
       <div class="steps-content" v-show="current == 0">
         <PreferenceTwo
           :candidateDetails="candidateDetails"
@@ -85,13 +101,19 @@
           class="mt-3"
           @click="saveExit"
         >
-          Exit
+          Save & Exit
         </a-button>
       </div>
     </div>
   </div>
 </template>
 <script>
+const createData = () => ({
+  threshold: 0,
+  headerClass: "vue-fixed-header",
+  fixedClass: "vue-fixed-header--isFixed",
+  hideScrollUp: false,
+});
 import Preference from "@/components/candidate-registration/Preference.vue";
 import PreferenceTwo from "@/components/candidate-registration/preference-two.vue";
 import Verification from "@/components/candidate-registration/verification.vue";
@@ -107,6 +129,9 @@ import languages from "@/common/languages.js";
 import hobbies from "@/common/hobbies.js";
 import foods from "@/common/foods.js";
 import thankfulThings from "@/common/thankfulThings.js";
+import VueFixedHeader from "vue-fixed-header";
+import jwtService from '../../services/jwt.service';
+
 export default {
   components: {
     Preference,
@@ -118,13 +143,18 @@ export default {
     UploadProfile,
     Review,
     Verification,
+    VueFixedHeader,
   },
   mounted() {
     this.getCandidateInitialInfo();
   },
   data() {
     return {
-      current: 1,
+      fixedStatus: {
+        headerIsFixed: false,
+      },
+      propsData: { ...createData() },
+      current: 0,
       enabledNextBtn: false,
       candidateDetails: {
         preferenceData: null,
@@ -158,6 +188,9 @@ export default {
     };
   },
   methods: {
+    updateFixedStatus(next) {
+      this.fixedStatus.headerIsFixed = next;
+    },
     onDataChange(e) {
       switch (e.current) {
         case 0:
@@ -177,7 +210,7 @@ export default {
       this.checkExistData();
     },
     getCandidateInitialInfo: async function () {
-      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const user = JSON.parse(localStorage.getItem("user"));
       const response = await ApiService.get("v1/candidate/initial-info");
       if (response.status === 200) {
         const details = {
@@ -199,7 +232,7 @@ export default {
               per_permanent_country: parseInt(
                 response.data.data.personal_info.contact.per_permanent_country
               ),
-              per_email: userInfo.email,
+              per_email: user.email,
               per_county: "None",
               per_current_residence_city: "None",
               per_permanent_city: "None",
@@ -367,7 +400,8 @@ export default {
       return object;
     },
     saveExit() {
-      this.$router.push("/");
+      jwtService.destroyTokenAndUser();
+      this.$router.push("/login");
     },
     doneBtn() {
       this.$router.push("/dashboard");
@@ -456,12 +490,17 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: calc(100vh);
-  overflow: hidden;
+  .step-bar {
+    margin: 0;
+    padding: 0;
+    z-index: 9;
+  }
   header {
     text-align: center;
     height: 100px;
     width: 100%;
+    margin: 0;
+    padding: 0;
     background-color: $bg-secondary;
 
     @media (max-width: 768px) {
@@ -499,6 +538,7 @@ export default {
       height: 80px;
     }
   }
+
   .heading-text {
     margin-top: 20px;
     color: $color-brand;
@@ -508,5 +548,14 @@ export default {
       color: $color-brand;
     }
   }
+}
+
+.step-bar.vue-fixed-header--isFixed {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 800px;
+  padding: 0;
+  background: azure;
 }
 </style>

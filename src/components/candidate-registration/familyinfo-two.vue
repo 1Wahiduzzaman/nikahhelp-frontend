@@ -564,7 +564,7 @@ export default {
     },
 
     saveFamilyInfo() {
-      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const userInfo = JSON.parse(localStorage.getItem("user"));
       this.$store
         .dispatch("updateFamilyInfo", {
           ...this.familyInformation,

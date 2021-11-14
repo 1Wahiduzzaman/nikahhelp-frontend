@@ -1978,6 +1978,7 @@ import SelectGroup from "@/components/ui/selects/SelectGroup";
 import { ReligionTV } from "../../models/religion";
 import { CountriesTV } from "../../models/country";
 import { AGES, HEIGHTS } from "../../models/data";
+import ApiService from "../../services/api.service";
 export default {
   name: "PreferenceTwo",
   components: { vSelect, NeedHelp, SelectGroup },
@@ -2064,22 +2065,31 @@ export default {
     savePreference() {
       const response = this.$store.dispatch("savePreferenceInfoAbout", {
         ...this.preferenceData,
-        pre_nationality: this.preferenceData.preferred_nationality,
+        pre_nationality:
+          this.preferenceData.preferred_nationality.length > 0
+            ? this.preferenceData.preferred_nationality
+            : [1],
         pre_partner_religions:
           this.preferenceData.pre_partner_religion_id.join(","),
         pre_partner_comes_from: this.preferenceData.preferred_countries.map(
-          (c) => {
+          (c, index) => {
             return {
               country: c,
-              city: null,
+              city:
+                this.preferenceData.preferred_cities.length > 0
+                  ? this.preferenceData.preferred_cities[index]
+                  : null,
             };
           }
         ),
         pre_disallow_preference: this.preferenceData.bloked_countries.map(
-          (c) => {
+          (c,index) => {
             return {
               country: c,
-              city: null,
+              city:
+                this.preferenceData.blocked_cities.length > 0
+                  ? this.preferenceData.blocked_cities[index]
+                  : null,
             };
           }
         ),
@@ -2108,7 +2118,6 @@ export default {
         pre_wiling_to_learn_rate,
         pre_strength_of_character_rate,
       } = this.preferenceData;
-      this.checkDisabled();
       const response = this.$store.dispatch("savePreferenceRatingInfo", {
         pre_education_rate,
         pre_emotional_maturity_rate,
@@ -2131,28 +2140,34 @@ export default {
         })
         .catch((error) => {});
     },
-    onChangeCountry(e, name, action) {
-      this.candidateDetails.countries.map((c) => {
-        if (c.name === e.name) {
-          switch (name) {
-            case "listOne":
-              action == "allowed"
-                ? this.preferenceData.allowedCity.listOne.push(c.cities)
-                : this.preferenceData.disAllowedCity.listOne.push(c.cities);
-              break;
-            case "listTwo":
-              action == "allowed"
-                ? this.preferenceData.allowedCity.listTwo.push(c.cities)
-                : this.preferenceData.disAllowedCity.listTwo.push(c.cities);
-              break;
-            case "listThree":
-              action == "allowed"
-                ? this.preferenceData.allowedCity.listThree.push(c.cities)
-                : this.preferenceData.disAllowedCity.listThree.push(c.cities);
-              break;
-          }
+    async onChangeCountry(e, name, action) {
+      const res = await ApiService.get(`v1/utilities/cities/${e}`);
+      if (res.status === 200) {
+        switch (name) {
+          case "listOne":
+            action == "allowed"
+              ? this.preferenceData.allowedCity.listOne.push(...res.data.data)
+              : this.preferenceData.disAllowedCity.listOne.push(
+                  ...res.data.data
+                );
+            break;
+          case "listTwo":
+            action == "allowed"
+              ? this.preferenceData.allowedCity.listTwo.push(...res.data.data)
+              : this.preferenceData.disAllowedCity.listTwo.push(
+                  ...res.data.data
+                );
+            break;
+          case "listThree":
+            action == "allowed"
+              ? this.preferenceData.allowedCity.listThree.push(...res.data.data)
+              : this.preferenceData.disAllowedCity.listThree.push(
+                  ...res.data.data
+                );
+            break;
         }
-      });
+      }
+
       this.savePreference();
     },
   },
