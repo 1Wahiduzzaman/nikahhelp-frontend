@@ -895,6 +895,7 @@ export default {
       color: $color-brand;
     }
   }
+  
   .r-registration {
     display: flex;
     flex-direction: column;
