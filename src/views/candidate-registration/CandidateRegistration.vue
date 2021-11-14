@@ -3,30 +3,30 @@
     <header>
       <a href="/"><img src="@/assets/logo.png" alt="" /></a>
     </header>
-    <VueFixedHeader
-      v-show="fixedStatus.headerIsFixed"
-      @change="updateFixedStatus"
-      :threshold="propsData.threshold"
-      :headerClass="propsData.headerClass"
-      :fixedClass="propsData.fixedClass"
-      :hideScrollUp="propsData.hideScrollUp"
-    >
-      <div class="step-bar">
-        <a-steps :current="current" labelPlacement="vertical">
-          <a-step v-for="item in steps" :key="item.title" :title="item.title" />
-        </a-steps>
-      </div>
-    </VueFixedHeader>
+
     <div class="steps ma-steps">
       <div class="steper-header text-center heading-text">
         <h4>CANDIDATE PROFILE AND REQUIREMENT FORM</h4>
         <p>Please answer all question accurately and in full</p>
       </div>
 
-      <a-steps :current="current" labelPlacement="vertical">
-        <a-step v-for="item in steps" :key="item.title" :title="item.title" />
-      </a-steps>
-
+      <VueFixedHeader
+        @change="updateFixedStatus"
+        :threshold="propsData.threshold"
+        :headerClass="propsData.headerClass"
+        :fixedClass="propsData.fixedClass"
+        :hideScrollUp="propsData.hideScrollUp"
+      >
+        <div class="step-bar">
+          <a-steps :current="current" labelPlacement="vertical">
+            <a-step
+              v-for="item in steps"
+              :key="item.title"
+              :title="item.title"
+            />
+          </a-steps>
+        </div>
+      </VueFixedHeader>
       <div class="steps-content" v-show="current == 0">
         <PreferenceTwo
           :candidateDetails="candidateDetails"
@@ -130,7 +130,7 @@ import hobbies from "@/common/hobbies.js";
 import foods from "@/common/foods.js";
 import thankfulThings from "@/common/thankfulThings.js";
 import VueFixedHeader from "vue-fixed-header";
-import jwtService from '../../services/jwt.service';
+import jwtService from "../../services/jwt.service";
 
 export default {
   components: {
@@ -556,6 +556,6 @@ export default {
   z-index: 1000;
   width: 800px;
   padding: 0;
-  background: azure;
+  background:aliceblue;
 }
 </style>
