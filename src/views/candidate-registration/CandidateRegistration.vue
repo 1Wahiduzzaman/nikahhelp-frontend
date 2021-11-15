@@ -147,6 +147,7 @@ export default {
   },
   mounted() {
     this.getCandidateInitialInfo();
+   
   },
   data() {
     return {
@@ -197,10 +198,12 @@ export default {
           this.candidateDetails.preferenceData = {
             ...e.value,
           };
+          break;
         case 1:
           this.candidateDetails.personalInformation = {
             ...e.value,
           };
+          break;
         case 3:
           this.candidateDetails.familyInformation = {
             ...e.value,
@@ -300,8 +303,16 @@ export default {
               response.data.data.user.preference.preferred_nationality.map(
                 (a) => a.id
               ),
+            blocked_cities:
+              response.data.data.user.preference.blocked_cities.map(
+                (a) => a.id
+              ),
             preferred_countries:
               response.data.data.user.preference.preferred_countries.map(
+                (a) => a.id
+              ),
+            preferred_cities:
+              response.data.data.user.preference.preferred_cities.map(
                 (a) => a.id
               ),
             bloked_countries:
@@ -356,8 +367,17 @@ export default {
         this.candidateDetails = {
           ...details,
         };
+        this.current = response.data.data.user.data_input_status;
         this.checkExistData();
       }
+    },
+    async saveDataInputStatus(satge) {
+      const res = await ApiService.post(
+        "v1/candidate/personal-info-status?_method=PATCH",
+        {
+          data_input_status: satge,
+        }
+      );
     },
     checkExistData() {
       let isEnabled = false;
@@ -433,6 +453,7 @@ export default {
         }
       }
       this.checkExistData();
+       this.saveDataInputStatus(this.current);
     },
     prev() {
       this.current--;
@@ -556,6 +577,6 @@ export default {
   z-index: 1000;
   width: 800px;
   padding: 0;
-  background:aliceblue;
+  background: aliceblue;
 }
 </style>
