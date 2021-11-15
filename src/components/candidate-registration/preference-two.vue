@@ -2078,17 +2078,21 @@ export default {
               city:
                 this.preferenceData.preferred_cities.length > 0
                   ? this.preferenceData.preferred_cities[index]
+                    ? this.preferenceData.preferred_cities[index]
+                    : null
                   : null,
             };
           }
         ),
         pre_disallow_preference: this.preferenceData.bloked_countries.map(
-          (c,index) => {
+          (c, index) => {
             return {
               country: c,
               city:
                 this.preferenceData.blocked_cities.length > 0
                   ? this.preferenceData.blocked_cities[index]
+                    ? this.preferenceData.blocked_cities[index]
+                    : null
                   : null,
             };
           }
