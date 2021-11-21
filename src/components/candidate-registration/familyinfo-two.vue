@@ -1,11 +1,12 @@
 <template>
-  <div class="family-info">
+  <div id="familyInfoAccordian" class="family-info">
     <div class="section-heading heading-text">
       <h5>Family Information</h5>
       <p>Your Family's Information</p>
     </div>
     <a-collapse
-      :activeKey="activePanel"
+      accordion
+      :activeKey="activeKey"
       :bordered="false"
       expand-icon-position="right"
     >
@@ -71,7 +72,7 @@
                       </span>
                     </a>
                   </p>
-                  <div
+                  <div data-parent="#familyInfoAccordian"
                     class="collapse"
                     id="collapseFamilyInformationFatherName"
                   >
@@ -110,7 +111,7 @@
                       v-model="familyInformation.father_profession"
                       class="select-ma"
                     >
-                      <a-select-option :value="null" disabled
+                      <a-select-option :value="0" disabled
                         >Select your father's profession</a-select-option
                       >
                       <a-select-option
@@ -145,7 +146,7 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapseCandidateFatherProfession">
+                  <div class="collapse" data-parent="#familyInfoAccordian" id="collapseCandidateFatherProfession">
                     <div class="card card-body bubble">
                       Select your father's profession
                     </div>
@@ -203,7 +204,7 @@
                     </a>
                   </p>
                   <div
-                    class="collapse"
+                    class="collapse" data-parent="#familyInfoAccordian"
                     id="collapseFamilyInformationMotherName"
                   >
                     <div class="card card-body bubble">
@@ -241,7 +242,7 @@
                       v-model="familyInformation.mother_profession"
                       class="select-ma"
                     >
-                      <a-select-option :value="null" disabled
+                      <a-select-option :value="0" disabled
                         >Select your mother's profession</a-select-option
                       >
                       <a-select-option
@@ -276,7 +277,7 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapseCandidateMotherProfession">
+                  <div class="collapse" data-parent="#familyInfoAccordian" id="collapseCandidateMotherProfession">
                     <div class="card card-body bubble">
                       Select your mothers' profession
                     </div>
@@ -330,7 +331,7 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapseSiblingsInfomation">
+                  <div class="collapse" data-parent="#familyInfoAccordian" id="collapseSiblingsInfomation">
                     <div class="card card-body bubble">
                       Siblings information
                     </div>
@@ -387,7 +388,7 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapseAnyotherFamilyLike">
+                  <div class="collapse" data-parent="#familyInfoAccordian" id="collapseAnyotherFamilyLike">
                     <div class="card card-body bubble">
                       Any other family info you would like to share
                     </div>
@@ -427,7 +428,7 @@
                       v-model="familyInformation.country_of_origin"
                       class="select-ma w-100"
                     >
-                      <a-select-option disabled :value="null">
+                      <a-select-option disabled :value="0">
                         Select your country of birth</a-select-option
                       >
                       <a-select-option
@@ -463,7 +464,7 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapseSelectCountryOfBirth">
+                  <div class="collapse" data-parent="#familyInfoAccordian" id="collapseSelectCountryOfBirth">
                     <div class="card card-body bubble">
                       Select your country of birth
                     </div>
@@ -472,7 +473,7 @@
               </a-row>
             </a-col>
           </a-row>
-          <!-- <a-button
+          <a-button
             shape="round"
             type="primary"
             style="float: right"
@@ -480,7 +481,7 @@
             @click="handleSubmitForm"
           >
             Save & Continue
-          </a-button> -->
+          </a-button>
         </a-form-model>
       </a-collapse-panel>
     </a-collapse>
@@ -507,6 +508,7 @@ export default {
 
   data() {
     return {
+      activeKey: ["1"],
       rules: RULES_FAMILY_INFO,
       // familyInformation: this.getDefaultFamilyInfo(),
       arr: ARR_FAMILY_INFO,
@@ -540,9 +542,9 @@ export default {
     },
     filterOption(input, option) {
       return (
-        option.componentOptions.children[0].text
+        option.componentOptions.children[0].text.trim()
           .toLowerCase()
-          .indexOf(input.toLowerCase()) >= 0
+          .startsWith(input.toLowerCase())
       );
     },
     onValueChange(e) {

@@ -1,13 +1,21 @@
 export const AGES=[
     {
-      value: 20,
-      label: '<p class="m-0">20</p>',
+      value: 18,
+      label: '<p class="m-0">18</p>',
     },
     {
+        value: 19,
+        label: '<p class="m-0">19</p>',
+      },
+
+      {
+        value: 20,
+        label: '<p class="m-0">20</p>',
+      },
+      {
         value: 21,
         label: '<p class="m-0">21</p>',
       },
-
       {
         value: 22,
         label: '<p class="m-0">22</p>',
@@ -16,6 +24,7 @@ export const AGES=[
         value: 23,
         label: '<p class="m-0">23</p>',
       },
+
       {
         value: 24,
         label: '<p class="m-0">24</p>',
@@ -29,6 +38,7 @@ export const AGES=[
         value: 26,
         label: '<p class="m-0">26</p>',
       },
+
       {
         value: 27,
         label: '<p class="m-0">27</p>',
@@ -38,7 +48,6 @@ export const AGES=[
         value: 28,
         label: '<p class="m-0">28</p>',
       },
-
       {
         value: 29,
         label: '<p class="m-0">29</p>',
@@ -54,23 +63,22 @@ export const AGES=[
       },
 
       {
-        value: 32,
-        label: '<p class="m-0">32</p>',
-      },
-      {
+      value: 32,
+      label: '<p class="m-0">32</p>',
+    },
+    {
         value: 33,
         label: '<p class="m-0">33</p>',
       },
 
       {
-      value: 34,
-      label: '<p class="m-0">34</p>',
-    },
-    {
+        value: 34,
+        label: '<p class="m-0">34</p>',
+      },
+      {
         value: 35,
         label: '<p class="m-0">35</p>',
       },
-
       {
         value: 36,
         label: '<p class="m-0">36</p>',
@@ -83,6 +91,7 @@ export const AGES=[
         value: 38,
         label: '<p class="m-0">38</p>',
       },
+
       {
         value: 39,
         label: '<p class="m-0">39</p>',
@@ -92,23 +101,23 @@ export const AGES=[
         label: '<p class="m-0">40</p>',
       },
 
-      {
-        value: 41,
-        label: '<p class="m-0">41</p>',
-      },
-      {
+    {
+      value: 41,
+      label: '<p class="m-0">41</p>',
+    },
+    {
         value: 42,
         label: '<p class="m-0">42</p>',
       },
-
-    {
-      value: 43,
-      label: '<p class="m-0">43</p>',
-    },
-    {
+      {
+        value: 43,
+        label: '<p class="m-0">43</p>',
+      },
+      {
         value: 44,
         label: '<p class="m-0">44</p>',
       },
+
       {
         value: 45,
         label: '<p class="m-0">45</p>',
@@ -126,7 +135,6 @@ export const AGES=[
         value: 48,
         label: '<p class="m-0">48</p>',
       },
-
       {
         value: 49,
         label: '<p class="m-0">49</p>',
@@ -139,6 +147,7 @@ export const AGES=[
         value: 51,
         label: '<p class="m-0">51</p>',
       },
+
       {
         value: 52,
         label: '<p class="m-0">52</p>',
@@ -147,7 +156,6 @@ export const AGES=[
         value: 53,
         label: '<p class="m-0">53</p>',
       },
-
       {
         value: 54,
         label: '<p class="m-0">54</p>',
@@ -158,7 +166,23 @@ export const AGES=[
       },
       {
         value: 56,
-        label: '<p class="m-0">55</p>',
+        label: '<p class="m-0">56</p>',
+      },
+      {
+        value: 57,
+        label: '<p class="m-0">57</p>',
+      },
+      {
+        value: 58,
+        label: '<p class="m-0">58</p>',
+      },
+      {
+        value: 59,
+        label: '<p class="m-0">59</p>',
+      },
+      {
+        value: 60,
+        label: '<p class="m-0">60</p>',
       },
   ]
 

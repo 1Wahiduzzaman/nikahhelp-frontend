@@ -1,4 +1,4 @@
-export const RULES = {
+export const RULES_RATE={
     pre_employment_wealth_rate: [
         {
             required: true,
@@ -77,6 +77,11 @@ export const RULES = {
             trigger: "change",
         },
     ],
+}
+
+
+export const RULES = {
+
     pre_employment_status: [
         {
             required: true,
@@ -143,27 +148,27 @@ export const RULES = {
 };
 
 export const RULES_FAMILY_INFO={
-    fathersProfession:[{
+    father_profession:[{
         required: true,
         message: "Select your father's profession",
         trigger: "change",
     }],
-    mothersProfession:[{
+    mother_profession:[{
         required: true,
         message: "Select your mother's profession",
         trigger: "change",
     }],
-    siblings:[{
+    siblings_desc:[{
         required: true,
         message: "Write about your siblings",
         trigger: "change",
     }],
-    otherFamilyInfo:[{
+    family_info:[{
         required: true,
         message: "Write about your other family info",
         trigger: "change",
     }],
-    countryOfOrigin:[{
+    country_of_origin:[{
         required: true,
         message: "Select your country of origin",
         trigger: "change",

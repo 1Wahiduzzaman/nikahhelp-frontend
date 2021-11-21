@@ -52,7 +52,11 @@
         </div>
 
         <div class="steps-content" v-if="current == 0">
-          <PersonalInfoTwo ref="personInfoRefTwo" />
+          <PersonalInfoTwo
+            :representativeDetails="representativeDetails"
+            :personalInformation="representativeDetails.personalInformation"
+            ref="personInfoRefTwo"
+          />
         </div>
         <div class="steps-content" v-if="current == 1">
           <!-- <VerificationInfo
@@ -162,6 +166,9 @@ export default {
       },
       propsData: { ...createData() },
       current: 0,
+      representativeDetails: {
+        images: {},
+      },
       steps: [
         {
           title: "Personal Info",
@@ -195,32 +202,38 @@ export default {
       dataLoading: false,
     };
   },
-  created() {
-    // this.$store.dispatch("getUser");
-    // this.getPercentage();
-  },
-  async mounted() {
-    await this.$store.dispatch("getRepresentativeData");
-    // let repData;
-    // await this.$store.dispatch("getRepresentativeData").then((data) => {
-    //   console.log(data);
-    //   repData = data.data.data[0];
-    //   this.repData = repData;
-    //   // console.log(this.repData);
-    // });
-    // // API_URL.substring(0, API_URL.length - 4)+
-    // // API_URL.substring(0, API_URL.length - 4)+
-    // this.imageUrlFront =
-    //   repData.ver_document_frontside != undefined
-    //     ? repData.ver_document_frontside
-    //     : "";
-    // this.imageUrlBack =
-    //   repData.ver_document_backside != undefined
-    //     ? repData.ver_document_backside
-    //     : "";
-    // this.dataLoading = false;
+  created() {},
+  mounted() {
+    this.getRepresentativeInitialInfo();
   },
   methods: {
+    updateFixedStatus(next) {
+      this.fixedStatus.headerIsFixed = next;
+    },
+    getRepresentativeInitialInfo: async function () {
+      const user = JSON.parse(localStorage.getItem("user"));
+      console.log("user", user);
+      const response = await this.$store.dispatch("getRepresentativeData");
+      if (response.status === 200) {
+        const details = {
+          countries: response.data.data.countries,
+          occupations: response.data.data.occupations,
+          id: user.id,
+          personalInformation: {
+            essential: {
+              ...response.data.data.representative_info.essential,
+              default_date: response.data.data.representative_info.essential.dob,
+            },
+            personal: { ...response.data.data.representative_info.personal },
+          },
+        };
+        console.log("details", details);
+        this.representativeDetails = {
+          ...details,
+        };
+        // this.current = response.data.data.user.data_input_status;
+      }
+    },
     saveExit() {
       this.$router.push("/");
     },
@@ -895,7 +908,7 @@ export default {
       color: $color-brand;
     }
   }
-  
+
   .r-registration {
     display: flex;
     flex-direction: column;
@@ -910,7 +923,7 @@ export default {
 }
 
 .step-bar.vue-fixed-header--isFixed {
-  height:120px;
+  height: 120px;
   position: fixed;
   top: 0;
   z-index: 1000;
