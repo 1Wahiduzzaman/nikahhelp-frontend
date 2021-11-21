@@ -5,7 +5,7 @@
 			<Layout >
 				<div class="container">
 					<a-row v-if="teams.length == 0 && !joinTeamShow && !createTeamShow">
-						<div class="d-flex welcome-text">
+						<div class="d-flex justify-content-center align-items-center welcome-text mt-2">
 							<h1 class="text-1">Welcome to</h1>
 							<img
 								src="@/assets/Icons/MT ma large logo.svg"
@@ -15,7 +15,7 @@
 							/>
 							<h1 class="text-2">on-board</h1>
 						</div>
-						<div class="description-text">
+						<div class="description-text text-center">
 							<p>
 								Here you can create team, invite family and friends, shortlist
 								potential <br />
@@ -145,33 +145,35 @@ export default {
 				await this.$store.dispatch("getUser");
 				this.user = this.$store.getters["userInfo"];
 				this.is_verified = this.user.is_verified;
-				if (this.is_verified == 0) {
-					this.$router.push("/email-verification");
-				}
-				if (this.user.account_type === 0) {
-					this.$router.push("/member-type");
-				}
-
-				if (this.user.account_type === 4) {
-					this.$router.push("/admin");
-				}
-
-				let data_input_status = this.$store.getters["userDataInputStatus"];
-				console.log("data input status", data_input_status);
-				if (data_input_status == 10) {
-					this.$router.push("/member-name/candidate");
-				}
-
-				if (data_input_status == 20) {
-					this.$router.push("/member-name/representative");
-				}
-
-				if (data_input_status == 11) {
-					this.$router.push("/candidate-registration");
-				}
-				if (data_input_status == 21) {
-					this.$router.push("/representative-registration");
-				}
+        // need to be removed later
+				// if (this.is_verified == 0) {
+				// 	this.$router.push("/email-verification");
+				// }
+				// if (this.user.account_type === 0) {
+				// 	this.$router.push("/member-type");
+				// }
+        //
+				// if (this.user.account_type === 4) {
+				// 	this.$router.push("/admin");
+				// }
+        //
+				// let data_input_status = this.$store.getters["userDataInputStatus"];
+				// console.log("data input status", data_input_status);
+				// if (data_input_status == 10) {
+				// 	this.$router.push("/member-name/candidate");
+				// }
+        //
+				// if (data_input_status == 20) {
+				// 	this.$router.push("/member-name/representative");
+				// }
+        //
+				// if (data_input_status == 11) {
+				// 	this.$router.push("/candidate-registration");
+				// }
+				// if (data_input_status == 21) {
+				// 	this.$router.push("/representative-registration");
+				// }
+        // need to be removed later
 
 				// if (data_input_status == 12) {
 				// 	this.$router.push("/candidate-registration");
@@ -227,14 +229,14 @@ export default {
 			.text-1 {
 				margin-top: 110px;
 				margin-right: 20px;
-				font-weight: 700;
+				font-weight: 900;
 				color: #666;
 			}
 
 			.text-2 {
 				margin-top: 110px;
 				margin-left: 20px;
-				font-weight: 700;
+				font-weight: bold;
 				color: #666;
 			}
 		}
