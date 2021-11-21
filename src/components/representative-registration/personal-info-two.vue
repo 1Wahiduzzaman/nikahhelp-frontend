@@ -12,10 +12,10 @@
       </template>
       <a-collapse-panel key="1" header="1. Essential Information">
         <a-form-model
-          ref="personalInfoFormOne"
-          v-if="representativeInfo"
-          :model="representativeInfo"
-          :rules="rules"
+          ref="repPersonalInfoFormOne"
+          v-if="personalInformation && personalInformation.essential"
+          :model="personalInformation.essential"
+
           class="form-ma"
         >
           <a-row>
@@ -26,7 +26,7 @@
                 <a-col :span="12">
                   <div class="mb-2">
                     <a-icon
-                      v-if="representativeInfo.gender"
+                      v-if="personalInformation.essential.per_gender"
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
                     />What is your gender?
@@ -41,15 +41,22 @@
                 </a-col>
                 <a-col span="12">
                   <!-- ToDo:: need to add a fake option as placeholders are not working -->
-                  <a-select
-                    class="select-ma w-100"
-                    v-model="representativeInfo.gender"
-                    @change="(value) => (representativeInfo.gender = value)"
-                    placeholder="Select a Gender"
-                  >
-                    <a-select-option value="Male"> Male </a-select-option>
-                    <a-select-option value="Female"> Female </a-select-option>
-                  </a-select>
+                  <a-form-model-item ref="per_gender" prop="per_gender">
+                    <a-select
+                      @change="onValueChange($event, 'per_gender', 'essential')"
+                      id="per_gender"
+                      ref="select"
+                      placeholder="Select gender"
+                      class="select-ma w-100"
+                      v-model="personalInformation.essential.per_gender"
+                    >
+                      <a-select-option disabled :value="0"
+                        >Select your gender</a-select-option
+                      >
+                      <a-select-option :value="1">Male</a-select-option>
+                      <a-select-option :value="2">Female</a-select-option>
+                    </a-select>
+                  </a-form-model-item>
                 </a-col>
               </a-row>
             </a-col>
@@ -59,7 +66,7 @@
                 <a-col :span="12">
                   <div class="mb-2">
                     <a-icon
-                      v-if="default_date || dobFromDatePicker"
+                      v-if="personalInformation.essential.dob"
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
                     />What is your date of birth?
@@ -73,13 +80,13 @@
                   </a-tooltip>
                 </a-col>
                 <a-col :span="12" class="date-of-birth text-left">
-                  <!-- <a-date-picker class="w-100" v-model.lazy="representativeInfo.dob" /> -->
+                  <!-- <a-date-picker class="w-100" v-model.lazy="personalInformation.essential.dob" /> -->
                   <DropdownDatePicker
                     displayFormat="dmy"
                     dropdownClass="custom-select"
                     :key="default_date"
-                    :default-date="default_date"
-                    v-model="dobFromDatePicker"
+                    :default-date="personalInformation.essential.dob"
+                    v-model="personalInformation.essential.dob"
                     :on-change="onChangeDD"
                     :maxYear="new Date().getFullYear() - 18"
                     :minYear="1940"
@@ -93,7 +100,7 @@
                 <a-col :span="12">
                   <div class="mb-2">
                     <a-icon
-                      v-if="representativeInfo.occupation"
+                      v-if="personalInformation.essential.per_occupation"
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
                     />What is your occupation?
@@ -112,16 +119,18 @@
                     option-filter-prop="children"
                     :filter-option="filterOption"
                     :showArrow="true"
-                    v-model="representativeInfo.occupation"
+                    v-model="personalInformation.essential.per_occupation"
                     class="select-ma w-100"
                     placeholder="Select Occupation"
-                    @change="(value) => (representativeInfo.occupation = value)"
+                    @change="
+                      onValueChange($event, 'per_occupation', 'essential')
+                    "
                   >
                     <a-select-option
                       :value="value"
                       :key="key"
                       style="width: 100px"
-                      v-for="(value, key) in occupations"
+                      v-for="(value, key) in representativeDetails.occupations"
                     >
                       {{ value }}
                     </a-select-option>
@@ -131,10 +140,10 @@
                   <a-input
                     class="w-100 mt-2"
                     placeholder="Please specify"
-                    v-if="representativeInfo.occupation == 'Other'"
-                    @change="
-                      (value) => (representativeInfo.occupationOther = value)
+                    v-if="
+                      personalInformation.essential.per_occupation == 'Other'
                     "
+                    @blur="onValueChange($event, 'per_occupation', 'essential')"
                   />
                 </a-col>
               </a-row>
@@ -148,10 +157,10 @@
         style="margin-top: 5px"
       >
         <a-form-model
-          ref="personalInfoFormTwo"
-          v-if="representativeResidence"
-          :model="representativeResidence"
-          :rules="rules"
+          ref="repPersonalInfoFormTwo"
+          v-if="personalInformation && personalInformation.personal"
+          :model="personalInformation.personal"
+        
           class="form-ma"
         >
           <a-row>
@@ -162,8 +171,8 @@
                   <div class="mb-2">
                     <a-icon
                       v-if="
-                        representativeResidence.country &&
-                        representativeResidence.city
+                        personalInformation.personal.per_county &&
+                        personalInformation.personal.per_current_residence_city
                       "
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
@@ -186,7 +195,7 @@
                         option-filter-prop="children"
                         :filter-option="filterOption"
                         :showArrow="true"
-                        v-model="representativeResidence.country"
+                        v-model="personalInformation.personal.per_county"
                         class="select-ma w-100"
                         :placeholder="'Country'"
                         @change="onChangeCountryResidence"
@@ -195,7 +204,9 @@
                           :value="value"
                           :key="key"
                           style="width: 100px"
-                          v-for="(value, key) in countries"
+                          v-for="(
+                            value, key
+                          ) in representativeDetails.countries"
                         >
                           {{ value.name }}
                         </a-select-option>
@@ -209,18 +220,25 @@
                         option-filter-prop="children"
                         :filter-option="filterOption"
                         :showArrow="true"
-                        v-model="representativeResidence.city"
+                        v-model="
+                          personalInformation.personal
+                            .per_current_residence_city
+                        "
                         class="select-ma w-100"
                         placeholder="Select Issue"
                         @change="
-                          (value) => (representativeResidence.city = value)
+                          onValueChange(
+                            $event,
+                            'per_current_residence_city',
+                            'contact'
+                          )
                         "
                       >
                         <a-select-option
                           :value="value"
                           :key="key"
                           style="width: 100px"
-                          v-for="(value, key) in cities1"
+                          v-for="(value, key) in representativeDetails.cities"
                         >
                           {{ value.name }}
                         </a-select-option>
@@ -232,14 +250,12 @@
                   <a-input
                     class="w-100 mt-2"
                     v-if="
-                      representativeResidence.country == 'Other' ||
-                      representativeResidence.city == 'Other'
+                      personalInformation.personal.per_county == 'Other' ||
+                      personalInformation.personal.per_current_residence_city ==
+                        'Other'
                     "
                     placeholder="Please specify"
-                    @change="
-                      (value) =>
-                        (representativeResidence.specifiedAddress = value)
-                    "
+                    @change="onValueChange($event, 'per_county', 'contact')"
                   />
                 </a-col>
               </a-row>
@@ -253,8 +269,8 @@
                 <a-col :span="24">
                   <!--<a-icon
 										v-if="
-											representativePermanentAddress.country &&
-											representativePermanentAddress.city
+											personalInformation.personal.country &&
+											personalInformation.personal.city
 										"
 										class="color-success mr-2 fs-18 fw-500"
 										type="check"
@@ -268,7 +284,7 @@
                 </a-col>
                 <a-col :span="12">
                   <a-row :gutter="[8]" type="flex">
-                    <a-col :span="17"><a-input placeholder="e.gu: gu4985" v-model="representativePermanentAddress.postCode" /></a-col>
+                    <a-col :span="17"><a-input placeholder="e.gu: gu4985" v-model="personalInformation.personal.postCode" /></a-col>
                     <a-col :span="7"><a-button class="" shape="round" type="primary">Find Address</a-button></a-col>
                   </a-row>
                 </a-col> -->
@@ -284,8 +300,9 @@
                       <div class="mb-2">
                         <a-icon
                           v-if="
-                            representativePermanentAddress.country &&
-                            representativePermanentAddress.city
+                            personalInformation.personal
+                              .per_permanent_country &&
+                            personalInformation.personal.per_permanent_city
                           "
                           class="color-success mr-2 fs-18 fw-500"
                           type="check"
@@ -301,7 +318,9 @@
                             option-filter-prop="children"
                             :filter-option="filterOption"
                             :showArrow="true"
-                            v-model="representativePermanentAddress.country"
+                            v-model="
+                              personalInformation.personal.per_permanent_country
+                            "
                             class="select-ma w-100"
                             placeholder="Select Country"
                             @change="onChangeCountryPermanent"
@@ -310,7 +329,9 @@
                               :value="value"
                               :key="key"
                               style="width: 100px"
-                              v-for="(value, key) in countries"
+                              v-for="(
+                                value, key
+                              ) in representativeDetails.countries"
                             >
                               {{ value.name }}
                             </a-select-option>
@@ -326,19 +347,20 @@
                             option-filter-prop="children"
                             :filter-option="filterOption"
                             :showArrow="true"
-                            v-model="representativePermanentAddress.city"
+                            v-model="
+                              personalInformation.personal.per_permanent_city
+                            "
                             class="select-ma w-100"
                             placeholder="Select City"
-                            @change="
-                              (value) =>
-                                (representativePermanentAddress.city = value)
-                            "
+                            @change="onValueChange($event, 'contact')"
                           >
                             <a-select-option
                               :value="value"
                               :key="key"
                               style="width: 100px"
-                              v-for="(value, key) in cities2"
+                              v-for="(
+                                value, key
+                              ) in representativeDetails.cities"
                             >
                               {{ value.name }}
                             </a-select-option>
@@ -352,13 +374,14 @@
                       <a-input
                         class="w-100 mt-2"
                         v-if="
-                          representativePermanentAddress.country == 'Other' ||
-                          representativePermanentAddress.city == 'Other'
+                          personalInformation.personal.per_permanent_country ==
+                            'Other' ||
+                          personalInformation.personal.per_permanent_city ==
+                            'Other'
                         "
                         placeholder="Please specify"
                         @change="
-                          (value) =>
-                            (representativePermanentAddress.other = value)
+                          onValueChange($event, 'per_permanent_city', 'contact')
                         "
                       />
                     </a-col>
@@ -375,7 +398,9 @@
                     <a-col :span="12">
                       <div class="mb-2">
                         <a-icon
-                          v-if="representativePermanentAddress.postCode"
+                          v-if="
+                            personalInformation.personal.per_permanent_post_code
+                          "
                           class="color-success mr-2 fs-18 fw-500"
                           type="check"
                         />Post Code
@@ -392,7 +417,16 @@
                       <a-input
                         class="w-100 mt-2"
                         placeholder="Please specify"
-                        v-model="representativePermanentAddress.postCode"
+                        v-model="
+                          personalInformation.personal.per_permanent_post_code
+                        "
+                        @blur="
+                          onValueChange(
+                            $event,
+                            'per_permanent_post_code',
+                            'contact'
+                          )
+                        "
                       />
                     </a-col>
                   </a-row>
@@ -408,7 +442,9 @@
                     <a-col :span="12">
                       <div class="mb-2">
                         <a-icon
-                          v-if="representativePermanentAddress.homeAddress"
+                          v-if="
+                            personalInformation.personal.per_permanent_address
+                          "
                           class="color-success mr-2 fs-18 fw-500"
                           type="check"
                         />Home Address
@@ -426,7 +462,16 @@
                         <a-textarea
                           placeholder="Sample text here"
                           :rows="4"
-                          v-model="representativePermanentAddress.homeAddress"
+                          v-model="
+                            personalInformation.personal.per_permanent_address
+                          "
+                          @blur="
+                            onValueChange(
+                              $event,
+                              'per_permanent_address',
+                              'contact'
+                            )
+                          "
                         />
                       </template>
                     </a-col>
@@ -440,7 +485,7 @@
                 <a-col :span="12">
                   <div class="mb-2">
                     <a-icon
-                      v-if="phoneNumber && phoneNumber.length > 10"
+                      v-if="personalInformation.personal.mobile_number"
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
                     />What is your Phone number?
@@ -458,7 +503,8 @@
                     class="w-100"
                     placeholder="+8801685117737"
                     id="inputNumber"
-                    v-model="phoneNumber"
+                    v-model="personalInformation.personal.mobile_number"
+                    @blur="onValueChange($event, 'mobile_number', 'contact')"
                   />
                 </a-col>
               </a-row>
@@ -579,61 +625,75 @@
 import DropdownDatePicker from "vue-dropdown-datepicker";
 import ApiService from "../../services/api.service";
 export default {
-  props: ["activePanel", "repData"],
+  props: {
+    representativeDetails: {
+      type: Object,
+    },
+    personalInformation: {
+      type: Object,
+    },
+  },
   name: "personInfoRefTwo",
   components: {
     DropdownDatePicker,
   },
   data() {
     return {
-      rules: [],
-      representativeInfo: {
-        gender: undefined,
-        dob: undefined,
-        occupation: undefined,
-        ocupationOther: undefined,
-      },
-      representativeResidence: {
-        country: undefined,
-        city: undefined,
-        specifiedAddress: undefined,
-      },
-      representativePermanentAddress: {
-        postCode: undefined,
-        country: undefined,
-        city: undefined,
-        homeAddress: undefined,
-        other: undefined,
-      },
+      activeKey: ["1"],
+      rules: {},
+      default_date: null,
       phoneNumber: undefined,
-      emailAddress: this.$store.state.user.user.email,
-      dobFromDatePicker: undefined,
-      activeKey: "1",
-
-      default_date: undefined,
-
-      countries: [],
-      cities1: [],
-      cities2: [],
-
-      occupations: [],
     };
   },
-  watch: {
-    repData(newValue, preValue) {
-      console.log(newValue);
-      this.$forceUpdate();
-    },
-  },
-  beforeUpdate() {
-    // console.log(this.repData)
-  },
-  async mounted() {
-    this.setPersonalInfoRepData();
-    this.getCountries();
-    this.getOccupations();
-  },
+
+  async mounted() {},
   methods: {
+    onValueChange(e, name, action) {
+      if (action === "essential") {
+        this.personalInformation.essential[name] = e;
+      } else {
+        this.personalInformation.personal[name] = e;
+      }
+      this.save(action);
+    },
+    async saveEssentialInfo() {
+      await this.$store
+        .dispatch("createPersonalInfoForRepresentative", {
+          ...this.personalInformation.essential,
+        })
+        .then((data) => {
+          this.$emit("valueChange", {
+            value: this.personalInformation,
+            current: 0,
+          });
+        })
+        .catch((error) => {});
+    },
+    async saveContactInfo() {
+      await this.$store
+        .dispatch(
+          "creatContactInfoForRepresentative",
+          this.personalInformation.personal
+        )
+        .then((data) => {
+          this.$emit("valueChange", {
+            value: this.personalInformation,
+            current: 1,
+          });
+        })
+        .catch((error) => {});
+    },
+    save(action) {
+      switch (action) {
+        case "essential":
+          this.saveEssentialInfo();
+          break;
+
+        case "contact":
+          this.saveContactInfo();
+          break;
+      }
+    },
     filterOption(input, option) {
       return (
         option.componentOptions.children[0].text
@@ -641,103 +701,16 @@ export default {
           .indexOf(input.toLowerCase()) >= 0
       );
     },
-    async getOccupations() {
-      let occupationObject = [];
-      await ApiService.get("v1/occupations")
-        .then((data) => {
-          // console.log(data);
-          occupationObject = data.data.data.occupations;
-        })
-        .catch((error) => {
-          console.log(error);
-          console.log(error.response);
-        });
-      for (const [key, _occupation] of Object.entries(occupationObject)) {
-        this.occupations.push(_occupation);
-      }
-    },
-    async getCountries() {
-      let ccObject;
-      await ApiService.get("v1/utilities/countries")
-        .then((data) => {
-          // console.log(data);
-          ccObject = data.data.data;
-        })
-        .catch((error) => {
-          console.log(error);
-          console.log(error.response);
-        });
-      ccObject.map((_countries) => {
-        this.countries.push(_countries);
-      });
-    },
-    async setPersonalInfoRepData() {
-      console.log("Getting called");
-      // console.log(this.repData);
-      if (this.repData) {
-        if (this.repData.per_gender != null) {
-          if (this.repData.per_gender == 1) {
-            this.representativeInfo.gender = "Male";
-          } else if (this.repData.per_gender == 2) {
-            this.representativeInfo.gender = "Female";
-          }
-        }
 
-        // for setting value
-        if (this.repData.dob != null) {
-          this.default_date = this.repData.dob;
-          this.dobFromDatePicker = this.repData.dob;
-        } else {
-          this.default_date = undefined;
-        }
-
-        if (this.repData.per_occupation != null) {
-          this.representativeInfo.occupation = this.repData.per_occupation;
-        }
-
-        if (this.repData.per_current_residence_country != null) {
-          this.representativeResidence.country =
-            this.repData.per_current_residence_country;
-        }
-
-        if (this.repData.per_current_residence_city != null) {
-          this.representativeResidence.city =
-            this.repData.per_current_residence_city;
-        }
-
-        if (this.repData.per_permanent_country != null) {
-          this.representativePermanentAddress.country =
-            this.repData.per_permanent_country;
-        }
-
-        if (this.repData.per_permanent_city != null) {
-          this.representativePermanentAddress.city =
-            this.repData.per_permanent_city;
-        }
-
-        if (this.repData.per_permanent_post_code != null) {
-          this.representativePermanentAddress.postCode =
-            this.repData.per_permanent_post_code;
-        }
-
-        if (this.repData.per_permanent_address != null) {
-          this.representativePermanentAddress.homeAddress =
-            this.repData.per_permanent_address;
-        }
-
-        if (this.repData.per_telephone_no != null)
-          this.phoneNumber = this.repData.per_telephone_no;
-      }
-    },
     onChangeDD(d, m, y) {
-      console.log(this.dobFromDatePicker);
+      this.save("essential");
     },
     onChangePanel(e) {
       this.activeKey = e;
       this.$emit("pannelChanged", e);
     },
     onChangeCountryResidence(value) {
-      this.representativeResidence.country = value;
+      this.personalInformation.personal.country = value;
       this.countries.map((_country) => {
         if (_country.name == value) {
           this.cities1 = _country.cities;
@@ -745,7 +718,7 @@ export default {
       });
     },
     onChangeCountryPermanent(value) {
-      this.representativePermanentAddress.country = value;
+      this.personalInformation.personal.country = value;
       this.countries.map((_country) => {
         if (_country.name == value) {
           this.cities2 = _country.cities;
@@ -753,12 +726,6 @@ export default {
       });
     },
   },
-
-  // watch: {
-  //   activeKey(val) {
-  //     console.log(val);
-  //   },
-  // },
 };
 </script>
 

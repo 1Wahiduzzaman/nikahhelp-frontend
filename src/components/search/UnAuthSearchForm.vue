@@ -25,9 +25,11 @@
         <SelectGroup
           @selected="onDropdownChange"
           :uniqueNames="['min_age', 'max_age']"
+          :size="'large'"
           :options="ageTV"
           :placeholder="'Age'"
           :width="'120'"
+          :suffixIcon="'true'"
           :values="[searchModel.min_age, searchModel.max_age]"
         />
       </div>
@@ -39,7 +41,9 @@
           :uniqueNames="['heightMin', 'heightMax']"
           :options="heightTV"
           :placeholder="'Height'"
+           :size="'large'"
           :width="'120'"
+          :suffixIcon="'true'"
         />
       </div>
 

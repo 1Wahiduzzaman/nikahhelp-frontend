@@ -1,5 +1,5 @@
 <template>
-  <div class="verificationInfo p-3 rounded" style="background: #f4f4f9">
+  <div  class="verificationInfo p-3 rounded" style="background: #f4f4f9">
     <div class="verification-content" style="margin-top: 40px">
       <a-collapse
         default-active-key="1"
@@ -10,7 +10,13 @@
           <a-icon type="caret-down" :rotate="props.isActive ? 180 : 0" />
         </template>
         <a-collapse-panel key="1" header="1. Essential Information">
-          <form class="form-ma">
+          <a-form-model
+            v-if="verification"
+            ref="verification"
+            :model="verification"
+            :rules="rules"
+            class="form-ma"
+          >
             <div
               class="verification-header"
               style="color: rgba(0, 0, 0, 0.65); margin: 10px 0px"
@@ -88,7 +94,7 @@
 								</a-row>
 							</a-col> -->
 
-              <div v-if="is_document_upload">
+              <div>
                 <a-col :span="24">
                   <!-- <a-row class="form-item py-3" :gutter="[16]" type="flex" justify="between" align="top"> -->
                   <a-row
@@ -100,7 +106,7 @@
                     <a-col :span="12">
                       <div class="mb-2">
                         <a-icon
-                          v-if="ver_country"
+                          v-if="verification.ver_country"
                           class="color-success mr-2 fs-18 fw-500"
                           type="check"
                         />Country
@@ -116,69 +122,63 @@
                     <a-col :span="12">
                       <a-row :gutter="[8]">
                         <a-col :span="12">
-                          <a-select
-                            :showSearch="true"
-                            option-filter-prop="children"
-                            :filter-option="filterOption"
-                            :showArrow="true"
-                            v-model="ver_country"
-                            class="select-ma w-100"
-                            placeholder="Country"
-                            @change="onChangeCountry"
+                          <a-form-model-item
+                            ref="ver_country"
+                            prop="ver_country"
                           >
-                            <a-select-option
-                              v-for="(
-                                _country, key
-                              ) in candidateDetails.countries"
-                              :value="_country"
-                              :key="key"
+                            <a-select
+                              id="ver_country"
+                              :showSearch="true"
+                              option-filter-prop="children"
+                              :filter-option="filterOption"
+                              :showArrow="true"
+                              v-model="verification.ver_country"
+                              class="select-ma w-100"
+                              placeholder="Country"
+                              ref="select"
+                              @change="onChangeCountry"
                             >
-                              {{ _country.name }}
-                            </a-select-option>
-                            <!-- <template v-for="_country in countries">
-                              <a-select-option :value="_country.name">
+                              <a-select-option
+                                v-for="(
+                                  _country, key
+                                ) in candidateDetails.countries"
+                                :value="_country.id"
+                                :key="key"
+                              >
                                 {{ _country.name }}
                               </a-select-option>
-                            </template> -->
-                            <!-- <a-select-option value="Other">
-                            Other
-                          </a-select-option> -->
-                          </a-select>
+                            </a-select>
+                          </a-form-model-item>
                         </a-col>
                         <a-col :span="12">
-                          <a-select
-                            :showSearch="true"
-                            option-filter-prop="children"
-                            :filter-option="filterOption"
-                            :showArrow="true"
-                            v-model="ver_city"
-                            class="select-ma w-100"
-                            placeholder="City"
-                            @change="(value) => (ver_city = value)"
-                          >
-                            <!-- <template v-for="_city in cities1">
-                              <a-select-option :value="_city.name">
+                          <a-form-model-item ref="ver_city" prop="ver_city">
+                            <a-select
+                              id="ver_city"
+                              :showSearch="true"
+                              option-filter-prop="children"
+                              :filter-option="filterOption"
+                              :showArrow="true"
+                              v-model="verification.ver_city"
+                              class="select-ma w-100"
+                              placeholder="City"
+                              @change="onValueChange"
+                            >
+                              <a-select-option
+                                v-for="(_city, key) in cities"
+                                :value="_city.id"
+                                :key="key"
+                              >
                                 {{ _city.name }}
                               </a-select-option>
-                            </template> -->
-                            <a-select-option
-                              v-for="(_city, key) in candidateDetails.cities"
-                              :value="_city"
-                              :key="key"
-                            >
-                              {{ _city.name }}
-                            </a-select-option>
-                            <!-- <a-select-option value="Other">
-                            Other
-                          </a-select-option> -->
-                          </a-select>
+                            </a-select>
+                          </a-form-model-item>
                         </a-col>
                       </a-row>
-                      <a-input
+                      <!-- <a-input
                         class="w-100 mt-2"
                         placeholder="Please specify"
                         v-if="ver_city == 'Other'"
-                      />
+                      /> -->
                     </a-col>
                   </a-row>
                 </a-col>
@@ -188,7 +188,7 @@
                     <a-col :span="12">
                       <div class="mb-2">
                         <a-icon
-                          v-if="ver_document_type"
+                          v-if="verification.ver_document_type"
                           class="color-success mr-2 fs-18 fw-500"
                           type="check"
                         />Document type?
@@ -203,9 +203,10 @@
                     </a-col>
                     <a-col :span="12">
                       <a-select
-                        v-model="ver_document_type"
+                        v-model="verification.ver_document_type"
                         class="select-ma w-100"
                         placeholder="Document type"
+                        @change="onValueChange"
                       >
                         <a-select-option value="Passport">
                           Passport
@@ -223,7 +224,7 @@
                     <a-col :span="12">
                       <div class="mb-2">
                         <a-icon
-                          v-if="imageUrlFront"
+                          v-if="verification.ver_image_front"
                           class="color-success mr-2 fs-18 fw-500"
                           type="check"
                         />Upload front side?
@@ -237,7 +238,7 @@
                       </a-tooltip>
                     </a-col>
                     <a-col :span="12">
-                      <div class="text-center">
+                      <div class="image-container text-center">
                         <span class="mb-2"
                           >The format supported are JPEG, PNG, PDF. Maximum file
                           size 2 mb</span
@@ -245,18 +246,21 @@
                         <span
                           @click="clearImg('font')"
                           class="close-icon"
-                          v-if="frontPageSrc"
+                          v-if="verification.ver_image_front"
                           ><img src="@/assets/icon/close.svg" alt="img"
                         /></span>
                         <div class="img-preview mb-2">
                           <img
-                            :src="frontPageSrc"
+                            :src="verification.ver_image_front"
                             width="180"
                             height="200"
-                            v-if="frontPageSrc"
+                            v-if="verification.ver_image_front"
                           />
                           <div class="mt-3">Front Page</div>
-                          <div class="mt-4" v-if="!frontPageSrc">
+                          <div
+                            class="mt-4"
+                            v-if="!verification.ver_image_front"
+                          >
                             <a-icon
                               type="plus-circle"
                               :style="{ fontSize: '80px', color: '#aaa' }"
@@ -279,7 +283,7 @@
                     <a-col :span="12">
                       <div class="mb-2">
                         <a-icon
-                          v-if="imageUrlBack"
+                          v-if="verification.ver_image_back"
                           class="color-success mr-2 fs-18 fw-500"
                           type="check"
                         />Upload back side?
@@ -293,7 +297,7 @@
                       </a-tooltip>
                     </a-col>
                     <a-col :span="12">
-                      <div class="text-center">
+                      <div class="image-container text-center">
                         <span class="mb-2"
                           >The format supported are JPEG, PNG, PDF. Maximum file
                           size 2 mb</span
@@ -301,19 +305,19 @@
                         <span
                           @click="clearImg('back')"
                           class="close-icon"
-                          v-if="backPageSrc"
+                          v-if="verification.ver_image_back"
                           ><img src="@/assets/icon/close.svg" alt="img"
                         /></span>
                         <div class="img-preview mb-2">
                           <img
-                            :src="backPageSrc"
+                            :src="verification.ver_image_back"
                             width="180"
                             height="200"
-                            v-if="backPageSrc"
+                            v-if="verification.ver_image_back"
                           />
 
                           <div class="mt-3">Back Page</div>
-                          <div class="mt-4" v-if="!backPageSrc">
+                          <div class="mt-4" v-if="!verification.ver_image_back">
                             <a-icon
                               type="plus-circle"
                               :style="{ fontSize: '80px', color: '#aaa' }"
@@ -336,7 +340,7 @@
                     <a-col :span="12">
                       <div class="mb-2">
                         <a-icon
-                          v-if="ver_recommender_title"
+                          v-if="verification.ver_recommender_title"
                           class="color-success mr-2 fs-18 fw-500"
                           type="check"
                         />Person of community standing who know you?
@@ -352,88 +356,99 @@
                     <a-col :span="12">
                       <a-row :gutter="[8, 8]">
                         <a-col :span="24">
-                          <a-input
-                            v-model="ver_recommender_title"
-                            class="w-100"
-                            placeholder="Title"
-                            @change="
-                              ver_recommender_title = $event.target.value
-                            "
-                          />
+                          <a-form-model-item
+                            ref="ver_recommences_title"
+                            prop="ver_recommences_title"
+                          >
+                            <a-input
+                              v-model="verification.ver_recommences_title"
+                              class="w-100"
+                              placeholder="Title"
+                              @blur="onValueChange"
+                            />
+                          </a-form-model-item>
                         </a-col>
                         <a-col :span="12">
-                          <a-input
-                            v-model="ver_recommender_first_name"
-                            class="w-100 rounded-right"
-                            placeholder="First Name"
-                            @change="
-                              ver_recommender_first_name = $event.target.value
-                            "
-                          />
+                          <a-form-model-item
+                            ref="ver_recommences_first_name"
+                            prop="ver_recommences_first_name"
+                          >
+                            <a-input
+                              v-model="verification.ver_recommences_first_name"
+                              class="w-100 rounded-right"
+                              placeholder="First Name"
+                              @blur="onValueChange"
+                            />
+                          </a-form-model-item>
                         </a-col>
                         <a-col :span="12">
-                          <a-input
-                            v-model="ver_recommender_last_name"
-                            class="w-100 rounded-left"
-                            placeholder="Last Name"
-                            @change="
-                              ver_recommender_last_name = $event.target.value
-                            "
-                          />
+                          <a-form-model-item
+                            ref="ver_recommences_last_name"
+                            prop="ver_recommences_last_name"
+                          >
+                            <a-input
+                              v-model="verification.ver_recommences_last_name"
+                              class="w-100 rounded-left"
+                              placeholder="Last Name"
+                              @blur="onValueChange"
+                            />
+                          </a-form-model-item>
                         </a-col>
                         <a-col :span="24">
-                          <a-select
-                            :showSearch="true"
-                            option-filter-prop="children"
-                            :filter-option="filterOption"
-                            :showArrow="true"
-                            v-model="ver_recommender_occupation"
-                            class="select-ma w-100"
-                            placeholder="Occupation"
-                            @change="ver_recommender_occupation = $event"
+                          <a-form-model-item
+                            ref="ver_recommences_occupation"
+                            prop="ver_recommences_occupation"
                           >
-                            <!-- <template v-for="_occupation in occupations">
-                              <a-select-option :value="_occupation">
+                            <a-select
+                              id="ver_recommences_occupation"
+                              :showSearch="true"
+                              option-filter-prop="children"
+                              :filter-option="filterOption"
+                              :showArrow="true"
+                              v-model="verification.ver_recommences_occupation"
+                              class="select-ma w-100"
+                              placeholder="Occupation"
+                              @change="onValueChange"
+                            >
+                              <a-select-option
+                                v-for="(
+                                  _occupation, key
+                                ) in candidateDetails.occupations"
+                                :value="_occupation"
+                                :key="key"
+                              >
                                 {{ _occupation }}
                               </a-select-option>
-                            </template> -->
-                            <a-select-option
-                              v-for="(
-                                _occupation, key
-                              ) in candidateDetails.occupations"
-                              :value="_occupation"
-                              :key="key"
-                            >
-                              {{ _occupation }}
-                            </a-select-option>
-                            <!-- <a-select-option value="Other">
-                            Other
-                          </a-select-option> -->
-                          </a-select>
+                            </a-select>
+                          </a-form-model-item>
                         </a-col>
-                        <!-- <a-col :span="24">
-                          <a-input
-                            class="w-100"
-                            placeholder="Please specify"
-                            @change="
-                              ver_recommender_occupation = $event.target.value
-                            "
-                          />
-                        </a-col> -->
+
                         <a-col :span="24">
-                          <a-textarea
-                            placeholder="Address"
-                            :rows="4"
-                            v-model="ver_recommender_address"
-                          />
+                          <a-form-model-item
+                            ref="ver_recommences_address"
+                            prop="ver_recommences_address"
+                          >
+                            <a-textarea
+                              placeholder="Address"
+                              :rows="4"
+                              v-model="verification.ver_recommences_address"
+                              @blur="onValueChange"
+                            />
+                          </a-form-model-item>
                         </a-col>
                         <a-col :span="24">
-                          <a-input-number
-                            class="w-100"
-                            id="inputNumber"
-                            placeholder="Mobile number"
-                            v-model="ver_recommender_mobile_no"
-                          />
+                          <a-form-model-item
+                            ref="ver_recommences_mobile_no"
+                            prop="ver_recommences_mobile_no"
+                          >
+                            <a-input-number
+                              class="w-100"
+                              id="inputNumber"
+                              placeholder="Mobile number"
+                              v-model="verification.ver_recommences_mobile_no"
+                              @blur="onValueChange"
+                            />
+                          </a-form-model-item>
                         </a-col>
                       </a-row>
                     </a-col>
@@ -441,7 +456,7 @@
                 </a-col>
               </div>
             </a-row>
-          </form>
+          </a-form-model>
         </a-collapse-panel>
       </a-collapse>
     </div>
@@ -456,11 +471,18 @@ import FileUploadOne from "@/components/shared/FileUploadOne.vue";
 import ApiService from "../../services/api.service";
 export default {
   name: "Verification",
-  props: ["candidateDetails"],
+  props: {
+    candidateDetails: {
+      type: Object,
+    },
+    verification: {
+      type: Object,
+    },
+  },
   components: {
     FileUploadOne,
   },
-  
+
   created() {
     // console.log(this.handleChangeFromProp)
     console.log(this.repData);
@@ -472,42 +494,34 @@ export default {
   },
   data() {
     return {
-      imageUrlFront: null,
-      imageUrlBack:null,
-      confirmationChecked: true,
-      is_document_upload: true,
-      ver_country: undefined,
-      ver_city: undefined,
-      ver_document_type: undefined,
-      ver_document_frontside: undefined,
-      ver_document_backside: undefined,
-      ver_recommender_title: undefined,
-      ver_recommender_first_name: undefined,
-      ver_recommender_last_name: undefined,
-      ver_recommender_occupation: undefined,
-      ver_recommender_address: undefined,
-      ver_recommender_mobile_no: undefined,
-
-      frontPage: "",
-      frontPageSrc: "" || this.imageUrlFront,
-      backPage: "",
-      backPageSrc: "" || this.imageUrlBack,
-
-      countries: [],
-      cities1: [],
-      cities2: [],
-
-      occupations: [],
+      rules: {},
+      cities: [],
     };
   },
 
   methods: {
-    filterOption(input, option) {
+   filterOption(input, option) {
       return (
-        option.componentOptions.children[0].text
+        option.componentOptions.children[0].text.trim()
           .toLowerCase()
-          .indexOf(input.toLowerCase()) >= 0
+          .startsWith(input.toLowerCase())
       );
+    },
+    onValueChange(e) {
+      this.saveVerificationInfo();
+    },
+    saveVerificationInfo() {
+      this.$store
+        .dispatch("saveVerificationInfo", {
+          ...this.verification,
+        })
+        .then((data) => {
+          this.$emit("valueChange", {
+            value: this.verification,
+            current: 2,
+          });
+        })
+        .catch((error) => {});
     },
     imageSizeCheck(file) {
       if (file["size"] > 2111775) {
@@ -530,7 +544,8 @@ export default {
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
-        this.frontPageSrc = e.target.result;
+        this.verification.ver_image_front = e.target.result;
+        this.saveVerificationInfo();
       };
     },
     getBackPage(e) {
@@ -543,88 +558,19 @@ export default {
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
-        this.backPageSrc = e.target.result;
+        this.verification.ver_image_back = e.target.result;
+        this.saveVerificationInfo();
       };
     },
-    async getCountries() {
-      let ccObject;
-      await ApiService.get("v1/utilities/countries")
-        .then((data) => {
-          // console.log(data);
-          ccObject = data.data.data;
-        })
-        .catch((error) => {
-          console.log(error);
-          console.log(error.response);
-        });
-      ccObject.map((_countries) => {
-        this.countries.push(_countries);
-      });
-    },
-    async getOccupations() {
-      let occupationObject = [];
-      await ApiService.get("v1/occupations")
-        .then((data) => {
-          // console.log(data);
-          occupationObject = data.data.data.occupations;
-        })
-        .catch((error) => {
-          console.log(error);
-          console.log(error.response);
-        });
-      for (const [key, _occupation] of Object.entries(occupationObject)) {
-        this.occupations.push(_occupation);
-      }
-    },
-    setPersonalInfoRepData() {
-      console.log("Rep Data Called");
-      console.log(this.repData);
-      if (this.repData) {
-        if (this.repData.is_document_upload != null)
-          this.is_document_upload = true;
 
-        if (this.repData.ver_country != null)
-          this.ver_country = this.repData.ver_country;
-
-        if (this.repData.ver_city != null)
-          this.ver_city = this.repData.ver_city;
-
-        if (this.repData.ver_document_type != null)
-          this.ver_document_type = this.repData.ver_document_type;
-
-        if (this.repData.ver_recommender_title != null)
-          this.ver_recommender_title = this.repData.ver_recommender_title;
-
-        if (this.repData.ver_recommender_first_name != null)
-          this.ver_recommender_first_name =
-            this.repData.ver_recommender_first_name;
-
-        if (this.repData.ver_recommender_last_name != null)
-          this.ver_recommender_last_name =
-            this.repData.ver_recommender_last_name;
-
-        if (this.repData.ver_recommender_occupation != null)
-          this.ver_recommender_occupation =
-            this.repData.ver_recommender_occupation;
-
-        if (this.repData.ver_recommender_address != null)
-          this.ver_recommender_address = this.repData.ver_recommender_address;
-
-        if (this.repData.ver_recommender_mobile_no != null)
-          this.ver_recommender_mobile_no =
-            this.repData.ver_recommender_mobile_no;
-      }
-    },
-    // onConfirmationSwitchChnaged(checked) {
-    // 	this.is_document_upload = checked;
-    // },
     onChangeCountry(value) {
-      this.ver_country = value;
-      this.countries.map((_country) => {
-        if (_country.name == value) {
-          this.cities1 = _country.cities;
-        }
-      });
+      // this.ver_country = value;
+      // this.countries.map((_country) => {
+      //   if (_country.name == value) {
+      //     this.cities1 = _country.cities;
+      //   }
+      // });
+      this.saveVerificationInfo();
     },
     clearImg(action) {
       switch (action) {
@@ -643,6 +589,12 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+.image-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .ant-tooltip-inner {
   border-radius: 0px;
 }
