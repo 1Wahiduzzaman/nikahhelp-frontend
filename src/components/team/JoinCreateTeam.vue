@@ -1,7 +1,7 @@
 <template>
 	<div class="col-lg-4 col-xl-12 col-md-4 col-sm-12">
-		<a-card class="team-card" style="min-height: 500px">
-			<a-row style="margin-top: 5%">
+		<a-card class="team-card text-center" style="min-height: 500px">
+			<a-row>
 				<a-col :span="24">
 					<a-col :span="24"
 						><img
@@ -11,18 +11,6 @@
 							width="200"
 							height="200"
 						/>
-						<!-- <img
-							class="group-logo"
-							src="@/assets/Icons/Join a team or Create a team.svg"
-							alt=""
-							width="200"
-							height="200"
-							style="
-								border: 5px #6158a7 solid;
-								border-radius: 50%;
-								padding: 15px;
-							"
-						/> -->
 					</a-col>
 				</a-col>
 			</a-row>
@@ -32,19 +20,16 @@
 					<div class="space-align-block">
 						<a-space align="center">
 							<a-button class="confirm-button" v-on:click="$emit('joinATeam')"
-								>Join A Team
+								>Join a team
 							</a-button>
 						</a-space>
 					</div>
-					<!--        <hr>-->
-					<!--        <br>-->
-					<p style="text-align: center; padding-top: 8px">or</p>
-					<!--        <hr>-->
+					<p class="text-center pt-2">or</p>
 
 					<div class="space-align-block">
 						<a-space align="center">
 							<a-button class="confirm-button" v-on:click="$emit('createATeam')"
-								>Create A Team
+								>Create a team
 							</a-button>
 						</a-space>
 					</div>
@@ -73,6 +58,7 @@
 
 .group-logo {
 	width: 80px;
+  height: 120px;
 	margin-bottom: 10px;
 }
 
@@ -115,6 +101,7 @@
 	border-radius: 10px;
 	background-color: #ffffff;
 	box-shadow: 0px 0px 10px 1px rgba(63, 6, 17, 0.3);
+  text-align: center;
 
 	.team-card-header {
 		background-color: #ffffff;

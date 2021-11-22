@@ -29,42 +29,7 @@
               </a-button>
             </template>
           </a-modal>
-          <div class="bg-white d-flex team-short-cards align-items-center mt-4 position-relative">
-            <h4 class="text-primary bg-white">Total</h4>
-            <div class="team-short-infos d-flex position-relative">
-              <div class="position-absolute d-flex">
-                <div class="d-flex align-items-center team-short-info">
-                  <div class="team-count-box d-flex justify-content-center align-items-center text-white">2</div>
-                  <h4 class="color-brand team-short-info-text ml-2">Team</h4>
-                </div>
-                <div class="d-flex align-items-center team-short-info">
-                  <div class="team-count-box d-flex justify-content-center align-items-center text-white">500</div>
-                  <h4 class="color-brand team-short-info-text ml-2">View</h4>
-                </div>
-                <div class="d-flex align-items-center team-short-info">
-                  <div class="team-count-box d-flex justify-content-center align-items-center text-white">300</div>
-                  <h4 class="color-brand team-short-info-text ml-2">Unseen <br> Message</h4>
-                </div>
-                <div class="d-flex align-items-center team-short-info">
-                  <div class="team-count-box d-flex justify-content-center align-items-center text-white">300</div>
-                  <h4 class="color-brand team-short-info-text ml-2">Unseen <br> Notification</h4>
-                </div>
-                <div class="d-flex align-items-center team-short-info">
-                  <div class="team-count-box d-flex justify-content-center align-items-center text-white">300</div>
-                  <h4 class="color-brand team-short-info-text ml-2">Connection <br> Request</h4>
-                </div>
-                <div class="d-flex align-items-center team-short-info">
-                  <div class="team-count-box d-flex justify-content-center align-items-center text-white">300</div>
-                  <h4 class="color-brand team-short-info-text ml-2">Connection <br> Awaiting</h4>
-                </div>
-                <div class="d-flex align-items-center team-short-info">
-                  <div class="team-count-box d-flex justify-content-center align-items-center text-white">300</div>
-                  <h4 class="color-brand team-short-info-text ml-2">Profile <br> Suggestion</h4>
-                </div>
-              </div>
-            </div>
-            <h4 class="banner-active-team">Team 1 <br> Active Now</h4>
-          </div>
+          <Banner />
 					<a-row :gutter="16">
 						<div class="row justify-content-md-center">
 							<TeamDetailsCard
@@ -122,11 +87,13 @@ import JoinTeam from "@/components/team/JoinTeam.vue";
 import CreateTeamPage1 from "@/components/team/CreateTeamPage1.vue";
 import JoinCreateTeam from "@/components/team/JoinCreateTeam.vue";
 import TeamDetailsCard from "@/components/team/TeamDetailsCard.vue";
-import Layout from '@/views/design/Layout'
+import Layout from '@/views/design/Layout';
+import Banner from "@/components/team/Banner.vue";
 
 export default {
 	name: "ManageTeam",
 	components: {
+    Banner,
 		Layout,
 		JoinTeam,
 		JoinCreateTeam,
@@ -296,40 +263,6 @@ export default {
     word-spacing: 0.1em;
     font-weight: 400;
     color: #aaa;
-  }
-}
-.team-short-cards {
-  .team-short-infos {
-    border-radius: 10px;
-    width: 100%;
-    border: 1px solid $bg-primary;
-    padding: .5rem;
-    height: 55px;
-    .position-absolute {
-      top: 2px;
-      z-index: 9;
-      .team-count-box {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background: $bg-primary;
-        outline: 2px solid $bg-primary;
-        outline-offset: 2px;
-      }
-      .team-short-info {
-        margin-left: 1rem;
-        .team-short-info-text {
-          font-size: 16px;
-          font-style: normal;
-        }
-      }
-    }
-  }
-  .banner-active-team {
-    font-size: 16px;
-    border-left: 1px solid $bg-brand;
-    margin-left: 0.5rem;
-    padding-left: .5rem;
   }
 }
 </style>
