@@ -39,41 +39,33 @@
 								:index="teamIndex"
 								@teamListUpdated="loadTeams"
 							/>
-							<a-col
-								:span="8"
-								v-if="joinCreateTeamShow"
-								class="d-flex"
-								style="margin-top: 20px"
-							>
-								<JoinCreateTeam
-									@joinATeam="
+              <JoinCreateTeam
+                  v-if="joinCreateTeamShow"
+                  class="d-flex"
+                  style="margin-top: 20px"
+                  @joinATeam="
 										joinCreateTeamShow = false;
 										joinTeamShow = true;
 									"
-									@createATeam="
+                  @createATeam="
 										joinCreateTeamShow = false;
 										createTeamShow = true;
 									"
-								/>
-							</a-col>
-
-							<a-col :span="8" v-if="joinTeamShow">
-								<JoinTeam
-									@cancel_button="
+              />
+              <JoinTeam
+                  v-if="joinTeamShow"
+                  @cancel_button="
 										joinCreateTeamShow = true;
 										joinTeamShow = false;
 									"
-								/>
-							</a-col>
-
-							<a-col :span="8" v-if="createTeamShow">
-								<CreateTeamPage1
-									@cancel_button="
+              />
+              <CreateTeamPage1
+                  v-if="createTeamShow"
+                  @cancel_button="
 										joinCreateTeamShow = true;
 										createTeamShow = false;
 									"
-								/>
-							</a-col>
+              />
 						</div>
 					</a-row>
 				</div>

@@ -1,5 +1,5 @@
 <template>
-	<div class="col-lg-4 col-xl-12 col-md-4 col-sm-12">
+	<div class="col-lg-6 col-xl-4">
 		<a-card class="team-card text-center" style="min-height: 500px">
 			<a-row>
 				<a-col :span="24">

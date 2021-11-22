@@ -1,45 +1,47 @@
 <template>
-	<a-card class="card-container" style="padding-bottom: 50px">
-		<a-row>
-			<a-col :span="24">
-				<a-col :span="24"
-					><img
-						class="group-logo"
-						src="@/assets/Icons/Create a team.svg"
-						alt=""
-				/></a-col>
-				<a-col :span="24"><span class="card-title">Create a team</span></a-col>
-			</a-col>
-		</a-row>
-		<a-row>
-			<a-divider />
-		</a-row>
-		<a-row>
-			<a-input
-				v-model="$store.state.team.team_name"
-				size="large"
-				class="team-name-input"
-				placeholder="Team name"
-			/>
-		</a-row>
-		<a-row>
-			<a-textarea
-				class="team-description"
-				placeholder="Team description"
-				:auto-size="{ minRows: 3, maxRows: 5 }"
-				v-model="$store.state.team.team_description"
-			/>
-		</a-row>
-		<a-row>
-			<a-button class="next-button" @click="goNext">Next</a-button>
-			<a-button
-				class="next-button"
-				style="margin-right: 10px"
-				v-on:click="$emit('cancel_button')"
-				>Cancel</a-button
-			>
-		</a-row>
-	</a-card>
+  <div class="col-lg-6 col-xl-4">
+    <a-card class="card-container" style="padding-bottom: 50px">
+      <a-row>
+        <a-col :span="24">
+          <a-col :span="24"
+          ><img
+              class="group-logo"
+              src="@/assets/Icons/Create a team.svg"
+              alt=""
+          /></a-col>
+          <a-col :span="24"><span class="card-title">Create a team</span></a-col>
+        </a-col>
+      </a-row>
+      <a-row>
+        <a-divider />
+      </a-row>
+      <a-row>
+        <a-input
+            v-model="$store.state.team.team_name"
+            size="large"
+            class="team-name-input"
+            placeholder="Team name"
+        />
+      </a-row>
+      <a-row>
+        <a-textarea
+            class="team-description"
+            placeholder="Team description"
+            :auto-size="{ minRows: 3, maxRows: 5 }"
+            v-model="$store.state.team.team_description"
+        />
+      </a-row>
+      <a-row>
+        <a-button class="next-button" @click="goNext">Next</a-button>
+        <a-button
+            class="next-button"
+            style="margin-right: 10px"
+            v-on:click="$emit('cancel_button')"
+        >Cancel</a-button
+        >
+      </a-row>
+    </a-card>
+  </div>
 </template>
 
 <script>
