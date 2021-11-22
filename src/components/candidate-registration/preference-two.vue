@@ -797,7 +797,7 @@
                       id="preferred_nationality"
                       class="nationality-select"
                       mode="multiple"
-                       :maxTagCount="3"
+                      :maxTagCount="3"
                       :showSearch="true"
                       :filter-option="filterOption"
                       @change="
@@ -2031,7 +2031,9 @@ export default {
       ethnicityList: ethnicities,
     };
   },
-  mounted() {},
+  mounted() {
+   
+  },
   created() {},
   computed: {},
 
@@ -2041,11 +2043,10 @@ export default {
       this.savePreference();
     },
     filterOption(input, option) {
-      return (
-        option.componentOptions.children[0].text.trim()
-          .toLowerCase()
-          .startsWith(input.toLowerCase())
-      );
+      return option.componentOptions.children[0].text
+        .trim()
+        .toLowerCase()
+        .startsWith(input.toLowerCase());
     },
 
     handleSubmitFormOne() {
@@ -2074,8 +2075,8 @@ export default {
       });
     },
     onMultiValueChange(e, name) {
-      if(this.preferenceData[name].length>3){
-        this.preferenceData[name]=this.preferenceData[name].splice(0,3);
+      if (this.preferenceData[name].length > 3) {
+        this.preferenceData[name] = this.preferenceData[name].splice(0, 3);
         return;
       }
       this.preferenceData[name] =
@@ -2209,8 +2210,9 @@ export default {
             break;
         }
       }
-
-      this.savePreference();
+      
+        this.savePreference();
+      
     },
   },
 
@@ -2233,40 +2235,8 @@ export default {
       font-size: 14px;
     }
   }
-  .card {
-    background-color: #cdedf7;
-  }
-  .bubble {
-    position: relative;
-    width: 280px;
-    height: 70px;
-    padding: 5px;
-    // color: #32557f;
-    border-radius: 5px;
-    // border: 3px solid #32557f;
 
-    &::before,
-    &::after {
-      content: "\0020";
-      display: block;
-      position: absolute;
-      top: -15px;
-      left: 10px;
-      z-index: 2;
-      width: 0;
-      height: 0;
-      overflow: hidden;
-      border: solid 15px transparent;
-      border-top: 0;
-      border-bottom-color: #d9eafa;
-    }
 
-    &::before {
-      top: -18px;
-      z-index: 1;
-      border-bottom-color: #d9eafa;
-    }
-  }
   .form-ma {
     .pre-age {
       max-width: 100% !important;

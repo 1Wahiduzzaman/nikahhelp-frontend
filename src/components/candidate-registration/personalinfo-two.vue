@@ -162,14 +162,38 @@
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item ref="per_height" prop="per_height">
-                    <a-input
+                    <!-- <a-input
                       id="per_height"
                       suffix="cm"
                       @blur="onValueChange($event, 'essential')"
                       v-model.number="personalInformation.essential.per_height"
                       placeholder="Enter your height"
                       type="number"
-                    />
+                    /> -->
+                    <a-select
+                      @change="onValueChange($event, 'essential')"
+                      id="per_height"
+                      :showSearch="true"
+                      option-filter-prop="children"
+                      :filter-option="filterOption"
+                      :showArrow="true"
+                      style="width: 150px"
+                      placeholder="Please select your height"
+                      v-model.number="personalInformation.essential.per_height"
+                      class="select-ma w-100"
+                    >
+                      <a-select-option :value="0" disabled
+                        >Select your height</a-select-option
+                      >
+                      <a-select-option
+                        :value="item.value"
+                        :key="key"
+                        style="width: 100px"
+                        v-for="(item, key) in heightTV"
+                      >
+                        <div v-html="item.label"></div>
+                      </a-select-option>
+                    </a-select>
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -620,7 +644,7 @@
                       :showArrow="true"
                       ref="select"
                       style="width: 150px"
-                      placeholder="Please select"
+                      placeholder="Please select your ethnicities"
                       v-model="personalInformation.general.per_ethnicity"
                       class="select-ma w-100"
                     >
@@ -1008,7 +1032,9 @@
                         prop="per_current_residence_country"
                       >
                         <a-select
-                          @change="onValueChange($event, 'contact')"
+                          @change="
+                            onCountryChange($event, 'contact', 'residence')
+                          "
                           id="per_current_residence_country"
                           style="width: 150px"
                           :filter-option="filterOption"
@@ -1059,7 +1085,8 @@
                             >Select City</a-select-option
                           >
                           <a-select-option
-                            v-for="city in []"
+                            v-for="city in personalInformation.contact
+                              .residenceCities"
                             :key="city.id"
                             :value="city.id"
                             >{{ city.name }}</a-select-option
@@ -1204,7 +1231,9 @@
                         prop="per_permanent_country"
                       >
                         <a-select
-                          @change="onValueChange($event, 'contact')"
+                          @change="
+                            onCountryChange($event, 'contact', 'permanant')
+                          "
                           id="per_permanent_country"
                           style="width: 150px"
                           placeholder="Country"
@@ -1252,7 +1281,8 @@
                             >Select City</a-select-option
                           >
                           <a-select-option
-                            v-for="city in []"
+                            v-for="city in personalInformation.contact
+                              .permanantCities"
                             :key="city.id"
                             :value="city.id"
                             >{{ city.name }}</a-select-option
@@ -1457,7 +1487,7 @@
                 <a-col :span="12">
                   <div class="mb-2">
                     <a-icon
-                      v-if="personalInformation.contact.email"
+                      v-if="personalInformation.contact.per_email"
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
                     />What is your email address?
@@ -1783,7 +1813,7 @@
                       @change="onValueChange($event, 'more_about')"
                       id="per_smoker"
                       ref="select"
-                      placeholder="Smoker"
+                      placeholder="Are you a Smoker"
                       v-model="personalInformation.more_about.per_smoker"
                       class="select-ma"
                     >
@@ -2414,7 +2444,8 @@ import hobbies from "@/common/hobbies.js";
 import foods from "@/common/foods.js";
 import thankfulThings from "@/common/thankfulThings.js";
 import { ARR_PersonalInfo, RULESPERSONALINFO } from "./models/candidate";
-
+import { HEIGHTS } from "../../models/data";
+import ApiService from "../../services/api.service";
 export default {
   name: "PersonalInfoTwo",
   components: {
@@ -2440,6 +2471,7 @@ export default {
       thankfulThings: thankfulThings,
       ethnicityList: ethnicities,
       arr: ARR_PersonalInfo,
+      heightTV: HEIGHTS,
     };
   },
 
@@ -2614,13 +2646,33 @@ export default {
         })
         .catch((error) => {});
     },
+    async onCountryChange(e, name, action) {
+      const res = await ApiService.get(`v1/utilities/cities/${e}`);
 
-   filterOption(input, option) {
-      return (
-        option.componentOptions.children[0].text.trim()
-          .toLowerCase()
-          .startsWith(input.toLowerCase())
-      );
+      if (res.status === 200) {
+        switch (action) {
+          case "permanant":
+            this.personalInformation.contact.permanantCities=[];
+            this.personalInformation.contact.permanantCities.push(
+              ...res.data.data
+            );
+            break;
+          case "residence":
+             this.personalInformation.contact.residenceCities=[];
+            this.personalInformation.contact.residenceCities.push(
+              ...res.data.data
+            );
+            break;
+        }
+      }
+
+      this.saveContactInfo();
+    },
+    filterOption(input, option) {
+      return option.componentOptions.children[0].text
+        .trim()
+        .toLowerCase()
+        .startsWith(input.toLowerCase());
     },
   },
 };
@@ -2638,40 +2690,7 @@ export default {
       font-size: 14px;
     }
   }
-  .card {
-    background-color: #d9eafa;
-  }
-  .bubble {
-    position: relative;
-    width: 280px;
-    height: 70px;
-    padding: 5px;
-    // color: #32557f;
-    border-radius: 5px;
-    // border: 3px solid #32557f;
 
-    &::before,
-    &::after {
-      content: "\0020";
-      display: block;
-      position: absolute;
-      top: -15px;
-      left: 10px;
-      z-index: 2;
-      width: 0;
-      height: 0;
-      overflow: hidden;
-      border: solid 15px transparent;
-      border-top: 0;
-      border-bottom-color: #d9eafa;
-    }
-
-    &::before {
-      top: -18px;
-      z-index: 1;
-      border-bottom-color: #d9eafa;
-    }
-  }
   .text-box {
     border-color: $color-secondary;
     border-radius: 5px;
