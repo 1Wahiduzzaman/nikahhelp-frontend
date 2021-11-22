@@ -44,7 +44,7 @@
         />
       </div>
       <div class="steps-content" v-show="current == 2">
-        <Verification :candidateDetails="candidateDetails" ref="Verification" />
+        <Verification :verification="candidateDetails.verification" :candidateDetails="candidateDetails" ref="Verification" />
       </div>
       <div class="steps-content" v-show="current == 3">
         <FamilyInfoTwo
@@ -147,7 +147,6 @@ export default {
   },
   mounted() {
     this.getCandidateInitialInfo();
-   
   },
   data() {
     return {
@@ -159,6 +158,7 @@ export default {
       enabledNextBtn: false,
       candidateDetails: {
         preferenceData: null,
+        images: {},
       },
       steps: [
         {
@@ -208,6 +208,10 @@ export default {
           this.candidateDetails.familyInformation = {
             ...e.value,
           };
+        case 4:
+          this.candidateDetails.images = {
+            ...e.value,
+          };
           break;
       }
       this.checkExistData();
@@ -225,6 +229,7 @@ export default {
           hobbies: hobbies,
           foods: foods,
           thankfulThings: thankfulThings,
+          verification: response.data.data.validation_info.verification,
           personalInformation: {
             contact: {
               ...this.nullToUndefined(response.data.data.personal_info.contact),
@@ -365,6 +370,7 @@ export default {
         };
         console.log("details", details);
         this.candidateDetails = {
+          ...this.candidateDetails,
           ...details,
         };
         this.current = response.data.data.user.data_input_status;
@@ -405,6 +411,11 @@ export default {
           isEnabled = Object.values(
             this.candidateDetails.familyInformation
           ).every((x) => x !== undefined && x !== null && x !== "");
+          break;
+        case 4:
+          isEnabled = Object.values(this.candidateDetails.images).every(
+            (x) => x !== undefined && x !== null && x !== ""
+          );
           break;
       }
 
@@ -453,7 +464,7 @@ export default {
         }
       }
       this.checkExistData();
-       this.saveDataInputStatus(this.current);
+      this.saveDataInputStatus(this.current);
     },
     prev() {
       this.current--;
