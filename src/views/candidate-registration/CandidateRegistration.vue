@@ -44,7 +44,11 @@
         />
       </div>
       <div class="steps-content" v-show="current == 2">
-        <Verification :verification="candidateDetails.verification" :candidateDetails="candidateDetails" ref="Verification" />
+        <Verification
+          :verification="candidateDetails.verification"
+          :candidateDetails="candidateDetails"
+          ref="Verification"
+        />
       </div>
       <div class="steps-content" v-show="current == 3">
         <FamilyInfoTwo
@@ -229,21 +233,33 @@ export default {
           hobbies: hobbies,
           foods: foods,
           thankfulThings: thankfulThings,
-          verification: response.data.data.validation_info.verification,
+          verification: {
+            ...response.data.data.validation_info.verification,
+            cities:[]
+          },
           personalInformation: {
             contact: {
               ...this.nullToUndefined(response.data.data.personal_info.contact),
-              per_current_residence_country: parseInt(
-                response.data.data.personal_info.contact
-                  .per_current_residence_country
-              ),
-              per_permanent_country: parseInt(
-                response.data.data.personal_info.contact.per_permanent_country
-              ),
+              per_current_residence_country: response.data.data.personal_info
+                .contact.per_current_residence_country
+                ? parseInt(
+                    response.data.data.personal_info.contact
+                      .per_current_residence_country
+                  )
+                : response.data.data.personal_info.contact
+                    .per_current_residence_country,
+              per_permanent_country: response.data.data.personal_info.contact
+                .per_permanent_country
+                ? parseInt(
+                    response.data.data.personal_info.contact
+                      .per_permanent_country
+                  )
+                : response.data.data.personal_info.contact
+                    .per_permanent_country,
               per_email: user.email,
               per_county: "None",
-              per_current_residence_city: "None",
-              per_permanent_city: "None",
+              permanantCities: [],
+              residenceCities: [],
             },
             essential: {
               ...this.nullToUndefined(
@@ -373,6 +389,62 @@ export default {
           ...this.candidateDetails,
           ...details,
         };
+        if (
+          this.candidateDetails.preferenceData &&
+          this.candidateDetails.preferenceData.preferred_countries.length > 0
+        ) {
+          this.onChangeCountry(
+            this.candidateDetails.preferenceData.preferred_countries[0],
+            "listOne",
+            "allowed"
+          );
+        }
+        if (
+          this.candidateDetails.preferenceData &&
+          this.candidateDetails.preferenceData.bloked_countries.length > 0
+        ) {
+          this.onChangeCountry(
+            this.candidateDetails.preferenceData.bloked_countries[0],
+            "listOne",
+            "disAllowed"
+          );
+        }
+        if (
+          this.candidateDetails.personalInformation &&
+          this.candidateDetails.personalInformation.contact
+            .per_current_residence_country > 0
+        ) {
+          this.onChangeCountry(
+            this.candidateDetails.personalInformation.contact
+              .per_current_residence_country,
+            "residence",
+            ""
+          );
+        }
+        if (
+          this.candidateDetails.personalInformation &&
+          this.candidateDetails.personalInformation.contact
+            .per_permanent_country > 0
+        ) {
+          this.onChangeCountry(
+            this.candidateDetails.personalInformation.contact
+              .per_permanent_country,
+            "permanat",
+            ""
+          );
+        }
+               if (
+          this.candidateDetails.verification &&
+          this.candidateDetails.verification.
+            ver_country > 0
+        ) {
+          this.onChangeCountry(
+            this.candidateDetails.verification.
+            ver_country,
+            "verification",
+            ""
+          );
+        }
         this.current = response.data.data.user.data_input_status;
         this.checkExistData();
       }
@@ -384,6 +456,60 @@ export default {
           data_input_status: satge,
         }
       );
+    },
+    async onChangeCountry(e, name, action, isDefault = false) {
+      const res = await ApiService.get(`v1/utilities/cities/${e}`);
+
+      if (res.status === 200) {
+        switch (name) {
+          case "listOne":
+            action == "allowed"
+              ? (this.candidateDetails.preferenceData.allowedCity.listOne = [])
+              : (this.candidateDetails.preferenceData.disAllowedCity.listOne =
+                  []);
+            action == "allowed"
+              ? this.candidateDetails.preferenceData.allowedCity.listOne.push(
+                  ...res.data.data
+                )
+              : this.candidateDetails.preferenceData.disAllowedCity.listOne.push(
+                  ...res.data.data
+                );
+            break;
+          case "listTwo":
+            action == "allowed"
+              ? this.candidateDetails.preferenceData.allowedCity.listTwo.push(
+                  ...res.data.data
+                )
+              : this.candidateDetails.preferenceData.disAllowedCity.listTwo.push(
+                  ...res.data.data
+                );
+            break;
+          case "listThree":
+            action == "allowed"
+              ? this.candidateDetails.preferenceData.allowedCity.listThree.push(
+                  ...res.data.data
+                )
+              : this.candidateDetails.preferenceData.disAllowedCity.listThree.push(
+                  ...res.data.data
+                );
+            break;
+          case "residence":
+            this.candidateDetails.personalInformation.contact.residenceCities.push(
+              ...res.data.data
+            );
+            break;
+          case "permanat":
+            this.candidateDetails.personalInformation.contact.permanantCities.push(
+              ...res.data.data
+            );
+            break;
+             case "verification":
+            this.candidateDetails.verification.cities.push(
+              ...res.data.data
+            );
+            break;
+        }
+      }
     },
     checkExistData() {
       let isEnabled = false;

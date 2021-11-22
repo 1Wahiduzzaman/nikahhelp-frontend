@@ -1,5 +1,5 @@
 <template>
-  <div  class="verificationInfo p-3 rounded" style="background: #f4f4f9">
+  <div class="verificationInfo p-3 rounded" style="background: #f4f4f9">
     <div class="verification-content" style="margin-top: 40px">
       <a-collapse
         default-active-key="1"
@@ -164,7 +164,7 @@
                               @change="onValueChange"
                             >
                               <a-select-option
-                                v-for="(_city, key) in cities"
+                                v-for="(_city, key) in verification.cities"
                                 :value="_city.id"
                                 :key="key"
                               >
@@ -500,12 +500,11 @@ export default {
   },
 
   methods: {
-   filterOption(input, option) {
-      return (
-        option.componentOptions.children[0].text.trim()
-          .toLowerCase()
-          .startsWith(input.toLowerCase())
-      );
+    filterOption(input, option) {
+      return option.componentOptions.children[0].text
+        .trim()
+        .toLowerCase()
+        .startsWith(input.toLowerCase());
     },
     onValueChange(e) {
       this.saveVerificationInfo();
@@ -563,13 +562,12 @@ export default {
       };
     },
 
-    onChangeCountry(value) {
-      // this.ver_country = value;
-      // this.countries.map((_country) => {
-      //   if (_country.name == value) {
-      //     this.cities1 = _country.cities;
-      //   }
-      // });
+    async onChangeCountry(e) {
+      const res = await ApiService.get(`v1/utilities/cities/${e}`);
+      if (res.status === 200) {
+        this.verification.cities = [];
+        this.verification.cities.push(...res.data.data);
+      }
       this.saveVerificationInfo();
     },
     clearImg(action) {
