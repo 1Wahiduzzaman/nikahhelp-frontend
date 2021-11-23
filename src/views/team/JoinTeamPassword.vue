@@ -41,7 +41,7 @@ export default {
 		};
 	},
 	created() {
-		this.loadUser();
+		//this.loadUser();
 	},
 	methods: {
 		async loadUser() {

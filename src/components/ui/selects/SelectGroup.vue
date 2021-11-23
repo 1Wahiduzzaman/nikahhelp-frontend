@@ -1,5 +1,13 @@
 <template>
-  <div class="d-flex align-items-center justify-content-center select-group">
+  <div
+    class="
+      select-group-container
+      d-flex
+      align-items-center
+      justify-content-center
+      select-group
+    "
+  >
     <a-select
       :style="{ maxWidth: width + 'px', width: width + 'px' }"
       :id="uniqueNames[0]"
@@ -119,45 +127,47 @@ export default {
 
 <style  lang="scss">
 @import "@/styles/base/_variables.scss";
-.select_group_wrapper {
-  position: relative;
-}
-.dropdown_area {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  .dropdown {
-    padding: 4px 6px;
-    border: 1px solid $color-primary;
-    border-radius: 4px;
+.select-group-container {
+  .select_group_wrapper {
     position: relative;
+  }
+  .dropdown_area {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    font-size: 19px;
+    .dropdown {
+      padding: 4px 6px;
+      border: 1px solid $color-primary;
+      border-radius: 4px;
+      position: relative;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-size: 19px;
+    }
+
+    .dropdown__left {
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+    }
+
+    .dropdown__right {
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;
+    }
   }
 
-  .dropdown__left {
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
+  .options_wrapper {
+    position: absolute;
+    left: -130px;
+    bottom: -40px;
+    background: #fff;
   }
-
-  .dropdown__right {
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+  p {
+    //width: 140px;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
-}
-
-.options_wrapper {
-  position: absolute;
-  left: -130px;
-  bottom: -40px;
-  background: #fff;
-}
-p {
-  //width: 140px;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
 }
 </style>

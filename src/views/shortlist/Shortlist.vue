@@ -339,7 +339,7 @@ export default {
 		};
 	},
 	created() {
-		this.loadUser();
+		//this.loadUser();
 		this.getActiveTeamId();
 		this.loadShortListedCandidates();
 		this.loadTeamShortListedCandidates();

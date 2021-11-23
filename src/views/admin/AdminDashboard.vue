@@ -31,7 +31,7 @@ export default {
 		Footer,
 	},
 	created() {
-		this.loadUser();
+		//this.loadUser();
 	},
 	methods: {
 		async loadUser() {

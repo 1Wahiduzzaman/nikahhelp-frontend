@@ -22,10 +22,10 @@ export default {
 		};
 	},
 	created() {
-		this.loadUser();
+		//this.loadUser();
 		//this.getDashboardstats();
 		//this.getUserTeams();
-		window.scrollTo(0, 0);
+		//window.scrollTo(0, 0);
 	},
 	methods: {
 		async loadUser() {

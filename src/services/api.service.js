@@ -35,16 +35,9 @@ const ApiService = {
   // * After succesfull login we will set token to header
   // * with this function so we can use it in every requests
   setHeader() {
-  const user=JwtService.getUser();
-   //if (JwtService.getToken() && user && user.is_verified>0) {
-      Vue.axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${JwtService.getToken()}`; // using jwt service to get and set header
-    // }
-    // else {
-    //   JwtService.destroyTokenAndUser()
-    //   router.push('/login')
-    // }
+    Vue.axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${JwtService.getToken()}`; // using jwt service to get and set header
 
   },
 

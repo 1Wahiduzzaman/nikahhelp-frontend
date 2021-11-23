@@ -74,6 +74,7 @@ import Header from "../components/header/header.vue";
 import ChatWindow from "@/views/chat/ChatWindow.vue";
 
 import PrivacyPolicy from "@/views/privacy-policy/PrivacyPolicy.vue";
+import { InitRoute } from './guard/guard'
 
 Vue.use(VueRouter);
 import design from './design'
@@ -88,9 +89,7 @@ const routes = [
         path: "/dashboard",
         name: "DHome",
         component: DHome,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/ui",
@@ -101,70 +100,55 @@ const routes = [
         path: "/ui-chat",
         name: "UI-Chat",
         component: TestChat,
+        beforeEnter: InitRoute,
     },
     {
         path: "/chat-window",
         name: "ChatWindow",
         component: ChatWindow,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/candidate-registration",
         name: "CandidateRegistration",
         component: CandidateRegistration,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/representative-registration",
         name: "RepresentativeRegistration",
         component: RepresentativeRegistration,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/shortlist",
         name: "Shortlist",
         component: Shortlist,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/shortlist/all",
         name: "AllShortlist",
         component: AllShortlist,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/shortlist/all/team",
         name: "AllTeamShortlist",
         component: AllTeamShortlist,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/notifications",
         name: "NotificationPage",
         component: NotificationPage,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/blocklist",
         name: "BlockList",
         component: BlockList,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     // {
     //   path: "/manageteam",
@@ -178,173 +162,123 @@ const routes = [
         path: "/subscription",
         name: "Subscription",
         component: Subscription,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/subscription/:id?",
         name: "Subscription",
         component: Subscription,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/subscription/payment/:team/:id/:subId",
         name: "SubscriptionPayment",
         component: SubscriptionPayment,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/subscription/complete/success/:subName/:team",
         name: "SubscriptionSuccess",
         component: SubscriptionSuccess,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/manageteam",
         name: "ManageTeam",
         component: ManageTeam,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
 
     {
         path: "/create-team-2",
         name: "CreateTeamPage2",
         component: CreateTeamPage2,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/create-team-3",
         name: "CreateTeamPage3",
         component: CreateTeamPage3,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/create-team-4",
         name: "CreateTeamPage4",
         component: CreateTeamPage4,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/create-team-5/:team_id?",
         name: "CreateTeamPage5",
         component: CreateTeamPage5,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/connections",
         name: "Connections",
         component: Connections,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/profile",
         name: "Profile",
         component: Profile,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/user/profile/:id",
         name: "ProfileView",
         component: ProfileView,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/",
         name: "Home",
         component: Home,
-        meta: {
-            requiresUnAuth: true,
-        },
+       // beforeEnter: InitRoute,
     },
-
-    // {
-    //     path: "/about",
-    //     name: "About",
-    //     component: About,
-    //     meta: {
-    //         requiresAuth: true,
-    //     },
-    // },
-    //Search Section
     {
         path: "/search",
         name: "Search",
         component: Search,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/search/advance",
         name: "AdvanceSearch",
         component: AdvanceSearch,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/visitor/search",
         name: "UnAuthSearch",
         component: UnAuthSearch,
         props: true,
-        meta: {
-            requiresUnAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/signup",
         name: "Signup",
         component: Signup,
-        meta: {
-            requiresUnAuth: true,
-        },
+
     },
     {
         path: "/login",
         name: "Login",
         component: Login,
-        meta: {
-            requiresUnAuth: true,
-        },
+
     },
     {
         path: "/member-type",
         name: "MemberTypeSelection",
         component: MemberTypeSelection,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/member-name/:type",
         name: "MemberNameInput",
         component: MemberNameInput,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/email-verification",
@@ -356,17 +290,13 @@ const routes = [
         path: "/email-verification-success",
         name: "Success",
         component: Success,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
     {
         path: "/emailVerify/:token",
         name: "VerifyEmail",
         component: VerifyEmail,
-        meta: {
-            requiresAuth: true,
-        },
+
     },
     {
         path: "/forgot-password",
@@ -416,9 +346,7 @@ const routes = [
         path: "/settings",
         name: "Settings",
         component: Settings,
-        meta: {
-            requiresAuth: true,
-        },
+        beforeEnter: InitRoute,
     },
 
     {
@@ -431,41 +359,32 @@ const routes = [
         path: "/admin",
         name: "AdminDashboard",
         component: AdminDashboard,
+        beforeEnter: InitRoute,
 
         children: [{
             path: "",
             component: AdminHome,
-            meta: {
-                requiresAuth: true,
-            },
+
         },
         {
             path: "add-admin",
             component: AddAdmin,
-            meta: {
-                requiresAuth: true,
-            },
+
         },
         {
             path: "user-report",
             component: UserReport,
-            meta: {
-                requiresAuth: true,
-            },
+
         },
         {
             path: "pending-user-list",
             component: PendingUserList,
-            meta: {
-                requiresAuth: true,
-            },
+
         },
         {
             path: "subscription-report",
             component: SubscriptionReport,
-            meta: {
-                requiresAuth: true,
-            },
+
         },
         ],
     },

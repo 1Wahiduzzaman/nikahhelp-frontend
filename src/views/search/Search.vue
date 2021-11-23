@@ -303,7 +303,7 @@ export default {
 		};
 	},
 	created() {
-		this.loadUser();
+		//this.loadUser();
 		this.getActiveTeamId();
 		this.$store.dispatch("getCountries");
 		this.$store.dispatch("getReligionOptions");
