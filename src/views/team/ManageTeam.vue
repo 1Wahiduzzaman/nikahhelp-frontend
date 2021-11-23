@@ -58,7 +58,9 @@
 										joinCreateTeamShow = true;
 										joinTeamShow = false;
 									"
-              />
+                  @toggleToTeamPassword="toggleToTeamPassword" />
+              <JoinTeamPassword
+                  v-if="joinTeamPassword" />
               <CreateTeamPage1
                   v-if="createTeamShow"
                   @cancel_button="
@@ -79,6 +81,7 @@ import JoinTeam from "@/components/team/JoinTeam.vue";
 import CreateTeamPage1 from "@/components/team/CreateTeamPage1.vue";
 import JoinCreateTeam from "@/components/team/JoinCreateTeam.vue";
 import TeamDetailsCard from "@/components/team/TeamDetailsCard.vue";
+import JoinTeamPassword from "@/components/team/JoinTeamPassword.vue";
 import Layout from '@/views/design/Layout';
 import Banner from "@/components/team/Banner.vue";
 
@@ -91,6 +94,7 @@ export default {
 		JoinCreateTeam,
 		CreateTeamPage1,
 		TeamDetailsCard,
+    JoinTeamPassword
 	},
 	data() {
 		return {
@@ -100,7 +104,8 @@ export default {
 			joinTeamShow: false,
 			createTeamShow: false,
 			joinCreateTeamShow: true,
-      welcomeModal: true
+      welcomeModal: true,
+      joinTeamPassword: false
 		};
 	},
 	created() {
@@ -197,6 +202,11 @@ export default {
 		},
     hideWelcomeModal() {
       this.welcomeModal = false;
+    },
+    toggleToTeamPassword() {
+      this.joinTeamPassword = true;
+      this.joinCreateTeamShow = false;
+      this.joinTeamShow = false;
     }
 	},
 };

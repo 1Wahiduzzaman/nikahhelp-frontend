@@ -11,11 +11,11 @@
          </div>
         <h4 class="card-title pt-2">Joining a team</h4>
       </div>
-			<a-row class="mt-4">
+			<a-row class="mt-4 px-4">
 				<a-col :span="24">
 					<a-input
 						placeholder="Paste link here"
-            class="ant-input-box"
+            class="ant-input-box color-primary"
 						size="large"
 						@change="invitationLink = $event.target.value"
 					>
@@ -24,6 +24,54 @@
 					</a-input>
 				</a-col>
 			</a-row>
+      <div class="mt-4 px-4 invite-info-box">
+        <h4 class="invited-respresent color-primary fs-20">Congratulations you're joining as a <b class="font-weight-bold text-uppercase">representative</b></h4>
+
+        <div class="invite-info py-4">
+          <div class="d-flex">
+            <div class="d-flex justify-content-between align-items-center col-50">
+              <h6 class="fs-14">Invited by</h6>
+              <a-icon type="more" style="margin-top: -4px" />
+            </div>
+            <h6 class="ml-2 fs-14">Selina Parvez</h6>
+          </div>
+          <div class="d-flex">
+            <div class="d-flex justify-content-between align-items-center col-50">
+              <h6 class="fs-14">Team name</h6>
+              <a-icon type="more" style="margin-top: -4px" />
+            </div>
+            <h6 class="ml-2 fs-14">Selina's family</h6>
+          </div>
+          <div class="d-flex">
+            <div class="d-flex justify-content-between align-items-center col-50">
+              <h6 class="fs-14">Total team member</h6>
+              <a-icon type="more" style="margin-top: -4px" />
+            </div>
+            <h6 class="ml-2 fs-14">2</h6>
+          </div>
+          <div class="d-flex">
+            <div class="d-flex justify-content-between align-items-center col-50">
+              <h6 class="fs-14">Role</h6>
+              <a-icon type="more" style="margin-top: -4px" />
+            </div>
+            <h6 class="ml-2 fs-14">Member</h6>
+          </div>
+          <div class="d-flex">
+            <div class="d-flex justify-content-between align-items-center col-50">
+              <h6 class="fs-14">Relationship</h6>
+              <a-icon type="more" style="margin-top: -4px" />
+            </div>
+            <h6 class="ml-2 fs-14">Brother-in-law</h6>
+          </div>
+          <div class="d-flex">
+            <div class="d-flex justify-content-between align-items-center col-50">
+              <h6 class="fs-14">Team create date</h6>
+              <a-icon type="more" style="margin-top: -4px" />
+            </div>
+            <h6 class="ml-2 fs-14">12/11/2020</h6>
+          </div>
+        </div>
+      </div>
       <div class="position-absolute footer-cancel-btn">
         <a-button class="back-button button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
       </div>
@@ -61,21 +109,22 @@ export default {
 			console.log("search clicked");
 		},
 		onConfirmClick(event) {
-			if (this.invitationLink.length > 0) {
-				console.log("Coming here");
-				this.$router.push({
-					name: "Join Team Password",
-					params: { invitationLink: this.invitationLink },
-				});
-			} else if (this.invitationLink.length == 0) {
-				console.log("Coming There");
-				//this.$message.error("Please fill up invitation link");
-				this.$error({
-					title: "Invitation Link is empty",
-					content: "Please paste team invitation link",
-					centered: true,
-				});
-			}
+      this.$emit("toggleToTeamPassword");
+			// if (this.invitationLink.length > 0) {
+			// 	console.log("Coming here");
+			// 	this.$router.push({
+			// 		name: "Join Team Password",
+			// 		params: { invitationLink: this.invitationLink },
+			// 	});
+			// } else if (this.invitationLink.length == 0) {
+			// 	console.log("Coming There");
+			// 	//this.$message.error("Please fill up invitation link");
+			// 	this.$error({
+			// 		title: "Invitation Link is empty",
+			// 		content: "Please paste team invitation link",
+			// 		centered: true,
+			// 	});
+			// }
 		},
 	},
 };
@@ -593,6 +642,21 @@ export default {
       right: 12px;
       .button {
         border-radius: 16px;
+      }
+    }
+    .invite-info-box {
+      .invite-info {
+        .d-flex {
+          .col-50 {
+            width: 50%;
+            .fs-14 {
+              font-weight: normal;
+            }
+          }
+          .fs-14 {
+            font-weight: bold;
+          }
+        }
       }
     }
   }

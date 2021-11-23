@@ -1,53 +1,51 @@
 <template>
 	<div
-		class="col-lg-4 col-xl-12 col-md-4 col-sm-12 d-flex justify-content-center"
+		class="col-lg-6 col-xl-4"
 	>
 		<a-card
 			class="team-card"
-			style="min-height: 500px; width: 60%; margin-top: 20px"
+			style="min-height: 500px; margin-top: 20px;"
+      bodyStyle="padding: 0"
 		>
-			<a-row>
-				<a-col :span="24">
-					<a-col :span="24"
-						><img
-							class="group-logo"
-							src="@/assets/Icons/Join a team.svg"
-							alt=""
-					/></a-col>
-					<a-col :span="24"><span class="card-title">Join a team</span></a-col>
-				</a-col>
-			</a-row>
-			<a-row>
-				<a-divider />
-			</a-row>
-			<a-row>
-				<a-col :span="24" class="mt-4">
-					<a-input-password
-						placeholder="Enter Password"
-						size="large"
-						class="team-password"
-						@change="invitationPassword = $event.target.value"
-					>
-						<!-- <a-button slot="enterButton"> Search </a-button> -->
-					</a-input-password>
-				</a-col>
-			</a-row>
-			<!-- <a-row>
-				<div class="space-align-container" style="margin-top: 46px">
-					<div class="space-align-block">
-						<a-space align="right">
-							<a-button class="confirm-button" @click="onConfirmClick"
-								>Confirm</a-button
-							>
-						</a-space>
-					</div>
-				</div>
-			</a-row> -->
-			<div>
-				<a-button class="confirm-button" @click="onConfirmClick">
-					Confirm
-				</a-button>
-			</div>
+      <div style="width: 100%" class="d-flex align-items-center justify-content-center joining-header position-relative">
+        <div class="logo-position position-absolute">
+          <img
+              class="group-logo"
+              src="@/assets/Icons/Join a team.svg"
+              alt=""
+          />
+        </div>
+        <h4 class="card-title pt-2">Joining a team</h4>
+      </div>
+      <div class="mt-5 px-4">
+        <h4 class="fs-18 color-primary">Team Password</h4>
+        <a-row class="mt-1">
+          <a-col :span="24" class="mt-4">
+            <a-input-password
+                placeholder="Enter Password"
+                size="large"
+                class="team-password"
+                @change="invitationPassword = $event.target.value"
+            >
+            </a-input-password>
+          </a-col>
+        </a-row>
+      </div>
+
+<!--      <div class="d-flex flex-column align-items-center justify-content-center mt-5">-->
+<!--        <div class="success-box">-->
+<!--          <a-icon type="check" class="fs-24 text-white d-flex align-items-center justify-content-center py-2" />-->
+<!--        </div>-->
+<!--        <h4 class="fs-20 mt-3">Done</h4>-->
+<!--        <p class="fs-14">You're joined successfully</p>-->
+<!--      </div>-->
+
+      <div class="position-absolute footer-cancel-btn">
+        <a-button class="back-button button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
+      </div>
+      <div class="position-absolute footer-conf-btn">
+        <a-button class="confirm-button button float-right" @click="onConfirmClick">Confirm</a-button>
+      </div>
 		</a-card>
 	</div>
 </template>
@@ -111,6 +109,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "@/styles/base/_variables.scss";
 .input-controls > input {
 	height: 50px;
 	margin-top: 10px;
@@ -172,6 +171,26 @@ export default {
 	border-radius: 10px;
 	background-color: #ffffff;
 	box-shadow: 0px 0px 10px 1px rgba(63, 6, 17, 0.3);
+
+  .joining-header {
+    background: $bg-primary;
+    padding: 0 20px;
+    .logo-position {
+      left: 12px;
+      top: -2px;
+      .group-logo {
+        width: 40px;
+        height: 40px;
+        background: $bg-white;
+        border-radius: 50%;
+        padding: 4px;
+      }
+    }
+    .card-title {
+      font-size: 14px;
+      color: $color-white;
+    }
+  }
 
 	.team-card-header {
 		background-color: #ffffff;
@@ -559,7 +578,32 @@ export default {
 			}
 		}
 	}
-}
 
+  .footer-cancel-btn {
+    bottom: 20px;
+    left: 12px;
+    .button {
+      border-radius: 16px;
+      background: $bg-brand;
+      color: $color-white;
+    }
+  }
+  .footer-conf-btn {
+    bottom: 20px;
+    right: 12px;
+    .button {
+      border-radius: 16px;
+    }
+  }
+
+  .d-flex {
+    .success-box {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: $bg-success;
+    }
+  }
+}
 // end css for team-card
 </style>

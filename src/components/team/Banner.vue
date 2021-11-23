@@ -2,7 +2,7 @@
   <div class="bg-white d-flex team-short-cards align-items-center mt-4 position-relative">
     <h4 class="text-primary bg-white banner-total">Total</h4>
     <div class="team-short-infos d-flex position-relative">
-      <div class="position-absolute d-flex">
+      <div class="position-absolute d-flex justify-content-between">
         <div class="d-flex align-items-center team-short-info">
           <div class="team-count-box d-flex justify-content-center align-items-center text-white">2</div>
           <h4 class="color-brand team-short-info-text ml-2">Team</h4>
