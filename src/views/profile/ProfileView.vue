@@ -79,7 +79,7 @@ export default {
 		};
 	},
 	created() {
-		this.loadUser();
+		//this.loadUser();
 		this.loadUserProfile();
 		this.$store.dispatch("getCountries");
 		this.$store.dispatch("getStudyLevelOptions");

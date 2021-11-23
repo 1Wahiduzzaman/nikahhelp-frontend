@@ -25,7 +25,7 @@ export default {
 		};
 	},
 	created() {
-		this.loadUser();
+		//this.loadUser();
 		this.getActiveTeamId();
 	},
 	methods: {

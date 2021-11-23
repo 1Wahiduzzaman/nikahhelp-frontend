@@ -34,7 +34,7 @@ export default {
 
   methods: {
     handleClick() {
-      const user = JSON.parse(localStorage.getItem("userInfo"));
+      const user = JSON.parse(localStorage.getItem("user"));
       if (user.account_type === 1) {
         this.$router.push("/candidate-registration");
       } else {

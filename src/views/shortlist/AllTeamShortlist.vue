@@ -270,7 +270,7 @@ export default {
 		};
 	},
 	created() {
-		this.loadUser();
+		//this.loadUser();
 		this.loadShortListedCandidates();
 		this.loadTeamShortListedCandidates();
 		this.$store.dispatch("getCountries");
