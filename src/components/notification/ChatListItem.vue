@@ -6,9 +6,9 @@
                 <span class="online-icon-avatar"></span>
             </div>
             <div class="content">
-                <span class="label">Group chat</span>
-                <h4 class="mt-1">Justen Web</h4>
-                <p class="mb-0">Lorem ipsum dolor sit amet</p>
+                <span class="label">{{ item.label }}</span>
+                <h4 class="mt-1">{{ item.name }}</h4>
+                <p class="mb-0">{{ item.message ? item.message.body : '' }}</p>
                 <p class="color-primary mb-0">Team listed by - Pervez alam</p>
             </div>
              <span class="online-icon"></span>
