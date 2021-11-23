@@ -103,7 +103,7 @@ export default {
 	},
 	created() {
 		//console.log(this.$store.state.team);
-		this.loadUser();
+		//this.loadUser();
 		this.loadTeams();
 	},
 	computed: {

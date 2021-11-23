@@ -221,7 +221,7 @@ export default {
 		};
 	},
 	created() {
-		this.loadUser();
+		//this.loadUser();
 		this.loadTeams();
 		this.getSelectedTeam();
 	},
