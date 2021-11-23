@@ -38,35 +38,26 @@ export default {
 				this.representativeInfo = this.$store.getters["representativeInfo"];
 				this.is_verified = this.user.is_verified;
 
-        // comments need to be remove later
-				// if (this.is_verified == 0) {
-				// 	this.$router.push("/email-verification");
-				// }
-				// if (this.user.account_type === 0) {
-				// 	this.$router.push("/member-type");
-				// }
-        //
-				// if (this.user.account_type === 4) {
-				// 	this.$router.push("/admin");
-				// }
-        //
-				// let data_input_status = this.$store.getters["userDataInputStatus"];
-				// console.log("data input status", data_input_status);
-				// if (data_input_status == 10) {
-				// 	this.$router.push("/member-name/candidate");
-				// }
-        //
-				// if (data_input_status == 20) {
-				// 	this.$router.push("/member-name/representative");
-				// }
-        //
-				// if (data_input_status == 11) {
-				// 	this.$router.push("/candidate-registration");
-				// }
-				// if (data_input_status == 21) {
-				// 	this.$router.push("/representative-registration");
-				// }
-        // comments need to be remove later
+				if (this.user.account_type === 4) {
+					this.$router.push("/admin");
+				}
+
+				let data_input_status = this.$store.getters["userDataInputStatus"];
+				console.log("data input status", data_input_status);
+				if (data_input_status == 10) {
+					//this.$router.push("/member-name/candidate");
+				}
+
+				if (data_input_status == 20) {
+					this.$router.push("/member-name/representative");
+				}
+
+				if (data_input_status == 11) {
+					this.$router.push("/candidate-registration");
+				}
+				if (data_input_status == 21) {
+					this.$router.push("/representative-registration");
+				}
 
 				// if (data_input_status == 12) {
 				// 	this.$router.push("/candidate-registration");
@@ -108,22 +99,6 @@ export default {
 		},
 	},
 };
-
-import $ from 'jquery';
-import * as io from "socket.io";
-var socket = io();
-console.log(socket)
-$(function(){
-	$('.js-msg-send').on('click', function(){
-		console.log('ok')
-	});
-	socket.on('chat message', function(msg) {
-		var item = document.createElement('li');
-		item.textContent = msg;
-		messages.appendChild(item);
-		window.scrollTo(0, document.body.scrollHeight);
-	});
-});
 </script>
 
 <style scoped>
@@ -140,6 +115,4 @@ $(function(){
 /* .chat-design {
 	margin-left: 110px;
 } */
-</style>  
-
-
+</style>

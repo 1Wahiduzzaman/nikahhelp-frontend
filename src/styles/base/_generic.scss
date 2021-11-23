@@ -388,3 +388,11 @@ div[data-unique="second_one"] >  .ant-select-selection{
     opacity: 0.6;
     cursor: not-allowed;
   }
+.ant-input-box {
+    .ant-input:not(:first-child) {
+        padding-left: 45px !important;
+    }
+    .ant-input:not(:last-child) {
+        padding-right: 40px !important;
+    }
+}
