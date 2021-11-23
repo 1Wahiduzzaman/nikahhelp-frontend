@@ -31,42 +31,42 @@
           <div class="d-flex">
             <div class="d-flex justify-content-between align-items-center col-50">
               <h6 class="fs-14">Invited by</h6>
-              <a-icon type="more" style="margin-top: -4px" />
+              <span style="margin-top: -6px">:</span>
             </div>
             <h6 class="ml-2 fs-14">Selina Parvez</h6>
           </div>
           <div class="d-flex">
             <div class="d-flex justify-content-between align-items-center col-50">
               <h6 class="fs-14">Team name</h6>
-              <a-icon type="more" style="margin-top: -4px" />
+              <span style="margin-top: -6px">:</span>
             </div>
             <h6 class="ml-2 fs-14">Selina's family</h6>
           </div>
           <div class="d-flex">
             <div class="d-flex justify-content-between align-items-center col-50">
               <h6 class="fs-14">Total team member</h6>
-              <a-icon type="more" style="margin-top: -4px" />
+              <span style="margin-top: -9px">:</span>
             </div>
             <h6 class="ml-2 fs-14">2</h6>
           </div>
           <div class="d-flex">
             <div class="d-flex justify-content-between align-items-center col-50">
               <h6 class="fs-14">Role</h6>
-              <a-icon type="more" style="margin-top: -4px" />
+              <span style="margin-top: -6px">:</span>
             </div>
             <h6 class="ml-2 fs-14">Member</h6>
           </div>
           <div class="d-flex">
             <div class="d-flex justify-content-between align-items-center col-50">
               <h6 class="fs-14">Relationship</h6>
-              <a-icon type="more" style="margin-top: -4px" />
+              <span style="margin-top: -6px">:</span>
             </div>
             <h6 class="ml-2 fs-14">Brother-in-law</h6>
           </div>
           <div class="d-flex">
             <div class="d-flex justify-content-between align-items-center col-50">
               <h6 class="fs-14">Team create date</h6>
-              <a-icon type="more" style="margin-top: -4px" />
+              <span style="margin-top: -6px">:</span>
             </div>
             <h6 class="ml-2 fs-14">12/11/2020</h6>
           </div>
