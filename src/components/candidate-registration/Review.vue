@@ -713,10 +713,12 @@ export default {
     this.getCandidateData();
   },
   methods: {
+   
     async getCandidateData() {
       try {
+         const user=JSON.parse(localStorage.getItem('user'))
         const response = await ApiService.get(
-          `v1/candidate/info/${JwtService.getUserId()}`
+          `v1/candidate/info/${user.id}`
         );
         this.candidateData = {
           ...response.data.data,

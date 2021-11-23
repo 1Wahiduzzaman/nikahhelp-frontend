@@ -5,7 +5,8 @@
       <p>Your Profile and Avatar Images</p>
     </div>
     <a-collapse
-      :activeKey="$store.state.candidateInfo.activePanel"
+      accordion
+      :activeKey="activeKey"
       :bordered="false"
       expand-icon-position="right"
     >
@@ -269,6 +270,7 @@ export default {
   components: {},
   data() {
     return {
+      activeKey: ["1"],
       src: "",
       avatar: "",
       avatarSrc: "",
@@ -353,6 +355,10 @@ export default {
             this.avatarSrc = data.data.data.avatar_image_url;
             this.mainImageSrc = data.data.data.main_image_url;
             this.additionalImageSrc = data.data.data.other_images[0].image_path;
+            this.$emit("valueChange", {
+              value: data.data.data,
+              current: 4,
+            });
           }
         })
         .catch((error) => {
@@ -525,7 +531,13 @@ export default {
               content: data.data.message,
               center: true,
             });
-            this.$store.state.candidateInfo.activePanel++;
+            this.$emit("valueChange", {
+              value: {
+                per_avatar_url: data.data.data.per_avatar_url,
+                per_main_image_url: data.data.data.per_main_image_url,
+              },
+              current: 4,
+            });
           }
           if (data.data.status && data.data.status == "FAIL") {
             const errorMessage = JSON.stringify(data.data.data);
@@ -536,10 +548,7 @@ export default {
         .catch((error) => {
           this.loadingButton = false;
           console.log(error);
-        
         });
-
-     
     },
   },
 };

@@ -8,31 +8,40 @@
           <h4>REPRESENTATIVE PROFILE FORM</h4>
           <p>Please answer all question accurately and in full</p>
         </div>
-        <div>
-          <a-steps
-            :current="current"
-            labelPlacement="vertical"
-            style="max-width: 100%"
-          >
-            <a-step
-              v-for="item in steps"
-              :key="item.title"
-              :title="item.title"
-            />
-          </a-steps>
-        </div>
 
-        <div class="text-center"  v-if="current == 0">
+        <VueFixedHeader
+          @change="updateFixedStatus"
+          :threshold="propsData.threshold"
+          :headerClass="propsData.headerClass"
+          :fixedClass="propsData.fixedClass"
+          :hideScrollUp="propsData.hideScrollUp"
+        >
+          <div class="step-bar">
+            <a-steps
+              :current="current"
+              style="max-width: 100%"
+              labelPlacement="vertical"
+            >
+              <a-step
+                v-for="item in steps"
+                :key="item.title"
+                :title="item.title"
+              />
+            </a-steps>
+          </div>
+        </VueFixedHeader>
+
+        <div class="text-center" v-if="current == 0">
           <h5 style="color: #e34184">Personal Information</h5>
           <p style="color: #e34184; font-size: 14px">Details about you</p>
         </div>
 
-        <div class="text-center"  v-if="current == 1">
+        <div class="text-center" v-if="current == 1">
           <h5 style="color: #e34184">Verification Information</h5>
           <p style="color: #e34184; font-size: 14px">Details about you</p>
         </div>
 
-        <div class="text-center"  v-if="current == 2">
+        <div class="text-center" v-if="current == 2">
           <h5 style="color: #e34184">Image Upload</h5>
           <p style="color: #e34184; font-size: 14px">Details about you</p>
         </div>
@@ -43,7 +52,11 @@
         </div>
 
         <div class="steps-content" v-if="current == 0">
-          <PersonalInfoTwo ref="personInfoRefTwo" />
+          <PersonalInfoTwo
+            :representativeDetails="representativeDetails"
+            :personalInformation="representativeDetails.personalInformation"
+            ref="personInfoRefTwo"
+          />
         </div>
         <div class="steps-content" v-if="current == 1">
           <!-- <VerificationInfo
@@ -116,6 +129,12 @@
   </div>
 </template>
 <script>
+const createData = () => ({
+  threshold: 0,
+  headerClass: "vue-fixed-header",
+  fixedClass: "vue-fixed-header--isFixed",
+  hideScrollUp: false,
+});
 import PersonalInfo from "@/components/representative-registration/PersonalInfo.vue";
 import PersonalInfoTwo from "@/components/representative-registration/personal-info-two.vue";
 import VerificationInfo from "@/components/representative-registration/VerificationInfo.vue";
@@ -125,7 +144,7 @@ import ApiService from "../../services/api.service";
 import Header from "../../components/header/header";
 
 import { API_URL } from "../../configs/config";
-
+import VueFixedHeader from "vue-fixed-header";
 import validator from "validator";
 export default {
   name: "RepresentativeRegistration",
@@ -137,12 +156,19 @@ export default {
     ImageUpload,
     AgreementSubmit,
     Header,
+    VueFixedHeader,
   },
 
   data() {
     return {
-      // dont forget to change this current value for testing purpose
+      fixedStatus: {
+        headerIsFixed: false,
+      },
+      propsData: { ...createData() },
       current: 0,
+      representativeDetails: {
+        images: {},
+      },
       steps: [
         {
           title: "Personal Info",
@@ -176,32 +202,38 @@ export default {
       dataLoading: false,
     };
   },
-  created() {
-    // this.$store.dispatch("getUser");
-    // this.getPercentage();
-  },
-  async mounted() {
-    await this.$store.dispatch("getRepresentativeData");
-    // let repData;
-    // await this.$store.dispatch("getRepresentativeData").then((data) => {
-    //   console.log(data);
-    //   repData = data.data.data[0];
-    //   this.repData = repData;
-    //   // console.log(this.repData);
-    // });
-    // // API_URL.substring(0, API_URL.length - 4)+
-    // // API_URL.substring(0, API_URL.length - 4)+
-    // this.imageUrlFront =
-    //   repData.ver_document_frontside != undefined
-    //     ? repData.ver_document_frontside
-    //     : "";
-    // this.imageUrlBack =
-    //   repData.ver_document_backside != undefined
-    //     ? repData.ver_document_backside
-    //     : "";
-    // this.dataLoading = false;
+  created() {},
+  mounted() {
+    this.getRepresentativeInitialInfo();
   },
   methods: {
+    updateFixedStatus(next) {
+      this.fixedStatus.headerIsFixed = next;
+    },
+    getRepresentativeInitialInfo: async function () {
+      const user = JSON.parse(localStorage.getItem("user"));
+      console.log("user", user);
+      const response = await this.$store.dispatch("getRepresentativeData");
+      if (response.status === 200) {
+        const details = {
+          countries: response.data.data.countries,
+          occupations: response.data.data.occupations,
+          id: user.id,
+          personalInformation: {
+            essential: {
+              ...response.data.data.representative_info.essential,
+              default_date: response.data.data.representative_info.essential.dob,
+            },
+            personal: { ...response.data.data.representative_info.personal },
+          },
+        };
+        console.log("details", details);
+        this.representativeDetails = {
+          ...details,
+        };
+        // this.current = response.data.data.user.data_input_status;
+      }
+    },
     saveExit() {
       this.$router.push("/");
     },
@@ -816,18 +848,87 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+@import "@/styles/base/_variables.scss";
 .r-registration-container {
   display: flex;
   flex-direction: column;
-  height: calc(100vh);
-  overflow: hidden;
+  header {
+    text-align: center;
+    height: 100px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: $bg-secondary;
+
+    @media (max-width: 768px) {
+      width: 105%;
+    }
+
+    @media (max-width: 700px) {
+      width: 120%;
+    }
+    @media (max-width: 620px) {
+      width: 130%;
+    }
+    @media (max-width: 540px) {
+      width: 148%;
+    }
+    @media (max-width: 414px) {
+      width: 195%;
+    }
+
+    @media (max-width: 375px) {
+      width: 214%;
+    }
+    @media (max-width: 360px) {
+      width: 223%;
+    }
+    @media (max-width: 320px) {
+      width: 250%;
+    }
+    @media (max-width: 280px) {
+      width: 286%;
+    }
+
+    img {
+      margin-top: 10px;
+      height: 80px;
+    }
+  }
+  .header-text {
+    width: 100%;
+  }
+  .heading-text {
+    margin-top: 20px;
+    color: $color-brand;
+    width: 100%;
+    h4,
+    h6 {
+      font-weight: bold;
+      color: $color-brand;
+    }
+  }
+
   .r-registration {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    .step-bar {
+      margin: 0;
+      padding: 0;
+      z-index: 9;
+    }
   }
 }
-@import "@/styles/base/_variables.scss";
+
+.step-bar.vue-fixed-header--isFixed {
+  height: 120px;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 800px;
+  padding: 0;
+  background: aliceblue;
+}
 </style>

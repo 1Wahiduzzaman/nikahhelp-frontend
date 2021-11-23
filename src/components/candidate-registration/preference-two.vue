@@ -1,5 +1,5 @@
 <template>
-  <div class="preference">
+  <div id="accordion" class="preference">
     <div class="section-heading heading-text">
       <h5>Your Preferences</h5>
       <p>Your Preferences About Your Prospective Partner</p>
@@ -49,6 +49,7 @@
                       preferenceData.pre_partner_age_min,
                       preferenceData.pre_partner_age_max,
                     ]"
+                    :size="'default'"
                     :options="ageTV"
                     :placeholder="'Age'"
                     :width="'120'"
@@ -75,7 +76,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapseExampleAge">
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="collapseExampleAge"
+                  >
                     <div class="card card-body bubble">
                       Provide your preferred age range
                     </div>
@@ -112,6 +117,7 @@
                     :options="heightTV"
                     :placeholder="'Height'"
                     :width="'180'"
+                    :size="'default'"
                   />
                 </a-col>
                 <a-col :span="12">
@@ -135,7 +141,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapseExample">
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="collapseExample"
+                  >
                     <div class="card card-body bubble">
                       Provide your preferred height range in 'cm'
                     </div>
@@ -229,7 +239,7 @@
                       </div>
                     </div>
 
-                    <div class="row my-1">
+                    <!-- <div class="row my-1">
                       <div class="col-md-6">
                         <a-select
                           @change="
@@ -335,7 +345,7 @@
                           </a-select-option>
                         </a-select>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </a-col>
                 <a-col :span="12">
@@ -359,7 +369,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="countryCity">
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="countryCity"
+                  >
                     <div class="card card-body bubble">
                       Provide your preferred countries and cities. You can
                       choose upto 3 pairs
@@ -454,7 +468,7 @@
                       </div>
                     </div>
 
-                    <div class="row my-1">
+                    <!-- <div class="row my-1">
                       <div class="col-md-6">
                         <a-select
                           @change="
@@ -560,7 +574,7 @@
                           </a-select-option>
                         </a-select>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </a-col>
                 <a-col :span="12">
@@ -584,7 +598,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="forbiddenCountryCity">
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="forbiddenCountryCity"
+                  >
                     <div class="card card-body bubble">
                       Are there countries or cities that you do not wish to be
                       contacted from?
@@ -615,6 +633,7 @@
                   >
                     <a-select
                       id="pre_partner_religion_id"
+                      :maxTagCount="3"
                       :show-arrow="true"
                       :showSearch="true"
                       :filter-option="filterOption"
@@ -660,7 +679,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapseExampleReligion">
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="collapseExampleReligion"
+                  >
                     <div class="card card-body bubble">
                       Preferred Religions for partner.
                     </div>
@@ -691,17 +714,15 @@
                     <a-select
                       id="pre_ethnicities"
                       :showSearch="true"
-                      option-filter-prop="children"
                       :filter-option="filterOption"
                       :showArrow="true"
-                      ref="select"
                       style="width: 150px"
-                      placeholder="Please select"
+                      placeholder="Please select your ethnicities"
                       @change="onValueChange"
                       v-model="preferenceData.pre_ethnicities"
                       class="select-ma w-100"
                     >
-                      <a-select-option :value="null" disabled
+                      <a-select-option :value="0" disabled
                         >Select Ethnicity</a-select-option
                       >
 
@@ -736,7 +757,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapseExampleEthnicity">
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="collapseExampleEthnicity"
+                  >
                     <div class="card card-body bubble">
                       Select Partner's Ethnicity
                     </div>
@@ -772,13 +797,14 @@
                       id="preferred_nationality"
                       class="nationality-select"
                       mode="multiple"
+                      :maxTagCount="3"
                       :showSearch="true"
                       :filter-option="filterOption"
                       @change="
                         onMultiValueChange($event, 'preferred_nationality')
                       "
                       v-model="preferenceData.preferred_nationality"
-                      placeholder="Select Nationality"
+                      placeholder="Select your Nationality"
                       label="name"
                     >
                       <a-select-option value="Don't Mind"
@@ -816,7 +842,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapseExamplePartnerNationality">
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="collapseExamplePartnerNationality"
+                  >
                     <div class="card card-body bubble">
                       Preferred Partner's Nationality. You can select multiple
                       values
@@ -855,7 +885,7 @@
                       v-model="preferenceData.pre_study_level_id"
                       class="select-ma w-100"
                     >
-                      <a-select-option :value="null" disabled
+                      <a-select-option :value="0" disabled
                         >Select minimum education level</a-select-option
                       >
                       <a-select-option
@@ -890,7 +920,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapseMinimumEducation">
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="collapseMinimumEducation"
+                  >
                     <div class="card card-body bubble">
                       Minimum Education Level of Partner
                     </div>
@@ -922,11 +956,11 @@
                       @change="onValueChange"
                       id="pre_employment_status"
                       style="width: 150px"
-                      placeholder="Please select"
+                      placeholder="Please select your employment status"
                       v-model="preferenceData.pre_employment_status"
                       class="select-ma w-100"
                     >
-                      <a-select-option :value="null" disabled
+                      <a-select-option :value="0" disabled
                         >Select current employment status</a-select-option
                       >
                       <a-select-option value="Employed">
@@ -962,7 +996,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePartnerEmploymentStatus">
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="collapsePartnerEmploymentStatus"
+                  >
                     <div class="card card-body bubble">
                       Partner's Employment Status
                     </div>
@@ -997,7 +1035,7 @@
                       placeholder="Please select your preferred occupation"
                       class="select-ma w-100"
                     >
-                      <a-select-option :value="null" disabled
+                      <a-select-option :value="0" disabled
                         >Select Occupation</a-select-option
                       >
                       <a-select-option
@@ -1032,7 +1070,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="partner-occupation">
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="partner-occupation"
+                  >
                     <div class="card card-body bubble">
                       Partner's occupuation
                     </div>
@@ -1047,11 +1089,6 @@
                 <a-col :span="10">
                   <div class="mb-2">
                     <a-icon
-                      v-if="!preferenceData.pre_preferred_divorcee"
-                      class="color-danger mr-2 fs-18 fw-500"
-                      type="close"
-                    />
-                    <a-icon
                       v-if="preferenceData.pre_preferred_divorcee"
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
@@ -1063,7 +1100,7 @@
                   <div>
                     <span class="mr-1">No</span>
                     <a-switch
-                      @change="onValueChange"
+                      @change="onRateChange"
                       v-model="preferenceData.pre_preferred_divorcee"
                     >
                       <a-icon slot="checkedChildren" type="check" />
@@ -1110,7 +1147,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="divorceePartnerAcceptance">
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="divorceePartnerAcceptance"
+                  >
                     <div class="card card-body bubble">
                       This field is optional
                     </div>
@@ -1139,9 +1180,7 @@
                   >
                     <a-textarea
                       @blur="onValueChange"
-                      rows="3"
-                      type="text"
-                      class="form-control"
+                      :rows="3"
                       id="pre_other_preference"
                       v-model="preferenceData.pre_other_preference"
                       placeholder="* Sample Text"
@@ -1169,7 +1208,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="otherRequirementsForPartner">
+                  <div
+                    class="collapse"
+                    data-parent="#accordion"
+                    id="otherRequirementsForPartner"
+                  >
                     <div class="card card-body bubble">
                       Any other requirements
                     </div>
@@ -1199,9 +1242,7 @@
                   >
                     <a-textarea
                       @blur="onValueChange"
-                      rows="3"
-                      type="text"
-                      class="form-control"
+                      :rows="3"
                       id="pre_description"
                       v-model="preferenceData.pre_description"
                       placeholder="* Sample Text"
@@ -1229,7 +1270,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="anyotherRequirementOnPartner">
+                  <div
+                    class="collapse"
+                    data-parent="#accordion"
+                    id="anyotherRequirementOnPartner"
+                  >
                     <div class="card card-body bubble">
                       Any other requirements for partner
                     </div>
@@ -1240,7 +1285,7 @@
           </a-row>
         </a-form-model>
 
-        <!-- <a-button
+        <a-button
           shape="round"
           type="primary"
           style="float: right"
@@ -1248,7 +1293,7 @@
           @click="handleSubmitFormOne"
         >
           Save & Continue
-        </a-button> -->
+        </a-button>
       </a-collapse-panel>
       <!-- Important things for you (Ratings) -->
       <a-collapse-panel
@@ -1260,7 +1305,7 @@
           v-if="preferenceData"
           ref="preferenceFormTwo"
           :model="preferenceData"
-          :rules="rules"
+          :rules="RULES_RATE"
           class="form-ma"
         >
           <a-row :gutter="8">
@@ -1271,11 +1316,6 @@
               <a-row type="flex" align="top">
                 <a-col :span="10">
                   <div class="mb-2">
-                    <a-icon
-                      v-if="!preferenceData.pre_strength_of_character_rate"
-                      class="color-danger mr-2 fs-18 fw-500"
-                      type="close"
-                    />
                     <a-icon
                       v-if="preferenceData.pre_strength_of_character_rate"
                       class="color-success mr-2 fs-18 fw-500"
@@ -1318,7 +1358,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePartnerCharacterRating">
+                  <div
+                    class="collapse"
+                    data-parent="#accordion"
+                    id="collapsePartnerCharacterRating"
+                  >
                     <div class="card card-body bubble">
                       Provide ratings. This field is required.
                     </div>
@@ -1332,11 +1376,6 @@
               <a-row type="flex" align="top">
                 <a-col :span="10">
                   <div class="mb-2">
-                    <a-icon
-                      v-if="!preferenceData.pre_look_and_appearance_rate"
-                      class="color-danger mr-2 fs-18 fw-500"
-                      type="close"
-                    />
                     <a-icon
                       v-if="preferenceData.pre_look_and_appearance_rate"
                       class="color-success mr-2 fs-18 fw-500"
@@ -1379,7 +1418,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePartnerLookApperence">
+                  <div
+                    class="collapse"
+                    data-parent="#accordion"
+                    id="collapsePartnerLookApperence"
+                  >
                     <div class="card card-body bubble">
                       Provide ratings. This field is required.
                     </div>
@@ -1393,11 +1436,6 @@
               <a-row type="flex" align="top">
                 <a-col :span="10">
                   <div class="mb-2">
-                    <a-icon
-                      v-if="!preferenceData.pre_religiosity_or_faith_rate"
-                      class="color-danger mr-2 fs-18 fw-500"
-                      type="close"
-                    />
                     <a-icon
                       v-if="preferenceData.pre_religiosity_or_faith_rate"
                       class="color-success mr-2 fs-18 fw-500"
@@ -1440,7 +1478,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePartnerReligiousFaith">
+                  <div
+                    class="collapse"
+                    data-parent="#accordion"
+                    id="collapsePartnerReligiousFaith"
+                  >
                     <div class="card card-body bubble">
                       Provide ratings. This field is required.
                     </div>
@@ -1454,11 +1496,6 @@
               <a-row type="flex" align="top">
                 <a-col :span="10">
                   <div class="mb-2">
-                    <a-icon
-                      v-if="!preferenceData.pre_manners_socialskill_ethics_rate"
-                      class="color-danger mr-2 fs-18 fw-500"
-                      type="close"
-                    />
                     <a-icon
                       v-if="preferenceData.pre_manners_socialskill_ethics_rate"
                       class="color-success mr-2 fs-18 fw-500"
@@ -1503,7 +1540,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePartnerMannerSocialSkills">
+                  <div
+                    class="collapse"
+                    data-parent="#accordion"
+                    id="collapsePartnerMannerSocialSkills"
+                  >
                     <div class="card card-body bubble">
                       Provide ratings. This field is required.
                     </div>
@@ -1517,11 +1558,6 @@
               <a-row type="flex" align="top">
                 <a-col :span="10">
                   <div class="mb-2">
-                    <a-icon
-                      v-if="!preferenceData.pre_emotional_maturity_rate"
-                      class="color-danger mr-2 fs-18 fw-500"
-                      type="close"
-                    />
                     <a-icon
                       v-if="preferenceData.pre_emotional_maturity_rate"
                       class="color-success mr-2 fs-18 fw-500"
@@ -1565,6 +1601,7 @@
                     </a>
                   </p>
                   <div
+                    data-parent="#accordion"
                     class="collapse"
                     id="collapsePartnerEmotionMaturityRating"
                   >
@@ -1581,11 +1618,6 @@
               <a-row type="flex" align="top">
                 <a-col :span="10">
                   <div class="mb-2">
-                    <a-icon
-                      v-if="!preferenceData.pre_good_listener_rate"
-                      class="color-danger mr-2 fs-18 fw-500"
-                      type="close"
-                    />
                     <a-icon
                       v-if="preferenceData.pre_good_listener_rate"
                       class="color-success mr-2 fs-18 fw-500"
@@ -1628,7 +1660,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePartnerGoodlistenerRating">
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="collapsePartnerGoodlistenerRating"
+                  >
                     <div class="card card-body bubble">
                       Provide ratings. This field is required.
                     </div>
@@ -1642,11 +1678,6 @@
               <a-row type="flex" align="top">
                 <a-col :span="10">
                   <div class="mb-2">
-                    <a-icon
-                      v-if="!preferenceData.pre_good_talker_rate"
-                      class="color-danger mr-2 fs-18 fw-500"
-                      type="close"
-                    />
                     <a-icon
                       v-if="preferenceData.pre_good_talker_rate"
                       class="color-success mr-2 fs-18 fw-500"
@@ -1689,7 +1720,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePartnerGoodTalkerRating">
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="collapsePartnerGoodTalkerRating"
+                  >
                     <div class="card card-body bubble">
                       Provide ratings. This field is required.
                     </div>
@@ -1703,11 +1738,6 @@
               <a-row type="flex" align="top">
                 <a-col :span="10">
                   <div class="mb-2">
-                    <a-icon
-                      v-if="!preferenceData.pre_wiling_to_learn_rate"
-                      class="color-danger mr-2 fs-18 fw-500"
-                      type="close"
-                    />
                     <a-icon
                       v-if="preferenceData.pre_wiling_to_learn_rate"
                       class="color-success mr-2 fs-18 fw-500"
@@ -1751,6 +1781,7 @@
                     </a>
                   </p>
                   <div
+                    data-parent="#accordion"
                     class="collapse"
                     id="collapsePartnerWillingToLearnRating"
                   >
@@ -1767,11 +1798,6 @@
               <a-row type="flex" align="top">
                 <a-col :span="10">
                   <div class="mb-2">
-                    <a-icon
-                      v-if="!preferenceData.pre_family_social_status_rate"
-                      class="color-danger mr-2 fs-18 fw-500"
-                      type="close"
-                    />
                     <a-icon
                       v-if="preferenceData.pre_family_social_status_rate"
                       class="color-success mr-2 fs-18 fw-500"
@@ -1815,6 +1841,7 @@
                     </a>
                   </p>
                   <div
+                    data-parent="#accordion"
                     class="collapse"
                     id="collapsePartnerFamilySocialStatusRating"
                   >
@@ -1831,11 +1858,6 @@
               <a-row type="flex" align="top">
                 <a-col :span="10">
                   <div class="mb-2">
-                    <a-icon
-                      v-if="!preferenceData.pre_employment_wealth_rate"
-                      class="color-danger mr-2 fs-18 fw-500"
-                      type="close"
-                    />
                     <a-icon
                       v-if="preferenceData.pre_employment_wealth_rate"
                       class="color-success mr-2 fs-18 fw-500"
@@ -1879,6 +1901,7 @@
                     </a>
                   </p>
                   <div
+                    data-parent="#accordion"
                     class="collapse"
                     id="collapsePartnerEmploymentWealthrating"
                   >
@@ -1895,11 +1918,6 @@
               <a-row type="flex" align="top">
                 <a-col :span="10">
                   <div class="mb-2">
-                    <a-icon
-                      v-if="!preferenceData.pre_education_rate"
-                      class="color-danger mr-2 fs-18 fw-500"
-                      type="close"
-                    />
                     <a-icon
                       v-if="preferenceData.pre_education_rate"
                       class="color-success mr-2 fs-18 fw-500"
@@ -1942,7 +1960,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePartnerEducationRating">
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="collapsePartnerEducationRating"
+                  >
                     <div class="card card-body bubble">
                       Provide ratings. This field is required.
                     </div>
@@ -1951,7 +1973,7 @@
               </a-row>
             </a-col>
 
-            <!-- <a-button
+            <a-button
               shape="round"
               type="primary"
               style="float: right"
@@ -1959,7 +1981,7 @@
               @click="handleSubmitFormTwo"
             >
               Save & Continue
-            </a-button> -->
+            </a-button>
           </a-row>
         </a-form-model>
       </a-collapse-panel>
@@ -1973,11 +1995,12 @@ import NeedHelp from "@/components/candidate-registration/NeedHelp.vue";
 import ethnicities from "@/common/ethnicities.js";
 
 import Vue from "vue";
-import { ARR, RULES } from "./models/candidate";
+import { ARR, RULES, RULES_RATE } from "./models/candidate";
 import SelectGroup from "@/components/ui/selects/SelectGroup";
 import { ReligionTV } from "../../models/religion";
 import { CountriesTV } from "../../models/country";
 import { AGES, HEIGHTS } from "../../models/data";
+import ApiService from "../../services/api.service";
 export default {
   name: "PreferenceTwo",
   components: { vSelect, NeedHelp, SelectGroup },
@@ -2001,13 +2024,16 @@ export default {
         "Extremely Important",
       ],
       rules: RULES,
+      RULES_RATE: RULES_RATE,
       arr: ARR,
       ageTV: AGES,
       heightTV: HEIGHTS,
       ethnicityList: ethnicities,
     };
   },
-  mounted() {},
+  mounted() {
+   
+  },
   created() {},
   computed: {},
 
@@ -2017,16 +2043,16 @@ export default {
       this.savePreference();
     },
     filterOption(input, option) {
-      return (
-        option.componentOptions.children[0].text
-          .toLowerCase()
-          .indexOf(input.toLowerCase()) >= 0
-      );
+      return option.componentOptions.children[0].text
+        .trim()
+        .toLowerCase()
+        .startsWith(input.toLowerCase());
     },
 
     handleSubmitFormOne() {
       this.$refs.preferenceFormOne.validate((valid) => {
         if (valid) {
+          this.activeKey = ["2"];
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
@@ -2049,6 +2075,10 @@ export default {
       });
     },
     onMultiValueChange(e, name) {
+      if (this.preferenceData[name].length > 3) {
+        this.preferenceData[name] = this.preferenceData[name].splice(0, 3);
+        return;
+      }
       this.preferenceData[name] =
         this.preferenceData[name][this.preferenceData[name].length - 1] ==
         "Don't Mind"
@@ -2060,26 +2090,45 @@ export default {
     onValueChange(e) {
       this.savePreference();
     },
+    onRateChange(e) {
+      if (!this.preferenceData.pre_preferred_divorcee) {
+        this.preferenceData.pre_preferred_divorcee_child = false;
+      }
+      this.savePreference();
+    },
 
     savePreference() {
       const response = this.$store.dispatch("savePreferenceInfoAbout", {
         ...this.preferenceData,
-        pre_nationality: this.preferenceData.preferred_nationality,
+        pre_nationality:
+          this.preferenceData.preferred_nationality.length > 0
+            ? this.preferenceData.preferred_nationality
+            : [1],
         pre_partner_religions:
           this.preferenceData.pre_partner_religion_id.join(","),
         pre_partner_comes_from: this.preferenceData.preferred_countries.map(
-          (c) => {
+          (c, index) => {
             return {
               country: c,
-              city: null,
+              city:
+                this.preferenceData.preferred_cities.length > 0
+                  ? this.preferenceData.preferred_cities[index]
+                    ? this.preferenceData.preferred_cities[index]
+                    : null
+                  : null,
             };
           }
         ),
         pre_disallow_preference: this.preferenceData.bloked_countries.map(
-          (c) => {
+          (c, index) => {
             return {
               country: c,
-              city: null,
+              city:
+                this.preferenceData.blocked_cities.length > 0
+                  ? this.preferenceData.blocked_cities[index]
+                    ? this.preferenceData.blocked_cities[index]
+                    : null
+                  : null,
             };
           }
         ),
@@ -2108,7 +2157,6 @@ export default {
         pre_wiling_to_learn_rate,
         pre_strength_of_character_rate,
       } = this.preferenceData;
-      this.checkDisabled();
       const response = this.$store.dispatch("savePreferenceRatingInfo", {
         pre_education_rate,
         pre_emotional_maturity_rate,
@@ -2131,29 +2179,40 @@ export default {
         })
         .catch((error) => {});
     },
-    onChangeCountry(e, name, action) {
-      this.candidateDetails.countries.map((c) => {
-        if (c.name === e.name) {
-          switch (name) {
-            case "listOne":
-              action == "allowed"
-                ? this.preferenceData.allowedCity.listOne.push(c.cities)
-                : this.preferenceData.disAllowedCity.listOne.push(c.cities);
-              break;
-            case "listTwo":
-              action == "allowed"
-                ? this.preferenceData.allowedCity.listTwo.push(c.cities)
-                : this.preferenceData.disAllowedCity.listTwo.push(c.cities);
-              break;
-            case "listThree":
-              action == "allowed"
-                ? this.preferenceData.allowedCity.listThree.push(c.cities)
-                : this.preferenceData.disAllowedCity.listThree.push(c.cities);
-              break;
-          }
+    async onChangeCountry(e, name, action) {
+      const res = await ApiService.get(`v1/utilities/cities/${e}`);
+
+      if (res.status === 200) {
+        switch (name) {
+          case "listOne":
+            action == "allowed"
+              ? (this.preferenceData.allowedCity.listOne = [])
+              : (this.preferenceData.disAllowedCity.listOne = []);
+            action == "allowed"
+              ? this.preferenceData.allowedCity.listOne.push(...res.data.data)
+              : this.preferenceData.disAllowedCity.listOne.push(
+                  ...res.data.data
+                );
+            break;
+          case "listTwo":
+            action == "allowed"
+              ? this.preferenceData.allowedCity.listTwo.push(...res.data.data)
+              : this.preferenceData.disAllowedCity.listTwo.push(
+                  ...res.data.data
+                );
+            break;
+          case "listThree":
+            action == "allowed"
+              ? this.preferenceData.allowedCity.listThree.push(...res.data.data)
+              : this.preferenceData.disAllowedCity.listThree.push(
+                  ...res.data.data
+                );
+            break;
         }
-      });
-      this.savePreference();
+      }
+      
+        this.savePreference();
+      
     },
   },
 
@@ -2176,40 +2235,8 @@ export default {
       font-size: 14px;
     }
   }
-  .card {
-    background-color: #cdedf7;
-  }
-  .bubble {
-    position: relative;
-    width: 280px;
-    height: 70px;
-    padding: 5px;
-    // color: #32557f;
-    border-radius: 5px;
-    // border: 3px solid #32557f;
 
-    &::before,
-    &::after {
-      content: "\0020";
-      display: block;
-      position: absolute;
-      top: -15px;
-      left: 10px;
-      z-index: 2;
-      width: 0;
-      height: 0;
-      overflow: hidden;
-      border: solid 15px transparent;
-      border-top: 0;
-      border-bottom-color: #d9eafa;
-    }
 
-    &::before {
-      top: -18px;
-      z-index: 1;
-      border-bottom-color: #d9eafa;
-    }
-  }
   .form-ma {
     .pre-age {
       max-width: 100% !important;

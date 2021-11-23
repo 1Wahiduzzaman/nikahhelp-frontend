@@ -1,5 +1,5 @@
 <template>
-  <div class="personal-info">
+  <div id="personalInfoAccordian" class="personal-info">
     <div class="section-heading heading-text">
       <h5>Personal Information</h5>
       <p>Your Personal Information</p>
@@ -76,7 +76,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePersonalInfoGender">
+                  <div
+                    data-parent="#personalInfoAccordian"
+                    class="collapse"
+                    id="collapsePersonalInfoGender"
+                  >
                     <div class="card card-body bubble">Select Your Gender</div>
                   </div>
                 </a-col>
@@ -132,7 +136,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePersonalInfoDateOfBirth">
+                  <div
+                    data-parent="#personalInfoAccordian"
+                    class="collapse"
+                    id="collapsePersonalInfoDateOfBirth"
+                  >
                     <div class="card card-body bubble">Choose DOB</div>
                   </div>
                 </a-col>
@@ -154,14 +162,38 @@
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item ref="per_height" prop="per_height">
-                    <a-input
+                    <!-- <a-input
                       id="per_height"
                       suffix="cm"
                       @blur="onValueChange($event, 'essential')"
                       v-model.number="personalInformation.essential.per_height"
                       placeholder="Enter your height"
                       type="number"
-                    />
+                    /> -->
+                    <a-select
+                      @change="onValueChange($event, 'essential')"
+                      id="per_height"
+                      :showSearch="true"
+                      option-filter-prop="children"
+                      :filter-option="filterOption"
+                      :showArrow="true"
+                      style="width: 150px"
+                      placeholder="Please select your height"
+                      v-model.number="personalInformation.essential.per_height"
+                      class="select-ma w-100"
+                    >
+                      <a-select-option :value="0" disabled
+                        >Select your height</a-select-option
+                      >
+                      <a-select-option
+                        :value="item.value"
+                        :key="key"
+                        style="width: 100px"
+                        v-for="(item, key) in heightTV"
+                      >
+                        <div v-html="item.label"></div>
+                      </a-select-option>
+                    </a-select>
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -185,7 +217,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePersonalInfoHeight">
+                  <div
+                    class="collapse"
+                    data-parent="#personalInfoAccordian"
+                    id="collapsePersonalInfoHeight"
+                  >
                     <div class="card card-body bubble">
                       Please provide height in cm
                     </div>
@@ -276,7 +312,7 @@
                         personalInformation.essential.per_employment_status
                       "
                     >
-                      <a-select-option disabled :value="null"
+                      <a-select-option disabled :value="0"
                         >Select your employment status</a-select-option
                       >
                       <a-select-option value="employed"
@@ -310,6 +346,7 @@
                     </a>
                   </p>
                   <div
+                    data-parent="#personalInfoAccordian"
                     class="collapse"
                     id="collapsePersonalInfoEmploymentSatus"
                   >
@@ -349,7 +386,7 @@
                       v-model="personalInformation.essential.per_occupation"
                       class="select-ma w-100"
                     >
-                      <a-select-option :value="null" disabled
+                      <a-select-option :value="0" disabled
                         >Select your occupation</a-select-option
                       >
                       <a-select-option
@@ -384,7 +421,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePersonalInfoOccupation">
+                  <div
+                    class="collapse"
+                    data-parent="#personalInfoAccordian"
+                    id="collapsePersonalInfoOccupation"
+                  >
                     <div class="card card-body bubble">
                       Your current profession
                     </div>
@@ -464,6 +505,7 @@
                   </p>
                   <div
                     class="collapse"
+                    data-parent="#personalInfoAccordian"
                     id="collapsePersonalInfoHighestLevelEducation"
                   >
                     <div class="card card-body bubble">
@@ -537,7 +579,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePersonalInfoReligion">
+                  <div
+                    class="collapse"
+                    data-parent="#personalInfoAccordian"
+                    id="collapsePersonalInfoReligion"
+                  >
                     <div class="card card-body bubble">Your religion</div>
                   </div>
                 </a-col>
@@ -548,7 +594,7 @@
 
             <!-- Essential Information End -->
           </a-row>
-          <!-- <a-button
+          <a-button
             shape="round"
             type="primary"
             style="float: right"
@@ -556,7 +602,7 @@
             @click="handleSubmitFormOne"
           >
             Save & Continue
-          </a-button> -->
+          </a-button>
         </a-form-model>
       </a-collapse-panel>
 
@@ -598,11 +644,11 @@
                       :showArrow="true"
                       ref="select"
                       style="width: 150px"
-                      placeholder="Please select"
+                      placeholder="Please select your ethnicities"
                       v-model="personalInformation.general.per_ethnicity"
                       class="select-ma w-100"
                     >
-                      <a-select-option :value="null" disabled
+                      <a-select-option :value="0" disabled
                         >Select Ethnicity</a-select-option
                       >
 
@@ -637,7 +683,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePersonalInfoEthnicity">
+                  <div
+                    class="collapse"
+                    data-parent="#personalInfoAccordian"
+                    id="collapsePersonalInfoEthnicity"
+                  >
                     <div class="card card-body bubble">Your Ethnicity</div>
                   </div>
                 </a-col>
@@ -674,7 +724,7 @@
                       v-model="personalInformation.general.per_mother_tongue"
                       class="select-ma w-100"
                     >
-                      <a-select-option disabled :value="null"
+                      <a-select-option disabled :value="0"
                         >Select your mother tongue</a-select-option
                       >
                       <a-select-option
@@ -710,6 +760,7 @@
                   </p>
                   <div
                     class="collapse"
+                    data-parent="#personalInfoAccordian"
                     id="collapsePersonalInfoSpeakingLanguage"
                   >
                     <div class="card card-body bubble">
@@ -783,7 +834,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePersonalInfonationality">
+                  <div
+                    class="collapse"
+                    data-parent="#personalInfoAccordian"
+                    id="collapsePersonalInfonationality"
+                  >
                     <div class="card card-body bubble">Your Nationality</div>
                   </div>
                 </a-col>
@@ -884,10 +939,8 @@
                       @blur="onValueChange($event, 'general')"
                       id="per_health_condition"
                       placeholder="Exp: Bangladesh"
-                      cols="30"
-                      rows="3"
+                      :rows="3"
                       v-model="personalInformation.general.per_health_condition"
-                      class="w-100 text-box"
                     ></a-textarea>
                   </a-form-model-item>
                 </a-col>
@@ -914,6 +967,7 @@
                   </p>
                   <div
                     class="collapse"
+                    data-parent="#personalInfoAccordian"
                     id="collapsePersonalInfoHealthCondition"
                   >
                     <div class="card card-body bubble">
@@ -924,7 +978,7 @@
               </a-row>
             </a-col>
           </a-row>
-          <!-- <a-button
+          <a-button
             shape="round"
             type="primary"
             style="float: right"
@@ -932,7 +986,7 @@
             @click="handleSubmitFormTwo"
           >
             Save & Continue
-          </a-button> -->
+          </a-button>
         </a-form-model>
       </a-collapse-panel>
 
@@ -978,7 +1032,9 @@
                         prop="per_current_residence_country"
                       >
                         <a-select
-                          @change="onValueChange($event, 'contact')"
+                          @change="
+                            onCountryChange($event, 'contact', 'residence')
+                          "
                           id="per_current_residence_country"
                           style="width: 150px"
                           :filter-option="filterOption"
@@ -1029,7 +1085,8 @@
                             >Select City</a-select-option
                           >
                           <a-select-option
-                            v-for="city in []"
+                            v-for="city in personalInformation.contact
+                              .residenceCities"
                             :key="city.id"
                             :value="city.id"
                             >{{ city.name }}</a-select-option
@@ -1062,6 +1119,7 @@
                   </p>
                   <div
                     class="collapse"
+                    data-parent="#personalInfoAccordian"
                     id="collapsePersonalInfoCurrentResidenceCity"
                   >
                     <div class="card card-body bubble">
@@ -1133,7 +1191,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePersonalInfoPostCode">
+                  <div
+                    class="collapse"
+                    data-parent="#personalInfoAccordian"
+                    id="collapsePersonalInfoPostCode"
+                  >
                     <div class="card card-body bubble">
                       Post Code for permanent address
                     </div>
@@ -1169,7 +1231,9 @@
                         prop="per_permanent_country"
                       >
                         <a-select
-                          @change="onValueChange($event, 'contact')"
+                          @change="
+                            onCountryChange($event, 'contact', 'permanant')
+                          "
                           id="per_permanent_country"
                           style="width: 150px"
                           placeholder="Country"
@@ -1217,7 +1281,8 @@
                             >Select City</a-select-option
                           >
                           <a-select-option
-                            v-for="city in []"
+                            v-for="city in personalInformation.contact
+                              .permanantCities"
                             :key="city.id"
                             :value="city.id"
                             >{{ city.name }}</a-select-option
@@ -1248,7 +1313,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="personalInfoParmanentCountryCity">
+                  <div
+                    class="collapse"
+                    data-parent="#personalInfoAccordian"
+                    id="personalInfoParmanentCountryCity"
+                  >
                     <div class="card card-body bubble">
                       Permanent address Country and City
                     </div>
@@ -1278,12 +1347,10 @@
                     <a-textarea
                       @blur="onValueChange($event, 'contact')"
                       id="per_permanent_address"
-                      cols="30"
-                      rows="3"
+                      :rows="3"
                       v-model="
                         personalInformation.contact.per_permanent_address
                       "
-                      class="w-100 text-box"
                       placeholder="Sample Text"
                     ></a-textarea>
                   </a-form-model-item>
@@ -1309,7 +1376,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePersonalInfoFullAddress">
+                  <div
+                    class="collapse"
+                    data-parent="#personalInfoAccordian"
+                    id="collapsePersonalInfoFullAddress"
+                  >
                     <div class="card card-body bubble">Full address</div>
                   </div>
                 </a-col>
@@ -1397,7 +1468,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsepersonalInfoContactNumber">
+                  <div
+                    class="collapse"
+                    data-parent="#personalInfoAccordian"
+                    id="collapsepersonalInfoContactNumber"
+                  >
                     <div class="card card-body bubble">
                       Provide mobile number with country code
                     </div>
@@ -1412,7 +1487,7 @@
                 <a-col :span="12">
                   <div class="mb-2">
                     <a-icon
-                      v-if="personalInformation.contact.email"
+                      v-if="personalInformation.contact.per_email"
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
                     />What is your email address?
@@ -1454,7 +1529,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePersonalInfoEmailId">
+                  <div
+                    class="collapse"
+                    data-parent="#personalInfoAccordian"
+                    id="collapsePersonalInfoEmailId"
+                  >
                     <div class="card card-body bubble">
                       Your registered email address. Read only field.
                     </div>
@@ -1463,7 +1542,7 @@
               </a-row>
             </a-col>
           </a-row>
-          <!-- <a-button
+          <a-button
             shape="round"
             type="primary"
             style="float: right"
@@ -1471,7 +1550,7 @@
             @click="handleSubmitFormThree"
           >
             Save & Continue
-          </a-button> -->
+          </a-button>
         </a-form-model>
       </a-collapse-panel>
 
@@ -1549,7 +1628,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePersonalInfoMaritalStatus">
+                  <div
+                    class="collapse"
+                    data-parent="#personalInfoAccordian"
+                    id="collapsePersonalInfoMaritalStatus"
+                  >
                     <div class="card card-body bubble">
                       Current Marital Status
                     </div>
@@ -1588,7 +1671,7 @@
                       "
                       class="select-ma"
                     >
-                      <a-select-option disabled :value="null"
+                      <a-select-option disabled :value="0"
                         >Select your current living arrangement</a-select-option
                       >
                       <a-select-option value="parents">Parents</a-select-option>
@@ -1625,6 +1708,7 @@
                   </p>
                   <div
                     class="collapse"
+                    data-parent="#personalInfoAccordian"
                     id="collapsePersonalInfoCuurentlyLivingWith"
                   >
                     <div class="card card-body bubble">
@@ -1667,7 +1751,7 @@
                       "
                       class="select-ma"
                     >
-                      <a-select-option disabled :value="null"
+                      <a-select-option disabled :value="0"
                         >Select your option</a-select-option
                       >
                       <a-select-option value="1">Yes</a-select-option>
@@ -1699,6 +1783,7 @@
                   </p>
                   <div
                     class="collapse"
+                    data-parent="#personalInfoAccordian"
                     id="collapsePersonalInfoWillingToRelocate"
                   >
                     <div class="card card-body bubble">
@@ -1728,7 +1813,7 @@
                       @change="onValueChange($event, 'more_about')"
                       id="per_smoker"
                       ref="select"
-                      placeholder="Smoker"
+                      placeholder="Are you a Smoker"
                       v-model="personalInformation.more_about.per_smoker"
                       class="select-ma"
                     >
@@ -1765,7 +1850,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePersonalInfoSmokerOrNot">
+                  <div
+                    class="collapse"
+                    data-parent="#personalInfoAccordian"
+                    id="collapsePersonalInfoSmokerOrNot"
+                  >
                     <div class="card card-body bubble">Smoker or not</div>
                   </div>
                 </a-col>
@@ -1795,7 +1884,7 @@
                     "
                     class="select-ma"
                   >
-                    <a-select-option disabled :value="null"
+                    <a-select-option disabled :value="0"
                       >Select your language</a-select-option
                     >
                     <a-select-option value="English">English</a-select-option>
@@ -1826,7 +1915,7 @@
                       "
                       class="select-ma w-100"
                     >
-                      <a-select-option disabled :value="null"
+                      <a-select-option disabled :value="0"
                         >Select the language you speak</a-select-option
                       >
                       <a-select-option value="Don't Mind"
@@ -1867,6 +1956,7 @@
                   </p>
                   <div
                     class="collapse"
+                    data-parent="#personalInfoAccordian"
                     id="collapsePersonalInfoSpeakingLanguages"
                   >
                     <div class="card card-body bubble">Language you speak</div>
@@ -1900,7 +1990,7 @@
                     "
                     class="select-ma"
                   >
-                    <a-select-option disabled :value="null"
+                    <a-select-option disabled :value="0"
                       >Select your Hobby</a-select-option
                     >
                     <a-select-option value="Music">Music</a-select-option>
@@ -1931,7 +2021,7 @@
                       "
                       class="select-ma w-100"
                     >
-                      <a-select-option disabled :value="null"
+                      <a-select-option disabled :value="0"
                         >Select your hobbies
                       </a-select-option>
                       <a-select-option value="Don't Mind"
@@ -1968,7 +2058,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePersonalInfoHobbies">
+                  <div
+                    class="collapse"
+                    data-parent="#personalInfoAccordian"
+                    id="collapsePersonalInfoHobbies"
+                  >
                     <div class="card card-body bubble">Your hobbies</div>
                   </div>
                 </a-col>
@@ -2015,7 +2109,7 @@
                       "
                       class="select-ma"
                     >
-                      <a-select-option disabled :value="null"
+                      <a-select-option disabled :value="0"
                         >Select your Favorite Food Cuisine</a-select-option
                       >
                       <a-select-option value="Don't Mind"
@@ -2054,7 +2148,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePersonalInfoFavoriteFood">
+                  <div
+                    class="collapse"
+                    data-parent="#personalInfoAccordian"
+                    id="collapsePersonalInfoFavoriteFood"
+                  >
                     <div class="card card-body bubble">
                       Favorite Food and cuisine.
                     </div>
@@ -2086,7 +2184,7 @@
                     "
                     class="select-ma"
                   >
-                    <a-select-option disabled :value="null"
+                    <a-select-option disabled :value="0"
                       >Select things you enjoy</a-select-option
                     >
                     <a-select-option value="Music">Music</a-select-option>
@@ -2115,7 +2213,7 @@
                       v-model="personalInformation.more_about.per_things_enjoy"
                       class="select-ma w-100"
                     >
-                      <a-select-option disabled :value="null"
+                      <a-select-option disabled :value="0"
                         >Select things you enjoy
                       </a-select-option>
                       <a-select-option value="Don't Mind"
@@ -2154,6 +2252,7 @@
                   </p>
                   <div
                     class="collapse"
+                    data-parent="#personalInfoAccordian"
                     id="collapsePersonalInfoEnjoyfullThings"
                   >
                     <div class="card card-body bubble">Things you enjoy</div>
@@ -2199,7 +2298,7 @@
                       v-model="personalInformation.more_about.per_thankfull_for"
                       class="select-ma"
                     >
-                      <a-select-option disabled :value="null"
+                      <a-select-option disabled :value="0"
                         >Select things you are thankful for</a-select-option
                       >
                       <a-select-option value="Don't Mind"
@@ -2237,7 +2336,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePersonalInfoThankulFor">
+                  <div
+                    class="collapse"
+                    data-parent="#personalInfoAccordian"
+                    id="collapsePersonalInfoThankulFor"
+                  >
                     <div class="card card-body bubble">
                       kind of things are you thankful for
                     </div>
@@ -2291,7 +2394,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" id="collapsePersonalInfoMoreAboutMe">
+                  <div
+                    class="collapse"
+                    data-parent="#personalInfoAccordian"
+                    id="collapsePersonalInfoMoreAboutMe"
+                  >
                     <div class="card card-body bubble">
                       A little about yourself
                     </div>
@@ -2300,7 +2407,7 @@
               </a-row>
             </a-col>
           </a-row>
-          <!-- <a-button
+          <a-button
             shape="round"
             type="primary"
             style="float: right"
@@ -2308,7 +2415,7 @@
             @click="handleSubmitFormFour"
           >
             Save & Continue
-          </a-button> -->
+          </a-button>
         </a-form-model>
       </a-collapse-panel>
 
@@ -2337,7 +2444,8 @@ import hobbies from "@/common/hobbies.js";
 import foods from "@/common/foods.js";
 import thankfulThings from "@/common/thankfulThings.js";
 import { ARR_PersonalInfo, RULESPERSONALINFO } from "./models/candidate";
-
+import { HEIGHTS } from "../../models/data";
+import ApiService from "../../services/api.service";
 export default {
   name: "PersonalInfoTwo",
   components: {
@@ -2345,9 +2453,6 @@ export default {
     NeedHelp,
   },
   props: {
-    activePanel: {
-      type: Number,
-    },
     candidateDetails: {
       type: Object,
     },
@@ -2366,27 +2471,20 @@ export default {
       thankfulThings: thankfulThings,
       ethnicityList: ethnicities,
       arr: ARR_PersonalInfo,
+      heightTV: HEIGHTS,
     };
   },
-  created() {},
-  mounted() {
-    this.checkDisabled();
-  },
+
   methods: {
     onValueChange(e, action) {
       console.log(this.personalInformation);
-      this.checkDisabled();
       this.save(action);
     },
-    checkDisabled() {
-      this.$emit("disabled", {
-        value: true,
-        current: 1,
-      });
-    },
+
     handleSubmitFormOne() {
       this.$refs.personalInfoFormOne.validate((valid) => {
         if (valid) {
+          this.activeKey = ["2"];
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
@@ -2399,6 +2497,7 @@ export default {
     handleSubmitFormTwo() {
       this.$refs.personalInfoFormTwo.validate((valid) => {
         if (valid) {
+          this.activeKey = ["3"];
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
@@ -2411,6 +2510,7 @@ export default {
     handleSubmitFormThree() {
       this.$refs.personalInfoFormThree.validate((valid) => {
         if (valid) {
+          this.activeKey = ["4"];
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
@@ -2436,6 +2536,12 @@ export default {
       this.save("essential");
     },
     onMultiValueChange(e, name, action) {
+      if (this.personalInformation.more_about[name].length > 3) {
+        this.personalInformation.more_about[name] =
+          this.personalInformation.more_about[name].splice(0, 3);
+        return;
+      }
+
       this.personalInformation.more_about[name] =
         this.personalInformation.more_about[name][
           this.personalInformation.more_about[name].length - 1
@@ -2540,13 +2646,33 @@ export default {
         })
         .catch((error) => {});
     },
+    async onCountryChange(e, name, action) {
+      const res = await ApiService.get(`v1/utilities/cities/${e}`);
 
+      if (res.status === 200) {
+        switch (action) {
+          case "permanant":
+            this.personalInformation.contact.permanantCities=[];
+            this.personalInformation.contact.permanantCities.push(
+              ...res.data.data
+            );
+            break;
+          case "residence":
+             this.personalInformation.contact.residenceCities=[];
+            this.personalInformation.contact.residenceCities.push(
+              ...res.data.data
+            );
+            break;
+        }
+      }
+
+      this.saveContactInfo();
+    },
     filterOption(input, option) {
-      return (
-        option.componentOptions.children[0].text
-          .toLowerCase()
-          .indexOf(input.toLowerCase()) >= 0
-      );
+      return option.componentOptions.children[0].text
+        .trim()
+        .toLowerCase()
+        .startsWith(input.toLowerCase());
     },
   },
 };
@@ -2564,40 +2690,7 @@ export default {
       font-size: 14px;
     }
   }
-  .card {
-    background-color: #d9eafa;
-  }
-  .bubble {
-    position: relative;
-    width: 280px;
-    height: 70px;
-    padding: 5px;
-    // color: #32557f;
-    border-radius: 5px;
-    // border: 3px solid #32557f;
 
-    &::before,
-    &::after {
-      content: "\0020";
-      display: block;
-      position: absolute;
-      top: -15px;
-      left: 10px;
-      z-index: 2;
-      width: 0;
-      height: 0;
-      overflow: hidden;
-      border: solid 15px transparent;
-      border-top: 0;
-      border-bottom-color: #d9eafa;
-    }
-
-    &::before {
-      top: -18px;
-      z-index: 1;
-      border-bottom-color: #d9eafa;
-    }
-  }
   .text-box {
     border-color: $color-secondary;
     border-radius: 5px;

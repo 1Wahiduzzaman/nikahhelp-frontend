@@ -1,16 +1,16 @@
 <template>
   <div class="d-flex align-items-center justify-content-center select-group">
     <a-select
-      :style="{ maxWidth: width + 'px',width: width + 'px' }"
+      :style="{ maxWidth: width + 'px', width: width + 'px' }"
       :id="uniqueNames[0]"
       v-model="values[0]"
       @select="onSelect"
-      show-search
-      size="large"
+      :show-search="true"
+      :size="size"
       dropdownClassName="first_one"
       :placeholder="placeholder"
       :dropdownMatchSelectWidth="false"
-      option-filter-prop="children"
+      :filter-option="filterOption"
       :data-unique="uniqueNames[0]"
     >
       <a-select-option
@@ -20,21 +20,21 @@
       >
         <div v-html="option.label"></div>
       </a-select-option>
-      <template #suffixIcon>
+      <template v-if="suffixIcon" #suffixIcon>
         <img src="@/assets/select-arrow-big.png" alt="" />
       </template>
     </a-select>
-    <div class="mx-2" style="color: #7e7e7e">TO</div>
+    <div class="mx-2" style="color: #7e7e7e">To</div>
     <a-select
       v-model="values[1]"
-      :style="{ maxWidth: width + 'px',width: width + 'px' }"
+      :style="{ maxWidth: width + 'px', width: width + 'px' }"
       @select="onSelect"
-      size="large"
-      show-search
+      :size="size"
+      :show-search="true"
       dropdownClassName="second_one"
       :dropdownMatchSelectWidth="false"
+      :filter-option="filterOption"
       :placeholder="placeholder"
-      option-filter-prop="children"
       :data-unique="uniqueNames[1]"
       :id="uniqueNames[1]"
     >
@@ -45,7 +45,7 @@
       >
         <div v-html="option.label"></div>
       </a-select-option>
-      <template #suffixIcon>
+      <template v-if="suffixIcon" #suffixIcon>
         <img src="@/assets/select-arrow-big.png" alt="" />
       </template>
     </a-select>
@@ -59,13 +59,45 @@ export default {
       value: "",
     };
   },
-  props: ["placeholder", "options", "uniqueNames", "width","values"],
+
+  props: {
+    placeholder: {
+      type: String,
+    },
+    options: {
+      type: Array,
+    },
+    uniqueNames: {
+      type: Array,
+    },
+    width: {
+      type: String,
+    },
+    values: {
+      type: Array,
+    },
+    size: {
+      type: String,
+      default: "large",
+    },
+    suffixIcon: {
+      type: Boolean,
+      default: false,
+    },
+  },
   watch: {
     value(val) {
       console.log("value", val);
     },
   },
   methods: {
+    filterOption(input, option) {
+      return (
+        option.componentOptions.children[0].data.domProps.innerHTML
+          .toLowerCase()
+          .indexOf(input?.toLowerCase()) >= 0
+      );
+    },
     onSearch(searchText) {
       this.dataSource = !searchText
         ? []
@@ -103,7 +135,6 @@ export default {
     justify-content: space-around;
     align-items: center;
     font-size: 19px;
-    
   }
 
   .dropdown__left {
@@ -122,7 +153,6 @@ export default {
   left: -130px;
   bottom: -40px;
   background: #fff;
-  
 }
 p {
   //width: 140px;

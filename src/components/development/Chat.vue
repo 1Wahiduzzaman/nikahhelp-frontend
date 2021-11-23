@@ -651,21 +651,6 @@ export default {
   }
 };
 
-import $ from 'jquery';
-import * as io from "socket.io";
-var socket = io();
-console.log('raz')
-$(function(){
-	$('.js-msg-send').on('click', function(){
-		console.log('ok')
-	});
-	// socket.on('chat message', function(msg) {
-	// 	var item = document.createElement('li');
-	// 	item.textContent = msg;
-	// 	messages.appendChild(item);
-	// 	window.scrollTo(0, document.body.scrollHeight);
-	// });
-});
 </script>
 
 <style scoped lang="scss">    

@@ -3,14 +3,30 @@
     <header>
       <a href="/"><img src="@/assets/logo.png" alt="" /></a>
     </header>
+
     <div class="steps ma-steps">
       <div class="steper-header text-center heading-text">
         <h4>CANDIDATE PROFILE AND REQUIREMENT FORM</h4>
         <p>Please answer all question accurately and in full</p>
       </div>
-      <a-steps :current="current" labelPlacement="vertical">
-        <a-step v-for="item in steps" :key="item.title" :title="item.title" />
-      </a-steps>
+
+      <VueFixedHeader
+        @change="updateFixedStatus"
+        :threshold="propsData.threshold"
+        :headerClass="propsData.headerClass"
+        :fixedClass="propsData.fixedClass"
+        :hideScrollUp="propsData.hideScrollUp"
+      >
+        <div class="step-bar">
+          <a-steps :current="current" labelPlacement="vertical">
+            <a-step
+              v-for="item in steps"
+              :key="item.title"
+              :title="item.title"
+            />
+          </a-steps>
+        </div>
+      </VueFixedHeader>
       <div class="steps-content" v-show="current == 0">
         <PreferenceTwo
           :candidateDetails="candidateDetails"
@@ -28,7 +44,11 @@
         />
       </div>
       <div class="steps-content" v-show="current == 2">
-        <Verification :candidateDetails="candidateDetails" ref="Verification" />
+        <Verification
+          :verification="candidateDetails.verification"
+          :candidateDetails="candidateDetails"
+          ref="Verification"
+        />
       </div>
       <div class="steps-content" v-show="current == 3">
         <FamilyInfoTwo
@@ -85,13 +105,19 @@
           class="mt-3"
           @click="saveExit"
         >
-          Exit
+          Save & Exit
         </a-button>
       </div>
     </div>
   </div>
 </template>
 <script>
+const createData = () => ({
+  threshold: 0,
+  headerClass: "vue-fixed-header",
+  fixedClass: "vue-fixed-header--isFixed",
+  hideScrollUp: false,
+});
 import Preference from "@/components/candidate-registration/Preference.vue";
 import PreferenceTwo from "@/components/candidate-registration/preference-two.vue";
 import Verification from "@/components/candidate-registration/verification.vue";
@@ -107,6 +133,9 @@ import languages from "@/common/languages.js";
 import hobbies from "@/common/hobbies.js";
 import foods from "@/common/foods.js";
 import thankfulThings from "@/common/thankfulThings.js";
+import VueFixedHeader from "vue-fixed-header";
+import jwtService from "../../services/jwt.service";
+
 export default {
   components: {
     Preference,
@@ -118,16 +147,22 @@ export default {
     UploadProfile,
     Review,
     Verification,
+    VueFixedHeader,
   },
   mounted() {
     this.getCandidateInitialInfo();
   },
   data() {
     return {
-      current: 1,
+      fixedStatus: {
+        headerIsFixed: false,
+      },
+      propsData: { ...createData() },
+      current: 0,
       enabledNextBtn: false,
       candidateDetails: {
         preferenceData: null,
+        images: {},
       },
       steps: [
         {
@@ -158,18 +193,27 @@ export default {
     };
   },
   methods: {
+    updateFixedStatus(next) {
+      this.fixedStatus.headerIsFixed = next;
+    },
     onDataChange(e) {
       switch (e.current) {
         case 0:
           this.candidateDetails.preferenceData = {
             ...e.value,
           };
+          break;
         case 1:
           this.candidateDetails.personalInformation = {
             ...e.value,
           };
+          break;
         case 3:
           this.candidateDetails.familyInformation = {
+            ...e.value,
+          };
+        case 4:
+          this.candidateDetails.images = {
             ...e.value,
           };
           break;
@@ -177,7 +221,7 @@ export default {
       this.checkExistData();
     },
     getCandidateInitialInfo: async function () {
-      const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      const user = JSON.parse(localStorage.getItem("user"));
       const response = await ApiService.get("v1/candidate/initial-info");
       if (response.status === 200) {
         const details = {
@@ -189,20 +233,33 @@ export default {
           hobbies: hobbies,
           foods: foods,
           thankfulThings: thankfulThings,
+          verification: {
+            ...response.data.data.validation_info.verification,
+            cities:[]
+          },
           personalInformation: {
             contact: {
               ...this.nullToUndefined(response.data.data.personal_info.contact),
-              per_current_residence_country: parseInt(
-                response.data.data.personal_info.contact
-                  .per_current_residence_country
-              ),
-              per_permanent_country: parseInt(
-                response.data.data.personal_info.contact.per_permanent_country
-              ),
-              per_email: userInfo.email,
+              per_current_residence_country: response.data.data.personal_info
+                .contact.per_current_residence_country
+                ? parseInt(
+                    response.data.data.personal_info.contact
+                      .per_current_residence_country
+                  )
+                : response.data.data.personal_info.contact
+                    .per_current_residence_country,
+              per_permanent_country: response.data.data.personal_info.contact
+                .per_permanent_country
+                ? parseInt(
+                    response.data.data.personal_info.contact
+                      .per_permanent_country
+                  )
+                : response.data.data.personal_info.contact
+                    .per_permanent_country,
+              per_email: user.email,
               per_county: "None",
-              per_current_residence_city: "None",
-              per_permanent_city: "None",
+              permanantCities: [],
+              residenceCities: [],
             },
             essential: {
               ...this.nullToUndefined(
@@ -267,8 +324,16 @@ export default {
               response.data.data.user.preference.preferred_nationality.map(
                 (a) => a.id
               ),
+            blocked_cities:
+              response.data.data.user.preference.blocked_cities.map(
+                (a) => a.id
+              ),
             preferred_countries:
               response.data.data.user.preference.preferred_countries.map(
+                (a) => a.id
+              ),
+            preferred_cities:
+              response.data.data.user.preference.preferred_cities.map(
                 (a) => a.id
               ),
             bloked_countries:
@@ -321,9 +386,129 @@ export default {
         };
         console.log("details", details);
         this.candidateDetails = {
+          ...this.candidateDetails,
           ...details,
         };
+        if (
+          this.candidateDetails.preferenceData &&
+          this.candidateDetails.preferenceData.preferred_countries.length > 0
+        ) {
+          this.onChangeCountry(
+            this.candidateDetails.preferenceData.preferred_countries[0],
+            "listOne",
+            "allowed"
+          );
+        }
+        if (
+          this.candidateDetails.preferenceData &&
+          this.candidateDetails.preferenceData.bloked_countries.length > 0
+        ) {
+          this.onChangeCountry(
+            this.candidateDetails.preferenceData.bloked_countries[0],
+            "listOne",
+            "disAllowed"
+          );
+        }
+        if (
+          this.candidateDetails.personalInformation &&
+          this.candidateDetails.personalInformation.contact
+            .per_current_residence_country > 0
+        ) {
+          this.onChangeCountry(
+            this.candidateDetails.personalInformation.contact
+              .per_current_residence_country,
+            "residence",
+            ""
+          );
+        }
+        if (
+          this.candidateDetails.personalInformation &&
+          this.candidateDetails.personalInformation.contact
+            .per_permanent_country > 0
+        ) {
+          this.onChangeCountry(
+            this.candidateDetails.personalInformation.contact
+              .per_permanent_country,
+            "permanat",
+            ""
+          );
+        }
+               if (
+          this.candidateDetails.verification &&
+          this.candidateDetails.verification.
+            ver_country > 0
+        ) {
+          this.onChangeCountry(
+            this.candidateDetails.verification.
+            ver_country,
+            "verification",
+            ""
+          );
+        }
+        this.current = response.data.data.user.data_input_status;
         this.checkExistData();
+      }
+    },
+    async saveDataInputStatus(satge) {
+      const res = await ApiService.post(
+        "v1/candidate/personal-info-status?_method=PATCH",
+        {
+          data_input_status: satge,
+        }
+      );
+    },
+    async onChangeCountry(e, name, action, isDefault = false) {
+      const res = await ApiService.get(`v1/utilities/cities/${e}`);
+
+      if (res.status === 200) {
+        switch (name) {
+          case "listOne":
+            action == "allowed"
+              ? (this.candidateDetails.preferenceData.allowedCity.listOne = [])
+              : (this.candidateDetails.preferenceData.disAllowedCity.listOne =
+                  []);
+            action == "allowed"
+              ? this.candidateDetails.preferenceData.allowedCity.listOne.push(
+                  ...res.data.data
+                )
+              : this.candidateDetails.preferenceData.disAllowedCity.listOne.push(
+                  ...res.data.data
+                );
+            break;
+          case "listTwo":
+            action == "allowed"
+              ? this.candidateDetails.preferenceData.allowedCity.listTwo.push(
+                  ...res.data.data
+                )
+              : this.candidateDetails.preferenceData.disAllowedCity.listTwo.push(
+                  ...res.data.data
+                );
+            break;
+          case "listThree":
+            action == "allowed"
+              ? this.candidateDetails.preferenceData.allowedCity.listThree.push(
+                  ...res.data.data
+                )
+              : this.candidateDetails.preferenceData.disAllowedCity.listThree.push(
+                  ...res.data.data
+                );
+            break;
+          case "residence":
+            this.candidateDetails.personalInformation.contact.residenceCities.push(
+              ...res.data.data
+            );
+            break;
+          case "permanat":
+            this.candidateDetails.personalInformation.contact.permanantCities.push(
+              ...res.data.data
+            );
+            break;
+             case "verification":
+            this.candidateDetails.verification.cities.push(
+              ...res.data.data
+            );
+            break;
+        }
       }
     },
     checkExistData() {
@@ -353,6 +538,11 @@ export default {
             this.candidateDetails.familyInformation
           ).every((x) => x !== undefined && x !== null && x !== "");
           break;
+        case 4:
+          isEnabled = Object.values(this.candidateDetails.images).every(
+            (x) => x !== undefined && x !== null && x !== ""
+          );
+          break;
       }
 
       this.enabledNextBtn = isEnabled;
@@ -367,7 +557,8 @@ export default {
       return object;
     },
     saveExit() {
-      this.$router.push("/");
+      jwtService.destroyTokenAndUser();
+      this.$router.push("/login");
     },
     doneBtn() {
       this.$router.push("/dashboard");
@@ -399,6 +590,7 @@ export default {
         }
       }
       this.checkExistData();
+      this.saveDataInputStatus(this.current);
     },
     prev() {
       this.current--;
@@ -456,12 +648,17 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: calc(100vh);
-  overflow: hidden;
+  .step-bar {
+    margin: 0;
+    padding: 0;
+    z-index: 9;
+  }
   header {
     text-align: center;
     height: 100px;
     width: 100%;
+    margin: 0;
+    padding: 0;
     background-color: $bg-secondary;
 
     @media (max-width: 768px) {
@@ -499,6 +696,7 @@ export default {
       height: 80px;
     }
   }
+
   .heading-text {
     margin-top: 20px;
     color: $color-brand;
@@ -508,5 +706,14 @@ export default {
       color: $color-brand;
     }
   }
+}
+
+.step-bar.vue-fixed-header--isFixed {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 800px;
+  padding: 0;
+  background: aliceblue;
 }
 </style>

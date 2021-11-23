@@ -143,6 +143,17 @@ export default {
         });
     });
   },
+  async saveVerificationInfo(_, payload) {
+    return new Promise((resolve, reject) => {
+      ApiService.post("v1/candidate/personal-verification-info", payload)
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
   async updatePersonalInfo(context, payload) {
     await axios
       .post(
