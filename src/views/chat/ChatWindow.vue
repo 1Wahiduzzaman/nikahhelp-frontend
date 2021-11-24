@@ -366,7 +366,6 @@ export default {
       })];
     },
     processChatHistoryResponse(data) {
-
       let singleChat = map(data.single_chat, item => {
         return {
           label: 'Team member',
@@ -431,7 +430,7 @@ export default {
 
     async getIndividualChat({ message : {chat_id, team_id}, name }) {
       const payload = {
-        type: 'team',
+        type: team_id ? 'team' : '',
         chat_id,
         team_id
       };
@@ -440,12 +439,14 @@ export default {
 
       const isAnyKeyValueFalse = !!Object.keys(payload).find(k => !payload[k]);
 
-      if(!isAnyKeyValueFalse) {
-        this.conversationTitle = name;
-        this.chats = await this.loadIndividualChatHistory(payload);
-      }else {
-        this.chats = [];
-      }
+      this.conversationTitle = name;
+      this.chats = await this.loadIndividualChatHistory(payload);
+      // if(!isAnyKeyValueFalse) {
+      //   this.conversationTitle = name;
+      //   this.chats = await this.loadIndividualChatHistory(payload);
+      // }else {
+      //   this.chats = [];
+      // }
     },
     messageCreatedAt(time) {
       return format(time);

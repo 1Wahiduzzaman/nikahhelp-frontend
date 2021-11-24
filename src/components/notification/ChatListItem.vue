@@ -13,17 +13,24 @@
             </div>
              <span class="online-icon"></span>
         </div>
-        <div class="date">05 min ago</div>
+        <div class="date">{{ item.message ? messageCreatedAt(item.message.created_at) : '' }}</div>
     </div>
 </template>
 
 <script>
+import {format} from "timeago.js";
+
 export default {
     props: {
         item: {
             type: Object
         }
-    }
+    },
+  methods: {
+    messageCreatedAt(time) {
+      return format(time);
+    },
+  }
 }
 </script>
 
@@ -39,7 +46,7 @@ export default {
             background-color: #e42076;
             margin: 10px;
             border-radius: 50%;
-            box-shadow: 0px 0px 4px 2px #e775a7;  
+            box-shadow: 0px 0px 4px 2px #e775a7;
         }
         .avatar-area {
             position: relative;
@@ -61,7 +68,7 @@ export default {
                 box-sizing: content-box;
             }
         }
-    
+
         .content {
             margin-left: 12px;
             flex: auto;
