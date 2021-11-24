@@ -106,7 +106,7 @@ const routes = [
         path: "/chat-window",
         name: "ChatWindow",
         component: ChatWindow,
-        beforeEnter: InitRoute,
+        // beforeEnter: InitRoute,
     },
     {
         path: "/candidate-registration",
