@@ -19,8 +19,8 @@ export default {
     if (response.data.status_code === 200) {
       const token = response.data.data.token.access_token;
       let data = { token: token };
-      JwtService.saveTokenAndUser(data);
       response.data.data.user.is_verified = 0;
+      JwtService.saveTokenAndUser(data);
       JwtService.setUser(response.data.data.user);
       context.commit("setUser", {
         token: response.data.data.access_token,
