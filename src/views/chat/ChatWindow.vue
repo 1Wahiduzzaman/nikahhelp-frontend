@@ -351,7 +351,7 @@ export default {
       this.sockets.subscribe('receive_message', function (res) {
         // console.log(res);
         res.sender = res.senderInfo;
-        this.chats.push(res);
+        this.chats.unshift(res);
       });
     }
   },
@@ -462,6 +462,7 @@ export default {
       // this.activeTeam = team_id;
       this.conversationTitle = name;
       this.chats = await this.loadIndividualChatHistory(payload);
+      this.chats = this.chats.reverse();
 
       // if(!isAnyKeyValueFalse) {
       //   this.conversationTitle = name;
@@ -540,7 +541,7 @@ export default {
         if(this.one_to_one_user) {
           payload.sender = loggedUser;
           payload.to = this.one_to_one_user.toString();
-          this.chats.push(payload);
+          this.chats.unshift(payload);
           this.$socket.emit('send_message', payload);
         } else {
           this.$socket.emit('send_message_in_group', payload);
