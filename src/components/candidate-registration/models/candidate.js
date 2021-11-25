@@ -131,20 +131,20 @@ export const RULES = {
             trigger: "blur",
         },
     ],
-    pre_other_preference: [
-        {
-            required: true,
-            message: "Write something",
-            trigger: "blur",
-        },
-    ],
-    pre_description: [
-        {
-            required: true,
-            message: "Write something",
-            trigger: "blur",
-        },
-    ],
+    // pre_other_preference: [
+    //     {
+    //         required: true,
+    //         message: "Write something",
+    //         trigger: "blur",
+    //     },
+    // ],
+    // pre_description: [
+    //     {
+    //         required: true,
+    //         message: "Write something",
+    //         trigger: "blur",
+    //     },
+    // ],
 };
 
 export const RULES_FAMILY_INFO={
