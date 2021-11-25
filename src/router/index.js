@@ -96,6 +96,7 @@ const AppRouter = new VueRouter({
             redirect: '/dashboard',
             beforeEnter: InitRoute,
             children: [
+
                 {
                     path: "/dashboard",
                     name: "DHome",
@@ -171,12 +172,12 @@ const AppRouter = new VueRouter({
 
                 },
                 {
-                  path: "/manageteam",
-                  name: "ManageTeam",
-                  component: ManageTeam,
-                  meta: {
-                    requiresAuth: true,
-                  },
+                    path: "/manageteam",
+                    name: "ManageTeam",
+                    component: ManageTeam,
+                    meta: {
+                        requiresAuth: true,
+                    },
                 },
                 {
                     path: "/subscription",
@@ -271,177 +272,49 @@ const AppRouter = new VueRouter({
                     props: true,
 
                 },
+                {
+                    path: "/settings",
+                    name: "Settings",
+                    component: Settings,
+
+                },
+                {
+                    path: "/admin",
+                    name: "AdminDashboard",
+                    component: AdminDashboard,
+
+
+                    children: [{
+                        path: "",
+                        component: AdminHome,
+
+                    },
+                    {
+                        path: "add-admin",
+                        component: AddAdmin,
+
+                    },
+                    {
+                        path: "user-report",
+                        component: UserReport,
+
+                    },
+                    {
+                        path: "pending-user-list",
+                        component: PendingUserList,
+
+                    },
+                    {
+                        path: "subscription-report",
+                        component: SubscriptionReport,
+
+                    },
+                    ],
+                },
             ]
         },
 
-        // {
-        //     path: "/jointeampassword",
-        //     name: "Join Team Password",
-        //     component: JoinTeamPassword,
-        // },
 
-        // {
-        //     path: "/ui",
-        //     name: "UI",
-        //     component: Test,
-        // },
-        // {
-        //     path: "/ui-chat",
-        //     name: "UI-Chat",
-        //     component: TestChat,
-
-        // },
-        // {
-        //     path: "/chat-window",
-        //     name: "ChatWindow",
-        //     component: ChatWindow,
-
-        // },
-
-        // {
-        //     path: "/shortlist",
-        //     name: "Shortlist",
-        //     component: Shortlist,
-
-        // },
-        // {
-        //     path: "/shortlist/all",
-        //     name: "AllShortlist",
-        //     component: AllShortlist,
-
-        // },
-        // {
-        //     path: "/shortlist/all/team",
-        //     name: "AllTeamShortlist",
-        //     component: AllTeamShortlist,
-
-        // },
-        // {
-        //     path: "/notifications",
-        //     name: "NotificationPage",
-        //     component: NotificationPage,
-
-        // },
-        // {
-        //     path: "/blocklist",
-        //     name: "BlockList",
-        //     component: BlockList,
-
-        // },
-        // // {
-        // //   path: "/manageteam",
-        // //   name: "ManageTeam",
-        // //   component: ManageTeam,
-        // //   meta: {
-        // //     requiresAuth: true,
-        // //   },
-        // // },
-        // {
-        //     path: "/subscription",
-        //     name: "Subscription",
-        //     component: Subscription,
-
-        // },
-        // {
-        //     path: "/subscription/:id?",
-        //     name: "Subscription",
-        //     component: Subscription,
-
-        // },
-        // {
-        //     path: "/subscription/payment/:team/:id/:subId",
-        //     name: "SubscriptionPayment",
-        //     component: SubscriptionPayment,
-
-        // },
-        // {
-        //     path: "/subscription/complete/success/:subName/:team",
-        //     name: "SubscriptionSuccess",
-        //     component: SubscriptionSuccess,
-
-        // },
-        // {
-        //     path: "/manageteam",
-        //     name: "ManageTeam",
-        //     component: ManageTeam,
-
-        // },
-
-        // {
-        //     path: "/create-team-2",
-        //     name: "CreateTeamPage2",
-        //     component: CreateTeamPage2,
-
-        // },
-        // {
-        //     path: "/create-team-3",
-        //     name: "CreateTeamPage3",
-        //     component: CreateTeamPage3,
-
-        // },
-        // {
-        //     path: "/create-team-4",
-        //     name: "CreateTeamPage4",
-        //     component: CreateTeamPage4,
-
-        // },
-        // {
-        //     path: "/create-team-5/:team_id?",
-        //     name: "CreateTeamPage5",
-        //     component: CreateTeamPage5,
-
-        // },
-        // {
-        //     path: "/connections",
-        //     name: "Connections",
-        //     component: Connections,
-
-        // },
-        // {
-        //     path: "/profile",
-        //     name: "Profile",
-        //     component: Profile,
-
-        // },
-        // {
-        //     path: "/user/profile/:id",
-        //     name: "ProfileView",
-        //     component: ProfileView,
-
-        // },
-
-        // {
-        //     path: "/search",
-        //     name: "Search",
-        //     component: Search,
-
-        // },
-        // {
-        //     path: "/search/advance",
-        //     name: "AdvanceSearch",
-        //     component: AdvanceSearch,
-
-        // },
-        // {
-        //     path: "/visitor/search",
-        //     name: "UnAuthSearch",
-        //     component: UnAuthSearch,
-        //     props: true,
-
-        // },
-
-        // {
-        //     path: "/member-type",
-        //     name: "MemberTypeSelection",
-        //     component: MemberTypeSelection,
-
-        // },
-        // {
-        //     path: "/member-name/:type",
-        //     name: "MemberNameInput",
-        //     component: MemberNameInput,
-
-        // },
         {
             path: "/signup",
             name: "Signup",
@@ -473,26 +346,17 @@ const AppRouter = new VueRouter({
             component: VerifyEmail,
 
         },
-        // {
-        //     path: "/forgot-password",
-        //     name: "ForgetPassword",
-        //     component: ForgetPassword,
-        // },
-        // {
-        //     path: "/password-reset-token-verification/:token",
-        //     name: "ResetPassword",
-        //     component: ResetPassword,
-        // },
-        // {
-        //     path: "/header",
-        //     name: "Header",
-        //     component: Header,
-        // },
-        // {
-        //     path: "/logout",
-        //     name: "Logout",
-        //     component: Logout,
-        // },
+        {
+            path: "/forgot-password",
+            name: "ForgetPassword",
+            component: ForgetPassword,
+        },
+        {
+            path: "/password-reset-token-verification/:token",
+            name: "ResetPassword",
+            component: ResetPassword,
+        },
+
         {
             path: "/about",
             name: "About",
@@ -517,52 +381,14 @@ const AppRouter = new VueRouter({
             component: TermsAndConditionPage,
 
         },
-        // {
-        //     path: "/settings",
-        //     name: "Settings",
-        //     component: Settings,
 
-        // },
 
         {
             path: "/privacy-policy",
             name: "PrivacyPolicy",
             component: PrivacyPolicy,
         },
-        // //Admin Routes
-        // {
-        //     path: "/admin",
-        //     name: "AdminDashboard",
-        //     component: AdminDashboard,
 
-
-        //     children: [{
-        //         path: "",
-        //         component: AdminHome,
-
-        //     },
-        //     {
-        //         path: "add-admin",
-        //         component: AddAdmin,
-
-        //     },
-        //     {
-        //         path: "user-report",
-        //         component: UserReport,
-
-        //     },
-        //     {
-        //         path: "pending-user-list",
-        //         component: PendingUserList,
-
-        //     },
-        //     {
-        //         path: "subscription-report",
-        //         component: SubscriptionReport,
-
-        //     },
-        //     ],
-        // },
     ]
 })
 

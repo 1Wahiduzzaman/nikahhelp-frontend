@@ -1,17 +1,21 @@
 <template>
-  <div class="row header-text" >
-    <div class="col-md-12 text-center"><img src="@/assets/logo.png" class="logoimage" /></div>
+  <div class="row header-text">
+    <div class="col-md-12 text-center">
+      <router-link to="/"
+        ><img class="logoimage" src="@/assets/logo.png" alt=""
+      /></router-link>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.header-text{
-	min-height: 120px;
-	background-color: #3A3091;
-	color: #FFF;
+.header-text {
+  min-height: 120px;
+  background-color: #3a3091;
+  color: #fff;
 }
-.logoimage{
-max-height: 100px;
+.logoimage {
+  max-height: 100px;
 }
 .carousel-item {
   height: 65vh;
