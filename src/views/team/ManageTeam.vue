@@ -29,7 +29,7 @@
               </a-button>
             </template>
           </a-modal>
-          <Banner />
+          <Banner v-if="1 !== 1" />
 					<a-row :gutter="16">
 						<div class="row justify-content-md-center">
 							<TeamDetailsCard
