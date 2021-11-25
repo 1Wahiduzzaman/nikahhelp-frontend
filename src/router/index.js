@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 import DHome from "@/views/dashboard/DHome.vue";
 import Home from "@/views/auth/Home.vue";
 import About from "@/views/auth/About.vue";
+import MatrimonySystem from "@/components/system/matrimony-system.vue";
 import AboutPage from "@/components/landing-page/about.vue";
 import HelpPage from "@/components/landing-page/help.vue";
 import TermsAndConditionPage from "@/components/landing-page/terms-condition.vue";
@@ -78,331 +79,492 @@ import { InitRoute } from './guard/guard'
 
 Vue.use(VueRouter);
 import design from './design'
-const routes = [
-    ...design,
-    {
-        path: "/jointeampassword",
-        name: "Join Team Password",
-        component: JoinTeamPassword,
-    },
-    {
-        path: "/dashboard",
-        name: "DHome",
-        component: DHome,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/ui",
-        name: "UI",
-        component: Test,
-    },
-    {
-        path: "/ui-chat",
-        name: "UI-Chat",
-        component: TestChat,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/chat-window",
-        name: "ChatWindow",
-        component: ChatWindow,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/candidate-registration",
-        name: "CandidateRegistration",
-        component: CandidateRegistration,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/representative-registration",
-        name: "RepresentativeRegistration",
-        component: RepresentativeRegistration,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/shortlist",
-        name: "Shortlist",
-        component: Shortlist,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/shortlist/all",
-        name: "AllShortlist",
-        component: AllShortlist,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/shortlist/all/team",
-        name: "AllTeamShortlist",
-        component: AllTeamShortlist,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/notifications",
-        name: "NotificationPage",
-        component: NotificationPage,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/blocklist",
-        name: "BlockList",
-        component: BlockList,
-        beforeEnter: InitRoute,
-    },
-    // {
-    //   path: "/manageteam",
-    //   name: "ManageTeam",
-    //   component: ManageTeam,
-    //   meta: {
-    //     requiresAuth: true,
-    //   },
-    // },
-    {
-        path: "/subscription",
-        name: "Subscription",
-        component: Subscription,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/subscription/:id?",
-        name: "Subscription",
-        component: Subscription,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/subscription/payment/:team/:id/:subId",
-        name: "SubscriptionPayment",
-        component: SubscriptionPayment,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/subscription/complete/success/:subName/:team",
-        name: "SubscriptionSuccess",
-        component: SubscriptionSuccess,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/manageteam",
-        name: "ManageTeam",
-        component: ManageTeam,
-        beforeEnter: InitRoute,
-    },
-
-    {
-        path: "/create-team-2",
-        name: "CreateTeamPage2",
-        component: CreateTeamPage2,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/create-team-3",
-        name: "CreateTeamPage3",
-        component: CreateTeamPage3,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/create-team-4",
-        name: "CreateTeamPage4",
-        component: CreateTeamPage4,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/create-team-5/:team_id?",
-        name: "CreateTeamPage5",
-        component: CreateTeamPage5,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/connections",
-        name: "Connections",
-        component: Connections,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/profile",
-        name: "Profile",
-        component: Profile,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/user/profile/:id",
-        name: "ProfileView",
-        component: ProfileView,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/",
-        name: "Home",
-        component: Home,
-       // beforeEnter: InitRoute,
-    },
-    {
-        path: "/search",
-        name: "Search",
-        component: Search,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/search/advance",
-        name: "AdvanceSearch",
-        component: AdvanceSearch,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/visitor/search",
-        name: "UnAuthSearch",
-        component: UnAuthSearch,
-        props: true,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/signup",
-        name: "Signup",
-        component: Signup,
-
-    },
-    {
-        path: "/login",
-        name: "Login",
-        component: Login,
-
-    },
-    {
-        path: "/member-type",
-        name: "MemberTypeSelection",
-        component: MemberTypeSelection,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/member-name/:type",
-        name: "MemberNameInput",
-        component: MemberNameInput,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/email-verification",
-        name: "EmailVerification",
-        component: EmailVerification,
-    },
-
-    {
-        path: "/email-verification-success",
-        name: "Success",
-        component: Success,
-        beforeEnter: InitRoute,
-    },
-    {
-        path: "/emailVerify/:token",
-        name: "VerifyEmail",
-        component: VerifyEmail,
-
-    },
-    {
-        path: "/forgot-password",
-        name: "ForgetPassword",
-        component: ForgetPassword,
-    },
-    {
-        path: "/password-reset-token-verification/:token",
-        name: "ResetPassword",
-        component: ResetPassword,
-    },
-    {
-        path: "/header",
-        name: "Header",
-        component: Header,
-    },
-    {
-        path: "/logout",
-        name: "Logout",
-        component: Logout,
-    },
-    {
-        path: "/about",
-        name: "About",
-        component: AboutPage,
-
-    },
-    {
-        path: "/help",
-        name: "Help",
-        component: HelpPage,
-
-    },
-    {
-        path: "/safety_guidance",
-        name: "Safety_Guidance",
-        component: SafetyAndGuidancePage,
-
-    },
-    {
-        path: "/terms_condition",
-        name: "Terms_Condition",
-        component: TermsAndConditionPage,
-
-    },
-    {
-        path: "/settings",
-        name: "Settings",
-        component: Settings,
-        beforeEnter: InitRoute,
-    },
-
-    {
-        path: "/privacy-policy",
-        name: "PrivacyPolicy",
-        component: PrivacyPolicy,
-    },
-    //Admin Routes
-    {
-        path: "/admin",
-        name: "AdminDashboard",
-        component: AdminDashboard,
-        beforeEnter: InitRoute,
-
-        children: [{
-            path: "",
-            component: AdminHome,
-
-        },
-        {
-            path: "add-admin",
-            component: AddAdmin,
-
-        },
-        {
-            path: "user-report",
-            component: UserReport,
-
-        },
-        {
-            path: "pending-user-list",
-            component: PendingUserList,
-
-        },
-        {
-            path: "subscription-report",
-            component: SubscriptionReport,
-
-        },
-        ],
-    },
-];
-const router = new VueRouter({
-    mode: "history",
+const AppRouter = new VueRouter({
+    mode: 'history',
     base: process.env.BASE_URL,
-    routes,
-});
+    routes: [
+        {
+            path: "/",
+            name: "Home",
+            component: Home,
 
-// router.beforeEach(function(to, _, next) {
-//     if (to.meta.requiresAuth) {
-//         next({ path: "/login" });
-//     } else if (to.meta.requiresUnAuth && store.getters.isAuthenticated) {
-//         next({ path: "/dashboard" });
-//     } else {
-//         next();
-//     }
-// });
+        },
+        {
+            path: "",
+            name: 'root',
+            component: MatrimonySystem,
+            redirect: '/dashboard',
+            beforeEnter: InitRoute,
+            children: [
+                {
+                    path: "/dashboard",
+                    name: "DHome",
+                    component: DHome,
 
-export default router;
+                },
+                {
+                    path: "/candidate-registration",
+                    name: "CandidateRegistration",
+                    component: CandidateRegistration,
+
+
+                },
+                {
+                    path: "/representative-registration",
+                    name: "RepresentativeRegistration",
+                    component: RepresentativeRegistration,
+
+
+                },
+                {
+                    path: "/jointeampassword",
+                    name: "Join Team Password",
+                    component: JoinTeamPassword,
+                },
+
+                {
+                    path: "/ui",
+                    name: "UI",
+                    component: Test,
+                },
+                {
+                    path: "/ui-chat",
+                    name: "UI-Chat",
+                    component: TestChat,
+
+                },
+                {
+                    path: "/chat-window",
+                    name: "ChatWindow",
+                    component: ChatWindow,
+
+                },
+
+                {
+                    path: "/shortlist",
+                    name: "Shortlist",
+                    component: Shortlist,
+
+                },
+                {
+                    path: "/shortlist/all",
+                    name: "AllShortlist",
+                    component: AllShortlist,
+
+                },
+                {
+                    path: "/shortlist/all/team",
+                    name: "AllTeamShortlist",
+                    component: AllTeamShortlist,
+
+                },
+                {
+                    path: "/notifications",
+                    name: "NotificationPage",
+                    component: NotificationPage,
+
+                },
+                {
+                    path: "/blocklist",
+                    name: "BlockList",
+                    component: BlockList,
+
+                },
+                {
+                  path: "/manageteam",
+                  name: "ManageTeam",
+                  component: ManageTeam,
+                  meta: {
+                    requiresAuth: true,
+                  },
+                },
+                {
+                    path: "/subscription",
+                    name: "Subscription",
+                    component: Subscription,
+
+                },
+                {
+                    path: "/subscription/:id?",
+                    name: "Subscription",
+                    component: Subscription,
+
+                },
+                {
+                    path: "/subscription/payment/:team/:id/:subId",
+                    name: "SubscriptionPayment",
+                    component: SubscriptionPayment,
+
+                },
+                {
+                    path: "/subscription/complete/success/:subName/:team",
+                    name: "SubscriptionSuccess",
+                    component: SubscriptionSuccess,
+
+                },
+                {
+                    path: "/manageteam",
+                    name: "ManageTeam",
+                    component: ManageTeam,
+
+                },
+
+                {
+                    path: "/create-team-2",
+                    name: "CreateTeamPage2",
+                    component: CreateTeamPage2,
+
+                },
+                {
+                    path: "/create-team-3",
+                    name: "CreateTeamPage3",
+                    component: CreateTeamPage3,
+
+                },
+                {
+                    path: "/create-team-4",
+                    name: "CreateTeamPage4",
+                    component: CreateTeamPage4,
+
+                },
+                {
+                    path: "/create-team-5/:team_id?",
+                    name: "CreateTeamPage5",
+                    component: CreateTeamPage5,
+
+                },
+                {
+                    path: "/connections",
+                    name: "Connections",
+                    component: Connections,
+
+                },
+                {
+                    path: "/profile",
+                    name: "Profile",
+                    component: Profile,
+
+                },
+                {
+                    path: "/user/profile/:id",
+                    name: "ProfileView",
+                    component: ProfileView,
+
+                },
+
+                {
+                    path: "/search",
+                    name: "Search",
+                    component: Search,
+
+                },
+                {
+                    path: "/search/advance",
+                    name: "AdvanceSearch",
+                    component: AdvanceSearch,
+
+                },
+                {
+                    path: "/visitor/search",
+                    name: "UnAuthSearch",
+                    component: UnAuthSearch,
+                    props: true,
+
+                },
+            ]
+        },
+
+        // {
+        //     path: "/jointeampassword",
+        //     name: "Join Team Password",
+        //     component: JoinTeamPassword,
+        // },
+
+        // {
+        //     path: "/ui",
+        //     name: "UI",
+        //     component: Test,
+        // },
+        // {
+        //     path: "/ui-chat",
+        //     name: "UI-Chat",
+        //     component: TestChat,
+
+        // },
+        // {
+        //     path: "/chat-window",
+        //     name: "ChatWindow",
+        //     component: ChatWindow,
+
+        // },
+
+        // {
+        //     path: "/shortlist",
+        //     name: "Shortlist",
+        //     component: Shortlist,
+
+        // },
+        // {
+        //     path: "/shortlist/all",
+        //     name: "AllShortlist",
+        //     component: AllShortlist,
+
+        // },
+        // {
+        //     path: "/shortlist/all/team",
+        //     name: "AllTeamShortlist",
+        //     component: AllTeamShortlist,
+
+        // },
+        // {
+        //     path: "/notifications",
+        //     name: "NotificationPage",
+        //     component: NotificationPage,
+
+        // },
+        // {
+        //     path: "/blocklist",
+        //     name: "BlockList",
+        //     component: BlockList,
+
+        // },
+        // // {
+        // //   path: "/manageteam",
+        // //   name: "ManageTeam",
+        // //   component: ManageTeam,
+        // //   meta: {
+        // //     requiresAuth: true,
+        // //   },
+        // // },
+        // {
+        //     path: "/subscription",
+        //     name: "Subscription",
+        //     component: Subscription,
+
+        // },
+        // {
+        //     path: "/subscription/:id?",
+        //     name: "Subscription",
+        //     component: Subscription,
+
+        // },
+        // {
+        //     path: "/subscription/payment/:team/:id/:subId",
+        //     name: "SubscriptionPayment",
+        //     component: SubscriptionPayment,
+
+        // },
+        // {
+        //     path: "/subscription/complete/success/:subName/:team",
+        //     name: "SubscriptionSuccess",
+        //     component: SubscriptionSuccess,
+
+        // },
+        // {
+        //     path: "/manageteam",
+        //     name: "ManageTeam",
+        //     component: ManageTeam,
+
+        // },
+
+        // {
+        //     path: "/create-team-2",
+        //     name: "CreateTeamPage2",
+        //     component: CreateTeamPage2,
+
+        // },
+        // {
+        //     path: "/create-team-3",
+        //     name: "CreateTeamPage3",
+        //     component: CreateTeamPage3,
+
+        // },
+        // {
+        //     path: "/create-team-4",
+        //     name: "CreateTeamPage4",
+        //     component: CreateTeamPage4,
+
+        // },
+        // {
+        //     path: "/create-team-5/:team_id?",
+        //     name: "CreateTeamPage5",
+        //     component: CreateTeamPage5,
+
+        // },
+        // {
+        //     path: "/connections",
+        //     name: "Connections",
+        //     component: Connections,
+
+        // },
+        // {
+        //     path: "/profile",
+        //     name: "Profile",
+        //     component: Profile,
+
+        // },
+        // {
+        //     path: "/user/profile/:id",
+        //     name: "ProfileView",
+        //     component: ProfileView,
+
+        // },
+
+        // {
+        //     path: "/search",
+        //     name: "Search",
+        //     component: Search,
+
+        // },
+        // {
+        //     path: "/search/advance",
+        //     name: "AdvanceSearch",
+        //     component: AdvanceSearch,
+
+        // },
+        // {
+        //     path: "/visitor/search",
+        //     name: "UnAuthSearch",
+        //     component: UnAuthSearch,
+        //     props: true,
+
+        // },
+
+        // {
+        //     path: "/member-type",
+        //     name: "MemberTypeSelection",
+        //     component: MemberTypeSelection,
+
+        // },
+        // {
+        //     path: "/member-name/:type",
+        //     name: "MemberNameInput",
+        //     component: MemberNameInput,
+
+        // },
+        {
+            path: "/signup",
+            name: "Signup",
+            component: Signup,
+
+        },
+        {
+            path: "/login",
+            name: "Login",
+            component: Login,
+
+        },
+
+        {
+            path: "/email-verification",
+            name: "EmailVerification",
+            component: EmailVerification,
+        },
+
+        {
+            path: "/email-verification-success",
+            name: "Success",
+            component: Success,
+
+        },
+        {
+            path: "/emailVerify/:token",
+            name: "VerifyEmail",
+            component: VerifyEmail,
+
+        },
+        // {
+        //     path: "/forgot-password",
+        //     name: "ForgetPassword",
+        //     component: ForgetPassword,
+        // },
+        // {
+        //     path: "/password-reset-token-verification/:token",
+        //     name: "ResetPassword",
+        //     component: ResetPassword,
+        // },
+        // {
+        //     path: "/header",
+        //     name: "Header",
+        //     component: Header,
+        // },
+        // {
+        //     path: "/logout",
+        //     name: "Logout",
+        //     component: Logout,
+        // },
+        {
+            path: "/about",
+            name: "About",
+            component: AboutPage,
+
+        },
+        {
+            path: "/help",
+            name: "Help",
+            component: HelpPage,
+
+        },
+        {
+            path: "/safety_guidance",
+            name: "Safety_Guidance",
+            component: SafetyAndGuidancePage,
+
+        },
+        {
+            path: "/terms_condition",
+            name: "Terms_Condition",
+            component: TermsAndConditionPage,
+
+        },
+        // {
+        //     path: "/settings",
+        //     name: "Settings",
+        //     component: Settings,
+
+        // },
+
+        {
+            path: "/privacy-policy",
+            name: "PrivacyPolicy",
+            component: PrivacyPolicy,
+        },
+        // //Admin Routes
+        // {
+        //     path: "/admin",
+        //     name: "AdminDashboard",
+        //     component: AdminDashboard,
+
+
+        //     children: [{
+        //         path: "",
+        //         component: AdminHome,
+
+        //     },
+        //     {
+        //         path: "add-admin",
+        //         component: AddAdmin,
+
+        //     },
+        //     {
+        //         path: "user-report",
+        //         component: UserReport,
+
+        //     },
+        //     {
+        //         path: "pending-user-list",
+        //         component: PendingUserList,
+
+        //     },
+        //     {
+        //         path: "subscription-report",
+        //         component: SubscriptionReport,
+
+        //     },
+        //     ],
+        // },
+    ]
+})
+
+export default AppRouter;
+window.AppRouter = AppRouter;
