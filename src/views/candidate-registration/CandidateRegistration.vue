@@ -1,8 +1,6 @@
 <template>
   <div class="candidate-registration">
-    <header>
-      <a href="/"><img src="@/assets/logo.png" alt="" /></a>
-    </header>
+  <Header />
 
     <div class="steps ma-steps">
       <div class="steper-header text-center heading-text">
@@ -135,7 +133,7 @@ import foods from "@/common/foods.js";
 import thankfulThings from "@/common/thankfulThings.js";
 import VueFixedHeader from "vue-fixed-header";
 import jwtService from "../../services/jwt.service";
-
+import Header from "../../components/header/header";
 export default {
   components: {
     Preference,
@@ -148,6 +146,7 @@ export default {
     Review,
     Verification,
     VueFixedHeader,
+    Header
   },
   mounted() {
     this.getCandidateInitialInfo();
@@ -235,7 +234,7 @@ export default {
           thankfulThings: thankfulThings,
           verification: {
             ...response.data.data.validation_info.verification,
-            cities:[]
+            cities: [],
           },
           personalInformation: {
             contact: {
@@ -357,8 +356,6 @@ export default {
                 : true,
             pre_partner_comes_from: [],
             pre_disallow_preference: [],
-            // pre_partner_age_max: 1,
-            // pre_partner_age_min: 1,
             disAllowedCity: {
               listOne: [],
               listTwo: [],
@@ -433,14 +430,12 @@ export default {
             ""
           );
         }
-               if (
+        if (
           this.candidateDetails.verification &&
-          this.candidateDetails.verification.
-            ver_country > 0
+          this.candidateDetails.verification.ver_country > 0
         ) {
           this.onChangeCountry(
-            this.candidateDetails.verification.
-            ver_country,
+            this.candidateDetails.verification.ver_country,
             "verification",
             ""
           );
@@ -503,10 +498,8 @@ export default {
               ...res.data.data
             );
             break;
-             case "verification":
-            this.candidateDetails.verification.cities.push(
-              ...res.data.data
-            );
+          case "verification":
+            this.candidateDetails.verification.cities.push(...res.data.data);
             break;
         }
       }
@@ -515,9 +508,30 @@ export default {
       let isEnabled = false;
       switch (this.current) {
         case 0:
-          isEnabled = Object.values(this.candidateDetails.preferenceData).every(
-            (x) => x !== undefined && x !== null && x !== ""
-          );
+          const {
+            pre_partner_age_max,
+            pre_partner_age_min,
+            pre_height_max,
+            pre_height_min,
+            pre_partner_religion_id,
+            pre_ethnicities,
+            preferred_nationality,
+            pre_study_level_id,
+            pre_employment_status,
+            pre_occupation,
+          } = this.candidateDetails.preferenceData;
+          isEnabled = Object.values({
+            pre_partner_age_max,
+            pre_partner_age_min,
+            pre_height_max,
+            pre_height_min,
+            pre_partner_religion_id,
+            pre_ethnicities,
+            preferred_nationality,
+            pre_study_level_id,
+            pre_employment_status,
+            pre_occupation,
+          }).every((x) => x !== undefined && x !== null && x !== "");
           break;
         case 1:
           Object.values(this.candidateDetails.personalInformation).forEach(
@@ -654,7 +668,7 @@ export default {
     z-index: 9;
   }
   header {
-    text-align: center;
+   text-align: center;
     height: 100px;
     width: 100%;
     margin: 0;
@@ -696,7 +710,9 @@ export default {
       height: 80px;
     }
   }
-
+.header-text {
+    width: 100%;
+  }
   .heading-text {
     margin-top: 20px;
     color: $color-brand;

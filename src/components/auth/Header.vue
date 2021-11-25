@@ -1,12 +1,14 @@
 <template>
   <nav class="top-menu navbar justify-content-between">
     <div class="container">
-      <a href="/" class="navbar-brand"
-        ><img
-          class="logo"
-          src="@/assets/Icons/Logo/SVG/White Logo.svg"
-          alt="logo"
-      /></a>
+      <router-link to="/">
+        <a href="javascript:void()" class="navbar-brand"
+          ><img
+            class="logo"
+            src="@/assets/Icons/Logo/SVG/White Logo.svg"
+            alt="logo"
+        /></a>
+      </router-link>
       <form class="login">
         <div v-if="!isLoggedIn">
           <router-link to="/login"

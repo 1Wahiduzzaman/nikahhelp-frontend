@@ -1305,7 +1305,6 @@
           v-if="preferenceData"
           ref="preferenceFormTwo"
           :model="preferenceData"
-          :rules="RULES_RATE"
           class="form-ma"
         >
           <a-row :gutter="8">

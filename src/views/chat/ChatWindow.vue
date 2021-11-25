@@ -95,6 +95,7 @@
                   <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <div class="chat-item"
                          v-for="item in teamChat"
+                         v-if="item.user_id != getAuthUserId"
                          :key="item.team_id"
                     >
                       <ChatListItem
@@ -150,7 +151,7 @@
                   </div>
                 </div>
                 <div class="middle">
-                  <div class="chat-group">Team 1 Group chat</div>
+                  <div class="chat-group">{{ one_to_one_user ? 'Private' : conversationTitle + ' Group' }} chat</div>
                 </div>
                 <div class="right">
 
@@ -215,7 +216,7 @@
 import ChatListItem from '@/components/notification/ChatListItem';
 import ApiService from '@/services/api.service';
 import { pick, map } from 'lodash';
-const messageKeys = ['id', 'chat_id', 'team_id', 'body', 'seen', 'created_at'];
+const messageKeys = ['id', 'user_id', 'chat_id', 'team_id', 'body', 'seen', 'created_at'];
 import { format } from 'timeago.js'
 
 export default {
@@ -236,7 +237,11 @@ export default {
       teamChat: [],
       chatHistory: [],
       chats: [],
-      conv_search_key: null
+      conv_search_key: null,
+      activeTeam: null,
+      teamMembers: [],
+      online_users: [],
+      one_to_one_user: null,
     }
   },
   components: {
@@ -294,7 +299,6 @@ export default {
       }
       return count;
     },
-
     connectedConversations: function() {
       var connectedConversations = [];
       if(this.conv_search_key == null || this.conv_search_key == ""){
@@ -319,6 +323,13 @@ export default {
         return connectedConversations;
       }
     },
+    getAuthUserId() {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      if(loggedUser) {
+        return loggedUser.id;
+      }
+      return null;
+    }
   },
   created(){
 
@@ -332,25 +343,31 @@ export default {
 
       this.sockets.subscribe('ping_success', function (res) {
         console.log(res);
+        if(res && res.online_users) {
+          this.online_users = res.online_users;
+        }
       });
 
-      let data = {
-        to: 83,
-        msg: 'hello man',
-        user: loggedUser
-      }
-
-      this.$socket.emit('send_message', data);
+      // let data = {
+      //   to: 83,
+      //   msg: 'hello man',
+      //   user: loggedUser
+      // }
+      //
+      // this.$socket.emit('send_message', data);
 
       this.sockets.subscribe('receive_message', function (res) {
         console.log(res);
+        this.chats.push(res);
       });
     }
   },
   methods:{
     // Process team chat response
     processTeamChatResponse(data) {
-      let group = pick(data, ['id', 'name', 'logo']);
+      // let group = pick(data, ['id', 'name', 'logo']);
+      this.activeTeam = data.team_id;
+      let group = data;
       group.message = pick(data.last_group_message, messageKeys);
       group.label = 'Group chat';
       group.state = 'Typing...'
@@ -358,6 +375,7 @@ export default {
       return [group, ...map(data.team_members, item => {
         return {
           label: 'Team member',
+          user_id: item.user_id,
           state: 'seen',
           name: item.user?.full_name || 'user name',
           logo: item.user?.avatar,
@@ -400,7 +418,12 @@ export default {
     async loadTeamChat(){
       try {
         let { data }  = await ApiService.get('/v1/team-chat').then(res => res.data);
-        this.teamChat =  this.processTeamChatResponse(data);
+        if(data && data.team_members) {
+          this.teamMembers = map(data.team_members, item => {
+            return item.user_id.toString();
+          });
+        }
+        this.teamChat = this.processTeamChatResponse(data);
       } catch (e) {
         console.error(e);
       }
@@ -428,17 +451,20 @@ export default {
       }
     },
 
-    async getIndividualChat({ message : {chat_id, team_id}, name }) {
+    async getIndividualChat({ message : {chat_id, team_id}, name, user_id }) {
       const payload = {
-        type: team_id ? 'team' : '',
+        type: chat_id ? 'single' : 'team',
         chat_id,
-        team_id
+        team_id,
+        user_id
       };
 
       this.conversationTitle = '';
+      this.one_to_one_user = user_id;
 
-      const isAnyKeyValueFalse = !!Object.keys(payload).find(k => !payload[k]);
+      // const isAnyKeyValueFalse = !!Object.keys(payload).find(k => !payload[k]);
 
+      // this.activeTeam = team_id;
       this.conversationTitle = name;
       this.chats = await this.loadIndividualChatHistory(payload);
       // if(!isAnyKeyValueFalse) {
@@ -489,35 +515,78 @@ export default {
       var user_id = this.$store.state.user.user.id;
       var payload = {
         user_id: user_id,
-        conv_id:conv_id
+        conv_id: conv_id
       }
 
       this.$store.dispatch('clearUnreadMsg',payload);
     },
-    sendMsg(e){
-      e.preventDefault();
-      var current_conv = this.$store.state.chat.current_conversation;
-      if(current_conv == null || current_conv == ''){
-        alert('Please select conversation');
-      }
-      else{
-        var sent_by = this.$store.state.user.user.id;
-        var msg_text = this.msg_text;
-        var conv_id = this.$store.state.chat.current_conversation;
-        var members = this.$store.getters["getChatMemberList"];
-        var conv_type = this.$store.getters["getConversationType"];
-        // console.log(members);
-        var sent_at = new Date();
-        var new_msg = {
-          conv_id: conv_id,
-          msg_text: msg_text,
-          sent_by: sent_by,
-          sent_at: sent_at
-
+    async sendMsg(e){
+      console.log(e);
+      let url = '';
+      if(this.msg_text) {
+        let loggedUser = JSON.parse(localStorage.getItem('user'));
+        let payload = {
+          team_id: this.activeTeam,
+          msg: this.msg_text,
+          body: this.msg_text,
+          created_at: new Date(),
+          senderId: loggedUser.id,
         }
-      }
 
-      // msgCollection.add(new_msg);
+        if(this.one_to_one_user) {
+          payload.receiver = this.one_to_one_user;
+          url = 'send-message';
+        } else {
+          payload.sender = loggedUser;
+          payload.receivers = JSON.stringify(this.teamMembers);
+          url = 'send-message-to-team';
+        }
+
+        await ApiService.post(`/v1/${url}`, payload).then(res => {
+          if(this.one_to_one_user) {
+            payload.sender = loggedUser;
+            this.chats.push(payload);
+            this.$socket.emit('send_message', payload);
+          } else {
+            this.$socket.emit('send_message_in_group', payload);
+          }
+          this.msg_text = '';
+        });
+
+        // await ApiService.post('/v1/send-message', payload).then(res => {
+        //   this.teamMembers.push('83');
+        //
+        //   let data = {
+        //     // receivers: JSON.stringify(this.teamMembers),
+        //     to: 80,
+        //     msg: payload.message,
+        //     body: payload.message,
+        //     sender: loggedUser,
+        //     senderId: loggedUser.id,
+        //     created_at: new Date()
+        //   }
+        //   this.msg_text = '';
+        //   this.chats.push(data);
+        //   this.$socket.emit('send_message', data);
+        //   console.log(res.data);
+        // });
+
+        // await ApiService.post('/v1/send-message-to-team', payload).then(res => {
+        //   this.teamMembers.push('83');
+        //
+        //   let data = {
+        //     receivers: JSON.stringify(this.teamMembers),
+        //     msg: payload.message,
+        //     body: payload.message,
+        //     sender: loggedUser,
+        //     senderId: loggedUser.id,
+        //     created_at: new Date()
+        //   }
+        //   this.msg_text = '';
+        //   this.$socket.emit('send_message_in_group', data);
+        //   console.log(res.data);
+        // });
+      }
     },
     unique(array){
       return array.filter(function(el, index, arr) {

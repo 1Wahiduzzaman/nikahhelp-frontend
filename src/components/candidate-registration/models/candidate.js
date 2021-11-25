@@ -3,28 +3,28 @@ export const RULES_RATE={
         {
             required: true,
             message: "Rate Employment and wealth",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     pre_good_talker_rate: [
         {
             required: true,
             message: "Rate good talker",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     pre_family_social_status_rate: [
         {
             required: true,
             message: "Rate family and social status",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     pre_education_rate: [
         {
             required: true,
             message: "Rate education",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
 
@@ -32,49 +32,49 @@ export const RULES_RATE={
         {
             required: true,
             message: "Rate willing to learn",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     pre_religiosity_or_faith_rate: [
         {
             required: true,
             message: "Rate religiosity and faith",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     pre_manners_socialskill_ethics_rate: [
         {
             required: true,
             message: "Rate social skill and ethics",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     pre_emotional_maturity_rate: [
         {
             required: true,
             message: "Rate emotional maturity",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     pre_good_listener_rate: [
         {
             required: true,
             message: "Rate good listener",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     pre_look_and_appearance_rate: [
         {
             required: true,
             message: "Rate look and appearance",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     pre_strength_of_character_rate: [
         {
             required: true,
             message: "Rate strength character",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
 }
@@ -86,92 +86,92 @@ export const RULES = {
         {
             required: true,
             message: "Select your employment status",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     pre_study_level_id: [
         {
             required: true,
             message: "Select your education status",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     preferred_nationality: [
         {
             required: true,
             message: "Select a nationality",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     pre_ethnicities: [
         {
             required: true,
             message: "Select a ethnicities",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     prefReligions: [
         {
             required: true,
             message: "Select a religion",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     preferred_nationality: [
         {
             required: true,
             message: "Select a nationality",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     pre_occupation: [
         {
             required: true,
             message: "Select a occupation",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
-    pre_other_preference: [
-        {
-            required: true,
-            message: "Write something",
-            trigger: "change",
-        },
-    ],
-    pre_description: [
-        {
-            required: true,
-            message: "Write something",
-            trigger: "change",
-        },
-    ],
+    // pre_other_preference: [
+    //     {
+    //         required: true,
+    //         message: "Write something",
+    //         trigger: "blur",
+    //     },
+    // ],
+    // pre_description: [
+    //     {
+    //         required: true,
+    //         message: "Write something",
+    //         trigger: "blur",
+    //     },
+    // ],
 };
 
 export const RULES_FAMILY_INFO={
     father_profession:[{
         required: true,
         message: "Select your father's profession",
-        trigger: "change",
+        trigger: "blur",
     }],
     mother_profession:[{
         required: true,
         message: "Select your mother's profession",
-        trigger: "change",
+        trigger: "blur",
     }],
     siblings_desc:[{
         required: true,
         message: "Write about your siblings",
-        trigger: "change",
+        trigger: "blur",
     }],
     family_info:[{
         required: true,
         message: "Write about your other family info",
-        trigger: "change",
+        trigger: "blur",
     }],
     country_of_origin:[{
         required: true,
         message: "Select your country of origin",
-        trigger: "change",
+        trigger: "blur",
     }],
 }
 
@@ -179,187 +179,187 @@ export const RULESPERSONALINFO = {
     per_smoker: [{
         required: true,
         message: "Select you are a smoker or not?",
-        trigger: "change",
+        trigger: "blur",
     },],
     per_ethnicity: [{
         required: true,
         message: "Select your ethnicity",
-        trigger: "change",
+        trigger: "blur",
     },],
     per_mother_tongue: [{
         required: true,
         message: "Select your mother tongue",
-        trigger: "change",
+        trigger: "blur",
     },],
     height:[
         {
             required: true,
             message: "Write about your height",
-            trigger: "change",
+            trigger: "blur",
         }
     ],
     per_nationality: [{
         required: true,
         message: "Select your nationality",
-        trigger: "change",
+        trigger: "blur",
     },],
     per_country_of_birth: [{
         required: true,
         message: "Select your country of birth",
-        trigger: "change",
+        trigger: "blur",
     },],
     per_health_condition: [{
         required: true,
         message: "Write about your health and wellbeing",
-        trigger: "change",
+        trigger: "blur",
     },],
     per_language_speak: [{
         required: true,
         message: "Select your language",
-        trigger: "change",
+        trigger: "blur",
     },],
     per_hobbies_interests: [{
         required: true,
         message: "Select your hobbies and leisure interests",
-        trigger: "change",
+        trigger: "blur",
     },],
     per_food_cuisine_like: [{
         required: true,
         message: "Select your favourite food and cuisine",
-        trigger: "change",
+        trigger: "blur",
     },],
     per_things_enjoy: [{
         required: true,
         message: "Select your things that you enjoy",
-        trigger: "change",
+        trigger: "blur",
     },],
 
     per_thankfull_for: [{
         required: true,
         message: "Select you thankful for?",
-        trigger: "change",
+        trigger: "blur",
     },],
     per_about: [{
         required: true,
         message: "Write about you",
-        trigger: "change",
+        trigger: "blur",
     },],
     mobile_number: [{
         required: true,
         message: "Write your mobile number",
-        trigger: "change",
+        trigger: "blur",
     },],
     per_marital_status: [
         {
             required: true,
             message: "Select your marital status",
-            trigger: "change",
+            trigger: "blur",
         }
     ],
     email: [
         {
             required: true,
             message: "Write your email address",
-            trigger: "change",
+            trigger: "blur",
         }
     ],
     mobile_country_code: [{
         required: true,
         message: "Select your mobile country code",
-        trigger: "change",
+        trigger: "blur",
     },],
     per_currently_living_with: [{
         required: true,
         message: "Select you are currently living arrangement?",
-        trigger: "change",
+        trigger: "blur",
     },],
     per_willing_to_relocate: [{
         required: true,
         message: "Select you are willing to relocate",
-        trigger: "change",
+        trigger: "blur",
     },],
     per_gender: [
         {
             required: true,
             message: "Select your gender",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     dob: [
         {
             required: true,
             message: "Select your date of birth",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     per_employment_status: [
         {
             required: true,
             message: "Select your employment status",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     per_occupation: [
         {
             required: true,
             message: "Select your occupation",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     per_education_level_id: [
         {
             required: true,
             message: "Select your education level",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     per_religion_id: [
         {
             required: true,
             message: "Select your religion",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     per_current_residence_country: [
         {
             required: true,
             message: "Select your currently resident country",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     per_permanent_address: [
         {
             required: true,
             message: "Write about your home address",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     per_current_residence_city: [
         {
             required: true,
             message: "Select your currently resident city",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     postCode: [
         {
             required: true,
             message: "Select your postcode",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     per_permanent_country: [
         {
             required: true,
             message: "Select your permanant country",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
     per_permanent_city: [
         {
             required: true,
             message: "Select your permanant city",
-            trigger: "change",
+            trigger: "blur",
         },
     ],
 

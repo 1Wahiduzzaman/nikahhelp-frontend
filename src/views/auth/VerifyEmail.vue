@@ -20,6 +20,7 @@ export default {
         if (data.status === 200) {
           const user = JSON.parse(localStorage.getItem("user"));
           user.is_verified = 1;
+		  user.data_input_status = 0
           localStorage.setItem("user", JSON.stringify(user));
           this.$router.push("/email-verification-success");
         }

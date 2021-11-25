@@ -12,26 +12,14 @@ export default {
     context.commit("setUser", {
       token: response.data.data.access_token,
     });
-
-    if (token && response.data.data.user.is_verified > 0) {
-      router.push({
-        name: "DHome",
-      })
-    }
-    else {
-      router.push({
-        name: "EmailVerification",
-      })
-    }
-
-
-
+    router.push({ name: 'DHome' });
   },
   async signup(context, payload) {
     const response = await axios.post("v1/register", payload);
     if (response.data.status_code === 200) {
       const token = response.data.data.token.access_token;
       let data = { token: token };
+      response.data.data.user.is_verified = 0;
       JwtService.saveTokenAndUser(data);
       JwtService.setUser(response.data.data.user);
       context.commit("setUser", {
@@ -52,8 +40,15 @@ export default {
 
   },
   async verify(_, payload) {
-    const response = await axios.get(`/v1/emailVerify/${payload.token}`);
-    console.log(response);
+    return new Promise((resolve, reject) => {
+       axios.get(`/v1/emailVerify/${payload.token}`).then((data) => {
+        resolve(data);
+      })
+        .catch((error) => {
+          reject(error);
+        });
+
+    })
   },
   async forgetPassword(_, payload) {
     const response = await axios.post("v1/forgot/password", payload);
