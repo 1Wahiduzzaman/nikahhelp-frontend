@@ -41,7 +41,7 @@ export default {
   },
   async verify(_, payload) {
     return new Promise((resolve, reject) => {
-      await axios.get(`/v1/emailVerify/${payload.token}`).then((data) => {
+       axios.get(`/v1/emailVerify/${payload.token}`).then((data) => {
         resolve(data);
       })
         .catch((error) => {
