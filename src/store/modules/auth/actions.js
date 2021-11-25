@@ -12,20 +12,7 @@ export default {
     context.commit("setUser", {
       token: response.data.data.access_token,
     });
-
-    if (token && response.data.data.user.is_verified > 0) {
-      router.push({
-        name: "DHome",
-      })
-    }
-    else {
-      router.push({
-        name: "EmailVerification",
-      })
-    }
-
-
-
+    router.push({ name: 'DHome' });
   },
   async signup(context, payload) {
     const response = await axios.post("v1/register", payload);
@@ -33,6 +20,7 @@ export default {
       const token = response.data.data.token.access_token;
       let data = { token: token };
       JwtService.saveTokenAndUser(data);
+      response.data.data.user.is_verified = 0;
       JwtService.setUser(response.data.data.user);
       context.commit("setUser", {
         token: response.data.data.access_token,
