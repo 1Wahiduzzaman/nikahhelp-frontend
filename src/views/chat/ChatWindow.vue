@@ -358,6 +358,7 @@ export default {
 
       this.sockets.subscribe('receive_message', function (res) {
         console.log(res);
+        res.sender = res.senderInfo;
         this.chats.push(res);
       });
     }
@@ -531,13 +532,14 @@ export default {
           body: this.msg_text,
           created_at: new Date(),
           senderId: loggedUser.id,
+          sender: loggedUser.id,
+          senderInfo: loggedUser
         }
 
         if(this.one_to_one_user) {
           payload.receiver = this.one_to_one_user;
           url = 'send-message';
         } else {
-          payload.sender = loggedUser;
           payload.receivers = JSON.stringify(this.teamMembers);
           url = 'send-message-to-team';
         }
