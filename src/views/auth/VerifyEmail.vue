@@ -17,9 +17,7 @@ export default {
       };
       try {
         const data = await this.$store.dispatch("verify", actionPayload);
-		console.log('data',data);
-		console.log('(data.status_code',data.status_code);
-        if (data.status_code == 200) {
+        if (data.status === 200) {
           const user = JSON.parse(localStorage.getItem("user"));
           user.is_verified = 1;
 		  user.data_input_status = 0
