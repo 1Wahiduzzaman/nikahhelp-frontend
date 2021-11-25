@@ -342,22 +342,14 @@ export default {
       this.$socket.emit('ping', {user_id: loggedUser.id});
 
       this.sockets.subscribe('ping_success', function (res) {
-        console.log(res);
+        // console.log(res);
         if(res && res.online_users) {
           this.online_users = res.online_users;
         }
       });
 
-      // let data = {
-      //   to: 83,
-      //   msg: 'hello man',
-      //   user: loggedUser
-      // }
-      //
-      // this.$socket.emit('send_message', data);
-
       this.sockets.subscribe('receive_message', function (res) {
-        console.log(res);
+        // console.log(res);
         res.sender = res.senderInfo;
         this.chats.push(res);
       });
@@ -442,7 +434,9 @@ export default {
     async loadIndividualChatHistory(payload){
       try {
         let { data }  = await ApiService.post('/v1/individual-chat-history', payload).then(res => res.data);
-
+        if(data && data.message_history) {
+          data = data.message_history;
+        }
         return data.map(item => {
           item.senderId = item.sender?.id
           return item;
@@ -468,6 +462,7 @@ export default {
       // this.activeTeam = team_id;
       this.conversationTitle = name;
       this.chats = await this.loadIndividualChatHistory(payload);
+
       // if(!isAnyKeyValueFalse) {
       //   this.conversationTitle = name;
       //   this.chats = await this.loadIndividualChatHistory(payload);
@@ -527,67 +522,34 @@ export default {
       if(this.msg_text) {
         let loggedUser = JSON.parse(localStorage.getItem('user'));
         let payload = {
-          team_id: this.activeTeam,
-          msg: this.msg_text,
+          team_id: this.activeTeam.toString(),
           body: this.msg_text,
           created_at: new Date(),
-          senderId: loggedUser.id,
-          sender: loggedUser.id,
+          senderId: loggedUser.id.toString(),
           senderInfo: loggedUser
         }
 
         if(this.one_to_one_user) {
-          payload.receiver = this.one_to_one_user;
+          payload.receiver = this.one_to_one_user.toString();
           url = 'send-message';
         } else {
           payload.receivers = JSON.stringify(this.teamMembers);
           url = 'send-message-to-team';
         }
 
+        if(this.one_to_one_user) {
+          payload.sender = loggedUser;
+          payload.to = this.one_to_one_user.toString();
+          this.chats.push(payload);
+          this.$socket.emit('send_message', payload);
+        } else {
+          this.$socket.emit('send_message_in_group', payload);
+        }
+        payload.sender = loggedUser.id.toString();
+        this.msg_text = '';
         await ApiService.post(`/v1/${url}`, payload).then(res => {
-          if(this.one_to_one_user) {
-            payload.sender = loggedUser;
-            this.chats.push(payload);
-            this.$socket.emit('send_message', payload);
-          } else {
-            this.$socket.emit('send_message_in_group', payload);
-          }
-          this.msg_text = '';
+          // console.log(res);
         });
-
-        // await ApiService.post('/v1/send-message', payload).then(res => {
-        //   this.teamMembers.push('83');
-        //
-        //   let data = {
-        //     // receivers: JSON.stringify(this.teamMembers),
-        //     to: 80,
-        //     msg: payload.message,
-        //     body: payload.message,
-        //     sender: loggedUser,
-        //     senderId: loggedUser.id,
-        //     created_at: new Date()
-        //   }
-        //   this.msg_text = '';
-        //   this.chats.push(data);
-        //   this.$socket.emit('send_message', data);
-        //   console.log(res.data);
-        // });
-
-        // await ApiService.post('/v1/send-message-to-team', payload).then(res => {
-        //   this.teamMembers.push('83');
-        //
-        //   let data = {
-        //     receivers: JSON.stringify(this.teamMembers),
-        //     msg: payload.message,
-        //     body: payload.message,
-        //     sender: loggedUser,
-        //     senderId: loggedUser.id,
-        //     created_at: new Date()
-        //   }
-        //   this.msg_text = '';
-        //   this.$socket.emit('send_message_in_group', data);
-        //   console.log(res.data);
-        // });
       }
     },
     unique(array){
