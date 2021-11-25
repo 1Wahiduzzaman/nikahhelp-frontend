@@ -40,8 +40,15 @@ export default {
 
   },
   async verify(_, payload) {
-    const response = await axios.get(`/v1/emailVerify/${payload.token}`);
-    console.log(response);
+    return new Promise((resolve, reject) => {
+      await axios.get(`/v1/emailVerify/${payload.token}`).then((data) => {
+        resolve(data);
+      })
+        .catch((error) => {
+          reject(error);
+        });
+
+    })
   },
   async forgetPassword(_, payload) {
     const response = await axios.post("v1/forgot/password", payload);
