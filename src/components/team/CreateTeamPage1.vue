@@ -46,6 +46,7 @@
         </div>
       </div>
       <CreateTeamPassword v-if="step === 2" @goNext="goNextStep" />
+      <CreateAddMember v-if="step === 3" @goNext="goNextStep" />
     </a-card>
     <a-modal v-model="imageModal" @ok="hideImageModal">
       <div class="text-center">
@@ -68,9 +69,10 @@
 
 <script>
 import CreateTeamPassword from "./CreateTeamPassword";
+import CreateAddMember from "./CreateAddMember";
 export default {
 	name: "CreateTeam1",
-	components: {CreateTeamPassword},
+	components: {CreateAddMember, CreateTeamPassword},
 	data() {
 		return {
 			isLoading: false,

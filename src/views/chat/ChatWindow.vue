@@ -107,28 +107,16 @@
                     </div>
                   </div>
                   <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                    <div class="chat-item" v-for="item in connectedConversations" :key="item.id" @click="selectConversation(item.id)">
-                      <div class="top">
-                        <div class="item-img">
-                          <img src="../../assets/info-img.png" alt="info image"/>
-                          <span></span>
-                        </div>
-                        <div class="chat-info">
-                          <div class="chat-group">{{item.type}}</div>
-                          <div class="chat-name">{{item.title}}</div>
-                          <div class="last-chat">{{item.last_msg}}</div>
-
-                        </div>
-                        <div class="status-info">
-                          <div class="status" v-show="checkUnread(item.id)"></div>
-
-                        </div>
-                      </div>
-                      <div class="bottom">
-                        <!-- <div class="typing">Typing...</div>   -->
-                        <!-- <div class="chat-time">05 min ago</div> -->
-                      </div>
-
+                    <div class="chat-item"
+                         v-for="item in connectedTeam"
+                         :key="item.team_id"
+                    >
+                      <ChatListItem
+                          :item="item"
+                          action
+                          class="w-full pr-3 cursor-pointer"
+                          @click.native="getConnectedChat(item)"
+                      />
                     </div>
                   </div>
                 </div>
@@ -151,7 +139,7 @@
                   </div>
                 </div>
                 <div class="middle">
-                  <div class="chat-group">{{ one_to_one_user ? 'Private' : conversationTitle + ' Group' }} chat</div>
+                  <div class="chat-group">{{ getChatType }} chat</div>
                 </div>
                 <div class="right">
 
@@ -162,7 +150,7 @@
                   <div
                       v-for="item in chats"
                       :key="item.id"
-                      :class="['chats', (item.senderId == $store.state.user.user.id) ? 'me' : '']"
+                      :class="['chats', (parseInt(item.senderId) == parseInt(getAuthUserId)) ? 'me' : '']"
                   >
                     <div class="item-img">
                       <img src="../../assets/info-img.png" alt="info image"/>
@@ -240,9 +228,10 @@ export default {
       conv_search_key: null,
       activeTeam: null,
       teamMembers: [],
-      connectedChat: [],
+      connectedTeam: [],
       online_users: [],
       one_to_one_user: null,
+      inConnectedChat: false
     }
   },
   components: {
@@ -330,6 +319,13 @@ export default {
         return loggedUser.id;
       }
       return null;
+    },
+    getChatType() {
+      if(this.inConnectedChat) {
+        return 'Connected Group';
+      } else {
+       return this.one_to_one_user ? 'Private' : this.conversationTitle + ' Group'
+      }
     }
   },
   created(){
@@ -428,12 +424,16 @@ export default {
           team_id: 1
         };
         let { data }  = await ApiService.post('/v1/connection-list-chat', payload).then(res => res.data);
-        console.log(data);
-        // if(data && data.team_members) {
-        //   this.teamMembers = map(data.team_members, item => {
-        //     return item.user_id.toString();
-        //   });
-        // }
+        if(data && data.connected_teams) {
+          this.connectedTeam = map(data.connected_teams, item => {
+            return {
+              label: 'Connected Team',
+              state: 'seen',
+              name: item.team_name ? item.team_name : 'user name',
+              team_id: item.team_id
+            }
+          });
+        }
         // this.connectedChat = this.processTeamChatResponse(data);
       } catch (e) {
         console.error(e);
@@ -462,7 +462,23 @@ export default {
         console.error(e);
       }
     },
-
+    async getConnectedChat(item) {
+      try {
+        console.log(item)
+        this.conversationTitle = item.name;
+        this.inConnectedChat = true;
+        let payload = {
+          to_team_id: 1
+        };
+        let { data }  = await ApiService.post('/v1/connected-team-chat-history', payload).then(res => res.data);
+        this.chats = data.map(item => {
+          item.senderId = item.sender?.id
+          return item;
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    },
     async getIndividualChat({ message : {chat_id, team_id}, name, user_id }) {
       const payload = {
         type: chat_id ? 'single' : 'team',
@@ -478,6 +494,7 @@ export default {
 
       // this.activeTeam = team_id;
       this.conversationTitle = name;
+      this.inConnectedChat = false;
       this.chats = await this.loadIndividualChatHistory(payload);
       this.chats = this.chats.reverse();
 
@@ -536,39 +553,60 @@ export default {
     },
     async sendMsg(e){
       console.log(e);
-      let url = '';
       if(this.msg_text) {
-        let loggedUser = JSON.parse(localStorage.getItem('user'));
-        let payload = {
-          team_id: this.activeTeam.toString(),
-          body: this.msg_text,
-          created_at: new Date(),
-          senderId: loggedUser.id.toString(),
-          senderInfo: loggedUser
-        }
-
-        if(this.one_to_one_user) {
-          payload.receiver = this.one_to_one_user.toString();
-          url = 'send-message';
+        if(this.inConnectedChat) {
+          await this.sendConnectedTeamMessage();
         } else {
-          payload.receivers = JSON.stringify(this.teamMembers);
-          url = 'send-message-to-team';
+          await this.sendTeamMessage();
         }
-
-        if(this.one_to_one_user) {
-          payload.sender = loggedUser;
-          payload.to = this.one_to_one_user.toString();
-          this.chats.unshift(payload);
-          this.$socket.emit('send_message', payload);
-        } else {
-          this.$socket.emit('send_message_in_group', payload);
-        }
-        payload.sender = loggedUser.id.toString();
-        this.msg_text = '';
-        await ApiService.post(`/v1/${url}`, payload).then(res => {
-          // console.log(res);
-        });
       }
+    },
+    async sendTeamMessage() {
+      let url = '';
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let payload = {
+        team_id: this.activeTeam.toString(),
+        body: this.msg_text,
+        created_at: new Date(),
+        senderId: loggedUser.id.toString(),
+        senderInfo: loggedUser
+      }
+
+      if(this.one_to_one_user) {
+        payload.receiver = this.one_to_one_user.toString();
+        url = 'send-message';
+      } else {
+        payload.receivers = JSON.stringify(this.teamMembers);
+        url = 'send-message-to-team';
+      }
+
+      if(this.one_to_one_user) {
+        payload.sender = loggedUser;
+        payload.to = this.one_to_one_user.toString();
+        this.chats.unshift(payload);
+        this.$socket.emit('send_message', payload);
+      } else {
+        this.$socket.emit('send_message_in_group', payload);
+      }
+      payload.sender = loggedUser.id.toString();
+      this.msg_text = '';
+      await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
+    },
+    async sendConnectedTeamMessage() {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let payload = {
+        to_team_id: 1,
+        sender: loggedUser.id,
+        receivers: JSON.stringify(this.teamMembers),
+        message: this.msg_text,
+        body: this.msg_text,
+        created_at: new Date(),
+        senderId: loggedUser.id.toString(),
+        senderInfo: loggedUser
+      };
+      this.$socket.emit('send_message_in_group', payload);
+      this.msg_text = null;
+      await ApiService.post(`/v1/send-message-team-to-team`, payload).then(res => res.data);
     },
     unique(array){
       return array.filter(function(el, index, arr) {

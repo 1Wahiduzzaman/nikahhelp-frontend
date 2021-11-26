@@ -27,7 +27,7 @@
         <a-button class="back-button button float-left text-white" v-on:click="$emit('cancel_button')">Back</a-button>
       </div>
       <div class="position-absolute footer-conf-btn">
-        <a-button class="confirm-button button float-right bg-primary text-white" @click="goNextStep(2)">Save & Continue</a-button>
+        <a-button class="confirm-button button float-right bg-primary text-white" @click="goNextStep()">Save & Continue</a-button>
       </div>
     </div>
   </div>
@@ -43,7 +43,7 @@ export default {
     }
   },
   methods: {
-    goNext() {
+    goNextStep() {
       this.$emit("goNext", 3);
     }
   }
