@@ -104,6 +104,7 @@ export default {
 			joinTeamShow: false,
 			createTeamShow: false,
 			joinCreateTeamShow: true,
+      createTeamPassword: false,
       welcomeModal: true,
       joinTeamPassword: false
 		};

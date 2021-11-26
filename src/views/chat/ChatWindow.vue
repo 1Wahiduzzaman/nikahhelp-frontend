@@ -240,6 +240,7 @@ export default {
       conv_search_key: null,
       activeTeam: null,
       teamMembers: [],
+      connectedChat: [],
       online_users: [],
       one_to_one_user: null,
     }
@@ -332,9 +333,9 @@ export default {
     }
   },
   created(){
-
     this.loadTeamChat();
     this.loadChatHistory();
+    this.loadConnectedGroup();
   },
   mounted() {
     let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -421,7 +422,23 @@ export default {
         console.error(e);
       }
     },
-
+    async loadConnectedGroup() {
+      try {
+        let payload = {
+          team_id: 1
+        };
+        let { data }  = await ApiService.post('/v1/connection-list-chat', payload).then(res => res.data);
+        console.log(data);
+        // if(data && data.team_members) {
+        //   this.teamMembers = map(data.team_members, item => {
+        //     return item.user_id.toString();
+        //   });
+        // }
+        // this.connectedChat = this.processTeamChatResponse(data);
+      } catch (e) {
+        console.error(e);
+      }
+    },
     async loadChatHistory(){
       try {
         let { data }  = await ApiService.get('/v1/chat-history').then(res => res.data);
