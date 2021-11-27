@@ -40,13 +40,17 @@
         <a-select-option value="Member"> Sister-in-law </a-select-option>
       </a-select>
 
-      <a-input
-          placeholder="Paste link here"
-          class="ant-input-box color-primary ml-2"
-          size="medium"
-      >
-        <a-icon slot="suffix" type="forward" class="input-suffix fs-16" />
-      </a-input>
+<!--      <a-input-->
+<!--          placeholder="Paste link here"-->
+<!--          class="ant-input-box color-primary ml-2"-->
+<!--          size="medium"-->
+<!--      >-->
+<!--        <a-icon slot="suffix" type="forward" class="input-suffix fs-16" />-->
+<!--      </a-input>-->
+      <div class="d-flex position-relative">
+        <input type="text" disabled value="fgdkgkdkg" class="team-invite-link ml-2">
+        <a-icon type="forward" class="fs-16 position-absolute forward-link" />
+      </div>
     </div>
     <div class="position">
       <div class="position-absolute footer-cancel-btn">
@@ -62,6 +66,7 @@
 <script>
 export default {
   name: "CreateAddMember",
+  props: ['team', 'file'],
   data() {
     return {
 
@@ -78,6 +83,16 @@ export default {
 @import "@/styles/base/_variables.scss";
 .ant-input-suffix {
   right: 6px !important;
+}
+.team-invite-link {
+  height: 30px;
+  width: 60px;
+  border-radius: 16px;
+}
+.forward-link {
+  height: 16px;
+  right: 3px;
+  top: 7px;
 }
 .box {
   .px-4 {

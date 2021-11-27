@@ -15,19 +15,23 @@
         <a-row class="mt-4 px-4">
           <a-col :span="24">
             <a-input
-                v-model="$store.state.team.team_name"
+                v-model="team.name"
                 size="large"
                 class="team-name-input"
                 placeholder="Team name"
+                @input="in_progress = true"
             />
+<!--            <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.name">Team name required</span>-->
           </a-col>
           <a-col class="mt-4" :span="24">
             <a-textarea
                 class="team-description team-name-input"
                 placeholder="Team description"
                 :auto-size="{ minRows: 3, maxRows: 5 }"
-                v-model="$store.state.team.team_description"
+                v-model="team.description"
+                @input="in_progress = true"
             />
+<!--            <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.description">Team name required</span>-->
           </a-col>
           <a-col class="mt-4" :span="24">
             <div class="d-flex align-items-center">
@@ -39,18 +43,19 @@
           </a-col>
         </a-row>
         <div class="position-absolute footer-cancel-btn">
-          <a-button class="back-button button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
+          <a-button class="back-button button float-left" @click="goBack()">Back</a-button>
         </div>
         <div class="position-absolute footer-conf-btn">
-          <a-button class="confirm-button button float-right" @click="goNextStep(2)">Next</a-button>
+          <a-button class="confirm-button button float-right" @click="goNextStep(2)" :disabled="checkDisability">Next</a-button>
         </div>
       </div>
-      <CreateTeamPassword v-if="step === 2" @goNext="goNextStep" />
-      <CreateAddMember v-if="step === 3" @goNext="goNextStep" />
+      <CreateTeamPassword :team="team" :file="file" v-if="step === 2" @goNext="goNextStep" />
+      <CreateAddMember :team="team" :file="file" v-if="step === 3" @goNext="goNextStep" />
     </a-card>
     <a-modal v-model="imageModal" @ok="hideImageModal">
       <div class="text-center">
-        <img src="../../assets/info-img.png" alt="info image" />
+        <img :src="logoBobUrl" v-if="logoBobUrl" alt="info image" class="bob-logo" />
+        <img src="../../assets/info-img.png" v-else alt="info image" />
         <p class="mt-2">
           You can choose an avatar or <br> browse an image from local drive
         </p>
@@ -58,9 +63,16 @@
           <a-button type="primary" class="bg-brand">
             Avatar
           </a-button>
-          <a-button type="primary" class="ml-4 bg-primary">
+          <a-button type="primary" class="ml-4 bg-primary" @click="uploadFile()">
             Browse
           </a-button>
+          <input
+              type="file"
+              ref="file"
+              style="display: none"
+              accept="image/*"
+              @change="onChangeFileSet($event)"
+          />
         </div>
       </div>
     </a-modal>
@@ -79,9 +91,21 @@ export default {
 			user: {},
 			is_verified: 1,
       imageModal: false,
-      step: 1
+      step: 1,
+      team: {},
+      in_progress: false,
+      file: '',
+      logoBobUrl: null
 		};
 	},
+  computed: {
+    checkDisability() {
+      if(this.team.name && this.team.description) {
+        return false;
+      }
+      return true;
+    }
+  },
 	created() {},
 	methods: {
     onConfirmClick(event) {
@@ -137,8 +161,23 @@ export default {
 		},
     goNextStep(value) {
       this.step = value;
+    },
+    goBack() {
+      this.team = {};
+      this.$emit('cancel_button');
+    },
+    uploadFile() {
+      this.$refs.file.click();
+    },
+    onChangeFileSet(e) {
+      let droppedFiles = e.target.files || e.dataTransfer.files;
+      if (!droppedFiles) return;
+      [...droppedFiles].forEach((f) => {
+        this.file = f;
+        this.logoBobUrl = URL.createObjectURL(f);
+      });
     }
-	},
+  },
 };
 </script>
 
@@ -161,6 +200,11 @@ export default {
   height: 50px;
   border-radius: 50%;
   background: $bg-primary;
+}
+.bob-logo {
+  width: 87px;
+  height: 87px;
+  border-radius: 50%;
 }
 .input-controls > input {
   height: 50px;
