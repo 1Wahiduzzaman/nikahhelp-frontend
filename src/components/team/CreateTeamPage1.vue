@@ -50,7 +50,7 @@
         </div>
       </div>
       <CreateTeamPassword :team="team" :file="file" v-if="step === 2" @goNext="goNextStep" @updateTeamData="updateTeamData" />
-      <CreateAddMember :team="team" :file="file" v-if="step === 3" @goNext="goNextStep" />
+      <CreateAddMember :team="team" :file="file" v-if="step === 3" @cancel_button="$emit('cancel_button')" @goNext="goNextStep" />
     </a-card>
     <a-modal v-model="imageModal" @ok="hideImageModal">
       <div class="text-center">

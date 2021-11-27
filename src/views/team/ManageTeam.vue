@@ -63,10 +63,7 @@
                   v-if="joinTeamPassword" />
               <CreateTeamPage1
                   v-if="createTeamShow"
-                  @cancel_button="
-										joinCreateTeamShow = true;
-										createTeamShow = false;
-									"
+                  @cancel_button="cancelCreateTeamPage()"
               />
 						</div>
 					</a-row>
@@ -208,6 +205,11 @@ export default {
       this.joinTeamPassword = true;
       this.joinCreateTeamShow = false;
       this.joinTeamShow = false;
+    },
+    cancelCreateTeamPage() {
+      this.joinCreateTeamShow = true;
+      this.createTeamShow = false;
+      this.loadTeams();
     }
 	},
 };

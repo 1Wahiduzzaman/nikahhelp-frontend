@@ -60,11 +60,12 @@ export default {
         formData.append(data, this.team[data]);
       });
 
-      let { data } = ApiService.post('/v1/team', formData).then(res => res.data);
-      if(data) {
-        this.$emit("updateTeamData", data);
-        this.$emit("goNext", 3);
-      }
+      await ApiService.post('/v1/team', formData).then(res => {
+        if(res && res.data) {
+          this.$emit("updateTeamData", res.data);
+          this.$emit("goNext", 3);
+        }
+      });
     }
   }
 }
