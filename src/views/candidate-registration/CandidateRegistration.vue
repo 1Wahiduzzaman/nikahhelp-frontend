@@ -1,6 +1,6 @@
 <template>
   <div class="candidate-registration">
-  <Header />
+    <Header />
 
     <div class="steps ma-steps">
       <div class="steper-header text-center heading-text">
@@ -25,7 +25,7 @@
           </a-steps>
         </div>
       </VueFixedHeader>
-      <div class="steps-content" v-show="current == 0">
+      <div class="steps-content" v-if="current == 0">
         <PreferenceTwo
           :candidateDetails="candidateDetails"
           :preferenceData="candidateDetails.preferenceData"
@@ -33,7 +33,7 @@
           ref="PreferenceTwo"
         />
       </div>
-      <div class="steps-content" v-show="current == 1">
+      <div class="steps-content" v-if="current == 1">
         <PersonalInfoTwo
           :personalInformation="candidateDetails.personalInformation"
           :candidateDetails="candidateDetails"
@@ -41,14 +41,14 @@
           ref="personalInfoTwo"
         />
       </div>
-      <div class="steps-content" v-show="current == 2">
+      <div class="steps-content" v-if="current == 2">
         <Verification
           :verification="candidateDetails.verification"
           :candidateDetails="candidateDetails"
           ref="Verification"
         />
       </div>
-      <div class="steps-content" v-show="current == 3">
+      <div class="steps-content" v-if="current == 3">
         <FamilyInfoTwo
           @valueChange="onDataChange($event)"
           :familyInformation="candidateDetails.familyInformation"
@@ -56,7 +56,7 @@
           ref="familyInfoTwo"
         />
       </div>
-      <div class="steps-content" v-show="current == 4">
+      <div class="steps-content" v-if="current == 4">
         <UploadProfile />
       </div>
       <div class="steps-content" v-if="current == 5">
@@ -146,7 +146,7 @@ export default {
     Review,
     Verification,
     VueFixedHeader,
-    Header
+    Header,
   },
   mounted() {
     this.getCandidateInitialInfo();
@@ -225,7 +225,7 @@ export default {
       if (response.status === 200) {
         const details = {
           countries: response.data.data.countries,
-          occupations: response.data.data.occupations,
+          occupations: [],
           religions: response.data.data.religions,
           ethnicities: ethnicities,
           languages: languages,
@@ -319,26 +319,32 @@ export default {
           },
           preferenceData: {
             ...this.nullToUndefined(response.data.data.user.preference),
-            preferred_nationality:
-              response.data.data.user.preference.preferred_nationality.map(
-                (a) => a.id
-              ),
-            blocked_cities:
-              response.data.data.user.preference.blocked_cities.map(
-                (a) => a.id
-              ),
-            preferred_countries:
-              response.data.data.user.preference.preferred_countries.map(
-                (a) => a.id
-              ),
-            preferred_cities:
-              response.data.data.user.preference.preferred_cities.map(
-                (a) => a.id
-              ),
-            bloked_countries:
-              response.data.data.user.preference.bloked_countries.map(
-                (a) => a.id
-              ),
+            // preferred_nationality:
+            //   response.data.data.user.preference.preferred_nationality.map(
+            //     (a) => a.id
+            //   ),
+            // blocked_cities:
+            //   response.data.data.user.preference.blocked_cities.map(
+            //     (a) => a.id
+            //   ),
+            // preferred_countries:
+            //   response.data.data.user.preference.preferred_countries.map(
+            //     (a) => a.id
+            //   ),
+            // preferred_cities:
+            //   response.data.data.user.preference.preferred_cities.map(
+            //     (a) => a.id
+            //   ),
+            // bloked_countries:
+            //   response.data.data.user.preference.bloked_countries.map(
+            //     (a) => a.id
+            //   ),
+            // pre_employment_status: response.data.data.user.preference
+            //   .pre_employment_status
+            //   ? JSON.parse(
+            //       response.data.data.user.preference.pre_employment_status
+            //     )
+            //   : null,
             pre_partner_religion_id:
               response.data.data.user.preference.pre_partner_religion_id.map(
                 function (v) {
@@ -440,7 +446,7 @@ export default {
             ""
           );
         }
-        this.current = response.data.data.user.data_input_status;
+        //this.current = response.data.data.user.data_input_status;
         this.checkExistData();
       }
     },
@@ -453,7 +459,7 @@ export default {
       );
     },
     async onChangeCountry(e, name, action, isDefault = false) {
-      const res = await ApiService.get(`v1/utilities/cities/${e}`);
+      const res = await ApiService.get(`v1/utilities/cities/${e.id}`);
 
       if (res.status === 200) {
         switch (name) {
@@ -668,7 +674,7 @@ export default {
     z-index: 9;
   }
   header {
-   text-align: center;
+    text-align: center;
     height: 100px;
     width: 100%;
     margin: 0;
@@ -710,7 +716,7 @@ export default {
       height: 80px;
     }
   }
-.header-text {
+  .header-text {
     width: 100%;
   }
   .heading-text {

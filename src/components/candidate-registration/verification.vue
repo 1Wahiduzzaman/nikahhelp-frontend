@@ -106,7 +106,7 @@
                     <a-col :span="12">
                       <div class="mb-2">
                         <a-icon
-                          v-if="verification.ver_country"
+                          v-if="verification.ver_country_id"
                           class="color-success mr-2 fs-18 fw-500"
                           type="check"
                         />Country
@@ -123,16 +123,16 @@
                       <a-row :gutter="[8]">
                         <a-col :span="12">
                           <a-form-model-item
-                            ref="ver_country"
-                            prop="ver_country"
+                            ref="ver_country_id"
+                            prop="ver_country_id"
                           >
                             <a-select
-                              id="ver_country"
+                              id="ver_country_id"
                               :showSearch="true"
                               option-filter-prop="children"
                               :filter-option="filterOption"
                               :showArrow="true"
-                              v-model="verification.ver_country"
+                              v-model="verification.ver_country_id"
                               class="select-ma w-100"
                               placeholder="Country"
                               ref="select"

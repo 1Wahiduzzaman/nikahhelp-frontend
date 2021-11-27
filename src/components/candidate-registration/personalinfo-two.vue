@@ -6,6 +6,7 @@
     </div>
     <a-collapse
       accordion
+       @change="changeActivekey"
       :activeKey="activeKey"
       :bordered="false"
       expand-icon-position="right"
@@ -18,9 +19,8 @@
       <a-collapse-panel key="1" header="1. Essential Information">
         <a-form-model
           ref="personalInfoFormOne"
-          v-if="personalInformation && personalInformation.essential"
+          v-if="personalInformation && personalInformation.essential && activeKey==1"
           :model="personalInformation.essential"
-          :rules="rules"
           class="form-ma"
         >
           <a-row type="flex" align="top">
@@ -43,7 +43,7 @@
                       @change="onValueChange($event, 'essential')"
                       id="per_gender"
                       ref="select"
-                      placeholder="Select gender"
+                      placeholder="Select your gender"
                       class="select-ma w-100"
                       v-model="personalInformation.essential.per_gender"
                     >
@@ -614,9 +614,9 @@
       >
         <a-form-model
           ref="personalInfoFormTwo"
-          v-if="personalInformation && personalInformation.general"
+          v-if="personalInformation && personalInformation.general && activeKey==2"
           :model="personalInformation.general"
-          :rules="rules"
+         
           class="form-ma"
         >
           <a-row type="flex" align="top">
@@ -998,9 +998,9 @@
       >
         <a-form-model
           ref="personalInfoFormThree"
-          v-if="personalInformation && personalInformation.contact"
+          v-if="personalInformation && personalInformation.contact && activeKey==3"
           :model="personalInformation.contact"
-          :rules="rules"
+          
           class="form-ma"
         >
           <a-row>
@@ -1562,9 +1562,9 @@
       >
         <a-form-model
           ref="personalInfoFormFour"
-          v-if="personalInformation && personalInformation.more_about"
+          v-if="personalInformation && personalInformation.more_about && activeKey==4"
           :model="personalInformation.more_about"
-          :rules="rules"
+         
           class="form-ma"
         >
           <a-row>
@@ -2462,7 +2462,7 @@ export default {
   },
   data() {
     return {
-      activeKey: ["1"],
+      activeKey: 1,
       default_date: null,
       rules: RULESPERSONALINFO,
       languages: languages,
@@ -2476,6 +2476,9 @@ export default {
   },
 
   methods: {
+     changeActivekey(key) {
+     this.activeKey=key
+    },
     onValueChange(e, action) {
       console.log(this.personalInformation);
       this.save(action);

@@ -337,7 +337,7 @@ export const AGES=[
         '<p class="m-0"><strong>6</strong>ft <strong>3</strong> inches or <strong>190.50</strong> cm</p>',
     },
     {
-      value: 19,
+      value: 29,
       label:
         '<p class="m-0"><strong>6</strong>ft <strong>4</strong> inches or <strong>193.04</strong> cm</p>',
     },
@@ -361,5 +361,19 @@ export const AGES=[
       label:
         '<p class="m-0"><strong>6</strong>ft <strong>8</strong> inches or <strong>203.20</strong> cm</p>',
     },
+
+  ]
+
+  export const  Employment_Statuses=[{
+    value:'Employment' ,name:'Employment'
+  },
+  {
+    value:'Unemployment' ,name:'Unemployment'
+  },
+
+  {
+    value:'Other' ,name:"Don't Mind"
+  }
+
 
   ]

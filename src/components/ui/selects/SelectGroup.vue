@@ -8,6 +8,15 @@
       select-group
     "
   >
+    <!-- <v-select
+      class="style-chooser"
+      label="name"
+      :placeholder="placeholder"
+      :id="uniqueNames[0]"
+      v-model="values[0]"
+      :options="options"
+      @select="onSelect"
+    ></v-select> -->
     <a-select
       :style="{ maxWidth: width + 'px', width: width + 'px' }"
       :id="uniqueNames[0]"
@@ -18,13 +27,12 @@
       dropdownClassName="first_one"
       :placeholder="placeholder"
       :dropdownMatchSelectWidth="false"
-      :filter-option="filterOption"
       :data-unique="uniqueNames[0]"
     >
       <a-select-option
         :value="option.value"
         v-for="option in options"
-        :key="`${uniqueNames[0]}=${option.label}`"
+        :key="`${uniqueNames[0]}=${option.value}`"
       >
         <div v-html="option.label"></div>
       </a-select-option>
@@ -33,6 +41,15 @@
       </template>
     </a-select>
     <div class="mx-2" style="color: #7e7e7e">To</div>
+    <!-- <v-select
+      class="style-chooser"
+      label="name"
+      :placeholder="placeholder"
+      :id="uniqueNames[1]"
+      v-model="values[1]"
+      :options="options"
+      @select="onSelect"
+    ></v-select> -->
     <a-select
       v-model="values[1]"
       :style="{ maxWidth: width + 'px', width: width + 'px' }"
@@ -41,7 +58,6 @@
       :show-search="true"
       dropdownClassName="second_one"
       :dropdownMatchSelectWidth="false"
-      :filter-option="filterOption"
       :placeholder="placeholder"
       :data-unique="uniqueNames[1]"
       :id="uniqueNames[1]"
@@ -49,7 +65,7 @@
       <a-select-option
         :value="option.value"
         v-for="option in options"
-        :key="`${uniqueNames[1]}=${option.label}`"
+        :key="`${uniqueNames[1]}=${option.value}`"
       >
         <div v-html="option.label"></div>
       </a-select-option>
