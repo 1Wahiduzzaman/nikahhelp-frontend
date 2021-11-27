@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4 box">
+  <div class="mt-4 box position-relative">
     <div class="px-4">
       <h4 class="fs-14">Team ID: #658412373</h4>
       <div class="d-flex align-items-center">
@@ -60,21 +60,28 @@
         <a-button class="confirm-button button float-right bg-primary text-white" @click="goNextStep()">Save & Continue</a-button>
       </div>
     </div>
+    <InviteMember v-if="showMemberBox" @toggleMemberbox="toggleMemberbox" />
   </div>
 </template>
 
 <script>
+import InviteMember from "./InviteMember";
 export default {
   name: "CreateAddMember",
+  components: {InviteMember},
   props: ['team', 'file'],
   data() {
     return {
-
+      showMemberBox: false
     }
   },
   methods: {
     goNextStep() {
-      this.$emit("goNext", 4);
+      // this.$emit("goNext", 4);
+      this.showMemberBox = !this.showMemberBox;
+    },
+    toggleMemberbox() {
+      this.showMemberBox = !this.showMemberBox;
     }
   }
 }
@@ -95,6 +102,7 @@ export default {
   top: 7px;
 }
 .box {
+  min-height: 430px;
   .px-4 {
     .fs-14 {
       color: #aaaaaa;
