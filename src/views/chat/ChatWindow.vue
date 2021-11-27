@@ -95,6 +95,7 @@
                   <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <div class="chat-item"
                          v-for="item in teamChat"
+                         v-if="item.user_id != getAuthUserId"
                          :key="item.team_id"
                     >
                       <ChatListItem
@@ -106,28 +107,16 @@
                     </div>
                   </div>
                   <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                    <div class="chat-item" v-for="item in connectedConversations" :key="item.id" @click="selectConversation(item.id)">
-                      <div class="top">
-                        <div class="item-img">
-                          <img src="../../assets/info-img.png" alt="info image"/>
-                          <span></span>
-                        </div>
-                        <div class="chat-info">
-                          <div class="chat-group">{{item.type}}</div>
-                          <div class="chat-name">{{item.title}}</div>
-                          <div class="last-chat">{{item.last_msg}}</div>
-
-                        </div>
-                        <div class="status-info">
-                          <div class="status" v-show="checkUnread(item.id)"></div>
-
-                        </div>
-                      </div>
-                      <div class="bottom">
-                        <!-- <div class="typing">Typing...</div>   -->
-                        <!-- <div class="chat-time">05 min ago</div> -->
-                      </div>
-
+                    <div class="chat-item"
+                         v-for="item in connectedTeam"
+                         :key="item.team_id"
+                    >
+                      <ChatListItem
+                          :item="item"
+                          action
+                          class="w-full pr-3 cursor-pointer"
+                          @click.native="getConnectedChat(item)"
+                      />
                     </div>
                   </div>
                 </div>
@@ -150,7 +139,7 @@
                   </div>
                 </div>
                 <div class="middle">
-                  <div class="chat-group">Team 1 Group chat</div>
+                  <div class="chat-group">{{ getChatType }} chat</div>
                 </div>
                 <div class="right">
 
@@ -161,7 +150,7 @@
                   <div
                       v-for="item in chats"
                       :key="item.id"
-                      :class="['chats', (item.senderId == $store.state.user.user.id) ? 'me' : '']"
+                      :class="['chats', (parseInt(item.senderId) == parseInt(getAuthUserId)) ? 'me' : '']"
                   >
                     <div class="item-img">
                       <img src="../../assets/info-img.png" alt="info image"/>
@@ -239,7 +228,10 @@ export default {
       conv_search_key: null,
       activeTeam: null,
       teamMembers: [],
-      online_users: []
+      connectedTeam: [],
+      online_users: [],
+      one_to_one_user: null,
+      inConnectedChat: false
     }
   },
   components: {
@@ -297,7 +289,6 @@ export default {
       }
       return count;
     },
-
     connectedConversations: function() {
       var connectedConversations = [];
       if(this.conv_search_key == null || this.conv_search_key == ""){
@@ -322,11 +313,25 @@ export default {
         return connectedConversations;
       }
     },
+    getAuthUserId() {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      if(loggedUser) {
+        return loggedUser.id;
+      }
+      return null;
+    },
+    getChatType() {
+      if(this.inConnectedChat) {
+        return 'Connected Group';
+      } else {
+       return this.one_to_one_user ? 'Private' : this.conversationTitle + ' Group'
+      }
+    }
   },
   created(){
-
     this.loadTeamChat();
     this.loadChatHistory();
+    this.loadConnectedGroup();
   },
   mounted() {
     let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -334,23 +339,16 @@ export default {
       this.$socket.emit('ping', {user_id: loggedUser.id});
 
       this.sockets.subscribe('ping_success', function (res) {
-        console.log(res);
+        // console.log(res);
         if(res && res.online_users) {
           this.online_users = res.online_users;
         }
       });
 
-      // let data = {
-      //   to: 83,
-      //   msg: 'hello man',
-      //   user: loggedUser
-      // }
-      //
-      // this.$socket.emit('send_message', data);
-
       this.sockets.subscribe('receive_message', function (res) {
-        console.log(res);
-        this.chats.push(res);
+        // console.log(res);
+        res.sender = res.senderInfo;
+        this.chats.unshift(res);
       });
     }
   },
@@ -358,6 +356,7 @@ export default {
     // Process team chat response
     processTeamChatResponse(data) {
       // let group = pick(data, ['id', 'name', 'logo']);
+      this.activeTeam = data.team_id;
       let group = data;
       group.message = pick(data.last_group_message, messageKeys);
       group.label = 'Group chat';
@@ -419,7 +418,27 @@ export default {
         console.error(e);
       }
     },
-
+    async loadConnectedGroup() {
+      try {
+        let payload = {
+          team_id: 1
+        };
+        let { data }  = await ApiService.post('/v1/connection-list-chat', payload).then(res => res.data);
+        if(data && data.connected_teams) {
+          this.connectedTeam = map(data.connected_teams, item => {
+            return {
+              label: 'Connected Team',
+              state: 'seen',
+              name: item.team_name ? item.team_name : 'user name',
+              team_id: item.team_id
+            }
+          });
+        }
+        // this.connectedChat = this.processTeamChatResponse(data);
+      } catch (e) {
+        console.error(e);
+      }
+    },
     async loadChatHistory(){
       try {
         let { data }  = await ApiService.get('/v1/chat-history').then(res => res.data);
@@ -432,7 +451,9 @@ export default {
     async loadIndividualChatHistory(payload){
       try {
         let { data }  = await ApiService.post('/v1/individual-chat-history', payload).then(res => res.data);
-
+        if(data && data.message_history) {
+          data = data.message_history;
+        }
         return data.map(item => {
           item.senderId = item.sender?.id
           return item;
@@ -441,7 +462,23 @@ export default {
         console.error(e);
       }
     },
-
+    async getConnectedChat(item) {
+      try {
+        console.log(item)
+        this.conversationTitle = item.name;
+        this.inConnectedChat = true;
+        let payload = {
+          to_team_id: 1
+        };
+        let { data }  = await ApiService.post('/v1/connected-team-chat-history', payload).then(res => res.data);
+        this.chats = data.map(item => {
+          item.senderId = item.sender?.id
+          return item;
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    },
     async getIndividualChat({ message : {chat_id, team_id}, name, user_id }) {
       const payload = {
         type: chat_id ? 'single' : 'team',
@@ -451,12 +488,16 @@ export default {
       };
 
       this.conversationTitle = '';
+      this.one_to_one_user = user_id;
 
       // const isAnyKeyValueFalse = !!Object.keys(payload).find(k => !payload[k]);
 
-      this.activeTeam = team_id;
+      // this.activeTeam = team_id;
       this.conversationTitle = name;
+      this.inConnectedChat = false;
       this.chats = await this.loadIndividualChatHistory(payload);
+      this.chats = this.chats.reverse();
+
       // if(!isAnyKeyValueFalse) {
       //   this.conversationTitle = name;
       //   this.chats = await this.loadIndividualChatHistory(payload);
@@ -513,49 +554,59 @@ export default {
     async sendMsg(e){
       console.log(e);
       if(this.msg_text) {
-        let loggedUser = JSON.parse(localStorage.getItem('user'));
-        let payload = {
-          team_id: this.activeTeam,
-          sender: 78,
-          receiver: 80,
-          // receiver: 83,
-          message: this.msg_text
+        if(this.inConnectedChat) {
+          await this.sendConnectedTeamMessage();
+        } else {
+          await this.sendTeamMessage();
         }
-
-        await ApiService.post('/v1/send-message', payload).then(res => {
-          this.teamMembers.push('83');
-
-          let data = {
-            // receivers: JSON.stringify(this.teamMembers),
-            to: 80,
-            msg: payload.message,
-            body: payload.message,
-            sender: loggedUser,
-            senderId: loggedUser.id,
-            created_at: new Date()
-          }
-          this.msg_text = '';
-          this.chats.push(data);
-          this.$socket.emit('send_message', data);
-          console.log(res.data);
-        });
-
-        // await ApiService.post('/v1/send-message-to-team', payload).then(res => {
-        //   this.teamMembers.push('83');
-        //
-        //   let data = {
-        //     receivers: JSON.stringify(this.teamMembers),
-        //     msg: payload.message,
-        //     body: payload.message,
-        //     sender: loggedUser,
-        //     senderId: loggedUser.id,
-        //     created_at: new Date()
-        //   }
-        //   this.msg_text = '';
-        //   this.$socket.emit('send_message_in_group', data);
-        //   console.log(res.data);
-        // });
       }
+    },
+    async sendTeamMessage() {
+      let url = '';
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let payload = {
+        team_id: this.activeTeam.toString(),
+        body: this.msg_text,
+        created_at: new Date(),
+        senderId: loggedUser.id.toString(),
+        senderInfo: loggedUser
+      }
+
+      if(this.one_to_one_user) {
+        payload.receiver = this.one_to_one_user.toString();
+        url = 'send-message';
+      } else {
+        payload.receivers = JSON.stringify(this.teamMembers);
+        url = 'send-message-to-team';
+      }
+
+      if(this.one_to_one_user) {
+        payload.sender = loggedUser;
+        payload.to = this.one_to_one_user.toString();
+        this.chats.unshift(payload);
+        this.$socket.emit('send_message', payload);
+      } else {
+        this.$socket.emit('send_message_in_group', payload);
+      }
+      payload.sender = loggedUser.id.toString();
+      this.msg_text = '';
+      await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
+    },
+    async sendConnectedTeamMessage() {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let payload = {
+        to_team_id: 1,
+        sender: loggedUser.id,
+        receivers: JSON.stringify(this.teamMembers),
+        message: this.msg_text,
+        body: this.msg_text,
+        created_at: new Date(),
+        senderId: loggedUser.id.toString(),
+        senderInfo: loggedUser
+      };
+      this.$socket.emit('send_message_in_group', payload);
+      this.msg_text = null;
+      await ApiService.post(`/v1/send-message-team-to-team`, payload).then(res => res.data);
     },
     unique(array){
       return array.filter(function(el, index, arr) {

@@ -104,6 +104,7 @@ export default {
 			joinTeamShow: false,
 			createTeamShow: false,
 			joinCreateTeamShow: true,
+      createTeamPassword: false,
       welcomeModal: true,
       joinTeamPassword: false
 		};
@@ -247,24 +248,49 @@ export default {
     margin-right: 20px;
     font-weight: 900;
     color: #666;
-    font-size: 20px;
+    font-size: 14px;
+    @media screen and (min-width: 576px) {
+      font-size: 18px;
+    }
+    @media screen and (min-width: 768px) {
+      font-size: 20px;
+    }
   }
   .matrimony-logo {
-    width: 200px;
+    width: 100px;
+    @media screen and (min-width: 576px) {
+      width: 140px;
+    }
+    @media screen and (min-width: 768px) {
+      width: 180px;
+    }
   }
   .text-2 {
     margin-left: 20px;
     font-weight: bold;
     color: #666;
-    font-size: 20px;
+    font-size: 14px;
+    @media screen and (min-width: 576px) {
+      font-size: 18px;
+    }
+    @media screen and (min-width: 768px) {
+      font-size: 20px;
+    }
   }
 }
 .description-text {
   p {
-    font-size: 18px;
+    font-size: 14px;
     word-spacing: 0.1em;
     font-weight: 400;
     color: #aaa;
+    margin-top: 8px;
+    @media screen and (min-width: 576px) {
+      font-size: 17px;
+    }
+    @media screen and (min-width: 768px) {
+      font-size: 18px;
+    }
   }
 }
 </style>

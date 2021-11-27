@@ -1367,8 +1367,8 @@ export default {
               height: 500px;
             }
             .chats {
-              display: flex;     
-              margin-bottom: 20px;       
+              display: flex;
+              margin-bottom: 20px;
               .item-img {
                 width: 30px;
                 height: 30px;
@@ -1401,7 +1401,7 @@ export default {
                   background: #eceaf5;
                   border-radius: 5px;
                   padding: 5px;
-                  margin-bottom: 5px;  
+                  margin-bottom: 5px;
                 }
                 .date-time {
                   font-size: 10px;
@@ -1428,7 +1428,7 @@ export default {
                 .dropdown-menu {
                   z-index: 1061;
                   margin-top: 7px;
-                  padding: 10px 15px;              
+                  padding: 10px 15px;
                   box-shadow: 0 0 3px 2px #ddd;
                   transform: none !important;
                   right: 0px;
@@ -1449,7 +1449,7 @@ export default {
                   }
                 }
               }
-              &.me {            
+              &.me {
                 flex-direction: row-reverse;
                 .item-img {
                   margin-right: 0;
@@ -1464,13 +1464,13 @@ export default {
                 .msg-text {
                   background-color: #3f9de7;
                   color: #ffffff;
-                } 
+                }
                 .date-time {
                   text-align: right;
-                }                     
-              } 
-            } 
-          } 
+                }
+              }
+            }
+          }
           .footer {
             position: absolute;
             bottom: 0;

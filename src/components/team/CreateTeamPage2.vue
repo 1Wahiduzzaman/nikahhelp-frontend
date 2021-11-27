@@ -1,53 +1,33 @@
 <template>
-	<!-- <div class="col-md-12 col-lg-8 col-sm-12 col-xs-12 col-md-offset-2"> -->
-
-	<div class="row justify-content-md-center">
-		<a-card class="card-container">
-			<a-row>
-				<a-col :span="24">
-					<a-col :span="24"
-						><img
-							class="group-logo"
-							src="@/assets/Icons/Create a team.svg"
-							alt=""
-					/></a-col>
-					<a-col :span="24"
-						><span class="card-title">Create a team</span></a-col
-					>
-				</a-col>
-			</a-row>
-			<a-row>
-				<a-divider />
-			</a-row>
-			<a-row>
-				<a-col :span="24">
-					<a-input
-						v-model="$store.state.team.team_password"
-						size="large"
-						type="password"
-						class="team-name-input"
-						placeholder="Type Team Password"
-					/>
-				</a-col>
-			</a-row>
-			<a-row>
-				<a-col :span="24">
-					<a-input
-						v-model="$store.state.team.confirm_password"
-						size="large"
-						type="password"
-						class="team-name-input"
-						placeholder="Re-Type Team Password"
-					/>
-				</a-col>
-			</a-row>
-			<a-row>
-				<a-col :span="24">
-					<a-button class="next-button" @click="goNext">Next</a-button>
-				</a-col>
-			</a-row>
-		</a-card>
-	</div>
+	<div>
+    <a-row>
+      <a-col :span="24">
+        <a-input
+            v-model="$store.state.team.team_password"
+            size="large"
+            type="password"
+            class="team-name-input"
+            placeholder="Type Team Password"
+        />
+      </a-col>
+    </a-row>
+    <a-row>
+      <a-col :span="24">
+        <a-input
+            v-model="$store.state.team.confirm_password"
+            size="large"
+            type="password"
+            class="team-name-input"
+            placeholder="Re-Type Team Password"
+        />
+      </a-col>
+    </a-row>
+    <a-row>
+      <a-col :span="24">
+        <a-button class="next-button" @click="goNext">Next</a-button>
+      </a-col>
+    </a-row>
+  </div>
 </template>
 
 <script>
