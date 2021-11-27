@@ -54,14 +54,17 @@ export default {
   },
   methods: {
     async goNextStep() {
-      // let formData = new FormData();
-      // formData.append('logo', this.file);
-      // Object.keys(this.team).map(data =>{
-      //   formData.append(data, this.team[data]);
-      // });
-      //
-      // let { data } = ApiService.post('/v1/team', formData).then(res => res.data);
-      this.$emit("goNext", 3);
+      let formData = new FormData();
+      formData.append('logo', this.file);
+      Object.keys(this.team).map(data =>{
+        formData.append(data, this.team[data]);
+      });
+
+      let { data } = ApiService.post('/v1/team', formData).then(res => res.data);
+      if(data) {
+        this.$emit("updateTeamData", data);
+        this.$emit("goNext", 3);
+      }
     }
   }
 }

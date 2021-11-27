@@ -49,7 +49,7 @@
           <a-button class="confirm-button button float-right" @click="goNextStep(2)" :disabled="checkDisability">Next</a-button>
         </div>
       </div>
-      <CreateTeamPassword :team="team" :file="file" v-if="step === 2" @goNext="goNextStep" />
+      <CreateTeamPassword :team="team" :file="file" v-if="step === 2" @goNext="goNextStep" @updateTeamData="updateTeamData" />
       <CreateAddMember :team="team" :file="file" v-if="step === 3" @goNext="goNextStep" />
     </a-card>
     <a-modal v-model="imageModal" @ok="hideImageModal">
@@ -176,6 +176,9 @@ export default {
         this.file = f;
         this.logoBobUrl = URL.createObjectURL(f);
       });
+    },
+    updateTeamData(data) {
+      this.team = data;
     }
   },
 };
