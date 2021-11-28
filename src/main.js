@@ -31,7 +31,7 @@ Vue.component('Layout', Layout);
 import VueSocketIO from 'vue-socket.io'
 import SocketIO from 'socket.io-client'
 
-const socketConnection = SocketIO('wss://66.29.130.69:4000');
+const socketConnection = SocketIO('https://matrimonyassist.com/chat_nodejs/');
 
 Vue.use(new VueSocketIO({
     debug: true,
