@@ -19,14 +19,14 @@
               <h4 class="fs-14 text-white fw-700">Selina Parvez</h4>
               <h4 class="fs-12 text-white fw-500 candidate-type">Profile type: Candidate</h4>
             </div>
-            <button class="btn btn-success position-absolute">Invite</button>
+            <button class="btn btn-success position-absolute" @click="inviteMember(item)">Invite</button>
           </div>
         </div>
       </div>
       <div class="link-box px-4 position-absolute w-full">
         <div class="w-full mt-2">
-          <input type="text" class="form-control invite-link text-white" value="Link" />
-          <button class="copy-button position-absolute">Copy</button>
+          <input type="text" class="form-control invite-link text-white" id="copyInput" :value="invitationObject.invitation_link" disabled />
+          <button class="copy-button position-absolute" @click="copyToken">Copy</button>
         </div>
         <p class="fs-10 text-white mt-2">Send this link through email or any messaging platform <br> Only one member can use this link once</p>
       </div>
@@ -36,7 +36,21 @@
 
 <script>
 export default {
-  name: "InviteMember"
+  name: "InviteMember",
+  props: ['team', 'invitationObject'],
+  methods: {
+    inviteMember(item) {
+      console.log(item);
+    },
+    copyToken() {
+      let copyText = document.getElementById("copyInput");
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+
+      navigator.clipboard.writeText(copyText.value);
+      alert("Copied the text: " + copyText.value);
+    }
+  }
 }
 </script>
 
@@ -64,7 +78,7 @@ export default {
       }
     }
     .suggestion-box {
-      height: 330px;
+      height: 342px;
       overflow-y: auto;
       padding-bottom: 75px;
       .user {

@@ -60,7 +60,10 @@
 									"
                   @toggleToTeamPassword="toggleToTeamPassword" />
               <JoinTeamPassword
-                  v-if="joinTeamPassword" />
+                  v-if="joinTeamPassword"
+                  @cancel_button="
+                  joinTeamShow = true;
+									joinTeamPassword = false;"/>
               <CreateTeamPage1
                   v-if="createTeamShow"
                   @cancel_button="cancelCreateTeamPage()"

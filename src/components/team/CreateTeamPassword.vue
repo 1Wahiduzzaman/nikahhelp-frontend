@@ -25,7 +25,7 @@
     </a-row>
     <div class="position">
       <div class="position-absolute footer-cancel-btn">
-        <a-button class="back-button button float-left text-white" v-on:click="$emit('cancel_button')">Back</a-button>
+        <a-button class="back-button button float-left text-white" v-on:click="$emit('cancel_button', 1)">Back</a-button>
       </div>
       <div class="position-absolute footer-conf-btn">
         <a-button class="confirm-button button float-right bg-primary text-white" @click="goNextStep()" :disabled="checkDisability">Save & Continue</a-button>
@@ -59,13 +59,14 @@ export default {
       Object.keys(this.team).map(data =>{
         formData.append(data, this.team[data]);
       });
-
-      await ApiService.post('/v1/team', formData).then(res => {
-        if(res && res.data) {
-          this.$emit("updateTeamData", res.data);
-          this.$emit("goNext", 3);
-        }
-      });
+      // this.$emit("updateTeamData", res.data);
+      this.$emit("goNext", 3);
+      // await ApiService.post('/v1/team', formData).then(res => {
+      //   if(res && res.data) {
+      //     this.$emit("updateTeamData", res.data);
+      //     this.$emit("goNext", 3);
+      //   }
+      // });
     }
   }
 }

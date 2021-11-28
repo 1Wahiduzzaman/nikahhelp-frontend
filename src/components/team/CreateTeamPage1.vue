@@ -1,6 +1,6 @@
 <template>
   <div class="col-lg-6 col-xl-4 cards">
-    <a-card class="team-card" style="min-height: 500px;" bodyStyle="padding: 0">
+    <div class="team-card card" style="min-height: 500px;">
       <div class="d-flex align-items-center justify-content-center joining-header position-relative" style="width: 100%">
         <div class="logo-position position-absolute">
           <img
@@ -19,39 +19,60 @@
                 size="large"
                 class="team-name-input"
                 placeholder="Team name"
-                @input="in_progress = true"
             />
-<!--            <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.name">Team name required</span>-->
+            <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.name">Team name required</span>
           </a-col>
-          <a-col class="mt-4" :span="24">
+          <a-col class="mt-3" :span="24">
             <a-textarea
                 class="team-description team-name-input"
                 placeholder="Team description"
                 :auto-size="{ minRows: 3, maxRows: 5 }"
                 v-model="team.description"
-                @input="in_progress = true"
             />
-<!--            <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.description">Team name required</span>-->
+            <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.description">Team description required</span>
           </a-col>
-          <a-col class="mt-4" :span="24">
+          <a-col class="mt-3" :span="24">
+            <a-input
+                v-model="team.password"
+                size="large"
+                type="password"
+                class="team-name-input"
+                placeholder="Type Team Password"
+            />
+            <span class="fs-12 text-danger ml-2 fs-12" v-if="team.password && team.password.length !== 4">Password must be 4 digits</span>
+          </a-col>
+          <a-col class="mt-3" :span="24">
+            <a-input
+                v-model="team.confirm_password"
+                size="large"
+                type="password"
+                class="team-name-input"
+                placeholder="Re-Type New Password"
+            />
+            <span class="text-danger mt-2 ml-2 fs-12" v-if="team.password && team.confirm_password && team.password !== team.confirm_password">Password doesn't match.</span>
+            <span v-if="team.confirm_password && team.confirm_password.length !== 4" class="fs-12 text-danger ml-2">Password must be 4 digits</span>
+          </a-col>
+          <a-col class="mt-3" :span="24">
             <div class="d-flex align-items-center">
               <div class="cursor-pointer image-plus" @click="imageModal = true">
                 <h4 class="fs-40 d-flex justify-content-center align-items-center text-white">+</h4>
               </div>
               <h4 class="fs-14 color-gray ml-4">Add a team image</h4>
             </div>
+            <span class="text-danger fs-12" v-if="in_progress && !file">Please upload team logo</span>
           </a-col>
         </a-row>
         <div class="position-absolute footer-cancel-btn">
           <a-button class="back-button button float-left" @click="goBack()">Back</a-button>
         </div>
         <div class="position-absolute footer-conf-btn">
-          <a-button class="confirm-button button float-right" @click="goNextStep(2)" :disabled="checkDisability">Next</a-button>
+          <a-button class="confirm-button button float-right" @click="createTeam()" :disabled="checkDisability">Next</a-button>
         </div>
       </div>
-      <CreateTeamPassword :team="team" :file="file" v-if="step === 2" @goNext="goNextStep" @updateTeamData="updateTeamData" />
-      <CreateAddMember :team="team" :file="file" v-if="step === 3" @cancel_button="$emit('cancel_button')" @goNext="goNextStep" />
-    </a-card>
+<!--      <CreateTeamPassword :team="team" :file="file" v-if="step === 2" @goNext="goNextStep" @cancel_button="goNextStep" @updateTeamData="updateTeamData" />-->
+      <CreateAddMember :team="team" :file="file" v-if="step === 2" @cancel_button="$emit('cancel_button')" @goNext="goNextStep" />
+      <TeamCreateSuccess v-if="step === 3" :team="team" />
+    </div>
     <a-modal v-model="imageModal" @ok="hideImageModal">
       <div class="text-center">
         <img :src="logoBobUrl" v-if="logoBobUrl" alt="info image" class="bob-logo" />
@@ -80,11 +101,13 @@
 </template>
 
 <script>
-import CreateTeamPassword from "./CreateTeamPassword";
+import ApiService from '@/services/api.service';
+// import CreateTeamPassword from "./CreateTeamPassword";
 import CreateAddMember from "./CreateAddMember";
+import TeamCreateSuccess from "./TeamCreateSuccess";
 export default {
 	name: "CreateTeam1",
-	components: {CreateAddMember, CreateTeamPassword},
+	components: {TeamCreateSuccess, CreateAddMember},
 	data() {
 		return {
 			isLoading: false,
@@ -92,7 +115,12 @@ export default {
 			is_verified: 1,
       imageModal: false,
       step: 1,
-      team: {},
+      team: {
+        name: '',
+        description: '',
+        password: '',
+        confirm_password: ''
+      },
       in_progress: false,
       file: '',
       logoBobUrl: null
@@ -100,7 +128,10 @@ export default {
 	},
   computed: {
     checkDisability() {
-      if(this.team.name && this.team.description) {
+      if(this.team.name && this.team.description &&
+          this.team.password && this.team.confirm_password &&
+          this.team.password.length === 4 && this.team.confirm_password.length === 4 &&
+          this.team.password === this.team.confirm_password && this.file) {
         return false;
       }
       return true;
@@ -179,6 +210,21 @@ export default {
     },
     updateTeamData(data) {
       this.team = data;
+    },
+    async createTeam() {
+      this.in_progress = true;
+      let formData = new FormData();
+      formData.append('logo', this.file);
+      Object.keys(this.team).map(data =>{
+        formData.append(data, this.team[data]);
+      });
+
+      await ApiService.post('/v1/team', formData).then(res => {
+        if(res && res.data) {
+          this.updateTeamData(res.data.data);
+          this.goNextStep(2);
+        }
+      });
     }
   },
 };

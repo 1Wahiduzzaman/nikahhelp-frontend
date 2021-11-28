@@ -1,7 +1,7 @@
 <template>
   <div class="mt-4 box position-relative">
     <div class="px-4">
-      <h4 class="fs-14">Team ID: #658412373</h4>
+      <h4 class="fs-14">Team ID: #{{ team.team_id }}</h4>
       <div class="d-flex align-items-center">
         <h4 class="fs-16">To activate team add a member</h4>
         <a-icon type="info-circle" class="ml-2 fs-12" />
@@ -10,7 +10,8 @@
     <div class="dropdowns d-flex mt-4">
       <a-select
           placeholder="Role"
-          class="w-full"
+          class="fs-12 w-25"
+          v-model="invitationObject.role"
       >
          <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>
         <a-select-option value="Admin"> Admin </a-select-option>
@@ -19,48 +20,32 @@
 
       <a-select
           placeholder="Add as a"
-          class="w-full ml-2"
+          class="ml-2 fs-12 w-25"
+          v-model="invitationObject.add_as_a"
       >
-        <a-select-option value="Owner+Admin"> Candidate </a-select-option>
-        <a-select-option value="Admin"> Representative </a-select-option>
-        <a-select-option value="Member"> Match Maker </a-select-option>
+        <a-select-option value="Candidate"> Candidate </a-select-option>
+        <a-select-option value="Representative"> Representative </a-select-option>
+        <a-select-option value="Match Maker"> Match Maker </a-select-option>
       </a-select>
 
       <a-select
           placeholder="Relationship"
-          class="w-full ml-2"
+          class="ml-2 fs-12 w-25"
+          v-model="invitationObject.relationship"
       >
-        <a-select-option value="Owner+Admin"> Father </a-select-option>
-        <a-select-option value="Admin"> Mother </a-select-option>
-        <a-select-option value="Member"> Brother </a-select-option>
-        <a-select-option value="Member"> Sister </a-select-option>
-        <a-select-option value="Member"> Grand Father </a-select-option>
-        <a-select-option value="Member"> Grand Mother </a-select-option>
-        <a-select-option value="Member"> Brother-in-law </a-select-option>
-        <a-select-option value="Member"> Sister-in-law </a-select-option>
+        <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
       </a-select>
-
-<!--      <a-input-->
-<!--          placeholder="Paste link here"-->
-<!--          class="ant-input-box color-primary ml-2"-->
-<!--          size="medium"-->
-<!--      >-->
-<!--        <a-icon slot="suffix" type="forward" class="input-suffix fs-16" />-->
-<!--      </a-input>-->
-      <div class="d-flex position-relative">
-        <input type="text" disabled value="fgdkgkdkg" class="team-invite-link ml-2">
-        <a-icon type="forward" class="fs-16 position-absolute forward-link" />
-      </div>
+      <a-button type="primary" class="ml-2 fs-12" @click="goNextStep()" :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship">Send</a-button>
     </div>
     <div class="position">
       <div class="position-absolute footer-cancel-btn">
         <a-button class="back-button button float-left text-white" v-on:click="$emit('cancel_button')">Back</a-button>
       </div>
       <div class="position-absolute footer-conf-btn">
-        <a-button class="confirm-button button float-right bg-primary text-white" @click="goNextStep()">Save & Continue</a-button>
+        <a-button class="confirm-button button float-right bg-primary text-white" @click="addMember()">Save & Continue</a-button>
       </div>
     </div>
-    <InviteMember v-if="showMemberBox" @toggleMemberbox="toggleMemberbox" />
+    <InviteMember :team="team" :invitationObject="invitationObject" v-if="showMemberBox" @toggleMemberbox="toggleMemberbox" />
   </div>
 </template>
 
@@ -72,7 +57,15 @@ export default {
   props: ['team', 'file'],
   data() {
     return {
-      showMemberBox: false
+      showMemberBox: false,
+      relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-paw'],
+      invitationObject: {
+        role: "Owner+Admin",
+        add_as_a: "Candidate",
+        relationship: "Father",
+        invitation_link: "",
+      },
+      invitedUsers: []
     }
   },
   methods: {
@@ -82,14 +75,42 @@ export default {
     },
     toggleMemberbox() {
       this.showMemberBox = !this.showMemberBox;
+    },
+    addMember() {
+      this.$emit("goNext", 3);
     }
-  }
+  },
+  mounted() {
+    // amaizingly, for some reason i need to refer this to
+    // a other variable so my iffe function can access this
+    var self = this;
+    (function createShotLink() {
+      // this is the method i am using to create a short link
+      function makeid(length) {
+        var result = [];
+        var characters =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+          result.push(
+              characters.charAt(Math.floor(Math.random() * charactersLength))
+          );
+        }
+        return result.join("");
+      }
+      self.invitationObject.invitation_link = makeid(10);
+    })();
+    console.log(this.invitationLink);
+  },
 }
 </script>
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .ant-input-suffix {
   right: 6px !important;
+}
+.w-25 {
+  width: 25%;
 }
 .team-invite-link {
   height: 30px;
