@@ -39,8 +39,8 @@ export default {
   name: "InviteMember",
   props: ['team', 'invitationObject'],
   methods: {
-    inviteMember(item) {
-      console.log(item);
+    inviteMember(id) {
+      this.$emit('addMember', id);
     },
     copyToken() {
       let copyText = document.getElementById("copyInput");

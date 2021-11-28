@@ -54,6 +54,7 @@ import ApiService from "../../services/api.service";
 export default {
 	name: "ManageTeam",
 	components: {},
+  props: ['team'],
 	data() {
 		return {
 			isLoading: false,
@@ -68,40 +69,22 @@ export default {
 		window: () => window,
 	},
 	methods: {
-		onSearch() {
-			console.log("search clicked");
-		},
-		onConfirmClick(event) {
+		onConfirmClick() {
 			if (this.invitationPassword.length > 0) {
-				console.log(this.$route.params.invitationLink);
-				console.log(this.invitationPassword);
-				ApiService.post("v1/join-team-by-invitation", {
-					invitation_link: this.$route.params.invitationLink,
-					team_password: this.invitationPassword,
-				})
-					.then((data) => {
-						console.log("Data Came");
-						console.log(data);
-						///this.$message.error(data.message);
-						if (data.status == 200) {
-							this.$success({
-								title: "Success",
-								content: data.data.message,
-							});
-							//this.$message.success(data.data.message);
-							//this.$message.success("Invitation accepted");
-							this.$router.push("/manageteam");
-						} else {
-							this.$message.error(data.data.message);
-						}
-					})
-					.catch((e) => {
-						console.log(e.response);
-						this.$message.error(e.response.data.message);
-						this.$message.error("Invitation Error, Please check Again");
-					});
-			} else {
-				console.log("Password field is empty");
+        if(this.team.password === this.team_password) {
+          let payload = {
+            team_id: this.team.team,
+            invitation_link: this.invitation_link,
+            team_password: this.team_password
+          };
+          ApiService.post("v1/join-team-by-invitation", payload).then((res) => {
+            console.log(res)
+          }).catch((e) => {
+            console.log(e);
+          });
+        } else {
+          alert("Password does not match");
+        }
 			}
 		},
 	},

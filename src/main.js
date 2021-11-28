@@ -24,6 +24,7 @@ ApiService.init();
 
 Vue.use(VueCompositionAPI);
 Vue.use(Antd);
+Vue.use(require('vue-moment'));
 
 Vue.component('Layout', Layout);
 

@@ -10,7 +10,7 @@
     <div class="dropdowns d-flex mt-4">
       <a-select
           placeholder="Role"
-          class="fs-12 w-25"
+          class="fs-10 w-25"
           v-model="invitationObject.role"
       >
          <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>
@@ -20,7 +20,7 @@
 
       <a-select
           placeholder="Add as a"
-          class="ml-2 fs-12 w-25"
+          class="ml-2 fs-10 w-25"
           v-model="invitationObject.add_as_a"
       >
         <a-select-option value="Candidate"> Candidate </a-select-option>
@@ -30,7 +30,7 @@
 
       <a-select
           placeholder="Relationship"
-          class="ml-2 fs-12 w-25"
+          class="ml-2 fs-10 w-25"
           v-model="invitationObject.relationship"
       >
         <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
@@ -45,11 +45,16 @@
         <a-button class="confirm-button button float-right bg-primary text-white" @click="addMember()">Save & Continue</a-button>
       </div>
     </div>
-    <InviteMember :team="team" :invitationObject="invitationObject" v-if="showMemberBox" @toggleMemberbox="toggleMemberbox" />
+    <InviteMember :team="team"
+                  :invitationObject="invitationObject"
+                  v-if="showMemberBox"
+                  @toggleMemberbox="toggleMemberbox"
+                  @addMember="addInvitedMember" />
   </div>
 </template>
 
 <script>
+import ApiService from '@/services/api.service';
 import InviteMember from "./InviteMember";
 export default {
   name: "CreateAddMember",
@@ -76,8 +81,31 @@ export default {
     toggleMemberbox() {
       this.showMemberBox = !this.showMemberBox;
     },
-    addMember() {
-      this.$emit("goNext", 3);
+    async addMember() {
+      let payload = {
+        team_id: this.team.team_id,
+        members: this.invitedUsers
+      };
+
+      await ApiService.post('/v1/invite-team-members', payload).then(res => {
+        if(res && res.data) {
+          this.$emit("goNext", 3);
+        }
+      });
+    },
+    addInvitedMember(id) {
+      console.log(id);
+      let data = {
+        role: this.invitationObject.role,
+        add_as_a: this.invitationObject.add_as_a,
+        relationship: this.invitationObject.relationship,
+        invitation_link: this.invitationObject.invitation_link,
+      };
+      if(this.invitedUsers.length > 0) {
+        this.invitedUsers[0] = data;
+      } else {
+        this.invitedUsers.push(data);
+      }
     }
   },
   mounted() {

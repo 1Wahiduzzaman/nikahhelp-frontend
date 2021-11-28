@@ -61,6 +61,7 @@
                   @toggleToTeamPassword="toggleToTeamPassword" />
               <JoinTeamPassword
                   v-if="joinTeamPassword"
+                  :team="joinTeamInfo"
                   @cancel_button="
                   joinTeamShow = true;
 									joinTeamPassword = false;"/>
@@ -106,7 +107,8 @@ export default {
 			joinCreateTeamShow: true,
       createTeamPassword: false,
       welcomeModal: true,
-      joinTeamPassword: false
+      joinTeamPassword: false,
+      joinTeamInfo: null
 		};
 	},
 	created() {
@@ -204,7 +206,8 @@ export default {
     hideWelcomeModal() {
       this.welcomeModal = false;
     },
-    toggleToTeamPassword() {
+    toggleToTeamPassword(teamInfo) {
+      this.joinTeamInfo = teamInfo;
       this.joinTeamPassword = true;
       this.joinCreateTeamShow = false;
       this.joinTeamShow = false;

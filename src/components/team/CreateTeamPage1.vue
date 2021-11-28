@@ -19,6 +19,7 @@
                 size="large"
                 class="team-name-input"
                 placeholder="Team name"
+                autocomplete="off"
             />
             <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.name">Team name required</span>
           </a-col>
@@ -38,6 +39,7 @@
                 type="password"
                 class="team-name-input"
                 placeholder="Type Team Password"
+                autocomplete="off"
             />
             <span class="fs-12 text-danger ml-2 fs-12" v-if="team.password && team.password.length !== 4">Password must be 4 digits</span>
           </a-col>
@@ -48,6 +50,7 @@
                 type="password"
                 class="team-name-input"
                 placeholder="Re-Type New Password"
+                autocomplete="off"
             />
             <span class="text-danger mt-2 ml-2 fs-12" v-if="team.password && team.confirm_password && team.password !== team.confirm_password">Password doesn't match.</span>
             <span v-if="team.confirm_password && team.confirm_password.length !== 4" class="fs-12 text-danger ml-2">Password must be 4 digits</span>
@@ -218,6 +221,8 @@ export default {
       Object.keys(this.team).map(data =>{
         formData.append(data, this.team[data]);
       });
+
+      this.goNextStep(2);
 
       await ApiService.post('/v1/team', formData).then(res => {
         if(res && res.data) {
