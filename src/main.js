@@ -30,7 +30,7 @@ Vue.component('Layout', Layout);
 import VueSocketIO from 'vue-socket.io'
 import SocketIO from 'socket.io-client'
 
-const socketConnection = SocketIO('http://66.29.130.69:3000');
+const socketConnection = SocketIO('https://chat.arranzed.com');
 
 Vue.use(new VueSocketIO({
     debug: true,
