@@ -40,11 +40,14 @@
         <p class="fs-14">You're joined successfully</p>
       </div>
 
-      <div class="position-absolute footer-cancel-btn">
+      <div class="position-absolute footer-cancel-btn" v-if="!success">
         <a-button class="back-button button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
       </div>
-      <div class="position-absolute footer-conf-btn">
+      <div class="position-absolute footer-conf-btn" v-if="!success">
         <a-button class="confirm-button button float-right" @click="onConfirmClick">Confirm</a-button>
+      </div>
+      <div class="position-absolute footer-conf-btn" v-if="success">
+        <a-button class="confirm-button button float-right" @click="closeSuccess">Ok</a-button>
       </div>
 		</a-card>
 	</div>
@@ -91,6 +94,9 @@ export default {
         }
 			}
 		},
+    closeSuccess() {
+      this.$emit('cancel_button');
+    }
 	},
 };
 </script>

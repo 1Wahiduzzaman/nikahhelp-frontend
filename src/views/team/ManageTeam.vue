@@ -62,9 +62,7 @@
               <JoinTeamPassword
                   v-if="joinTeamPassword"
                   :team="joinTeamInfo"
-                  @cancel_button="
-                  joinTeamShow = true;
-									joinTeamPassword = false;"/>
+                  @cancel_button="cancelJoinButton()"/>
               <CreateTeamPage1
                   v-if="createTeamShow"
                   @cancel_button="cancelCreateTeamPage()"
@@ -137,7 +135,7 @@ export default {
 				await this.$store
 					.dispatch("getTeams")
 					.then((data) => {
-						this.teams = [...data.data.data];
+						this.teams = data.data.data;
 					})
 					.catch((error) => {
 						console.log(error.response);
@@ -215,6 +213,11 @@ export default {
     cancelCreateTeamPage() {
       this.joinCreateTeamShow = true;
       this.createTeamShow = false;
+      this.loadTeams();
+    },
+    cancelJoinButton() {
+      this.joinTeamShow = false;
+      this.joinTeamPassword = false;
       this.loadTeams();
     }
 	},
