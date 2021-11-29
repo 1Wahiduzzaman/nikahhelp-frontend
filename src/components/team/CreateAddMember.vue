@@ -35,13 +35,18 @@
       >
         <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
       </a-select>
-      <a-button v-if="invitedUsers.length <= 0" type="primary" class="ml-2 fs-12 br-20" @click="goNextStep()" :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship">Send</a-button>
-      <a-dropdown class="right-br-20 bg-primary text-white" v-if="invitedUsers.length > 0">
+
+      <a-button v-if="invitedUsers.length <= 0"
+                type="primary"
+                class="ml-2 fs-10 br-20"
+                @click="goNextStep()"
+                :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship">Invite now</a-button>
+      <a-dropdown class="right-br-20 bg-primary text-white w-25 fs-10 dropdown-button" v-if="invitedUsers.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1">Invitation </a-menu-item>
           <a-menu-item key="2" @click="removeInvite()">Remove </a-menu-item>
         </a-menu>
-        <a-button class="ml-2"> Button <a-icon type="down" /> </a-button>
+        <a-button class="ml-1 fs-10"> Invite Now <a-icon type="down" /> </a-button>
       </a-dropdown>
     </div>
     <div class="position">
@@ -106,7 +111,7 @@ export default {
         add_as_a: this.invitationObject.add_as_a,
         relationship: this.invitationObject.relationship,
         invitation_link: this.invitationObject.invitation_link,
-        invited_user_id: id
+        email: id
       };
       if(this.invitedUsers.length > 0) {
         this.invitedUsers[0] = data;
@@ -153,6 +158,9 @@ export default {
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }
+.dropdown-button {
+  padding: 0 8px !important;
+}
 .w-25 {
   width: 25%;
 }
@@ -190,7 +198,7 @@ export default {
     bottom: 50px;
     .footer-cancel-btn {
       bottom: 20px;
-      left: 12px;
+      left: 32px;
       .button {
         border-radius: 16px;
         background: $bg-brand;
@@ -198,7 +206,7 @@ export default {
     }
     .footer-conf-btn {
       bottom: 20px;
-      right: 12px;
+      right: 32px;
       .button {
         border-radius: 16px;
       }

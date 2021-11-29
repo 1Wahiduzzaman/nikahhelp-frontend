@@ -58,6 +58,7 @@ export default {
   },
   methods: {
     inviteMember(id) {
+      id = 'mahmud@gmail.com';
       this.$emit('addMember', id);
       this.$emit('toggleMemberbox');
     },

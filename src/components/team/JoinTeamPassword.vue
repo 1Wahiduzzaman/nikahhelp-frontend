@@ -2,10 +2,9 @@
 	<div
 		class="col-lg-6 col-xl-4"
 	>
-		<a-card
-			class="team-card"
+		<div
+			class="team-card card"
 			style="min-height: 500px; margin-top: 20px;"
-      bodyStyle="padding: 0"
 		>
       <div style="width: 100%" class="d-flex align-items-center justify-content-center joining-header position-relative">
         <div class="logo-position position-absolute">
@@ -49,7 +48,7 @@
       <div class="position-absolute footer-conf-btn" v-if="success">
         <a-button class="confirm-button button float-right" @click="closeSuccess">Ok</a-button>
       </div>
-		</a-card>
+		</div>
 	</div>
 </template>
 <script>
@@ -574,7 +573,7 @@ export default {
 
   .footer-cancel-btn {
     bottom: 20px;
-    left: 12px;
+    left: 32px;
     .button {
       border-radius: 16px;
       background: $bg-brand;
@@ -583,7 +582,7 @@ export default {
   }
   .footer-conf-btn {
     bottom: 20px;
-    right: 12px;
+    right: 32px;
     .button {
       border-radius: 16px;
     }

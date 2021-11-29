@@ -20,7 +20,10 @@
             v-model="invitationLink"
 					>
             <a-icon slot="prefix" type="snippets" class="input-prefix" />
-            <a-icon slot="suffix" type="caret-right" class="input-suffix" @click="getTheTeamInvitationInfo" />
+            <a-icon slot="suffix" type="caret-right" class="input-suffix"
+                    @click="getTheTeamInvitationInfo"
+                    :disabled="!invitationLink"
+                    :class="{'bg-primary': invitationLink}" />
 					</a-input>
 				</a-col>
 			</a-row>
@@ -132,11 +135,13 @@ export default {
 			// }
 		},
     async getTheTeamInvitationInfo() {
-      await ApiService.get(`/v1/team-invitation-information/${this.invitationLink}`).then(res => {
-        if(res && res.data) {
-          this.team = res.data.data;
-        }
-      });
+      if(this.invitationLink) {
+        await ApiService.get(`/v1/team-invitation-information/${this.invitationLink}`).then(res => {
+          if(res && res.data) {
+            this.team = res.data.data;
+          }
+        });
+      }
     }
 	},
 };
@@ -644,14 +649,14 @@ export default {
     }
     .footer-cancel-btn {
       bottom: 20px;
-      left: 12px;
+      left: 32px;
       .button {
         border-radius: 16px;
       }
     }
     .footer-conf-btn {
       bottom: 20px;
-      right: 12px;
+      right: 32px;
       .button {
         border-radius: 16px;
       }

@@ -14,7 +14,7 @@
         </h4>
       </div>
       <div class="box" v-if="step === 1">
-        <a-row class="mt-4 px-4">
+        <a-row class="mt-2 px-4">
           <a-col class="text-center" :span="24">
             <div class="d-flex align-items-center justify-content-center">
               <div class="cursor-pointer image-plus background-img" @click="imageModal = true" :style="{ backgroundImage: 'url(' + logoBobUrl + ')' }">
@@ -24,7 +24,7 @@
             </div>
             <span class="text-danger fs-12" v-if="in_progress && !file">Please upload team logo</span>
           </a-col>
-          <a-col :span="24" class="mt-3">
+          <a-col :span="24" class="mt-2">
             <a-input
                 v-model="team.name"
                 size="large"
@@ -35,7 +35,7 @@
             />
             <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.name">Team name required</span>
           </a-col>
-          <a-col class="mt-3" :span="24">
+          <a-col class="mt-2" :span="24">
             <a-textarea
                 class="team-description team-name-input"
                 placeholder="Team description"
@@ -45,7 +45,7 @@
             />
             <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.description">Team description required</span>
           </a-col>
-          <a-col class="mt-3" :span="24">
+          <a-col class="mt-2" :span="24">
             <a-input
                 v-model="team.password"
                 size="large"
@@ -57,7 +57,7 @@
             />
             <span class="fs-12 text-danger ml-2 fs-12" v-if="team.password && team.password.length !== 4">Password must be 4 digits</span>
           </a-col>
-          <a-col class="mt-3" :span="24">
+          <a-col class="mt-2" :span="24">
             <a-input
                 v-model="team.confirm_password"
                 size="large"
@@ -749,14 +749,14 @@ export default {
     .box {
       .footer-cancel-btn {
         bottom: 20px;
-        left: 12px;
+        left: 32px;
         .button {
           border-radius: 16px;
         }
       }
       .footer-conf-btn {
         bottom: 20px;
-        right: 12px;
+        right: 32px;
         .button {
           border-radius: 16px;
         }
