@@ -154,6 +154,17 @@ export default {
         });
     });
   },
+  async saveImageVerificationInfo(_, payload) {
+    return new Promise((resolve, reject) => {
+      ApiService.image("v1/candidate/personal-verification-info", payload)
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+    });
+  },
   async updatePersonalInfo(context, payload) {
     await axios
       .post(

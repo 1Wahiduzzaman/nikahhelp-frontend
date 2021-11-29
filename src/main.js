@@ -14,7 +14,7 @@ import store from "./store/index.js";
 import Storage from "vue-web-storage";
 // * ApiService for the application
 import ApiService from "./services/api.service";
-
+import vSelect from "vue-select";
 
 Vue.use(Storage, {
   prefix: "",
@@ -26,7 +26,6 @@ Vue.use(VueCompositionAPI);
 Vue.use(Antd);
 
 Vue.component('Layout', Layout);
-
 import VueSocketIO from 'vue-socket.io'
 import SocketIO from 'socket.io-client'
 

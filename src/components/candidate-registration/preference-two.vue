@@ -216,24 +216,30 @@
                           </a-select-option>
                         </a-select> -->
                         <v-select
+                          :clearable="false"
+                          id="preferred_countries0"
                           class="style-chooser"
                           v-model.lazy="preferenceData.preferred_countries[0]"
                           label="name"
                           placeholder="Select Country"
                           :options="candidateDetails.countries"
-                          @input="
-                            onChangeCountry($event, 'listOne', 'allowed')
-                          "
+                          @input="onChangeCountry($event, 'listOne', 'allowed')"
+                          ><template #open-indicator>
+                            <a-icon type="down" /> </template
                         ></v-select>
                       </div>
                       <div class="col-md-6">
                         <v-select
+                          :clearable="false"
+                          id="preferred_cities0"
                           class="style-chooser"
                           label="name"
                           placeholder="Select City"
                           v-model.lazy="preferenceData.preferred_cities[0]"
                           :options="preferenceData.allowedCity.listOne"
                           @input="onValueChange"
+                        ><template #open-indicator>
+                            <a-icon type="down" /> </template
                         ></v-select>
                         <!-- <a-select
                           @select="onValueChange"
@@ -440,6 +446,8 @@
                     <div class="row my-1">
                       <div class="col-md-6">
                         <v-select
+                          :clearable="false"
+                          id="bloked_countries0"
                           class="style-chooser"
                           v-model.lazy="preferenceData.bloked_countries[0]"
                           label="name"
@@ -448,6 +456,8 @@
                           @input="
                             onChangeCountry($event, 'listOne', 'disAllowed')
                           "
+                        ><template #open-indicator>
+                            <a-icon type="down" /> </template
                         ></v-select>
                         <!-- <a-select
                           @select="
@@ -477,12 +487,16 @@
                       </div>
                       <div class="col-md-6">
                         <v-select
+                          :clearable="false"
+                          id="blocked_cities0"
                           class="style-chooser"
                           placeholder="Select City"
                           v-model.lazy="preferenceData.blocked_cities[0]"
                           label="name"
                           :options="preferenceData.disAllowedCity.listOne"
                           @input="onValueChange"
+                        ><template #open-indicator>
+                            <a-icon type="down" /> </template
                         ></v-select>
                         <!-- <a-select
                           @select="onValueChange"
@@ -675,7 +689,9 @@
                     prop="pre_partner_religion_id"
                   >
                     <v-select
+                      :clearable="false"
                       :multiple="true"
+                      id="pre_partner_religion_id"
                       :reduce="(option) => option.id"
                       class="nationality-select"
                       placeholder="Select your preferred religion"
@@ -685,7 +701,11 @@
                       v-model.lazy="preferenceData.pre_partner_religion_id"
                       label="name"
                       :options="candidateDetails.religions"
-                    ></v-select>
+                    >
+                      <template #open-indicator>
+                        <a-icon type="down" />
+                      </template>
+                    </v-select>
                     <!-- <a-select
                       id="pre_partner_religion_id"
                       :maxTagCount="3"
@@ -768,13 +788,17 @@
                     prop="pre_ethnicities"
                   >
                     <v-select
+                      :clearable="false"
+                      id="pre_ethnicities"
                       class="style-chooser"
                       placeholder="Please select your ethnicities"
                       @input="onValueChange"
                       v-model.lazy="preferenceData.pre_ethnicities"
                       label="name"
                       :options="ethnicityList"
-                    ></v-select>
+                    >  <template #open-indicator>
+                        <a-icon type="down" />
+                      </template></v-select>
                     <!-- <a-select
                       id="pre_ethnicities"
                       :showSearch="true"
@@ -859,6 +883,8 @@
                     prop="preferred_nationality"
                   >
                     <v-select
+                      id="preferred_nationality"
+                      :clearable="false"
                       :multiple="true"
                       class="nationality-select"
                       @input="
@@ -868,7 +894,9 @@
                       placeholder="Select your Nationality"
                       label="name"
                       :options="candidateDetails.countries"
-                    ></v-select>
+                    >  <template #open-indicator>
+                        <a-icon type="down" />
+                      </template></v-select>
                     <!-- <a-select
                       id="preferred_nationality"
                       class="nationality-select"
@@ -953,6 +981,7 @@
                     prop="pre_study_level_id"
                   >
                     <v-select
+                      :clearable="false"
                       class="style-chooser"
                       @input="onValueChange"
                       :reduce="(option) => option.id"
@@ -960,7 +989,9 @@
                       v-model.lazy="preferenceData.pre_study_level_id"
                       label="name"
                       :options="candidateDetails.studylevels"
-                    ></v-select>
+                    >  <template #open-indicator>
+                        <a-icon type="down" />
+                      </template></v-select>
                     <!-- <a-select
                       :showSearch="true"
                       :filter-option="filterOption"
@@ -1040,14 +1071,17 @@
                     prop="pre_employment_status"
                   >
                     <v-select
+                      :clearable="false"
                       class="style-chooser"
-                        :reduce="(option) => option.value"
+                      :reduce="(option) => option.value"
                       @input="onValueChange"
                       placeholder="Please select your employment status"
                       v-model.lazy="preferenceData.pre_employment_status"
                       label="name"
                       :options="employment_Statuses"
-                    ></v-select>
+                    >  <template #open-indicator>
+                        <a-icon type="down" />
+                      </template></v-select>
                     <!-- <a-select
                       @select="onValueChange"
                       id="pre_employment_status"
@@ -1123,13 +1157,16 @@
                 <a-col :span="12">
                   <a-form-model-item ref="pre_occupation" prop="pre_occupation">
                     <v-select
+                      :clearable="false"
                       class="style-chooser"
                       @input="onValueChange"
                       v-model.lazy="preferenceData.pre_occupation"
                       placeholder="Please select your preferred occupation"
                       label="name"
                       :options="candidateDetails.occupations"
-                    ></v-select>
+                    >  <template #open-indicator>
+                        <a-icon type="down" />
+                      </template></v-select>
                     <!-- <a-select
                       @select="onValueChange"
                       id="pre_occupation"
@@ -2117,7 +2154,7 @@ import { ARR, RULES, RULES_RATE } from "./models/candidate";
 import SelectGroup from "@/components/ui/selects/SelectGroup";
 import { ReligionTV } from "../../models/religion";
 import { CountriesTV } from "../../models/country";
-import { AGES, HEIGHTS,Employment_Statuses } from "../../models/data";
+import { AGES, HEIGHTS, Employment_Statuses } from "../../models/data";
 import ApiService from "../../services/api.service";
 export default {
   name: "PreferenceTwo",
@@ -2133,6 +2170,11 @@ export default {
 
   data() {
     return {
+      attributes: {
+        ref: "openIndicator",
+        role: "presentation",
+        class: "vs__open-indicator",
+      },
       activeKey: 1,
       desc: [
         "Not Important",
@@ -2146,7 +2188,7 @@ export default {
       arr: ARR,
       ageTV: AGES,
       heightTV: HEIGHTS,
-      employment_Statuses:Employment_Statuses,
+      employment_Statuses: Employment_Statuses,
       ethnicityList: ethnicities,
     };
   },
@@ -2222,7 +2264,7 @@ export default {
         ...this.preferenceData,
         pre_nationality:
           this.preferenceData.preferred_nationality.length > 0
-            ? this.preferenceData.preferred_nationality.map(n=>n.id)
+            ? this.preferenceData.preferred_nationality.map((n) => n.id)
             : null,
         pre_partner_religions:
           this.preferenceData.pre_partner_religion_id.join(","),
@@ -2360,7 +2402,9 @@ export default {
       max-width: 100% !important;
       margin: 0px auto;
     }
-
+.anticon{
+  color: #b3b2b2;
+}
     .ant-slider {
       margin-bottom: 16px;
       .ant-slider-track {

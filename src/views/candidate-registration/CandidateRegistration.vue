@@ -64,9 +64,10 @@
       </div>
 
       <div class="steps-action text-right pb-5 clearfix">
+          <!-- :class="{ disabled: !enabledNextBtn }"
+          :disabled="!enabledNextBtn" -->
         <a-button
-          :class="{ disabled: !enabledNextBtn }"
-          :disabled="!enabledNextBtn"
+        
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
@@ -157,7 +158,7 @@ export default {
         headerIsFixed: false,
       },
       propsData: { ...createData() },
-      current: 0,
+      current: 1,
       enabledNextBtn: false,
       candidateDetails: {
         preferenceData: null,
@@ -524,7 +525,7 @@ export default {
             preferred_nationality,
             pre_study_level_id,
             pre_employment_status,
-            pre_occupation,
+            //pre_occupation,
           } = this.candidateDetails.preferenceData;
           isEnabled = Object.values({
             pre_partner_age_max,
@@ -536,7 +537,7 @@ export default {
             preferred_nationality,
             pre_study_level_id,
             pre_employment_status,
-            pre_occupation,
+           // pre_occupation,
           }).every((x) => x !== undefined && x !== null && x !== "");
           break;
         case 1:

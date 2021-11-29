@@ -624,6 +624,7 @@
 <script>
 import DropdownDatePicker from "vue-dropdown-datepicker";
 import ApiService from "../../services/api.service";
+import vSelect from "vue-select";
 export default {
   props: {
     representativeDetails: {
@@ -635,7 +636,7 @@ export default {
   },
   name: "personInfoRefTwo",
   components: {
-    DropdownDatePicker,
+    DropdownDatePicker,vSelect
   },
   data() {
     return {
