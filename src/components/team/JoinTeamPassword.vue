@@ -17,7 +17,7 @@
         </div>
         <h4 class="card-title pt-2">Joining a team</h4>
       </div>
-      <div class="mt-5 px-4">
+      <div class="mt-5 px-4" v-if="!success">
         <h4 class="fs-18 color-primary">Team Password</h4>
         <a-row class="mt-1">
           <a-col :span="24" class="mt-4">
@@ -32,13 +32,13 @@
         </a-row>
       </div>
 
-<!--      <div class="d-flex flex-column align-items-center justify-content-center mt-5">-->
-<!--        <div class="success-box">-->
-<!--          <a-icon type="check" class="fs-24 text-white d-flex align-items-center justify-content-center py-2" />-->
-<!--        </div>-->
-<!--        <h4 class="fs-20 mt-3">Done</h4>-->
-<!--        <p class="fs-14">You're joined successfully</p>-->
-<!--      </div>-->
+      <div class="d-flex flex-column align-items-center justify-content-center mt-5" v-if="success">
+        <div class="success-box">
+          <a-icon type="check" class="fs-24 text-white d-flex align-items-center justify-content-center py-2" />
+        </div>
+        <h4 class="fs-20 mt-3">Done</h4>
+        <p class="fs-14">You're joined successfully</p>
+      </div>
 
       <div class="position-absolute footer-cancel-btn">
         <a-button class="back-button button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
@@ -61,6 +61,7 @@ export default {
 			user: {},
 			is_verified: 1,
 			invitationPassword: "",
+      success: false
 		};
 	},
 	created() {},
@@ -69,16 +70,19 @@ export default {
 		window: () => window,
 	},
 	methods: {
-		onConfirmClick() {
+		async onConfirmClick() {
 			if (this.invitationPassword.length > 0) {
-        if(this.team.password === this.team_password) {
+        if(this.team.password.toString() === this.invitationPassword.toString()) {
           let payload = {
-            team_id: this.team.team,
-            invitation_link: this.invitation_link,
-            team_password: this.team_password
+            team_id: this.team.team_id,
+            invitation_link: this.team.invitation_link,
+            team_password: this.invitationPassword
           };
-          ApiService.post("v1/join-team-by-invitation", payload).then((res) => {
-            console.log(res)
+
+          await ApiService.post("v1/join-team-by-invitation", payload).then((res) => {
+            if(res && res.data && res.data.data) {
+              this.success = true;
+            }
           }).catch((e) => {
             console.log(e);
           });

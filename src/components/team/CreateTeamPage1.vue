@@ -222,8 +222,6 @@ export default {
         formData.append(data, this.team[data]);
       });
 
-      this.goNextStep(2);
-
       await ApiService.post('/v1/team', formData).then(res => {
         if(res && res.data) {
           this.updateTeamData(res.data.data);

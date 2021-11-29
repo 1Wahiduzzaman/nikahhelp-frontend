@@ -25,7 +25,7 @@
 				</a-col>
 			</a-row>
       <div v-if="team" class="mt-4 px-4 invite-info-box">
-        <h4 class="invited-respresent color-primary fs-20">Congratulations you're joining as a <b class="font-weight-bold text-uppercase">representative</b></h4>
+        <h4 class="invited-respresent color-primary fs-20">Congratulations you're joining as a <b class="font-weight-bold text-uppercase">{{ team.user_type }}</b></h4>
 
         <div class="invite-info py-4">
           <div class="d-flex">
@@ -33,42 +33,42 @@
               <h6 class="fs-14">Invited by</h6>
               <span style="margin-top: -6px">:</span>
             </div>
-            <h6 class="ml-2 fs-14">Selina Parvez</h6>
+            <h6 class="ml-2 fs-14">{{ team && team.team && team.team.created_by ? team.team.created_by.full_name : '' }}</h6>
           </div>
           <div class="d-flex">
             <div class="d-flex justify-content-between align-items-center col-50">
               <h6 class="fs-14">Team name</h6>
               <span style="margin-top: -6px">:</span>
             </div>
-            <h6 class="ml-2 fs-14">Selina's family</h6>
+            <h6 class="ml-2 fs-14">{{ team && team.team ? team.team.name : '' }}</h6>
           </div>
           <div class="d-flex">
             <div class="d-flex justify-content-between align-items-center col-50">
               <h6 class="fs-14">Total team member</h6>
               <span style="margin-top: -9px">:</span>
             </div>
-            <h6 class="ml-2 fs-14">{{ team.member_count }}</h6>
+            <h6 class="ml-2 fs-14">{{ team && team.team ? team.team.member_count : '' }}</h6>
           </div>
           <div class="d-flex">
             <div class="d-flex justify-content-between align-items-center col-50">
               <h6 class="fs-14">Role</h6>
               <span style="margin-top: -6px">:</span>
             </div>
-            <h6 class="ml-2 fs-14">Member</h6>
+            <h6 class="ml-2 fs-14">{{ team.role }}</h6>
           </div>
           <div class="d-flex">
             <div class="d-flex justify-content-between align-items-center col-50">
               <h6 class="fs-14">Relationship</h6>
               <span style="margin-top: -6px">:</span>
             </div>
-            <h6 class="ml-2 fs-14">Brother-in-law</h6>
+            <h6 class="ml-2 fs-14">{{ team.relationship }}</h6>
           </div>
           <div class="d-flex">
             <div class="d-flex justify-content-between align-items-center col-50">
               <h6 class="fs-14">Team create date</h6>
               <span style="margin-top: -6px">:</span>
             </div>
-            <h6 class="ml-2 fs-14">{{ team.created_at | moment("DD/MM/YYYY") }}</h6>
+            <h6 class="ml-2 fs-14">{{ team.team.created_at | moment("DD/MM/YYYY") }}</h6>
           </div>
         </div>
       </div>
@@ -111,8 +111,9 @@ export default {
 		},
 		onConfirmClick(event) {
       if(this.invitationLink && this.team) {
-        this.team.invitation_link = this.invitationLink;
-        this.$emit("toggleToTeamPassword", this.team);
+        let payload = this.team.team;
+        payload.invitation_link = this.invitationLink;
+        this.$emit("toggleToTeamPassword", payload);
       }
 			// if (this.invitationLink.length > 0) {
 			// 	console.log("Coming here");
@@ -131,7 +132,7 @@ export default {
 			// }
 		},
     async getTheTeamInvitationInfo() {
-      await ApiService.get(`/v1/team-information/${this.invitationLink}`).then(res => {
+      await ApiService.get(`/v1/team-invitation-information/${this.invitationLink}`).then(res => {
         if(res && res.data) {
           this.team = res.data.data;
         }
