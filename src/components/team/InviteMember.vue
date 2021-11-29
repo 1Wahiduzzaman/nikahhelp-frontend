@@ -6,7 +6,7 @@
         <h4 class="fs-14 text-white invite-txt">Send team invitation</h4>
       </div>
       <div class="px-4 mt-2 position-relative">
-        <a-input ref="userNameInput" placeholder="Search email or user ID">
+        <a-input ref="userNameInput" placeholder="Search email or user ID" v-model="user_email">
           <a-icon slot="suffix" type="info-circle" style="color: rgba(0,0,0,.45)" />
         </a-input>
         <span class="text-white fs-12 fw-500 ml-2">Invited/Suggested/Searched user</span>
@@ -35,12 +35,31 @@
 </template>
 
 <script>
+import ApiService from '@/services/api.service';
 export default {
   name: "InviteMember",
   props: ['team', 'invitationObject'],
+  data() {
+    return {
+      user_email: ''
+    }
+  },
+  watch: {
+    user_email: function (val) {
+      console.log(val);
+      // ApiService.get('/v1/team/invitations', {
+      //   email: val
+      // }).then(res => {
+      //   console.log(res.data);
+      // }).catch(e => {
+      //   console.log(e);
+      // });
+    }
+  },
   methods: {
     inviteMember(id) {
       this.$emit('addMember', id);
+      this.$emit('toggleMemberbox');
     },
     copyToken() {
       let copyText = document.getElementById("copyInput");
@@ -58,8 +77,8 @@ export default {
 @import "@/styles/base/_variables.scss";
 .add-member-box {
   height: 500px;
-  width: 372px;
-  top: -70px;
+  width: 385px;
+  top: -71px;
   left: 0;
   margin-left: -8px;
   border-radius: 10px;

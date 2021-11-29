@@ -35,14 +35,21 @@
       >
         <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
       </a-select>
-      <a-button type="primary" class="ml-2 fs-12" @click="goNextStep()" :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship">Send</a-button>
+      <a-button v-if="invitedUsers.length <= 0" type="primary" class="ml-2 fs-12 br-20" @click="goNextStep()" :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship">Send</a-button>
+      <a-dropdown class="right-br-20 bg-primary text-white" v-if="invitedUsers.length > 0">
+        <a-menu slot="overlay">
+          <a-menu-item key="1">Invitation </a-menu-item>
+          <a-menu-item key="2" @click="removeInvite()">Remove </a-menu-item>
+        </a-menu>
+        <a-button class="ml-2"> Button <a-icon type="down" /> </a-button>
+      </a-dropdown>
     </div>
     <div class="position">
       <div class="position-absolute footer-cancel-btn">
         <a-button class="back-button button float-left text-white" v-on:click="$emit('cancel_button')">Back</a-button>
       </div>
       <div class="position-absolute footer-conf-btn">
-        <a-button class="confirm-button button float-right bg-primary text-white" @click="addMember()">Save & Continue</a-button>
+        <a-button class="confirm-button button float-right bg-primary text-white" @click="addMember()" :disabled="invitedUsers.length <= 0" :title="invitedUsers.length <= 0 ? 'Please choose user' : ''">Save & Continue</a-button>
       </div>
     </div>
     <InviteMember :team="team"
@@ -94,18 +101,21 @@ export default {
       });
     },
     addInvitedMember(id) {
-      console.log(id);
       let data = {
         role: this.invitationObject.role,
         add_as_a: this.invitationObject.add_as_a,
         relationship: this.invitationObject.relationship,
         invitation_link: this.invitationObject.invitation_link,
+        invited_user_id: id
       };
       if(this.invitedUsers.length > 0) {
         this.invitedUsers[0] = data;
       } else {
         this.invitedUsers.push(data);
       }
+    },
+    removeInvite() {
+      this.invitedUsers = [];
     }
   },
   mounted() {
@@ -128,7 +138,6 @@ export default {
       }
       self.invitationObject.invitation_link = makeid(10);
     })();
-    console.log(this.invitationLink);
   },
 }
 </script>
@@ -136,6 +145,13 @@ export default {
 @import "@/styles/base/_variables.scss";
 .ant-input-suffix {
   right: 6px !important;
+}
+.br-20 {
+  border-radius: 20px;
+}
+.right-br-20 {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 .w-25 {
   width: 25%;

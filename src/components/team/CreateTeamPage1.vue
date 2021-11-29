@@ -9,17 +9,29 @@
               alt=""
           />
         </div>
-        <h4 class="card-title pt-2">Create a team</h4>
+        <h4 class="card-title pt-2">
+          {{ step === 2 ? 'Add team member' : 'Create a team' }}
+        </h4>
       </div>
       <div class="box" v-if="step === 1">
         <a-row class="mt-4 px-4">
-          <a-col :span="24">
+          <a-col class="text-center" :span="24">
+            <div class="d-flex align-items-center justify-content-center">
+              <div class="cursor-pointer image-plus background-img" @click="imageModal = true" :style="{ backgroundImage: 'url(' + logoBobUrl + ')' }">
+                <h4 class="fs-40 d-flex justify-content-center align-items-center text-white">+</h4>
+              </div>
+              <h4 class="fs-14 color-gray ml-2">Add a team image</h4>
+            </div>
+            <span class="text-danger fs-12" v-if="in_progress && !file">Please upload team logo</span>
+          </a-col>
+          <a-col :span="24" class="mt-3">
             <a-input
                 v-model="team.name"
                 size="large"
                 class="team-name-input"
                 placeholder="Team name"
                 autocomplete="off"
+                @input="in_progress = true"
             />
             <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.name">Team name required</span>
           </a-col>
@@ -29,6 +41,7 @@
                 placeholder="Team description"
                 :auto-size="{ minRows: 3, maxRows: 5 }"
                 v-model="team.description"
+                @input="in_progress = true"
             />
             <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.description">Team description required</span>
           </a-col>
@@ -40,6 +53,7 @@
                 class="team-name-input"
                 placeholder="Type Team Password"
                 autocomplete="off"
+                @input="in_progress = true"
             />
             <span class="fs-12 text-danger ml-2 fs-12" v-if="team.password && team.password.length !== 4">Password must be 4 digits</span>
           </a-col>
@@ -51,18 +65,10 @@
                 class="team-name-input"
                 placeholder="Re-Type New Password"
                 autocomplete="off"
+                @input="in_progress = true"
             />
             <span class="text-danger mt-2 ml-2 fs-12" v-if="team.password && team.confirm_password && team.password !== team.confirm_password">Password doesn't match.</span>
             <span v-if="team.confirm_password && team.confirm_password.length !== 4" class="fs-12 text-danger ml-2">Password must be 4 digits</span>
-          </a-col>
-          <a-col class="mt-3" :span="24">
-            <div class="d-flex align-items-center">
-              <div class="cursor-pointer image-plus" @click="imageModal = true">
-                <h4 class="fs-40 d-flex justify-content-center align-items-center text-white">+</h4>
-              </div>
-              <h4 class="fs-14 color-gray ml-4">Add a team image</h4>
-            </div>
-            <span class="text-danger fs-12" v-if="in_progress && !file">Please upload team logo</span>
           </a-col>
         </a-row>
         <div class="position-absolute footer-cancel-btn">
@@ -72,11 +78,18 @@
           <a-button class="confirm-button button float-right" @click="createTeam()" :disabled="checkDisability">Next</a-button>
         </div>
       </div>
-<!--      <CreateTeamPassword :team="team" :file="file" v-if="step === 2" @goNext="goNextStep" @cancel_button="goNextStep" @updateTeamData="updateTeamData" />-->
       <CreateAddMember :team="team" :file="file" v-if="step === 2" @cancel_button="$emit('cancel_button')" @goNext="goNextStep" />
       <TeamCreateSuccess v-if="step === 3" :team="team" />
     </div>
     <a-modal v-model="imageModal" @ok="hideImageModal">
+      <template slot="footer">
+        <a-button key="back" @click="hideImageModal">
+          Cancel
+        </a-button>
+        <a-button key="back" type="primary" @click="hideImageModal">
+          Ok
+        </a-button>
+      </template>
       <div class="text-center">
         <img :src="logoBobUrl" v-if="logoBobUrl" alt="info image" class="bob-logo" />
         <img src="../../assets/info-img.png" v-else alt="info image" />
@@ -84,10 +97,10 @@
           You can choose an avatar or <br> browse an image from local drive
         </p>
         <div class="d-flex justify-content-center">
-          <a-button type="primary" class="bg-brand">
+          <a-button type="primary" class="bg-brand br-20">
             Avatar
           </a-button>
-          <a-button type="primary" class="ml-4 bg-primary" @click="uploadFile()">
+          <a-button type="primary" class="ml-4 bg-primary br-20" @click="uploadFile()">
             Browse
           </a-button>
           <input
@@ -105,7 +118,6 @@
 
 <script>
 import ApiService from '@/services/api.service';
-// import CreateTeamPassword from "./CreateTeamPassword";
 import CreateAddMember from "./CreateAddMember";
 import TeamCreateSuccess from "./TeamCreateSuccess";
 export default {
@@ -241,11 +253,22 @@ export default {
 .ant-card-body {
   padding: 0 !important;
 }
+.ant-btn {
+  border-radius: 20px !important;
+}
+.br-20 {
+  border-radius: 20px;
+}
 .bg-brand {
   background: #E51F76 !important;
 }
 .fs-40 {
   font-size: 40px;
+}
+.background-img {
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
 }
 .image-plus {
   width: 50px;
