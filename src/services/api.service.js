@@ -70,6 +70,16 @@ const ApiService = {
     return Vue.axios.post(`${resource}`, params);
   },
 
+  // * Used only for upload image
+  image(resource, params) {
+    this.setHeader();
+    let data = new FormData()
+    for (const [key, value] of Object.entries(params)) {
+      data.append(key,value)
+    }
+    return Vue.axios.post(`${resource}`, data, config);
+  },
+
   // ! Services bellow this line is not important for now
   // ! for frontend, But I am putting them for future or
   // ! if needed later

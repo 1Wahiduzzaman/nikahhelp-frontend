@@ -236,8 +236,8 @@
     .style-chooser .vs__dropdown-toggle {
         cursor: pointer;
         background: white;
-        border: 1px solid #e6e6e6;
-        border-radius: 50px;
+        border: 1px solid grey;
+        border-radius: 20px;
         height: 35px;
         color: #e6e6e6;
     }
@@ -245,15 +245,32 @@
         border: 1px solid rgb(4, 186, 241);
     }
     .style-chooser .vs__dropdown-menu {
-        height: auto;
+        //height: 30px;
+       width: 100%;
+       li{
+        max-width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+       }
     }
-    .style-chooser .vs__selected {
-        background: #e6e6e6;
+    .style-chooser .vs__selected-options{
+        max-width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+       
+    }
+    .style-chooser .vs__selected span {
+     
         width: 100%;
         height: 25px;
-        border-radius: 50px;
-        padding-left: 10px;
-        padding-right: 10px;
+        border-radius: 20px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+       
+       
     }
     .style-chooser .vs__clear,
     .style-chooser .vs__open-indicator {
@@ -262,20 +279,134 @@
     .nationality-select .vs__dropdown-toggle {
         background: white;
         border: 1px solid grey;
-        border-radius: 50px;
-        height: 30px;
+        border-radius: 20px;
         color: #e6e6e6;
     }
     .nationality-select .vs__dropdown-toggle:hover {
         border: 1px solid rgb(28, 176, 221);
     }
     .nationality-select .vs__selected {
-        height: 20px;
-        background-color: #e6e6e6;
+        height: 24px;
         color: #676767;
         border-radius: 25px;
         margin-left: 5px;
         padding: 5px;
+        background-color: #e6e6e6;
+        border-radius: 100px;
+        border-color: #c5c3c3;
+        font-size: 14px;
+        padding: 5px;
+        font-family: inherit;
+    }
+    .nationality-select .vs__search::placeholder {
+        color: black;
+        background-color: #e6e6e6;
+        border-radius: 4px;
+        padding: 5px;
+    }
+    .date-of-birth {
+        text-align: right;
+        .custom-select {
+            width: 30%;
+            padding-top: 1px;
+            padding-bottom: 1px;
+            height: auto;
+            margin-right: 2%;
+        }
+    }
+}
+.r-registration-container {
+    .anticon {
+        svg {
+            vertical-align: baseline;
+        }
+    }
+    .ant-collapse-borderless {
+        background: transparent;
+    }
+    .ant-select-selection__placeholder {
+        color: #676767;
+    }
+    .ant-select-selection__choice {
+        background-color: #e6e6e6;
+        border-radius: 100px;
+        border-color: #c5c3c3;
+        margin: 1px 3px 1px 3px;
+        font-size: 14px;
+        padding-left: 5px;
+        padding-right: 18px;
+        font-family: inherit;
+    }
+    .style-chooser .vs__search::placeholder {
+        color: black !important;
+        background-color: #e6e6e6;
+        border-radius: 20px;
+        padding: 5px;
+    }
+    .style-chooser .vs__dropdown-toggle {
+        cursor: pointer;
+        background: white;
+        border: 1px solid grey;
+        border-radius: 20px;
+        height: 35px;
+        color: #e6e6e6;
+    }
+    .style-chooser .vs__dropdown-toggle:hover {
+        border: 1px solid rgb(4, 186, 241);
+    }
+    .style-chooser .vs__dropdown-menu {
+        //height: 30px;
+       width: 100%;
+       li{
+        max-width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+       }
+    }
+    .style-chooser .vs__selected-options{
+        max-width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+       
+    }
+    .style-chooser .vs__selected span {
+     
+        width: 100%;
+        height: 25px;
+        border-radius: 20px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+       
+       
+    }
+    .style-chooser .vs__clear,
+    .style-chooser .vs__open-indicator {
+        fill: #e6e6e6;
+    }
+    .nationality-select .vs__dropdown-toggle {
+        background: white;
+        border: 1px solid grey;
+        border-radius: 20px;
+        color: #e6e6e6;
+    }
+    .nationality-select .vs__dropdown-toggle:hover {
+        border: 1px solid rgb(28, 176, 221);
+    }
+    .nationality-select .vs__selected {
+        height: 24px;
+        color: #676767;
+        border-radius: 25px;
+        margin-left: 5px;
+        padding: 5px;
+        background-color: #e6e6e6;
+        border-radius: 100px;
+        border-color: #c5c3c3;
+        font-size: 14px;
+        padding: 5px;
+        font-family: inherit;
     }
     .nationality-select .vs__search::placeholder {
         color: black;

@@ -135,7 +135,7 @@
                               v-model="verification.ver_country_id"
                               label="name"
                               :reduce="(option) => option.id"
-                              :options="candidateDetails.countries"
+                              :options="representativeDetails.countries"
                               ><template #open-indicator>
                                 <a-icon type="down" /> </template
                             ></v-select>
@@ -154,7 +154,7 @@
                               <a-select-option
                                 v-for="(
                                   _country, key
-                                ) in candidateDetails.countries"
+                                ) in representativeDetails.countries"
                                 :value="_country.id"
                                 :key="key"
                               >
@@ -457,7 +457,7 @@
                               placeholder="Occupation"
                               v-model="verification.ver_recommences_occupation"
                               label="name"
-                              :options="candidateDetails.occupations"
+                              :options="representativeDetails.occupations"
                               ><template #open-indicator>
                                 <a-icon type="down" /> </template
                             ></v-select>
@@ -475,7 +475,7 @@
                               <a-select-option
                                 v-for="(
                                   _occupation, key
-                                ) in candidateDetails.occupations"
+                                ) in representativeDetails.occupations"
                                 :value="_occupation"
                                 :key="key"
                               >
@@ -533,9 +533,9 @@ import FileUploadOne from "@/components/shared/FileUploadOne.vue";
 import ApiService from "../../services/api.service";
 import vSelect from "vue-select";
 export default {
-  name: "Verification",
+  name: "VerificationRef",
   props: {
-    candidateDetails: {
+    representativeDetails: {
       type: Object,
     },
     verification: {
@@ -590,7 +590,7 @@ export default {
         ver_recommences_mobile_no
       } = this.verification;
       this.$store
-        .dispatch("saveVerificationInfo", {
+        .dispatch("saveRepresentativeVerificationInfo", {
           ver_city_id,
           ver_country,
           ver_country_id,
@@ -613,7 +613,7 @@ export default {
     },
     saveImageVerificationInfo(image) {
       this.$store
-        .dispatch("saveImageVerificationInfo", image)
+        .dispatch("saveRepresentativeImageVerificationInfo", image)
         .then((data) => {
           this.verification.ver_image_back =
             data.data.data.verification.ver_image_back;

@@ -6,6 +6,7 @@
     </div>
 
     <a-collapse
+      @change="changeActivekey"
       accordion
       :activeKey="activeKey"
       :bordered="false"
@@ -19,7 +20,7 @@
         header="1. Your Preferences about your prospective partner."
       >
         <a-form-model
-          v-if="preferenceData"
+          v-if="preferenceData && activeKey == 1"
           ref="preferenceFormOne"
           :model="preferenceData"
           :rules="rules"
@@ -176,7 +177,9 @@
                     <span class="ml-1 mr-1">No </span>
                     <a-switch
                       @change="onValueChange"
-                      v-model="preferenceData.pre_has_country_allow_preference"
+                      v-model.lazy="
+                        preferenceData.pre_has_country_allow_preference
+                      "
                     >
                       <a-icon slot="checkedChildren" type="check" />
                       <a-icon slot="unCheckedChildren" type="close" />
@@ -187,16 +190,17 @@
                   <div v-if="preferenceData.pre_has_country_allow_preference">
                     <div class="row my-1">
                       <div class="col-md-6">
-                        <a-select
-                          @change="
+                        <!-- <a-select
+                          @select="
                             onChangeCountry($event, 'listOne', 'allowed')
                           "
                           id="preferred_countries0"
                           style="width: 150px"
                           :filter-option="filterOption"
+                          option-filter-prop="children"
                           :showSearch="true"
                           placeholder="Select Country"
-                          v-model="preferenceData.preferred_countries[0]"
+                          v-model.lazy="preferenceData.preferred_countries[0]"
                           class="select-ma w-100"
                         >
                           <a-select-option disabled :value="0"
@@ -210,17 +214,44 @@
                           >
                             {{ item.name }}
                           </a-select-option>
-                        </a-select>
+                        </a-select> -->
+                        <v-select
+                          :clearable="false"
+                          id="preferred_countries0"
+                          class="style-chooser select-ma w-100"
+                          v-model.lazy="preferenceData.preferred_countries[0]"
+                          label="name"
+                          placeholder="Select Country"
+                          :options="candidateDetails.countries"
+                          @input="onChangeCountry($event, 'listOne', 'allowed')"
+                          >
+                          <span slot="no-options">Select Country</span>
+                          <template #open-indicator>
+                            <a-icon type="down" /> </template
+                        ></v-select>
                       </div>
                       <div class="col-md-6">
-                        <a-select
-                          @change="onValueChange"
+                        <v-select
+                          :clearable="false"
+                          id="preferred_cities0"
+                          class="style-chooser"
+                          label="name"
+                          placeholder="Select City"
+                          v-model.lazy="preferenceData.preferred_cities[0]"
+                          :options="preferenceData.allowedCity.listOne"
+                          @input="onValueChange"
+                        ><template #open-indicator>
+                            <a-icon type="down" /> </template
+                        ></v-select>
+                        <!-- <a-select
+                          @select="onValueChange"
                           id="preferred_cities0"
                           style="width: 150px"
                           :filter-option="filterOption"
+                          option-filter-prop="children"
                           :showSearch="true"
                           placeholder="Select City"
-                          v-model="preferenceData.preferred_cities[0]"
+                          v-model.lazy="preferenceData.preferred_cities[0]"
                           class="select-ma w-100"
                         >
                           <a-select-option disabled :value="0"
@@ -235,7 +266,7 @@
                           >
                             {{ item.name }}
                           </a-select-option>
-                        </a-select>
+                        </a-select> -->
                       </div>
                     </div>
 
@@ -250,7 +281,7 @@
                           :filter-option="filterOption"
                           :showSearch="true"
                           placeholder="Select Country"
-                          v-model="preferenceData.preferred_countries[1]"
+                          v-model.lazy="preferenceData.preferred_countries[1]"
                           class="select-ma w-100"
                         >
                           <a-select-option disabled :value="0"
@@ -274,7 +305,7 @@
                           :filter-option="filterOption"
                           :showSearch="true"
                           placeholder="Select City"
-                          v-model="preferenceData.preferred_cities[1]"
+                          v-model.lazy="preferenceData.preferred_cities[1]"
                           class="select-ma w-100"
                         >
                           <a-select-option disabled :value="0"
@@ -304,7 +335,7 @@
                           :filter-option="filterOption"
                           :showSearch="true"
                           placeholder="Select Country"
-                          v-model="preferenceData.preferred_countries[2]"
+                          v-model.lazy="preferenceData.preferred_countries[2]"
                           class="select-ma w-100"
                         >
                           <a-select-option disabled :value="0"
@@ -328,7 +359,7 @@
                           :filter-option="filterOption"
                           :showSearch="true"
                           placeholder="Select City"
-                          v-model="preferenceData.preferred_cities[2]"
+                          v-model.lazy="preferenceData.preferred_cities[2]"
                           class="select-ma w-100"
                         >
                           <a-select-option disabled :value="0"
@@ -400,8 +431,8 @@
                   <div>
                     <span class="ml-1 mr-1">No</span>
                     <a-switch
-                      @change="onValueChange"
-                      v-model="
+                      @select="onValueChange"
+                      v-model.lazy="
                         preferenceData.pre_has_country_disallow_preference
                       "
                     >
@@ -416,8 +447,22 @@
                   >
                     <div class="row my-1">
                       <div class="col-md-6">
-                        <a-select
-                          @change="
+                        <v-select
+                          :clearable="false"
+                          id="bloked_countries0"
+                          class="style-chooser"
+                          v-model.lazy="preferenceData.bloked_countries[0]"
+                          label="name"
+                          placeholder="Select Country"
+                          :options="candidateDetails.countries"
+                          @input="
+                            onChangeCountry($event, 'listOne', 'disAllowed')
+                          "
+                        ><template #open-indicator>
+                            <a-icon type="down" /> </template
+                        ></v-select>
+                        <!-- <a-select
+                          @select="
                             onChangeCountry($event, 'listOne', 'disAllowed')
                           "
                           id="bloked_countries0"
@@ -425,7 +470,8 @@
                           :filter-option="filterOption"
                           :showSearch="true"
                           placeholder="Select Country"
-                          v-model="preferenceData.bloked_countries[0]"
+                          option-filter-prop="children"
+                          v-model.lazy="preferenceData.bloked_countries[0]"
                           class="select-ma w-100"
                         >
                           <a-select-option disabled :value="0"
@@ -439,17 +485,30 @@
                           >
                             {{ item.name }}
                           </a-select-option>
-                        </a-select>
+                        </a-select> -->
                       </div>
                       <div class="col-md-6">
-                        <a-select
-                          @change="onValueChange"
+                        <v-select
+                          :clearable="false"
+                          id="blocked_cities0"
+                          class="style-chooser"
+                          placeholder="Select City"
+                          v-model.lazy="preferenceData.blocked_cities[0]"
+                          label="name"
+                          :options="preferenceData.disAllowedCity.listOne"
+                          @input="onValueChange"
+                        ><template #open-indicator>
+                            <a-icon type="down" /> </template
+                        ></v-select>
+                        <!-- <a-select
+                          @select="onValueChange"
                           id="blocked_cities0"
                           style="width: 150px"
+                          option-filter-prop="children"
                           :filter-option="filterOption"
                           :showSearch="true"
                           placeholder="Select City"
-                          v-model="preferenceData.blocked_cities[0]"
+                          v-model.lazy="preferenceData.blocked_cities[0]"
                           class="select-ma w-100"
                         >
                           <a-select-option disabled :value="0"
@@ -464,7 +523,7 @@
                           >
                             {{ item.name }}
                           </a-select-option>
-                        </a-select>
+                        </a-select> -->
                       </div>
                     </div>
 
@@ -479,7 +538,7 @@
                           :filter-option="filterOption"
                           :showSearch="true"
                           placeholder="Select Country"
-                          v-model="preferenceData.bloked_countries[1]"
+                          v-model.lazy="preferenceData.bloked_countries[1]"
                           class="select-ma w-100"
                         >
                           <a-select-option disabled :value="0"
@@ -503,7 +562,7 @@
                           :filter-option="filterOption"
                           :showSearch="true"
                           placeholder="Select City"
-                          v-model="preferenceData.blocked_cities[1]"
+                          v-model.lazy="preferenceData.blocked_cities[1]"
                           class="select-ma w-100"
                         >
                           <a-select-option disabled :value="0"
@@ -533,7 +592,7 @@
                           :filter-option="filterOption"
                           :showSearch="true"
                           placeholder="Select Country"
-                          v-model="preferenceData.bloked_countries[2]"
+                          v-model.lazy="preferenceData.bloked_countries[2]"
                           class="select-ma w-100"
                         >
                           <a-select-option disabled :value="0"
@@ -557,7 +616,7 @@
                           :filter-option="filterOption"
                           :showSearch="true"
                           placeholder="Select City"
-                          v-model="preferenceData.blocked_cities[2]"
+                          v-model.lazy="preferenceData.blocked_cities[2]"
                           class="select-ma w-100"
                         >
                           <a-select-option disabled :value="0"
@@ -631,20 +690,39 @@
                     ref="pre_partner_religion_id"
                     prop="pre_partner_religion_id"
                   >
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      :multiple="true"
+                      id="pre_partner_religion_id"
+                      :reduce="(option) => option.id"
+                      class="nationality-select"
+                      placeholder="Select your preferred religion"
+                      @input="
+                        onMultiValueChange($event, 'pre_partner_religion_id')
+                      "
+                      v-model.lazy="preferenceData.pre_partner_religion_id"
+                      label="name"
+                      :options="candidateDetails.religions"
+                    >
+                      <template #open-indicator>
+                        <a-icon type="down" />
+                      </template>
+                    </v-select>
+                    <!-- <a-select
                       id="pre_partner_religion_id"
                       :maxTagCount="3"
                       :show-arrow="true"
                       :showSearch="true"
                       :filter-option="filterOption"
+                      option-filter-prop="children"
                       mode="multiple"
                       style="width: 150px"
                       placeholder="Select your preferred religion"
-                      @change="
+                      @select="
                         onMultiValueChange($event, 'pre_partner_religion_id')
                       "
                       class="select-ma w-100"
-                      v-model="preferenceData.pre_partner_religion_id"
+                      v-model.lazy="preferenceData.pre_partner_religion_id"
                     >
                       <a-select-option value="Don't Mind"
                         >Don't Mind
@@ -655,7 +733,7 @@
                         v-for="(item, index) in candidateDetails.religions"
                         >{{ item.name }}
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -711,15 +789,28 @@
                     ref="pre_ethnicities"
                     prop="pre_ethnicities"
                   >
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      id="pre_ethnicities"
+                      class="style-chooser"
+                      placeholder="Please select your ethnicities"
+                      @input="onValueChange"
+                      v-model.lazy="preferenceData.pre_ethnicities"
+                      label="name"
+                      :options="ethnicityList"
+                    >  <template #open-indicator>
+                        <a-icon type="down" />
+                      </template></v-select>
+                    <!-- <a-select
                       id="pre_ethnicities"
                       :showSearch="true"
                       :filter-option="filterOption"
+                      option-filter-prop="children"
                       :showArrow="true"
                       style="width: 150px"
                       placeholder="Please select your ethnicities"
-                      @change="onValueChange"
-                      v-model="preferenceData.pre_ethnicities"
+                      @select="onValueChange"
+                      v-model.lazy="preferenceData.pre_ethnicities"
                       class="select-ma w-100"
                     >
                       <a-select-option :value="0" disabled
@@ -733,7 +824,7 @@
                       >
                         {{ ethnicity }}
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -793,17 +884,33 @@
                     ref="preferred_nationality"
                     prop="preferred_nationality"
                   >
-                    <a-select
+                    <v-select
+                      id="preferred_nationality"
+                      :clearable="false"
+                      :multiple="true"
+                      class="nationality-select"
+                      @input="
+                        onMultiValueChange($event, 'preferred_nationality')
+                      "
+                      v-model.lazy="preferenceData.preferred_nationality"
+                      placeholder="Select your Nationality"
+                      label="name"
+                      :options="candidateDetails.countries"
+                    >  <template #open-indicator>
+                        <a-icon type="down" />
+                      </template></v-select>
+                    <!-- <a-select
                       id="preferred_nationality"
                       class="nationality-select"
+                      option-filter-prop="children"
                       mode="multiple"
                       :maxTagCount="3"
                       :showSearch="true"
                       :filter-option="filterOption"
-                      @change="
+                      @select="
                         onMultiValueChange($event, 'preferred_nationality')
                       "
-                      v-model="preferenceData.preferred_nationality"
+                      v-model.lazy="preferenceData.preferred_nationality"
                       placeholder="Select your Nationality"
                       label="name"
                     >
@@ -818,7 +925,7 @@
                       >
                         {{ item.name }}
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -875,14 +982,27 @@
                     ref="pre_study_level_id"
                     prop="pre_study_level_id"
                   >
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange"
+                      :reduce="(option) => option.id"
+                      placeholder="Please select your education status"
+                      v-model.lazy="preferenceData.pre_study_level_id"
+                      label="name"
+                      :options="candidateDetails.studylevels"
+                    >  <template #open-indicator>
+                        <a-icon type="down" />
+                      </template></v-select>
+                    <!-- <a-select
                       :showSearch="true"
                       :filter-option="filterOption"
-                      @change="onValueChange"
+                      @select="onValueChange"
                       id="pre_employment_status"
                       style="width: 150px"
                       placeholder="Please select your education status"
-                      v-model="preferenceData.pre_study_level_id"
+                      v-model.lazy="preferenceData.pre_study_level_id"
+                      option-filter-prop="children"
                       class="select-ma w-100"
                     >
                       <a-select-option :value="0" disabled
@@ -896,7 +1016,7 @@
                       >
                         {{ item.name }}
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -952,12 +1072,25 @@
                     ref="pre_employment_status"
                     prop="pre_employment_status"
                   >
-                    <a-select
-                      @change="onValueChange"
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      :reduce="(option) => option.value"
+                      @input="onValueChange"
+                      placeholder="Please select your employment status"
+                      v-model.lazy="preferenceData.pre_employment_status"
+                      label="name"
+                      :options="employment_Statuses"
+                    >  <template #open-indicator>
+                        <a-icon type="down" />
+                      </template></v-select>
+                    <!-- <a-select
+                      @select="onValueChange"
                       id="pre_employment_status"
+                      option-filter-prop="children"
                       style="width: 150px"
                       placeholder="Please select your employment status"
-                      v-model="preferenceData.pre_employment_status"
+                      v-model.lazy="preferenceData.pre_employment_status"
                       class="select-ma w-100"
                     >
                       <a-select-option :value="0" disabled
@@ -972,7 +1105,7 @@
                       <a-select-option value="Others">
                         Don't mind
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -1025,13 +1158,24 @@
                 <a-col :span="2"></a-col>
                 <a-col :span="12">
                   <a-form-model-item ref="pre_occupation" prop="pre_occupation">
-                    <a-select
-                      @change="onValueChange"
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange"
+                      v-model.lazy="preferenceData.pre_occupation"
+                      placeholder="Please select your preferred occupation"
+                      label="name"
+                      :options="candidateDetails.occupations"
+                    >  <template #open-indicator>
+                        <a-icon type="down" />
+                      </template></v-select>
+                    <!-- <a-select
+                      @select="onValueChange"
                       id="pre_occupation"
                       :showSearch="true"
                       option-filter-prop="children"
                       :filter-option="filterOption"
-                      v-model="preferenceData.pre_occupation"
+                      v-model.lazy="preferenceData.pre_occupation"
                       placeholder="Please select your preferred occupation"
                       class="select-ma w-100"
                     >
@@ -1046,7 +1190,7 @@
                       >
                         {{ value }}
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -1101,7 +1245,7 @@
                     <span class="mr-1">No</span>
                     <a-switch
                       @change="onRateChange"
-                      v-model="preferenceData.pre_preferred_divorcee"
+                      v-model.lazy="preferenceData.pre_preferred_divorcee"
                     >
                       <a-icon slot="checkedChildren" type="check" />
                       <a-icon slot="unCheckedChildren" type="close" />
@@ -1118,7 +1262,7 @@
                     <span class="mr-1">No</span>
                     <a-switch
                       @change="onValueChange"
-                      v-model="preferenceData.pre_preferred_divorcee_child"
+                      v-model.lazy="preferenceData.pre_preferred_divorcee_child"
                     >
                       <a-icon slot="checkedChildren" type="check" />
                       <a-icon slot="unCheckedChildren" type="close" />
@@ -1181,8 +1325,12 @@
                     <a-textarea
                       @blur="onValueChange"
                       :rows="3"
+                      autocomplete="off"
+                      autocorrect="off"
+                      autocapitalize="off"
+                      spellcheck="false"
                       id="pre_other_preference"
-                      v-model="preferenceData.pre_other_preference"
+                      v-model.lazy.lazy="preferenceData.pre_other_preference"
                       placeholder="* Sample Text"
                     />
                   </a-form-model-item>
@@ -1243,8 +1391,12 @@
                     <a-textarea
                       @blur="onValueChange"
                       :rows="3"
+                      autocomplete="off"
+                      autocorrect="off"
+                      autocapitalize="off"
+                      spellcheck="false"
                       id="pre_description"
-                      v-model="preferenceData.pre_description"
+                      v-model.lazy.lazy="preferenceData.pre_description"
                       placeholder="* Sample Text"
                     />
                   </a-form-model-item>
@@ -1302,7 +1454,7 @@
         style="margin-top: 5px"
       >
         <a-form-model
-          v-if="preferenceData"
+          v-if="preferenceData && activeKey == 2"
           ref="preferenceFormTwo"
           :model="preferenceData"
           class="form-ma"
@@ -1330,7 +1482,9 @@
                   >
                     <a-rate
                       id="pre_strength_of_character_rate"
-                      v-model="preferenceData.pre_strength_of_character_rate"
+                      v-model.lazy="
+                        preferenceData.pre_strength_of_character_rate
+                      "
                       @change="onChangeRate"
                       :tooltips="desc"
                     />
@@ -1390,7 +1544,7 @@
                   >
                     <a-rate
                       id="pre_look_and_appearance_rate"
-                      v-model="preferenceData.pre_look_and_appearance_rate"
+                      v-model.lazy="preferenceData.pre_look_and_appearance_rate"
                       @change="onChangeRate"
                       :tooltips="desc"
                     />
@@ -1450,7 +1604,9 @@
                   >
                     <a-rate
                       id="pre_religiosity_or_faith_rate"
-                      v-model="preferenceData.pre_religiosity_or_faith_rate"
+                      v-model.lazy="
+                        preferenceData.pre_religiosity_or_faith_rate
+                      "
                       @change="onChangeRate"
                       :tooltips="desc"
                     />
@@ -1510,7 +1666,7 @@
                   >
                     <a-rate
                       id="pre_manners_socialskill_ethics_rate"
-                      v-model="
+                      v-model.lazy="
                         preferenceData.pre_manners_socialskill_ethics_rate
                       "
                       @change="onChangeRate"
@@ -1572,7 +1728,7 @@
                   >
                     <a-rate
                       id="pre_emotional_maturity_rate"
-                      v-model="preferenceData.pre_emotional_maturity_rate"
+                      v-model.lazy="preferenceData.pre_emotional_maturity_rate"
                       @change="onChangeRate"
                       :tooltips="desc"
                     />
@@ -1632,7 +1788,7 @@
                   >
                     <a-rate
                       id="pre_good_listener_rate"
-                      v-model="preferenceData.pre_good_listener_rate"
+                      v-model.lazy="preferenceData.pre_good_listener_rate"
                       @change="onChangeRate"
                       :tooltips="desc"
                     />
@@ -1692,7 +1848,7 @@
                   >
                     <a-rate
                       id="pre_good_talker_rate"
-                      v-model="preferenceData.pre_good_talker_rate"
+                      v-model.lazy="preferenceData.pre_good_talker_rate"
                       @change="onChangeRate"
                       :tooltips="desc"
                     />
@@ -1752,7 +1908,7 @@
                   >
                     <a-rate
                       id="pre_wiling_to_learn_rate"
-                      v-model="preferenceData.pre_wiling_to_learn_rate"
+                      v-model.lazy="preferenceData.pre_wiling_to_learn_rate"
                       @change="onChangeRate"
                       :tooltips="desc"
                     />
@@ -1811,7 +1967,9 @@
                     prop="pre_family_social_status_rate"
                   >
                     <a-rate
-                      v-model="preferenceData.pre_family_social_status_rate"
+                      v-model.lazy="
+                        preferenceData.pre_family_social_status_rate
+                      "
                       id="pre_family_social_status_rate"
                       @change="onChangeRate"
                       :tooltips="desc"
@@ -1872,7 +2030,7 @@
                   >
                     <a-rate
                       id="pre_employment_wealth_rate"
-                      v-model="preferenceData.pre_employment_wealth_rate"
+                      v-model.lazy="preferenceData.pre_employment_wealth_rate"
                       @change="onChangeRate"
                       :tooltips="desc"
                     />
@@ -1932,7 +2090,7 @@
                   >
                     <a-rate
                       id="pre_education_rate"
-                      v-model="preferenceData.pre_education_rate"
+                      v-model.lazy="preferenceData.pre_education_rate"
                       @change="onChangeRate"
                       :tooltips="desc"
                     />
@@ -1998,7 +2156,7 @@ import { ARR, RULES, RULES_RATE } from "./models/candidate";
 import SelectGroup from "@/components/ui/selects/SelectGroup";
 import { ReligionTV } from "../../models/religion";
 import { CountriesTV } from "../../models/country";
-import { AGES, HEIGHTS } from "../../models/data";
+import { AGES, HEIGHTS, Employment_Statuses } from "../../models/data";
 import ApiService from "../../services/api.service";
 export default {
   name: "PreferenceTwo",
@@ -2014,7 +2172,12 @@ export default {
 
   data() {
     return {
-      activeKey: ["1"],
+      attributes: {
+        ref: "openIndicator",
+        role: "presentation",
+        class: "vs__open-indicator",
+      },
+      activeKey: 1,
       desc: [
         "Not Important",
         "Quite Important",
@@ -2027,16 +2190,18 @@ export default {
       arr: ARR,
       ageTV: AGES,
       heightTV: HEIGHTS,
+      employment_Statuses: Employment_Statuses,
       ethnicityList: ethnicities,
     };
   },
-  mounted() {
-   
-  },
+  mounted() {},
   created() {},
   computed: {},
 
   methods: {
+    changeActivekey(key) {
+      this.activeKey = key;
+    },
     onDropdownChange({ name, value }) {
       this.preferenceData[name] = value;
       this.savePreference();
@@ -2101,18 +2266,18 @@ export default {
         ...this.preferenceData,
         pre_nationality:
           this.preferenceData.preferred_nationality.length > 0
-            ? this.preferenceData.preferred_nationality
-            : [1],
+            ? this.preferenceData.preferred_nationality.map((n) => n.id)
+            : null,
         pre_partner_religions:
           this.preferenceData.pre_partner_religion_id.join(","),
         pre_partner_comes_from: this.preferenceData.preferred_countries.map(
           (c, index) => {
             return {
-              country: c,
+              country: c.id,
               city:
                 this.preferenceData.preferred_cities.length > 0
                   ? this.preferenceData.preferred_cities[index]
-                    ? this.preferenceData.preferred_cities[index]
+                    ? this.preferenceData.preferred_cities[index].id
                     : null
                   : null,
             };
@@ -2121,11 +2286,11 @@ export default {
         pre_disallow_preference: this.preferenceData.bloked_countries.map(
           (c, index) => {
             return {
-              country: c,
+              country: c.id,
               city:
                 this.preferenceData.blocked_cities.length > 0
                   ? this.preferenceData.blocked_cities[index]
-                    ? this.preferenceData.blocked_cities[index]
+                    ? this.preferenceData.blocked_cities[index].id
                     : null
                   : null,
             };
@@ -2179,7 +2344,7 @@ export default {
         .catch((error) => {});
     },
     async onChangeCountry(e, name, action) {
-      const res = await ApiService.get(`v1/utilities/cities/${e}`);
+      const res = await ApiService.get(`v1/utilities/cities/${e.id}`);
 
       if (res.status === 200) {
         switch (name) {
@@ -2209,9 +2374,8 @@ export default {
             break;
         }
       }
-      
-        this.savePreference();
-      
+
+      this.savePreference();
     },
   },
 
@@ -2235,13 +2399,14 @@ export default {
     }
   }
 
-
   .form-ma {
     .pre-age {
       max-width: 100% !important;
       margin: 0px auto;
     }
-
+.anticon{
+  color: #b3b2b2;
+}
     .ant-slider {
       margin-bottom: 16px;
       .ant-slider-track {

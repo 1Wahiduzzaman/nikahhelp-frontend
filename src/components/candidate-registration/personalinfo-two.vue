@@ -6,6 +6,7 @@
     </div>
     <a-collapse
       accordion
+      @change="changeActivekey"
       :activeKey="activeKey"
       :bordered="false"
       expand-icon-position="right"
@@ -18,9 +19,13 @@
       <a-collapse-panel key="1" header="1. Essential Information">
         <a-form-model
           ref="personalInfoFormOne"
-          v-if="personalInformation && personalInformation.essential"
-          :model="personalInformation.essential"
+          v-if="
+            personalInformation &&
+            personalInformation.essential &&
+            activeKey == 1
+          "
           :rules="rules"
+          :model="personalInformation.essential"
           class="form-ma"
         >
           <a-row type="flex" align="top">
@@ -39,11 +44,27 @@
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item ref="per_gender" prop="per_gender">
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange($event, 'essential')"
+                      id="per_gender"
+                      :reduce="(option) => option.value"
+                      placeholder="Select your gender"
+                      v-model="personalInformation.essential.per_gender"
+                      label="name"
+                      :options="[
+                        { name: 'Male', value: 1 },
+                        { name: 'Female', value: 2 },
+                      ]"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="onValueChange($event, 'essential')"
                       id="per_gender"
                       ref="select"
-                      placeholder="Select gender"
+                      placeholder="Select your gender"
                       class="select-ma w-100"
                       v-model="personalInformation.essential.per_gender"
                     >
@@ -52,7 +73,7 @@
                       >
                       <a-select-option :value="1">Male</a-select-option>
                       <a-select-option :value="2">Female</a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -162,14 +183,6 @@
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item ref="per_height" prop="per_height">
-                    <!-- <a-input
-                      id="per_height"
-                      suffix="cm"
-                      @blur="onValueChange($event, 'essential')"
-                      v-model.number="personalInformation.essential.per_height"
-                      placeholder="Enter your height"
-                      type="number"
-                    /> -->
                     <a-select
                       @change="onValueChange($event, 'essential')"
                       id="per_height"
@@ -302,7 +315,22 @@
                     ref="per_employment_status"
                     prop="per_employment_status"
                   >
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange($event, 'essential')"
+                      id="per_employment_status"
+                      :reduce="(option) => option.value"
+                      placeholder="Select your employment status"
+                      v-model="
+                        personalInformation.essential.per_employment_status
+                      "
+                      label="name"
+                      :options="employment_Statuses"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="onValueChange($event, 'essential')"
                       id="per_employment_status"
                       ref="select"
@@ -321,7 +349,7 @@
                       <a-select-option value="unemployed"
                         >Unemploymed</a-select-option
                       >
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -374,7 +402,19 @@
 
                 <a-col :span="12">
                   <a-form-model-item ref="per_occupation" prop="per_occupation">
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange($event, 'essential')"
+                      id="per_occupation"
+                      placeholder="Please select your occupation"
+                      v-model="personalInformation.essential.per_occupation"
+                      label="name"
+                      :options="candidateDetails.occupations"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="onValueChange($event, 'essential')"
                       id="per_occupation"
                       :showSearch="true"
@@ -397,7 +437,7 @@
                       >
                         {{ value }}
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -455,7 +495,22 @@
                     ref="per_education_level_id"
                     prop="per_education_level_id"
                   >
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange($event, 'essential')"
+                      id="per_education_level_id"
+                      :reduce="(option) => option.id"
+                      placeholder="Please select your education status"
+                      v-model="
+                        personalInformation.essential.per_education_level_id
+                      "
+                      label="name"
+                      :options="candidateDetails.studylevels"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="onValueChange($event, 'essential')"
                       id="per_education_level_id"
                       :showSearch="true"
@@ -467,9 +522,7 @@
                       "
                       class="select-ma w-100"
                     >
-                      <!-- <a-select-option value="">Bs</a-select-option>
-                  <a-select-option value="a">MS</a-select-option>
-                  <a-select-option value="b">other</a-select-option>      -->
+                     
                       <a-select-option disabled :value="0"
                         >Select your education level</a-select-option
                       >
@@ -479,7 +532,7 @@
                         v-for="(item, index) in candidateDetails.studylevels"
                         >{{ item.name }}</a-select-option
                       >
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -534,7 +587,20 @@
                     ref="per_religion_id"
                     prop="per_religion_id"
                   >
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange($event, 'essential')"
+                      id="per_religion_id"
+                      :reduce="(option) => option.id"
+                      placeholder="Select your religion"
+                      v-model="personalInformation.essential.per_religion_id"
+                      label="name"
+                      :options="candidateDetails.religions"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="onValueChange($event, 'essential')"
                       id="per_religion_id"
                       :showSearch="true"
@@ -555,7 +621,7 @@
                       >
                         {{ item.name }}
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -614,7 +680,9 @@
       >
         <a-form-model
           ref="personalInfoFormTwo"
-          v-if="personalInformation && personalInformation.general"
+          v-if="
+            personalInformation && personalInformation.general && activeKey == 2
+          "
           :model="personalInformation.general"
           :rules="rules"
           class="form-ma"
@@ -635,7 +703,19 @@
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item ref="per_ethnicity" prop="per_ethnicity">
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange($event, 'general')"
+                      id="per_ethnicity"
+                      placeholder="Please select your ethnicities"
+                      v-model="personalInformation.general.per_ethnicity"
+                      label="name"
+                      :options="candidateDetails.ethnicities"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="onValueChange($event, 'general')"
                       id="per_ethnicity"
                       :showSearch="true"
@@ -659,7 +739,7 @@
                       >
                         {{ ethnicity }}
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -712,7 +792,19 @@
                     ref="per_mother_tongue"
                     prop="per_mother_tongue"
                   >
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange($event, 'general')"
+                      id="per_mother_tongue"
+                      placeholder="Select your mother tongue"
+                      v-model="personalInformation.general.per_mother_tongue"
+                      label="name"
+                      :options="candidateDetails.languages"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="onValueChange($event, 'general')"
                       id="per_mother_tongue"
                       :showSearch="true"
@@ -734,7 +826,7 @@
                       >
                         {{ language }}
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -789,7 +881,20 @@
                     ref="per_nationality"
                     prop="per_nationality"
                   >
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange($event, 'general')"
+                      id="per_nationality"
+                      placeholder="Select Country"
+                      :reduce="(option) => option.id"
+                      v-model="personalInformation.general.per_nationality"
+                      label="name"
+                      :options="candidateDetails.countries"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="onValueChange($event, 'general')"
                       id="per_nationality"
                       :filter-option="filterOption"
@@ -810,7 +915,7 @@
                       >
                         {{ item.name }}
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -863,7 +968,20 @@
                     ref="per_country_of_birth"
                     prop="per_country_of_birth"
                   >
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange($event, 'general')"
+                      id="per_country_of_birth"
+                      placeholder=" Select your Country of birth"
+                      :reduce="(option) => option.id"
+                      v-model="personalInformation.general.per_country_of_birth"
+                      label="name"
+                      :options="candidateDetails.countries"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="onValueChange($event, 'general')"
                       id="per_country_of_birth"
                       :filter-option="filterOption"
@@ -884,7 +1002,7 @@
                       >
                         {{ item.name }}
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -998,10 +1116,12 @@
       >
         <a-form-model
           ref="personalInfoFormThree"
-          v-if="personalInformation && personalInformation.contact"
+          v-if="
+            personalInformation && personalInformation.contact && activeKey == 3
+          "
           :model="personalInformation.contact"
-          :rules="rules"
           class="form-ma"
+          :rules="rules"
         >
           <a-row>
             <!-- Current Residence -->
@@ -1031,7 +1151,25 @@
                         ref="per_current_residence_country"
                         prop="per_current_residence_country"
                       >
-                        <a-select
+                        <v-select
+                          :clearable="false"
+                          class="style-chooser"
+                          @input="
+                            onCountryChange($event, 'contact', 'residence')
+                          "
+                          id="per_current_residence_country"
+                          placeholder="Select Country"
+                          v-model="
+                            personalInformation.contact
+                              .per_current_residence_country
+                          "
+                          :reduce="(option) => option.id"
+                          label="name"
+                          :options="candidateDetails.countries"
+                          ><template #open-indicator>
+                            <a-icon type="down" /> </template
+                        ></v-select>
+                        <!-- <a-select
                           @change="
                             onCountryChange($event, 'contact', 'residence')
                           "
@@ -1057,7 +1195,7 @@
                           >
                             {{ item.name }}
                           </a-select-option>
-                        </a-select>
+                        </a-select> -->
                       </a-form-model-item>
                     </a-col>
                     <a-col :span="2"></a-col>
@@ -1068,7 +1206,23 @@
                         ref="per_current_residence_city"
                         prop="per_current_residence_city"
                       >
-                        <a-select
+                        <v-select
+                          :clearable="false"
+                          class="style-chooser"
+                          @input="onValueChange($event, 'contact')"
+                          id="per_current_residence_city"
+                          placeholder="Select City"
+                          v-model.number="
+                            personalInformation.contact
+                              .per_current_residence_city
+                          "
+                          :reduce="(option) => option.id"
+                          label="name"
+                          :options="personalInformation.contact.residenceCities"
+                          ><template #open-indicator>
+                            <a-icon type="down" /> </template
+                        ></v-select>
+                        <!-- <a-select
                           @change="onValueChange($event, 'contact')"
                           id="per_current_residence_city"
                           style="width: 150px"
@@ -1091,7 +1245,7 @@
                             :value="city.id"
                             >{{ city.name }}</a-select-option
                           >
-                        </a-select>
+                        </a-select> -->
                       </a-form-model-item>
                     </a-col>
                   </a-row>
@@ -1230,7 +1384,24 @@
                         ref="per_permanent_country"
                         prop="per_permanent_country"
                       >
-                        <a-select
+                        <v-select
+                          :clearable="false"
+                          class="style-chooser"
+                          @input="
+                            onCountryChange($event, 'contact', 'permanant')
+                          "
+                          id="per_permanent_country"
+                          placeholder="Select Country"
+                          v-model="
+                            personalInformation.contact.per_permanent_country
+                          "
+                          :reduce="(option) => option.id"
+                          label="name"
+                          :options="candidateDetails.countries"
+                          ><template #open-indicator>
+                            <a-icon type="down" /> </template
+                        ></v-select>
+                        <!-- <a-select
                           @change="
                             onCountryChange($event, 'contact', 'permanant')
                           "
@@ -1255,7 +1426,7 @@
                           >
                             {{ item.name }}
                           </a-select-option>
-                        </a-select>
+                        </a-select> -->
                       </a-form-model-item>
                     </a-col>
                     <a-col :span="2"></a-col>
@@ -1265,7 +1436,22 @@
                         ref="per_permanent_city"
                         prop="per_permanent_city"
                       >
-                        <a-select
+                        <v-select
+                          :clearable="false"
+                          class="style-chooser"
+                          @input="onValueChange($event, 'contact')"
+                          id="per_permanent_city"
+                          placeholder="Select City"
+                          v-model="
+                            personalInformation.contact.per_permanent_city
+                          "
+                          :reduce="(option) => option.id"
+                          label="name"
+                          :options="personalInformation.contact.permanantCities"
+                          ><template #open-indicator>
+                            <a-icon type="down" /> </template
+                        ></v-select>
+                        <!-- <a-select
                           @change="onValueChange($event, 'contact')"
                           id="per_permanent_city"
                           style="width: 150px"
@@ -1287,7 +1473,7 @@
                             :value="city.id"
                             >{{ city.name }}</a-select-option
                           >
-                        </a-select>
+                        </a-select> -->
                       </a-form-model-item>
                     </a-col>
                   </a-row>
@@ -1562,7 +1748,11 @@
       >
         <a-form-model
           ref="personalInfoFormFour"
-          v-if="personalInformation && personalInformation.more_about"
+          v-if="
+            personalInformation &&
+            personalInformation.more_about &&
+            activeKey == 4
+          "
           :model="personalInformation.more_about"
           :rules="rules"
           class="form-ma"
@@ -1586,7 +1776,30 @@
                     ref="per_marital_status"
                     prop="per_marital_status"
                   >
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange($event, 'more_about')"
+                      id="per_marital_status"
+                      placeholder="Select your Marital Status"
+                      v-model="
+                        personalInformation.more_about.per_marital_status
+                      "
+                      :reduce="(option) => option.value"
+                      label="name"
+                      :options="[
+                        { name: 'Single', value: 'single' },
+                        { name: 'Married', value: 'married' },
+                        { name: 'Divorced', value: 'divorced' },
+                        {
+                          name: 'Divorced with Children',
+                          value: 'divorced_with_children',
+                        },
+                      ]"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="onValueChange($event, 'more_about')"
                       id="per_marital_status"
                       ref="select"
@@ -1604,7 +1817,7 @@
                       <a-select-option value="divorced_with_children"
                         >Divorced with Children</a-select-option
                       >
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -1661,7 +1874,33 @@
                     ref="per_currently_living_with"
                     prop="per_currently_living_with"
                   >
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange($event, 'more_about')"
+                      id="per_currently_living_with"
+                      placeholder="Currently Living With"
+                      v-model="
+                        personalInformation.more_about.per_currently_living_with
+                      "
+                      :reduce="(option) => option.value"
+                      label="name"
+                      :options="[
+                        { name: 'Parents', value: 'Parents' },
+                        {
+                          name: 'Live in my own home',
+                          value: 'Live in my own home',
+                        },
+                        {
+                          name: 'live in others home',
+                          value: 'live in others home',
+                        },
+                        { name: 'Other', value: 'Other' },
+                      ]"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="onValueChange($event, 'more_about')"
                       id="per_currently_living_with"
                       ref="select"
@@ -1682,7 +1921,7 @@
                         >Live in others home</a-select-option
                       >
                       <a-select-option value="other">Other</a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -1741,7 +1980,32 @@
                     ref="per_willing_to_relocate"
                     prop="per_willing_to_relocate"
                   >
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange($event, 'more_about')"
+                      id="per_willing_to_relocate"
+                      placeholder="Willing to relocate"
+                      v-model="
+                        personalInformation.more_about.per_willing_to_relocate
+                      "
+                      :reduce="(option) => option.value"
+                      label="name"
+                      :options="[
+                        { name: 'Yes', value: 1 },
+                        {
+                          name: 'No',
+                          value: 2,
+                        },
+                        {
+                          name: `Let's discuss`,
+                          value: 3,
+                        },
+                      ]"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="onValueChange($event, 'more_about')"
                       id="per_willing_to_relocate"
                       ref="select"
@@ -1757,7 +2021,7 @@
                       <a-select-option value="1">Yes</a-select-option>
                       <a-select-option value="2">No</a-select-option>
                       <a-select-option value="3">Let's discuss</a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -1809,7 +2073,30 @@
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item ref="per_smoker" prop="per_smoker">
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange($event, 'more_about')"
+                      id="per_smoker"
+                      placeholder="Are you a Smoker"
+                      v-model="personalInformation.more_about.per_smoker"
+                      :reduce="(option) => option.value"
+                      label="name"
+                      :options="[
+                        { name: 'Yes', value: 1 },
+                        {
+                          name: 'No',
+                          value: 2,
+                        },
+                        {
+                          name: `Former smoker`,
+                          value: 3,
+                        },
+                      ]"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="onValueChange($event, 'more_about')"
                       id="per_smoker"
                       ref="select"
@@ -1826,7 +2113,7 @@
                       <a-select-option :value="3"
                         >Former smoker</a-select-option
                       >
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -1894,7 +2181,28 @@
                     ref="per_language_speak"
                     prop="per_language_speak"
                   >
-                    <a-select
+                    <v-select
+                      id="per_language_speak"
+                      :clearable="false"
+                      :multiple="true"
+                      class="nationality-select"
+                      @input="
+                        onMultiValueChange(
+                          $event,
+                          'per_language_speak',
+                          'more_about'
+                        )
+                      "
+                      placeholder="Select the language you speak"
+                      v-model="
+                        personalInformation.more_about.per_language_speak
+                      "
+                      label="name"
+                      :options="candidateDetails.languages"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="
                         onMultiValueChange(
                           $event,
@@ -1930,7 +2238,7 @@
                       >
                         {{ spoken_language }}
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -1996,7 +2304,29 @@
                     <a-select-option value="Music">Music</a-select-option>
                     <a-select-option value="Cricket">Cricket</a-select-option>
                   </a-select> -->
-                  <a-form-model-item
+                  <v-select
+                    id="per_hobbies_interests"
+                    :clearable="false"
+                    :multiple="true"
+                    class="nationality-select"
+                    @input="
+                      onMultiValueChange(
+                        $event,
+                        'per_hobbies_interests',
+                        'more_about'
+                      )
+                    "
+                    placeholder="Select your hobbies"
+                    v-model="
+                      personalInformation.more_about.per_hobbies_interests
+                    "
+                    label="name"
+                    :options="candidateDetails.hobbies"
+                    ><template #open-indicator>
+                      <a-icon type="down" />
+                    </template>
+                  </v-select>
+                  <!-- <a-form-model-item
                     ref="per_hobbies_interests"
                     prop="per_hobbies_interests"
                   >
@@ -2035,7 +2365,7 @@
                         {{ hobby }}
                       </a-select-option>
                     </a-select>
-                  </a-form-model-item>
+                  </a-form-model-item> -->
                 </a-col>
                 <a-col :span="12">
                   <p>
@@ -2089,7 +2419,29 @@
                     ref="per_food_cuisine_like"
                     prop="per_food_cuisine_like"
                   >
-                    <a-select
+                    <v-select
+                      id="per_food_cuisine_like"
+                      :clearable="false"
+                      :multiple="true"
+                      class="nationality-select"
+                      @input="
+                        onMultiValueChange(
+                          $event,
+                          'per_food_cuisine_like',
+                          'more_about'
+                        )
+                      "
+                      placeholder="Food and Cuisine I like"
+                      v-model="
+                        personalInformation.more_about.per_food_cuisine_like
+                      "
+                      label="name"
+                      :options="candidateDetails.foods"
+                      ><template #open-indicator>
+                        <a-icon type="down" />
+                      </template>
+                    </v-select>
+                    <!-- <a-select
                       @change="
                         onMultiValueChange(
                           $event,
@@ -2122,9 +2474,8 @@
                       >
                         {{ value }}
                       </a-select-option>
-                      <!-- <a-select-option value="Chinese">Chinese</a-select-option>
-										<a-select-option value="Italian">Italian</a-select-option> -->
-                    </a-select>
+                    
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -2190,7 +2541,27 @@
                     <a-select-option value="Music">Music</a-select-option>
                     <a-select-option value="Cricket">Cricket</a-select-option>
                   </a-select> -->
-                  <a-form-model-item
+                  <v-select
+                    id="per_things_enjoy"
+                    :clearable="false"
+                    :multiple="true"
+                    class="nationality-select"
+                    @input="
+                      onMultiValueChange(
+                        $event,
+                        'per_things_enjoy',
+                        'more_about'
+                      )
+                    "
+                    placeholder="Select your hobbies"
+                    v-model="personalInformation.more_about.per_things_enjoy"
+                    label="name"
+                    :options="candidateDetails.hobbies"
+                    ><template #open-indicator>
+                      <a-icon type="down" />
+                    </template>
+                  </v-select>
+                  <!-- <a-form-model-item
                     ref="per_things_enjoy"
                     prop="per_things_enjoy"
                   >
@@ -2227,7 +2598,7 @@
                         {{ hobby }}
                       </a-select-option>
                     </a-select>
-                  </a-form-model-item>
+                  </a-form-model-item> -->
                 </a-col>
                 <a-col :span="12">
                   <p>
@@ -2281,7 +2652,28 @@
                     ref="per_thankfull_for"
                     prop="per_thankfull_for"
                   >
-                    <a-select
+                    <v-select
+                      id="per_things_enjoy"
+                      :clearable="false"
+                      :multiple="true"
+                      class="nationality-select"
+                      @input="
+                        onMultiValueChange(
+                          $event,
+                          'per_thankfull_for',
+                          'more_about'
+                        )
+                      "
+                      placeholder="I'm Thankfull For"
+                      :reduce="(option) => option.value"
+                      v-model="personalInformation.more_about.per_thankfull_for"
+                      label="label"
+                      :options="candidateDetails.thankfulThings"
+                      ><template #open-indicator>
+                        <a-icon type="down" />
+                      </template>
+                    </v-select>
+                    <!-- <a-select
                       @change="
                         onMultiValueChange(
                           $event,
@@ -2312,7 +2704,7 @@
                       >
                         {{ value.label }}
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -2444,13 +2836,15 @@ import hobbies from "@/common/hobbies.js";
 import foods from "@/common/foods.js";
 import thankfulThings from "@/common/thankfulThings.js";
 import { ARR_PersonalInfo, RULESPERSONALINFO } from "./models/candidate";
-import { HEIGHTS } from "../../models/data";
+import { HEIGHTS, Employment_Statuses } from "../../models/data";
 import ApiService from "../../services/api.service";
+import vSelect from "vue-select";
 export default {
   name: "PersonalInfoTwo",
   components: {
     DropdownDatePicker,
     NeedHelp,
+    vSelect,
   },
   props: {
     candidateDetails: {
@@ -2462,9 +2856,10 @@ export default {
   },
   data() {
     return {
-      activeKey: ["1"],
+      activeKey: 1,
       default_date: null,
       rules: RULESPERSONALINFO,
+      employment_Statuses: Employment_Statuses,
       languages: languages,
       hobbies: hobbies,
       foods: foods,
@@ -2476,6 +2871,9 @@ export default {
   },
 
   methods: {
+    changeActivekey(key) {
+      this.activeKey = key;
+    },
     onValueChange(e, action) {
       console.log(this.personalInformation);
       this.save(action);
@@ -2551,7 +2949,6 @@ export default {
               (item) => item != "Don't Mind"
             );
 
-      this.checkDisabled();
       this.save(action);
     },
 
@@ -2652,13 +3049,13 @@ export default {
       if (res.status === 200) {
         switch (action) {
           case "permanant":
-            this.personalInformation.contact.permanantCities=[];
+            this.personalInformation.contact.permanantCities = [];
             this.personalInformation.contact.permanantCities.push(
               ...res.data.data
             );
             break;
           case "residence":
-             this.personalInformation.contact.residenceCities=[];
+            this.personalInformation.contact.residenceCities = [];
             this.personalInformation.contact.residenceCities.push(
               ...res.data.data
             );
@@ -2698,6 +3095,9 @@ export default {
   }
   .custom-select {
     font-size: 12px !important;
+  }
+  .anticon {
+    color: #b3b2b2;
   }
 }
 </style>

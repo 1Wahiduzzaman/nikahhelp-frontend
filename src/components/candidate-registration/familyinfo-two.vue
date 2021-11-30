@@ -72,7 +72,8 @@
                       </span>
                     </a>
                   </p>
-                  <div data-parent="#familyInfoAccordian"
+                  <div
+                    data-parent="#familyInfoAccordian"
                     class="collapse"
                     id="collapseFamilyInformationFatherName"
                   >
@@ -100,7 +101,19 @@
                     ref="father_profession"
                     prop="father_profession"
                   >
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange"
+                      id="father_profession"
+                      placeholder="Please select Fathet's Profession"
+                      v-model="familyInformation.father_profession"
+                      label="name"
+                      :options="candidateDetails.occupations"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="onValueChange"
                       id="father_profession"
                       :showSearch="true"
@@ -122,7 +135,7 @@
                       >
                         {{ value }}
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -146,7 +159,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" data-parent="#familyInfoAccordian" id="collapseCandidateFatherProfession">
+                  <div
+                    class="collapse"
+                    data-parent="#familyInfoAccordian"
+                    id="collapseCandidateFatherProfession"
+                  >
                     <div class="card card-body bubble">
                       Select your father's profession
                     </div>
@@ -204,7 +221,8 @@
                     </a>
                   </p>
                   <div
-                    class="collapse" data-parent="#familyInfoAccordian"
+                    class="collapse"
+                    data-parent="#familyInfoAccordian"
                     id="collapseFamilyInformationMotherName"
                   >
                     <div class="card card-body bubble">
@@ -231,7 +249,19 @@
                     ref="mother_profession"
                     prop="mother_profession"
                   >
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange"
+                      id="mother_profession"
+                      placeholder="Please select Fathet's Profession"
+                      v-model="familyInformation.mother_profession"
+                      label="name"
+                      :options="candidateDetails.occupations"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="onValueChange"
                       id="mother_profession"
                       :showSearch="true"
@@ -253,7 +283,7 @@
                       >
                         {{ value }}
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -277,7 +307,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" data-parent="#familyInfoAccordian" id="collapseCandidateMotherProfession">
+                  <div
+                    class="collapse"
+                    data-parent="#familyInfoAccordian"
+                    id="collapseCandidateMotherProfession"
+                  >
                     <div class="card card-body bubble">
                       Select your mothers' profession
                     </div>
@@ -331,7 +365,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" data-parent="#familyInfoAccordian" id="collapseSiblingsInfomation">
+                  <div
+                    class="collapse"
+                    data-parent="#familyInfoAccordian"
+                    id="collapseSiblingsInfomation"
+                  >
                     <div class="card card-body bubble">
                       Siblings information
                     </div>
@@ -388,7 +426,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" data-parent="#familyInfoAccordian" id="collapseAnyotherFamilyLike">
+                  <div
+                    class="collapse"
+                    data-parent="#familyInfoAccordian"
+                    id="collapseAnyotherFamilyLike"
+                  >
                     <div class="card card-body bubble">
                       Any other family info you would like to share
                     </div>
@@ -415,7 +457,20 @@
                     ref="country_of_origin"
                     prop="country_of_origin"
                   >
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange"
+                      id="country_of_origin"
+                      :reduce="(option) => option.name"
+                      placeholder="Please select country of origin"
+                      v-model="familyInformation.country_of_origin"
+                      label="name"
+                      :options="candidateDetails.countries"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="onValueChange"
                       id="country_of_origin"
                       :showSearch="true"
@@ -440,7 +495,7 @@
                       >
                         {{ item.name }}
                       </a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -464,7 +519,11 @@
                       </span>
                     </a>
                   </p>
-                  <div class="collapse" data-parent="#familyInfoAccordian" id="collapseSelectCountryOfBirth">
+                  <div
+                    class="collapse"
+                    data-parent="#familyInfoAccordian"
+                    id="collapseSelectCountryOfBirth"
+                  >
                     <div class="card card-body bubble">
                       Select your country of birth
                     </div>
@@ -489,6 +548,7 @@
 </template>
 <script>
 import NeedHelp from "@/components/candidate-registration/NeedHelp.vue";
+import vSelect from "vue-select";
 import {
   ARR_FAMILY_INFO,
   _PROFESSIONS,
@@ -496,7 +556,7 @@ import {
 } from "./models/candidate";
 export default {
   name: "familyInfoTwo",
-  components: { NeedHelp },
+  components: { NeedHelp, vSelect },
   props: {
     candidateDetails: {
       type: Object,
@@ -541,11 +601,10 @@ export default {
       });
     },
     filterOption(input, option) {
-      return (
-        option.componentOptions.children[0].text.trim()
-          .toLowerCase()
-          .startsWith(input.toLowerCase())
-      );
+      return option.componentOptions.children[0].text
+        .trim()
+        .toLowerCase()
+        .startsWith(input.toLowerCase());
     },
     onValueChange(e) {
       console.log(this.familyInformation);
