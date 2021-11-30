@@ -1,6 +1,6 @@
 <template>
   <div class="col-lg-6 col-xl-4 cards">
-    <a-card class="team-card" style="min-height: 500px;" bodyStyle="padding: 0">
+    <div class="team-card card" style="min-height: 500px;">
       <div class="d-flex align-items-center justify-content-center joining-header position-relative" style="width: 100%">
         <div class="logo-position position-absolute">
           <img
@@ -9,58 +9,107 @@
               alt=""
           />
         </div>
-        <h4 class="card-title pt-2">Create a team</h4>
+        <h4 class="card-title pt-2">
+          {{ step === 2 ? 'Add team member' : 'Create a team' }}
+        </h4>
       </div>
       <div class="box" v-if="step === 1">
-        <a-row class="mt-4 px-4">
-          <a-col :span="24">
+        <a-row class="mt-2 px-4">
+          <a-col class="text-center" :span="24">
+            <div class="d-flex align-items-center justify-content-center">
+              <div class="cursor-pointer image-plus background-img" @click="imageModal = true" :style="{ backgroundImage: 'url(' + logoBobUrl + ')' }">
+                <h4 class="fs-40 d-flex justify-content-center align-items-center text-white">+</h4>
+              </div>
+              <h4 class="fs-14 color-gray ml-2">Add a team image</h4>
+            </div>
+            <span class="text-danger fs-12" v-if="in_progress && !file">Please upload team logo</span>
+          </a-col>
+          <a-col :span="24" class="mt-2">
             <a-input
-                v-model="$store.state.team.team_name"
+                v-model="team.name"
                 size="large"
                 class="team-name-input"
                 placeholder="Team name"
+                autocomplete="off"
+                @input="in_progress = true"
             />
+            <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.name">Team name required</span>
           </a-col>
-          <a-col class="mt-4" :span="24">
+          <a-col class="mt-2" :span="24">
             <a-textarea
                 class="team-description team-name-input"
                 placeholder="Team description"
                 :auto-size="{ minRows: 3, maxRows: 5 }"
-                v-model="$store.state.team.team_description"
+                v-model="team.description"
+                @input="in_progress = true"
             />
+            <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.description">Team description required</span>
           </a-col>
-          <a-col class="mt-4" :span="24">
-            <div class="d-flex align-items-center">
-              <div class="cursor-pointer image-plus" @click="imageModal = true">
-                <h4 class="fs-40 d-flex justify-content-center align-items-center text-white">+</h4>
-              </div>
-              <h4 class="fs-14 color-gray ml-4">Add a team image</h4>
-            </div>
+          <a-col class="mt-2" :span="24">
+            <a-input
+                v-model="team.password"
+                size="large"
+                type="password"
+                class="team-name-input"
+                placeholder="Type Team Password"
+                autocomplete="off"
+                @input="in_progress = true"
+            />
+            <span class="fs-12 text-danger ml-2 fs-12" v-if="team.password && team.password.length !== 4">Password must be 4 digits</span>
+          </a-col>
+          <a-col class="mt-2" :span="24">
+            <a-input
+                v-model="team.confirm_password"
+                size="large"
+                type="password"
+                class="team-name-input"
+                placeholder="Re-Type New Password"
+                autocomplete="off"
+                @input="in_progress = true"
+            />
+            <span class="text-danger mt-2 ml-2 fs-12" v-if="team.password && team.confirm_password && team.password !== team.confirm_password">Password doesn't match.</span>
+            <span v-if="team.confirm_password && team.confirm_password.length !== 4" class="fs-12 text-danger ml-2">Password must be 4 digits</span>
           </a-col>
         </a-row>
         <div class="position-absolute footer-cancel-btn">
-          <a-button class="back-button button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
+          <a-button class="back-button button float-left" @click="goBack()">Back</a-button>
         </div>
         <div class="position-absolute footer-conf-btn">
-          <a-button class="confirm-button button float-right" @click="goNextStep(2)">Next</a-button>
+          <a-button class="confirm-button button float-right" @click="createTeam()" :disabled="checkDisability">Next</a-button>
         </div>
       </div>
-      <CreateTeamPassword v-if="step === 2" @goNext="goNextStep" />
-      <CreateAddMember v-if="step === 3" @goNext="goNextStep" />
-    </a-card>
+      <CreateAddMember :team="team" :file="file" v-if="step === 2" @cancel_button="$emit('cancel_button')" @goNext="goNextStep" />
+      <TeamCreateSuccess v-if="step === 3" :team="team" />
+    </div>
     <a-modal v-model="imageModal" @ok="hideImageModal">
+      <template slot="footer">
+        <a-button key="back" @click="hideImageModal">
+          Cancel
+        </a-button>
+        <a-button key="back" type="primary" @click="hideImageModal">
+          Ok
+        </a-button>
+      </template>
       <div class="text-center">
-        <img src="../../assets/info-img.png" alt="info image" />
+        <img :src="logoBobUrl" v-if="logoBobUrl" alt="info image" class="bob-logo" />
+        <img src="../../assets/info-img.png" v-else alt="info image" />
         <p class="mt-2">
           You can choose an avatar or <br> browse an image from local drive
         </p>
         <div class="d-flex justify-content-center">
-          <a-button type="primary" class="bg-brand">
+          <a-button type="primary" class="bg-brand br-20">
             Avatar
           </a-button>
-          <a-button type="primary" class="ml-4 bg-primary">
+          <a-button type="primary" class="ml-4 bg-primary br-20" @click="uploadFile()">
             Browse
           </a-button>
+          <input
+              type="file"
+              ref="file"
+              style="display: none"
+              accept="image/*"
+              @change="onChangeFileSet($event)"
+          />
         </div>
       </div>
     </a-modal>
@@ -68,20 +117,41 @@
 </template>
 
 <script>
-import CreateTeamPassword from "./CreateTeamPassword";
+import ApiService from '@/services/api.service';
 import CreateAddMember from "./CreateAddMember";
+import TeamCreateSuccess from "./TeamCreateSuccess";
 export default {
 	name: "CreateTeam1",
-	components: {CreateAddMember, CreateTeamPassword},
+	components: {TeamCreateSuccess, CreateAddMember},
 	data() {
 		return {
 			isLoading: false,
 			user: {},
 			is_verified: 1,
       imageModal: false,
-      step: 1
+      step: 1,
+      team: {
+        name: '',
+        description: '',
+        password: '',
+        confirm_password: ''
+      },
+      in_progress: false,
+      file: '',
+      logoBobUrl: null
 		};
 	},
+  computed: {
+    checkDisability() {
+      if(this.team.name && this.team.description &&
+          this.team.password && this.team.confirm_password &&
+          this.team.password.length === 4 && this.team.confirm_password.length === 4 &&
+          this.team.password === this.team.confirm_password && this.file) {
+        return false;
+      }
+      return true;
+    }
+  },
 	created() {},
 	methods: {
     onConfirmClick(event) {
@@ -137,8 +207,41 @@ export default {
 		},
     goNextStep(value) {
       this.step = value;
+    },
+    goBack() {
+      this.team = {};
+      this.$emit('cancel_button');
+    },
+    uploadFile() {
+      this.$refs.file.click();
+    },
+    onChangeFileSet(e) {
+      let droppedFiles = e.target.files || e.dataTransfer.files;
+      if (!droppedFiles) return;
+      [...droppedFiles].forEach((f) => {
+        this.file = f;
+        this.logoBobUrl = URL.createObjectURL(f);
+      });
+    },
+    updateTeamData(data) {
+      this.team = data;
+    },
+    async createTeam() {
+      this.in_progress = true;
+      let formData = new FormData();
+      formData.append('logo', this.file);
+      Object.keys(this.team).map(data =>{
+        formData.append(data, this.team[data]);
+      });
+
+      await ApiService.post('/v1/team', formData).then(res => {
+        if(res && res.data) {
+          this.updateTeamData(res.data.data);
+          this.goNextStep(2);
+        }
+      });
     }
-	},
+  },
 };
 </script>
 
@@ -150,17 +253,33 @@ export default {
 .ant-card-body {
   padding: 0 !important;
 }
+.ant-btn {
+  border-radius: 20px !important;
+}
+.br-20 {
+  border-radius: 20px;
+}
 .bg-brand {
   background: #E51F76 !important;
 }
 .fs-40 {
   font-size: 40px;
 }
+.background-img {
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+}
 .image-plus {
   width: 50px;
   height: 50px;
   border-radius: 50%;
   background: $bg-primary;
+}
+.bob-logo {
+  width: 87px;
+  height: 87px;
+  border-radius: 50%;
 }
 .input-controls > input {
   height: 50px;
@@ -630,14 +749,14 @@ export default {
     .box {
       .footer-cancel-btn {
         bottom: 20px;
-        left: 12px;
+        left: 32px;
         .button {
           border-radius: 16px;
         }
       }
       .footer-conf-btn {
         bottom: 20px;
-        right: 12px;
+        right: 32px;
         .button {
           border-radius: 16px;
         }

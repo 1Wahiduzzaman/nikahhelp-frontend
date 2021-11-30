@@ -40,7 +40,7 @@
 								@teamListUpdated="loadTeams"
 							/>
               <JoinCreateTeam
-                  v-if="joinCreateTeamShow"
+                  v-if="joinCreateTeamShow && teams.length < 5"
                   class="d-flex"
                   style="margin-top: 20px"
                   @joinATeam="
@@ -60,13 +60,12 @@
 									"
                   @toggleToTeamPassword="toggleToTeamPassword" />
               <JoinTeamPassword
-                  v-if="joinTeamPassword" />
+                  v-if="joinTeamPassword"
+                  :team="joinTeamInfo"
+                  @cancel_button="cancelJoinButton()"/>
               <CreateTeamPage1
                   v-if="createTeamShow"
-                  @cancel_button="
-										joinCreateTeamShow = true;
-										createTeamShow = false;
-									"
+                  @cancel_button="cancelCreateTeamPage()"
               />
 						</div>
 					</a-row>
@@ -106,7 +105,8 @@ export default {
 			joinCreateTeamShow: true,
       createTeamPassword: false,
       welcomeModal: true,
-      joinTeamPassword: false
+      joinTeamPassword: false,
+      joinTeamInfo: null
 		};
 	},
 	created() {
@@ -135,7 +135,7 @@ export default {
 				await this.$store
 					.dispatch("getTeams")
 					.then((data) => {
-						this.teams = [...data.data.data];
+						this.teams = data.data.data;
 					})
 					.catch((error) => {
 						console.log(error.response);
@@ -204,10 +204,21 @@ export default {
     hideWelcomeModal() {
       this.welcomeModal = false;
     },
-    toggleToTeamPassword() {
+    toggleToTeamPassword(teamInfo) {
+      this.joinTeamInfo = teamInfo;
       this.joinTeamPassword = true;
       this.joinCreateTeamShow = false;
       this.joinTeamShow = false;
+    },
+    cancelCreateTeamPage() {
+      this.joinCreateTeamShow = true;
+      this.createTeamShow = false;
+      this.loadTeams();
+    },
+    cancelJoinButton() {
+      this.joinTeamShow = false;
+      this.joinTeamPassword = false;
+      this.loadTeams();
     }
 	},
 };

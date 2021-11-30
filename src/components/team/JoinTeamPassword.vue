@@ -2,10 +2,9 @@
 	<div
 		class="col-lg-6 col-xl-4"
 	>
-		<a-card
-			class="team-card"
+		<div
+			class="team-card card"
 			style="min-height: 500px; margin-top: 20px;"
-      bodyStyle="padding: 0"
 		>
       <div style="width: 100%" class="d-flex align-items-center justify-content-center joining-header position-relative">
         <div class="logo-position position-absolute">
@@ -17,7 +16,7 @@
         </div>
         <h4 class="card-title pt-2">Joining a team</h4>
       </div>
-      <div class="mt-5 px-4">
+      <div class="mt-5 px-4" v-if="!success">
         <h4 class="fs-18 color-primary">Team Password</h4>
         <a-row class="mt-1">
           <a-col :span="24" class="mt-4">
@@ -32,21 +31,24 @@
         </a-row>
       </div>
 
-<!--      <div class="d-flex flex-column align-items-center justify-content-center mt-5">-->
-<!--        <div class="success-box">-->
-<!--          <a-icon type="check" class="fs-24 text-white d-flex align-items-center justify-content-center py-2" />-->
-<!--        </div>-->
-<!--        <h4 class="fs-20 mt-3">Done</h4>-->
-<!--        <p class="fs-14">You're joined successfully</p>-->
-<!--      </div>-->
+      <div class="d-flex flex-column align-items-center justify-content-center mt-5" v-if="success">
+        <div class="success-box">
+          <a-icon type="check" class="fs-24 text-white d-flex align-items-center justify-content-center py-2" />
+        </div>
+        <h4 class="fs-20 mt-3">Done</h4>
+        <p class="fs-14">You're joined successfully</p>
+      </div>
 
-      <div class="position-absolute footer-cancel-btn">
+      <div class="position-absolute footer-cancel-btn" v-if="!success">
         <a-button class="back-button button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
       </div>
-      <div class="position-absolute footer-conf-btn">
+      <div class="position-absolute footer-conf-btn" v-if="!success">
         <a-button class="confirm-button button float-right" @click="onConfirmClick">Confirm</a-button>
       </div>
-		</a-card>
+      <div class="position-absolute footer-conf-btn" v-if="success">
+        <a-button class="confirm-button button float-right" @click="closeSuccess">Ok</a-button>
+      </div>
+		</div>
 	</div>
 </template>
 <script>
@@ -54,12 +56,14 @@ import ApiService from "../../services/api.service";
 export default {
 	name: "ManageTeam",
 	components: {},
+  props: ['team'],
 	data() {
 		return {
 			isLoading: false,
 			user: {},
 			is_verified: 1,
 			invitationPassword: "",
+      success: false
 		};
 	},
 	created() {},
@@ -68,42 +72,30 @@ export default {
 		window: () => window,
 	},
 	methods: {
-		onSearch() {
-			console.log("search clicked");
-		},
-		onConfirmClick(event) {
+		async onConfirmClick() {
 			if (this.invitationPassword.length > 0) {
-				console.log(this.$route.params.invitationLink);
-				console.log(this.invitationPassword);
-				ApiService.post("v1/join-team-by-invitation", {
-					invitation_link: this.$route.params.invitationLink,
-					team_password: this.invitationPassword,
-				})
-					.then((data) => {
-						console.log("Data Came");
-						console.log(data);
-						///this.$message.error(data.message);
-						if (data.status == 200) {
-							this.$success({
-								title: "Success",
-								content: data.data.message,
-							});
-							//this.$message.success(data.data.message);
-							//this.$message.success("Invitation accepted");
-							this.$router.push("/manageteam");
-						} else {
-							this.$message.error(data.data.message);
-						}
-					})
-					.catch((e) => {
-						console.log(e.response);
-						this.$message.error(e.response.data.message);
-						this.$message.error("Invitation Error, Please check Again");
-					});
-			} else {
-				console.log("Password field is empty");
+        if(this.team.password.toString() === this.invitationPassword.toString()) {
+          let payload = {
+            team_id: this.team.team_id,
+            invitation_link: this.team.invitation_link,
+            team_password: this.invitationPassword
+          };
+
+          await ApiService.post("v1/join-team-by-invitation", payload).then((res) => {
+            if(res && res.data && res.data.data) {
+              this.success = true;
+            }
+          }).catch((e) => {
+            console.log(e);
+          });
+        } else {
+          alert("Password does not match");
+        }
 			}
 		},
+    closeSuccess() {
+      this.$emit('cancel_button');
+    }
 	},
 };
 </script>
@@ -581,7 +573,7 @@ export default {
 
   .footer-cancel-btn {
     bottom: 20px;
-    left: 12px;
+    left: 32px;
     .button {
       border-radius: 16px;
       background: $bg-brand;
@@ -590,7 +582,7 @@ export default {
   }
   .footer-conf-btn {
     bottom: 20px;
-    right: 12px;
+    right: 32px;
     .button {
       border-radius: 16px;
     }

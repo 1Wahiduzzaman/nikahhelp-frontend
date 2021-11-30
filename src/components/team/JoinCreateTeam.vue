@@ -92,6 +92,7 @@
 .confirm-button {
 	background-color: #6158a7;
 	color: white;
+  border-radius: 20px;
 }
 
 // start css for team-card

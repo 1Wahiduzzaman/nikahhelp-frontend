@@ -1,5 +1,5 @@
 <template>
-	<div class="col-lg-6 col-xl-4">
+	<div class="col-lg-6 col-xl-4 position-relative">
 		<!-- Team Deletion Modal -->
 		<DeletionModal
 			:showModalProp="showModalDeletion"
@@ -262,7 +262,7 @@
 			<!-- Add or Remove Member Button -->
 			<div class="member-action">
 				<div class="add-remove">
-					<button class="add-member" @click="addMemberClick">
+					<button class="add-member" @click="handleAddMemberclick">
 						<img src="../../assets/icon/add.svg" alt="add" /> Add member
 					</button>
 					<a-tooltip placement="top" title="Show team invitations">
@@ -346,284 +346,72 @@
 				</div>
 
 				<!-- Member Table -->
-				<table width="100%">
-					<template v-for="member in sortOwnerFirst(teamData.team_members)">
-						<!-- its a false warning -->
-						<tr class="admin-member" v-if="member.role == 'Owner+Admin'">
-							<td>
-								<!-- <div class="name-short">
-                  {{ nameInitials(member.user.full_name) }}
-                </div> -->
-								<div class="name-short">O{{ firstLetter(member.role) }}</div>
-								<!-- <div class="name-short" v-if="!edit_button_flag">
-                  {{ firstLetter(member.role) }}
-                </div> -->
-								<!-- <div
-                  class="name-short"
-                  style="padding: 0px; margin: 0"
-                  v-if="edit_button_flag"
-                >
-                  <select
-                    style="
-                      color: #000c17;
-                      background-color: #cccccc;
-                      border-radius: 10px;
-                      width: 35px;
-                      height: 20px;
-                    "
-                    @change="(e) => onRoleChange(e, member.user_id)"
-                  >
-                    <option selected disabled>{{ member.role }}</option>
-                    <option>Admin</option>
-										<option>Member</option>
-                  </select>
-                </div> -->
-							</td>
-							<td>
-								<div class="name-full">{{ member.user.full_name }}</div>
-							</td>
-							<td>
-								<div class="title">
-									{{ accountTypeReducer(member.user_type) }}
-								</div>
-							</td>
-							<!--<td>
-								<div class="status">
-									<img src="../../assets/icon/done,success.svg" alt="remove" />
-								</div>
-							</td>-->
-							<td>
-								<div class="relation">{{ member.relationship }}</div>
-							</td>
-							<td>
-								<!-- <div class="remove">
-                  <img
-                    src="../../assets/icon/remove.svg"
-                    alt="remove"
-                    v-if="edit_button_flag && remove_button_flag"
-                  />
-                </div> -->
-							</td>
-						</tr>
-						<tr class="spacer" v-if="member.role == 'Owner+Admin'">
-							Spacer
-						</tr>
-						<!-- <br v-if="member.role == 'Owner+Admin'" :key="member.id" /> -->
+				<div class="member-info-table">
+          <table class="table w-full table-borderless" :class="{'mb-3': invitationObject.visible}">
+            <tr v-for="(member, mIndex) in sortOwnerFirst(teamData.team_members)" :key="mIndex" class="admin-member">
+              <td>
+                <div class="name-short" :class="{'name-short-single': member.role.toString() != 'Owner+Admin' }"><span v-if="member.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(member.role) }}</div>
+              </td>
+              <td>
+                <div class="name-full">{{ member.user.full_name }}</div>
+              </td>
+              <td>
+                <div class="title">
+                  <span class="badge badge-secondary fs-10" :title="accountTypeReducer(member.user_type)">{{ accountTypeReducer(member.user_type).substr(0, 3) }} {{ member.user_type ? '.' : '' }}</span>
+                </div>
+              </td>
+              <td>
+                <div class="relation">{{ member.relationship }}</div>
+              </td>
+              <td></td>
+            </tr>
+          </table>
+          <div class="d-flex member-add-box" v-if="invitationObject.visible">
+            <a-select
+                placeholder="Role"
+                class="fs-10 w-25"
+                v-model="invitationObject.role"
+            >
+              <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>
+              <a-select-option value="Admin"> Admin </a-select-option>
+              <a-select-option value="Member"> Member </a-select-option>
+            </a-select>
 
-						<tr class="admin-member" v-if="member.role == 'Admin'">
-							<td>
-								<!-- <div class="name-short">
-                  {{ nameInitials(member.user.full_name) }}
-                </div> -->
-								<div class="name-short" v-if="!changeRoleEnabled">
-									{{ firstLetter(member.role) }}
-								</div>
-								<!-- <div class="name-short" v-if="!edit_button_flag">
-                  {{ firstLetter(member.role) }}
-                </div> -->
-								<div
-									class="name-short"
-									style="padding: 0px; margin: 0"
-									v-if="changeRoleEnabled"
-								>
-									<select
-										style="
-											color: #242424;
-											background-color: #fff;
-											border-radius: 10px;
-											width: 55px;
-											height: 20px;
-											text-align: left;
-										"
-										@change="(e) => onRoleChange(e, member.user_id)"
-									>
-										<option selected disabled>{{ member.role }}</option>
-										<option>Admin</option>
-										<option>Member</option>
-									</select>
-								</div>
-							</td>
-							<td>
-								<div class="name-full">{{ member.user.full_name }}</div>
-							</td>
-							<td>
-								<div class="title">
-									{{ accountTypeReducer(member.user_type) }}
-								</div>
-							</td>
-							<!--<td>
-								<div class="status">
-									<img src="../../assets/icon/done,success.svg" alt="remove" />
-								</div>
-							</td>-->
-							<td>
-								<div class="relation">{{ member.relationship }}</div>
-							</td>
-							<td>
-								<!-- <div class="remove">
-                  <img
-                    src="../../assets/icon/remove.svg"
-                    alt="remove"
-                    v-if="edit_button_flag && remove_button_flag"
-                  />
-                </div> -->
-							</td>
-						</tr>
-						<tr class="spacer" v-if="member.role == 'Admin'">
-							Spacer
-						</tr>
+            <a-select
+                placeholder="Add as a"
+                class="ml-1 fs-10 w-25"
+                v-model="invitationObject.add_as_a"
+            >
+              <a-select-option value="Candidate"> Candidate </a-select-option>
+              <a-select-option value="Representative"> Representative </a-select-option>
+              <a-select-option value="Match Maker"> Match Maker </a-select-option>
+            </a-select>
 
-						<tr class="only-member" v-if="member.role == 'Member'">
-							<td>
-								<!-- <div class="name-short">
-                  {{ nameInitials(member.user.full_name) }}
-                </div> -->
-								<div class="name-short" v-if="!changeRoleEnabled">
-									{{ firstLetter(member.role) }}
-								</div>
-								<div
-									class="name-short"
-									style="padding: 0px; margin: 0"
-									v-if="changeRoleEnabled"
-								>
-									<select
-										style="
-											color: #242424;
-											background-color: #fff;
-											border-radius: 10px;
-											width: 55px;
-											height: 20px;
-											text-align: left;
-										"
-										@change="(e) => onRoleChange(e, member.user_id)"
-									>
-										<option selected disabled>{{ member.role }}</option>
-										<option>Admin</option>
-										<option>Member</option>
-									</select>
-								</div>
-							</td>
-							<td>
-								<div class="name-full">{{ member.user.full_name }}</div>
-							</td>
-							<td>
-								<div class="title">
-									{{ accountTypeReducer(member.user_type) }}
-								</div>
-							</td>
-							<!--<td>
-								<div class="status">
-									<img src="../../assets/icon/done,success.svg" alt="remove" />
-								</div>
-							</td>-->
-							<td>
-								<div class="relation">{{ member.relationship }}</div>
-							</td>
-							<td>
-								<button
-									type="button"
-									class="remove"
-									v-if="remove_button_flag"
-									@click="
-										deleteTeamMember(member.user_id, member.user.full_name)
-									"
-								>
-									<img src="../../assets/icon/remove.svg" alt="remove" />
-								</button>
-							</td>
-						</tr>
-						<tr class="spacer" v-if="member.role != 'Owner+Admin'">
-							Spacer
-						</tr>
-						<!-- <br v-if="member.role !== 'Owner+Admin'" :key="member.id" /> -->
-					</template>
+            <a-select
+                placeholder="Relationship"
+                class="ml-1 fs-10 w-25"
+                v-model="invitationObject.relationship"
+            >
+              <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
+            </a-select>
 
-					<!-- <tr class="only-member">
-            <td><div class="name-short">A</div></td>
-            <td><div class="name-full">Sheikh Parvez</div></td>
-            <td><div class="title">Rep.</div></td>
-            <td>
-              <div class="status">
-                <img src="../../assets/icon/pending.svg" alt="remove" />
-              </div>
-            </td>
-            <td><div class="relation">Candidate</div></td>
-            <td>
-              <button type="button" class="remove">
-                <img src="../../assets/icon/remove.svg" alt="remove" />
-              </button>
-            </td>
-          </tr>
-          <tr class="only-member">
-            <td><div class="name-short">A</div></td>
-            <td><div class="name-full">Rifat Karim</div></td>
-            <td><div class="title">Rep.</div></td>
-            <td>
-              <div class="status">
-                <img src="../../assets/icon/not-joined.svg" alt="remove" />
-              </div>
-            </td>
-            <td><div class="relation">Candidate</div></td>
-            <td>
-              <button type="button" class="remove">
-                <img src="../../assets/icon/remove.svg" alt="remove" />
-              </button>
-            </td>
-          </tr> -->
-				</table>
+            <a-button
+                v-if="invitedMembers.length <= 0"
+                type="primary"
+                class="ml-1 fs-12 br-20 bg-primary text-white member-btn"
+                :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship"
+                @click="inviteNowWindow">Invite now</a-button>
 
-				<!-- for the sake of reactivity am breaking rule here -->
-				<!-- Team Invitation Part -->
-				<!-- <div v-if="edit_button_flag">
-					<div
-						class="select-member"
-						v-for="index in addMemberCount"
-						:key="index"
-					>
-						<select
-							class="custom-select"
-							id="inputGroupSelect01"
-							@change="handleChangeAddAs($event, index)"
-						>
-							<option selected>Role</option>
-							<option value="Candidate">Candidate</option>
-							<option value="Representative">Representative</option>
-							<option value="Match Maker">Match Maker</option>
-						</select>
+            <a-dropdown class="right-br-20 bg-primary text-white w-25 fs-10 member-btn dropdown-button" v-if="invitedMembers.length > 0">
+              <a-menu slot="overlay">
+                <a-menu-item key="1" @click="submitInvite()">Invitation </a-menu-item>
+                <a-menu-item key="2" @click="removeInvite()">Remove </a-menu-item>
+              </a-menu>
+              <a-button class="ml-1 fs-10"> Invite Now <a-icon type="down" /> </a-button>
+            </a-dropdown>
+          </div>
+        </div>
 
-						<select
-							class="custom-select"
-							id="inputGroupSelect01"
-							@change="handleChangeRole($event, index)"
-						>
-							<option selected>Add as a</option>
-							<option value="Owner+Admin">Owner+Admin</option>
-							<option value="Member Admin">Admin</option>
-							<option value="Member">Member</option>
-						</select>
-
-						<input
-							placeholder="Relation"
-							type="text"
-							class="form-controller input-custom-invitation-link"
-							@change="handleChangeRelationship($event, index)"
-						/>
-						<input
-							v-model="invitation_link_show[index]"
-							type="text"
-							class="form-controller input-custom-invitation-link"
-							readonly
-						/>
-						<button style="height: 100%; width: 15%">
-							<img
-								src="../../assets/icon/link-genarate-share.svg"
-								alt="link genarate and share"
-								@click="generateInvitation(index)"
-							/>
-						</button>
-					</div>
-				</div>
-			</div> -->
 				<a-tooltip placement="top" title="Click save to save your changes">
 					<button
 						class="btn btn-sm btn-success"
@@ -636,23 +424,7 @@
 			</div>
 			<!-- Invitations History -->
 			<div class="team-invitations mr-3">
-				<!-- <button class="btn btn-sm btn-primary" @click="showInvitation">
-					Show Team Invitations
-				</button> -->
-
-				<!-- <a-tooltip placement="top" title="Show team invitations">
-					<img
-						src="@/assets/icon/link-genarate-share.svg"
-						alt=""
-						height="25"
-						width="25"
-						class="shared-link"
-						@click="showInvitation"
-					/>
-				</a-tooltip> -->
-
 				<!-- Team Invitation History Modal -->
-
 				<a-modal
 					:width="700"
 					v-model="showTeamInvitation"
@@ -703,6 +475,11 @@
 			</div>
 		</div>
 		<!-- end box card s -->
+    <InviteMember v-if="invitationObject.visible && invitationObject.invitation_link && invitationObject.memberBox"
+                  :team="teamData"
+                  :invitationObject="invitationObject"
+                  :from="'details-card'"
+                  @executeInviteMember="executeInviteMember" />
 	</div>
 </template>
 
@@ -716,24 +493,28 @@ import TNCModal from "./Modals/TeamNameChangeModal.vue";
 import TDCModal from "./Modals/TeamDescriptionChange.vue";
 // import { Modal } from 'ant-design-vue';
 import firebase from "../../configs/firebase";
+import InviteMember from "./InviteMember";
 export default {
 	name: "TeamDetailsCard",
 	props: ["teamData", "index"],
-	components: { DeletionModal, PreferenceModal, LTModal, TNCModal, TDCModal },
+	components: {InviteMember, DeletionModal, PreferenceModal, LTModal, TNCModal, TDCModal },
 	data() {
 		return {
 			invitation_link: [],
 			invitation_link_show: [],
-			invitationObject: {
-				role: "",
-				add_as_a: "",
-				relationship: "",
-				invitation_link: "",
-			},
-
+      relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-paw'],
+      invitationObject: {
+        role: "Owner+Admin",
+        add_as_a: "Candidate",
+        relationship: "Father",
+        invitation_link: "",
+        visible: false,
+        memberBox: false
+      },
 			add_as_a: [],
 			role: [],
 			relationship: [],
+      invitedMembers: [],
 
 			edit_button_flag: false,
 			remove_button_flag: false,
@@ -983,13 +764,14 @@ export default {
 		},
 		sortOwnerFirst(team) {
 			let _team = [];
-			team.map((_t) => {
+			team.forEach((_t) => {
 				if (_t.role == "Owner+Admin") {
 					_team.unshift(_t);
 				} else {
 					_team.push(_t);
 				}
 			});
+      console.log(team)
 			return _team;
 		},
 		changeRole() {
@@ -1158,8 +940,6 @@ export default {
 			this.showModalPreference = true;
 		},
 		firstLetter(name) {
-			// console.log('ROLE');
-			// console.log(name);
 			if (name == "Owner+Admin" || name == "Member+Admin" || name == "Admin") {
 				return "A";
 			} else {
@@ -1322,16 +1102,17 @@ export default {
 			this.addMemberCount++;
 		},
 		accountTypeReducer(accType) {
-			console.log(accType);
-			if (accType == "Representative") {
-				return "Rep.";
-			}
-			if (accType == "Candidate") {
-				return "Cand.";
-			}
-			if (accType == "Matchmaker") {
-				return "Match.";
-			}
+      return accType;
+			// console.log(accType);
+			// if (accType == "Representative") {
+			// 	return "Rep.";
+			// }
+			// if (accType == "Candidate") {
+			// 	return "Cand.";
+			// }
+			// if (accType == "Matchmaker") {
+			// 	return "Match.";
+			// }
 		},
 		editTeam() {
 			//Toggle the Edit Button
@@ -1525,6 +1306,48 @@ export default {
 					this.invitation_link[index] = "";
 				});
 		},
+    handleAddMemberclick() {
+      this.invitationObject.visible = true;
+    },
+    inviteNowWindow() {
+      this.invitationObject.memberBox = true;
+      this.createInvitaionLink();
+    },
+    executeInviteMember(id) {
+      this.invitationObject.memberBox = false;
+      let data = {
+        role: this.invitationObject.role,
+        add_as_a: this.invitationObject.add_as_a,
+        relationship: this.invitationObject.relationship,
+        invitation_link: this.invitationObject.invitation_link,
+        email: id
+      };
+      if(this.invitedMembers.length > 0) {
+        this.invitedMembers[0] = data;
+      } else {
+        this.invitedMembers.push(data);
+      }
+    },
+    removeInvite() {
+      this.invitedMembers = [];
+      this.invitationObject.invitation_link = '';
+    },
+    async submitInvite() {
+      let payload = {
+        team_id: this.teamData.team_id,
+        members: this.invitedMembers
+      };
+
+      await ApiService.post('/v1/invite-team-members', payload).then(res => {
+        if(res && res.data) {
+          this.invitedMembers = [];
+          this.invitationObject.visible = false;
+          this.invitationObject.memberBox = false;
+          this.invitationObject.invitation_link = false;
+          this.$emit("teamListUpdated");
+        }
+      });
+    },
 		createInvitaionLink() {
 			// amaizingly, for some reason i need to refer this to
 			// a other variable so my iffe function can access this
@@ -1660,7 +1483,26 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// Css for spacer in team member list-item
+.member-info-table {
+  border: 1px solid #d9d9d9;
+  padding: 4px;
+  border-radius: 4px;
+}
+.table {
+  border-collapse: separate;
+  border-spacing: 8px;
+  margin-top: -6px;
+  margin-bottom: -5px;
+}
+.table td, .table th {
+  padding: 0 !important;
+}
+.member-add-box {
+  margin-top: -14px;
+}
+.member-btn {
+  padding: 0 4px !important;
+}
 .spacer {
 	font-size: 8px;
 	color: transparent;
@@ -1909,22 +1751,22 @@ export default {
 		}
 		.admin-member,
 		.only-member {
-			padding: 4px;
-			border-radius: 15px;
+			//padding: 4px;
+			//border-radius: 15px;
 			font-size: 12px;
-			color: #ffffff;
+			//color: #ffffff;
 			td {
-				background-color: #3a3092;
+				background-color: #ffffff;
 			}
 			td:first-of-type {
-				padding-left: 5px;
-				border-top-left-radius: 12px;
-				border-bottom-left-radius: 12px;
+				//padding-left: 5px;
+				//border-top-left-radius: 12px;
+				//border-bottom-left-radius: 12px;
 			}
 			td:last-of-type {
-				padding-right: 5px;
-				border-top-right-radius: 12px;
-				border-bottom-right-radius: 12px;
+				//padding-right: 5px;
+				//border-top-right-radius: 12px;
+				//border-bottom-right-radius: 12px;
 			}
 			td {
 				padding-top: 2px;
@@ -1936,23 +1778,29 @@ export default {
 			.status,
 			.relation,
 			.remove {
-				background-color: #3a3092;
+				//background-color: #3a3092;
 				margin-right: 10px;
 			}
 			.name-short {
-				background-color: #ffffff;
-				color: #6159a8;
-				width: 30px;
-				border-top-left-radius: 12px;
-				border-bottom-left-radius: 12px;
-				padding: 0 5px;
-				font-size: 12px;
-				font-weight: bold;
+        padding: 5px 5px;
+        font-size: 8px;
+        font-weight: bold;
+        color: #ffffff;
+        width: 22px;
+        height: 22px;
+        background: #3a3092;
+        border-radius: 50%;
 			}
+      .name-short-single {
+        padding: 5px 8px;
+      }
+      .name-full {
+        font-size: 14px;
+      }
 			.title {
 				background-color: #ffffff;
 				color: #777777;
-				padding: 0 5px;
+				padding: 2px 5px;
 				border-radius: 10px;
 			}
 			.status {

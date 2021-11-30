@@ -13,9 +13,7 @@
 				</a-row>
 				<a-row>
 					<a-col :span="24">
-						<span class="create-team-message"
-							>Done, You have successfully created a team</span
-						>
+						<span class="create-team-message">Done, You're successfully create a team</span>
 					</a-col>
 				</a-row>
 			</div>

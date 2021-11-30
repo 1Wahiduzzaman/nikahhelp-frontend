@@ -1,6 +1,6 @@
 <template>
 	<div class="col-lg-6 col-xl-4 cards">
-		<a-card class="team-card" style="min-height: 500px;" bodyStyle="padding: 0">
+		<div class="card team-card" style="min-height: 500px;">
       <div class="d-flex align-items-center justify-content-center joining-header position-relative" style="width: 100%">
          <div class="logo-position position-absolute">
            <img
@@ -17,15 +17,18 @@
 						placeholder="Paste link here"
             class="ant-input-box color-primary"
 						size="large"
-						@change="invitationLink = $event.target.value"
+            v-model="invitationLink"
 					>
             <a-icon slot="prefix" type="snippets" class="input-prefix" />
-            <a-icon slot="suffix" type="caret-right" class="input-suffix" />
+            <a-icon slot="suffix" type="caret-right" class="input-suffix"
+                    @click="getTheTeamInvitationInfo"
+                    :disabled="!invitationLink"
+                    :class="{'bg-primary': invitationLink}" />
 					</a-input>
 				</a-col>
 			</a-row>
-      <div class="mt-4 px-4 invite-info-box">
-        <h4 class="invited-respresent color-primary fs-20">Congratulations you're joining as a <b class="font-weight-bold text-uppercase">representative</b></h4>
+      <div v-if="team" class="mt-4 px-4 invite-info-box">
+        <h4 class="invited-respresent color-primary fs-20">Congratulations you're joining as a <b class="font-weight-bold text-uppercase">{{ team.user_type }}</b></h4>
 
         <div class="invite-info py-4">
           <div class="d-flex">
@@ -33,42 +36,42 @@
               <h6 class="fs-14">Invited by</h6>
               <span style="margin-top: -6px">:</span>
             </div>
-            <h6 class="ml-2 fs-14">Selina Parvez</h6>
+            <h6 class="ml-2 fs-14">{{ team && team.team && team.team.created_by ? team.team.created_by.full_name : '' }}</h6>
           </div>
           <div class="d-flex">
             <div class="d-flex justify-content-between align-items-center col-50">
               <h6 class="fs-14">Team name</h6>
               <span style="margin-top: -6px">:</span>
             </div>
-            <h6 class="ml-2 fs-14">Selina's family</h6>
+            <h6 class="ml-2 fs-14">{{ team && team.team ? team.team.name : '' }}</h6>
           </div>
           <div class="d-flex">
             <div class="d-flex justify-content-between align-items-center col-50">
               <h6 class="fs-14">Total team member</h6>
               <span style="margin-top: -9px">:</span>
             </div>
-            <h6 class="ml-2 fs-14">2</h6>
+            <h6 class="ml-2 fs-14">{{ team && team.team ? team.team.member_count : '' }}</h6>
           </div>
           <div class="d-flex">
             <div class="d-flex justify-content-between align-items-center col-50">
               <h6 class="fs-14">Role</h6>
               <span style="margin-top: -6px">:</span>
             </div>
-            <h6 class="ml-2 fs-14">Member</h6>
+            <h6 class="ml-2 fs-14">{{ team.role }}</h6>
           </div>
           <div class="d-flex">
             <div class="d-flex justify-content-between align-items-center col-50">
               <h6 class="fs-14">Relationship</h6>
               <span style="margin-top: -6px">:</span>
             </div>
-            <h6 class="ml-2 fs-14">Brother-in-law</h6>
+            <h6 class="ml-2 fs-14">{{ team.relationship }}</h6>
           </div>
           <div class="d-flex">
             <div class="d-flex justify-content-between align-items-center col-50">
               <h6 class="fs-14">Team create date</h6>
               <span style="margin-top: -6px">:</span>
             </div>
-            <h6 class="ml-2 fs-14">12/11/2020</h6>
+            <h6 class="ml-2 fs-14">{{ team.team.created_at | moment("DD/MM/YYYY") }}</h6>
           </div>
         </div>
       </div>
@@ -78,7 +81,7 @@
       <div class="position-absolute footer-conf-btn">
         <a-button class="confirm-button button float-right" @click="onConfirmClick">Confirm</a-button>
       </div>
-		</a-card>
+		</div>
 	</div>
 </template>
 
@@ -93,6 +96,7 @@ export default {
 			user: {},
 			is_verified: 1,
 			invitationLink: "",
+      team: null
 		};
 	},
 	created() {},
@@ -109,7 +113,11 @@ export default {
 			console.log("search clicked");
 		},
 		onConfirmClick(event) {
-      this.$emit("toggleToTeamPassword");
+      if(this.invitationLink && this.team) {
+        let payload = this.team.team;
+        payload.invitation_link = this.invitationLink;
+        this.$emit("toggleToTeamPassword", payload);
+      }
 			// if (this.invitationLink.length > 0) {
 			// 	console.log("Coming here");
 			// 	this.$router.push({
@@ -126,6 +134,15 @@ export default {
 			// 	});
 			// }
 		},
+    async getTheTeamInvitationInfo() {
+      if(this.invitationLink) {
+        await ApiService.get(`/v1/team-invitation-information/${this.invitationLink}`).then(res => {
+          if(res && res.data) {
+            this.team = res.data.data;
+          }
+        });
+      }
+    }
 	},
 };
 </script>
@@ -632,14 +649,14 @@ export default {
     }
     .footer-cancel-btn {
       bottom: 20px;
-      left: 12px;
+      left: 32px;
       .button {
         border-radius: 16px;
       }
     }
     .footer-conf-btn {
       bottom: 20px;
-      right: 12px;
+      right: 32px;
       .button {
         border-radius: 16px;
       }
