@@ -123,19 +123,19 @@
                       <a-row :gutter="[8]">
                         <a-col :span="12">
                           <a-form-model-item
-                            ref="ver_country"
-                            prop="ver_country"
+                            ref="ver_country_id"
+                            prop="ver_country_id"
                           >
                             <v-select
                               :clearable="false"
                               class="style-chooser"
                               @input="onChangeCountry"
-                              id="ver_country"
+                              id="ver_country_id"
                               placeholder="Country"
-                              v-model="verification.ver_country"
+                              v-model="verification.ver_country_id"
                               label="name"
                               :reduce="(option) => option.id"
-                              :options="candidateDetails.countries"
+                              :options="representativeDetails.countries"
                               ><template #open-indicator>
                                 <a-icon type="down" /> </template
                             ></v-select>
@@ -154,7 +154,7 @@
                               <a-select-option
                                 v-for="(
                                   _country, key
-                                ) in candidateDetails.countries"
+                                ) in representativeDetails.countries"
                                 :value="_country.id"
                                 :key="key"
                               >
@@ -164,17 +164,17 @@
                           </a-form-model-item>
                         </a-col>
                         <a-col :span="12">
-                          <a-form-model-item ref="ver_city" prop="ver_city">
+                          <a-form-model-item ref="ver_city_id" prop="ver_city_id">
                             <v-select
                               :clearable="false"
                               class="style-chooser"
                               @input="onValueChange"
-                              id="ver_city"
+                              id="ver_city_id"
                               placeholder="City"
                               :reduce="(option) => option.id"
-                              v-model="verification.ver_city"
+                              v-model="verification.ver_city_id"
                               label="name"
-                              :options="candidateDetails.countries"
+                              :options="verification.cities"
                               ><template #open-indicator>
                                 <a-icon type="down" /> </template
                             ></v-select>
@@ -457,7 +457,7 @@
                               placeholder="Occupation"
                               v-model="verification.ver_recommences_occupation"
                               label="name"
-                              :options="candidateDetails.occupations"
+                              :options="representativeDetails.occupations"
                               ><template #open-indicator>
                                 <a-icon type="down" /> </template
                             ></v-select>
@@ -475,7 +475,7 @@
                               <a-select-option
                                 v-for="(
                                   _occupation, key
-                                ) in candidateDetails.occupations"
+                                ) in representativeDetails.occupations"
                                 :value="_occupation"
                                 :key="key"
                               >
@@ -503,7 +503,7 @@
                             ref="ver_recommences_mobile_no"
                             prop="ver_recommences_mobile_no"
                           >
-                            <a-input-number
+                            <a-input
                               class="w-100"
                               id="inputNumber"
                               placeholder="Mobile number"
@@ -533,9 +533,9 @@ import FileUploadOne from "@/components/shared/FileUploadOne.vue";
 import ApiService from "../../services/api.service";
 import vSelect from "vue-select";
 export default {
-  name: "Verification",
+  name: "VerificationRef",
   props: {
-    candidateDetails: {
+    representativeDetails: {
       type: Object,
     },
     verification: {
@@ -576,9 +576,32 @@ export default {
       this.saveVerificationInfo();
     },
     saveVerificationInfo() {
+      const {
+        ver_city_id,
+        ver_country,
+        ver_country_id,
+        ver_document_type,
+        ver_recommences_address,
+        ver_recommences_first_name,
+        ver_recommences_last_name,
+        ver_recommences_occupation,
+        ver_recommences_title,
+        ver_status,
+        ver_recommences_mobile_no
+      } = this.verification;
       this.$store
-        .dispatch("saveVerificationInfo", {
-          ...this.verification,
+        .dispatch("saveRepresentativeVerificationInfo", {
+          ver_city_id,
+          ver_country,
+          ver_country_id,
+          ver_document_type,
+          ver_recommences_address,
+          ver_recommences_first_name,
+          ver_recommences_last_name,
+          ver_recommences_occupation,
+          ver_recommences_title,
+          ver_status,
+          ver_recommences_mobile_no,
         })
         .then((data) => {
           this.$emit("valueChange", {
@@ -590,7 +613,7 @@ export default {
     },
     saveImageVerificationInfo(image) {
       this.$store
-        .dispatch("saveImageVerificationInfo", image)
+        .dispatch("saveRepresentativeImageVerificationInfo", image)
         .then((data) => {
           this.verification.ver_image_back =
             data.data.data.verification.ver_image_back;

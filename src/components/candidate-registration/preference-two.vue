@@ -218,13 +218,15 @@
                         <v-select
                           :clearable="false"
                           id="preferred_countries0"
-                          class="style-chooser"
+                          class="style-chooser select-ma w-100"
                           v-model.lazy="preferenceData.preferred_countries[0]"
                           label="name"
                           placeholder="Select Country"
                           :options="candidateDetails.countries"
                           @input="onChangeCountry($event, 'listOne', 'allowed')"
-                          ><template #open-indicator>
+                          >
+                          <span slot="no-options">Select Country</span>
+                          <template #open-indicator>
                             <a-icon type="down" /> </template
                         ></v-select>
                       </div>

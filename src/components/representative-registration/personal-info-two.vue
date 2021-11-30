@@ -15,7 +15,6 @@
           ref="repPersonalInfoFormOne"
           v-if="personalInformation && personalInformation.essential"
           :model="personalInformation.essential"
-
           class="form-ma"
         >
           <a-row>
@@ -42,7 +41,23 @@
                 <a-col span="12">
                   <!-- ToDo:: need to add a fake option as placeholders are not working -->
                   <a-form-model-item ref="per_gender" prop="per_gender">
-                    <a-select
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange($event, 'per_gender', 'essential')"
+                      id="per_gender"
+                      placeholder="Select gender"
+                      :reduce="(option) => option.value"
+                      v-model="personalInformation.essential.per_gender"
+                      label="name"
+                      :options="[
+                        { name: 'Male', value: 1 },
+                        { name: 'Female', value: 2 },
+                      ]"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                    <!-- <a-select
                       @change="onValueChange($event, 'per_gender', 'essential')"
                       id="per_gender"
                       ref="select"
@@ -55,7 +70,7 @@
                       >
                       <a-select-option :value="1">Male</a-select-option>
                       <a-select-option :value="2">Female</a-select-option>
-                    </a-select>
+                    </a-select> -->
                   </a-form-model-item>
                 </a-col>
               </a-row>
@@ -114,7 +129,21 @@
                   </a-tooltip>
                 </a-col>
                 <a-col :span="12">
-                  <a-select
+                  <v-select
+                    :clearable="false"
+                    class="style-chooser"
+                    @input="
+                      onValueChange($event, 'per_occupation', 'essential')
+                    "
+                    id="per_occupation"
+                    placeholder="Select Occupation"
+                    v-model="personalInformation.essential.per_occupation"
+                    label="name"
+                    :options="representativeDetails.occupations"
+                    ><template #open-indicator>
+                      <a-icon type="down" /> </template
+                  ></v-select>
+                  <!-- <a-select
                     :showSearch="true"
                     option-filter-prop="children"
                     :filter-option="filterOption"
@@ -135,8 +164,8 @@
                       {{ value }}
                     </a-select-option>
 
-                    <!-- <a-select-option value="Other"> Other </a-select-option> -->
-                  </a-select>
+
+                  </a-select> -->
                   <a-input
                     class="w-100 mt-2"
                     placeholder="Please specify"
@@ -160,7 +189,6 @@
           ref="repPersonalInfoFormTwo"
           v-if="personalInformation && personalInformation.personal"
           :model="personalInformation.personal"
-        
           class="form-ma"
         >
           <a-row>
@@ -171,7 +199,7 @@
                   <div class="mb-2">
                     <a-icon
                       v-if="
-                        personalInformation.personal.per_county &&
+                        personalInformation.personal.per_current_residence_country &&
                         personalInformation.personal.per_current_residence_city
                       "
                       class="color-success mr-2 fs-18 fw-500"
@@ -190,7 +218,20 @@
                 <a-col :span="12">
                   <a-row :gutter="[8]">
                     <a-col :span="12">
-                      <a-select
+                      <v-select
+                        :clearable="false"
+                        class="style-chooser"
+                        @input="onChangeCountryResidence"
+                        id="per_current_residence_country"
+                        :placeholder="'Country'"
+                        :reduce="(option) => option.name"
+                        v-model="personalInformation.personal.per_current_residence_country"
+                        label="name"
+                        :options="representativeDetails.countries"
+                        ><template #open-indicator>
+                          <a-icon type="down" /> </template
+                      ></v-select>
+                      <!-- <a-select
                         :showSearch="true"
                         option-filter-prop="children"
                         :filter-option="filterOption"
@@ -211,11 +252,33 @@
                           {{ value.name }}
                         </a-select-option>
 
-                        <!-- <a-select-option value="Other"> Other </a-select-option> -->
-                      </a-select>
+                     
+                      </a-select> -->
                     </a-col>
                     <a-col :span="12">
-                      <a-select
+                      <v-select
+                        :clearable="false"
+                        class="style-chooser"
+                        @input="
+                          onValueChange(
+                            $event,
+                            'per_current_residence_city',
+                            'contact'
+                          )
+                        "
+                        id="per_current_residence_city"
+                        placeholder="Select City"
+                        :reduce="(option) => option.name"
+                        v-model="
+                          personalInformation.personal
+                            .per_current_residence_city
+                        "
+                        label="name"
+                        :options="representativeDetails.cities"
+                        ><template #open-indicator>
+                          <a-icon type="down" /> </template
+                      ></v-select>
+                      <!-- <a-select
                         :showSearch="true"
                         option-filter-prop="children"
                         :filter-option="filterOption"
@@ -243,14 +306,14 @@
                           {{ value.name }}
                         </a-select-option>
 
-                        <!-- <a-select-option value="Other"> Other </a-select-option> -->
-                      </a-select>
+                     
+                      </a-select> -->
                     </a-col>
                   </a-row>
                   <a-input
                     class="w-100 mt-2"
                     v-if="
-                      personalInformation.personal.per_county == 'Other' ||
+                      personalInformation.personal.per_current_residence_country == 'Other' ||
                       personalInformation.personal.per_current_residence_city ==
                         'Other'
                     "
@@ -313,7 +376,22 @@
                     <a-col :span="12">
                       <a-row :gutter="[8]">
                         <a-col :span="12">
-                          <a-select
+                          <v-select
+                            :clearable="false"
+                            class="style-chooser"
+                            @input="onChangeCountryPermanent"
+                            id="per_permanent_country"
+                            :placeholder="'Country'"
+                            :reduce="(option) => option.name"
+                            v-model="
+                              personalInformation.personal.per_permanent_country
+                            "
+                            label="name"
+                            :options="representativeDetails.countries"
+                            ><template #open-indicator>
+                              <a-icon type="down" /> </template
+                          ></v-select>
+                          <!-- <a-select
                             :showSearch="true"
                             option-filter-prop="children"
                             :filter-option="filterOption"
@@ -336,13 +414,26 @@
                               {{ value.name }}
                             </a-select-option>
 
-                            <!-- <a-select-option value="Other">
-                              Other
-                            </a-select-option> -->
-                          </a-select>
+                          
+                          </a-select> -->
                         </a-col>
                         <a-col :span="12">
-                          <a-select
+                          <v-select
+                            :clearable="false"
+                            class="style-chooser"
+                            @input="onValueChange($event, 'contact')"
+                            id="per_permanent_city"
+                            placeholder="Select City"
+                            :reduce="(option) => option.name"
+                            v-model="
+                              personalInformation.personal.per_permanent_city
+                            "
+                            label="name"
+                            :options="representativeDetails.cities"
+                            ><template #open-indicator>
+                              <a-icon type="down" /> </template
+                          ></v-select>
+                          <!-- <a-select
                             :showSearch="true"
                             option-filter-prop="children"
                             :filter-option="filterOption"
@@ -365,10 +456,8 @@
                               {{ value.name }}
                             </a-select-option>
 
-                            <!-- <a-select-option value="Other">
-                              Other
-                            </a-select-option> -->
-                          </a-select>
+                           
+                          </a-select> -->
                         </a-col>
                       </a-row>
                       <a-input
@@ -509,83 +598,7 @@
                 </a-col>
               </a-row>
             </a-col>
-            <!-- <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row :gutter="[16]" type="flex" justify="between" align="top">
-                <a-col :span="12">
-                  <div class="mb-2"><a-icon class="color-success mr-2 fs-18 fw-500" type="check" />What is your Mobile number?</div>
-                  <span class="color-info fw-500">Need help?</span>
-                </a-col>
-                <a-col :span="12">
-                  <div class="mobile-verification">
-                    <a-input-group class="mb-2">
-                      <a-row :gutter="8" type="flex" align="middle">
-                        <a-col :span="7">
-                          <a-select class="select-ma w-100 rounded-right" placeholder="Gender">
-                            <a-select-option value="jack"> Male </a-select-option>
-                            <a-select-option value="lucy"> Female </a-select-option>
-                          </a-select>
-                        </a-col>
-                        <a-col :span="13">
-                          <a-input class="rounded" default-value="26888888" />
-                        </a-col>
-                        <a-col :span="4">
-                          <a-button class="rounded-left" shape="round" type="primary">Ok</a-button>
-                        </a-col>
-                      </a-row>
-                    </a-input-group>
-                    <a-input-group class="mb-2">
-                      <a-row :gutter="8" type="flex" align="middle">
-                        <a-col :span="7">
-                          <a-select class="select-ma w-100 rounded-right" placeholder="+44">
-                            <a-select-option value="jack"> Male </a-select-option>
-                            <a-select-option value="lucy"> Female </a-select-option>
-                          </a-select>
-                        </a-col>
-                        <a-col :span="13">
-                          <a-input class="rounded" default-value="26888888" />
-                        </a-col>
-                        <a-col :span="4">
-                          <a-button class="rounded-left flex-center-center" shape="round" type="primary"
-                            ><a-icon class="fs-16" type="sync"
-                          /></a-button>
-                        </a-col>
-                      </a-row>
-                    </a-input-group>
-                    <span class="fs-11 color-info mb-2">Please enter the verification code we sent your phone</span>
-                    <a-input-group>
-                      <a-row :gutter="4">
-                        <a-col :span="3">
-                          <a-input class="rounded-right" default-value="" />
-                        </a-col>
-                        <a-col :span="3">
-                          <a-input default-value="" />
-                        </a-col>
-                        <a-col :span="3">
-                          <a-input default-value="" />
-                        </a-col>
-                        <a-col :span="3">
-                          <a-input default-value="" />
-                        </a-col>
-                        <a-col :span="3">
-                          <a-input default-value="" />
-                        </a-col>
-                        <a-col :span="3">
-                          <a-input default-value="" />
-                        </a-col>
-                        <a-col :span="6">
-                          <a-button class="rounded-left" shape="round" type="primary">verify</a-button>
-                        </a-col>
-                      </a-row>
-                    </a-input-group>
-                    <span class="fs-11 color-danger">You entered wrong verification code</span>
-                    <div class="mt-2 fw-500">
-                      +44 444 949403938389
-                      <a-button class="btn-success" shape="round" size="small">verify</a-button>
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col> -->
+
             <a-col class="form-item py-3" :span="24">
               <!-- <a-row :gutter="[16]" type="flex" justify="between" align="top"> -->
               <a-row :gutter="[16]" type="flex" align="top">
@@ -609,7 +622,7 @@
                     class="w-100"
                     placeholder="Email Address"
                     id="inputNumber"
-                    :value="$store.state.user.user.email"
+                    :value="personalInformation.personal.email"
                     :disabled="true"
                   />
                 </a-col>
@@ -636,7 +649,8 @@ export default {
   },
   name: "personInfoRefTwo",
   components: {
-    DropdownDatePicker,vSelect
+    DropdownDatePicker,
+    vSelect,
   },
   data() {
     return {
@@ -650,11 +664,11 @@ export default {
   async mounted() {},
   methods: {
     onValueChange(e, name, action) {
-      if (action === "essential") {
-        this.personalInformation.essential[name] = e;
-      } else {
-        this.personalInformation.personal[name] = e;
-      }
+    //   if (action === "essential") {
+    //     this.personalInformation.essential[name] = e;
+    //   } else {
+    //     this.personalInformation.personal[name] = e;
+    //   }
       this.save(action);
     },
     async saveEssentialInfo() {
@@ -711,20 +725,22 @@ export default {
       this.$emit("pannelChanged", e);
     },
     onChangeCountryResidence(value) {
-      this.personalInformation.personal.country = value;
-      this.countries.map((_country) => {
-        if (_country.name == value) {
-          this.cities1 = _country.cities;
-        }
-      });
+     
+    //   this.countries.map((_country) => {
+    //     if (_country.name == value) {
+    //       this.cities1 = _country.cities;
+    //     }
+    //   });
+      this.saveContactInfo();
     },
     onChangeCountryPermanent(value) {
-      this.personalInformation.personal.country = value;
-      this.countries.map((_country) => {
-        if (_country.name == value) {
-          this.cities2 = _country.cities;
-        }
-      });
+   
+    //   this.countries.map((_country) => {
+    //     if (_country.name == value) {
+    //       this.cities2 = _country.cities;
+    //     }
+    //   });
+      this.saveContactInfo();
     },
   },
 };
@@ -732,7 +748,9 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
-
+.anticon {
+    color: #b3b2b2;
+  }
 .ant-tooltip-inner {
   border-radius: 0px;
 }

@@ -42,14 +42,9 @@ export default {
         });
     });
   },
-
-  async createVerificationInformationRepresentative(context, payload) {
+  async saveRepresentativeVerificationInfo(_, payload) {
     return new Promise((resolve, reject) => {
-      ApiService.post("v1/representative/verify/identity", payload, {
-        header: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      ApiService.post("v1/representative/verify/identity", payload)
         .then((data) => {
           resolve(data);
         })
@@ -58,6 +53,32 @@ export default {
         });
     });
   },
+  async saveRepresentativeImageVerificationInfo(_, payload) {
+    return new Promise((resolve, reject) => {
+      ApiService.image("v1/representative/verify/identity", payload)
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+    });
+  },
+  // async createVerificationInformationRepresentative(context, payload) {
+  //   return new Promise((resolve, reject) => {
+  //     ApiService.post("v1/representative/verify/identity", payload, {
+  //       header: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     })
+  //       .then((data) => {
+  //         resolve(data);
+  //       })
+  //       .catch((error) => {
+  //         reject(error);
+  //       });
+  //   });
+  // },
 
   async getRepresentativeData(context) {
     return new Promise((resolve, reject) => {

@@ -158,7 +158,7 @@ export default {
         headerIsFixed: false,
       },
       propsData: { ...createData() },
-      current: 1,
+      current: 0,
       enabledNextBtn: false,
       candidateDetails: {
         preferenceData: null,
@@ -447,7 +447,7 @@ export default {
             ""
           );
         }
-        //this.current = response.data.data.user.data_input_status;
+        this.current = response.data.data.user.data_input_status;
         this.checkExistData();
       }
     },

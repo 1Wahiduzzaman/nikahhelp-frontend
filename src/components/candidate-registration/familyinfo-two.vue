@@ -462,7 +462,7 @@
                       class="style-chooser"
                       @input="onValueChange"
                       id="country_of_origin"
-                      :reduce="(option) => option.id"
+                      :reduce="(option) => option.name"
                       placeholder="Please select country of origin"
                       v-model="familyInformation.country_of_origin"
                       label="name"

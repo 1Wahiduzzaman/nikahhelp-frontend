@@ -11,7 +11,7 @@ export const InitRoute = (to, from, next) => {
 
         return next({ name: 'CandidateRegistration' });
     }
-    else if (user.account_type === 2 && user.data_input_status <= 3) {
+    else if (user.account_type === 2 ) {
         return next({ name: 'RepresentativeRegistration' });
     }
     else {

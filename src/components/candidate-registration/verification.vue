@@ -123,16 +123,16 @@
                       <a-row :gutter="[8]">
                         <a-col :span="12">
                           <a-form-model-item
-                            ref="ver_country"
-                            prop="ver_country"
+                            ref="ver_country_id"
+                            prop="ver_country_id"
                           >
                             <v-select
                               :clearable="false"
                               class="style-chooser"
                               @input="onChangeCountry"
-                              id="ver_country"
+                              id="ver_country_id"
                               placeholder="Country"
-                              v-model="verification.ver_country"
+                              v-model="verification.ver_country_id"
                               label="name"
                               :reduce="(option) => option.id"
                               :options="candidateDetails.countries"
@@ -164,17 +164,17 @@
                           </a-form-model-item>
                         </a-col>
                         <a-col :span="12">
-                          <a-form-model-item ref="ver_city" prop="ver_city">
+                          <a-form-model-item ref="ver_city_id" prop="ver_city_id">
                             <v-select
                               :clearable="false"
                               class="style-chooser"
                               @input="onValueChange"
-                              id="ver_city"
+                              id="ver_city_id"
                               placeholder="City"
                               :reduce="(option) => option.id"
-                              v-model="verification.ver_city"
+                              v-model="verification.ver_city_id"
                               label="name"
-                              :options="candidateDetails.countries"
+                              :options="verification.cities"
                               ><template #open-indicator>
                                 <a-icon type="down" /> </template
                             ></v-select>
@@ -503,7 +503,7 @@
                             ref="ver_recommences_mobile_no"
                             prop="ver_recommences_mobile_no"
                           >
-                            <a-input-number
+                            <a-input
                               class="w-100"
                               id="inputNumber"
                               placeholder="Mobile number"
@@ -576,9 +576,32 @@ export default {
       this.saveVerificationInfo();
     },
     saveVerificationInfo() {
+      const {
+        ver_city_id,
+        ver_country,
+        ver_country_id,
+        ver_document_type,
+        ver_recommences_address,
+        ver_recommences_first_name,
+        ver_recommences_last_name,
+        ver_recommences_occupation,
+        ver_recommences_title,
+        ver_status,
+        ver_recommences_mobile_no
+      } = this.verification;
       this.$store
         .dispatch("saveVerificationInfo", {
-          ...this.verification,
+          ver_city_id,
+          ver_country,
+          ver_country_id,
+          ver_document_type,
+          ver_recommences_address,
+          ver_recommences_first_name,
+          ver_recommences_last_name,
+          ver_recommences_occupation,
+          ver_recommences_title,
+          ver_status,
+          ver_recommences_mobile_no,
         })
         .then((data) => {
           this.$emit("valueChange", {

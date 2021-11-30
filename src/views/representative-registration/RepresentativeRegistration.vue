@@ -66,7 +66,11 @@
             :imageUrlFront="imageUrlFront"
             :imageUrlBack="imageUrlBack"
           /> -->
-          <VerificationInfo ref="verificationInfoRef" />
+          <Verification
+            :representativeDetails="representativeDetails"
+            :verification="representativeDetails.verification"
+            ref="VerificationRef"
+          />
         </div>
         <div class="steps-content" v-if="current == 2">
           <!-- <ImageUpload
@@ -138,6 +142,7 @@ const createData = () => ({
 import PersonalInfo from "@/components/representative-registration/PersonalInfo.vue";
 import PersonalInfoTwo from "@/components/representative-registration/personal-info-two.vue";
 import VerificationInfo from "@/components/representative-registration/VerificationInfo.vue";
+import Verification from "@/components/representative-registration/verification.vue";
 import ImageUpload from "@/components/representative-registration/ImageUpload.vue";
 import AgreementSubmit from "@/components/representative-registration/AgreementSubmit.vue";
 import ApiService from "../../services/api.service";
@@ -153,6 +158,7 @@ export default {
     PersonalInfo,
     PersonalInfoTwo,
     VerificationInfo,
+    Verification,
     ImageUpload,
     AgreementSubmit,
     Header,
@@ -217,14 +223,21 @@ export default {
       if (response.status === 200) {
         const details = {
           countries: response.data.data.countries,
-          occupations: response.data.data.occupations,
+          occupations: [],
           id: user.id,
+          verification: {
+            ...response.data.data.representative_info.verification,
+          },
           personalInformation: {
             essential: {
               ...response.data.data.representative_info.essential,
-              default_date: response.data.data.representative_info.essential.dob,
+              default_date:
+                response.data.data.representative_info.essential.dob,
             },
-            personal: { ...response.data.data.representative_info.personal },
+            personal: {
+              ...response.data.data.representative_info.personal,
+              email: user.email,
+            },
           },
         };
         console.log("details", details);
