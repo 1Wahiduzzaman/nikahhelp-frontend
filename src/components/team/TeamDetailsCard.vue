@@ -360,10 +360,25 @@
                   <span class="badge badge-secondary fs-10" :title="accountTypeReducer(member.user_type)">{{ accountTypeReducer(member.user_type).substr(0, 3) }} {{ member.user_type ? '.' : '' }}</span>
                 </div>
               </td>
+              <td><div class="status-box bg-success text-white">&#10003;</div></td>
               <td>
                 <div class="relation">{{ member.relationship }}</div>
               </td>
-              <td></td>
+              <td><div class="minus-icon cursor-pointer" @click="deleteTeamMember(member.user_id, member.user.full_name)">-</div></td>
+            </tr>
+            <tr v-for="item in teamData.team_invited_members" :key="item.id" class="admin-member">
+              <td>
+                <div class="name-short" :class="{'name-short-single': item.role.toString() != 'Owner+Admin' }"><span v-if="item.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(item.role) }}</div>
+              </td>
+              <td><div class="name-full">{{ item.user ? item.user.full_name : 'Not joined yet' }}</div></td>
+              <td>
+                <div class="title">
+                  <span class="badge badge-secondary fs-10" :title="accountTypeReducer(item.user_type)">{{ accountTypeReducer(item.user_type).substr(0, 3) }} {{ item.user_type ? '.' : '' }}</span>
+                </div>
+              </td>
+              <td><div class="status-box bg-brand text-white">&#10006;</div></td>
+              <td><div class="relation">{{ item.relationship }}</div></td>
+              <td><div class="minus-icon cursor-pointer">-</div></td>
             </tr>
           </table>
           <div class="d-flex member-add-box" v-if="invitationObject.visible">
@@ -479,6 +494,7 @@
                   :team="teamData"
                   :invitationObject="invitationObject"
                   :from="'details-card'"
+                  @toggleMemberbox="toggleMemberbox"
                   @executeInviteMember="executeInviteMember" />
 	</div>
 </template>
@@ -956,10 +972,7 @@ export default {
 				cancelText: "No",
 				confirmLoading: true,
 				async onOk() {
-					await ApiService.delete("v1/team-members-delete", {
-						team_id: self.teamData.team_id,
-						delete_user_id: id,
-					})
+					await ApiService.delete(`/v1/team-members-delete?team_id=${self.teamData.team_id}&delete_user_id=${id}`)
 						.then((data) => {
 							console.log(data);
 							if (data.data.status != "FAIL") {
@@ -1313,6 +1326,9 @@ export default {
       this.invitationObject.memberBox = true;
       this.createInvitaionLink();
     },
+    toggleMemberbox() {
+      this.invitationObject.memberBox = false;
+    },
     executeInviteMember(id) {
       this.invitationObject.memberBox = false;
       let data = {
@@ -1483,6 +1499,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "@/styles/base/_variables.scss";
 .member-info-table {
   border: 1px solid #d9d9d9;
   padding: 4px;
@@ -1518,6 +1535,32 @@ export default {
 .input-custom-invitation-link {
 	width: 30%;
 	border-radius: 5px;
+}
+.bg-brand {
+  background: #E51F76FF;
+}
+.minus-icon {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: $bg-brand;
+  color: $color-white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  margin-top: 3px;
+}
+.status-box {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  margin-top: 2px;
+  padding: 6px;
 }
 // start css for team-card
 .team-card {
