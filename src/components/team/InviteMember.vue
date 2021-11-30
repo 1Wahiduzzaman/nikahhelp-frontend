@@ -1,5 +1,5 @@
 <template>
-  <div class="position-absolute add-member-box">
+  <div class="position-absolute add-member-box" :class="{'from-data-card': from === 'details-card'}">
     <div class="member-box position-relative">
       <div class="cross-button-box mr-2 mt-2 d-flex justify-content-center align-items-center cursor-pointer" @click="$emit('toggleMemberbox')">&#10006;</div>
       <div class="d-flex px-4">
@@ -38,7 +38,7 @@
 import ApiService from '@/services/api.service';
 export default {
   name: "InviteMember",
-  props: ['team', 'invitationObject'],
+  props: ['team', 'invitationObject', 'from'],
   data() {
     return {
       user_email: ''
@@ -58,9 +58,14 @@ export default {
   },
   methods: {
     inviteMember(id) {
-      id = 'mahmud@gmail.com';
-      this.$emit('addMember', id);
-      this.$emit('toggleMemberbox');
+      if(this.from === 'details-card') {
+        id = 'mahmud@gmail.com';
+        this.$emit("executeInviteMember", id);
+      } else {
+        id = 'mahmud@gmail.com';
+        this.$emit('addMember', id);
+        this.$emit('toggleMemberbox');
+      }
     },
     copyToken() {
       let copyText = document.getElementById("copyInput");
@@ -140,5 +145,14 @@ export default {
       }
     }
   }
+}
+.from-data-card {
+  width: 96%;
+  top: 20px;
+  left: 0;
+  height: 500px;
+  border-radius: 10px;
+  margin-left: 16px;
+  background: $bg-primary;
 }
 </style>

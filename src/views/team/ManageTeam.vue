@@ -40,7 +40,7 @@
 								@teamListUpdated="loadTeams"
 							/>
               <JoinCreateTeam
-                  v-if="joinCreateTeamShow && teams.length <= 5"
+                  v-if="joinCreateTeamShow && teams.length < 5"
                   class="d-flex"
                   style="margin-top: 20px"
                   @joinATeam="

@@ -1,5 +1,5 @@
 <template>
-	<div class="col-lg-6 col-xl-4">
+	<div class="col-lg-6 col-xl-4 position-relative">
 		<!-- Team Deletion Modal -->
 		<DeletionModal
 			:showModalProp="showModalDeletion"
@@ -262,7 +262,7 @@
 			<!-- Add or Remove Member Button -->
 			<div class="member-action">
 				<div class="add-remove">
-					<button class="add-member" @click="addMemberClick">
+					<button class="add-member" @click="handleAddMemberclick">
 						<img src="../../assets/icon/add.svg" alt="add" /> Add member
 					</button>
 					<a-tooltip placement="top" title="Show team invitations">
@@ -347,28 +347,26 @@
 
 				<!-- Member Table -->
 				<div class="member-info-table">
-          <table class="table w-full table-borderless">
-            <template v-for="member in sortOwnerFirst(teamData.team_members)">
-              <tr class="admin-member">
-                <td>
-                  <div class="name-short" :class="{'name-short-single': member.role.toString() != 'Owner+Admin' }"><span v-if="member.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(member.role) }}</div>
-                </td>
-                <td>
-                  <div class="name-full">{{ member.user.full_name }}</div>
-                </td>
-                <td>
-                  <div class="title">
-                    <span class="badge badge-secondary fs-10" :title="accountTypeReducer(member.user_type)">{{ accountTypeReducer(member.user_type).substr(0, 3) }} {{ member.user_type ? '.' : '' }}</span>
-                  </div>
-                </td>
-                <td>
-                  <div class="relation">{{ member.relationship }}</div>
-                </td>
-                <td></td>
-              </tr>
-            </template>
+          <table class="table w-full table-borderless" :class="{'mb-3': invitationObject.visible}">
+            <tr v-for="(member, mIndex) in sortOwnerFirst(teamData.team_members)" :key="mIndex" class="admin-member">
+              <td>
+                <div class="name-short" :class="{'name-short-single': member.role.toString() != 'Owner+Admin' }"><span v-if="member.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(member.role) }}</div>
+              </td>
+              <td>
+                <div class="name-full">{{ member.user.full_name }}</div>
+              </td>
+              <td>
+                <div class="title">
+                  <span class="badge badge-secondary fs-10" :title="accountTypeReducer(member.user_type)">{{ accountTypeReducer(member.user_type).substr(0, 3) }} {{ member.user_type ? '.' : '' }}</span>
+                </div>
+              </td>
+              <td>
+                <div class="relation">{{ member.relationship }}</div>
+              </td>
+              <td></td>
+            </tr>
           </table>
-          <div class="d-none member-add-box">
+          <div class="d-flex member-add-box" v-if="invitationObject.visible">
             <a-select
                 placeholder="Role"
                 class="fs-10 w-25"
@@ -398,9 +396,19 @@
             </a-select>
 
             <a-button
+                v-if="invitedMembers.length <= 0"
                 type="primary"
                 class="ml-1 fs-12 br-20 bg-primary text-white member-btn"
-                :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship">Invite now</a-button>
+                :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship"
+                @click="inviteNowWindow">Invite now</a-button>
+
+            <a-dropdown class="right-br-20 bg-primary text-white w-25 fs-10 member-btn dropdown-button" v-if="invitedMembers.length > 0">
+              <a-menu slot="overlay">
+                <a-menu-item key="1" @click="submitInvite()">Invitation </a-menu-item>
+                <a-menu-item key="2" @click="removeInvite()">Remove </a-menu-item>
+              </a-menu>
+              <a-button class="ml-1 fs-10"> Invite Now <a-icon type="down" /> </a-button>
+            </a-dropdown>
           </div>
         </div>
 
@@ -467,6 +475,11 @@
 			</div>
 		</div>
 		<!-- end box card s -->
+    <InviteMember v-if="invitationObject.visible && invitationObject.invitation_link && invitationObject.memberBox"
+                  :team="teamData"
+                  :invitationObject="invitationObject"
+                  :from="'details-card'"
+                  @executeInviteMember="executeInviteMember" />
 	</div>
 </template>
 
@@ -480,10 +493,11 @@ import TNCModal from "./Modals/TeamNameChangeModal.vue";
 import TDCModal from "./Modals/TeamDescriptionChange.vue";
 // import { Modal } from 'ant-design-vue';
 import firebase from "../../configs/firebase";
+import InviteMember from "./InviteMember";
 export default {
 	name: "TeamDetailsCard",
 	props: ["teamData", "index"],
-	components: { DeletionModal, PreferenceModal, LTModal, TNCModal, TDCModal },
+	components: {InviteMember, DeletionModal, PreferenceModal, LTModal, TNCModal, TDCModal },
 	data() {
 		return {
 			invitation_link: [],
@@ -494,10 +508,13 @@ export default {
         add_as_a: "Candidate",
         relationship: "Father",
         invitation_link: "",
+        visible: false,
+        memberBox: false
       },
 			add_as_a: [],
 			role: [],
 			relationship: [],
+      invitedMembers: [],
 
 			edit_button_flag: false,
 			remove_button_flag: false,
@@ -1289,6 +1306,48 @@ export default {
 					this.invitation_link[index] = "";
 				});
 		},
+    handleAddMemberclick() {
+      this.invitationObject.visible = true;
+    },
+    inviteNowWindow() {
+      this.invitationObject.memberBox = true;
+      this.createInvitaionLink();
+    },
+    executeInviteMember(id) {
+      this.invitationObject.memberBox = false;
+      let data = {
+        role: this.invitationObject.role,
+        add_as_a: this.invitationObject.add_as_a,
+        relationship: this.invitationObject.relationship,
+        invitation_link: this.invitationObject.invitation_link,
+        email: id
+      };
+      if(this.invitedMembers.length > 0) {
+        this.invitedMembers[0] = data;
+      } else {
+        this.invitedMembers.push(data);
+      }
+    },
+    removeInvite() {
+      this.invitedMembers = [];
+      this.invitationObject.invitation_link = '';
+    },
+    async submitInvite() {
+      let payload = {
+        team_id: this.teamData.team_id,
+        members: this.invitedMembers
+      };
+
+      await ApiService.post('/v1/invite-team-members', payload).then(res => {
+        if(res && res.data) {
+          this.invitedMembers = [];
+          this.invitationObject.visible = false;
+          this.invitationObject.memberBox = false;
+          this.invitationObject.invitation_link = false;
+          this.$emit("teamListUpdated");
+        }
+      });
+    },
 		createInvitaionLink() {
 			// amaizingly, for some reason i need to refer this to
 			// a other variable so my iffe function can access this
@@ -1433,12 +1492,13 @@ export default {
   border-collapse: separate;
   border-spacing: 8px;
   margin-top: -6px;
+  margin-bottom: -5px;
 }
 .table td, .table th {
   padding: 0 !important;
 }
 .member-add-box {
-  margin-top: -14 px;
+  margin-top: -14px;
 }
 .member-btn {
   padding: 0 4px !important;
