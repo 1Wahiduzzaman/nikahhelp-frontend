@@ -378,7 +378,7 @@
               </td>
               <td><div class="status-box bg-brand text-white">&#10006;</div></td>
               <td><div class="relation">{{ item.relationship }}</div></td>
-              <td><div class="minus-icon cursor-pointer">-</div></td>
+              <td><div class="minus-icon cursor-pointer" @click="deleteInvitation(item.id)">-</div></td>
             </tr>
           </table>
           <div class="d-flex member-add-box" v-if="invitationObject.visible">
@@ -996,6 +996,34 @@ export default {
 				},
 			});
 		},
+    async deleteInvitation(id) {
+      let self = this;
+      this.modal = this.$confirm({
+        title: "Delete Confirmation",
+        content: `Are you sure you want to remove this invitation of ${this.teamData.name} team?`,
+        okText: "Yes",
+        okType: "danger",
+        cancelText: "No",
+        confirmLoading: true,
+        async onOk() {
+          await ApiService.delete(`/v1/team-members-delete/${id}`)
+              .then((data) => {
+                console.log(data);
+                if (data.data.status != "FAIL") {
+                  self.$message.success("Invitation removed from " + self.teamData.name);
+                  self.$emit("teamListUpdated");
+                } else {
+                  self.$message.error("Something went wrong");
+                  self.$emit("teamListUpdated");
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+                self.$message.error("Something went wrong");
+              });
+        },
+      });
+    },
 		async checkCurrentUser() {
 			await this.$store.dispatch("getUser");
 			let userData = this.$store.getters.userInfo;

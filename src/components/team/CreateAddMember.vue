@@ -175,7 +175,7 @@ export default {
   top: 7px;
 }
 .box {
-  min-height: 430px;
+  min-height: 420px;
   .px-4 {
     .fs-14 {
       color: #aaaaaa;
