@@ -225,6 +225,9 @@
 				</div>
 			</div>
 
+      <team-profile-card v-if="profileCard"
+                         :profileActive="profileActive"
+                         @toggleProfileCard="toggleProfileCard" />
 			<!-- Member stats -->
 			<div class="member-area">
 				<div class="members">
@@ -353,7 +356,7 @@
                 <div class="name-short" :class="{'name-short-single': member.role.toString() != 'Owner+Admin' }"><span v-if="member.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(member.role) }}</div>
               </td>
               <td>
-                <div class="name-full">{{ member.user.full_name }}</div>
+                <div class="name-full" @click="toggleActiveProfile(member)">{{ member.user.full_name }}</div>
               </td>
               <td>
                 <div class="title">
@@ -370,7 +373,7 @@
               <td>
                 <div class="name-short" :class="{'name-short-single': item.role.toString() != 'Owner+Admin' }"><span v-if="item.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(item.role) }}</div>
               </td>
-              <td><div class="name-full">{{ item.user ? item.user.full_name : 'Not joined yet' }}</div></td>
+              <td><div class="name-full" @click="toggleActiveProfile(item)">{{ item.user ? item.user.full_name : 'Not joined yet' }}</div></td>
               <td>
                 <div class="title">
                   <span class="badge badge-secondary fs-10" :title="accountTypeReducer(item.user_type)">{{ accountTypeReducer(item.user_type).substr(0, 3) }} {{ item.user_type ? '.' : '' }}</span>
@@ -510,10 +513,11 @@ import TDCModal from "./Modals/TeamDescriptionChange.vue";
 // import { Modal } from 'ant-design-vue';
 import firebase from "../../configs/firebase";
 import InviteMember from "./InviteMember";
+import TeamProfileCard from "./TeamProfileCard";
 export default {
 	name: "TeamDetailsCard",
 	props: ["teamData", "index"],
-	components: {InviteMember, DeletionModal, PreferenceModal, LTModal, TNCModal, TDCModal },
+	components: {TeamProfileCard, InviteMember, DeletionModal, PreferenceModal, LTModal, TNCModal, TDCModal },
 	data() {
 		return {
 			invitation_link: [],
@@ -564,6 +568,8 @@ export default {
 			memberInvitation: false,
 
 			changeRoleEnabled: false,
+      profileCard: false,
+      profileActive: null
 		};
 	},
 	created() {
@@ -1522,6 +1528,16 @@ export default {
 			}
 			return false;
 		},
+    toggleProfileCard() {
+      this.profileCard = !this.profileCard;
+      if(!this.profileCard) {
+        this.profileActive = null;
+      }
+    },
+    toggleActiveProfile(item) {
+      this.profileCard = true;
+      this.profileActive = item;
+    }
 	},
 };
 </script>
