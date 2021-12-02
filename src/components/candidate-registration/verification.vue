@@ -586,7 +586,7 @@
                               placeholder="Occupation"
                               v-model="verification.ver_recommences_occupation"
                               label="name"
-                                :reduce="(option) => option.name"
+                              :reduce="(option) => option.name"
                               :options="candidateDetails.occupations"
                               ><template #open-indicator>
                                 <a-icon type="down" /> </template
@@ -862,10 +862,12 @@ export default {
     clearImg(action) {
       switch (action) {
         case "back":
-          this.backPageSrc = "";
+          this.imageBack = "";
+          this.verification.ver_image_back = "";
           break;
         case "font":
-          this.frontPageSrc = "";
+          this.imageFont = "";
+          this.verification.ver_image_front = "";
           break;
       }
     },

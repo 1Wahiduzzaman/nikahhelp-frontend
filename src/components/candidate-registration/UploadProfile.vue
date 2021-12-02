@@ -337,18 +337,13 @@ export default {
       const response = this.$store.dispatch("getImages");
       response
         .then((data) => {
-          console.log(data.data.data);
-          // if (data.data.data.other_images.length > 0) {
           this.avatarSrc = data.data.data.avatar_image_url;
           this.mainImageSrc = data.data.data.main_image_url;
-          // this.avatar = data.data.data.avatar_image_url;
-          // this.mainImage = data.data.data.main_image_url;
-          //  this.additionalImageSrc = data.data.data.other_images[0].image_path;
+          this.additionalImageSrc = data.data.data.other_images[0].image_path;
           this.$emit("valueChange", {
             value: data.data.data,
             current: 4,
           });
-          //}
         })
         .catch((error) => {
           console.log(error);
@@ -440,6 +435,9 @@ export default {
     },
     async saveImages() {
       this.loadingButton = true;
+      console.log(this.avatar);
+      console.log(this.mainImage);
+      console.log(this.additionalImage);
       let formData = new FormData();
       if (
         this.avatarSrc &&
@@ -455,7 +453,9 @@ export default {
           "team_connection_can_see",
           this.team_connection_can_see
         );
-      } else {
+      } 
+      
+      else {
         if (!this.avatar && !this.avatarSrc) {
           this.showError("Avatar Image is not uploaded!");
           this.loadingButton = false;
@@ -486,14 +486,7 @@ export default {
       }
 
       await this.$store
-        .dispatch("uploadImages", {
-          per_avatar_url: this.avatar,
-          per_main_image_url: this.mainImage,
-          //image: [{ image: this.additionalImage, type: 2, visibility: 4 }],
-          anybody_can_see: this.anybody_can_see ? 1 : 0,
-          only_team_can_see: this.only_team_can_see,
-          team_connection_can_see: this.team_connection_can_see,
-        })
+        .dispatch("uploadImages", formData)
         .then((data) => {
           if (data.data.status && data.data.status !== "FAIL") {
             this.loadingButton = false;

@@ -232,7 +232,7 @@ export default {
   async uploadImages(_, payload) {
     
     return new Promise((resolve, reject) => {
-      ApiService.image("v1/candidate/image-upload", payload)
+      ApiService.post("v1/candidate/image-upload", payload)
         .then((data) => {
           resolve(data);
         })
