@@ -110,7 +110,7 @@
                               @input="onValueChange"
                               id="ver_city"
                               placeholder="City"
-                              :reduce="(option) => option.id"
+                              :reduce="(option) => option.name"
                               v-model="verification.ver_city"
                               label="name"
                               :options="verification.cities"
@@ -458,6 +458,7 @@
                               placeholder="Occupation"
                               v-model="verification.ver_recommender_occupation"
                               label="name"
+                               :reduce="(option) => option.name"
                               :options="representativeDetails.occupations"
                               ><template #open-indicator>
                                 <a-icon type="down" /> </template
@@ -601,7 +602,6 @@ export default {
     onValueChange(e) {
       this.saveVerificationInfo();
     },
-
     saveVerificationInfo() {
       const {
         ver_city,

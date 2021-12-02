@@ -78,7 +78,10 @@
             ref="imageUploadRef"
             :repData="repData"
           /> -->
-          <ImageUpload :imageModel="representativeDetails.imageModel" ref="imageUploadRef" />
+          <ImageUpload
+            :imageModel="representativeDetails.imageModel"
+            ref="imageUploadRef"
+          />
         </div>
         <div class="steps-content" v-if="current == 3">
           <!-- <AgreementSubmit
@@ -223,7 +226,7 @@ export default {
       if (response.status === 200) {
         const details = {
           countries: response.data.data.countries,
-          occupations: [],
+          occupations: response.data.data.occupations,
           id: user.id,
           imageModel: {
             ...response.data.data.representative_info.image_upload,
@@ -239,7 +242,25 @@ export default {
             },
             personal: {
               ...response.data.data.representative_info.personal,
+              residenceCities:[],
+              permanantCities:[],
               email: user.email,
+              per_current_residence_country: response.data.data
+                .representative_info.personal.per_current_residence_country
+                ? parseInt(
+                    response.data.data.representative_info.personal
+                      .per_current_residence_country
+                  )
+                : response.data.data.representative_info.personal
+                    .per_current_residence_country,
+              per_permanent_country: response.data.data.representative_info
+                .personal.per_permanent_country
+                ? parseInt(
+                    response.data.data.representative_info.personal
+                      .per_permanent_country
+                  )
+                : response.data.data.representative_info.personal
+                    .per_permanent_country,
             },
           },
         };
@@ -247,7 +268,65 @@ export default {
         this.representativeDetails = {
           ...details,
         };
+        if (
+          this.representativeDetails.personalInformation &&
+          this.representativeDetails.personalInformation.personal
+            .per_current_residence_country > 0
+        ) {
+          this.onChangeCountry(
+            {
+              id: this.representativeDetails.personalInformation.personal
+                .per_current_residence_country,
+            },
+            "residence"
+          );
+        }
+        if (
+          this.representativeDetails.personalInformation &&
+          this.representativeDetails.personalInformation.personal
+            .per_permanent_country > 0
+        ) {
+          this.onChangeCountry(
+            {
+              id: this.representativeDetails.personalInformation.personal
+                .per_permanent_country,
+            },
+            "permanat"
+          );
+        }
+        if (
+          this.representativeDetails.verification &&
+          this.representativeDetails.verification.ver_country > 0
+        ) {
+          this.onChangeCountry(
+            { id: this.representativeDetails.verification.ver_country },
+            "verification"
+          );
+        }
         // this.current = response.data.data.user.data_input_status;
+      }
+    },
+    async onChangeCountry(e, name) {
+      const res = await ApiService.get(`v1/utilities/cities/${e.id}`);
+
+      if (res.status === 200) {
+        switch (name) {
+          case "residence":
+            this.representativeDetails.personalInformation.personal.residenceCities.push(
+              ...res.data.data
+            );
+            break;
+          case "permanat":
+            this.representativeDetails.personalInformation.personal.permanantCities.push(
+              ...res.data.data
+            );
+            break;
+          case "verification":
+            this.representativeDetails.verification.cities.push(
+              ...res.data.data
+            );
+            break;
+        }
       }
     },
     saveExit() {
@@ -868,6 +947,9 @@ export default {
 .r-registration-container {
   display: flex;
   flex-direction: column;
+  .steps-content{
+padding: 0px;
+  }
   header {
     text-align: center;
     height: 100px;
