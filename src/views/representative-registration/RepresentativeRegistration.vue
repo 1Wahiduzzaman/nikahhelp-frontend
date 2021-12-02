@@ -128,7 +128,7 @@
             class="mt-3"
             @click="saveExit"
           >
-            Exit
+           Save & Exit
           </a-button>
         </div>
       </div>
@@ -330,7 +330,8 @@ export default {
       }
     },
     saveExit() {
-      this.$router.push("/");
+     jwtService.destroyTokenAndUser();
+      this.$router.push("/login");
     },
     doneBtn() {
       this.$router.push("/dashboard");

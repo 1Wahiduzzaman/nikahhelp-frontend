@@ -211,6 +211,15 @@
               </a-row>
             </a-col>
           </a-row>
+          <a-button
+            shape="round"
+            type="primary"
+            style="float: right"
+            class="mt-3"
+            @click="handleSubmitFormOne"
+          >
+            Save & Continue
+          </a-button>
         </a-form-model>
       </a-collapse-panel>
       <a-collapse-panel
@@ -690,6 +699,15 @@
               </a-row>
             </a-col>
           </a-row>
+          <a-button
+            shape="round"
+            type="primary"
+            style="float: right"
+            class="mt-3"
+            @click="handleSubmitFormTwo"
+          >
+            Save & Continue
+          </a-button>
         </a-form-model>
       </a-collapse-panel>
     </a-collapse>
@@ -739,6 +757,32 @@ export default {
 
   async mounted() {},
   methods: {
+    handleSubmitFormOne() {
+      this.$refs.repPersonalInfoFormOne.validate((valid) => {
+        if (valid) {
+          this.activeKey = ["2"];
+        } else {
+          setTimeout(() => {
+            const el = document.querySelector(".has-error:first-of-type");
+            el.scrollIntoView();
+          }, 100);
+          return false;
+        }
+      });
+    },
+    handleSubmitFormTwo() {
+      this.$refs.repPersonalInfoFormTwo.validate((valid) => {
+        if (valid) {
+          this.activeKey = null;
+        } else {
+          setTimeout(() => {
+            const el = document.querySelector(".has-error:first-of-type");
+            el.scrollIntoView();
+          }, 100);
+          return false;
+        }
+      });
+    },
     onValueChange(e, name, action) {
       //   if (action === "essential") {
       //     this.personalInformation.essential[name] = e;
