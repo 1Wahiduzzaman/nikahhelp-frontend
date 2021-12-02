@@ -103,9 +103,9 @@ export default {
       }
     }
     .suggestion-box {
-      height: 342px;
+      height: 332px;
       overflow-y: auto;
-      padding-bottom: 75px;
+      padding-bottom: 80px;
       .user {
         .user-avatar {
           width: 30px;
@@ -147,9 +147,9 @@ export default {
   }
 }
 .from-data-card {
-  width: 96%;
+  width: 92%;
   top: 20px;
-  left: 0;
+  left: -1px;
   height: 500px;
   border-radius: 10px;
   margin-left: 16px;
