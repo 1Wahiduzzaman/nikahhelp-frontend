@@ -160,6 +160,7 @@
                     "
                     id="per_occupation"
                     placeholder="Select Occupation"
+                    :reduce="(option) => option.name"
                     v-model="personalInformation.essential.per_occupation"
                     label="name"
                     :options="representativeDetails.occupations"
@@ -247,15 +248,15 @@
                       <v-select
                         :clearable="false"
                         class="style-chooser"
-                        @input="onChangeCountryResidence"
+                        @input="onCountryChange($event,'residence')"
                         id="per_current_residence_country"
                         :placeholder="'Country'"
-                        :reduce="(option) => option.name"
                         v-model="
                           personalInformation.personal
                             .per_current_residence_country
                         "
                         label="name"
+                        :reduce="(option) => option.id"
                         :options="representativeDetails.countries"
                         ><template #open-indicator>
                           <a-icon type="down" /> </template
@@ -280,7 +281,7 @@
                             .per_current_residence_city
                         "
                         label="name"
-                        :options="representativeDetails.cities"
+                        :options="personalInformation.personal.residenceCities"
                         ><template #open-indicator>
                           <a-icon type="down" /> </template
                       ></v-select>
@@ -295,7 +296,7 @@
                         'Other'
                     "
                     placeholder="Please specify"
-                    @change="onValueChange($event, 'per_county', 'contact')"
+                    @change="onValueChange($event, 'per_current_residence_city', 'contact')"
                   />
                 </a-col>
                 <a-col :span="12">
@@ -371,7 +372,6 @@
                           type="check"
                         />Country
                       </div>
-                   
                     </a-col>
                     <a-col :span="12">
                       <a-row :gutter="[8]">
@@ -379,10 +379,10 @@
                           <v-select
                             :clearable="false"
                             class="style-chooser"
-                            @input="onChangeCountryPermanent"
+                            @input="onCountryChange($event,'permanant')"
                             id="per_permanent_country"
                             :placeholder="'Country'"
-                            :reduce="(option) => option.name"
+                            :reduce="(option) => option.id"
                             v-model="
                               personalInformation.personal.per_permanent_country
                             "
@@ -421,7 +421,7 @@
                           <v-select
                             :clearable="false"
                             class="style-chooser"
-                            @input="onValueChange($event, 'contact')"
+                             @input="onValueChange($event, 'per_permanent_city', 'contact')"
                             id="per_permanent_city"
                             placeholder="Select City"
                             :reduce="(option) => option.name"
@@ -429,7 +429,7 @@
                               personalInformation.personal.per_permanent_city
                             "
                             label="name"
-                            :options="representativeDetails.cities"
+                            :options="personalInformation.personal.permanantCities"
                             ><template #open-indicator>
                               <a-icon type="down" /> </template
                           ></v-select>
@@ -494,7 +494,6 @@
                           type="check"
                         />Post Code
                       </div>
-                  
                     </a-col>
                     <a-col :span="12">
                       <a-input
@@ -532,7 +531,6 @@
                           type="check"
                         />Home Address
                       </div>
-                     
                     </a-col>
                     <a-col :span="12">
                       <template>
@@ -554,7 +552,7 @@
                     </a-col>
                   </a-row>
                 </a-col>
-               <a-col :span="12">
+                <a-col :span="12">
                   <p>
                     <a
                       class="color-blue fw-700 fs-14"
@@ -802,20 +800,26 @@ export default {
       this.activeKey = e;
       this.$emit("pannelChanged", e);
     },
-    onChangeCountryResidence(value) {
-      //   this.countries.map((_country) => {
-      //     if (_country.name == value) {
-      //       this.cities1 = _country.cities;
-      //     }
-      //   });
-      this.saveContactInfo();
-    },
-    onChangeCountryPermanent(value) {
-      //   this.countries.map((_country) => {
-      //     if (_country.name == value) {
-      //       this.cities2 = _country.cities;
-      //     }
-      //   });
+    async onCountryChange(e, action) {
+      const res = await ApiService.get(`v1/utilities/cities/${e}`);
+
+      if (res.status === 200) {
+        switch (action) {
+          case "permanant":
+            this.personalInformation.personal.permanantCities = [];
+            this.personalInformation.personal.permanantCities.push(
+              ...res.data.data
+            );
+            break;
+          case "residence":
+            this.personalInformation.personal.residenceCities = [];
+            this.personalInformation.personal.residenceCities.push(
+              ...res.data.data
+            );
+            break;
+        }
+      }
+
       this.saveContactInfo();
     },
   },
