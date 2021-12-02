@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-profile-image">
+  <div v-if="imageModel" class="upload-profile-image">
     <a-collapse
       :default-active-key="1"
       :bordered="false"
@@ -89,71 +89,7 @@
 
         <!-- Previous Image sharing setting starts here -->
         <div class="share-settings">
-          <!-- <h3 class="text-center">Image Sharing Settings</h3>
-
-          <a-row type="flex" align="top">
-            <a-col :span="12">
-              <a-switch default-checked @change="onConfirmationSwitchChnaged1">
-                <a-icon slot="checkedChildren" type="check" />
-                <a-icon slot="unCheckedChildren" type="close" />
-              </a-switch>
-            </a-col>
-            <a-col :span="12">
-              <div class="mb-2">
-                <a-icon class="color-success mr-2 fs-18 fw-500" type="check" />I
-                don't want to share my images with anyone at this moment
-              </div>
-              <a-tooltip placement="bottom">
-                <template slot="title">
-                  Please provide tooltip texts so we can place it here</template
-                >
-                <span class="color-info fw-500">Need help?</span>
-              </a-tooltip>
-            </a-col>
-          </a-row>
-
-          <a-row type="flex" align="top">
-            <a-col :span="12">
-              <a-switch default-checked @change="onConfirmationSwitchChnaged2">
-                <a-icon slot="checkedChildren" type="check" />
-                <a-icon slot="unCheckedChildren" type="close" />
-              </a-switch>
-            </a-col>
-            <a-col :span="12">
-              <div class="mb-2">
-                <a-icon class="color-success mr-2 fs-18 fw-500" type="check" />I
-                would like to share all my images with my team
-              </div>
-              <a-tooltip placement="bottom">
-                <template slot="title">
-                  Please provide tooltip texts so we can place it here</template
-                >
-                <span class="color-info fw-500">Need help?</span>
-              </a-tooltip>
-            </a-col>
-          </a-row>
-
-          <a-row type="flex" align="top">
-            <a-col :span="12">
-              <a-switch default-checked @change="onConfirmationSwitchChnaged3">
-                <a-icon slot="checkedChildren" type="check" />
-                <a-icon slot="unCheckedChildren" type="close" />
-              </a-switch>
-            </a-col>
-            <a-col :span="12">
-              <div class="mb-2">
-                <a-icon class="color-success mr-2 fs-18 fw-500" type="check" />I
-                would like to share all my images with connected team(s)
-              </div>
-              <a-tooltip placement="bottom">
-                <template slot="title">
-                  Please provide tooltip texts so we can place it here</template
-                >
-                <span class="color-info fw-500">Need help?</span>
-              </a-tooltip>
-            </a-col>
-          </a-row> -->
-          <!-- Previous Image sharing setting ends here -->
+         
 
           <div class="share-settings">
             <h3 class="text-center">
@@ -173,7 +109,7 @@
             </h3>
             <p>
               <a-switch
-                v-model="repData.anybody_can_see"
+                v-model="imageModel.anybody_can_see"
                 @change="onConfirmationSwitchChnaged1"
               >
                 <a-icon slot="checkedChildren" type="check" />
@@ -185,8 +121,8 @@
             </p>
             <p>
               <a-switch
-                v-model="repData.only_team_can_see"
-                :disabled="repData.anybody_can_see"
+                v-model="imageModel.only_team_can_see"
+                :disabled="imageModel.anybody_can_see"
                 @change="onConfirmationSwitchChnaged2"
               >
                 <a-icon slot="checkedChildren" type="check" />
@@ -198,8 +134,8 @@
             </p>
             <p>
               <a-switch
-                v-model="repData.team_connection_can_see"
-                :disabled="repData.anybody_can_see"
+                v-model="imageModel.team_connection_can_see"
+                :disabled="imageModel.anybody_can_see"
                 @change="onConfirmationSwitchChnaged3"
               >
                 <a-icon slot="checkedChildren" type="check" />
@@ -210,13 +146,21 @@
               </span>
             </p>
           </div>
-          <!-- {{ repData }} -->
+          <!-- {{ imageModel }} -->
 
           <!-- <p>I don't want to share my images with anyone at this moment</p>
           <p>I would like to share all my images with my team</p>
           <p>I would like to share all my images with connected team(s)</p> -->
         </div>
-        <!-- <img alt="Image" /> -->
+            <a-button
+          shape="round"
+          type="primary"
+          style="float: right"
+          class="mt-3 btn btn-primary"
+          @click="saveImages"
+        >
+          Save &#38; Continue
+        </a-button>
       </a-collapse-panel>
     </a-collapse>
   </div>
@@ -228,14 +172,9 @@ import JwtService from "../../services/jwt.service";
 export default {
   name: "UploadImage",
   components: {},
-  // props: ["repData"],
+  props: ["imageModel"],
   data() {
     return {
-      repData: {
-        anybody_can_see: 0,
-        only_team_can_see: 0,
-        team_connection_can_see: 0,
-      },
       src: "",
       avatar: "",
       avatarSrc: "",
@@ -246,16 +185,8 @@ export default {
     };
   },
   async mounted() {
-    this.avatarSrc = this.repData.per_avatar_url;
-    this.mainImageSrc = this.repData.per_main_image_url;
-
-    // this.mainImage = this.fetchFile(this.mainImageSrc, 'mainImage.jpg');
-
-    // this.avatar = this.getBase64Image(this.repData.per_avatar_url);
-    // this.mainImage = this.getBase64Image(this.repData.per_main_image_url);
-    console.log(this.repData);
-    console.log(this.avatar);
-    console.log("Content I wanna See");
+    this.avatarSrc = this.imageModel.per_avatar_url;
+    this.mainImageSrc = this.imageModel.per_main_image_url;
   },
   methods: {
     imageSizeCheck(file) {
@@ -297,26 +228,24 @@ export default {
       console.log(this.mainImageSrc);
     },
     onConfirmationSwitchChnaged1(checked) {
-      console.log(checked);
-      if (checked) {
-        this.repData.only_team_can_see = false;
-        this.repData.team_connection_can_see = false;
-        this.only_team_can_see = 0;
-        this.team_connection_can_see = 0;
-      }
-      checked == true ? (this.anybody_can_see = 1) : (this.anybody_can_see = 0);
+      // console.log(checked);
+      // if (checked) {
+      //   this.imageModel.only_team_can_see = false;
+      //   this.imageModel.team_connection_can_see = false;
+      // }
+      // checked == true ? (this.anybody_can_see = 1) : (this.anybody_can_see = 0);
     },
     onConfirmationSwitchChnaged2(checked) {
-      console.log(checked);
-      checked == true
-        ? (this.only_team_can_see = 1)
-        : (this.only_team_can_see = 0);
+      // console.log(checked);
+      // checked == true
+      //   ? (this.only_team_can_see = 1)
+      //   : (this.only_team_can_see = 0);
     },
     onConfirmationSwitchChnaged3(checked) {
-      console.log(checked);
-      checked == true
-        ? (this.team_connection_can_see = 1)
-        : (this.team_connection_can_see = 0);
+      // console.log(checked);
+      // checked == true
+      //   ? (this.team_connection_can_see = 1)
+      //   : (this.team_connection_can_see = 0);
     },
     // getAdditionalImage(e) {
     //   this.additionalImage = e.target.files[0];
@@ -332,37 +261,45 @@ export default {
       reader.addEventListener("load", () => callback(reader.result));
       reader.readAsDataURL(img);
     },
-    saveImages() {
-      console.log("Save Images");
-      console.log(this.anybody_can_see);
-      console.log(this.only_team_can_see);
-      console.log(this.team_connection_can_see);
-
-      let formData = new FormData();
-      if (this.avatar || this.mainImage) {
-        formData.append("per_avatar_url", this.avatar);
-        formData.append("per_main_image_url", this.mainImage);
-        formData.append("anybody_can_see", this.anybody_can_see);
-        formData.append("only_team_can_see", this.only_team_can_see);
-        formData.append(
-          "team_connection_can_see",
-          this.team_connection_can_see
-        );
-      } else {
-        formData.append("anybody_can_see", this.anybody_can_see);
-        formData.append("only_team_can_see", this.only_team_can_see);
-        formData.append(
-          "team_connection_can_see",
-          this.team_connection_can_see
-        );
-      }
-
-      return axios.post("v1/representative/image/upload", formData, {
-        headers: {
-          "content-type": "multipart/form-data",
-          Authorization: `Bearer ${JwtService.getToken()}`,
-        },
-      });
+    async saveImages() {
+     
+      await this.$store
+        .dispatch("saveRepresentativeImage", {
+          per_avatar_url:this.avatar,
+          per_main_image_url:this.mainImage
+        })
+        .then((data) => {
+          if (data.data.status && data.data.status !== "FAIL") {
+            this.loadingButton = false;
+            this.$success({
+              title: "Success!",
+              content: data.data.message,
+              center: true,
+            });
+            // this.$emit("valueChange", {
+            //   value: {
+            //     per_avatar_url: data.data.data.per_avatar_url,
+            //     per_main_image_url: data.data.data.per_main_image_url,
+            //   },
+            //   current: 4,
+            // });
+          }
+          if (data.data.status && data.data.status == "FAIL") {
+            const errorMessage = JSON.stringify(data.data.data);
+            this.showError(errorMessage);
+            this.loadingButton = false;
+          }
+        })
+        .catch((error) => {
+          this.loadingButton = false;
+          console.log(error);
+        });
+      // return axios.post("v1/representative/image/upload", formData, {
+      //   headers: {
+      //     "content-type": "multipart/form-data",
+      //     Authorization: `Bearer ${JwtService.getToken()}`,
+      //   },
+      // });
       // .then((response) => {
       //   console.log(response);
       //   if (response.data.status_code == 200) {

@@ -24,7 +24,7 @@
         >
           <a-row>
             <!-- Father Name  -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
+            <!-- <a-col class="form-item py-3 border-bottom" :span="24">
               <a-row type="flex" align="top">
                 <a-col :span="12">
                   <div class="mb-2">
@@ -34,9 +34,7 @@
                       type="check"
                     />Post Code
                   </div>
-                  <!-- <need-help
-										title="Post Code for permanent address"
-									></need-help> -->
+                 
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item
@@ -83,7 +81,7 @@
                   </div>
                 </a-col>
               </a-row>
-            </a-col>
+            </a-col> -->
             <!-- Father's Profession -->
             <a-col class="form-item py-3 border-bottom" :span="24">
               <a-row type="flex" align="top">
@@ -106,6 +104,7 @@
                       class="style-chooser"
                       @input="onValueChange"
                       id="father_profession"
+                       :reduce="(option) => option.name"
                       placeholder="Please select Fathet's Profession"
                       v-model="familyInformation.father_profession"
                       label="name"
@@ -172,7 +171,7 @@
               </a-row>
             </a-col>
             <!-- Father Name  -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
+            <!-- <a-col class="form-item py-3 border-bottom" :span="24">
               <a-row type="flex" align="top">
                 <a-col :span="12">
                   <div class="mb-2">
@@ -182,9 +181,7 @@
                       type="check"
                     />Post Code
                   </div>
-                  <!-- <need-help
-										title="Post Code for permanent address"
-									></need-help> -->
+                 
                 </a-col>
                 <a-col :span="12">
                   <a-form-model-item
@@ -231,7 +228,7 @@
                   </div>
                 </a-col>
               </a-row>
-            </a-col>
+            </a-col> -->
             <!-- Mother's Profession -->
             <a-col class="form-item py-3 border-bottom" :span="24">
               <a-row type="flex" align="top">
@@ -257,6 +254,7 @@
                       placeholder="Please select Fathet's Profession"
                       v-model="familyInformation.mother_profession"
                       label="name"
+                       :reduce="(option) => option.name"
                       :options="candidateDetails.occupations"
                       ><template #open-indicator>
                         <a-icon type="down" /> </template
@@ -458,6 +456,8 @@
                     prop="country_of_origin"
                   >
                     <v-select
+                     :calculate-position="withPopper"
+                      append-to-body
                       :clearable="false"
                       class="style-chooser"
                       @input="onValueChange"
@@ -549,6 +549,7 @@
 <script>
 import NeedHelp from "@/components/candidate-registration/NeedHelp.vue";
 import vSelect from "vue-select";
+import { createPopper } from "@popperjs/core";
 import {
   ARR_FAMILY_INFO,
   _PROFESSIONS,
@@ -582,6 +583,33 @@ export default {
     this.checkDisabled();
   },
   methods: {
+        withPopper(dropdownList, component, { width }) {
+      dropdownList.style.width = width;
+      const popper = createPopper(component.$refs.toggle, dropdownList, {
+        placement: 'top',
+        modifiers: [
+          {
+            name: "offset",
+            options: {
+              offset: [0, -1],
+            },
+          },
+          {
+            name: "toggleClass",
+            enabled: true,
+            phase: "write",
+            fn({ state }) {
+              component.$el.classList.toggle(
+                "drop-up",
+                state.placement === "top"
+              );
+            },
+          },
+        ],
+      });
+
+      return () => popper.destroy();
+    },
     checkDisabled(e) {
       this.$emit("disabled", {
         value: true,

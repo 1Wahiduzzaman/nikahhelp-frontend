@@ -611,7 +611,7 @@
             <div class="col-md-6 col-6 mb-3">
               <div class="profile-img text-center">
                 <img
-                  :src="candidateData.review.personal.per_avatar_url"
+                  :src="candidateData.personal.per_avatar_url"
                   alt="img"
                   height="250"
                   width="200"
@@ -622,7 +622,7 @@
             <div class="col-md-6 col-6 mb-3">
               <div class="profile-img text-center">
                 <img
-                  :src="candidateData.review.personal.per_main_image_url"
+                  :src="candidateData.personal.per_main_image_url"
                   alt="img"
                   height="250"
                   width="200"
@@ -636,7 +636,7 @@
                 <h4>Image setting</h4>
                 <p class="mb-1">
                   <a-icon
-                    v-if="candidateData.review.personal.anybody_can_see == 0"
+                    v-if="candidateData.personal.anybody_can_see == 0"
                     class="color-danger mt-2 mr-2 fs-16 fw-500"
                     type="stop"
                   />
@@ -652,7 +652,7 @@
                 </p>
                 <p class="mb-1">
                   <a-icon
-                    v-if="candidateData.review.personal.only_team_can_see == 0"
+                    v-if="candidateData.personal.only_team_can_see == 0"
                     class="color-danger mt-2 mr-2 fs-16 fw-500"
                     type="stop"
                   />
@@ -668,7 +668,7 @@
                 <p class="mb-1">
                   <a-icon
                     v-if="
-                      candidateData.review.personal.team_connection_can_see == 0
+                      candidateData.personal.team_connection_can_see == 0
                     "
                     class="color-danger mt-2 mr-2 fs-16 fw-500"
                     type="stop"

@@ -1165,6 +1165,7 @@
                       v-model.lazy="preferenceData.pre_occupation"
                       placeholder="Please select your preferred occupation"
                       label="name"
+                      :reduce="(option) => option.name"
                       :options="candidateDetails.occupations"
                     >  <template #open-indicator>
                         <a-icon type="down" />
@@ -2229,10 +2230,12 @@ export default {
     handleSubmitFormTwo() {
       this.$refs.preferenceFormTwo.validate((valid) => {
         if (valid) {
+           this.activeKey=null;
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
             el.scrollIntoView();
+             this.activeKey=null;
           }, 100);
           return false;
         }

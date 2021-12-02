@@ -78,7 +78,7 @@
             ref="imageUploadRef"
             :repData="repData"
           /> -->
-          <ImageUpload ref="imageUploadRef" />
+          <ImageUpload :imageModel="representativeDetails.imageModel" ref="imageUploadRef" />
         </div>
         <div class="steps-content" v-if="current == 3">
           <!-- <AgreementSubmit
@@ -225,6 +225,9 @@ export default {
           countries: response.data.data.countries,
           occupations: [],
           id: user.id,
+          imageModel: {
+            ...response.data.data.representative_info.image_upload,
+          },
           verification: {
             ...response.data.data.representative_info.verification,
           },
