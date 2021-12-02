@@ -408,6 +408,7 @@
                       @input="onValueChange($event, 'essential')"
                       id="per_occupation"
                       placeholder="Please select your occupation"
+                       :reduce="(option) => option.name"
                       v-model="personalInformation.essential.per_occupation"
                       label="name"
                       :options="candidateDetails.occupations"
@@ -588,6 +589,8 @@
                     prop="per_religion_id"
                   >
                     <v-select
+                      :calculate-position="withPopper"
+                      append-to-body
                       :clearable="false"
                       class="style-chooser"
                       @input="onValueChange($event, 'essential')"
@@ -1216,7 +1219,7 @@
                             personalInformation.contact
                               .per_current_residence_city
                           "
-                          :reduce="(option) => option.id"
+                          :reduce="(option) => option.name"
                           label="name"
                           :options="personalInformation.contact.residenceCities"
                           ><template #open-indicator>
@@ -1445,7 +1448,7 @@
                           v-model="
                             personalInformation.contact.per_permanent_city
                           "
-                          :reduce="(option) => option.id"
+                          :reduce="(option) => option.name"
                           label="name"
                           :options="personalInformation.contact.permanantCities"
                           ><template #open-indicator>
@@ -2839,6 +2842,7 @@ import { ARR_PersonalInfo, RULESPERSONALINFO } from "./models/candidate";
 import { HEIGHTS, Employment_Statuses } from "../../models/data";
 import ApiService from "../../services/api.service";
 import vSelect from "vue-select";
+import { createPopper } from "@popperjs/core";
 export default {
   name: "PersonalInfoTwo",
   components: {
@@ -2871,6 +2875,33 @@ export default {
   },
 
   methods: {
+    withPopper(dropdownList, component, { width }) {
+      dropdownList.style.width = width;
+      const popper = createPopper(component.$refs.toggle, dropdownList, {
+        placement: 'top',
+        modifiers: [
+          {
+            name: "offset",
+            options: {
+              offset: [0, -1],
+            },
+          },
+          {
+            name: "toggleClass",
+            enabled: true,
+            phase: "write",
+            fn({ state }) {
+              component.$el.classList.toggle(
+                "drop-up",
+                state.placement === "top"
+              );
+            },
+          },
+        ],
+      });
+
+      return () => popper.destroy();
+    },
     changeActivekey(key) {
       this.activeKey = key;
     },
@@ -2921,6 +2952,7 @@ export default {
     handleSubmitFormFour() {
       this.$refs.personalInfoFormFour.validate((valid) => {
         if (valid) {
+          this.activeKey = null;
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");

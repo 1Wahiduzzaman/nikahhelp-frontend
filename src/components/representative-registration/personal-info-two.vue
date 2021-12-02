@@ -1,5 +1,5 @@
 <template>
-  <div class="personal-info">
+  <div id="accordion" class="personal-info">
     <a-collapse
       accordion
       :activeKey="activeKey"
@@ -22,7 +22,7 @@
               <!-- <a-row type="flex" justify="between" align="top"> -->
 
               <a-row type="flex" align="top">
-                <a-col :span="12">
+                <a-col :span="10">
                   <div class="mb-2">
                     <a-icon
                       v-if="personalInformation.essential.per_gender"
@@ -30,15 +30,9 @@
                       type="check"
                     />What is your gender?
                   </div>
-                  <a-tooltip placement="bottom">
-                    <template slot="title">
-                      Please provide tooltip texts so we can place it
-                      here</template
-                    >
-                    <span class="color-info fw-500">Need help?</span>
-                  </a-tooltip>
                 </a-col>
-                <a-col span="12">
+                <a-col :span="2"></a-col>
+                <a-col :span="12">
                   <!-- ToDo:: need to add a fake option as placeholders are not working -->
                   <a-form-model-item ref="per_gender" prop="per_gender">
                     <v-select
@@ -57,28 +51,44 @@
                       ><template #open-indicator>
                         <a-icon type="down" /> </template
                     ></v-select>
-                    <!-- <a-select
-                      @change="onValueChange($event, 'per_gender', 'essential')"
-                      id="per_gender"
-                      ref="select"
-                      placeholder="Select gender"
-                      class="select-ma w-100"
-                      v-model="personalInformation.essential.per_gender"
-                    >
-                      <a-select-option disabled :value="0"
-                        >Select your gender</a-select-option
-                      >
-                      <a-select-option :value="1">Male</a-select-option>
-                      <a-select-option :value="2">Female</a-select-option>
-                    </a-select> -->
                   </a-form-model-item>
+                </a-col>
+                <a-col :span="12">
+                  <p>
+                    <a
+                      class="color-blue fw-700 fs-14"
+                      data-toggle="collapse"
+                      href="#Needper_gender"
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      <span
+                        v-if="arr[0].first"
+                        @click="arr[0].first = !arr[0].first"
+                      >
+                        Need Help?
+                      </span>
+                      <span v-else @click="arr[0].first = !arr[0].first">
+                        Hide Help?
+                      </span>
+                    </a>
+                  </p>
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="Needper_gender"
+                  >
+                    <div class="card card-body bubble">
+                      Please provide tooltip texts so we can place it here
+                    </div>
+                  </div>
                 </a-col>
               </a-row>
             </a-col>
             <a-col class="form-item py-3 border-bottom" :span="24">
-              <!-- <a-row type="flex" justify="between" align="top"> -->
               <a-row type="flex" align="top">
-                <a-col :span="12">
+                <a-col :span="10">
                   <div class="mb-2">
                     <a-icon
                       v-if="personalInformation.essential.dob"
@@ -86,16 +96,9 @@
                       type="check"
                     />What is your date of birth?
                   </div>
-                  <a-tooltip placement="bottom">
-                    <template slot="title">
-                      Please provide tooltip texts so we can place it
-                      here</template
-                    >
-                    <span class="color-info fw-500">Need help?</span>
-                  </a-tooltip>
                 </a-col>
+                <a-col :span="2"></a-col>
                 <a-col :span="12" class="date-of-birth text-left">
-                  <!-- <a-date-picker class="w-100" v-model.lazy="personalInformation.essential.dob" /> -->
                   <DropdownDatePicker
                     displayFormat="dmy"
                     dropdownClass="custom-select"
@@ -107,12 +110,38 @@
                     :minYear="1940"
                   ></DropdownDatePicker>
                 </a-col>
+                <a-col :span="12">
+                  <p>
+                    <a
+                      class="color-blue fw-700 fs-14"
+                      data-toggle="collapse"
+                      href="#Needdob"
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      <span
+                        v-if="arr[1].first"
+                        @click="arr[1].first = !arr[1].first"
+                      >
+                        Need Help?
+                      </span>
+                      <span v-else @click="arr[1].first = !arr[1].first">
+                        Hide Help?
+                      </span>
+                    </a>
+                  </p>
+                  <div data-parent="#accordion" class="collapse" id="Needdob">
+                    <div class="card card-body bubble">
+                      Please provide tooltip texts so we can place it here
+                    </div>
+                  </div>
+                </a-col>
               </a-row>
             </a-col>
             <a-col class="form-item py-3 border-bottom" :span="24">
-              <!-- <a-row type="flex" justify="between" align="top"> -->
               <a-row type="flex" align="top">
-                <a-col :span="12">
+                <a-col :span="10">
                   <div class="mb-2">
                     <a-icon
                       v-if="personalInformation.essential.per_occupation"
@@ -120,14 +149,8 @@
                       type="check"
                     />What is your occupation?
                   </div>
-                  <a-tooltip placement="bottom">
-                    <template slot="title">
-                      Please provide tooltip texts so we can place it
-                      here</template
-                    >
-                    <span class="color-info fw-500">Need help?</span>
-                  </a-tooltip>
                 </a-col>
+                <a-col :span="2"></a-col>
                 <a-col :span="12">
                   <v-select
                     :clearable="false"
@@ -143,29 +166,7 @@
                     ><template #open-indicator>
                       <a-icon type="down" /> </template
                   ></v-select>
-                  <!-- <a-select
-                    :showSearch="true"
-                    option-filter-prop="children"
-                    :filter-option="filterOption"
-                    :showArrow="true"
-                    v-model="personalInformation.essential.per_occupation"
-                    class="select-ma w-100"
-                    placeholder="Select Occupation"
-                    @change="
-                      onValueChange($event, 'per_occupation', 'essential')
-                    "
-                  >
-                    <a-select-option
-                      :value="value"
-                      :key="key"
-                      style="width: 100px"
-                      v-for="(value, key) in representativeDetails.occupations"
-                    >
-                      {{ value }}
-                    </a-select-option>
 
-
-                  </a-select> -->
                   <a-input
                     class="w-100 mt-2"
                     placeholder="Please specify"
@@ -174,6 +175,37 @@
                     "
                     @blur="onValueChange($event, 'per_occupation', 'essential')"
                   />
+                </a-col>
+                <a-col :span="12">
+                  <p>
+                    <a
+                      class="color-blue fw-700 fs-14"
+                      data-toggle="collapse"
+                      href="#Needper_occupation"
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      <span
+                        v-if="arr[2].first"
+                        @click="arr[2].first = !arr[2].first"
+                      >
+                        Need Help?
+                      </span>
+                      <span v-else @click="arr[2].first = !arr[2].first">
+                        Hide Help?
+                      </span>
+                    </a>
+                  </p>
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="Needper_occupation"
+                  >
+                    <div class="card card-body bubble">
+                      Please provide tooltip texts so we can place it here
+                    </div>
+                  </div>
                 </a-col>
               </a-row>
             </a-col>
@@ -193,13 +225,13 @@
         >
           <a-row>
             <a-col class="form-item py-3 border-bottom" :span="24">
-              <!-- <a-row :gutter="[16]" type="flex" justify="between" align="top"> -->
               <a-row :gutter="[16]" type="flex" align="top">
-                <a-col :span="12">
+                <a-col :span="10">
                   <div class="mb-2">
                     <a-icon
                       v-if="
-                        personalInformation.personal.per_current_residence_country &&
+                        personalInformation.personal
+                          .per_current_residence_country &&
                         personalInformation.personal.per_current_residence_city
                       "
                       class="color-success mr-2 fs-18 fw-500"
@@ -207,14 +239,8 @@
                     />
                     Where is your current place of residance?
                   </div>
-                  <a-tooltip placement="bottom">
-                    <template slot="title">
-                      Please provide tooltip texts so we can place it
-                      here</template
-                    >
-                    <span class="color-info fw-500">Need help?</span>
-                  </a-tooltip>
                 </a-col>
+                <a-col :span="2"></a-col>
                 <a-col :span="12">
                   <a-row :gutter="[8]">
                     <a-col :span="12">
@@ -225,35 +251,15 @@
                         id="per_current_residence_country"
                         :placeholder="'Country'"
                         :reduce="(option) => option.name"
-                        v-model="personalInformation.personal.per_current_residence_country"
+                        v-model="
+                          personalInformation.personal
+                            .per_current_residence_country
+                        "
                         label="name"
                         :options="representativeDetails.countries"
                         ><template #open-indicator>
                           <a-icon type="down" /> </template
                       ></v-select>
-                      <!-- <a-select
-                        :showSearch="true"
-                        option-filter-prop="children"
-                        :filter-option="filterOption"
-                        :showArrow="true"
-                        v-model="personalInformation.personal.per_county"
-                        class="select-ma w-100"
-                        :placeholder="'Country'"
-                        @change="onChangeCountryResidence"
-                      >
-                        <a-select-option
-                          :value="value"
-                          :key="key"
-                          style="width: 100px"
-                          v-for="(
-                            value, key
-                          ) in representativeDetails.countries"
-                        >
-                          {{ value.name }}
-                        </a-select-option>
-
-                     
-                      </a-select> -->
                     </a-col>
                     <a-col :span="12">
                       <v-select
@@ -278,42 +284,13 @@
                         ><template #open-indicator>
                           <a-icon type="down" /> </template
                       ></v-select>
-                      <!-- <a-select
-                        :showSearch="true"
-                        option-filter-prop="children"
-                        :filter-option="filterOption"
-                        :showArrow="true"
-                        v-model="
-                          personalInformation.personal
-                            .per_current_residence_city
-                        "
-                        class="select-ma w-100"
-                        placeholder="Select Issue"
-                        @change="
-                          onValueChange(
-                            $event,
-                            'per_current_residence_city',
-                            'contact'
-                          )
-                        "
-                      >
-                        <a-select-option
-                          :value="value"
-                          :key="key"
-                          style="width: 100px"
-                          v-for="(value, key) in representativeDetails.cities"
-                        >
-                          {{ value.name }}
-                        </a-select-option>
-
-                     
-                      </a-select> -->
                     </a-col>
                   </a-row>
                   <a-input
                     class="w-100 mt-2"
                     v-if="
-                      personalInformation.personal.per_current_residence_country == 'Other' ||
+                      personalInformation.personal
+                        .per_current_residence_country == 'Other' ||
                       personalInformation.personal.per_current_residence_city ==
                         'Other'
                     "
@@ -321,8 +298,39 @@
                     @change="onValueChange($event, 'per_county', 'contact')"
                   />
                 </a-col>
+                <a-col :span="12">
+                  <p>
+                    <a
+                      class="color-blue fw-700 fs-14"
+                      data-toggle="collapse"
+                      href="#Needper_current_residence_country"
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      <span
+                        v-if="arr[3].first"
+                        @click="arr[3].first = !arr[3].first"
+                      >
+                        Need Help?
+                      </span>
+                      <span v-else @click="arr[3].first = !arr[3].first">
+                        Hide Help?
+                      </span>
+                    </a>
+                  </p>
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="Needper_current_residence_country"
+                  >
+                    <div class="card card-body bubble">
+                      Please provide tooltip texts so we can place it here
+                    </div>
+                  </div>
+                </a-col>
               </a-row>
-              <!-- <a-row class="form-item py-3 border-bottom" :gutter="[16]" type="flex" justify="between" align="top"> -->
+
               <a-row
                 class="form-item py-3 border-bottom"
                 :gutter="[16]"
@@ -330,10 +338,10 @@
                 align="top"
               >
                 <a-col :span="24">
-                  <!--<a-icon
+                  <!-- <a-icon
 										v-if="
-											personalInformation.personal.country &&
-											personalInformation.personal.city
+											personalInformation.personal.per_permanent_country &&
+											personalInformation.personal.per_permanent_city
 										"
 										class="color-success mr-2 fs-18 fw-500"
 										type="check"
@@ -342,15 +350,7 @@
                     <strong> What is your permanent address? </strong>
                   </div>
                 </a-col>
-                <!-- <a-col :span="12">
-                  <div class="mb-2"><a-icon class="color-success mr-2 fs-18 fw-500" type="check" />Post code</div>
-                </a-col>
-                <a-col :span="12">
-                  <a-row :gutter="[8]" type="flex">
-                    <a-col :span="17"><a-input placeholder="e.gu: gu4985" v-model="personalInformation.personal.postCode" /></a-col>
-                    <a-col :span="7"><a-button class="" shape="round" type="primary">Find Address</a-button></a-col>
-                  </a-row>
-                </a-col> -->
+
                 <a-col :span="24">
                   <!-- <a-row class="form-item py-3" :gutter="[16]" type="flex" justify="between" align="top"> -->
                   <a-row
@@ -371,7 +371,7 @@
                           type="check"
                         />Country
                       </div>
-                      <span class="color-info fw-500">Need help?</span>
+                   
                     </a-col>
                     <a-col :span="12">
                       <a-row :gutter="[8]">
@@ -494,13 +494,7 @@
                           type="check"
                         />Post Code
                       </div>
-                      <a-tooltip placement="bottom">
-                        <template slot="title">
-                          Please provide tooltip texts so we can place it
-                          here</template
-                        >
-                        <span class="color-info fw-500">Need help?</span>
-                      </a-tooltip>
+                  
                     </a-col>
                     <a-col :span="12">
                       <a-input
@@ -538,13 +532,7 @@
                           type="check"
                         />Home Address
                       </div>
-                      <a-tooltip placement="bottom">
-                        <template slot="title">
-                          Please provide tooltip texts so we can place it
-                          here</template
-                        >
-                        <span class="color-info fw-500">Need help?</span>
-                      </a-tooltip>
+                     
                     </a-col>
                     <a-col :span="12">
                       <template>
@@ -566,12 +554,42 @@
                     </a-col>
                   </a-row>
                 </a-col>
+               <a-col :span="12">
+                  <p>
+                    <a
+                      class="color-blue fw-700 fs-14"
+                      data-toggle="collapse"
+                      href="#Needaddress"
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      <span
+                        v-if="arr[6].first"
+                        @click="arr[6].first = !arr[6].first"
+                      >
+                        Need Help?
+                      </span>
+                      <span v-else @click="arr[6].first = !arr[6].first">
+                        Hide Help?
+                      </span>
+                    </a>
+                  </p>
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="Needaddress"
+                  >
+                    <div class="card card-body bubble">
+                      Please provide tooltip texts so we can place it here
+                    </div>
+                  </div>
+                </a-col>
               </a-row>
             </a-col>
             <a-col class="form-item py-3 border-bottom" :span="24">
-              <!-- <a-row :gutter="[16]" type="flex" justify="between" align="top"> -->
               <a-row :gutter="[16]" type="flex" align="top">
-                <a-col :span="12">
+                <a-col :span="10">
                   <div class="mb-2">
                     <a-icon
                       v-if="personalInformation.personal.mobile_number"
@@ -579,14 +597,8 @@
                       type="check"
                     />What is your Phone number?
                   </div>
-                  <a-tooltip placement="bottom">
-                    <template slot="title">
-                      Please provide tooltip texts so we can place it
-                      here</template
-                    >
-                    <span class="color-info fw-500">Need help?</span>
-                  </a-tooltip>
                 </a-col>
+                <a-col :span="2"></a-col>
                 <a-col :span="12">
                   <a-input
                     class="w-100"
@@ -596,27 +608,51 @@
                     @blur="onValueChange($event, 'mobile_number', 'contact')"
                   />
                 </a-col>
+                <a-col :span="12">
+                  <p>
+                    <a
+                      class="color-blue fw-700 fs-14"
+                      data-toggle="collapse"
+                      href="#Needmobile_number"
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      <span
+                        v-if="arr[4].first"
+                        @click="arr[4].first = !arr[4].first"
+                      >
+                        Need Help?
+                      </span>
+                      <span v-else @click="arr[4].first = !arr[4].first">
+                        Hide Help?
+                      </span>
+                    </a>
+                  </p>
+                  <div
+                    data-parent="#accordion"
+                    class="collapse"
+                    id="Needmobile_number"
+                  >
+                    <div class="card card-body bubble">
+                      Please provide tooltip texts so we can place it here
+                    </div>
+                  </div>
+                </a-col>
               </a-row>
             </a-col>
 
             <a-col class="form-item py-3" :span="24">
-              <!-- <a-row :gutter="[16]" type="flex" justify="between" align="top"> -->
               <a-row :gutter="[16]" type="flex" align="top">
-                <a-col :span="12">
+                <a-col :span="10">
                   <div class="mb-2">
                     <a-icon
                       class="color-success mr-2 fs-18 fw-500"
                       type="check"
                     />What is your Email address?
                   </div>
-                  <a-tooltip placement="bottom">
-                    <template slot="title">
-                      Please provide tooltip texts so we can place it
-                      here</template
-                    >
-                    <span class="color-info fw-500">Need help?</span>
-                  </a-tooltip>
                 </a-col>
+                <a-col :span="2"></a-col>
                 <a-col :span="12">
                   <a-input
                     class="w-100"
@@ -625,6 +661,33 @@
                     :value="personalInformation.personal.email"
                     :disabled="true"
                   />
+                </a-col>
+                <a-col :span="12">
+                  <p>
+                    <a
+                      class="color-blue fw-700 fs-14"
+                      data-toggle="collapse"
+                      href="#Needemail"
+                      role="button"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
+                    >
+                      <span
+                        v-if="arr[5].first"
+                        @click="arr[5].first = !arr[5].first"
+                      >
+                        Need Help?
+                      </span>
+                      <span v-else @click="arr[5].first = !arr[5].first">
+                        Hide Help?
+                      </span>
+                    </a>
+                  </p>
+                  <div data-parent="#accordion" class="collapse" id="Needemail">
+                    <div class="card card-body bubble">
+                      Please provide tooltip texts so we can place it here
+                    </div>
+                  </div>
                 </a-col>
               </a-row>
             </a-col>
@@ -654,6 +717,21 @@ export default {
   },
   data() {
     return {
+      arr: [
+        { first: true },
+        { first: true },
+        { first: true },
+        { first: true },
+        { first: true },
+
+        { first: true },
+        { first: true },
+        { first: true },
+
+        { first: true },
+        { first: true },
+        { first: true },
+      ],
       activeKey: ["1"],
       rules: {},
       default_date: null,
@@ -664,11 +742,11 @@ export default {
   async mounted() {},
   methods: {
     onValueChange(e, name, action) {
-    //   if (action === "essential") {
-    //     this.personalInformation.essential[name] = e;
-    //   } else {
-    //     this.personalInformation.personal[name] = e;
-    //   }
+      //   if (action === "essential") {
+      //     this.personalInformation.essential[name] = e;
+      //   } else {
+      //     this.personalInformation.personal[name] = e;
+      //   }
       this.save(action);
     },
     async saveEssentialInfo() {
@@ -725,21 +803,19 @@ export default {
       this.$emit("pannelChanged", e);
     },
     onChangeCountryResidence(value) {
-     
-    //   this.countries.map((_country) => {
-    //     if (_country.name == value) {
-    //       this.cities1 = _country.cities;
-    //     }
-    //   });
+      //   this.countries.map((_country) => {
+      //     if (_country.name == value) {
+      //       this.cities1 = _country.cities;
+      //     }
+      //   });
       this.saveContactInfo();
     },
     onChangeCountryPermanent(value) {
-   
-    //   this.countries.map((_country) => {
-    //     if (_country.name == value) {
-    //       this.cities2 = _country.cities;
-    //     }
-    //   });
+      //   this.countries.map((_country) => {
+      //     if (_country.name == value) {
+      //       this.cities2 = _country.cities;
+      //     }
+      //   });
       this.saveContactInfo();
     },
   },
@@ -749,8 +825,8 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .anticon {
-    color: #b3b2b2;
-  }
+  color: #b3b2b2;
+}
 .ant-tooltip-inner {
   border-radius: 0px;
 }

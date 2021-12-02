@@ -64,10 +64,11 @@
       </div>
 
       <div class="steps-action text-right pb-5 clearfix">
-          <!-- :class="{ disabled: !enabledNextBtn }"
+        <!-- :class="{ disabled: !enabledNextBtn }"
           :disabled="!enabledNextBtn" -->
         <a-button
-        
+          :class="{ disabled: !enabledNextBtn }"
+          :disabled="!enabledNextBtn"
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
@@ -226,7 +227,7 @@ export default {
       if (response.status === 200) {
         const details = {
           countries: response.data.data.countries,
-          occupations: [],
+          occupations: response.data.data.occupations,
           religions: response.data.data.religions,
           ethnicities: ethnicities,
           languages: languages,
@@ -320,32 +321,24 @@ export default {
           },
           preferenceData: {
             ...this.nullToUndefined(response.data.data.user.preference),
-            // preferred_nationality:
-            //   response.data.data.user.preference.preferred_nationality.map(
-            //     (a) => a.id
-            //   ),
-            // blocked_cities:
-            //   response.data.data.user.preference.blocked_cities.map(
-            //     (a) => a.id
-            //   ),
-            // preferred_countries:
-            //   response.data.data.user.preference.preferred_countries.map(
-            //     (a) => a.id
-            //   ),
-            // preferred_cities:
-            //   response.data.data.user.preference.preferred_cities.map(
-            //     (a) => a.id
-            //   ),
-            // bloked_countries:
-            //   response.data.data.user.preference.bloked_countries.map(
-            //     (a) => a.id
-            //   ),
-            // pre_employment_status: response.data.data.user.preference
-            //   .pre_employment_status
-            //   ? JSON.parse(
-            //       response.data.data.user.preference.pre_employment_status
-            //     )
-            //   : null,
+            pre_height_min:
+              response.data.data.user.preference.pre_height_min == 0
+                ? undefined
+                : response.data.data.user.preference.pre_height_min,
+            pre_height_max:
+              response.data.data.user.preference.pre_height_max == 0
+                ? undefined
+                : response.data.data.user.preference.pre_height_max,
+
+            pre_partner_age_max:
+              response.data.data.user.preference.pre_partner_age_max == 0
+                ? undefined
+                : response.data.data.user.preference.pre_partner_age_max,
+            pre_partner_age_min:
+              response.data.data.user.preference.pre_partner_age_min == 0
+                ? undefined
+                : response.data.data.user.preference.pre_partner_age_min,
+
             pre_partner_religion_id:
               response.data.data.user.preference.pre_partner_religion_id.map(
                 function (v) {
@@ -419,8 +412,10 @@ export default {
             .per_current_residence_country > 0
         ) {
           this.onChangeCountry(
-            this.candidateDetails.personalInformation.contact
-              .per_current_residence_country,
+            {
+              id: this.candidateDetails.personalInformation.contact
+                .per_current_residence_country,
+            },
             "residence",
             ""
           );
@@ -431,18 +426,20 @@ export default {
             .per_permanent_country > 0
         ) {
           this.onChangeCountry(
-            this.candidateDetails.personalInformation.contact
-              .per_permanent_country,
+            {
+              id: this.candidateDetails.personalInformation.contact
+                .per_permanent_country,
+            },
             "permanat",
             ""
           );
         }
         if (
           this.candidateDetails.verification &&
-          this.candidateDetails.verification.ver_country > 0
+          this.candidateDetails.verification.ver_country_id > 0
         ) {
           this.onChangeCountry(
-            this.candidateDetails.verification.ver_country,
+            { id: this.candidateDetails.verification.ver_country_id },
             "verification",
             ""
           );
@@ -458,6 +455,10 @@ export default {
           data_input_status: satge,
         }
       );
+      const user = JSON.parse(localStorage.getItem("user"));
+      user.data_input_status=satge;
+      localStorage.removeItem('user');
+      localStorage.setItem("user", JSON.stringify(user));
     },
     async onChangeCountry(e, name, action, isDefault = false) {
       const res = await ApiService.get(`v1/utilities/cities/${e.id}`);
@@ -537,27 +538,62 @@ export default {
             preferred_nationality,
             pre_study_level_id,
             pre_employment_status,
-           // pre_occupation,
+            // pre_occupation,
           }).every((x) => x !== undefined && x !== null && x !== "");
           break;
         case 1:
-          Object.values(this.candidateDetails.personalInformation).forEach(
-            (ob) => {
-              isEnabled = Object.values(ob).every(
-                (x) => x !== undefined && x !== null && x !== ""
-              );
-              if (!isEnabled) return;
-            }
-          );
+          const { essential, general, contact } =
+            this.candidateDetails.personalInformation;
+          Object.values({ essential, general, contact }).forEach((ob) => {
+            isEnabled = Object.values(ob).every(
+              (x) => x !== undefined && x !== null && x !== ""
+            );
+            if (!isEnabled) return;
+          });
 
           break;
         case 2:
-          isEnabled = true;
+          const {
+            ver_country_id,
+            ver_document_type,
+            ver_image_back,
+            ver_image_front,
+            ver_recommences_address,
+            ver_recommences_first_name,
+            ver_recommences_last_name,
+            ver_recommences_mobile_no,
+            ver_recommences_occupation,
+            ver_recommences_title,
+          } = this.candidateDetails.verification;
+          isEnabled = Object.values({
+            ver_country_id,
+            ver_document_type,
+            ver_image_back,
+            ver_image_front,
+            ver_recommences_address,
+            ver_recommences_first_name,
+            ver_recommences_last_name,
+            ver_recommences_mobile_no,
+            ver_recommences_occupation,
+            ver_recommences_title,
+          }).every((x) => x !== undefined && x !== null && x !== "");
+          break;
           break;
         case 3:
-          isEnabled = Object.values(
-            this.candidateDetails.familyInformation
-          ).every((x) => x !== undefined && x !== null && x !== "");
+          const {
+            country_of_origin,
+            family_info,
+            father_profession,
+            mother_profession,
+            siblings_desc,
+          } = this.candidateDetails.familyInformation;
+          isEnabled = Object.values({
+            country_of_origin,
+            family_info,
+            father_profession,
+            mother_profession,
+            siblings_desc,
+          }).every((x) => x !== undefined && x !== null && x !== "");
           break;
         case 4:
           isEnabled = Object.values(this.candidateDetails.images).every(
@@ -583,6 +619,7 @@ export default {
     },
     doneBtn() {
       this.$router.push("/dashboard");
+      this.saveDataInputStatus(this.current++);
     },
     async next() {
       switch (this.current) {

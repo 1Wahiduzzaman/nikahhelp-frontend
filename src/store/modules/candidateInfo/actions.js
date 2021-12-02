@@ -230,22 +230,9 @@ export default {
     });
   },
   async uploadImages(_, payload) {
-    // const response = await ApiService.post(
-    //   "v1/candidate/image-upload",
-    //   payload,
-    //   {
-    //     headers: {
-    //       "content-type": "multipart/form-data",
-    //     },
-    //   }
-    // );
-    // console.log(response.data);
+    
     return new Promise((resolve, reject) => {
-      ApiService.post("v1/candidate/image-upload", payload, {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      })
+      ApiService.image("v1/candidate/image-upload", payload)
         .then((data) => {
           resolve(data);
         })
@@ -265,7 +252,8 @@ export default {
   },
   async getImageSharingSettings() {
     return new Promise((resolve, reject) => {
-      ApiService.get(`v1/candidate/info/${JwtService.getUserId()}`)
+      const user=JwtService.getUser()
+      ApiService.get(`v1/candidate/info/${user.id}`)
         .then((data) => {
           resolve(data);
         })

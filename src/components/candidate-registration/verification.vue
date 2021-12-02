@@ -1,5 +1,9 @@
 <template>
-  <div class="verificationInfo p-3 rounded" style="background: #f4f4f9">
+  <div
+    id="accordion"
+    class="verificationInfo p-3 rounded"
+    style="background: #f4f4f9"
+  >
     <div class="verification-content" style="margin-top: 40px">
       <a-collapse
         default-active-key="1"
@@ -103,22 +107,16 @@
                     type="flex"
                     align="top"
                   >
-                    <a-col :span="12">
+                    <a-col :span="10">
                       <div class="mb-2">
                         <a-icon
-                          v-if="verification.ver_country"
+                          v-if="verification.ver_country_id"
                           class="color-success mr-2 fs-18 fw-500"
                           type="check"
                         />Country
                       </div>
-                      <a-tooltip placement="bottom">
-                        <template slot="title">
-                          Please provide tooltip texts so we can place it
-                          here</template
-                        >
-                        <span class="color-info fw-500">Need help?</span>
-                      </a-tooltip>
                     </a-col>
+                    <a-col :span="2"></a-col>
                     <a-col :span="12">
                       <a-row :gutter="[8]">
                         <a-col :span="12">
@@ -164,7 +162,10 @@
                           </a-form-model-item>
                         </a-col>
                         <a-col :span="12">
-                          <a-form-model-item ref="ver_city_id" prop="ver_city_id">
+                          <a-form-model-item
+                            ref="ver_city_id"
+                            prop="ver_city_id"
+                          >
                             <v-select
                               :clearable="false"
                               class="style-chooser"
@@ -206,12 +207,42 @@
                         v-if="ver_city == 'Other'"
                       /> -->
                     </a-col>
+                    <a-col :span="12">
+                      <p>
+                        <a
+                          class="color-blue fw-700 fs-14"
+                          data-toggle="collapse"
+                          href="#Needver_country_id"
+                          role="button"
+                          aria-expanded="false"
+                          aria-controls="collapseExample"
+                        >
+                          <span
+                            v-if="arr[0].first"
+                            @click="arr[0].first = !arr[0].first"
+                          >
+                            Need Help?
+                          </span>
+                          <span v-else @click="arr[0].first = !arr[0].first">
+                            Hide Help?
+                          </span>
+                        </a>
+                      </p>
+                      <div
+                        data-parent="#accordion"
+                        class="collapse"
+                        id="Needver_country_id"
+                      >
+                        <div class="card card-body bubble">
+                          Please provide tooltip texts so we can place it here
+                        </div>
+                      </div>
+                    </a-col>
                   </a-row>
                 </a-col>
                 <a-col class="form-item py-3 border-bottom" :span="24">
-                  <!-- <a-row  type="flex" justify="between" align="top"> -->
                   <a-row type="flex" align="top">
-                    <a-col :span="12">
+                    <a-col :span="10">
                       <div class="mb-2">
                         <a-icon
                           v-if="verification.ver_document_type"
@@ -219,14 +250,15 @@
                           type="check"
                         />Document type?
                       </div>
-                      <a-tooltip placement="bottom">
+                      <!-- <a-tooltip placement="bottom">
                         <template slot="title">
                           Please provide tooltip texts so we can place it
                           here</template
                         >
                         <span class="color-info fw-500">Need help?</span>
-                      </a-tooltip>
+                      </a-tooltip> -->
                     </a-col>
+                    <a-col :span="2"></a-col>
                     <a-col :span="12">
                       <v-select
                         :clearable="false"
@@ -258,12 +290,44 @@
                         </a-select-option>
                       </a-select> -->
                     </a-col>
+
+                    <a-col :span="12">
+                      <p>
+                        <a
+                          class="color-blue fw-700 fs-14"
+                          data-toggle="collapse"
+                          href="#Needver_document_type"
+                          role="button"
+                          aria-expanded="false"
+                          aria-controls="collapseExample"
+                        >
+                          <span
+                            v-if="arr[1].first"
+                            @click="arr[1].first = !arr[1].first"
+                          >
+                            Need Help?
+                          </span>
+                          <span v-else @click="arr[1].first = !arr[1].first">
+                            Hide Help?
+                          </span>
+                        </a>
+                      </p>
+                      <div
+                        data-parent="#accordion"
+                        class="collapse"
+                        id="Needver_document_type"
+                      >
+                        <div class="card card-body bubble">
+                          Please provide tooltip texts so we can place it here
+                        </div>
+                      </div>
+                    </a-col>
                   </a-row>
                 </a-col>
                 <a-col class="form-item py-3 border-bottom" :span="24">
                   <!-- <a-row type="flex" justify="between" align="top"> -->
                   <a-row type="flex" align="top">
-                    <a-col :span="12">
+                    <a-col :span="10">
                       <div class="mb-2">
                         <a-icon
                           v-if="verification.ver_image_front"
@@ -271,14 +335,15 @@
                           type="check"
                         />Upload front side?
                       </div>
-                      <a-tooltip placement="bottom">
+                      <!-- <a-tooltip placement="bottom">
                         <template slot="title">
                           Please provide tooltip texts so we can place it
                           here</template
                         >
                         <span class="color-info fw-500">Need help?</span>
-                      </a-tooltip>
+                      </a-tooltip> -->
                     </a-col>
+                    <a-col :span="2"></a-col>
                     <a-col :span="12">
                       <div class="image-container text-center">
                         <span class="mb-2"
@@ -321,12 +386,43 @@
                         />
                       </div>
                     </a-col>
+                    <a-col :span="12">
+                      <p>
+                        <a
+                          class="color-blue fw-700 fs-14"
+                          data-toggle="collapse"
+                          href="#Needver_image_front"
+                          role="button"
+                          aria-expanded="false"
+                          aria-controls="collapseExample"
+                        >
+                          <span
+                            v-if="arr[2].first"
+                            @click="arr[2].first = !arr[2].first"
+                          >
+                            Need Help?
+                          </span>
+                          <span v-else @click="arr[2].first = !arr[2].first">
+                            Hide Help?
+                          </span>
+                        </a>
+                      </p>
+                      <div
+                        data-parent="#accordion"
+                        class="collapse"
+                        id="Needver_image_front"
+                      >
+                        <div class="card card-body bubble">
+                          Please provide tooltip texts so we can place it here
+                        </div>
+                      </div>
+                    </a-col>
                   </a-row>
                 </a-col>
                 <a-col class="form-item py-3 border-bottom" :span="24">
                   <!-- <a-row type="flex" justify="between" align="top"> -->
                   <a-row type="flex" align="top">
-                    <a-col :span="12">
+                    <a-col :span="10">
                       <div class="mb-2">
                         <a-icon
                           v-if="verification.ver_image_back"
@@ -334,14 +430,15 @@
                           type="check"
                         />Upload back side?
                       </div>
-                      <a-tooltip placement="bottom">
+                      <!-- <a-tooltip placement="bottom">
                         <template slot="title">
                           Please provide tooltip texts so we can place it
                           here</template
                         >
                         <span class="color-info fw-500">Need help?</span>
-                      </a-tooltip>
+                      </a-tooltip> -->
                     </a-col>
+                    <a-col :span="2"></a-col>
                     <a-col :span="12">
                       <div class="image-container text-center">
                         <span class="mb-2"
@@ -382,12 +479,43 @@
                         />
                       </div>
                     </a-col>
+                    <a-col :span="12">
+                      <p>
+                        <a
+                          class="color-blue fw-700 fs-14"
+                          data-toggle="collapse"
+                          href="#Needver_image_back"
+                          role="button"
+                          aria-expanded="false"
+                          aria-controls="collapseExample"
+                        >
+                          <span
+                            v-if="arr[3].first"
+                            @click="arr[3].first = !arr[3].first"
+                          >
+                            Need Help?
+                          </span>
+                          <span v-else @click="arr[3].first = !arr[3].first">
+                            Hide Help?
+                          </span>
+                        </a>
+                      </p>
+                      <div
+                        data-parent="#accordion"
+                        class="collapse"
+                        id="Needver_image_back"
+                      >
+                        <div class="card card-body bubble">
+                          Please provide tooltip texts so we can place it here
+                        </div>
+                      </div>
+                    </a-col>
                   </a-row>
                 </a-col>
                 <a-col class="form-item py-3 border-bottom" :span="24">
                   <!-- <a-row type="flex" justify="between" align="top"> -->
                   <a-row type="flex" align="top">
-                    <a-col :span="12">
+                    <a-col :span="10">
                       <div class="mb-2">
                         <a-icon
                           v-if="verification.ver_recommender_title"
@@ -395,14 +523,15 @@
                           type="check"
                         />Person of community standing who know you?
                       </div>
-                      <a-tooltip placement="bottom">
+                      <!-- <a-tooltip placement="bottom">
                         <template slot="title">
                           Please provide tooltip texts so we can place it
                           here</template
                         >
                         <span class="color-info fw-500">Need help?</span>
-                      </a-tooltip>
+                      </a-tooltip> -->
                     </a-col>
+                    <a-col :span="2"></a-col>
                     <a-col :span="12">
                       <a-row :gutter="[8, 8]">
                         <a-col :span="24">
@@ -457,6 +586,7 @@
                               placeholder="Occupation"
                               v-model="verification.ver_recommences_occupation"
                               label="name"
+                                :reduce="(option) => option.name"
                               :options="candidateDetails.occupations"
                               ><template #open-indicator>
                                 <a-icon type="down" /> </template
@@ -514,6 +644,37 @@
                         </a-col>
                       </a-row>
                     </a-col>
+                    <a-col :span="12">
+                      <p>
+                        <a
+                          class="color-blue fw-700 fs-14"
+                          data-toggle="collapse"
+                          href="#Needver_recommences_title"
+                          role="button"
+                          aria-expanded="false"
+                          aria-controls="collapseExample"
+                        >
+                          <span
+                            v-if="arr[4].first"
+                            @click="arr[4].first = !arr[4].first"
+                          >
+                            Need Help?
+                          </span>
+                          <span v-else @click="arr[4].first = !arr[4].first">
+                            Hide Help?
+                          </span>
+                        </a>
+                      </p>
+                      <div
+                        data-parent="#accordion"
+                        class="collapse"
+                        id="Needver_recommences_title"
+                      >
+                        <div class="card card-body bubble">
+                          Please provide tooltip texts so we can place it here
+                        </div>
+                      </div>
+                    </a-col>
                   </a-row>
                 </a-col>
               </div>
@@ -558,6 +719,23 @@ export default {
   },
   data() {
     return {
+      arr: [
+        {
+          first: true,
+        },
+        {
+          first: true,
+        },
+        {
+          first: true,
+        },
+        {
+          first: true,
+        },
+        {
+          first: true,
+        },
+      ],
       rules: {},
       cities: [],
       imageBack: null,
@@ -587,7 +765,7 @@ export default {
         ver_recommences_occupation,
         ver_recommences_title,
         ver_status,
-        ver_recommences_mobile_no
+        ver_recommences_mobile_no,
       } = this.verification;
       this.$store
         .dispatch("saveVerificationInfo", {

@@ -287,23 +287,10 @@ export default {
       team_connection_can_see: 0,
     };
   },
-  // computed: {
-  // 	avatarSrc() {
-  // 		return this.$store.state.candidateInfo.imageupload.avatar_image_url;
-  // 	},
-  // 	mainImageSrc() {
-  // 		return this.$store.state.candidateInfo.imageupload.main_image_url;
-  // 	},
-  // 	additionalImageSrc() {
-  // 		return this.$store.state.candidateInfo.imageupload.other_images[0]
-  // 			.image_path;
-  // 	},
-  // },
+
   created() {
     this.getImagesFromDb();
     this.getImageSharingSettings();
-    this.$store.state.candidateInfo.activePanel = 1;
-    console.log(this.avatarSrc);
   },
   methods: {
     clearImg(action) {
@@ -351,15 +338,17 @@ export default {
       response
         .then((data) => {
           console.log(data.data.data);
-          if (data.data.data.other_images.length > 0) {
-            this.avatarSrc = data.data.data.avatar_image_url;
-            this.mainImageSrc = data.data.data.main_image_url;
-            this.additionalImageSrc = data.data.data.other_images[0].image_path;
-            this.$emit("valueChange", {
-              value: data.data.data,
-              current: 4,
-            });
-          }
+          // if (data.data.data.other_images.length > 0) {
+          this.avatarSrc = data.data.data.avatar_image_url;
+          this.mainImageSrc = data.data.data.main_image_url;
+          // this.avatar = data.data.data.avatar_image_url;
+          // this.mainImage = data.data.data.main_image_url;
+          //  this.additionalImageSrc = data.data.data.other_images[0].image_path;
+          this.$emit("valueChange", {
+            value: data.data.data,
+            current: 4,
+          });
+          //}
         })
         .catch((error) => {
           console.log(error);
@@ -369,7 +358,7 @@ export default {
       const response = this.$store.dispatch("getImageSharingSettings");
       response
         .then((data) => {
-          console.log(data.data.data.personal);
+          console.log("personal", data);
           this.anyoneFlag =
             data.data.data.personal.anybody_can_see == 1 ? true : false;
           this.onlyTeamFlag =
@@ -451,8 +440,6 @@ export default {
     },
     async saveImages() {
       this.loadingButton = true;
-      console.log("Save Images");
-      //validation
       let formData = new FormData();
       if (
         this.avatarSrc &&
@@ -462,29 +449,13 @@ export default {
         !this.mainImage &&
         !this.additionalImage
       ) {
-        //this.loadingButton = false;
-        console.log("Only data");
         formData.append("anybody_can_see", this.anybody_can_see);
         formData.append("only_team_can_see", this.only_team_can_see);
         formData.append(
           "team_connection_can_see",
           this.team_connection_can_see
         );
-
-        console.log(
-          this.anybody_can_see,
-          this.only_team_can_see,
-          this.team_connection_can_see
-        );
-        // this.$success({
-        // 	title: "Success!",
-        // 	content: "Image upload sucessful",
-        // 	center: true,
-        // });
-        // this.$store.state.candidateInfo.activePanel++;
-        // return;
       } else {
-        console.log("In the else");
         if (!this.avatar && !this.avatarSrc) {
           this.showError("Avatar Image is not uploaded!");
           this.loadingButton = false;
@@ -513,19 +484,19 @@ export default {
           this.team_connection_can_see
         );
       }
-      console.log(
-        this.anybody_can_see,
-        this.only_team_can_see,
-        this.team_connection_can_see
-      );
 
       await this.$store
-        .dispatch("uploadImages", formData)
+        .dispatch("uploadImages", {
+          per_avatar_url: this.avatar,
+          per_main_image_url: this.mainImage,
+          //image: [{ image: this.additionalImage, type: 2, visibility: 4 }],
+          anybody_can_see: this.anybody_can_see ? 1 : 0,
+          only_team_can_see: this.only_team_can_see,
+          team_connection_can_see: this.team_connection_can_see,
+        })
         .then((data) => {
           if (data.data.status && data.data.status !== "FAIL") {
-            console.log("Data saved to DB");
             this.loadingButton = false;
-            console.log(data.data);
             this.$success({
               title: "Success!",
               content: data.data.message,
