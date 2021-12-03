@@ -446,8 +446,8 @@ export default {
         if (data.data.status && data.data.status !== "FAIL") {
           this.$emit("valueChange", {
             value: {
-              per_avatar_url: data.data.data.per_avatar_url,
-              per_main_image_url: data.data.data.per_main_image_url,
+              avatar_image_url: data.data.data.per_avatar_url,
+              main_image_url: data.data.data.per_main_image_url,
             },
             current: 4,
           });
