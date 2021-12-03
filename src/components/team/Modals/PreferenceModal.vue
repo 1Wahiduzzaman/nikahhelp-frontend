@@ -47,7 +47,7 @@
         </div>
       </div>
 
-      <div class="justify-content-end">
+      <div class="justify-content-end mt-2">
         <div class="d-flex justify-content-end" style="width: 70%">
           <span
             class="align-bottom"
@@ -62,7 +62,7 @@
           </div>
         </div>
       </div>
-      <div class="justify-content-end">
+      <div class="justify-content-end mt-2">
         <div class="d-flex justify-content-end" style="width: 70%">
           <span
             class="align-bottom"

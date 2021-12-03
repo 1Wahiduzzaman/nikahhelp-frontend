@@ -7,8 +7,18 @@
       </div>
     </div>
     <div class="profile text-center">
-      <img src="https://picsum.photos/200/300?random=1" alt="profile" class="profile-img br-4">
+      <img src="https://picsum.photos/200/300?random=1" alt="profile" class="profile-img">
       <h4 class="fs-16 text-white pt-2">{{ profileActive.user && profileActive.user.full_name ? profileActive.user.full_name : profileActive.user.email }}</h4>
+      <div class="d-flex justify-content-center mb-2 mt-2">
+        <div class="role-section position-relative">
+          <button class="btn btn-sm text-white role-btn" @click="roleChangeBox = !roleChangeBox">Change Role</button>
+          <div class="position-absolute role-options bg-white" v-if="roleChangeBox">
+            <h4 class="fs-12 py-1 cursor-pointer text-left px-2" @click="changeRole('Admin')">Admin</h4>
+            <h4 class="fs-12 py-1 cursor-pointer text-left px-2" @click="changeRole('Member')">Member</h4>
+          </div>
+        </div>
+        <button class="btn btn-sm text-white remove-btn ml-3" @click="removeInvitation()">Remove</button>
+      </div>
       <div class="team-profile-short pt-2 text-center d-flex justify-content-center">
         <table class="table table-borderless short-table">
           <tr>
@@ -49,6 +59,11 @@
 export default {
   name: "TeamProfileCard",
   props: ['profileActive'],
+  data() {
+    return {
+      roleChangeBox: false
+    }
+  },
   methods: {
     formateDate(date) {
       if (date == null || date == undefined) {
@@ -64,6 +79,13 @@ export default {
 
       return [day, month, year].join("/");
     },
+    removeInvitation() {
+      this.$emit("deleteInvitation", this.profileActive.id);
+    },
+    changeRole(role) {
+      console.log(role);
+      this.roleChangeBox = false;
+    }
   }
 }
 </script>
@@ -97,11 +119,32 @@ export default {
     }
   }
   .profile {
-    margin-top: -4px;
+    margin-top: -16px;
     .profile-img {
-      width: 100px;
-      height: 100px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
       border: 2px solid $color-white;
+    }
+    .d-flex {
+      .role-section {
+        .role-btn {
+          border-radius: 20px 0 0 20px;
+          background: $bg-primary;
+          border: 1px solid $color-white;
+        }
+        .role-options {
+          width: 100px;
+          height: 55px;
+          border-radius: 4px;
+          z-index: 9;
+        }
+      }
+      .remove-btn {
+        border-radius: 0 20px 20px 0;
+        background: $bg-brand;
+        border: 1px solid $color-white;
+      }
     }
     .prof-detail {
       border: 2px solid $color-white;
