@@ -224,7 +224,7 @@
                           placeholder="Select Country"
                           :options="candidateDetails.countries"
                           @input="onChangeCountry($event, 'listOne', 'allowed')"
-                          >
+                        >
                           <span slot="no-options">Select Country</span>
                           <template #open-indicator>
                             <a-icon type="down" /> </template
@@ -240,7 +240,7 @@
                           v-model.lazy="preferenceData.preferred_cities[0]"
                           :options="preferenceData.allowedCity.listOne"
                           @input="onValueChange"
-                        ><template #open-indicator>
+                          ><template #open-indicator>
                             <a-icon type="down" /> </template
                         ></v-select>
                         <!-- <a-select
@@ -458,7 +458,7 @@
                           @input="
                             onChangeCountry($event, 'listOne', 'disAllowed')
                           "
-                        ><template #open-indicator>
+                          ><template #open-indicator>
                             <a-icon type="down" /> </template
                         ></v-select>
                         <!-- <a-select
@@ -497,7 +497,7 @@
                           label="name"
                           :options="preferenceData.disAllowedCity.listOne"
                           @input="onValueChange"
-                        ><template #open-indicator>
+                          ><template #open-indicator>
                             <a-icon type="down" /> </template
                         ></v-select>
                         <!-- <a-select
@@ -702,7 +702,10 @@
                       "
                       v-model.lazy="preferenceData.pre_partner_religion_id"
                       label="name"
-                      :options="candidateDetails.religions"
+                      :options="[
+                        { id: -1, name: `Don't Mind` },
+                        ...candidateDetails.religions,
+                      ]"
                     >
                       <template #open-indicator>
                         <a-icon type="down" />
@@ -798,9 +801,10 @@
                       v-model.lazy="preferenceData.pre_ethnicities"
                       label="name"
                       :options="ethnicityList"
-                    >  <template #open-indicator>
-                        <a-icon type="down" />
-                      </template></v-select>
+                    >
+                      <template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
                     <!-- <a-select
                       id="pre_ethnicities"
                       :showSearch="true"
@@ -890,15 +894,22 @@
                       :multiple="true"
                       class="nationality-select"
                       @input="
-                        onMultiValueChange($event, 'preferred_nationality')
+                        onNationalityValueChange(
+                          $event,
+                          'preferred_nationality'
+                        )
                       "
                       v-model.lazy="preferenceData.preferred_nationality"
                       placeholder="Select your Nationality"
                       label="name"
-                      :options="candidateDetails.countries"
-                    >  <template #open-indicator>
-                        <a-icon type="down" />
-                      </template></v-select>
+                      :options="[
+                        { id: -1, name: `Don't Mind` },
+                        ...candidateDetails.countries,
+                      ]"
+                    >
+                      <template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
                     <!-- <a-select
                       id="preferred_nationality"
                       class="nationality-select"
@@ -991,9 +1002,10 @@
                       v-model.lazy="preferenceData.pre_study_level_id"
                       label="name"
                       :options="candidateDetails.studylevels"
-                    >  <template #open-indicator>
-                        <a-icon type="down" />
-                      </template></v-select>
+                    >
+                      <template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
                     <!-- <a-select
                       :showSearch="true"
                       :filter-option="filterOption"
@@ -1081,9 +1093,10 @@
                       v-model.lazy="preferenceData.pre_employment_status"
                       label="name"
                       :options="employment_Statuses"
-                    >  <template #open-indicator>
-                        <a-icon type="down" />
-                      </template></v-select>
+                    >
+                      <template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
                     <!-- <a-select
                       @select="onValueChange"
                       id="pre_employment_status"
@@ -1167,9 +1180,10 @@
                       label="name"
                       :reduce="(option) => option.name"
                       :options="candidateDetails.occupations"
-                    >  <template #open-indicator>
-                        <a-icon type="down" />
-                      </template></v-select>
+                    >
+                      <template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
                     <!-- <a-select
                       @select="onValueChange"
                       id="pre_occupation"
@@ -2230,16 +2244,28 @@ export default {
     handleSubmitFormTwo() {
       this.$refs.preferenceFormTwo.validate((valid) => {
         if (valid) {
-           this.activeKey=null;
+          this.activeKey = null;
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
             el.scrollIntoView();
-             this.activeKey=null;
+            this.activeKey = null;
           }, 100);
           return false;
         }
       });
+    },
+    onNationalityValueChange(e, name) {
+      if (this.preferenceData[name].length > 3) {
+        this.preferenceData[name] = this.preferenceData[name].splice(0, 3);
+        return;
+      }
+      this.preferenceData[name] =
+        this.preferenceData[name][this.preferenceData[name].length - 1].name == `Don't Mind`
+          ? [{ id: 999999, name: `Don't Mind` }]
+          : this.preferenceData[name].filter((item) => item.name != `Don't Mind`);
+
+      this.savePreference();
     },
     onMultiValueChange(e, name) {
       if (this.preferenceData[name].length > 3) {
@@ -2247,10 +2273,9 @@ export default {
         return;
       }
       this.preferenceData[name] =
-        this.preferenceData[name][this.preferenceData[name].length - 1] ==
-        "Don't Mind"
-          ? ["Don't Mind"]
-          : this.preferenceData[name].filter((item) => item != "Don't Mind");
+        this.preferenceData[name][this.preferenceData[name].length - 1] == -1
+          ? [-1]
+          : this.preferenceData[name].filter((item) => item != -1);
 
       this.savePreference();
     },
@@ -2407,9 +2432,9 @@ export default {
       max-width: 100% !important;
       margin: 0px auto;
     }
-.anticon{
-  color: #b3b2b2;
-}
+    .anticon {
+      color: #b3b2b2;
+    }
     .ant-slider {
       margin-bottom: 16px;
       .ant-slider-track {

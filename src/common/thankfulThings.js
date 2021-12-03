@@ -1,5 +1,11 @@
 const thankfulThings = [
   {
+    label: `Don't Mind`,
+    value: `Don't Mind`,
+    description:
+      `Don't Mind`,
+  },
+  {
     label: "Charties and NGOs",
     value: "Charties and NGOs",
     description:

@@ -2201,7 +2201,7 @@
                         personalInformation.more_about.per_language_speak
                       "
                       label="name"
-                      :options="candidateDetails.languages"
+                      :options="[`Don't Mind`,...candidateDetails.languages]"
                       ><template #open-indicator>
                         <a-icon type="down" /> </template
                     ></v-select>
