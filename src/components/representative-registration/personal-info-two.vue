@@ -13,6 +13,7 @@
       <a-collapse-panel key="1" header="1. Essential Information">
         <a-form-model
           ref="repPersonalInfoFormOne"
+          :rules="rules"
           v-if="personalInformation && personalInformation.essential"
           :model="personalInformation.essential"
           class="form-ma"
@@ -99,16 +100,19 @@
                 </a-col>
                 <a-col :span="2"></a-col>
                 <a-col :span="12" class="date-of-birth text-left">
-                  <DropdownDatePicker
-                    displayFormat="dmy"
-                    dropdownClass="custom-select"
-                    :key="default_date"
-                    :default-date="personalInformation.essential.dob"
-                    v-model="personalInformation.essential.dob"
-                    :on-change="onChangeDD"
-                    :maxYear="new Date().getFullYear() - 18"
-                    :minYear="1940"
-                  ></DropdownDatePicker>
+                  <a-form-model-item ref="dob" prop="dob">
+                    <DropdownDatePicker
+                      id="dob"
+                      displayFormat="dmy"
+                      dropdownClass="custom-select"
+                      :key="default_date"
+                      :default-date="personalInformation.essential.dob"
+                      v-model="personalInformation.essential.dob"
+                      :on-change="onChangeDD"
+                      :maxYear="new Date().getFullYear() - 18"
+                      :minYear="1940"
+                    ></DropdownDatePicker>
+                  </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
                   <p>
@@ -152,21 +156,23 @@
                 </a-col>
                 <a-col :span="2"></a-col>
                 <a-col :span="12">
-                  <v-select
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="
-                      onValueChange($event, 'per_occupation', 'essential')
-                    "
-                    id="per_occupation"
-                    placeholder="Select Occupation"
-                    :reduce="(option) => option.name"
-                    v-model="personalInformation.essential.per_occupation"
-                    label="name"
-                    :options="representativeDetails.occupations"
-                    ><template #open-indicator>
-                      <a-icon type="down" /> </template
-                  ></v-select>
+                  <a-form-model-item ref="per_occupation" prop="per_occupation">
+                    <v-select
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="
+                        onValueChange($event, 'per_occupation', 'essential')
+                      "
+                      id="per_occupation"
+                      placeholder="Select Occupation"
+                      :reduce="(option) => option.name"
+                      v-model="personalInformation.essential.per_occupation"
+                      label="name"
+                      :options="representativeDetails.occupations"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
+                    ></v-select>
+                  </a-form-model-item>
 
                   <a-input
                     class="w-100 mt-2"
@@ -231,6 +237,7 @@
           ref="repPersonalInfoFormTwo"
           v-if="personalInformation && personalInformation.personal"
           :model="personalInformation.personal"
+          :rules="rules_personal"
           class="form-ma"
         >
           <a-row>
@@ -254,46 +261,58 @@
                 <a-col :span="12">
                   <a-row :gutter="[8]">
                     <a-col :span="12">
-                      <v-select
-                        :clearable="false"
-                        class="style-chooser"
-                        @input="onCountryChange($event,'residence')"
-                        id="per_current_residence_country"
-                        :placeholder="'Country'"
-                        v-model="
-                          personalInformation.personal
-                            .per_current_residence_country
-                        "
-                        label="name"
-                        :reduce="(option) => option.id"
-                        :options="representativeDetails.countries"
-                        ><template #open-indicator>
-                          <a-icon type="down" /> </template
-                      ></v-select>
+                      <a-form-model-item
+                        ref="per_current_residence_country"
+                        prop="per_current_residence_country"
+                      >
+                        <v-select
+                          :clearable="false"
+                          class="style-chooser"
+                          @input="onCountryChange($event, 'residence')"
+                          id="per_current_residence_country"
+                          :placeholder="'Country'"
+                          v-model="
+                            personalInformation.personal
+                              .per_current_residence_country
+                          "
+                          label="name"
+                          :reduce="(option) => option.id"
+                          :options="representativeDetails.countries"
+                          ><template #open-indicator>
+                            <a-icon type="down" /> </template
+                        ></v-select>
+                      </a-form-model-item>
                     </a-col>
                     <a-col :span="12">
-                      <v-select
-                        :clearable="false"
-                        class="style-chooser"
-                        @input="
-                          onValueChange(
-                            $event,
-                            'per_current_residence_city',
-                            'contact'
-                          )
-                        "
-                        id="per_current_residence_city"
-                        placeholder="Select City"
-                        :reduce="(option) => option.name"
-                        v-model="
-                          personalInformation.personal
-                            .per_current_residence_city
-                        "
-                        label="name"
-                        :options="personalInformation.personal.residenceCities"
-                        ><template #open-indicator>
-                          <a-icon type="down" /> </template
-                      ></v-select>
+                      <a-form-model-item
+                        ref="per_current_residence_city"
+                        prop="per_current_residence_city"
+                      >
+                        <v-select
+                          :clearable="false"
+                          class="style-chooser"
+                          @input="
+                            onValueChange(
+                              $event,
+                              'per_current_residence_city',
+                              'contact'
+                            )
+                          "
+                          id="per_current_residence_city"
+                          placeholder="Select City"
+                          :reduce="(option) => option.name"
+                          v-model="
+                            personalInformation.personal
+                              .per_current_residence_city
+                          "
+                          label="name"
+                          :options="
+                            personalInformation.personal.residenceCities
+                          "
+                          ><template #open-indicator>
+                            <a-icon type="down" /> </template
+                        ></v-select>
+                      </a-form-model-item>
                     </a-col>
                   </a-row>
                   <a-input
@@ -305,7 +324,13 @@
                         'Other'
                     "
                     placeholder="Please specify"
-                    @change="onValueChange($event, 'per_current_residence_city', 'contact')"
+                    @change="
+                      onValueChange(
+                        $event,
+                        'per_current_residence_city',
+                        'contact'
+                      )
+                    "
                   />
                 </a-col>
                 <a-col :span="12">
@@ -385,21 +410,27 @@
                     <a-col :span="12">
                       <a-row :gutter="[8]">
                         <a-col :span="12">
-                          <v-select
-                            :clearable="false"
-                            class="style-chooser"
-                            @input="onCountryChange($event,'permanant')"
-                            id="per_permanent_country"
-                            :placeholder="'Country'"
-                            :reduce="(option) => option.id"
-                            v-model="
-                              personalInformation.personal.per_permanent_country
-                            "
-                            label="name"
-                            :options="representativeDetails.countries"
-                            ><template #open-indicator>
-                              <a-icon type="down" /> </template
-                          ></v-select>
+                          <a-form-model-item
+                            ref="per_permanent_country"
+                            prop="per_permanent_country"
+                          >
+                            <v-select
+                              :clearable="false"
+                              class="style-chooser"
+                              @input="onCountryChange($event, 'permanant')"
+                              id="per_permanent_country"
+                              :placeholder="'Country'"
+                              :reduce="(option) => option.id"
+                              v-model="
+                                personalInformation.personal
+                                  .per_permanent_country
+                              "
+                              label="name"
+                              :options="representativeDetails.countries"
+                              ><template #open-indicator>
+                                <a-icon type="down" /> </template
+                            ></v-select>
+                          </a-form-model-item>
                           <!-- <a-select
                             :showSearch="true"
                             option-filter-prop="children"
@@ -427,21 +458,34 @@
                           </a-select> -->
                         </a-col>
                         <a-col :span="12">
-                          <v-select
-                            :clearable="false"
-                            class="style-chooser"
-                             @input="onValueChange($event, 'per_permanent_city', 'contact')"
-                            id="per_permanent_city"
-                            placeholder="Select City"
-                            :reduce="(option) => option.name"
-                            v-model="
-                              personalInformation.personal.per_permanent_city
-                            "
-                            label="name"
-                            :options="personalInformation.personal.permanantCities"
-                            ><template #open-indicator>
-                              <a-icon type="down" /> </template
-                          ></v-select>
+                          <a-form-model-item
+                            ref="per_permanent_city"
+                            prop="per_permanent_city"
+                          >
+                            <v-select
+                              :clearable="false"
+                              class="style-chooser"
+                              @input="
+                                onValueChange(
+                                  $event,
+                                  'per_permanent_city',
+                                  'contact'
+                                )
+                              "
+                              id="per_permanent_city"
+                              placeholder="Select City"
+                              :reduce="(option) => option.name"
+                              v-model="
+                                personalInformation.personal.per_permanent_city
+                              "
+                              label="name"
+                              :options="
+                                personalInformation.personal.permanantCities
+                              "
+                              ><template #open-indicator>
+                                <a-icon type="down" /> </template
+                            ></v-select>
+                          </a-form-model-item>
                           <!-- <a-select
                             :showSearch="true"
                             option-filter-prop="children"
@@ -505,20 +549,25 @@
                       </div>
                     </a-col>
                     <a-col :span="12">
-                      <a-input
-                        class="w-100 mt-2"
-                        placeholder="Please specify"
-                        v-model="
-                          personalInformation.personal.per_permanent_post_code
-                        "
-                        @blur="
-                          onValueChange(
-                            $event,
-                            'per_permanent_post_code',
-                            'contact'
-                          )
-                        "
-                      />
+                      <a-form-model-item
+                        ref="per_permanent_post_code"
+                        prop="per_permanent_post_code"
+                      >
+                        <a-input
+                          class="w-100 mt-2"
+                          placeholder="Please specify"
+                          v-model="
+                            personalInformation.personal.per_permanent_post_code
+                          "
+                          @blur="
+                            onValueChange(
+                              $event,
+                              'per_permanent_post_code',
+                              'contact'
+                            )
+                          "
+                        />
+                      </a-form-model-item>
                     </a-col>
                   </a-row>
                 </a-col>
@@ -543,20 +592,25 @@
                     </a-col>
                     <a-col :span="12">
                       <template>
-                        <a-textarea
-                          placeholder="Sample text here"
-                          :rows="4"
-                          v-model="
-                            personalInformation.personal.per_permanent_address
-                          "
-                          @blur="
-                            onValueChange(
-                              $event,
-                              'per_permanent_address',
-                              'contact'
-                            )
-                          "
-                        />
+                        <a-form-model-item
+                          ref="per_permanent_address"
+                          prop="per_permanent_address"
+                        >
+                          <a-textarea
+                            placeholder="Sample text here"
+                            :rows="4"
+                            v-model="
+                              personalInformation.personal.per_permanent_address
+                            "
+                            @blur="
+                              onValueChange(
+                                $event,
+                                'per_permanent_address',
+                                'contact'
+                              )
+                            "
+                          />
+                        </a-form-model-item>
                       </template>
                     </a-col>
                   </a-row>
@@ -607,13 +661,15 @@
                 </a-col>
                 <a-col :span="2"></a-col>
                 <a-col :span="12">
-                  <a-input
-                    class="w-100"
-                    placeholder="+8801685117737"
-                    id="inputNumber"
-                    v-model="personalInformation.personal.mobile_number"
-                    @blur="onValueChange($event, 'mobile_number', 'contact')"
-                  />
+                  <a-form-model-item ref="mobile_number" prop="mobile_number">
+                    <a-input
+                      class="w-100"
+                      placeholder="+8801685117737"
+                      id="inputNumber"
+                      v-model="personalInformation.personal.mobile_number"
+                      @blur="onValueChange($event, 'mobile_number', 'contact')"
+                    />
+                  </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
                   <p>
@@ -717,6 +773,7 @@
 import DropdownDatePicker from "vue-dropdown-datepicker";
 import ApiService from "../../services/api.service";
 import vSelect from "vue-select";
+import { RULES, RULES_PERSONAL } from "./models/representative";
 export default {
   props: {
     representativeDetails: {
@@ -733,6 +790,8 @@ export default {
   },
   data() {
     return {
+      rules: RULES,
+      rules_personal: RULES_PERSONAL,
       arr: [
         { first: true },
         { first: true },
@@ -749,7 +808,6 @@ export default {
         { first: true },
       ],
       activeKey: ["1"],
-      rules: {},
       default_date: null,
       phoneNumber: undefined,
     };
