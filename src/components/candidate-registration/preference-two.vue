@@ -190,31 +190,7 @@
                   <div v-if="preferenceData.pre_has_country_allow_preference">
                     <div class="row my-1">
                       <div class="col-md-6">
-                        <!-- <a-select
-                          @select="
-                            onChangeCountry($event, 'listOne', 'allowed')
-                          "
-                          id="preferred_countries0"
-                          style="width: 150px"
-                          :filter-option="filterOption"
-                          option-filter-prop="children"
-                          :showSearch="true"
-                          placeholder="Select Country"
-                          v-model.lazy="preferenceData.preferred_countries[0]"
-                          class="select-ma w-100"
-                        >
-                          <a-select-option disabled :value="0"
-                            >Select Country</a-select-option
-                          >
-                          <a-select-option
-                            :value="item.id"
-                            v-bind:key="index"
-                            style="width: 100px"
-                            v-for="(item, index) in candidateDetails.countries"
-                          >
-                            {{ item.name }}
-                          </a-select-option>
-                        </a-select> -->
+   
                         <v-select
                           :clearable="false"
                           id="preferred_countries0"
@@ -243,30 +219,7 @@
                           ><template #open-indicator>
                             <a-icon type="down" /> </template
                         ></v-select>
-                        <!-- <a-select
-                          @select="onValueChange"
-                          id="preferred_cities0"
-                          style="width: 150px"
-                          :filter-option="filterOption"
-                          option-filter-prop="children"
-                          :showSearch="true"
-                          placeholder="Select City"
-                          v-model.lazy="preferenceData.preferred_cities[0]"
-                          class="select-ma w-100"
-                        >
-                          <a-select-option disabled :value="0"
-                            >Select City</a-select-option
-                          >
-                          <a-select-option
-                            :value="item.id"
-                            v-bind:key="index"
-                            style="width: 100px"
-                            v-for="(item, index) in preferenceData.allowedCity
-                              .listOne"
-                          >
-                            {{ item.name }}
-                          </a-select-option>
-                        </a-select> -->
+                       
                       </div>
                     </div>
 
@@ -461,31 +414,7 @@
                           ><template #open-indicator>
                             <a-icon type="down" /> </template
                         ></v-select>
-                        <!-- <a-select
-                          @select="
-                            onChangeCountry($event, 'listOne', 'disAllowed')
-                          "
-                          id="bloked_countries0"
-                          style="width: 150px"
-                          :filter-option="filterOption"
-                          :showSearch="true"
-                          placeholder="Select Country"
-                          option-filter-prop="children"
-                          v-model.lazy="preferenceData.bloked_countries[0]"
-                          class="select-ma w-100"
-                        >
-                          <a-select-option disabled :value="0"
-                            >Select Country</a-select-option
-                          >
-                          <a-select-option
-                            :value="item.id"
-                            v-bind:key="index"
-                            style="width: 100px"
-                            v-for="(item, index) in candidateDetails.countries"
-                          >
-                            {{ item.name }}
-                          </a-select-option>
-                        </a-select> -->
+                        
                       </div>
                       <div class="col-md-6">
                         <v-select
@@ -500,30 +429,7 @@
                           ><template #open-indicator>
                             <a-icon type="down" /> </template
                         ></v-select>
-                        <!-- <a-select
-                          @select="onValueChange"
-                          id="blocked_cities0"
-                          style="width: 150px"
-                          option-filter-prop="children"
-                          :filter-option="filterOption"
-                          :showSearch="true"
-                          placeholder="Select City"
-                          v-model.lazy="preferenceData.blocked_cities[0]"
-                          class="select-ma w-100"
-                        >
-                          <a-select-option disabled :value="0"
-                            >Select Country</a-select-option
-                          >
-                          <a-select-option
-                            :value="item.id"
-                            v-bind:key="index"
-                            style="width: 100px"
-                            v-for="(item, index) in preferenceData
-                              .disAllowedCity.listOne"
-                          >
-                            {{ item.name }}
-                          </a-select-option>
-                        </a-select> -->
+                        
                       </div>
                     </div>
 
@@ -711,32 +617,7 @@
                         <a-icon type="down" />
                       </template>
                     </v-select>
-                    <!-- <a-select
-                      id="pre_partner_religion_id"
-                      :maxTagCount="3"
-                      :show-arrow="true"
-                      :showSearch="true"
-                      :filter-option="filterOption"
-                      option-filter-prop="children"
-                      mode="multiple"
-                      style="width: 150px"
-                      placeholder="Select your preferred religion"
-                      @select="
-                        onMultiValueChange($event, 'pre_partner_religion_id')
-                      "
-                      class="select-ma w-100"
-                      v-model.lazy="preferenceData.pre_partner_religion_id"
-                    >
-                      <a-select-option value="Don't Mind"
-                        >Don't Mind
-                      </a-select-option>
-                      <a-select-option
-                        :value="item.id"
-                        v-bind:key="index"
-                        v-for="(item, index) in candidateDetails.religions"
-                        >{{ item.name }}
-                      </a-select-option>
-                    </a-select> -->
+                   
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -805,30 +686,7 @@
                       <template #open-indicator>
                         <a-icon type="down" /> </template
                     ></v-select>
-                    <!-- <a-select
-                      id="pre_ethnicities"
-                      :showSearch="true"
-                      :filter-option="filterOption"
-                      option-filter-prop="children"
-                      :showArrow="true"
-                      style="width: 150px"
-                      placeholder="Please select your ethnicities"
-                      @select="onValueChange"
-                      v-model.lazy="preferenceData.pre_ethnicities"
-                      class="select-ma w-100"
-                    >
-                      <a-select-option :value="0" disabled
-                        >Select Ethnicity</a-select-option
-                      >
-
-                      <a-select-option
-                        v-for="(ethnicity, key) in ethnicityList"
-                        :value="ethnicity"
-                        :key="key"
-                      >
-                        {{ ethnicity }}
-                      </a-select-option>
-                    </a-select> -->
+                   
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -910,33 +768,7 @@
                       <template #open-indicator>
                         <a-icon type="down" /> </template
                     ></v-select>
-                    <!-- <a-select
-                      id="preferred_nationality"
-                      class="nationality-select"
-                      option-filter-prop="children"
-                      mode="multiple"
-                      :maxTagCount="3"
-                      :showSearch="true"
-                      :filter-option="filterOption"
-                      @select="
-                        onMultiValueChange($event, 'preferred_nationality')
-                      "
-                      v-model.lazy="preferenceData.preferred_nationality"
-                      placeholder="Select your Nationality"
-                      label="name"
-                    >
-                      <a-select-option value="Don't Mind"
-                        >Don't Mind
-                      </a-select-option>
-                      <a-select-option
-                        :value="item.id"
-                        v-bind:key="index"
-                        style="width: 100px"
-                        v-for="(item, index) in candidateDetails.countries"
-                      >
-                        {{ item.name }}
-                      </a-select-option>
-                    </a-select> -->
+                   
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -1006,29 +838,7 @@
                       <template #open-indicator>
                         <a-icon type="down" /> </template
                     ></v-select>
-                    <!-- <a-select
-                      :showSearch="true"
-                      :filter-option="filterOption"
-                      @select="onValueChange"
-                      id="pre_employment_status"
-                      style="width: 150px"
-                      placeholder="Please select your education status"
-                      v-model.lazy="preferenceData.pre_study_level_id"
-                      option-filter-prop="children"
-                      class="select-ma w-100"
-                    >
-                      <a-select-option :value="0" disabled
-                        >Select minimum education level</a-select-option
-                      >
-                      <a-select-option
-                        :value="item.id"
-                        v-bind:key="index"
-                        style="width: 100px"
-                        v-for="(item, index) in candidateDetails.studylevels"
-                      >
-                        {{ item.name }}
-                      </a-select-option>
-                    </a-select> -->
+                  
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -1097,28 +907,7 @@
                       <template #open-indicator>
                         <a-icon type="down" /> </template
                     ></v-select>
-                    <!-- <a-select
-                      @select="onValueChange"
-                      id="pre_employment_status"
-                      option-filter-prop="children"
-                      style="width: 150px"
-                      placeholder="Please select your employment status"
-                      v-model.lazy="preferenceData.pre_employment_status"
-                      class="select-ma w-100"
-                    >
-                      <a-select-option :value="0" disabled
-                        >Select current employment status</a-select-option
-                      >
-                      <a-select-option value="Employed">
-                        Employed
-                      </a-select-option>
-                      <a-select-option value="Unemployed">
-                        Unemployed
-                      </a-select-option>
-                      <a-select-option value="Others">
-                        Don't mind
-                      </a-select-option>
-                    </a-select> -->
+                   
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
@@ -1184,28 +973,7 @@
                       <template #open-indicator>
                         <a-icon type="down" /> </template
                     ></v-select>
-                    <!-- <a-select
-                      @select="onValueChange"
-                      id="pre_occupation"
-                      :showSearch="true"
-                      option-filter-prop="children"
-                      :filter-option="filterOption"
-                      v-model.lazy="preferenceData.pre_occupation"
-                      placeholder="Please select your preferred occupation"
-                      class="select-ma w-100"
-                    >
-                      <a-select-option :value="0" disabled
-                        >Select Occupation</a-select-option
-                      >
-                      <a-select-option
-                        :value="value"
-                        :key="key"
-                        style="width: 100px"
-                        v-for="(value, key) in candidateDetails.occupations"
-                      >
-                        {{ value }}
-                      </a-select-option>
-                    </a-select> -->
+                   
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="12">
