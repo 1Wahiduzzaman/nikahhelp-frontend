@@ -43,6 +43,7 @@
       </div>
       <div class="steps-content" v-if="current == 2">
         <Verification
+          @valueChange="onDataChange($event)"
           :verification="candidateDetails.verification"
           :candidateDetails="candidateDetails"
           ref="Verification"
@@ -57,7 +58,7 @@
         />
       </div>
       <div class="steps-content" v-if="current == 4">
-        <UploadProfile />
+        <UploadProfile :imageModel="candidateDetails.imageModel" />
       </div>
       <div class="steps-content" v-if="current == 5">
         <Review :candidateDetails="candidateDetails" />
@@ -163,7 +164,6 @@ export default {
       enabledNextBtn: false,
       candidateDetails: {
         preferenceData: null,
-        images: {},
       },
       steps: [
         {
@@ -214,7 +214,7 @@ export default {
             ...e.value,
           };
         case 4:
-          this.candidateDetails.images = {
+          this.candidateDetails.imageModel = {
             ...e.value,
           };
           break;
@@ -227,6 +227,11 @@ export default {
       if (response.status === 200) {
         const details = {
           countries: response.data.data.countries,
+          imageModel: {
+            ...response.data.data.candidate_image,
+            additionalImageSrc:
+              response.data.data.candidate_image.other_images.length > 0 ? response.data.data.candidate_image.other_images[0].image_path : null,
+          },
           occupations: response.data.data.occupations,
           religions: response.data.data.religions,
           ethnicities: ethnicities,
@@ -456,8 +461,8 @@ export default {
         }
       );
       const user = JSON.parse(localStorage.getItem("user"));
-      user.data_input_status=satge;
-      localStorage.removeItem('user');
+      user.data_input_status = satge;
+      localStorage.removeItem("user");
       localStorage.setItem("user", JSON.stringify(user));
     },
     async onChangeCountry(e, name, action, isDefault = false) {
@@ -526,7 +531,7 @@ export default {
             preferred_nationality,
             pre_study_level_id,
             pre_employment_status,
-            //pre_occupation,
+            pre_occupation,
           } = this.candidateDetails.preferenceData;
           isEnabled = Object.values({
             pre_partner_age_max,
@@ -538,7 +543,7 @@ export default {
             preferred_nationality,
             pre_study_level_id,
             pre_employment_status,
-            // pre_occupation,
+            pre_occupation,
           }).every((x) => x !== undefined && x !== null && x !== "");
           break;
         case 1:
@@ -596,9 +601,11 @@ export default {
           }).every((x) => x !== undefined && x !== null && x !== "");
           break;
         case 4:
-          isEnabled = Object.values(this.candidateDetails.images).every(
-            (x) => x !== undefined && x !== null && x !== ""
-          );
+          isEnabled = this.candidateDetails.imageModel
+            ? Object.values(this.candidateDetails.imageModel).every(
+                (x) => x !== undefined && x !== null && x !== ""
+              )
+            : false;
           break;
       }
 

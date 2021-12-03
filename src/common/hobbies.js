@@ -1,4 +1,5 @@
 const hobbies = [
+  `Don't Mind`,
   "3D printing",
   "Acrobatics",
   "Acting",

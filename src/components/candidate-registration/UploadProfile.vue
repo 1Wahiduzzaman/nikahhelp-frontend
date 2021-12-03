@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-profile-image">
+  <div v-if="imageModel" class="upload-profile-image">
     <div class="section-heading heading-text">
       <h5>Image Upload</h5>
       <p>Your Profile and Avatar Images</p>
@@ -40,18 +40,21 @@
                         <span
                           @click="clearImg('avatar')"
                           class="close-icon"
-                          v-if="avatarSrc"
+                          v-if="imageModel.avatar_image_url"
                           ><img src="@/assets/icon/close.svg" alt="img"
                         /></span>
                         <div class="img-preview mb-2">
                           <img
-                            :src="avatarSrc"
+                            :src="imageModel.avatar_image_url"
                             width="180"
                             height="200"
-                            v-if="avatarSrc"
+                            v-if="imageModel.avatar_image_url"
                           />
                           <div class="mt-3">Avatar Image</div>
-                          <div class="mt-4 add-icon" v-if="!avatarSrc">
+                          <div
+                            class="mt-4 add-icon"
+                            v-if="!imageModel.avatar_image_url"
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 16.69 16.69"
@@ -91,18 +94,21 @@
                         <span
                           @click="clearImg('main')"
                           class="close-icon"
-                          v-if="mainImageSrc"
+                          v-if="imageModel.main_image_url"
                           ><img src="@/assets/icon/close.svg" alt="img"
                         /></span>
                         <div class="img-preview mb-2">
                           <img
-                            :src="mainImageSrc"
+                            :src="imageModel.main_image_url"
                             width="180"
                             height="200"
-                            v-if="mainImageSrc"
+                            v-if="imageModel.main_image_url"
                           />
                           <div class="mt-3">Main Profile Image</div>
-                          <div class="mt-4 add-icon" v-if="!mainImageSrc">
+                          <div
+                            class="mt-4 add-icon"
+                            v-if="!imageModel.main_image_url"
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 16.69 16.69"
@@ -142,18 +148,21 @@
                         <span
                           @click="clearImg('additional')"
                           class="close-icon"
-                          v-if="additionalImageSrc"
+                          v-if="imageModel.additionalImageSrc"
                           ><img src="@/assets/icon/close.svg" alt="img"
                         /></span>
                         <div class="img-preview mb-2">
                           <img
-                            :src="additionalImageSrc"
+                            :src="imageModel.additionalImageSrc"
                             width="180"
                             height="200"
-                            v-if="additionalImageSrc"
+                            v-if="imageModel.additionalImageSrc"
                           />
                           <div class="mt-3">Additional Image</div>
-                          <div class="mt-4 add-icon" v-if="!additionalImageSrc">
+                          <div
+                            class="mt-4 add-icon"
+                            v-if="!imageModel.additionalImageSrc"
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 16.69 16.69"
@@ -247,7 +256,7 @@
             </p>
           </div>
         </div>
-        <a-button
+        <!-- <a-button
           shape="round"
           type="primary"
           style="float: right"
@@ -256,7 +265,7 @@
           @click="saveImages"
         >
           Save &#38; Continue
-        </a-button>
+        </a-button> -->
       </a-collapse-panel>
     </a-collapse>
   </div>
@@ -268,16 +277,14 @@ import Vue from "vue";
 export default {
   name: "UploadProfile",
   components: {},
+  props: {
+    imageModel: {
+      type: Object,
+    },
+  },
   data() {
     return {
       activeKey: ["1"],
-      src: "",
-      avatar: "",
-      avatarSrc: "",
-      mainImage: "",
-      mainImageSrc: "",
-      additionalImage: "",
-      additionalImageSrc: "",
       anyoneFlag: false,
       onlyTeamFlag: false,
       onlyTeamConnectionsFlag: false,
@@ -289,20 +296,19 @@ export default {
   },
 
   created() {
-    this.getImagesFromDb();
     this.getImageSharingSettings();
   },
   methods: {
     clearImg(action) {
       switch (action) {
         case "main":
-          this.mainImageSrc = "";
+          this.imageModel.avatar_image_url = "";
           break;
         case "avatar":
-          this.avatarSrc = "";
+          this.imageModel.main_image_url = "";
           break;
         case "additional":
-          this.additionalImageSrc = "";
+          this.imageModel.additionalImageSrc = "";
           break;
       }
     },
@@ -333,22 +339,7 @@ export default {
         },
       });
     },
-    getImagesFromDb() {
-      const response = this.$store.dispatch("getImages");
-      response
-        .then((data) => {
-          this.avatarSrc = data.data.data.avatar_image_url;
-          this.mainImageSrc = data.data.data.main_image_url;
-          this.additionalImageSrc = data.data.data.other_images[0].image_path;
-          this.$emit("valueChange", {
-            value: data.data.data,
-            current: 4,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+   
     getImageSharingSettings() {
       const response = this.$store.dispatch("getImageSharingSettings");
       response
@@ -376,12 +367,13 @@ export default {
         file = "";
         return;
       }
-      this.avatar = e.target.files[0];
-      console.log(this.avatar);
+      let formData = new FormData();
+      formData.append("per_avatar_url", e.target.files[0]);
+      this.saveImage(formData);
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
-        this.avatarSrc = e.target.result;
+        this.imageModel.avatar_image_url = e.target.result;
       };
     },
     getMainImage(e) {
@@ -390,11 +382,13 @@ export default {
         file = "";
         return;
       }
-      this.mainImage = e.target.files[0];
+      let formData = new FormData();
+      formData.append("main_image_url", e.target.files[0]);
+      this.saveImage(formData);
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
-        this.mainImageSrc = e.target.result;
+        this.imageModel.main_image_url = e.target.result;
       };
     },
     getAdditionalImage(e) {
@@ -403,12 +397,16 @@ export default {
         file = "";
         return;
       }
-      this.additionalImage = e.target.files[0];
+      let formData = new FormData();
+      formData.append("image[0][image]", e.target.files[0]);
+      formData.append("image[0][type]", 2);
+      formData.append("image[0][visibility]", 4);
+      this.saveImage(formData);
 
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
-        this.additionalImageSrc = e.target.result;
+        this.imageModel.additionalImageSrc = e.target.result;
       };
     },
     onConfirmationSwitchChnaged1(checked) {
@@ -420,100 +418,121 @@ export default {
         this.team_connection_can_see = 0;
       }
       checked == true ? (this.anybody_can_see = 1) : (this.anybody_can_see = 0);
+      this.onChangeCheckBox();
     },
     onConfirmationSwitchChnaged2(checked) {
       console.log(checked);
       checked == true
         ? (this.only_team_can_see = 1)
         : (this.only_team_can_see = 0);
+         this.onChangeCheckBox();
     },
     onConfirmationSwitchChnaged3(checked) {
       console.log(checked);
       checked == true
         ? (this.team_connection_can_see = 1)
         : (this.team_connection_can_see = 0);
+         this.onChangeCheckBox();
     },
-    async saveImages() {
-      this.loadingButton = true;
-      console.log(this.avatar);
-      console.log(this.mainImage);
-      console.log(this.additionalImage);
-      let formData = new FormData();
-      if (
-        this.avatarSrc &&
-        this.mainImageSrc &&
-        this.additionalImageSrc &&
-        !this.avatar &&
-        !this.mainImage &&
-        !this.additionalImage
-      ) {
-        formData.append("anybody_can_see", this.anybody_can_see);
-        formData.append("only_team_can_see", this.only_team_can_see);
-        formData.append(
-          "team_connection_can_see",
-          this.team_connection_can_see
-        );
-      } 
-      
-      else {
-        if (!this.avatar && !this.avatarSrc) {
-          this.showError("Avatar Image is not uploaded!");
-          this.loadingButton = false;
-          return;
-        }
-        if (!this.mainImage && !this.mainImageSrc) {
-          this.showError("Main Image is not uploaded!");
-          this.loadingButton = false;
-          return;
-        }
-        if (!this.additionalImage && !this.additionalImageSrc) {
-          this.showError("Additional Image is not uploaded!");
-          this.loadingButton = false;
-          return;
-        }
-
-        formData.append("per_avatar_url", this.avatar);
-        formData.append("per_main_image_url", this.mainImage);
-        formData.append("image[0][image]", this.additionalImage);
-        formData.append("image[0][type]", 2);
-        formData.append("image[0][visibility]", 4);
-        formData.append("anybody_can_see", this.anybody_can_see ? 1 : 0);
-        formData.append("only_team_can_see", this.only_team_can_see);
-        formData.append(
-          "team_connection_can_see",
-          this.team_connection_can_see
-        );
-      }
-
-      await this.$store
-        .dispatch("uploadImages", formData)
-        .then((data) => {
-          if (data.data.status && data.data.status !== "FAIL") {
-            this.loadingButton = false;
-            this.$success({
-              title: "Success!",
-              content: data.data.message,
-              center: true,
-            });
-            this.$emit("valueChange", {
-              value: {
-                per_avatar_url: data.data.data.per_avatar_url,
-                per_main_image_url: data.data.data.per_main_image_url,
-              },
-              current: 4,
-            });
-          }
-          if (data.data.status && data.data.status == "FAIL") {
-            const errorMessage = JSON.stringify(data.data.data);
-            this.showError(errorMessage);
-            this.loadingButton = false;
-          }
-        })
-        .catch((error) => {
-          this.loadingButton = false;
-          console.log(error);
-        });
+    onChangeCheckBox() {
+       let formData = new FormData();
+      formData.append("anybody_can_see", this.anybody_can_see);
+      formData.append("only_team_can_see", this.only_team_can_see);
+      formData.append("team_connection_can_see", this.team_connection_can_see);
+      this.saveImage(formData)
     },
+    async saveImage(data) {
+      await this.$store.dispatch("uploadImages", data).then((data) => {
+        if (data.data.status && data.data.status !== "FAIL") {
+          this.$emit("valueChange", {
+            value: {
+              per_avatar_url: data.data.data.per_avatar_url,
+              per_main_image_url: data.data.data.per_main_image_url,
+            },
+            current: 4,
+          });
+        }
+      });
+    },
+    // async saveImages() {
+    //   this.loadingButton = true;
+    //   console.log(this.avatar);
+    //   console.log(this.mainImage);
+    //   console.log(this.additionalImage);
+    //   let formData = new FormData();
+    //   if (
+    //     this.avatarSrc &&
+    //     this.mainImageSrc &&
+    //     this.additionalImageSrc &&
+    //     !this.avatar &&
+    //     !this.mainImage &&
+    //     !this.additionalImage
+    //   ) {
+    //     formData.append("anybody_can_see", this.anybody_can_see);
+    //     formData.append("only_team_can_see", this.only_team_can_see);
+    //     formData.append(
+    //       "team_connection_can_see",
+    //       this.team_connection_can_see
+    //     );
+    //   } else {
+    //     if (!this.avatar && !this.avatarSrc) {
+    //       this.showError("Avatar Image is not uploaded!");
+    //       this.loadingButton = false;
+    //       return;
+    //     }
+    //     if (!this.mainImage && !this.mainImageSrc) {
+    //       this.showError("Main Image is not uploaded!");
+    //       this.loadingButton = false;
+    //       return;
+    //     }
+    //     if (!this.additionalImage && !this.additionalImageSrc) {
+    //       this.showError("Additional Image is not uploaded!");
+    //       this.loadingButton = false;
+    //       return;
+    //     }
+
+    //     formData.append("per_avatar_url", this.avatar);
+    //     formData.append("per_main_image_url", this.mainImage);
+    //     formData.append("image[0][image]", this.additionalImage);
+    //     formData.append("image[0][type]", 2);
+    //     formData.append("image[0][visibility]", 4);
+    //     formData.append("anybody_can_see", this.anybody_can_see ? 1 : 0);
+    //     formData.append("only_team_can_see", this.only_team_can_see);
+    //     formData.append(
+    //       "team_connection_can_see",
+    //       this.team_connection_can_see
+    //     );
+    //   }
+
+    //   await this.$store
+    //     .dispatch("uploadImages", formData)
+    //     .then((data) => {
+    //       if (data.data.status && data.data.status !== "FAIL") {
+    //         this.loadingButton = false;
+    //         this.$success({
+    //           title: "Success!",
+    //           content: data.data.message,
+    //           center: true,
+    //         });
+    //         this.$emit("valueChange", {
+    //           value: {
+    //             per_avatar_url: data.data.data.per_avatar_url,
+    //             per_main_image_url: data.data.data.per_main_image_url,
+    //           },
+    //           current: 4,
+    //         });
+    //       }
+    //       if (data.data.status && data.data.status == "FAIL") {
+    //         const errorMessage = JSON.stringify(data.data.data);
+    //         this.showError(errorMessage);
+    //         this.loadingButton = false;
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       this.loadingButton = false;
+    //       console.log(error);
+    //     });
+    // },
   },
 };
 </script>

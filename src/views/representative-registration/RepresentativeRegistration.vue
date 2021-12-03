@@ -229,37 +229,45 @@ export default {
           occupations: response.data.data.occupations,
           id: user.id,
           imageModel: {
-            ...response.data.data.representative_info.image_upload,
+            ...response.data.data.image_upload,
           },
           verification: {
-            ...response.data.data.representative_info.verification,
+            ...response.data.data.verification,
+                   ver_country: response.data.data
+                .verification.ver_country
+                ? parseInt(
+                    response.data.data.verification
+                      .ver_country
+                  )
+                : response.data.data.verification
+                    .ver_country,
           },
           personalInformation: {
             essential: {
-              ...response.data.data.representative_info.essential,
+              ...response.data.data.essential,
               default_date:
-                response.data.data.representative_info.essential.dob,
+                response.data.data.essential.dob,
             },
             personal: {
-              ...response.data.data.representative_info.personal,
+              ...response.data.data.personal,
               residenceCities:[],
               permanantCities:[],
               email: user.email,
               per_current_residence_country: response.data.data
-                .representative_info.personal.per_current_residence_country
+                .personal.per_current_residence_country
                 ? parseInt(
-                    response.data.data.representative_info.personal
+                    response.data.data.personal
                       .per_current_residence_country
                   )
-                : response.data.data.representative_info.personal
+                : response.data.data.personal
                     .per_current_residence_country,
-              per_permanent_country: response.data.data.representative_info
+              per_permanent_country: response.data.data
                 .personal.per_permanent_country
                 ? parseInt(
-                    response.data.data.representative_info.personal
+                    response.data.data.personal
                       .per_permanent_country
                   )
-                : response.data.data.representative_info.personal
+                : response.data.data.personal
                     .per_permanent_country,
             },
           },
