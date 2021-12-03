@@ -217,6 +217,9 @@ export default {
           id: user.id,
           imageModel: {
             ...response.data.data.image_upload,
+            only_team_can_see: response.data.data.image_upload.only_team_can_see==0?true:false,
+            team_connection_can_see: response.data.data.image_upload.team_connection_can_seee==0?true:false,
+            anybody_can_see: response.data.data.image_upload.anybody_can_seee==0?true:false,
           },
           verification: {
             ...response.data.data.verification,

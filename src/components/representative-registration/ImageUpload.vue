@@ -89,8 +89,6 @@
 
         <!-- Previous Image sharing setting starts here -->
         <div class="share-settings">
-         
-
           <div class="share-settings">
             <h3 class="text-center">
               <svg
@@ -152,7 +150,7 @@
           <p>I would like to share all my images with my team</p>
           <p>I would like to share all my images with connected team(s)</p> -->
         </div>
-            <a-button
+        <!-- <a-button
           shape="round"
           type="primary"
           style="float: right"
@@ -160,7 +158,7 @@
           @click="saveImages"
         >
           Save &#38; Continue
-        </a-button>
+        </a-button> -->
       </a-collapse-panel>
     </a-collapse>
   </div>
@@ -209,6 +207,9 @@ export default {
       this.avatar = e.target.files[0];
       let reader = new FileReader();
       reader.readAsDataURL(file);
+      this.saveImages({
+        per_avatar_url: this.avatar,
+      });
       reader.onload = (e) => {
         this.avatarSrc = e.target.result;
       };
@@ -221,6 +222,9 @@ export default {
       }
       this.mainImage = e.target.files[0];
       let reader = new FileReader();
+      this.saveImages({
+        per_main_image_url: this.mainImage,
+      });
       reader.readAsDataURL(file);
       reader.onload = (e) => {
         this.mainImageSrc = e.target.result;
@@ -228,54 +232,60 @@ export default {
       console.log(this.mainImageSrc);
     },
     onConfirmationSwitchChnaged1(checked) {
-      // console.log(checked);
-      // if (checked) {
-      //   this.imageModel.only_team_can_see = false;
-      //   this.imageModel.team_connection_can_see = false;
-      // }
-      // checked == true ? (this.anybody_can_see = 1) : (this.anybody_can_see = 0);
+      console.log(checked);
+      if (checked) {
+        this.imageModel.only_team_can_see = false;
+        this.imageModel.team_connection_can_see = false;
+      }
+      checked == true
+        ? (this.imageModel.anybody_can_see = 1)
+        : (this.imageModel.anybody_can_see = 0);
+      this.saveRepresentativeImageCondition({
+        anybody_can_see: this.imageModel.anybody_can_see,
+      });
     },
     onConfirmationSwitchChnaged2(checked) {
-      // console.log(checked);
-      // checked == true
-      //   ? (this.only_team_can_see = 1)
-      //   : (this.only_team_can_see = 0);
+      console.log(checked);
+      checked == true
+        ? (this.imageModel.only_team_can_see = 1)
+        : (this.imageModel.only_team_can_see = 0);
+      this.saveRepresentativeImageCondition({
+        only_team_can_see: this.imageModel.only_team_can_see,
+      });
     },
     onConfirmationSwitchChnaged3(checked) {
-      // console.log(checked);
-      // checked == true
-      //   ? (this.team_connection_can_see = 1)
-      //   : (this.team_connection_can_see = 0);
+      console.log(checked);
+      checked == true
+        ? (this.imageModel.team_connection_can_see = 1)
+        : (this.imageModel.team_connection_can_see = 0);
+
+      this.saveRepresentativeImageCondition({
+        team_connection_can_see: this.imageModel.team_connection_can_see,
+      });
     },
-    // getAdditionalImage(e) {
-    //   this.additionalImage = e.target.files[0];
-    //   let file = e.target.files[0];
-    //   let reader = new FileReader();
-    //   reader.readAsDataURL(file);
-    //   reader.onload = (e) => {
-    //     this.additionalImageSrc = e.target.result;
-    //   };
-    // }
+    
     getBase64(img, callback) {
       const reader = new FileReader();
       reader.addEventListener("load", () => callback(reader.result));
       reader.readAsDataURL(img);
     },
-    async saveImages() {
-     
+    
+    async saveRepresentativeImageCondition(data) {
       await this.$store
-        .dispatch("saveRepresentativeImage", {
-          per_avatar_url:this.avatar,
-          per_main_image_url:this.mainImage
+        .dispatch("saveRepresentativeImageCondition", data)
+        .then((data) => {
+          
+         
         })
+        .catch((error) => {
+         
+        });
+    },
+    async saveImages(data) {
+      await this.$store
+        .dispatch("saveRepresentativeImage", data)
         .then((data) => {
           if (data.data.status && data.data.status !== "FAIL") {
-            this.loadingButton = false;
-            this.$success({
-              title: "Success!",
-              content: data.data.message,
-              center: true,
-            });
             // this.$emit("valueChange", {
             //   value: {
             //     per_avatar_url: data.data.data.per_avatar_url,
@@ -294,22 +304,6 @@ export default {
           this.loadingButton = false;
           console.log(error);
         });
-      // return axios.post("v1/representative/image/upload", formData, {
-      //   headers: {
-      //     "content-type": "multipart/form-data",
-      //     Authorization: `Bearer ${JwtService.getToken()}`,
-      //   },
-      // });
-      // .then((response) => {
-      //   console.log(response);
-      //   if (response.data.status_code == 200) {
-      //     this.$emit('images-uploaded');
-      //   }
-      // })
-      // .catch((error) => {
-      //   console.log(error);
-      // 	this.$message.error(error.toString());
-      // });
     },
   },
 };
