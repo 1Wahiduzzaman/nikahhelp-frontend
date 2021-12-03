@@ -625,8 +625,9 @@ export default {
       this.$router.push("/login");
     },
     doneBtn() {
+       this.saveDataInputStatus(6);
       this.$router.push("/dashboard");
-      this.saveDataInputStatus(this.current++);
+     
     },
     async next() {
       switch (this.current) {
