@@ -75,6 +75,17 @@ export default {
           });
     });
   },
+  async saveRepresentativeImageCondition(_, payload) {
+    return new Promise((resolve, reject) => {
+      ApiService.post("v1/representative/image/upload", payload)
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+    });
+  },
 
 
   async getRepresentativeData(context) {
