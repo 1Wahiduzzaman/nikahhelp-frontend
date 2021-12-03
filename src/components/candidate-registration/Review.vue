@@ -722,9 +722,6 @@ export default {
         );
         this.candidateData = {
           ...response.data.data,
-          review: {
-            personal: {},
-          },
         };
       } catch (error) {
         alert(this.error);

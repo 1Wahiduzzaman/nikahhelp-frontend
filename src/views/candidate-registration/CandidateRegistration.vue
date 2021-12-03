@@ -58,7 +58,7 @@
         />
       </div>
       <div class="steps-content" v-if="current == 4">
-        <UploadProfile :imageModel="candidateDetails.imageModel" />
+        <UploadProfile  @valueChange="onDataChange($event)" :imageModel="candidateDetails.imageModel" />
       </div>
       <div class="steps-content" v-if="current == 5">
         <Review :candidateDetails="candidateDetails" />
