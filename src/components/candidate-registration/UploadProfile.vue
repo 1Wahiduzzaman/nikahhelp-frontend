@@ -352,22 +352,7 @@ export default {
         },
       });
     },
-    // getImagesFromDb() {
-    //   const response = this.$store.dispatch("getImages");
-    //   response
-    //     .then((data) => {
-    //       this.avatarSrc = data.data.data.avatar_image_url;
-    //       this.mainImageSrc = data.data.data.main_image_url;
-    //       this.additionalImageSrc = data.data.data.other_images[0].image_path;
-    //       this.$emit("valueChange", {
-    //         value: data.data.data,
-    //         current: 4,
-    //       });
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // },
+    
     getImageSharingSettings() {
       const response = this.$store.dispatch("getImageSharingSettings");
       response
@@ -486,85 +471,7 @@ export default {
         }
       });
     },
-    // async saveImages() {
-    //   this.loadingButton = true;
-    //   console.log(this.avatar);
-    //   console.log(this.mainImage);
-    //   console.log(this.additionalImage);
-    //   let formData = new FormData();
-    //   if (
-    //     this.avatarSrc &&
-    //     this.mainImageSrc &&
-    //     this.additionalImageSrc &&
-    //     !this.avatar &&
-    //     !this.mainImage &&
-    //     !this.additionalImage
-    //   ) {
-    //     formData.append("anybody_can_see", this.anybody_can_see);
-    //     formData.append("only_team_can_see", this.only_team_can_see);
-    //     formData.append(
-    //       "team_connection_can_see",
-    //       this.team_connection_can_see
-    //     );
-    //   } else {
-    //     if (!this.avatar && !this.avatarSrc) {
-    //       this.showError("Avatar Image is not uploaded!");
-    //       this.loadingButton = false;
-    //       return;
-    //     }
-    //     if (!this.mainImage && !this.mainImageSrc) {
-    //       this.showError("Main Image is not uploaded!");
-    //       this.loadingButton = false;
-    //       return;
-    //     }
-    //     if (!this.additionalImage && !this.additionalImageSrc) {
-    //       this.showError("Additional Image is not uploaded!");
-    //       this.loadingButton = false;
-    //       return;
-    //     }
-
-    //     formData.append("per_avatar_url", this.avatar);
-    //     formData.append("per_main_image_url", this.mainImage);
-    //     formData.append("image[0][image]", this.additionalImage);
-    //     formData.append("image[0][type]", 2);
-    //     formData.append("image[0][visibility]", 4);
-    //     formData.append("anybody_can_see", this.anybody_can_see ? 1 : 0);
-    //     formData.append("only_team_can_see", this.only_team_can_see);
-    //     formData.append(
-    //       "team_connection_can_see",
-    //       this.team_connection_can_see
-    //     );
-    //   }
-
-    //   await this.$store
-    //     .dispatch("uploadImages", formData)
-    //     .then((data) => {
-    //       if (data.data.status && data.data.status !== "FAIL") {
-    //         this.loadingButton = false;
-    //         this.$success({
-    //           title: "Success!",
-    //           content: data.data.message,
-    //           center: true,
-    //         });
-    //         this.$emit("valueChange", {
-    //           value: {
-    //             per_avatar_url: data.data.data.per_avatar_url,
-    //             per_main_image_url: data.data.data.per_main_image_url,
-    //           },
-    //           current: 4,
-    //         });
-    //       }
-    //       if (data.data.status && data.data.status == "FAIL") {
-    //         const errorMessage = JSON.stringify(data.data.data);
-    //         this.showError(errorMessage);
-    //         this.loadingButton = false;
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       this.loadingButton = false;
-    //       console.log(error);
-    //     });
-    // },
+   
   },
 };
 </script>
