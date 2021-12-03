@@ -268,24 +268,24 @@
 					<button class="add-member" @click="handleAddMemberclick">
 						<img src="../../assets/icon/add.svg" alt="add" /> Add member
 					</button>
-					<a-tooltip placement="top" title="Show team invitations">
-						<img
-							src="@/assets/icon/link-genarate-share.svg"
-							alt=""
-							height="25"
-							width="25"
-							style="cursor: pointer"
-							class="shared-link"
-							@click="showInvitation"
-						/>
-					</a-tooltip>
-					<button
-						class="remove-member"
-						@click="remove_button_flag = !remove_button_flag"
-					>
-						<img src="../../assets/icon/remove.svg" alt="remove" />
-						<span>Remove member</span>
-					</button>
+<!--					<a-tooltip placement="top" title="Show team invitations">-->
+<!--						<img-->
+<!--							src="@/assets/icon/link-genarate-share.svg"-->
+<!--							alt=""-->
+<!--							height="25"-->
+<!--							width="25"-->
+<!--							style="cursor: pointer"-->
+<!--							class="shared-link"-->
+<!--							@click="showInvitation"-->
+<!--						/>-->
+<!--					</a-tooltip>-->
+<!--					<button-->
+<!--						class="remove-member"-->
+<!--						@click="remove_button_flag = !remove_button_flag"-->
+<!--					>-->
+<!--						<img src="../../assets/icon/remove.svg" alt="remove" />-->
+<!--						<span>Remove member</span>-->
+<!--					</button>-->
 
 					<a-modal
 						:width="900"
@@ -356,7 +356,7 @@
                 <div class="name-short" :class="{'name-short-single': member.role.toString() != 'Owner+Admin' }"><span v-if="member.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(member.role) }}</div>
               </td>
               <td>
-                <div class="name-full" @click="toggleActiveProfile(member)">{{ member.user.full_name }}</div>
+                <div class="name-full cursor-pointer" @click="toggleActiveProfile(member)">{{ member.user.full_name }}</div>
               </td>
               <td>
                 <div class="title">
@@ -373,7 +373,7 @@
               <td>
                 <div class="name-short" :class="{'name-short-single': item.role.toString() != 'Owner+Admin' }"><span v-if="item.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(item.role) }}</div>
               </td>
-              <td><div class="name-full" @click="toggleActiveProfile(item)">{{ item.user ? item.user.full_name : 'Not joined yet' }}</div></td>
+              <td><div class="name-full cursor-pointer" @click="toggleActiveProfile(item)">{{ item.user ? item.user.full_name : 'Not joined yet' }}</div></td>
               <td>
                 <div class="title">
                   <span class="badge badge-secondary fs-10" :title="accountTypeReducer(item.user_type)">{{ accountTypeReducer(item.user_type).substr(0, 3) }} {{ item.user_type ? '.' : '' }}</span>
@@ -1354,7 +1354,16 @@ export default {
 				});
 		},
     handleAddMemberclick() {
-      this.invitationObject.visible = true;
+      let members = this.teamData.team_members.length;
+      members += this.teamData.team_invited_members.length;
+      if(members < 5) {
+        this.invitationObject.visible = true;
+      } else {
+        this.$warning({
+          title: 'Maximum number reached!',
+          content: "You can't add new member now",
+        });
+      }
     },
     inviteNowWindow() {
       this.invitationObject.memberBox = true;
