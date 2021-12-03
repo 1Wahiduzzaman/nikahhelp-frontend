@@ -601,11 +601,10 @@ export default {
           }).every((x) => x !== undefined && x !== null && x !== "");
           break;
         case 4:
-          isEnabled = this.candidateDetails.imageModel
-            ? Object.values(this.candidateDetails.imageModel).every(
+          const {avatar_image_url,main_image_url}=this.candidateDetails.imageModel
+          isEnabled =  Object.values({avatar_image_url,main_image_url}).every(
                 (x) => x !== undefined && x !== null && x !== ""
               )
-            : false;
           break;
       }
 
@@ -662,47 +661,7 @@ export default {
       this.current--;
       this.checkExistData();
     },
-    getDefaultPersonalInfo() {
-      return {
-        essential: {
-          per_gender: undefined,
-          dob: "",
-          per_employment_status: undefined,
-          per_occupation: undefined,
-          per_education_level_id: undefined,
-          per_religion_id: undefined,
-        },
-        general: {
-          per_ethnicity: undefined,
-          per_mother_tongue: undefined,
-          per_nationality: undefined,
-          per_country_of_birth: undefined,
-          per_health_condition: undefined,
-        },
-        contact: {
-          per_current_residence_city: undefined,
-          postCode: "",
-          per_permanent_country: undefined,
-          per_permanent_city: "",
-          per_permanent_address: "",
-          mobile_number: undefined,
-          mobile_country_code: undefined,
-          email: userInfo.email,
-        },
-        more_about: {
-          per_marital_status: undefined,
-          per_currently_living_with: undefined,
-          per_willing_to_relocate: undefined,
-          per_smoker: undefined,
-          per_language_speak: undefined,
-          per_hobbies_interests: undefined,
-          per_food_cuisine_like: undefined,
-          per_things_enjoy: undefined,
-          per_thankfull_for: undefined,
-          per_about: "",
-        },
-      };
-    },
+   
   },
 };
 </script>
