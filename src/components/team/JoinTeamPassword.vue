@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="col-lg-6 col-xl-4"
+		class="col-lg-6 col-xl-3"
 	>
 		<div
 			class="team-card card"

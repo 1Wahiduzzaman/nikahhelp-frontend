@@ -1,12 +1,12 @@
 <template>
   <Layout>
-    <div class="container" style="padding-top: 0px;">
+    <div class="container-fluid" style="padding-top: 0px;">
       <div style="margin-bottom: 5px; padding-right: 1000px"></div>   <!--plz ignore this div -->
       <div class="row">
         <div class="col-12">
           <div class="chat-wrapper my-4">
             <div class="chat-left" :class="{'chat-hide': conversationTitle}">
-              <div class="chat-title">My team chats</div>
+              <div class="chat-title d-chat-title">My {{ chatTab }} chats</div>
               <div class="chat-search">
                 <div class="form-group has-search">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.02 40.76">
@@ -24,7 +24,7 @@
                 <nav >
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
-                      <div class="category-item">
+                      <div class="category-item"  @click="setChatTab('Recent')">
                         <a href="#">
                           <svg xmlns="http://www.w3.org/2000/svg" class="recent-icon" viewBox="0 0 33.75 33.75" style="margin-top:3px">
                             <g id="Layer_2" data-name="Layer 2">
@@ -40,7 +40,7 @@
                       </div>
                     </a>
                     <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">
-                      <div class="category-item">
+                      <div class="category-item" @click="setChatTab('Team')">
                         <a href="#">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.02 31.17" style="margin-top:3px">
                             <g id="Layer_2" data-name="Layer 2">
@@ -55,7 +55,7 @@
                       </div>
                     </a>
                     <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">
-                      <div class="category-item">
+                      <div class="category-item"  @click="setChatTab('Connected')">
                         <a href="#">
                           <!-- <img src="@/assets/icon/connected.svg" alt="connected icon"/> -->
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.52 39.16" style="margin-top:3px">
@@ -231,7 +231,8 @@ export default {
       connectedTeam: [],
       online_users: [],
       one_to_one_user: null,
-      inConnectedChat: false
+      inConnectedChat: false,
+      chatTab: 'Recent'
     }
   },
   components: {
@@ -353,6 +354,9 @@ export default {
     }
   },
   methods:{
+    setChatTab(type) {
+      this.chatTab = type;
+    },
     // Process team chat response
     processTeamChatResponse(data) {
       // let group = pick(data, ['id', 'name', 'logo']);
@@ -663,16 +667,29 @@ export default {
 
 <style scoped lang="scss">
 // start css for chat
+.container {
+  width: 100% !important;
+}
+@media (min-width: 1200px) {
+  .container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 100%;
+  }
+}
 .chat-hide {
   display: none;
 }
 .chat-show {
   display: block;
 }
+.d-chat-title {
+  display: none;
+}
 @media (min-width: 992px) {
   .chat-hide {
     display: block;
-
+  }
+  .d-chat-title {
+    display: block;
   }
 }
 .clearfix {

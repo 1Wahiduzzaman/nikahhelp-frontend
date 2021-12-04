@@ -7,9 +7,9 @@
             </div>
             <div class="content">
                 <span class="label">{{ item.label }}</span>
-                <h4 class="mt-1">{{ item.name }}</h4>
-                <p class="mb-0">{{ item.message ? item.message.body : '' }}</p>
-                <p class="color-primary mb-0">Team listed by - Pervez alam</p>
+                <h4 class="mt-1 fs-14">{{ item.name }}</h4>
+                <p class="mb-0 text-margin">{{ item.message ? item.message.body : '' }}</p>
+<!--                <p class="color-primary mb-0">Team listed by - Pervez alam</p>-->
             </div>
              <span class="online-icon"></span>
         </div>
@@ -38,9 +38,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .text-margin {
+      margin-top: -8px;
+    }
     .notification-list {
-        max-width: 300px;
-        min-width: 300px;
+        //max-width: 300px;
+        //min-width: 300px;
         .online-icon {
             flex-shrink: 0;
             width: 10px;

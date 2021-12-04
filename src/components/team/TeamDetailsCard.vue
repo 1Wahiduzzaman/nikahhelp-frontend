@@ -1,5 +1,5 @@
 <template>
-	<div class="col-lg-6 col-xl-4 position-relative">
+	<div class="col-lg-6 col-xl-3 position-relative">
 		<!-- Team Deletion Modal -->
 		<DeletionModal
 			:showModalProp="showModalDeletion"
@@ -360,7 +360,7 @@
 				<!-- Member Table -->
 				<div class="member-info-table">
           <table class="table w-full table-borderless" :class="{'mb-3': invitationObject.visible}">
-            <tr v-for="(member, mIndex) in sortOwnerFirst(teamData.team_members)" :key="mIndex" class="admin-member">
+            <tr v-for="(member, mIndex) in sortCandidateFirst(teamData.team_members)" :key="mIndex" class="admin-member">
               <td>
                 <div class="name-short" :class="{'name-short-single': member.role.toString() != 'Owner+Admin' }"><span v-if="member.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(member.role) }}</div>
               </td>
@@ -807,9 +807,19 @@ export default {
 					_team.push(_t);
 				}
 			});
-      console.log(team)
 			return _team;
 		},
+    sortCandidateFirst(team) {
+      let _team = [];
+      team.forEach((_t) => {
+        if (_t.user_type == "Candidate") {
+          _team.unshift(_t);
+        } else {
+          _team.push(_t);
+        }
+      });
+      return _team;
+    },
 		changeRole() {
 			console.log(this.changeRoleEnabled);
 			this.changeRoleEnabled = !this.changeRoleEnabled;
