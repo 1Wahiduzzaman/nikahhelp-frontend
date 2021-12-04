@@ -11,13 +11,17 @@
       <h4 class="fs-16 text-white pt-2">{{ profileActive.user && profileActive.user.full_name ? profileActive.user.full_name : profileActive.user.email }}</h4>
       <div class="d-flex justify-content-center mb-2 mt-2">
         <div class="role-section position-relative">
-          <button class="btn btn-sm text-white role-btn" @click="roleChangeBox = !roleChangeBox">Change Role</button>
+          <button class="btn btn-sm text-white role-btn"
+                  @click="roleChangeBox = !roleChangeBox"
+                  :disabled="checkIsOwnerAdmin">Change Role</button>
           <div class="position-absolute role-options bg-white" v-if="roleChangeBox">
             <h4 class="fs-12 py-1 cursor-pointer text-left px-2" @click="changeRole('Admin')">Admin</h4>
             <h4 class="fs-12 py-1 cursor-pointer text-left px-2" @click="changeRole('Member')">Member</h4>
           </div>
         </div>
-        <button class="btn btn-sm text-white remove-btn ml-3" @click="removeInvitation()">Remove</button>
+        <button class="btn btn-sm text-white remove-btn ml-3"
+                @click="removeInvitation()"
+                :disabled="checkIsOwnerAdmin">Remove</button>
       </div>
       <div class="team-profile-short pt-2 text-center d-flex justify-content-center">
         <table class="table table-borderless short-table">
@@ -56,12 +60,21 @@
 </template>
 
 <script>
+import ApiService from "../../services/api.service";
 export default {
   name: "TeamProfileCard",
-  props: ['profileActive'],
+  props: ['teamData', 'profileActive'],
   data() {
     return {
       roleChangeBox: false
+    }
+  },
+  computed: {
+    checkIsOwnerAdmin() {
+      if(this.profileActive.role == 'Owner+Admin') {
+        return true;
+      }
+      return false;
     }
   },
   methods: {
@@ -82,10 +95,24 @@ export default {
     removeInvitation() {
       this.$emit("deleteInvitation", this.profileActive.id);
     },
-    changeRole(role) {
-      console.log(role);
+    async changeRole(role) {
+      let payload = {
+        team_id: this.teamData.team_id,
+        user_id: this.profileActive.user_id,
+        access_type: role
+      };
       this.roleChangeBox = false;
-    }
+      await ApiService.post(`/v1/change-team-member-access`, payload).then(response => {
+        if (response.data.status == "FAIL") {
+          this.$message.error(response.data.message);
+        } else {
+          this.$message.success('Successfully role changed');
+          this.$emit("teamListUpdated");
+        }
+      }).catch(e => {
+        this.$message.error(e.response.data.message);
+      });
+    },
   }
 }
 </script>

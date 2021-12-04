@@ -48,11 +48,16 @@
 			<div class="team-card-header">
 				<!-- Team Info with ID -->
 				<div class="left">
-					<div class="status active">
-						Team {{ index + 1 }}
-						<span class="green" v-if="turnOn"></span>
-						<span class="red" v-else></span>
-					</div>
+          <a-tooltip
+              placement="bottom"
+              :title="teamData.team_id"
+          >
+            <div class="status active" :title="teamData.team_id">
+              Team {{ index + 1 }}
+              <span class="green" v-if="turnOn"></span>
+              <span class="red" v-else></span>
+            </div>
+          </a-tooltip>
 				</div>
 
 				<!-- Edit Buttons -->
@@ -227,9 +232,11 @@
 			</div>
 
       <team-profile-card v-if="profileCard"
+                         :teamData="teamData"
                          :profileActive="profileActive"
                          @toggleProfileCard="toggleProfileCard"
-                         @deleteInvitation="deleteInvitation" />
+                         @deleteInvitation="deleteInvitation"
+                         @teamListUpdated="teamListUpdated" />
 			<!-- Member stats -->
 			<div class="member-area">
 				<div class="members">
@@ -722,6 +729,11 @@ export default {
 					return false;
 				});
 		},
+    teamListUpdated() {
+      this.profileCard = false;
+      this.profileActive = null;
+      this.$emit("teamListUpdated");
+    },
 		async handleTeamInfoChange() {
 			// let payload = {
 			// 	name: this.teamInfo.name,
@@ -1471,7 +1483,6 @@ export default {
 		async onChangeActivateTeam(checked) {
 			if (checked) {
 				let returnedResult = await this.turnOnTeam();
-				console.log(returnedResult);
 				console.log(this.teamData);
 				//JwtService.saveTeamIDAppWide(this.teamData.team_id);
 				this.$store.commit("setTeamInfo", this.teamData);
@@ -1481,7 +1492,6 @@ export default {
 					this.turnOn = false;
 				}
 			} else {
-				console.log("System Wide Team ID Deleted");
 				this.$store.commit("setTeamInfo", null);
 				JwtService.destroyTeamIDAppWide();
 			}
