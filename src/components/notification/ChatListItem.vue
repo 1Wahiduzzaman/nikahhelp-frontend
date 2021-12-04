@@ -28,7 +28,10 @@ export default {
     },
   methods: {
     messageCreatedAt(time) {
-      return format(time);
+      if(time) {
+        return format(time);
+      }
+      return '';
     },
   }
 }

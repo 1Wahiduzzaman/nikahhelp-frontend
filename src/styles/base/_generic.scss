@@ -527,3 +527,14 @@ div[data-unique="second_one"] >  .ant-select-selection{
         padding-right: 40px !important;
     }
 }
+.ant-layout-sider {
+    z-index: 9;
+    position: absolute;
+    height: 100%;
+}
+@media (min-width: 992px) {
+    .ant-layout-sider {
+        z-index: 9;
+        position: relative;
+    }
+}

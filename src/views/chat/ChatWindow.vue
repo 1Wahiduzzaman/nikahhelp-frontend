@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-12">
           <div class="chat-wrapper my-4">
-            <div class="chat-left">
+            <div class="chat-left" :class="{'chat-hide': conversationTitle}">
               <div class="chat-title">My team chats</div>
               <div class="chat-search">
                 <div class="form-group has-search">
@@ -123,8 +123,8 @@
 
               </div>
             </div>
-            <div class="chat-right">
-              <button class="btn btn-primary my-4 d-md-none">Back</button>
+            <div class="chat-right" :class="{'chat-hide': !conversationTitle}">
+              <button class="btn btn-primary my-4 d-md-none" @click="backToTabList()">Back</button>
               <div class="header clearfix">
                 <div class="left">
                   <div  class="top">
@@ -508,6 +508,9 @@ export default {
     messageCreatedAt(time) {
       return format(time);
     },
+    backToTabList() {
+      this.conversationTitle = '';
+    },
     createConversations(){
       // console.log('create conv clicked');
       // var member_1 = Math.floor(Math.random() * 6) + 1;
@@ -660,6 +663,18 @@ export default {
 
 <style scoped lang="scss">
 // start css for chat
+.chat-hide {
+  display: none;
+}
+.chat-show {
+  display: block;
+}
+@media (min-width: 992px) {
+  .chat-hide {
+    display: block;
+
+  }
+}
 .clearfix {
   &::after {
     content: "";
@@ -778,7 +793,7 @@ export default {
       border-bottom: 2px solid #f2f2f2;
       border-top: 2px solid #f2f2f2;
       @media (max-width: 991px) {
-        padding-bottom: 6px;
+        padding-bottom: 10px;
       }
       nav {
         width: calc(100% - 44px);
@@ -1361,10 +1376,10 @@ export default {
         min-height: 600px;
       }
       @media (max-width: 991px) {
-        min-height: auto;
+        //min-height: auto;
       }
       .chat-box {
-        height: 500px;
+        height: 545px;
         overflow-y: auto;
         display: flex;
         flex-direction: column-reverse;
