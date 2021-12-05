@@ -1,5 +1,5 @@
 <template>
-	<div class="col-lg-6 col-xl-4 position-relative">
+	<div class="col-lg-6 col-xl-3 position-relative">
 		<!-- Team Deletion Modal -->
 		<DeletionModal
 			:showModalProp="showModalDeletion"
@@ -48,11 +48,16 @@
 			<div class="team-card-header">
 				<!-- Team Info with ID -->
 				<div class="left">
-					<div class="status active">
-						Team {{ index + 1 }}
-						<span class="green" v-if="turnOn"></span>
-						<span class="red" v-else></span>
-					</div>
+          <a-tooltip
+              placement="bottom"
+              :title="teamData.team_id"
+          >
+            <div class="status active" :title="teamData.team_id">
+              Team {{ index + 1 }}
+              <span class="green" v-if="turnOn"></span>
+              <span class="red" v-else></span>
+            </div>
+          </a-tooltip>
 				</div>
 
 				<!-- Edit Buttons -->
@@ -105,12 +110,13 @@
 							<!-- Change Name and Description section -->
 							<div class="col-8">
 								<label class="mt-2">Team Name: </label>
-								<a-input type="text" v-model="teamInfo.name" />
+								<a-input type="text" v-model="teamInfo.name" placeholder="Selina's family" />
 								<label class="mt-2">Team Description: </label>
 								<a-textarea
 									type="text"
 									v-model="teamInfo.description"
 									:rows="3"
+                  placeholder="Team description"
 								/>
 							</div>
 						</div>
@@ -158,7 +164,7 @@
 						<div class="dropdown-menu">
 							<!-- <a class="dropdown-item" href="#">Edit</a> -->
 							<!-- <a class="dropdown-item" href="#">Close</a> -->
-							<a class="dropdown-item" @click="changeRole">Change Roles</a>
+<!--							<a class="dropdown-item" @click="changeRole">Change Roles</a>-->
 							<a class="dropdown-item" @click="preferencesModal">Preferences</a>
 							<a class="dropdown-item" @click="deleteTeam">Delete</a>
 							<a class="dropdown-item red-hover" @click="leaveTeam"
@@ -195,8 +201,8 @@
 					</div>
 					<!-- Team Description -->
 					<div class="member-desc">
-						<p>
-							{{ teamData.description }}
+						<p class="break-long-words">
+							{{ teamData.description.substring(0, 80) }}
 						</p>
 						<!-- Edit Button for team description -->
 						<!-- <button v-if="edit_button_flag">
@@ -226,8 +232,11 @@
 			</div>
 
       <team-profile-card v-if="profileCard"
+                         :teamData="teamData"
                          :profileActive="profileActive"
-                         @toggleProfileCard="toggleProfileCard" />
+                         @toggleProfileCard="toggleProfileCard"
+                         @deleteInvitation="deleteInvitation"
+                         @teamListUpdated="teamListUpdated" />
 			<!-- Member stats -->
 			<div class="member-area">
 				<div class="members">
@@ -351,7 +360,7 @@
 				<!-- Member Table -->
 				<div class="member-info-table">
           <table class="table w-full table-borderless" :class="{'mb-3': invitationObject.visible}">
-            <tr v-for="(member, mIndex) in sortOwnerFirst(teamData.team_members)" :key="mIndex" class="admin-member">
+            <tr v-for="(member, mIndex) in sortCandidateFirst(teamData.team_members)" :key="mIndex" class="admin-member">
               <td>
                 <div class="name-short" :class="{'name-short-single': member.role.toString() != 'Owner+Admin' }"><span v-if="member.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(member.role) }}</div>
               </td>
@@ -390,7 +399,7 @@
                 class="fs-10 w-25"
                 v-model="invitationObject.role"
             >
-              <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>
+<!--              <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>-->
               <a-select-option value="Admin"> Admin </a-select-option>
               <a-select-option value="Member"> Member </a-select-option>
             </a-select>
@@ -400,7 +409,7 @@
                 class="ml-1 fs-10 w-25"
                 v-model="invitationObject.add_as_a"
             >
-              <a-select-option value="Candidate"> Candidate </a-select-option>
+              <a-select-option value="Candidate" :disabled="ifHasCandidate()"> Candidate </a-select-option>
               <a-select-option value="Representative"> Representative </a-select-option>
               <a-select-option value="Match Maker"> Match Maker </a-select-option>
             </a-select>
@@ -524,8 +533,8 @@ export default {
 			invitation_link_show: [],
       relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-paw'],
       invitationObject: {
-        role: "Owner+Admin",
-        add_as_a: "Candidate",
+        role: "Admin",
+        add_as_a: "Representative",
         relationship: "Father",
         invitation_link: "",
         visible: false,
@@ -720,6 +729,11 @@ export default {
 					return false;
 				});
 		},
+    teamListUpdated() {
+      this.profileCard = false;
+      this.profileActive = null;
+      this.$emit("teamListUpdated");
+    },
 		async handleTeamInfoChange() {
 			// let payload = {
 			// 	name: this.teamInfo.name,
@@ -793,9 +807,19 @@ export default {
 					_team.push(_t);
 				}
 			});
-      console.log(team)
 			return _team;
 		},
+    sortCandidateFirst(team) {
+      let _team = [];
+      team.forEach((_t) => {
+        if (_t.user_type == "Candidate") {
+          _team.unshift(_t);
+        } else {
+          _team.push(_t);
+        }
+      });
+      return _team;
+    },
 		changeRole() {
 			console.log(this.changeRoleEnabled);
 			this.changeRoleEnabled = !this.changeRoleEnabled;
@@ -1012,12 +1036,14 @@ export default {
         cancelText: "No",
         confirmLoading: true,
         async onOk() {
-          await ApiService.delete(`/v1/team-members-delete/${id}`)
+          await ApiService.delete(`/v1/member-invitation-delete?id=${id}`)
               .then((data) => {
                 console.log(data);
                 if (data.data.status != "FAIL") {
                   self.$message.success("Invitation removed from " + self.teamData.name);
                   self.$emit("teamListUpdated");
+                  self.profileActive = null;
+                  self.profileCard = false;
                 } else {
                   self.$message.error("Something went wrong");
                   self.$emit("teamListUpdated");
@@ -1467,7 +1493,6 @@ export default {
 		async onChangeActivateTeam(checked) {
 			if (checked) {
 				let returnedResult = await this.turnOnTeam();
-				console.log(returnedResult);
 				console.log(this.teamData);
 				//JwtService.saveTeamIDAppWide(this.teamData.team_id);
 				this.$store.commit("setTeamInfo", this.teamData);
@@ -1477,7 +1502,6 @@ export default {
 					this.turnOn = false;
 				}
 			} else {
-				console.log("System Wide Team ID Deleted");
 				this.$store.commit("setTeamInfo", null);
 				JwtService.destroyTeamIDAppWide();
 			}
@@ -1546,6 +1570,18 @@ export default {
     toggleActiveProfile(item) {
       this.profileCard = true;
       this.profileActive = item;
+    },
+    ifHasCandidate() {
+      let hasCandidate = this.teamData.team_members.find(item => item.user_type.toString() === 'Candidate');
+      if(hasCandidate) {
+        return true;
+      }
+
+      hasCandidate = this.teamData.team_invited_members.find(item => item.user_type.toString() === 'Candidate');
+      if(hasCandidate) {
+        return true;
+      }
+      return false;
     }
 	},
 };

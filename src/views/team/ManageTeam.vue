@@ -3,7 +3,7 @@
 		<div v-if="isLoading">Loading</div>
 		<div v-else>
 			<Layout >
-				<div class="container">
+				<div class="container-fluid vh-100 overflow-auto">
           <!--teams.length == 0 && !joinTeamShow && !createTeamShow-->
           <a-modal v-model="welcomeModal" @ok="hideWelcomeModal">
             <div class="d-flex justify-content-center align-items-center welcome-text mt-2">
@@ -31,7 +31,7 @@
           </a-modal>
           <Banner v-if="1 !== 1" />
 					<a-row :gutter="16">
-						<div class="row justify-content-md-center">
+						<div class="row justify-content-md-center mx-2">
 							<TeamDetailsCard
 								v-for="(team, teamIndex) in teams"
 								:key="team.id"

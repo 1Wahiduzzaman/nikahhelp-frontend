@@ -172,6 +172,14 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+.sidebar-trigger {
+  display: none;
+}
+@media (min-width: 576px) {
+  .sidebar-trigger {
+    display: flex;
+  }
+}
 .d-sidebar {
 	padding: 5px;
 	display: flex;
