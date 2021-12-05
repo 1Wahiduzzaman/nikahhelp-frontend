@@ -4,11 +4,11 @@
 		<div v-else>
 			<Layout>
 				<!-- Heading -->
-				<div class="section-header text-center mt-4">
-					<h4 class="heading">
+				<div class="section-header text-center mt-5">
+					<h4 class="heading fs-30 color-primary font-weight-bolder">
 						Choose a Subscription Plan that Works for You
 					</h4>
-					<p class="fs-14">
+					<p class="fs-14 font-weight-bold">
 						Matrimony Assist Subscription is Team Based. Only
 						<b>ONE</b> member pays
 						<br />
@@ -17,55 +17,62 @@
 					</p>
 				</div>
 				<!-- Subscription details -->
-				<div class="subscription-details container">
+				<div class="subscription-details container-fluid mt-4">
 					<div class="row">
-						<div class="col-4">
+						<div class="col-12 col-md-3">
 							<!-- Card 1 -->
 							<div
-								class="
-									custom-card
-									card-1
-									shadow-default
-									background-design-cardfooter
-								"
+								class="custom-card card-1 shadow-default background-design-cardfooter br-10 position-relative"
 								style="height: 400px"
 							>
-								<div class="div-1 background-design">
-									<h3>Choose Plan</h3>
+								<div class="div-1 background-design text-center px-2 pb-2 br-top-10">
+									<h3 class="text-white">Choose Plan</h3>
 								</div>
-								<div class="div-2">
-									<h4
-										class="duration"
-										:class="{ selected: isSelected1 }"
-										@click="firstOption"
-									>
-										1 month
-									</h4>
-									<h4
-										class="duration"
-										:class="{ selected: isSelected2 }"
-										@click="secondOption"
-									>
-										3 month
-									</h4>
-									<h4
-										class="duration"
-										:class="{ selected: isSelected3 }"
-										@click="thirdOption"
-									>
-										6 month
-									</h4>
-									<h4
-										class="duration"
-										:class="{ selected: isSelected4 }"
-										@click="fourthOption"
-									>
-										Free 1 Day
-									</h4>
+								<div class="div-2 mt-4 position-relative">
+									<div class="d-flex cursor-pointer py-2 px-4" :class="{'bg-brand-gradient': isSelected1}">
+                    <a-icon type="check" class="text-transparent fs-24 icon-check" :class="{'text-white': isSelected1 }" />
+                    <h4
+                        class="duration"
+                        :class="{ selected: isSelected1 }"
+                        @click="firstOption"
+                    >
+                      1 Month
+                    </h4>
+                  </div>
+									<div class="d-flex cursor-pointer py-2 px-4" :class="{'bg-brand-gradient': isSelected2}">
+                    <a-icon type="check" class="text-transparent fs-24 icon-check" :class="{'text-white': isSelected2 }" />
+                    <h4
+                        class="duration"
+                        :class="{ selected: isSelected2 }"
+                        @click="secondOption"
+                    >
+                      3 month
+                    </h4>
+                  </div>
+									<div class="d-flex cursor-pointer py-2 px-4" :class="{'bg-brand-gradient': isSelected3}">
+                    <a-icon type="check" class="text-transparent fs-24 icon-check" :class="{'text-white': isSelected3 }" />
+                    <h4
+                        class="duration"
+                        :class="{ selected: isSelected3 }"
+                        @click="thirdOption"
+                    >
+                      6 month
+                    </h4>
+                  </div>
+									<div class="d-flex cursor-pointer py-2 px-4 bg-info" :class="{'bg-brand-gradient': isSelected4}">
+                    <a-icon type="check" class="text-transparent fs-24 icon-check" :class="{'text-white': isSelected4 }" />
+                    <h4
+                        class="duration"
+                        :class="{ selected: isSelected4 }"
+                        @click="fourthOption"
+                    >
+                      Free 1 Day
+                    </h4>
+                  </div>
 								</div>
-								<div class="div-3">
+								<div class="div-3 bg-primary-gradient">
 									<p
-										style="text-align: center; padding: 5px; font-size: 12px"
+                    class="text-center fs-12 text-white"
 									>
 										Lorem ipsum dolor sit amet, consectetur adipisicing elit.
 										Magni eius at expedita? Explicabo laboriosam ipsa commod
@@ -73,15 +80,10 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-4">
+						<div class="col-12 col-md-6">
 							<!-- Card 2 -->
 							<div
-								class="
-									custom-card
-									card-2
-									shadow-default
-									background-design-middle
-								"
+								class="custom-card card-2 shadow-default background-design-middle"
 								style="height: 400px"
 							>
 								<div class="div-1 text-center">
@@ -93,12 +95,12 @@
 										class="mt-3"
 									/>
 								</div>
-								<div class="div-2">
-									<h3 class="price">£ {{ amount }}</h3>
-									<p class="price-text">Saved {{ savedAmount }} £</p>
+								<div class="div-2 text-center text-white font-weight-bolder desktop-py">
+									<h3 class="price text-white font-weight-bolder">£ {{ amount.toFixed(2) }}</h3>
+									<p class="price-text text-white font-weight-bolder">Saved {{ savedAmount }} £</p>
 								</div>
-								<div class="div-3">
-									<p style="text-align: center">
+								<div class="">
+									<p class="text-center text-white px-4 fs-14">
 										In Matrimony Assist, ALl subscribing teams have full
 										access to platform and features. The only difference is
 										time limit
@@ -106,20 +108,15 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-4">
+						<div class="col-12 col-md-3">
 							<!-- Card 3 -->
 							<div
-								class="
-									custom-card
-									card-3
-									shadow-default
-									background-design-rightcard
-								"
-								style="height: 360px"
+								class="custom-card card-3 shadow-default background-design-rightcard"
+								style="height: 352px"
 							>
-								<h1>Select Team</h1>
+								<h1 class="px-4 text-white pt-2 fs-30 text-center">Select Team</h1>
 
-								<div class="form-group">
+								<div class="form-group px-4">
 									<select class="w-100 custom-select" v-model="teamSelected">
 										<option
 											v-for="team in teams"
@@ -130,59 +127,64 @@
 										</option>
 									</select>
 								</div>
-								<p class="team-details-heading">This team details</p>
-								<div class="team-details">
-									<li class="flex-between-start">
-										<span class="flex-45 px-2">Team Name </span>
-										<span class="flex-55 px-2" v-if="teamSelected">
+
+                <div>
+                  <div class="d-flex align-items-center justify-content-between bg-white px-4 cursor-pointer" @click="setContentType('details')">
+                    <h4 class="fs-14 pt-1">This team details</h4>
+                    <a-icon type="up" :class="{'rotate-180': contentShow == 'details'}" />
+                  </div>
+                  <div class="team-details mt-2 px-4 d-none text-white mb-2" :class="{'d-block': contentShow == 'details'}">
+                    <li class="flex-between-start">
+                      <span class="flex-45 px-2">Team Name </span>
+                      <span class="flex-55 px-2" v-if="teamSelected">
 											:<span class="ml-2">{{ teamSelected.name }}</span></span
-										>
-									</li>
-									<li class="flex-between-start">
-										<span class="flex-45 px-2">Team ID</span>
-										<span class="flex-55 px-2" v-if="teamSelected">
+                      >
+                    </li>
+                    <li class="flex-between-start">
+                      <span class="flex-45 px-2">Team ID</span>
+                      <span class="flex-55 px-2" v-if="teamSelected">
 											:<span class="ml-2">{{ teamSelected.id }}</span></span
-										>
-									</li>
-									<li class="flex-between-start">
-										<span class="flex-45 px-2">Team Status </span>
-										<span class="flex-55 px-2" v-if="teamSelected">
+                      >
+                    </li>
+                    <li class="flex-between-start">
+                      <span class="flex-45 px-2">Team Status </span>
+                      <span class="flex-55 px-2" v-if="teamSelected">
 											:<span class="ml-2">Active, Valid, Verified</span></span
-										>
-									</li>
-									<li class="flex-between-start">
-										<span class="flex-45 px-2">Team Creation Date </span>
-										<span class="flex-55 px-2" v-if="teamSelected">
+                      >
+                    </li>
+                    <li class="flex-between-start">
+                      <span class="flex-45 px-2">Team Creation Date </span>
+                      <span class="flex-55 px-2" v-if="teamSelected">
 											:<span class="ml-2">{{ teamCreationDate }}</span></span
-										>
-									</li>
-									<li class="flex-between-start">
-										<span class="flex-45 px-2">Team Created By </span>
-										<span class="flex-55 px-2" v-if="teamSelected">
+                      >
+                    </li>
+                    <li class="flex-between-start">
+                      <span class="flex-45 px-2">Team Created By </span>
+                      <span class="flex-55 px-2" v-if="teamSelected">
 											:<span class="ml-2">{{ teamCreatedBy }}</span></span
-										>
-									</li>
-								</div>
-								<p class="team-sub-details-heading">
-									This team's last subscription details
-								</p>
-								<!--
-								<div class="sub-details">
-									Today, 6m ago Subscribed 6 month Plan by - Shirin Malik Team
-									Expire period extended to the date of - Dec 31, 2022
-								</div>
-								-->
+                      >
+                    </li>
+                  </div>
+                </div>
+
+                <div class="mt-1">
+                  <div class="d-flex align-items-center justify-content-between bg-white px-4 cursor-pointer" @click="setContentType('subscription')">
+                    <h4 class="fs-14 pt-1">This team's last subscription details</h4>
+                    <a-icon type="up" :class="{'rotate-180': contentShow == 'subscription'}" />
+                  </div>
+                  <div class="px-4 d-none mt-1" :class="{'d-block': contentShow == 'subscription'}">
+                    <small class="text-white">Today, 6m ago</small>
+                    <h4 class="fs-12 text-white mt-2">Subscribed <b>6 month Plan</b> by - <b>Shirin Malik</b></h4>
+                    <small class="text-white">Team Expire period extended to the date of - Dec 31, 2022</small>
+                  </div>
+                </div>
 							</div>
 							<button
 								@click="handleContinue"
-								class="btn btn-primary btn-payment mt-2 w-100"
+								class="btn bg-success btn-payment mt-2 w-100 text-white d-flex align-items-center justify-content-center br-10"
 							>
-								<img
-									src="@/assets/icon/arrow-right-square-fill-purple.svg"
-									alt="Icon"
-									height="10"
-								/>
 								Continue to payment
+                <a-icon type="arrow-right" class="ml-2 mt-1" />
 							</button>
 						</div>
 					</div>
@@ -218,6 +220,7 @@ export default {
 			savedAmount: 0.0,
 			teams: [],
 			teamSelected: null,
+      contentShow: 'details'
 		};
 	},
 	created() {
@@ -243,6 +246,9 @@ export default {
 		},
 	},
 	methods: {
+    setContentType(type) {
+      this.contentShow = type;
+    },
 		async loadUser() {
 			this.isLoading = true;
 			try {
@@ -532,7 +538,6 @@ export default {
 		#962a7b
 	);
 	padding-top: 10px;
-	height: 100px;
 }
 .background-design-cardfooter {
 	background-image: linear-gradient(to right, #8859a7, #6159a7);
@@ -553,5 +558,80 @@ export default {
 .background-design-rightcard {
 	background-image: linear-gradient(to bottom, #6159a7, #ca56ad, #eb5e94);
 	margin-top: 18px;
+}
+
+.br-20 {
+  border-radius: 20px;
+}
+.br-10 {
+  border-radius: 10px;
+}
+.br-top-20 {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.br-top-10 {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.div-3 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 8px;
+}
+.icon-check {
+  margin-top: 4px;
+  margin-right: 8px;
+}
+.text-transparent {
+  color: transparent;
+}
+.selected {
+  color: white;
+}
+.bg-brand-gradient {
+  background-image: linear-gradient(
+          to right,
+          #eb5e94,
+          #eb5e94,
+          #bf47a1,
+          #962a7b
+  );
+}
+.bg-primary-gradient {
+  background-image: linear-gradient(
+          to top right,
+          #6159a7,
+          #a459a7,
+          #ca56ad,
+          #eb5e94
+  );
+}
+.price {
+  font-size: 54px;
+}
+.price-text {
+  margin-top: -28px;
+  font-size: 20px;
+}
+.rotate-180 {
+  transform: rotate(180deg);
+}
+.btn-payment {
+  border: 2px solid $color-white;
+  outline-style: solid;
+  outline-color: #cfcece;
+}
+@media (min-width: 768px) {
+ .subscription-details {
+   padding: 0 2rem;
+ }
+  .desktop-py {
+    padding: 16px 0;
+  }
 }
 </style>

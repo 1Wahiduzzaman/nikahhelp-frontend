@@ -64,7 +64,7 @@
         <Review :candidateDetails="candidateDetails" />
       </div>
 
-      <div class="steps-action text-right pb-5 clearfix">
+      <div class="steps-action text-right pb-5 clearfix bottom-padding">
         <!-- :class="{ disabled: !enabledNextBtn }"
           :disabled="!enabledNextBtn" -->
         <a-button
@@ -742,5 +742,13 @@ export default {
   width: 800px;
   padding: 0;
   background: aliceblue;
+}
+.bottom-padding {
+  padding: 0 2rem;
+}
+@media (min-width: 768px) {
+  .bottom-padding {
+    padding: 1rem;
+  }
 }
 </style>

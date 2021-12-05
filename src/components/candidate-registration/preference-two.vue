@@ -26,1198 +26,1037 @@
           :rules="rules"
           class="form-ma"
         >
-          <a-row>
-            <!-- Preferred Age -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />What should be the age range of your prospective partner?
-                  </div>
-                </a-col>
-                <a-col :span="2"> </a-col>
-                <a-col :span="12">
-                  <SelectGroup
-                    @selected="onDropdownChange"
-                    :uniqueNames="[
+          <!-- Preferred Age -->
+          <div class="row mt-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />What should be the age range of your prospective partner?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <SelectGroup
+                  @selected="onDropdownChange"
+                  :uniqueNames="[
                       'pre_partner_age_min',
                       'pre_partner_age_max',
                     ]"
-                    :values="[
+                  :values="[
                       preferenceData.pre_partner_age_min,
                       preferenceData.pre_partner_age_max,
                     ]"
-                    :size="'default'"
-                    :options="ageTV"
-                    :placeholder="'Age'"
-                    :width="'120'"
-                  />
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapseExampleAge"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+                  :size="'default'"
+                  :options="ageTV"
+                  :placeholder="'Age'"
+                  class="form-right-content w-full ant-dropdown-half"
+              />
+            </div>
+            <div class="col-12 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapseExampleAge"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[23].first"
-                        @click="arr[23].first = !arr[23].first"
+                          v-if="arr[23].first"
+                          @click="arr[23].first = !arr[23].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[23].first = !arr[23].first">
+                  <span v-else @click="arr[23].first = !arr[23].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="collapseExampleAge"
-                  >
-                    <div class="card card-body bubble">
-                      Provide your preferred age range
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="collapseExampleAge"
+              >
+                <div class="card card-body bubble">
+                  Provide your preferred age range
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Preferred Height -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="
+          <!-- Preferred Height -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="
                         preferenceData.pre_height_min > 0 &&
                         preferenceData.pre_height_max > 0
                       "
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />What is your preferred height range for your prospective
-                    partner?
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12">
-                  <SelectGroup
-                    @selected="onDropdownChange"
-                    :values="[
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />What is your preferred height range for your prospective
+                partner?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <SelectGroup
+                  @selected="onDropdownChange"
+                  :values="[
                       preferenceData.pre_height_min,
                       preferenceData.pre_height_max,
                     ]"
-                    :uniqueNames="['pre_height_min', 'pre_height_max']"
-                    :options="heightTV"
-                    :placeholder="'Height'"
-                    :width="'180'"
-                    :size="'default'"
-                  />
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapseExample"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+                  :uniqueNames="['pre_height_min', 'pre_height_max']"
+                  :options="heightTV"
+                  :placeholder="'Height'"
+                  :size="'default'"
+                  class="form-right-content w-full"
+              />
+            </div>
+            <div class="col-12 mobile-margin mobile-help none-padding">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapseExample"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[22].first"
-                        @click="arr[22].first = !arr[22].first"
+                          v-if="arr[22].first"
+                          @click="arr[22].first = !arr[22].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[22].first = !arr[22].first">
+                  <span v-else @click="arr[22].first = !arr[22].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="collapseExample"
-                  >
-                    <div class="card card-body bubble">
-                      Provide your preferred height range in 'cm'
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="collapseExample"
+              >
+                <div class="card card-body bubble">
+                  Provide your preferred height range in 'cm'
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Preferred country -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="
+          <!-- Preferred country -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="
                         preferenceData.preferred_countries[0] &&
                         preferenceData.preferred_cities[0]
                       "
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Do you have preferences for countries or cities where your
-                    prospective partner comes from?
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12">
-                  <div>
-                    <span class="ml-1 mr-1">No </span>
-                    <a-switch
-                      @change="onValueChange"
-                      v-model.lazy="
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Do you have preferences for countries or cities where your
+                prospective partner comes from?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 non-padding-mobile-margin">
+              <div class="mobile-center mb-3 mobile-switch">
+                <span class="ml-1 mr-1">No </span>
+                <a-switch
+                    @change="onValueChange"
+                    v-model.lazy="
                         preferenceData.pre_has_country_allow_preference
                       "
+                >
+                  <a-icon slot="checkedChildren" type="check" />
+                  <a-icon slot="unCheckedChildren" type="close" />
+                </a-switch>
+                <span class="ml-1">Yes</span>
+              </div>
+
+              <div v-if="preferenceData.pre_has_country_allow_preference">
+                <div class="row my-1">
+                  <div class="col-md-6 mobile-margin">
+
+                    <v-select
+                        :clearable="false"
+                        id="preferred_countries0"
+                        class="style-chooser select-ma w-100"
+                        v-model.lazy="preferenceData.preferred_countries[0]"
+                        label="name"
+                        placeholder="Select Country"
+                        :options="candidateDetails.countries"
+                        @input="onChangeCountry($event, 'listOne', 'allowed')"
                     >
-                      <a-icon slot="checkedChildren" type="check" />
-                      <a-icon slot="unCheckedChildren" type="close" />
-                    </a-switch>
-                    <span class="ml-1">Yes</span>
+                      <span slot="no-options">Select Country</span>
+                      <template #open-indicator>
+                        <a-icon type="down" /> </template
+                      ></v-select>
                   </div>
+                  <div class="col-md-6 mobile-margin">
+                    <v-select
+                        :clearable="false"
+                        id="preferred_cities0"
+                        class="style-chooser"
+                        label="name"
+                        placeholder="Select City"
+                        v-model.lazy="preferenceData.preferred_cities[0]"
+                        :options="preferenceData.allowedCity.listOne"
+                        @input="onValueChange"
+                    ><template #open-indicator>
+                      <a-icon type="down" /> </template
+                    ></v-select>
 
-                  <div v-if="preferenceData.pre_has_country_allow_preference">
-                    <div class="row my-1">
-                      <div class="col-md-6">
-   
-                        <v-select
-                          :clearable="false"
-                          id="preferred_countries0"
-                          class="style-chooser select-ma w-100"
-                          v-model.lazy="preferenceData.preferred_countries[0]"
-                          label="name"
-                          placeholder="Select Country"
-                          :options="candidateDetails.countries"
-                          @input="onChangeCountry($event, 'listOne', 'allowed')"
-                        >
-                          <span slot="no-options">Select Country</span>
-                          <template #open-indicator>
-                            <a-icon type="down" /> </template
-                        ></v-select>
-                      </div>
-                      <div class="col-md-6">
-                        <v-select
-                          :clearable="false"
-                          id="preferred_cities0"
-                          class="style-chooser"
-                          label="name"
-                          placeholder="Select City"
-                          v-model.lazy="preferenceData.preferred_cities[0]"
-                          :options="preferenceData.allowedCity.listOne"
-                          @input="onValueChange"
-                          ><template #open-indicator>
-                            <a-icon type="down" /> </template
-                        ></v-select>
-                       
-                      </div>
-                    </div>
-
-                    <!-- <div class="row my-1">
-                      <div class="col-md-6">
-                        <a-select
-                          @change="
-                            onChangeCountry($event, 'listTwo', 'allowed')
-                          "
-                          id="preferred_countries1"
-                          style="width: 150px"
-                          :filter-option="filterOption"
-                          :showSearch="true"
-                          placeholder="Select Country"
-                          v-model.lazy="preferenceData.preferred_countries[1]"
-                          class="select-ma w-100"
-                        >
-                          <a-select-option disabled :value="0"
-                            >Select Country</a-select-option
-                          >
-                          <a-select-option
-                            :value="item.id"
-                            v-bind:key="index"
-                            style="width: 100px"
-                            v-for="(item, index) in candidateDetails.countries"
-                          >
-                            {{ item.name }}
-                          </a-select-option>
-                        </a-select>
-                      </div>
-                      <div class="col-md-6">
-                        <a-select
-                          @change="onValueChange"
-                          id="preferred_cities1"
-                          style="width: 150px"
-                          :filter-option="filterOption"
-                          :showSearch="true"
-                          placeholder="Select City"
-                          v-model.lazy="preferenceData.preferred_cities[1]"
-                          class="select-ma w-100"
-                        >
-                          <a-select-option disabled :value="0"
-                            >Select City</a-select-option
-                          >
-                          <a-select-option
-                            :value="item.id"
-                            v-bind:key="index"
-                            style="width: 100px"
-                            v-for="(item, index) in preferenceData.allowedCity
-                              .listTwo"
-                          >
-                            {{ item.name }}
-                          </a-select-option>
-                        </a-select>
-                      </div>
-                    </div>
-
-                    <div class="row my-1">
-                      <div class="col-md-6">
-                        <a-select
-                          @change="
-                            onChangeCountry($event, 'listThree', 'allowed')
-                          "
-                          id="preferred_countries2"
-                          style="width: 150px"
-                          :filter-option="filterOption"
-                          :showSearch="true"
-                          placeholder="Select Country"
-                          v-model.lazy="preferenceData.preferred_countries[2]"
-                          class="select-ma w-100"
-                        >
-                          <a-select-option disabled :value="0"
-                            >Select Country</a-select-option
-                          >
-                          <a-select-option
-                            :value="item.id"
-                            v-bind:key="index"
-                            style="width: 100px"
-                            v-for="(item, index) in candidateDetails.countries"
-                          >
-                            {{ item.name }}
-                          </a-select-option>
-                        </a-select>
-                      </div>
-                      <div class="col-md-6">
-                        <a-select
-                          @change="onChangeCountry"
-                          id="preferred_cities2"
-                          style="width: 150px"
-                          :filter-option="filterOption"
-                          :showSearch="true"
-                          placeholder="Select City"
-                          v-model.lazy="preferenceData.preferred_cities[2]"
-                          class="select-ma w-100"
-                        >
-                          <a-select-option disabled :value="0"
-                            >Select Country</a-select-option
-                          >
-                          <a-select-option
-                            :value="item.id"
-                            v-bind:key="index"
-                            style="width: 100px"
-                            v-for="(item, index) in preferenceData.allowedCity
-                              .listThree"
-                          >
-                            {{ item.name }}
-                          </a-select-option>
-                        </a-select>
-                      </div>
-                    </div> -->
                   </div>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#countryCity"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
+                </div>
+
+                <!-- <div class="row my-1">
+                  <div class="col-md-6">
+                    <a-select
+                      @change="
+                        onChangeCountry($event, 'listTwo', 'allowed')
+                      "
+                      id="preferred_countries1"
+                      style="width: 150px"
+                      :filter-option="filterOption"
+                      :showSearch="true"
+                      placeholder="Select Country"
+                      v-model.lazy="preferenceData.preferred_countries[1]"
+                      class="select-ma w-100"
                     >
+                      <a-select-option disabled :value="0"
+                        >Select Country</a-select-option
+                      >
+                      <a-select-option
+                        :value="item.id"
+                        v-bind:key="index"
+                        style="width: 100px"
+                        v-for="(item, index) in candidateDetails.countries"
+                      >
+                        {{ item.name }}
+                      </a-select-option>
+                    </a-select>
+                  </div>
+                  <div class="col-md-6">
+                    <a-select
+                      @change="onValueChange"
+                      id="preferred_cities1"
+                      style="width: 150px"
+                      :filter-option="filterOption"
+                      :showSearch="true"
+                      placeholder="Select City"
+                      v-model.lazy="preferenceData.preferred_cities[1]"
+                      class="select-ma w-100"
+                    >
+                      <a-select-option disabled :value="0"
+                        >Select City</a-select-option
+                      >
+                      <a-select-option
+                        :value="item.id"
+                        v-bind:key="index"
+                        style="width: 100px"
+                        v-for="(item, index) in preferenceData.allowedCity
+                          .listTwo"
+                      >
+                        {{ item.name }}
+                      </a-select-option>
+                    </a-select>
+                  </div>
+                </div>
+
+                <div class="row my-1">
+                  <div class="col-md-6">
+                    <a-select
+                      @change="
+                        onChangeCountry($event, 'listThree', 'allowed')
+                      "
+                      id="preferred_countries2"
+                      style="width: 150px"
+                      :filter-option="filterOption"
+                      :showSearch="true"
+                      placeholder="Select Country"
+                      v-model.lazy="preferenceData.preferred_countries[2]"
+                      class="select-ma w-100"
+                    >
+                      <a-select-option disabled :value="0"
+                        >Select Country</a-select-option
+                      >
+                      <a-select-option
+                        :value="item.id"
+                        v-bind:key="index"
+                        style="width: 100px"
+                        v-for="(item, index) in candidateDetails.countries"
+                      >
+                        {{ item.name }}
+                      </a-select-option>
+                    </a-select>
+                  </div>
+                  <div class="col-md-6">
+                    <a-select
+                      @change="onChangeCountry"
+                      id="preferred_cities2"
+                      style="width: 150px"
+                      :filter-option="filterOption"
+                      :showSearch="true"
+                      placeholder="Select City"
+                      v-model.lazy="preferenceData.preferred_cities[2]"
+                      class="select-ma w-100"
+                    >
+                      <a-select-option disabled :value="0"
+                        >Select Country</a-select-option
+                      >
+                      <a-select-option
+                        :value="item.id"
+                        v-bind:key="index"
+                        style="width: 100px"
+                        v-for="(item, index) in preferenceData.allowedCity
+                          .listThree"
+                      >
+                        {{ item.name }}
+                      </a-select-option>
+                    </a-select>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <div class="col-12 mobile-margin mobile-help none-padding">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#countryCity"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[21].first"
-                        @click="arr[21].first = !arr[21].first"
+                          v-if="arr[21].first"
+                          @click="arr[21].first = !arr[21].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[21].first = !arr[21].first">
+                  <span v-else @click="arr[21].first = !arr[21].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="countryCity"
-                  >
-                    <div class="card card-body bubble">
-                      Provide your preferred countries and cities. You can
-                      choose upto 3 pairs
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="countryCity"
+              >
+                <div class="card card-body bubble">
+                  Provide your preferred countries and cities. You can
+                  choose upto 3 pairs
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Disallowed country -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Are there countries or cities that you do not wish to be
-                    contacted from?
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12">
-                  <div>
-                    <span class="ml-1 mr-1">No</span>
-                    <a-switch
-                      @select="onValueChange"
-                      v-model.lazy="
+          <!-- Disallowed country -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Are there countries or cities that you do not wish to be
+                contacted from?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 non-padding-mobile-margin">
+              <div class="mobile-center mb-3 mobile-switch">
+                <span class="ml-1 mr-1">No</span>
+                <a-switch
+                    @select="onValueChange"
+                    v-model.lazy="
                         preferenceData.pre_has_country_disallow_preference
                       "
-                    >
-                      <a-icon slot="checkedChildren" type="check" />
-                      <a-icon slot="unCheckedChildren" type="close" />
-                    </a-switch>
-                    <span class="ml-1">Yes</span>
-                  </div>
-
-                  <div
-                    v-if="preferenceData.pre_has_country_disallow_preference"
-                  >
-                    <div class="row my-1">
-                      <div class="col-md-6">
-                        <v-select
-                          :clearable="false"
-                          id="bloked_countries0"
-                          class="style-chooser"
-                          v-model.lazy="preferenceData.bloked_countries[0]"
-                          label="name"
-                          placeholder="Select Country"
-                          :options="candidateDetails.countries"
-                          @input="
+                >
+                  <a-icon slot="checkedChildren" type="check" />
+                  <a-icon slot="unCheckedChildren" type="close" />
+                </a-switch>
+                <span class="ml-1">Yes</span>
+              </div>
+              <div
+                  v-if="preferenceData.pre_has_country_disallow_preference"
+              >
+                <div class="row my-1">
+                  <div class="col-md-6 mobile-margin">
+                    <v-select
+                        :clearable="false"
+                        id="bloked_countries0"
+                        class="style-chooser"
+                        v-model.lazy="preferenceData.bloked_countries[0]"
+                        label="name"
+                        placeholder="Select Country"
+                        :options="candidateDetails.countries"
+                        @input="
                             onChangeCountry($event, 'listOne', 'disAllowed')
                           "
-                          ><template #open-indicator>
-                            <a-icon type="down" /> </template
-                        ></v-select>
-                        
-                      </div>
-                      <div class="col-md-6">
-                        <v-select
-                          :clearable="false"
-                          id="blocked_cities0"
-                          class="style-chooser"
-                          placeholder="Select City"
-                          v-model.lazy="preferenceData.blocked_cities[0]"
-                          label="name"
-                          :options="preferenceData.disAllowedCity.listOne"
-                          @input="onValueChange"
-                          ><template #open-indicator>
-                            <a-icon type="down" /> </template
-                        ></v-select>
-                        
-                      </div>
-                    </div>
+                    ><template #open-indicator>
+                      <a-icon type="down" /> </template
+                    ></v-select>
 
-                    <!-- <div class="row my-1">
-                      <div class="col-md-6">
-                        <a-select
-                          @change="
-                            onChangeCountry($event, 'listTwo', 'disAllowed')
-                          "
-                          id="bloked_countries1"
-                          style="width: 150px"
-                          :filter-option="filterOption"
-                          :showSearch="true"
-                          placeholder="Select Country"
-                          v-model.lazy="preferenceData.bloked_countries[1]"
-                          class="select-ma w-100"
-                        >
-                          <a-select-option disabled :value="0"
-                            >Select Country</a-select-option
-                          >
-                          <a-select-option
-                            :value="item.id"
-                            v-bind:key="index"
-                            style="width: 100px"
-                            v-for="(item, index) in candidateDetails.countries"
-                          >
-                            {{ item.name }}
-                          </a-select-option>
-                        </a-select>
-                      </div>
-                      <div class="col-md-6">
-                        <a-select
-                          @change="onValueChange"
-                          id="blocked_cities1"
-                          style="width: 150px"
-                          :filter-option="filterOption"
-                          :showSearch="true"
-                          placeholder="Select City"
-                          v-model.lazy="preferenceData.blocked_cities[1]"
-                          class="select-ma w-100"
-                        >
-                          <a-select-option disabled :value="0"
-                            >Select City</a-select-option
-                          >
-                          <a-select-option
-                            :value="item.id"
-                            v-bind:key="index"
-                            style="width: 100px"
-                            v-for="(item, index) in preferenceData
-                              .disAllowedCity.listTwo"
-                          >
-                            {{ item.name }}
-                          </a-select-option>
-                        </a-select>
-                      </div>
-                    </div>
-
-                    <div class="row my-1">
-                      <div class="col-md-6">
-                        <a-select
-                          @change="
-                            onChangeCountry($event, 'listThree', 'disAllowed')
-                          "
-                          id="bloked_countries2"
-                          style="width: 150px"
-                          :filter-option="filterOption"
-                          :showSearch="true"
-                          placeholder="Select Country"
-                          v-model.lazy="preferenceData.bloked_countries[2]"
-                          class="select-ma w-100"
-                        >
-                          <a-select-option disabled :value="0"
-                            >Select Country</a-select-option
-                          >
-                          <a-select-option
-                            :value="item.id"
-                            v-bind:key="index"
-                            style="width: 100px"
-                            v-for="(item, index) in candidateDetails.countries"
-                          >
-                            {{ item.name }}
-                          </a-select-option>
-                        </a-select>
-                      </div>
-                      <div class="col-md-6">
-                        <a-select
-                          @change="onValueChange"
-                          id="blocked_cities2"
-                          style="width: 150px"
-                          :filter-option="filterOption"
-                          :showSearch="true"
-                          placeholder="Select City"
-                          v-model.lazy="preferenceData.blocked_cities[2]"
-                          class="select-ma w-100"
-                        >
-                          <a-select-option disabled :value="0"
-                            >Select City</a-select-option
-                          >
-                          <a-select-option
-                            :value="item.id"
-                            v-bind:key="index"
-                            style="width: 100px"
-                            v-for="(item, index) in preferenceData
-                              .disAllowedCity.listThree"
-                          >
-                            {{ item.name }}
-                          </a-select-option>
-                        </a-select>
-                      </div>
-                    </div> -->
                   </div>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#forbiddenCountryCity"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+                  <div class="col-md-6 mobile-margin">
+                    <v-select
+                        :clearable="false"
+                        id="blocked_cities0"
+                        class="style-chooser"
+                        placeholder="Select City"
+                        v-model.lazy="preferenceData.blocked_cities[0]"
+                        label="name"
+                        :options="preferenceData.disAllowedCity.listOne"
+                        @input="onValueChange"
+                    ><template #open-indicator>
+                      <a-icon type="down" /> </template
+                    ></v-select>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 mobile-margin mobile-help none-padding">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#forbiddenCountryCity"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[20].first"
-                        @click="arr[20].first = !arr[20].first"
+                          v-if="arr[20].first"
+                          @click="arr[20].first = !arr[20].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[20].first = !arr[20].first">
+                  <span v-else @click="arr[20].first = !arr[20].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="forbiddenCountryCity"
-                  >
-                    <div class="card card-body bubble">
-                      Are there countries or cities that you do not wish to be
-                      contacted from?
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="forbiddenCountryCity"
+              >
+                <div class="card card-body bubble">
+                  Are there countries or cities that you do not wish to be
+                  contacted from?
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Religion -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_partner_religion_id.length > 0"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />What is the preferred religion of your prospective
-                    partner?
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12">
-                  <a-form-model-item
-                    ref="pre_partner_religion_id"
-                    prop="pre_partner_religion_id"
-                  >
-                    <v-select
-                      :clearable="false"
-                      :multiple="true"
-                      id="pre_partner_religion_id"
-                      :reduce="(option) => option.id"
-                      class="nationality-select"
-                      placeholder="Select your preferred religion"
-                      @input="
+          <!-- Religion -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_partner_religion_id.length > 0"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />What is the preferred religion of your prospective
+                partner?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <v-select
+                  :clearable="false"
+                  :multiple="true"
+                  id="pre_partner_religion_id"
+                  :reduce="(option) => option.id"
+                  class="nationality-select form-right-content w-full"
+                  placeholder="Select your preferred religion"
+                  @input="
                         onMultiValueChange($event, 'pre_partner_religion_id')
                       "
-                      v-model.lazy="preferenceData.pre_partner_religion_id"
-                      label="name"
-                      :options="[
+                  v-model.lazy="preferenceData.pre_partner_religion_id"
+                  label="name"
+                  :options="[
                         { id: -1, name: `Don't Mind` },
                         ...candidateDetails.religions,
                       ]"
-                    >
-                      <template #open-indicator>
-                        <a-icon type="down" />
-                      </template>
-                    </v-select>
-                   
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapseExampleReligion"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+              >
+                <template #open-indicator>
+                  <a-icon type="down" />
+                </template>
+              </v-select>
+            </div>
+            <div class="col-12 mobile-margin mobile-help none-padding">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapseExampleReligion"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[19].first"
-                        @click="arr[19].first = !arr[19].first"
+                          v-if="arr[19].first"
+                          @click="arr[19].first = !arr[19].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[19].first = !arr[19].first">
+                  <span v-else @click="arr[19].first = !arr[19].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="collapseExampleReligion"
-                  >
-                    <div class="card card-body bubble">
-                      Preferred Religions for partner.
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="collapseExampleReligion"
+              >
+                <div class="card card-body bubble">
+                  Preferred Religions for partner.
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Ethnic Background -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_ethnicities"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Which ethnic background do you prefer your prospective
-                    partner to be from?
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12">
-                  <a-form-model-item
-                    ref="pre_ethnicities"
-                    prop="pre_ethnicities"
-                  >
-                    <v-select
-                      :clearable="false"
-                      id="pre_ethnicities"
-                      class="style-chooser"
-                      placeholder="Please select your ethnicities"
-                      @input="onValueChange"
-                      v-model.lazy="preferenceData.pre_ethnicities"
-                      label="name"
-                      :options="ethnicityList"
-                    >
-                      <template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
-                   
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapseExampleEthnicity"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+          <!-- Ethnic Background -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_ethnicities"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Which ethnic background do you prefer your prospective
+                partner to be from?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <v-select
+                  :clearable="false"
+                  id="pre_ethnicities"
+                  class="style-chooser w-full form-right-content"
+                  placeholder="Please select your ethnicities"
+                  @input="onValueChange"
+                  v-model.lazy="preferenceData.pre_ethnicities"
+                  label="name"
+                  :options="ethnicityList"
+              >
+                <template #open-indicator>
+                  <a-icon type="down" /> </template
+                ></v-select>
+            </div>
+            <div class="col-12 mobile-margin mobile-help none-padding">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapseExampleEthnicity"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[18].first"
-                        @click="arr[18].first = !arr[18].first"
+                          v-if="arr[18].first"
+                          @click="arr[18].first = !arr[18].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[18].first = !arr[18].first">
+                  <span v-else @click="arr[18].first = !arr[18].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="collapseExampleEthnicity"
-                  >
-                    <div class="card card-body bubble">
-                      Select Partner's Ethnicity
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="collapseExampleEthnicity"
+              >
+                <div class="card card-body bubble">
+                  Select Partner's Ethnicity
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Nationality-->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="
                         preferenceData &&
                         preferenceData.preferred_nationality &&
                         preferenceData.preferred_nationality.length > 0
                       "
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />What is the preferred nationality of your prospective
-                    partner?
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12">
-                  <a-form-model-item
-                    ref="preferred_nationality"
-                    prop="preferred_nationality"
-                  >
-                    <v-select
-                      id="preferred_nationality"
-                      :clearable="false"
-                      :multiple="true"
-                      class="nationality-select"
-                      @input="
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />What is the preferred nationality of your prospective
+                partner?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item
+                  ref="preferred_nationality"
+                  prop="preferred_nationality"
+              >
+                <v-select
+                    id="preferred_nationality"
+                    :clearable="false"
+                    :multiple="true"
+                    class="nationality-select w-full form-right-content"
+                    @input="
                         onNationalityValueChange(
                           $event,
                           'preferred_nationality'
                         )
                       "
-                      v-model.lazy="preferenceData.preferred_nationality"
-                      placeholder="Select your Nationality"
-                      label="name"
-                      :options="[
+                    v-model.lazy="preferenceData.preferred_nationality"
+                    placeholder="Select your Nationality"
+                    label="name"
+                    :options="[
                         { id: -1, name: `Don't Mind` },
                         ...candidateDetails.countries,
                       ]"
-                    >
-                      <template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
-                   
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapseExamplePartnerNationality"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+                >
+                  <template #open-indicator>
+                    <a-icon type="down" /> </template
+                  ></v-select>
+
+              </a-form-model-item>
+            </div>
+            <div class="col-12 mobile-margin mobile-help none-padding">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapseExamplePartnerNationality"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[17].first"
-                        @click="arr[17].first = !arr[17].first"
+                          v-if="arr[17].first"
+                          @click="arr[17].first = !arr[17].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[17].first = !arr[17].first">
+                  <span v-else @click="arr[17].first = !arr[17].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="collapseExamplePartnerNationality"
-                  >
-                    <div class="card card-body bubble">
-                      Preferred Partner's Nationality. You can select multiple
-                      values
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="collapseExamplePartnerNationality"
+              >
+                <div class="card card-body bubble">
+                  Preferred Partner's Nationality. You can select multiple
+                  values
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Education and study level -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_study_level_id"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Which is the minimum education level you prefer your
-                    prospective partner to have?
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12">
-                  <a-form-model-item
-                    ref="pre_study_level_id"
-                    prop="pre_study_level_id"
-                  >
-                    <v-select
-                      :clearable="false"
-                      class="style-chooser"
-                      @input="onValueChange"
-                      :reduce="(option) => option.id"
-                      placeholder="Please select your education status"
-                      v-model.lazy="preferenceData.pre_study_level_id"
-                      label="name"
-                      :options="candidateDetails.studylevels"
-                    >
-                      <template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
-                  
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapseMinimumEducation"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+          <!-- Education and study level -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_study_level_id"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Which is the minimum education level you prefer your
+                prospective partner to have?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item
+                  ref="pre_study_level_id"
+                  prop="pre_study_level_id"
+              >
+                <v-select
+                    :clearable="false"
+                    class="style-chooser w-full form-right-content"
+                    @input="onValueChange"
+                    :reduce="(option) => option.id"
+                    placeholder="Please select your education status"
+                    v-model.lazy="preferenceData.pre_study_level_id"
+                    label="name"
+                    :options="candidateDetails.studylevels"
+                >
+                  <template #open-indicator>
+                    <a-icon type="down" /> </template
+                  ></v-select>
+
+              </a-form-model-item>
+            </div>
+            <div class="col-12 mobile-margin mobile-help none-padding">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapseMinimumEducation"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[16].first"
-                        @click="arr[16].first = !arr[16].first"
+                          v-if="arr[16].first"
+                          @click="arr[16].first = !arr[16].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[16].first = !arr[16].first">
+                  <span v-else @click="arr[16].first = !arr[16].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="collapseMinimumEducation"
-                  >
-                    <div class="card card-body bubble">
-                      Minimum Education Level of Partner
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="collapseMinimumEducation"
+              >
+                <div class="card card-body bubble">
+                  Minimum Education Level of Partner
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Employment Status -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_employment_status"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />What employment status do you prefer you prospective
-                    partner to have?
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12">
-                  <a-form-model-item
-                    ref="pre_employment_status"
-                    prop="pre_employment_status"
-                  >
-                    <v-select
-                      :clearable="false"
-                      class="style-chooser"
-                      :reduce="(option) => option.value"
-                      @input="onValueChange"
-                      placeholder="Please select your employment status"
-                      v-model.lazy="preferenceData.pre_employment_status"
-                      label="name"
-                      :options="employment_Statuses"
-                    >
-                      <template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
-                   
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapsePartnerEmploymentStatus"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+          <!-- Employment Status -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_employment_status"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />What employment status do you prefer you prospective
+                partner to have?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item
+                  ref="pre_employment_status"
+                  prop="pre_employment_status"
+              >
+                <v-select
+                    :clearable="false"
+                    class="style-chooser w-full form-right-content"
+                    :reduce="(option) => option.value"
+                    @input="onValueChange"
+                    placeholder="Please select your employment status"
+                    v-model.lazy="preferenceData.pre_employment_status"
+                    label="name"
+                    :options="employment_Statuses"
+                >
+                  <template #open-indicator>
+                    <a-icon type="down" /> </template
+                  ></v-select>
+
+              </a-form-model-item>
+            </div>
+            <div class="col-12 mobile-margin mobile-help none-padding">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapsePartnerEmploymentStatus"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[15].first"
-                        @click="arr[15].first = !arr[15].first"
+                          v-if="arr[15].first"
+                          @click="arr[15].first = !arr[15].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[15].first = !arr[15].first">
+                  <span v-else @click="arr[15].first = !arr[15].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="collapsePartnerEmploymentStatus"
-                  >
-                    <div class="card card-body bubble">
-                      Partner's Employment Status
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="collapsePartnerEmploymentStatus"
+              >
+                <div class="card card-body bubble">
+                  Partner's Employment Status
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Occupations -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_occupation"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />What occupation do you prefer your prospective partner to
-                    have?
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12">
-                  <a-form-model-item ref="pre_occupation" prop="pre_occupation">
-                    <v-select
-                      :clearable="false"
-                      class="style-chooser"
-                      @input="onValueChange"
-                      v-model.lazy="preferenceData.pre_occupation"
-                      placeholder="Please select your preferred occupation"
-                      label="name"
-                      :reduce="(option) => option.name"
-                      :options="candidateDetails.occupations"
-                    >
-                      <template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
-                   
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#partner-occupation"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+          <!-- Occupations -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_occupation"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />What occupation do you prefer your prospective partner to
+                have?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item ref="pre_occupation" prop="pre_occupation">
+                <v-select
+                    :clearable="false"
+                    class="style-chooser w-full form-right-content"
+                    @input="onValueChange"
+                    v-model.lazy="preferenceData.pre_occupation"
+                    placeholder="Please select your preferred occupation"
+                    label="name"
+                    :reduce="(option) => option.name"
+                    :options="candidateDetails.occupations"
+                >
+                  <template #open-indicator>
+                    <a-icon type="down" /> </template
+                  ></v-select>
+
+              </a-form-model-item>
+            </div>
+            <div class="col-12 mobile-margin mobile-help none-padding">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#partner-occupation"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[14].first"
-                        @click="arr[14].first = !arr[14].first"
+                          v-if="arr[14].first"
+                          @click="arr[14].first = !arr[14].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[14].first = !arr[14].first">
+                  <span v-else @click="arr[14].first = !arr[14].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="partner-occupation"
-                  >
-                    <div class="card card-body bubble">
-                      Partner's occupuation
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="partner-occupation"
+              >
+                <div class="card card-body bubble">
+                  Partner's occupuation
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Divorcee -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_preferred_divorcee"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Are you willing to accept a divorcee?
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12">
-                  <div>
-                    <span class="mr-1">No</span>
-                    <a-switch
-                      @change="onRateChange"
-                      v-model.lazy="preferenceData.pre_preferred_divorcee"
-                    >
-                      <a-icon slot="checkedChildren" type="check" />
-                      <a-icon slot="unCheckedChildren" type="close" />
-                    </a-switch>
-                    <span class="ml-1">Yes</span>
-                  </div>
-                  <div
+          <!-- Divorcee -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
                     v-if="preferenceData.pre_preferred_divorcee"
-                    class="divorcee-child"
-                  >
-                    Are you willing to accept a divorcee with children?
-                  </div>
-                  <div v-if="preferenceData.pre_preferred_divorcee">
-                    <span class="mr-1">No</span>
-                    <a-switch
-                      @change="onValueChange"
-                      v-model.lazy="preferenceData.pre_preferred_divorcee_child"
-                    >
-                      <a-icon slot="checkedChildren" type="check" />
-                      <a-icon slot="unCheckedChildren" type="close" />
-                    </a-switch>
-                    <span class="ml-1">Yes</span>
-                  </div>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#divorceePartnerAcceptance"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Are you willing to accept a divorcee?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin mobile-center">
+              <div>
+                <span class="mr-1">No</span>
+                <a-switch
+                    @change="onRateChange"
+                    v-model.lazy="preferenceData.pre_preferred_divorcee"
+                >
+                  <a-icon slot="checkedChildren" type="check" />
+                  <a-icon slot="unCheckedChildren" type="close" />
+                </a-switch>
+                <span class="ml-1">Yes</span>
+              </div>
+              <div
+                  v-if="preferenceData.pre_preferred_divorcee"
+                  class="divorcee-child"
+              >
+                Are you willing to accept a divorcee with children?
+              </div>
+              <div v-if="preferenceData.pre_preferred_divorcee">
+                <span class="mr-1">No</span>
+                <a-switch
+                    @change="onValueChange"
+                    v-model.lazy="preferenceData.pre_preferred_divorcee_child"
+                >
+                  <a-icon slot="checkedChildren" type="check" />
+                  <a-icon slot="unCheckedChildren" type="close" />
+                </a-switch>
+                <span class="ml-1">Yes</span>
+              </div>
+            </div>
+            <div class="col-12 mobile-margin mobile-help none-padding">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#divorceePartnerAcceptance"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[13].first"
-                        @click="arr[13].first = !arr[13].first"
+                          v-if="arr[13].first"
+                          @click="arr[13].first = !arr[13].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[13].first = !arr[13].first">
+                  <span v-else @click="arr[13].first = !arr[13].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="divorceePartnerAcceptance"
-                  >
-                    <div class="card card-body bubble">
-                      This field is optional
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="divorceePartnerAcceptance"
+              >
+                <div class="card card-body bubble">
+                  This field is optional
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Other Preference -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_other_preference"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Do you have any other requirements?
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12">
-                  <a-form-model-item
-                    ref="pre_other_preference"
-                    prop="pre_other_preference"
-                  >
-                    <a-textarea
-                      @blur="onValueChange"
-                      :rows="3"
-                      autocomplete="off"
-                      autocorrect="off"
-                      autocapitalize="off"
-                      spellcheck="false"
-                      id="pre_other_preference"
-                      v-model.lazy.lazy="preferenceData.pre_other_preference"
-                      placeholder="* Sample Text"
-                    />
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#otherRequirementsForPartner"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+          <!-- Other Preference -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_other_preference"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Do you have any other requirements?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item
+                  ref="pre_other_preference"
+                  prop="pre_other_preference"
+              >
+                <a-textarea
+                    @blur="onValueChange"
+                    :rows="3"
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                    id="pre_other_preference"
+                    v-model.lazy.lazy="preferenceData.pre_other_preference"
+                    placeholder="* Sample Text"
+                    class="w-full form-right-content"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 mobile-margin mobile-help none-padding">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#otherRequirementsForPartner"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[12].first"
-                        @click="arr[12].first = !arr[12].first"
+                          v-if="arr[12].first"
+                          @click="arr[12].first = !arr[12].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[12].first = !arr[12].first">
+                  <span v-else @click="arr[12].first = !arr[12].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    class="collapse"
-                    data-parent="#accordion"
-                    id="otherRequirementsForPartner"
-                  >
-                    <div class="card card-body bubble">
-                      Any other requirements
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  class="collapse"
+                  data-parent="#accordion"
+                  id="otherRequirementsForPartner"
+              >
+                <div class="card card-body bubble">
+                  Any other requirements
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Description -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_description"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Describe your requirements about your preferred partner in
-                    max 250 words
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12">
-                  <a-form-model-item
-                    ref="pre_description"
-                    prop="pre_description"
-                  >
-                    <a-textarea
-                      @blur="onValueChange"
-                      :rows="3"
-                      autocomplete="off"
-                      autocorrect="off"
-                      autocapitalize="off"
-                      spellcheck="false"
-                      id="pre_description"
-                      v-model.lazy.lazy="preferenceData.pre_description"
-                      placeholder="* Sample Text"
-                    />
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#anyotherRequirementOnPartner"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+          <!-- Description -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_description"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Describe your requirements about your preferred partner in
+                max 250 words
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item
+                  ref="pre_description"
+                  prop="pre_description"
+              >
+                <a-textarea
+                    @blur="onValueChange"
+                    :rows="3"
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                    id="pre_description"
+                    v-model.lazy.lazy="preferenceData.pre_description"
+                    placeholder="* Sample Text"
+                    class="w-full form-right-input"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 mobile-margin mobile-help none-padding">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#anyotherRequirementOnPartner"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[11].first"
-                        @click="arr[11].first = !arr[11].first"
+                          v-if="arr[11].first"
+                          @click="arr[11].first = !arr[11].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[11].first = !arr[11].first">
+                  <span v-else @click="arr[11].first = !arr[11].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    class="collapse"
-                    data-parent="#accordion"
-                    id="anyotherRequirementOnPartner"
-                  >
-                    <div class="card card-body bubble">
-                      Any other requirements for partner
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
-          </a-row>
+                </a>
+              </p>
+              <div
+                  class="collapse"
+                  data-parent="#accordion"
+                  id="anyotherRequirementOnPartner"
+              >
+                <div class="card card-body bubble">
+                  Any other requirements for partner
+                </div>
+              </div>
+            </div>
+          </div>
         </a-form-model>
 
         <a-button
@@ -1230,6 +1069,7 @@
           Save & Continue
         </a-button>
       </a-collapse-panel>
+
       <!-- Important things for you (Ratings) -->
       <a-collapse-panel
         key="2"
@@ -1242,687 +1082,674 @@
           :model="preferenceData"
           class="form-ma"
         >
-          <a-row :gutter="8">
-            <!-- What are important to you(Ratings) -->
-
-            <!-- Character -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_strength_of_character_rate"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Do you have any other requirements?
-                  </div>
-                </a-col>
-                <a-col :span="4"></a-col>
-                <a-col :span="10">
-                  <a-form-model-item
-                    ref="pre_strength_of_character_rate"
-                    prop="pre_strength_of_character_rate"
-                  >
-                    <a-rate
-                      id="pre_strength_of_character_rate"
-                      v-model.lazy="
+          <!-- Character -->
+          <div class="row py-3 border-bottom">
+            <div class="col-12 col-md-6">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_strength_of_character_rate"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Do you have any other requirements?
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <a-form-model-item
+                  ref="pre_strength_of_character_rate"
+                  prop="pre_strength_of_character_rate"
+                  class="text-center"
+              >
+                <a-rate
+                    id="pre_strength_of_character_rate"
+                    v-model.lazy="
                         preferenceData.pre_strength_of_character_rate
                       "
-                      @change="onChangeRate"
-                      :tooltips="desc"
-                    />
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapsePartnerCharacterRating"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+                    @change="onChangeRate"
+                    :tooltips="desc"
+                    class="form-right-content"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapsePartnerCharacterRating"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[10].first"
-                        @click="arr[10].first = !arr[10].first"
+                          v-if="arr[10].first"
+                          @click="arr[10].first = !arr[10].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[10].first = !arr[10].first">
+                  <span v-else @click="arr[10].first = !arr[10].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    class="collapse"
-                    data-parent="#accordion"
-                    id="collapsePartnerCharacterRating"
-                  >
-                    <div class="card card-body bubble">
-                      Provide ratings. This field is required.
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  class="collapse"
+                  data-parent="#accordion"
+                  id="collapsePartnerCharacterRating"
+              >
+                <div class="card card-body bubble">
+                  Provide ratings. This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Looks and Appearance -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_look_and_appearance_rate"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Looks and appearance
-                  </div>
-                </a-col>
-                <a-col :span="4"></a-col>
-                <a-col :span="10">
-                  <a-form-model-item
-                    ref="pre_look_and_appearance_rate"
-                    prop="pre_look_and_appearance_rate"
-                  >
-                    <a-rate
-                      id="pre_look_and_appearance_rate"
-                      v-model.lazy="preferenceData.pre_look_and_appearance_rate"
-                      @change="onChangeRate"
-                      :tooltips="desc"
-                    />
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapsePartnerLookApperence"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+          <!-- Looks and Appearance -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_look_and_appearance_rate"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                /> Looks and appearance
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <a-form-model-item
+                  ref="pre_look_and_appearance_rate"
+                  prop="pre_look_and_appearance_rate"
+                  class="text-center"
+              >
+                <a-rate
+                    id="pre_look_and_appearance_rate"
+                    v-model.lazy="preferenceData.pre_look_and_appearance_rate"
+                    @change="onChangeRate"
+                    :tooltips="desc"
+                    class="form-right-content"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapsePartnerLookApperence"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[9].first"
-                        @click="arr[9].first = !arr[9].first"
+                          v-if="arr[9].first"
+                          @click="arr[9].first = !arr[9].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[9].first = !arr[9].first">
+                  <span v-else @click="arr[9].first = !arr[9].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    class="collapse"
-                    data-parent="#accordion"
-                    id="collapsePartnerLookApperence"
-                  >
-                    <div class="card card-body bubble">
-                      Provide ratings. This field is required.
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  class="collapse"
+                  data-parent="#accordion"
+                  id="collapsePartnerLookApperence"
+              >
+                <div class="card card-body bubble">
+                  Provide ratings. This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Religiosity/Faith -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_religiosity_or_faith_rate"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Religiosity/Faith
-                  </div>
-                </a-col>
-                <a-col :span="4"></a-col>
-                <a-col :span="10">
-                  <a-form-model-item
-                    ref="pre_religiosity_or_faith_rate"
-                    prop="pre_religiosity_or_faith_rate"
-                  >
-                    <a-rate
-                      id="pre_religiosity_or_faith_rate"
-                      v-model.lazy="
+          <!-- Religiosity/Faith -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_religiosity_or_faith_rate"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Religiosity/Faith
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <a-form-model-item
+                  ref="pre_religiosity_or_faith_rate"
+                  prop="pre_religiosity_or_faith_rate"
+                  class="text-center"
+              >
+                <a-rate
+                    id="pre_religiosity_or_faith_rate"
+                    v-model.lazy="
                         preferenceData.pre_religiosity_or_faith_rate
                       "
-                      @change="onChangeRate"
-                      :tooltips="desc"
-                    />
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapsePartnerReligiousFaith"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+                    @change="onChangeRate"
+                    :tooltips="desc"
+                    class="form-right-content"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapsePartnerReligiousFaith"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[8].first"
-                        @click="arr[8].first = !arr[8].first"
+                          v-if="arr[8].first"
+                          @click="arr[8].first = !arr[8].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[8].first = !arr[8].first">
+                  <span v-else @click="arr[8].first = !arr[8].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    class="collapse"
-                    data-parent="#accordion"
-                    id="collapsePartnerReligiousFaith"
-                  >
-                    <div class="card card-body bubble">
-                      Provide ratings. This field is required.
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  class="collapse"
+                  data-parent="#accordion"
+                  id="collapsePartnerReligiousFaith"
+              >
+                <div class="card card-body bubble">
+                  Provide ratings. This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Manners, Social skills and ethics -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_manners_socialskill_ethics_rate"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Manners, Social skills and ethics
-                  </div>
-                </a-col>
-                <a-col :span="4"></a-col>
-                <a-col :span="10">
-                  <a-form-model-item
-                    ref="pre_manners_socialskill_ethics_rate"
-                    prop="pre_manners_socialskill_ethics_rate"
-                  >
-                    <a-rate
-                      id="pre_manners_socialskill_ethics_rate"
-                      v-model.lazy="
+          <!-- Manners, Social skills and ethics -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_manners_socialskill_ethics_rate"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Manners, Social skills and ethics
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <a-form-model-item
+                  ref="pre_manners_socialskill_ethics_rate"
+                  prop="pre_manners_socialskill_ethics_rate"
+                  class="text-center"
+              >
+                <a-rate
+                    id="pre_manners_socialskill_ethics_rate"
+                    v-model.lazy="
                         preferenceData.pre_manners_socialskill_ethics_rate
                       "
-                      @change="onChangeRate"
-                      :tooltips="desc"
-                    />
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapsePartnerMannerSocialSkills"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+                    @change="onChangeRate"
+                    :tooltips="desc"
+                    class="form-right-content"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapsePartnerMannerSocialSkills"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[7].first"
-                        @click="arr[7].first = !arr[7].first"
+                          v-if="arr[7].first"
+                          @click="arr[7].first = !arr[7].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[7].first = !arr[7].first">
+                  <span v-else @click="arr[7].first = !arr[7].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    class="collapse"
-                    data-parent="#accordion"
-                    id="collapsePartnerMannerSocialSkills"
-                  >
-                    <div class="card card-body bubble">
-                      Provide ratings. This field is required.
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  class="collapse"
+                  data-parent="#accordion"
+                  id="collapsePartnerMannerSocialSkills"
+              >
+                <div class="card card-body bubble">
+                  Provide ratings. This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Emotional Maturity and compatibility -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_emotional_maturity_rate"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Emotional Maturity and compatibility
-                  </div>
-                </a-col>
-                <a-col :span="4"></a-col>
-                <a-col :span="10">
-                  <a-form-model-item
-                    ref="pre_emotional_maturity_rate"
-                    prop="pre_emotional_maturity_rate"
-                  >
-                    <a-rate
-                      id="pre_emotional_maturity_rate"
-                      v-model.lazy="preferenceData.pre_emotional_maturity_rate"
-                      @change="onChangeRate"
-                      :tooltips="desc"
-                    />
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapsePartnerEmotionMaturityRating"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+          <!-- Emotional Maturity and compatibility -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_emotional_maturity_rate"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Emotional Maturity and compatibility
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <a-form-model-item
+                  ref="pre_emotional_maturity_rate"
+                  prop="pre_emotional_maturity_rate"
+                  class="text-center"
+              >
+                <a-rate
+                    id="pre_emotional_maturity_rate"
+                    v-model.lazy="preferenceData.pre_emotional_maturity_rate"
+                    @change="onChangeRate"
+                    :tooltips="desc"
+                    class="form-right-content"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapsePartnerEmotionMaturityRating"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[6].first"
-                        @click="arr[6].first = !arr[6].first"
+                          v-if="arr[6].first"
+                          @click="arr[6].first = !arr[6].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[6].first = !arr[6].first">
+                  <span v-else @click="arr[6].first = !arr[6].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="collapsePartnerEmotionMaturityRating"
-                  >
-                    <div class="card card-body bubble">
-                      Provide ratings. This field is required.
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="collapsePartnerEmotionMaturityRating"
+              >
+                <div class="card card-body bubble">
+                  Provide ratings. This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Good Listener -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_good_listener_rate"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Good Listener
-                  </div>
-                </a-col>
-                <a-col :span="4"></a-col>
-                <a-col :span="10">
-                  <a-form-model-item
-                    ref="pre_good_listener_rate"
-                    prop="pre_good_listener_rate"
-                  >
-                    <a-rate
-                      id="pre_good_listener_rate"
-                      v-model.lazy="preferenceData.pre_good_listener_rate"
-                      @change="onChangeRate"
-                      :tooltips="desc"
-                    />
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapsePartnerGoodlistenerRating"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+          <!-- Good Listener -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_good_listener_rate"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Good Listener
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <a-form-model-item
+                  ref="pre_good_listener_rate"
+                  prop="pre_good_listener_rate"
+                  class="text-center"
+              >
+                <a-rate
+                    id="pre_good_listener_rate"
+                    v-model.lazy="preferenceData.pre_good_listener_rate"
+                    @change="onChangeRate"
+                    :tooltips="desc"
+                    class="form-right-content"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapsePartnerGoodlistenerRating"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[5].first"
-                        @click="arr[5].first = !arr[5].first"
+                          v-if="arr[5].first"
+                          @click="arr[5].first = !arr[5].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[5].first = !arr[5].first">
+                  <span v-else @click="arr[5].first = !arr[5].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="collapsePartnerGoodlistenerRating"
-                  >
-                    <div class="card card-body bubble">
-                      Provide ratings. This field is required.
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="collapsePartnerGoodlistenerRating"
+              >
+                <div class="card card-body bubble">
+                  Provide ratings. This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Good talker -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_good_talker_rate"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Good Talker
-                  </div>
-                </a-col>
-                <a-col :span="4"></a-col>
-                <a-col :span="10">
-                  <a-form-model-item
-                    ref="pre_good_talker_rate"
-                    prop="pre_good_talker_rate"
-                  >
-                    <a-rate
-                      id="pre_good_talker_rate"
-                      v-model.lazy="preferenceData.pre_good_talker_rate"
-                      @change="onChangeRate"
-                      :tooltips="desc"
-                    />
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapsePartnerGoodTalkerRating"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+          <!-- Good talker -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_good_talker_rate"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Good Talker
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <a-form-model-item
+                  ref="pre_good_talker_rate"
+                  prop="pre_good_talker_rate"
+                  class="text-center"
+              >
+                <a-rate
+                    id="pre_good_talker_rate"
+                    v-model.lazy="preferenceData.pre_good_talker_rate"
+                    @change="onChangeRate"
+                    :tooltips="desc"
+                    class="form-right-content"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapsePartnerGoodTalkerRating"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[4].first"
-                        @click="arr[4].first = !arr[4].first"
+                          v-if="arr[4].first"
+                          @click="arr[4].first = !arr[4].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[4].first = !arr[4].first">
+                  <span v-else @click="arr[4].first = !arr[4].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="collapsePartnerGoodTalkerRating"
-                  >
-                    <div class="card card-body bubble">
-                      Provide ratings. This field is required.
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="collapsePartnerGoodTalkerRating"
+              >
+                <div class="card card-body bubble">
+                  Provide ratings. This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Willing to learn -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_wiling_to_learn_rate"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Willing to learn
-                  </div>
-                </a-col>
-                <a-col :span="4"></a-col>
-                <a-col :span="10">
-                  <a-form-model-item
-                    ref="pre_wiling_to_learn_rate"
-                    prop="pre_wiling_to_learn_rate"
-                  >
-                    <a-rate
-                      id="pre_wiling_to_learn_rate"
-                      v-model.lazy="preferenceData.pre_wiling_to_learn_rate"
-                      @change="onChangeRate"
-                      :tooltips="desc"
-                    />
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapsePartnerWillingToLearnRating"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+          <!-- Willing to learn -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_wiling_to_learn_rate"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Willing to learn
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <a-form-model-item
+                  ref="pre_wiling_to_learn_rate"
+                  prop="pre_wiling_to_learn_rate"
+                  class="text-center"
+              >
+                <a-rate
+                    id="pre_wiling_to_learn_rate"
+                    v-model.lazy="preferenceData.pre_wiling_to_learn_rate"
+                    @change="onChangeRate"
+                    :tooltips="desc"
+                    class="form-right-content"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapsePartnerWillingToLearnRating"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[3].first"
-                        @click="arr[3].first = !arr[3].first"
+                          v-if="arr[3].first"
+                          @click="arr[3].first = !arr[3].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[3].first = !arr[3].first">
+                  <span v-else @click="arr[3].first = !arr[3].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="collapsePartnerWillingToLearnRating"
-                  >
-                    <div class="card card-body bubble">
-                      Provide ratings. This field is required.
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="collapsePartnerWillingToLearnRating"
+              >
+                <div class="card card-body bubble">
+                  Provide ratings. This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Family or Social Status -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_family_social_status_rate"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Family or Social Status
-                  </div>
-                </a-col>
-                <a-col :span="4"></a-col>
-                <a-col :span="10">
-                  <a-form-model-item
-                    ref="pre_family_social_status_rate"
-                    prop="pre_family_social_status_rate"
-                  >
-                    <a-rate
-                      v-model.lazy="
+          <!-- Family or Social Status -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_family_social_status_rate"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Family or Social Status
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <a-form-model-item
+                  ref="pre_family_social_status_rate"
+                  prop="pre_family_social_status_rate"
+                  class="text-center"
+              >
+                <a-rate
+                    v-model.lazy="
                         preferenceData.pre_family_social_status_rate
                       "
-                      id="pre_family_social_status_rate"
-                      @change="onChangeRate"
-                      :tooltips="desc"
-                    />
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapsePartnerFamilySocialStatusRating"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+                    id="pre_family_social_status_rate"
+                    @change="onChangeRate"
+                    :tooltips="desc"
+                    class="form-right-content"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapsePartnerFamilySocialStatusRating"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[2].first"
-                        @click="arr[2].first = !arr[2].first"
+                          v-if="arr[2].first"
+                          @click="arr[2].first = !arr[2].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[2].first = !arr[2].first">
+                  <span v-else @click="arr[2].first = !arr[2].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="collapsePartnerFamilySocialStatusRating"
-                  >
-                    <div class="card card-body bubble">
-                      Provide ratings. This field is required.
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="collapsePartnerFamilySocialStatusRating"
+              >
+                <div class="card card-body bubble">
+                  Provide ratings. This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Employment or Wealth -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_employment_wealth_rate"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Employment or Wealth
-                  </div>
-                </a-col>
-                <a-col :span="4"></a-col>
-                <a-col :span="10">
-                  <a-form-model-item
-                    ref="pre_employment_wealth_rate"
-                    prop="pre_employment_wealth_rate"
-                  >
-                    <a-rate
-                      id="pre_employment_wealth_rate"
-                      v-model.lazy="preferenceData.pre_employment_wealth_rate"
-                      @change="onChangeRate"
-                      :tooltips="desc"
-                    />
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapsePartnerEmploymentWealthrating"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+          <!-- Employment or Wealth -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_employment_wealth_rate"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Employment or Wealth
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <a-form-model-item
+                  ref="pre_employment_wealth_rate"
+                  prop="pre_employment_wealth_rate"
+                  class="text-center"
+              >
+                <a-rate
+                    id="pre_employment_wealth_rate"
+                    v-model.lazy="preferenceData.pre_employment_wealth_rate"
+                    @change="onChangeRate"
+                    :tooltips="desc"
+                    class="form-right-content"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapsePartnerEmploymentWealthrating"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[1].first"
-                        @click="arr[1].first = !arr[1].first"
+                          v-if="arr[1].first"
+                          @click="arr[1].first = !arr[1].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[1].first = !arr[1].first">
+                  <span v-else @click="arr[1].first = !arr[1].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="collapsePartnerEmploymentWealthrating"
-                  >
-                    <div class="card card-body bubble">
-                      Provide ratings. This field is required.
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="collapsePartnerEmploymentWealthrating"
+              >
+                <div class="card card-body bubble">
+                  Provide ratings. This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Education -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="preferenceData.pre_education_rate"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Education
-                  </div>
-                </a-col>
-                <a-col :span="4"></a-col>
-                <a-col :span="10">
-                  <a-form-model-item
-                    ref="pre_education_rate"
-                    prop="pre_education_rate"
-                  >
-                    <a-rate
-                      id="pre_education_rate"
-                      v-model.lazy="preferenceData.pre_education_rate"
-                      @change="onChangeRate"
-                      :tooltips="desc"
-                    />
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapsePartnerEducationRating"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+          <!-- Education -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="preferenceData.pre_education_rate"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Education
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <a-form-model-item
+                  ref="pre_education_rate"
+                  prop="pre_education_rate"
+                  class="text-center"
+              >
+                <a-rate
+                    id="pre_education_rate"
+                    v-model.lazy="preferenceData.pre_education_rate"
+                    @change="onChangeRate"
+                    :tooltips="desc"
+                    class="form-right-content"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapsePartnerEducationRating"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[0].first"
-                        @click="arr[0].first = !arr[0].first"
+                          v-if="arr[0].first"
+                          @click="arr[0].first = !arr[0].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[0].first = !arr[0].first">
+                  <span v-else @click="arr[0].first = !arr[0].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="collapsePartnerEducationRating"
-                  >
-                    <div class="card card-body bubble">
-                      Provide ratings. This field is required.
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="collapsePartnerEducationRating"
+              >
+                <div class="card card-body bubble">
+                  Provide ratings. This field is required.
+                </div>
+              </div>
+            </div>
+          </div>
 
+          <div class="d-flex justify-content-end">
             <a-button
-              shape="round"
-              type="primary"
-              style="float: right"
-              class="mt-3"
-              @click="handleSubmitFormTwo"
+                shape="round"
+                type="primary"
+                style="float: right"
+                class="mt-3"
+                @click="handleSubmitFormTwo"
             >
               Save & Continue
             </a-button>
-          </a-row>
+          </div>
         </a-form-model>
       </a-collapse-panel>
     </a-collapse>
@@ -2184,6 +2011,10 @@ export default {
 @import "@/styles/base/_variables.scss";
 
 .preference {
+  padding: 0 0.75rem;
+  @media (min-width: 768px) {
+    padding: 0;
+  }
   .section-heading {
     text-align: center;
     color: $color-brand;
@@ -2311,5 +2142,33 @@ export default {
 .religion-design {
   background-color: red;
   color: red;
+}
+
+.mobile-margin {
+  margin-top: 0.5rem;
+}
+.mobile-center {
+  text-align: center;
+}
+.mobile-switch {
+  margin-top: 12px;
+}
+@media (min-width: 768px) {
+  .form-right-content {
+    float: right;
+    padding-right: 0;
+  }
+  .mobile-margin {
+    margin-top: 0;
+  }
+  .non-padding-mobile-margin {
+    margin-top: 0;
+  }
+  .mobile-center {
+    text-align: left;
+  }
+  .mobile-switch {
+    margin-top: 0;
+  }
 }
 </style>
