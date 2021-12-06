@@ -101,7 +101,7 @@
 								</div>
 								<div class="">
 									<p class="text-center text-white px-4 fs-14">
-										In Matrimony Assist, ALl subscribing teams have full
+										In Matrimony Assist, All subscribing teams have full
 										access to platform and features. The only difference is
 										time limit
 									</p>
