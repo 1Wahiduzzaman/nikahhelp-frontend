@@ -58,7 +58,8 @@
                       :
                       <span class="ml-3">
                         <div
-                          v-for="(country) in candidateData.preference.preferred_countries"
+                          v-for="country in candidateData.preference
+                            .preferred_countries"
                           :key="country.id"
                         >
                           {{ country.name }}
@@ -92,7 +93,8 @@
                     ><span class="flex-50 px-2 d-inherit"
                       >:<span class="ml-3">
                         <div
-                          v-for="nationality in candidateData.preference.preferred_nationality"
+                          v-for="nationality in candidateData.preference
+                            .preferred_nationality"
                           :key="nationality.id"
                         >
                           {{ nationality.name }}
@@ -330,7 +332,13 @@
                           candidateDetails.religions.find(
                             (x) =>
                               x.id === candidateData.personal.per_religion_id
-                          ).name
+                          )
+                            ? candidateDetails.religions.find(
+                                (x) =>
+                                  x.id ===
+                                  candidateData.personal.per_religion_id
+                              ).name
+                            : ""
                         }}
                       </span></span
                     >
@@ -357,7 +365,11 @@
                       >:<span class="ml-3">{{
                         candidateDetails.countries[
                           candidateData.personal.per_nationality
-                        ].name
+                        ]
+                          ? candidateDetails.countries[
+                              candidateData.personal.per_nationality
+                            ].name
+                          : ""
                       }}</span></span
                     >
                   </li>
@@ -367,7 +379,11 @@
                       >:<span class="ml-3">{{
                         candidateDetails.countries[
                           candidateData.personal.per_country_of_birth
-                        ].name
+                        ]
+                          ? candidateDetails.countries[
+                              candidateData.personal.per_country_of_birth
+                            ].name
+                          : ""
                       }}</span></span
                     >
                   </li>
@@ -375,10 +391,12 @@
                     <span class="flex-50 px-2 label-text"
                       >Current Residance</span
                     ><span class="flex-50 px-2 d-inherit"
-                      >:<span class="ml-3">{{
+                      >:<span class="ml-3">{{candidateDetails.countries[
+                          candidateData.personal.per_current_residence
+                        ]?
                         candidateDetails.countries[
                           candidateData.personal.per_current_residence
-                        ].name
+                        ].name:""
                       }}</span></span
                     >
                   </li>
@@ -667,9 +685,7 @@
                 </p>
                 <p class="mb-1">
                   <a-icon
-                    v-if="
-                      candidateData.personal.team_connection_can_see == 0
-                    "
+                    v-if="candidateData.personal.team_connection_can_see == 0"
                     class="color-danger mt-2 mr-2 fs-16 fw-500"
                     type="stop"
                   />
@@ -713,13 +729,10 @@ export default {
     this.getCandidateData();
   },
   methods: {
-   
     async getCandidateData() {
       try {
-         const user=JSON.parse(localStorage.getItem('user'))
-        const response = await ApiService.get(
-          `v1/candidate/info/${user.id}`
-        );
+        const user = JSON.parse(localStorage.getItem("user"));
+        const response = await ApiService.get(`v1/candidate/info/${user.id}`);
         this.candidateData = {
           ...response.data.data,
         };

@@ -94,7 +94,7 @@ const AppRouter = new VueRouter({
             name: 'root',
             component: MatrimonySystem,
             redirect: '/dashboard',
-            beforeEnter: InitRoute,
+            //beforeEnter: InitRoute,
             children: [
 
                 {
