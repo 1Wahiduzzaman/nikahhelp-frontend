@@ -195,33 +195,33 @@ export default {
 				this.candidateInfo = this.$store.getters["candidateInfo"];
 				this.representativeInfo = this.$store.getters["representativeInfo"];
 				this.is_verified = this.user.is_verified;
-				if (this.is_verified == 0) {
-					this.$router.push("/email-verification");
-				}
-				if (this.user.account_type === 0) {
-					this.$router.push("/member-type");
-				}
-				
-				if (this.user.account_type === 4) {
-					this.$router.push("/admin");
-				}
-
-				let data_input_status = this.$store.getters["userDataInputStatus"];
-				console.log("data input status", data_input_status);
-				if (data_input_status == 10) {
-					this.$router.push("/member-name/candidate");
-				}
-
-				if (data_input_status == 20) {
-					this.$router.push("/member-name/representative");
-				}
-
-				if (data_input_status == 11) {
-					this.$router.push("/candidate-registration");
-				}
-				if (data_input_status == 21) {
-					this.$router.push("/representative-registration");
-				}
+				// if (this.is_verified == 0) {
+				// 	this.$router.push("/email-verification");
+				// }
+				// if (this.user.account_type === 0) {
+				// 	this.$router.push("/member-type");
+				// }
+				//
+				// if (this.user.account_type === 4) {
+				// 	this.$router.push("/admin");
+				// }
+        //
+				// let data_input_status = this.$store.getters["userDataInputStatus"];
+				// console.log("data input status", data_input_status);
+				// if (data_input_status == 10) {
+				// 	this.$router.push("/member-name/candidate");
+				// }
+        //
+				// if (data_input_status == 20) {
+				// 	this.$router.push("/member-name/representative");
+				// }
+        //
+				// if (data_input_status == 11) {
+				// 	this.$router.push("/candidate-registration");
+				// }
+				// if (data_input_status == 21) {
+				// 	this.$router.push("/representative-registration");
+				// }
 
 				// if (data_input_status == 12) {
 				// 	this.$router.push("/candidate-registration");
