@@ -11,7 +11,7 @@
 					placeholder="Your name on card"
 				/> 
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-3">
 				<label for="billingAddress" class="text-white ml-2">Country </label>
 				<!-- <input
 					type="text"
@@ -31,7 +31,7 @@
 					</option>
 				</select>
 			</div>
-			<div class="form-row">
+			<div class="form-row mt-3">
 				<div class="form-group col-md-6">
 					<label for="postCode" class="text-white ml-2">Post Code </label>
 					<input
@@ -53,9 +53,9 @@
 					/>
 				</div>
 			</div>
-			<label for="" class="text-white ml-2">Card Number</label>
+			<label class="text-white ml-2 mt-3">Card Number</label>
 			<div ref="card" class="form-control rounded-pill"></div>
-			<div class="mt-2 text-center">
+			<div class="mt-4 mb-3 text-right">
 				<button class="btn btn-primary validate-button" @click.prevent="submitPayment">
 					Validate
 				</button>

@@ -256,7 +256,7 @@
         <!-- Rating section  -->
 
         <!-- Personal Information -->
-        <div class="review-edit">
+        <div class="review-edit mt-5">
           <div class="review-edit-label">
             Personal Information
             <img
@@ -536,8 +536,9 @@
             </div>
           </div>
         </div>
+
         <!-- Family Information -->
-        <div class="review-edit">
+        <div class="review-edit mt-5">
           <div class="review-edit-label">
             Family Information
             <img
@@ -614,8 +615,9 @@
             </div>
           </div>
         </div>
-        <!-- UPloaded Image -->
-        <div class="review-edit">
+
+        <!-- Uploaded Image -->
+        <div class="review-edit mt-5">
           <div class="review-edit-label">
             My Uploaded Image
             <img
@@ -649,7 +651,7 @@
               </div>
             </div>
 
-            <div class="col-md-12 col-6">
+            <div class="col-12">
               <div class="card-custom shadow-default">
                 <h4>Image setting</h4>
                 <p class="mb-1">

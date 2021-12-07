@@ -3,19 +3,19 @@
 		<div>
       <Layout>
         <div class="container-fluid mt-5 px-4">
-          <div class="row">
-            <div class="col-12 col-md-6">
+          <div class="d-flex flex-mb-direction">
+            <div class="w-d-50">
               <div class="div-1 shadow-default">
                 <div class="section-heading">
                   <h4 class="fs-30">Team Subscription & Payment</h4>
-                  <p class="text-center p-nmt">
+                  <p class="text-center">
                     We don't want people to be looking for someone for too
                     long. <br />
                     The sooner you find someone suitable we feel we have
                     achieved both your and our goal
                   </p>
                 </div>
-                <div class="card-info-div">
+                <div class="card-info-div mt-4">
                   <h6 class="text-center">Validate Your Card</h6>
                   <div class="card-info-form">
                     <card-input
@@ -26,7 +26,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-md-6 desktop-non-margin">
+            <div class="w-d-50 desktop-non-margin">
               <div class="div-2 shadow-default desktop-pl">
                 <div class="section-heading"
                      v-if="subscriptionName == 'Free 1 day Subscription Plan'"
@@ -420,15 +420,30 @@ export default {
   outline-color: #cfcece;
   font-size: 16px;
 }
+.desktop-pl {
+  border-right: 20px solid $border-primary;
+}
+.w-d-50 {
+  width: 100%;
+}
+.flex-mb-direction {
+  flex-direction: column;
+}
 @media (min-width: 768px) {
   .desktop-non-margin {
-    margin-left: -1.75rem;
+    //margin-left: -1.75rem;
   }
   .desktop-pl {
     padding-left: 1.25rem;
   }
   .agree-button {
     font-size: 22px;
+  }
+  .w-d-50 {
+    width: 50%;
+  }
+  .flex-mb-direction {
+    flex-direction: row;
   }
 }
 
