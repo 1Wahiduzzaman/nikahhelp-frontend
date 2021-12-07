@@ -1,140 +1,112 @@
 <template>
 	<div>
 		<div>
-			<Header :user="user" />
-			<div class="main-content-wrapper"> 
-				<Sidebar />
-				<div class="main-content">
-					<div class="custom-card shadow-default">
-						<div class="row">
-							<div class="col-6">
-								<div class="div-1">
-									<div class="section-heading">
-										<h4>Team Subscription & Payment</h4>
-										<p>
-											We don't want people to be looking for someone for too
-											long. <br />
-											The Sooneer you find someone suitable we feel we have
-											achieved both your and our goal
-										</p>
-									</div>
-									<div class="card-info-div">
-										<h6 class="text-center">Validate Your Card</h6>
-										<div class="card-info-form">
-											<!-- <div class="form-group mt-2">
-												<label for="name" class="ml-2">Name on Card</label>
-												<input type="text" id="name" class="w-100" />
-											</div> -->
-											<!-- <div class="btn btn-success" @click.prevent="submitPayment">Pay</div> -->
-											<card-input
-												:clientSecret="clientSecret"
-												@get-payment-method="setPaymentMethod"
-											></card-input>
-											<!-- <div class="form-group">
-												<label for="securityCode">Security Code</label>
-												<input type="text" id="securityCode" class="w-100" />
-											</div> -->
-											<!-- <div class="form-group">
-												<label for="billingAddress">Billing Address </label>
-												<input type="text" id="billingAddress" class="w-100" />
-											</div> -->
-											<!-- <div class="form-row">
-												<div class="form-group col-md-6">
-													<label for="postCode" class="ml-2">Post Code </label>
-													<input type="text" id="postCode" class="w-100" />
-												</div>
-												<div class="form-group col-md-6">
-													<label for="country" class="ml-2">Country </label>
-													<input type="text" id="country" class="w-100" />
-												</div>
-											</div> -->
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-6">
-								<div class="div-2 mt-2">
-									<div class="section-heading" 
-										v-if="subscriptionName == 'Free 1 day Subscription Plan'"
-									>
-										<h6 class="title-signup">It's free to Signup!</h6>
-										<hr />
-									</div>
-									<div class="description"
-										v-if="subscriptionName == 'Free 1 day Subscription Plan'"
-									>
-										Why do we need a credit card for a free 1 day plan?
-										<br />
-										It helps us prevent spammers from signing up, which means
-										better deliverablity for you and everyone else. You won't be
-										charged unless you choose to take up a monthly plan.
-										<br />
-										<strong>This is a secure 256-bit SSL encrypted from. You're safe. </strong>
-									</div>
-									
-									<div class="cart mt-3">
-										<div class="cart-heading">
-											<h5>Item in Cart</h5>
-											<hr />
-										</div>
-										<div class="cart-description">
-											<p>
-												{{ subscriptionName }}
-												<span style="float: right"
-													>£ {{ subscriptionAmount }}</span
-												>
-											</p>
-											<!--
-											<p>
-												Discount 0%
-												<span style="float: right">£ 0.0</span>
-											</p>  -->
-											<hr />
-											<p>
+      <Layout>
+        <div class="container-fluid mt-5 px-4">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="div-1 shadow-default">
+                <div class="section-heading">
+                  <h4 class="fs-30">Team Subscription & Payment</h4>
+                  <p class="text-center p-nmt">
+                    We don't want people to be looking for someone for too
+                    long. <br />
+                    The sooner you find someone suitable we feel we have
+                    achieved both your and our goal
+                  </p>
+                </div>
+                <div class="card-info-div">
+                  <h6 class="text-center">Validate Your Card</h6>
+                  <div class="card-info-form">
+                    <card-input
+                        :clientSecret="clientSecret"
+                        @get-payment-method="setPaymentMethod"
+                    ></card-input>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 desktop-non-margin">
+              <div class="div-2 shadow-default desktop-pl">
+                <div class="section-heading"
+                     v-if="subscriptionName == 'Free 1 day Subscription Plan'"
+                >
+                  <h6 class="title-signup">It's free to Signup!</h6>
+                  <hr />
+                </div>
+                <div class="description fs-14"
+                     v-if="subscriptionName == 'Free 1 day Subscription Plan'"
+                >
+                  Why do we need a credit card for a free 1 day plan?
+                  <br />
+                  It helps us prevent spammers from signing up, which means
+                  better deliverablity for you and everyone else. You won't be
+                  charged unless you choose to take up a monthly plan.
+                  <br />
+                  <h6 class="mt-4">This is a secure 256-bit SSL encrypted from. You're safe. </h6>
+                </div>
+
+                <div class="cart mt-3 px-4">
+                  <div class="cart-heading">
+                    <h5 class="fs-18">Item in Cart</h5>
+                    <hr />
+                  </div>
+                  <div class="cart-description">
+                    <div class="d-flex justify-content-between fs-18">
+                      <h6 class="text-white">{{ subscriptionName }}</h6>
+                      <h6 class="text-white">£ {{ subscriptionAmount }}</h6>
+                    </div>
+                    <!--
+                    <p>
+                      Discount 0%
+                      <span style="float: right">£ 0.0</span>
+                    </p>  -->
+                    <hr />
+                    <p class="fs-18">
 												<span style="float: right">
 													Total Pay
 													<span class="ml-5">£ {{ subscriptionAmount }} </span>
 												</span>
-											</p>
-											<br />
-											<br />
-											<p class="details">Details:</p>
-											<br />
-											<p>
-												{{ subscriptionName }} Team - <b>{{ teamName }}</b>
-											</p>
-										</div>
-									</div>
-									<div class="agree-terms">
-										<p style="font-size: 13px; margin-top: 20px;">
-											By clicking "Agree and Subscribe", you agree:
-											<b
-												>You will be charged UK £0.00 daily and at the end of
-												your plan, your subscription will automatically renew
-												monthly until cancel(price subject to change). Cancel
-												anytime via Manage team > Team Setting > Subscription
-												details or Customer Support.
-											</b>
-											You also agree to the Terms of Use and the Subscription
-											and Cancellation Terms.
-										</p>
-										<div class="agree-button text-center">
-											<spinner v-if="isLoading"></spinner>
-											<button
-												v-if="!isLoading && agree"
-												class="btn btn-primary agree-button"
-												@click="subscribe"
-											>
-												Agree and Subscribe
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+                    </p>
+                    <br />
+                    <br />
+                    <p class="details fs-18">Details:</p>
+                    <br />
+                    <div class="d-flex justify-content-between fs-18">
+                      <h6 class="text-white">{{ subscriptionName }} Team -<b> {{ teamName }}</b> </h6>
+                      <h6 class="text-white"></h6>
+                    </div>
+                  </div>
+                </div>
+                <div class="agree-terms mt-4">
+                  <p class="mt-1 fs-16">
+                    By clicking "Agree and Subscribe", you agree:
+                    <b
+                    >You will be charged UK £0.00 daily and at the end of
+                      your plan, your subscription will automatically renew
+                      monthly until cancel(price subject to change). Cancel
+                      anytime via Manage team > Team Setting > Subscription
+                      details or Customer Support.
+                    </b>
+                    You also agree to the Terms of Use and the Subscription
+                    and Cancellation Terms.
+                  </p>
+                  <div class="text-center">
+                    <spinner v-if="isLoading"></spinner>
+                    <button
+                        v-if="!isLoading && agree"
+                        class="btn btn-primary agree-button br-30"
+                        @click="subscribe"
+                    >
+                      Agree and Subscribe
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Layout>
 		</div>
 		<Footer />
 	</div>
@@ -223,33 +195,33 @@ export default {
 				this.candidateInfo = this.$store.getters["candidateInfo"];
 				this.representativeInfo = this.$store.getters["representativeInfo"];
 				this.is_verified = this.user.is_verified;
-				if (this.is_verified == 0) {
-					this.$router.push("/email-verification");
-				}
-				if (this.user.account_type === 0) {
-					this.$router.push("/member-type");
-				}
-				
-				if (this.user.account_type === 4) {
-					this.$router.push("/admin");
-				}
-
-				let data_input_status = this.$store.getters["userDataInputStatus"];
-				console.log("data input status", data_input_status);
-				if (data_input_status == 10) {
-					this.$router.push("/member-name/candidate");
-				}
-
-				if (data_input_status == 20) {
-					this.$router.push("/member-name/representative");
-				}
-
-				if (data_input_status == 11) {
-					this.$router.push("/candidate-registration");
-				}
-				if (data_input_status == 21) {
-					this.$router.push("/representative-registration");
-				}
+				// if (this.is_verified == 0) {
+				// 	this.$router.push("/email-verification");
+				// }
+				// if (this.user.account_type === 0) {
+				// 	this.$router.push("/member-type");
+				// }
+				//
+				// if (this.user.account_type === 4) {
+				// 	this.$router.push("/admin");
+				// }
+        //
+				// let data_input_status = this.$store.getters["userDataInputStatus"];
+				// console.log("data input status", data_input_status);
+				// if (data_input_status == 10) {
+				// 	this.$router.push("/member-name/candidate");
+				// }
+        //
+				// if (data_input_status == 20) {
+				// 	this.$router.push("/member-name/representative");
+				// }
+        //
+				// if (data_input_status == 11) {
+				// 	this.$router.push("/candidate-registration");
+				// }
+				// if (data_input_status == 21) {
+				// 	this.$router.push("/representative-registration");
+				// }
 
 				// if (data_input_status == 12) {
 				// 	this.$router.push("/candidate-registration");
@@ -290,6 +262,176 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "@/styles/base/_variables.scss";
+.div-1 {
+  background-image: linear-gradient(
+          to right top,
+          #522e8e,
+          #602d8d,
+          #6e2b8c,
+          #7a2a8a,
+          #852888,
+          #912787,
+          #9d2585,
+          #a82483,
+          #b72181,
+          #c51f7e,
+          #d31f7b,
+          #e02076
+  );
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding: 20px;
+  .section-heading {
+    h4 {
+      color: white;
+      text-align: center;
+      font-weight: 800;
+    }
+    p {
+      text-align: justify;
+      font-size: 14px;
+      color: white;
+    }
+  }
+  .card-info-div {
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+    height: 77%;
+    .card-info-form {
+      padding: 10px;
+      background-image: linear-gradient(
+              to right top,
+              #522e8e,
+              #602d8d,
+              #6e2b8c,
+              #7a2a8a,
+              #852888,
+              #912787,
+              #9d2585,
+              #a82483,
+              #b72181,
+              #c51f7e,
+              #d31f7b,
+              #e02076
+      );
+      height: 93%;
+      border-radius: 5px;
+    }
+    .form-group {
+      line-height: 0.5;
+      label {
+        color: white;
+      }
+      input {
+        padding: 5px;
+      }
+      input[type="text"]:focus {
+        border-radius: 5px;
+      }
+    }
+  }
+}
+.div-2 {
+  padding: 5px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  .section-heading {
+    h6 {
+      font-weight: 400;
+    }
+    hr {
+      background-color: #222;
+    }
+  }
+  .description {
+    font-size: 12px;
+    line-height: 1.1;
+    margin-right: 20px;
+    text-align: justify;
+  }
+  .cart {
+    margin-right: 20px;
+    background-image: linear-gradient(
+            to right top,
+            #522e8e,
+            #602d8d,
+            #6e2b8c,
+            #7a2a8a,
+            #852888,
+            #912787,
+            #9d2585,
+            #a82483,
+            #b72181,
+            #c51f7e,
+            #d31f7b,
+            #e02076
+    );
+    border-radius: 5px;
+    padding: 10px;
+    .cart-heading {
+      line-height: 0.2;
+      h5 {
+        font-size: 30px;
+        color: white;
+        font-weight: 500;
+      }
+      hr {
+        background-color: white;
+      }
+    }
+    .cart-description {
+      padding-top: 16px;
+      line-height: 0.5;
+      color: white;
+      p {
+        font-size: 14px;
+      }
+      hr {
+        background-color: white;
+      }
+    }
+    .agree-terms {
+      p {
+        font-size: 12px;
+      }
+    }
+  }
+  .agree-terms {
+    margin-top: 10px;
+    margin-right: 20px;
+    text-align: justify;
+    p {
+      line-height: 1.1;
+      font-size: 12px;
+    }
+  }
+}
+.p-nmt {
+  margin-top: -12px;
+}
+.br-30 {
+  border-radius: 30px;
+}
+.agree-button {
+  border: 2px solid $color-white;
+  outline-style: solid;
+  outline-color: #cfcece;
+  font-size: 16px;
+}
+@media (min-width: 768px) {
+  .desktop-non-margin {
+    margin-left: -1.75rem;
+  }
+  .desktop-pl {
+    padding-left: 1.25rem;
+  }
+  .agree-button {
+    font-size: 22px;
+  }
+}
+
 .main-content-wrapper {
 	.main-content {
 		width: 80%;
@@ -371,7 +513,6 @@ export default {
 					}
 				}
 				.div-2 {
-					height: 100%;
 					padding: 5px;
 					border-top-right-radius: 5px;
 					border-top-left-radius: 5px;
@@ -463,7 +604,6 @@ export default {
 	margin-top: 10px;
 	font-weight: bold;
 	margin-bottom: -10px;
-	color: #e83e8c;
 	font-style: italic;
 }
 

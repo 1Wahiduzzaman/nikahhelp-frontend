@@ -1,5 +1,5 @@
 <template>
-  <div id="familyInfoAccordian" class="family-info">
+  <div id="familyInfoAccordian" class="family-info px-3">
     <div class="section-heading heading-text">
       <h5>Family Information</h5>
       <p>Your Family's Information</p>
@@ -22,516 +22,311 @@
           :rules="rules"
           class="form-ma"
         >
-          <a-row>
-            <!-- Father Name  -->
-            <!-- <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="12">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="familyInformation.father_name"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Post Code
-                  </div>
-                 
-                </a-col>
-                <a-col :span="12">
-                  <a-form-model-item
-                    ref="per_permanent_post_code"
-                    prop="per_permanent_post_code"
-                  >
-                    <a-input
-                      @blur="onValueChange"
-                      id="familyInformation.father_name"
-                      placeholder="Father Name"
-                      v-model="familyInformation.father_name"
-                    />
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapseFamilyInformationFatherName"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+          <!-- Father's Profession -->
+          <div class="row py-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="familyInformation.father_profession"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />What is your father's Profession?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item
+                  ref="father_profession"
+                  prop="father_profession"
+              >
+                <v-select
+                    :clearable="false"
+                    class="style-chooser"
+                    @input="onValueChange"
+                    id="father_profession"
+                    :reduce="(option) => option.name"
+                    placeholder="Please select Father's Profession"
+                    v-model="familyInformation.father_profession"
+                    label="name"
+                    :options="candidateDetails.occupations"
+                ><template #open-indicator>
+                  <a-icon type="down" /> </template
+                ></v-select>
+              </a-form-model-item>
+            </div>
+            <div class="col-12 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapseCandidateFatherProfession"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[6].first"
-                        @click="arr[6].first = !arr[6].first"
+                          v-if="arr[5].first"
+                          @click="arr[5].first = !arr[5].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[6].first = !arr[6].first">
+                  <span v-else @click="arr[5].first = !arr[5].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#familyInfoAccordian"
-                    class="collapse"
-                    id="collapseFamilyInformationFatherName"
-                  >
-                    <div class="card card-body bubble">
-                      Post Code for permanent address
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col> -->
-            <!-- Father's Profession -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="12">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="familyInformation.father_profession"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />What is your father's Profession?
-                  </div>
-                </a-col>
-                <a-col :span="12">
-                  <a-form-model-item
-                    ref="father_profession"
-                    prop="father_profession"
-                  >
-                    <v-select
-                      :clearable="false"
-                      class="style-chooser"
-                      @input="onValueChange"
-                      id="father_profession"
-                       :reduce="(option) => option.name"
-                      placeholder="Please select Fathet's Profession"
-                      v-model="familyInformation.father_profession"
-                      label="name"
-                      :options="candidateDetails.occupations"
-                      ><template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
-                    <!-- <a-select
-                      @change="onValueChange"
-                      id="father_profession"
-                      :showSearch="true"
-                      option-filter-prop="children"
-                      :filter-option="filterOption"
-                      :showArrow="true"
-                      placeholder="Please select Fathet's Profession"
-                      v-model="familyInformation.father_profession"
-                      class="select-ma"
-                    >
-                      <a-select-option :value="0" disabled
-                        >Select your father's profession</a-select-option
-                      >
-                      <a-select-option
-                        :value="value"
-                        :key="key"
-                        style="width: 100px"
-                        v-for="(value, key) in candidateDetails.occupations"
-                      >
-                        {{ value }}
-                      </a-select-option>
-                    </a-select> -->
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapseCandidateFatherProfession"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
-                      <span
-                        v-if="arr[5].first"
-                        @click="arr[5].first = !arr[5].first"
-                      >
-                        Need Help?
-                      </span>
-                      <span v-else @click="arr[5].first = !arr[5].first">
-                        Hide Help?
-                      </span>
-                    </a>
-                  </p>
-                  <div
-                    class="collapse"
-                    data-parent="#familyInfoAccordian"
-                    id="collapseCandidateFatherProfession"
-                  >
-                    <div class="card card-body bubble">
-                      Select your father's profession
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
-            <!-- Father Name  -->
-            <!-- <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="12">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="familyInformation.mother_name"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Post Code
-                  </div>
-                 
-                </a-col>
-                <a-col :span="12">
-                  <a-form-model-item
-                    ref="per_permanent_post_code"
-                    prop="per_permanent_post_code"
-                  >
-                    <a-input
-                      @blur="onValueChange"
-                      id="familyInformation.mother_name"
-                      placeholder="Father Name"
-                      v-model="familyInformation.mother_name"
-                    />
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapseFamilyInformationMotherName"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
-                      <span
-                        v-if="arr[4].first"
-                        @click="arr[4].first = !arr[4].first"
-                      >
-                        Need Help?
-                      </span>
-                      <span v-else @click="arr[4].first = !arr[4].first">
-                        Hide Help?
-                      </span>
-                    </a>
-                  </p>
-                  <div
-                    class="collapse"
-                    data-parent="#familyInfoAccordian"
-                    id="collapseFamilyInformationMotherName"
-                  >
-                    <div class="card card-body bubble">
-                      Post Code for permanent address
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col> -->
-            <!-- Mother's Profession -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="12">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="familyInformation.mother_profession"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />What is your mother's Profession?
-                  </div>
-                </a-col>
-                <a-col :span="12">
-                  <a-form-model-item
-                    ref="mother_profession"
-                    prop="mother_profession"
-                  >
-                    <v-select
-                      :clearable="false"
-                      class="style-chooser"
-                      @input="onValueChange"
-                      id="mother_profession"
-                      placeholder="Please select Fathet's Profession"
-                      v-model="familyInformation.mother_profession"
-                      label="name"
-                       :reduce="(option) => option.name"
-                      :options="candidateDetails.occupations"
-                      ><template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
-                    <!-- <a-select
-                      @change="onValueChange"
-                      id="mother_profession"
-                      :showSearch="true"
-                      option-filter-prop="children"
-                      :filter-option="filterOption"
-                      :showArrow="true"
-                      placeholder="Please select Fathet's Profession"
-                      v-model="familyInformation.mother_profession"
-                      class="select-ma"
-                    >
-                      <a-select-option :value="0" disabled
-                        >Select your mother's profession</a-select-option
-                      >
-                      <a-select-option
-                        :value="value"
-                        :key="key"
-                        style="width: 100px"
-                        v-for="(value, key) in candidateDetails.occupations"
-                      >
-                        {{ value }}
-                      </a-select-option>
-                    </a-select> -->
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapseCandidateMotherProfession"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
-                      <span
-                        v-if="arr[3].first"
-                        @click="arr[3].first = !arr[3].first"
-                      >
-                        Need Help?
-                      </span>
-                      <span v-else @click="arr[3].first = !arr[3].first">
-                        Hide Help?
-                      </span>
-                    </a>
-                  </p>
-                  <div
-                    class="collapse"
-                    data-parent="#familyInfoAccordian"
-                    id="collapseCandidateMotherProfession"
-                  >
-                    <div class="card card-body bubble">
-                      Select your mothers' profession
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  class="collapse"
+                  data-parent="#familyInfoAccordian"
+                  id="collapseCandidateFatherProfession"
+              >
+                <div class="card card-body bubble">
+                  Select your father's profession
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Siblings -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="12">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="familyInformation.siblings_desc"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Do you have any siblings?
-                  </div>
-                  <!-- <need-help title="Siblings information"></need-help> -->
-                </a-col>
-                <a-col :span="12">
-                  <a-form-model-item ref="siblings_desc" prop="siblings_desc">
-                    <a-textarea
-                      @blur="onValueChange"
-                      id="siblings_desc"
-                      placeholder="2 Brothers, 2 Sisters"
-                      :rows="3"
-                      v-model="familyInformation.siblings_desc"
-                    ></a-textarea>
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapseSiblingsInfomation"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+          <!-- Mother's Profession -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="familyInformation.mother_profession"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />What is your mother's Profession?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item
+                  ref="mother_profession"
+                  prop="mother_profession"
+              >
+                <v-select
+                    :clearable="false"
+                    class="style-chooser"
+                    @input="onValueChange"
+                    id="mother_profession"
+                    placeholder="Please select Mother's Profession"
+                    v-model="familyInformation.mother_profession"
+                    label="name"
+                    :reduce="(option) => option.name"
+                    :options="candidateDetails.occupations"
+                ><template #open-indicator>
+                  <a-icon type="down" /> </template
+                ></v-select>
+              </a-form-model-item>
+            </div>
+            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapseCandidateMotherProfession"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[2].first"
-                        @click="arr[2].first = !arr[2].first"
+                          v-if="arr[3].first"
+                          @click="arr[3].first = !arr[3].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[2].first = !arr[2].first">
+                  <span v-else @click="arr[3].first = !arr[3].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    class="collapse"
-                    data-parent="#familyInfoAccordian"
-                    id="collapseSiblingsInfomation"
-                  >
-                    <div class="card card-body bubble">
-                      Siblings information
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  class="collapse"
+                  data-parent="#familyInfoAccordian"
+                  id="collapseCandidateMotherProfession"
+              >
+                <div class="card card-body bubble">
+                  Select your mothers' profession
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- About Family -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="12">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="familyInformation.family_info"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Would you like to share any other information about your
-                    family?
-                  </div>
-                  <!-- <need-help
-										title="Any other family info you would like to share"
-									></need-help> -->
-                </a-col>
-                <a-col :span="12">
-                  <a-form-model-item ref="family_info" prop="family_info">
-                    <a-textarea
-                      @blur="onValueChange"
-                      id="family_info"
-                      placeholder="Would you like to share any other information about your family"
-                      :rows="3"
-                      v-model="familyInformation.family_info"
-                    ></a-textarea>
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapseAnyotherFamilyLike"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+          <!-- Siblings -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="familyInformation.siblings_desc"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Do you have any siblings?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item ref="siblings_desc" prop="siblings_desc">
+                <a-textarea
+                    @blur="onValueChange"
+                    id="siblings_desc"
+                    placeholder="2 Brothers, 2 Sisters"
+                    :rows="3"
+                    v-model="familyInformation.siblings_desc"
+                ></a-textarea>
+              </a-form-model-item>
+            </div>
+            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapseSiblingsInfomation"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[1].first"
-                        @click="arr[1].first = !arr[1].first"
+                          v-if="arr[2].first"
+                          @click="arr[2].first = !arr[2].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[1].first = !arr[1].first">
+                  <span v-else @click="arr[2].first = !arr[2].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    class="collapse"
-                    data-parent="#familyInfoAccordian"
-                    id="collapseAnyotherFamilyLike"
-                  >
-                    <div class="card card-body bubble">
-                      Any other family info you would like to share
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
+                </a>
+              </p>
+              <div
+                  class="collapse"
+                  data-parent="#familyInfoAccordian"
+                  id="collapseSiblingsInfomation"
+              >
+                <div class="card card-body bubble">
+                  Siblings information
+                </div>
+              </div>
+            </div>
+          </div>
 
-            <!-- Country Of Origin -->
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="12">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="familyInformation.country_of_origin"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />Is your ancestral home same as your country of birth?
-                  </div>
-                  <!-- <need-help title="Select your country of birth"></need-help> -->
-                </a-col>
-                <a-col :span="12">
-                  <a-form-model-item
-                    ref="country_of_origin"
-                    prop="country_of_origin"
-                  >
-                    <v-select
-                     :calculate-position="withPopper"
-                      append-to-body
-                      :clearable="false"
-                      class="style-chooser"
-                      @input="onValueChange"
-                      id="country_of_origin"
-                      :reduce="(option) => option.name"
-                      placeholder="Please select country of origin"
-                      v-model="familyInformation.country_of_origin"
-                      label="name"
-                      :options="candidateDetails.countries"
-                      ><template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
-                    <!-- <a-select
-                      @change="onValueChange"
-                      id="country_of_origin"
-                      :showSearch="true"
-                      option-filter-prop="children"
-                      :filter-option="filterOption"
-                      :showArrow="true"
-                      ref="select"
-                      style="width: 150px"
-                      placeholder="Please select country of origin"
-                      v-model="familyInformation.country_of_origin"
-                      class="select-ma w-100"
-                    >
-                      <a-select-option disabled :value="0">
-                        Select your country of birth</a-select-option
-                      >
-                      <a-select-option
-                        show-search
-                        :value="item.name"
-                        v-bind:key="index"
-                        style="width: 100px"
-                        v-for="(item, index) in candidateDetails.countries"
-                      >
-                        {{ item.name }}
-                      </a-select-option>
-                    </a-select> -->
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#collapseSelectCountryOfBirth"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+          <!-- About Family -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="familyInformation.family_info"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Would you like to share any other information about your
+                family?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item ref="family_info" prop="family_info">
+                <a-textarea
+                    @blur="onValueChange"
+                    id="family_info"
+                    placeholder="Would you like to share any other information about your family"
+                    :rows="3"
+                    v-model="familyInformation.family_info"
+                ></a-textarea>
+              </a-form-model-item>
+            </div>
+            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapseAnyotherFamilyLike"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[0].first"
-                        @click="arr[0].first = !arr[0].first"
+                          v-if="arr[1].first"
+                          @click="arr[1].first = !arr[1].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[0].first = !arr[0].first">
+                  <span v-else @click="arr[1].first = !arr[1].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    class="collapse"
-                    data-parent="#familyInfoAccordian"
-                    id="collapseSelectCountryOfBirth"
-                  >
-                    <div class="card card-body bubble">
-                      Select your country of birth
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
-          </a-row>
+                </a>
+              </p>
+              <div
+                  class="collapse"
+                  data-parent="#familyInfoAccordian"
+                  id="collapseAnyotherFamilyLike"
+              >
+                <div class="card card-body bubble">
+                  Any other family info you would like to share
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Country Of Origin -->
+          <div class="row pt-3 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="familyInformation.country_of_origin"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />Is your ancestral home same as your country of birth?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item
+                  ref="country_of_origin"
+                  prop="country_of_origin"
+              >
+                <v-select
+                    :calculate-position="withPopper"
+                    append-to-body
+                    :clearable="false"
+                    class="style-chooser"
+                    @input="onValueChange"
+                    id="country_of_origin"
+                    :reduce="(option) => option.name"
+                    placeholder="Please select country of origin"
+                    v-model="familyInformation.country_of_origin"
+                    label="name"
+                    :options="candidateDetails.countries"
+                ><template #open-indicator>
+                  <a-icon type="down" /> </template
+                ></v-select>
+              </a-form-model-item>
+            </div>
+            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapseSelectCountryOfBirth"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
+                      <span
+                          v-if="arr[0].first"
+                          @click="arr[0].first = !arr[0].first"
+                      >
+                        Need Help?
+                      </span>
+                  <span v-else @click="arr[0].first = !arr[0].first">
+                        Hide Help?
+                      </span>
+                </a>
+              </p>
+              <div
+                  class="collapse"
+                  data-parent="#familyInfoAccordian"
+                  id="collapseSelectCountryOfBirth"
+              >
+                <div class="card card-body bubble">
+                  Select your country of birth
+                </div>
+              </div>
+            </div>
+          </div>
+
           <a-button
             shape="round"
             type="primary"
@@ -682,6 +477,34 @@ export default {
     p {
       font-size: 14px;
     }
+  }
+}
+
+.mobile-margin {
+  margin-top: 0.5rem;
+}
+.mobile-center {
+  text-align: center;
+}
+.mobile-switch {
+  margin-top: 12px;
+}
+@media (min-width: 768px) {
+  .form-right-content {
+    float: right;
+    padding-right: 0;
+  }
+  .mobile-margin {
+    margin-top: 0;
+  }
+  .non-padding-mobile-margin {
+    margin-top: 0;
+  }
+  .mobile-center {
+    text-align: left;
+  }
+  .mobile-switch {
+    margin-top: 0;
   }
 }
 </style>
