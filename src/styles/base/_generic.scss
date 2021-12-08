@@ -259,18 +259,18 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-       
+
     }
     .style-chooser .vs__selected span {
-     
+
         width: 100%;
         height: 25px;
         border-radius: 20px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-       
-       
+
+
     }
     .style-chooser .vs__clear,
     .style-chooser .vs__open-indicator {
@@ -369,18 +369,18 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-       
+
     }
     .style-chooser .vs__selected span {
-     
+
         width: 100%;
         height: 25px;
         border-radius: 20px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-       
-       
+
+
     }
     .style-chooser .vs__clear,
     .style-chooser .vs__open-indicator {
@@ -535,6 +535,11 @@ div[data-unique="second_one"] >  .ant-select-selection{
 .ant-layout-sider-collapsed {
     opacity: 0;
 }
+.review {
+    .ant-rate-star:not(:last-child) {
+        margin-right: 2px;
+    }
+}
 @media (min-width: 576px) {
     .ant-layout-sider {
         z-index: 9;
@@ -542,5 +547,10 @@ div[data-unique="second_one"] >  .ant-select-selection{
     }
     .ant-layout-sider-collapsed {
         opacity: 1;
+    }
+}
+@media (min-width: 992px) {
+    .ant-rate-star:not(:last-child) {
+        margin-right: 8px !important;
     }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="review-publish">
+  <div class="review-publish px-2">
     <!-- <pre>{{ candidateData }}</pre> -->
     <fieldset v-if="candidateDetails && candidateData.personal" class="review">
       <h4 class="fw-700">Review and Publish Profile</h4>
@@ -433,19 +433,19 @@
                 </p>
               </div>
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3 mobile-margin-top">
               <div class="card-custom shadow-default">
                 <div class="badge-info">
                   <span class="badge-info-label"
                     ><span class="inner">Marital Status</span></span
                   >
-                  <span>{{ candidateData.personal.per_marital_status }}</span>
+                  <span class="value-text">{{ candidateData.personal.per_marital_status }}</span>
                 </div>
                 <div class="badge-info">
                   <span class="badge-info-label"
                     ><span class="inner">Currently living with</span></span
                   >
-                  <span>{{
+                  <span class="value-text">{{
                     candidateData.personal.per_currently_living_with
                   }}</span>
                 </div>
@@ -453,19 +453,20 @@
                   <span class="badge-info-label"
                     ><span class="inner">Willing to relocate</span></span
                   >
-                  <span
+                  <span class="value-text"
                     v-if="candidateData.personal.per_willing_to_relocate == 1"
                   >
                     Yes
                   </span>
                   <span
+                      class="value-text"
                     v-else-if="
                       candidateData.personal.per_willing_to_relocate == 2
                     "
                   >
                     No
                   </span>
-                  <span
+                  <span class="value-text"
                     v-if="candidateData.personal.per_willing_to_relocate == 3"
                   >
                     Let's Discuss
@@ -475,10 +476,10 @@
                   <span class="badge-info-label"
                     ><span class="inner">Smoker</span></span
                   >
-                  <span v-if="candidateData.personal.per_smoker == true">
+                  <span class="value-text" v-if="candidateData.personal.per_smoker == true">
                     Yes
                   </span>
-                  <span v-if="candidateData.personal.per_smoker == false">
+                  <span class="value-text" v-if="candidateData.personal.per_smoker == false">
                     No
                   </span>
                 </div>
@@ -486,13 +487,13 @@
                   <span class="badge-info-label"
                     ><span class="inner">Language</span></span
                   >
-                  <span>{{ candidateData.personal.per_language_speak }}</span>
+                  <span class="value-text">{{ candidateData.personal.per_language_speak }}</span>
                 </div>
                 <div class="badge-info">
                   <span class="badge-info-label"
                     ><span class="inner">My Hobbies & Interests</span></span
                   >
-                  <span>{{
+                  <span class="value-text">{{
                     candidateData.personal.per_hobbies_interests
                   }}</span>
                 </div>
@@ -500,7 +501,7 @@
                   <span class="badge-info-label"
                     ><span class="inner">Food & Cuisine I like</span></span
                   >
-                  <span>{{
+                  <span class="value-text">{{
                     candidateData.personal.per_food_cuisine_like
                   }}</span>
                 </div>
@@ -508,13 +509,13 @@
                   <span class="badge-info-label"
                     ><span class="inner">Things I Enjoy</span>
                   </span>
-                  <span>{{ candidateData.personal.per_things_enjoy }}</span>
+                  <span class="value-text">{{ candidateData.personal.per_things_enjoy }}</span>
                 </div>
                 <div class="badge-info">
                   <span class="badge-info-label">
                     <span class="inner">I am Thankfull for</span>
                   </span>
-                  <span>{{ candidateData.personal.per_thankfull_for }}</span>
+                  <span class="value-text">{{ candidateData.personal.per_thankfull_for }}</span>
                 </div>
               </div>
             </div>
@@ -526,7 +527,7 @@
 								</p>
 							</div>
 						</div> -->
-            <div class="col-md-12 mb-3">
+            <div class="col-md-12 mb-3 mt-3">
               <div class="card-custom shadow-default">
                 <h4>Additional Information</h4>
                 <p class="mb-0">
@@ -654,52 +655,52 @@
             <div class="col-12">
               <div class="card-custom shadow-default">
                 <h4>Image setting</h4>
-                <p class="mb-1">
+                <div class="d-flex">
                   <a-icon
-                    v-if="candidateData.personal.anybody_can_see == 0"
-                    class="color-danger mt-2 mr-2 fs-16 fw-500"
-                    type="stop"
+                      v-if="candidateData.personal.anybody_can_see == 0"
+                      class="color-danger mt-2 mr-2 fs-16 fw-500"
+                      type="stop"
                   />
                   <a-icon
-                    v-else
-                    class="color-success mt-2 mr-2 fs-16 fw-500"
-                    type="check"
+                      v-else
+                      class="color-success mt-2 mr-2 fs-16 fw-500"
+                      type="check"
                   />
                   <span class="fs-16"
-                    >I would like to share my all picture with anyone on this
+                  >I would like to share my all picture with anyone on this
                     plarform</span
                   >
-                </p>
-                <p class="mb-1">
+                </div>
+                <div class="d-flex">
                   <a-icon
-                    v-if="candidateData.personal.only_team_can_see == 0"
-                    class="color-danger mt-2 mr-2 fs-16 fw-500"
-                    type="stop"
+                      v-if="candidateData.personal.only_team_can_see == 0"
+                      class="color-danger mt-2 mr-2 fs-16 fw-500"
+                      type="stop"
                   />
                   <a-icon
-                    v-else
-                    class="color-success mt-2 mr-2 fs-16 fw-500"
-                    type="check"
+                      v-else
+                      class="color-success mt-2 mr-2 fs-16 fw-500"
+                      type="check"
                   />
                   <span class="fs-16"
-                    >I would like to share all my images with my team</span
+                  >I would like to share all my images with my team</span
                   >
-                </p>
-                <p class="mb-1">
+                </div>
+                <div class="d-flex">
                   <a-icon
-                    v-if="candidateData.personal.team_connection_can_see == 0"
-                    class="color-danger mt-2 mr-2 fs-16 fw-500"
-                    type="stop"
+                      v-if="candidateData.personal.team_connection_can_see == 0"
+                      class="color-danger mt-2 mr-2 fs-16 fw-500"
+                      type="stop"
                   />
                   <a-icon
-                    v-else
-                    class="color-success mt-2 mr-2 fs-16 fw-500"
-                    type="check"
+                      v-else
+                      class="color-success mt-2 mr-2 fs-16 fw-500"
+                      type="check"
                   />
-                  <span>
+                  <span class="fs-16">
                     I would like to share all my images with connected team(s)
                   </span>
-                </p>
+                </div>
               </div>
             </div>
           </div>
@@ -775,7 +776,7 @@ export default {
     }
     ul {
       .label-text {
-        opacity: 0.8;
+        //opacity: 0.8;
       }
     }
     .profile-img {
@@ -818,5 +819,28 @@ export default {
 
 .card-height-design {
   height: 360px;
+}
+
+.mobile-margin-top {
+  margin-top: 54px;
+}
+.label-text {
+  //font-size: 14px;
+  font-weight: 600;
+}
+.flex-50 > .ml-3 {
+  //font-size: 14px;
+  font-weight: bold;
+}
+.inner {
+  font-weight: 600;
+}
+.value-text {
+  font-weight: bold;
+}
+@media (min-width: 992px) {
+  .mobile-margin-top {
+    margin-top: 0;
+  }
 }
 </style>
