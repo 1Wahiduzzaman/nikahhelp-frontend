@@ -540,6 +540,9 @@ div[data-unique="second_one"] >  .ant-select-selection{
         margin-right: 2px;
     }
 }
+.vs__dropdown-menu, .vs__selected-options, .ant-input, .ant-select, .ant-select-selection {
+    font-weight: 600;
+}
 @media (min-width: 576px) {
     .ant-layout-sider {
         z-index: 9;

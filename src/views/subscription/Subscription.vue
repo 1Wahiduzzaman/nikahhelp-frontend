@@ -19,11 +19,11 @@
 				<!-- Subscription details -->
 				<div class="subscription-details container-fluid mt-4">
 					<div class="row">
-						<div class="col-12 col-md-3" :class="{'mobile-block': activeStep !== 1}">
+						<div class="col-12 col-md-4 col-xl-3" :class="{'mobile-block': activeStep !== 1}">
 							<!-- Card 1 -->
 							<div
 								class="custom-card card-1 shadow-default background-design-cardfooter br-10 position-relative"
-								style="height: 400px"
+								style="height: 450px"
 							>
 								<div class="div-1 background-design text-center px-2 pb-2 br-top-10">
 									<h3 class="text-white">Choose Plan</h3>
@@ -80,11 +80,11 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-12 col-md-6 position-relative" :class="{'mobile-block': activeStep !== 2}">
+						<div class="col-12 col-md-4 col-xl-6 position-relative" :class="{'mobile-block': activeStep !== 2}">
 							<!-- Card 2 -->
 							<div
 								class="custom-card card-2 shadow-default background-design-middle"
-								style="height: 400px"
+								style="height: 450px"
 							>
 								<div class="div-1 text-center">
 									<img
@@ -116,11 +116,11 @@
                 </div>
               </div>
 						</div>
-						<div class="col-12 col-md-3" :class="{'mobile-block': activeStep !== 3}">
+						<div class="col-12 col-md-4 col-xl-3" :class="{'mobile-block': activeStep !== 3}">
 							<!-- Card 3 -->
 							<div
 								class="custom-card card-3 shadow-default background-design-rightcard"
-								style="height: 352px"
+								style="height: 406px"
 							>
 								<h1 class="px-4 text-white pt-2 fs-30 text-center">Select Team</h1>
 
@@ -189,7 +189,7 @@
 							</div>
 							<button
 								@click="handleContinue"
-								class="btn bg-success btn-payment mt-2 w-100 text-white d-flex align-items-center justify-content-center br-10"
+								class="btn bg-success btn-payment w-100 text-white d-flex align-items-center justify-content-center br-10"
 							>
 								Continue to payment
                 <a-icon type="arrow-right" class="ml-2 mt-1" />
@@ -656,6 +656,9 @@ export default {
   right: 30px;
   z-index: 9;
 }
+.btn-payment {
+  margin-top: 30px;
+}
 @media (min-width: 768px) {
  .subscription-details {
    padding: 0 2rem;
@@ -671,6 +674,12 @@ export default {
   }
   .buttons-position {
     display: none;
+  }
+}
+
+@media (min-width: 992px) {
+  .btn-payment {
+    margin-top: 0.5rem;
   }
 }
 </style>
