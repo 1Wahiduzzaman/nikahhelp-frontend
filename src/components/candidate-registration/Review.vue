@@ -2,8 +2,8 @@
   <div class="review-publish px-2">
     <!-- <pre>{{ candidateData }}</pre> -->
     <fieldset v-if="candidateDetails && candidateData.personal" class="review">
-      <h4 class="fw-700">Review and Publish Profile</h4>
-      <p class="mb-5">
+      <h4 class="fw-700 px-2">Review and Publish Profile</h4>
+      <p class="mb-5 px-2">
         If anything needs to be editted, then go back to previous page by
         pressing previous button
       </p>
@@ -267,7 +267,7 @@
           </div>
           <div class="row h-100">
             <div class="col-md-8 mb-3">
-              <div class="card-custom h-67 shadow-default card-height-design">
+              <div class="card-custom shadow-default personal-height">
                 <ul style="line-height: 160%">
                   <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text">Name</span
@@ -527,7 +527,7 @@
 								</p>
 							</div>
 						</div> -->
-            <div class="col-md-12 mb-3 mt-3">
+            <div class="col-md-12 mb-3 mt-16px">
               <div class="card-custom shadow-default">
                 <h4>Additional Information</h4>
                 <p class="mb-0">
@@ -628,11 +628,11 @@
             />
           </div>
           <div class="row">
-            <!-- <div class="card-custom shadow-default"></div> -->
-            <div class="col-md-6 col-6 mb-3">
+            <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
                 <img
-                  :src="candidateData.personal.per_avatar_url"
+                    :src="candidateData.personal.per_avatar_url"
+                  class="user-image"
                   alt="img"
                   height="250"
                   width="200"
@@ -640,17 +640,31 @@
                 <p class="text-center">Avatar</p>
               </div>
             </div>
-            <div class="col-md-6 col-6 mb-3">
+            <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
                 <img
-                  :src="candidateData.personal.per_main_image_url"
-                  alt="img"
-                  height="250"
-                  width="200"
+                    :src="candidateData.personal.per_main_image_url"
+                    class="user-image"
+                    alt="img"
+                    height="250"
+                    width="200"
                 />
                 <p class="text-center">Main image</p>
               </div>
             </div>
+
+<!--            <div class="col-12 col-md-4 mb-3">-->
+<!--              <div class="profile-img text-center">-->
+<!--                <img-->
+<!--                    :src="candidateData.personal.per_main_image_url"-->
+<!--                    class="user-image"-->
+<!--                    alt="img"-->
+<!--                    height="250"-->
+<!--                    width="200"-->
+<!--                />-->
+<!--                <p class="text-center">Additional image</p>-->
+<!--              </div>-->
+<!--            </div>-->
 
             <div class="col-12">
               <div class="card-custom shadow-default">
@@ -830,7 +844,7 @@ export default {
 }
 .flex-50 > .ml-3 {
   //font-size: 14px;
-  font-weight: bold;
+  font-weight: 900;
 }
 .inner {
   font-weight: 600;
@@ -838,9 +852,22 @@ export default {
 .value-text {
   font-weight: bold;
 }
+.mt-16px {
+  margin-top: 16px;
+}
+.personal-height {
+  height: auto;
+}
+.user-image {
+  width: 100%;
+  height: 300px;
+}
 @media (min-width: 992px) {
   .mobile-margin-top {
     margin-top: 0;
+  }
+  .personal-height {
+    height: 360px;
   }
 }
 </style>

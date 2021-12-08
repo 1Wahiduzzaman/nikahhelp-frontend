@@ -3,7 +3,7 @@
     <Header />
 
     <div class="steps ma-steps">
-      <div class="steper-header text-center heading-text">
+      <div class="steper-header text-center heading-text px-3">
         <h4>CANDIDATE PROFILE AND REQUIREMENT FORM</h4>
         <p>Please answer all question accurately and in full</p>
       </div>
@@ -16,13 +16,20 @@
         :hideScrollUp="propsData.hideScrollUp"
       >
         <div class="step-bar">
-          <a-steps :current="current" labelPlacement="vertical">
+          <a-steps class="desktop-block" :current="current" labelPlacement="vertical">
             <a-step
               v-for="item in steps"
               :key="item.title"
               :title="item.title"
             />
           </a-steps>
+          <div class="mobile-block px-3">
+            <div class="mobile-step" :class="{'bg-primary': current >= 0}"></div>
+            <div class="mobile-step ml-2" :class="{'bg-primary': current >= 1}"></div>
+            <div class="mobile-step ml-2" :class="{'bg-primary': current >= 2}"></div>
+            <div class="mobile-step ml-2" :class="{'bg-primary': current >= 3}"></div>
+            <div class="mobile-step ml-2" :class="{'bg-primary': current >= 4}"></div>
+          </div>
         </div>
       </VueFixedHeader>
       <div class="steps-content" v-if="current == 0">
@@ -732,6 +739,18 @@ export default {
       font-weight: bold;
       color: $color-brand;
     }
+    h4 {
+      font-size: 18px;
+      @media (min-width: 992px) {
+        font-size: 24px;
+      }
+    }
+    h6 {
+      font-size: 14px;
+      @media (min-width: 992px) {
+        font-size: 20px;
+      }
+    }
   }
 }
 
@@ -740,15 +759,44 @@ export default {
   top: 0;
   z-index: 1000;
   width: 800px;
+  width: 100%;
   padding: 0;
   background: aliceblue;
+  border-radius: 30px;
 }
 .bottom-padding {
   padding: 0 2rem;
 }
+.mobile-step {
+  background-color: #b7b7b7;
+  border-radius: 20px;
+  width: 20%;
+  height: 20px;
+}
+.desktop-block {
+  display: none;
+}
+.mobile-block {
+  display: flex;
+}
 @media (min-width: 768px) {
   .bottom-padding {
     padding: 1rem;
+  }
+  .desktop-block {
+    display: flex;
+  }
+  .mobile-block {
+    display: none;
+  }
+  .step-bar.vue-fixed-header--isFixed {
+    top: 15px;
+    padding-top: 20px !important;
+  }
+}
+@media (min-width: 992px) {
+  .step-bar.vue-fixed-header--isFixed {
+    width: 800px;
   }
 }
 </style>

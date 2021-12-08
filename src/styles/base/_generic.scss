@@ -7,7 +7,9 @@
     font-family: "gabriola";
     src: url("/fonts/gabriola/gabriola.woff");
 }
-
+body {
+    font-family: 'Poppins', sans-serif;
+}
 .main-content-wrapper {
     display: flex;
     margin-top: 76px;
@@ -541,7 +543,7 @@ div[data-unique="second_one"] >  .ant-select-selection{
     }
 }
 .vs__dropdown-menu, .vs__selected-options, .ant-input, .ant-select, .ant-select-selection {
-    font-weight: 600;
+    //font-weight: 600;
 }
 @media (min-width: 576px) {
     .ant-layout-sider {
