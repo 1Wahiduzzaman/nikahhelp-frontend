@@ -4,11 +4,11 @@
 		<div v-else>
 			<Layout>
 				<!-- Heading -->
-				<div class="section-header text-center mt-5">
-					<h4 class="heading fs-30 color-primary font-weight-bolder">
+				<div class="section-header text-center mt-5 px-2">
+					<h4 class="heading color-primary font-weight-bolder">
 						Choose a Subscription Plan that Works for You
 					</h4>
-					<p class="fs-14 font-weight-bold">
+					<p class="font-weight-bold sub-heading">
 						Matrimony Assist Subscription is Team Based. Only
 						<b>ONE</b> member pays
 						<br />
@@ -19,7 +19,7 @@
 				<!-- Subscription details -->
 				<div class="subscription-details container-fluid mt-4">
 					<div class="row">
-						<div class="col-12 col-md-3">
+						<div class="col-12 col-md-3" :class="{'mobile-block': activeStep !== 1}">
 							<!-- Card 1 -->
 							<div
 								class="custom-card card-1 shadow-default background-design-cardfooter br-10 position-relative"
@@ -80,7 +80,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-12 col-md-6">
+						<div class="col-12 col-md-6 position-relative" :class="{'mobile-block': activeStep !== 2}">
 							<!-- Card 2 -->
 							<div
 								class="custom-card card-2 shadow-default background-design-middle"
@@ -106,9 +106,17 @@
 										time limit
 									</p>
 								</div>
+
 							</div>
+
+              <div class="position-absolute buttons-position">
+                <div class="d-flex">
+                  <button class="btn bg-danger px-4 py-2 text-white br-20" @click="nextStep(1)">Back</button>
+                  <button class="btn btn-success px-4 py-2 ml-2 br-20" @click="nextStep(3)">Next</button>
+                </div>
+              </div>
 						</div>
-						<div class="col-12 col-md-3">
+						<div class="col-12 col-md-3" :class="{'mobile-block': activeStep !== 3}">
 							<!-- Card 3 -->
 							<div
 								class="custom-card card-3 shadow-default background-design-rightcard"
@@ -186,6 +194,12 @@
 								Continue to payment
                 <a-icon type="arrow-right" class="ml-2 mt-1" />
 							</button>
+
+              <div class="position-absolute buttons-position">
+                <div class="d-flex">
+                  <button class="btn bg-danger px-4 py-2 text-white br-20" @click="nextStep(2)">Back</button>
+                </div>
+              </div>
 						</div>
 					</div>
 				</div>
@@ -220,7 +234,8 @@ export default {
 			savedAmount: 0.0,
 			teams: [],
 			teamSelected: null,
-      contentShow: 'details'
+      contentShow: 'details',
+      activeStep: 1
 		};
 	},
 	created() {
@@ -319,6 +334,9 @@ export default {
 				this.teamSelected = team;
 			}
 		},
+    nextStep(step) {
+      this.activeStep = step;
+    },
 		firstOption() {
 			this.isSelected1 = !this.isSelected1;
 			this.isSelected2 = false;
@@ -326,7 +344,7 @@ export default {
 			this.isSelected4 = false;
 			this.amount = 10.0;
 			this.savedAmount = 0.0;
-			console.log(this.isSelected1);
+      this.nextStep(2);
 		},
 		secondOption() {
 			this.isSelected2 = !this.isSelected2;
@@ -335,7 +353,7 @@ export default {
 			this.isSelected4 = false;
 			this.amount = 24.0;
 			this.savedAmount = 6.0;
-			console.log(this.isSelected2);
+      this.nextStep(2);
 		},
 		thirdOption() {
 			this.isSelected3 = !this.isSelected3;
@@ -344,7 +362,7 @@ export default {
 			this.isSelected4 = false;
 			this.amount = 42.0;
 			this.savedAmount = 18.0;
-			console.log(this.isSelected3);
+      this.nextStep(2);
 		},
 		fourthOption() {
 			this.isSelected4 = !this.isSelected4;
@@ -353,7 +371,7 @@ export default {
 			this.isSelected3 = false;
 			this.amount = 0.0;
 			this.savedAmount = 0.0;
-			console.log(this.isSelected3);
+      this.nextStep(2);
 		},
 		handleContinue() {
 			var subId;
@@ -383,8 +401,6 @@ export default {
 				});
 				return;
 			}
-			console.log(subId);
-			console.log(this.teamSelected);
 			this.$router.push(
 				`/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${subId}`
 			);
@@ -626,12 +642,35 @@ export default {
   outline-style: solid;
   outline-color: #cfcece;
 }
+.heading {
+  font-size: 20px;
+}
+.sub-heading {
+  font-size: 14px;
+}
+.mobile-block {
+  display: none;
+}
+.buttons-position {
+  top: 30px;
+  right: 30px;
+  z-index: 9;
+}
 @media (min-width: 768px) {
  .subscription-details {
    padding: 0 2rem;
  }
   .desktop-py {
     padding: 16px 0;
+  }
+  .heading {
+    font-size: 30px;
+  }
+  .mobile-block {
+    display: block;
+  }
+  .buttons-position {
+    display: none;
   }
 }
 </style>

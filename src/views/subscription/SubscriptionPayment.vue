@@ -4,8 +4,8 @@
       <Layout>
         <div class="container-fluid mt-5 px-4">
           <div class="d-flex flex-mb-direction">
-            <div class="w-d-50">
-              <div class="div-1 shadow-default">
+            <div class="w-d-50 bg-1 col-flex position-relative shadow-default" :class="{'mobile-block': activeStep !== 1}">
+              <div class="div-1">
                 <div class="section-heading">
                   <h4 class="fs-30">Team Subscription & Payment</h4>
                   <p class="text-center">
@@ -26,8 +26,8 @@
                 </div>
               </div>
             </div>
-            <div class="w-d-50 desktop-non-margin">
-              <div class="div-2 shadow-default desktop-pl">
+            <div class="w-d-50 desktop-non-margin col-flex shadow-default border-right position-relative" :class="{'mobile-block': activeStep !== 2 && !agree}">
+              <div class="div-2 desktop-pl">
                 <div class="section-heading"
                      v-if="subscriptionName == 'Free 1 day Subscription Plan'"
                 >
@@ -79,7 +79,7 @@
                   </div>
                 </div>
                 <div class="agree-terms mt-4">
-                  <p class="mt-1 fs-16">
+                  <p class="mt-1 agreement-text">
                     By clicking "Agree and Subscribe", you agree:
                     <b
                     >You will be charged UK £0.00 daily and at the end of
@@ -95,12 +95,17 @@
                     <spinner v-if="isLoading"></spinner>
                     <button
                         v-if="!isLoading && agree"
-                        class="btn btn-primary agree-button br-30"
+                        class="btn bg-success text-white agree-button br-30"
                         @click="subscribe"
                     >
                       Agree and Subscribe
                     </button>
                   </div>
+                </div>
+              </div>
+              <div class="position-absolute buttons-position">
+                <div class="d-flex">
+                  <button class="btn bg-danger px-4 py-2 text-white br-20" @click="nextStep(1)">Back</button>
                 </div>
               </div>
             </div>
@@ -140,6 +145,7 @@ export default {
 			teamName: null,
 			teamId: null,
 			agree: false,
+      activeStep: 1
 		};
 	},
 	created() {
@@ -150,9 +156,13 @@ export default {
 	},
 
 	methods: {
+    nextStep(step) {
+      this.activeStep = step;
+    },
 		setPaymentMethod(paymentMethod) {
 			console.log(paymentMethod);
 			this.agree = true;
+      this.activeStep = 2;
 		},
 		async subscribe() {
 			console.log(this.$store.state.user.payment_method);
@@ -263,7 +273,7 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
-.div-1 {
+.bg-1 {
   background-image: linear-gradient(
           to right top,
           #522e8e,
@@ -279,6 +289,14 @@ export default {
           #d31f7b,
           #e02076
   );
+}
+.bg-2 {
+  background: $bg-white;
+}
+.col-flex {
+  flex: 1;
+}
+.div-1 {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   padding: 20px;
@@ -404,7 +422,7 @@ export default {
     text-align: justify;
     p {
       line-height: 1.1;
-      font-size: 12px;
+      //font-size: 12px;
     }
   }
 }
@@ -420,8 +438,8 @@ export default {
   outline-color: #cfcece;
   font-size: 16px;
 }
-.desktop-pl {
-  border-right: 20px solid $border-primary;
+.border-right {
+  border-right: 20px solid $border-primary !important;
 }
 .w-d-50 {
   width: 100%;
@@ -429,22 +447,8 @@ export default {
 .flex-mb-direction {
   flex-direction: column;
 }
-@media (min-width: 768px) {
-  .desktop-non-margin {
-    //margin-left: -1.75rem;
-  }
-  .desktop-pl {
-    padding-left: 1.25rem;
-  }
-  .agree-button {
-    font-size: 22px;
-  }
-  .w-d-50 {
-    width: 50%;
-  }
-  .flex-mb-direction {
-    flex-direction: row;
-  }
+.agreement-text {
+  font-size: 14px;
 }
 
 .main-content-wrapper {
@@ -622,9 +626,38 @@ export default {
 	font-style: italic;
 }
 
-/*
-.agree-button {
-	padding: 5px 50px;
-	font-size: 18px;
-}*/ 
+.mobile-block {
+  display: none;
+}
+.buttons-position {
+  top: 3px;
+  right: -15px;
+  z-index: 9;
+}
+@media (min-width: 768px) {
+  .desktop-non-margin {
+    //margin-left: -1.75rem;
+  }
+  .desktop-pl {
+    padding-left: 1.25rem;
+  }
+  .agree-button {
+    font-size: 22px;
+  }
+  .w-d-50 {
+    width: 50%;
+  }
+  .flex-mb-direction {
+    flex-direction: row;
+  }
+  .agreement-text {
+    font-size: 16px;
+  }
+  .mobile-block {
+    display: block;
+  }
+  .buttons-position {
+    display: none;
+  }
+}
 </style>

@@ -9,7 +9,7 @@
 					class="w-100 p-2"
 					v-model="name"
 					placeholder="Your name on card"
-				/> 
+				/>
 			</div>
 			<div class="form-group mt-3">
 				<label for="billingAddress" class="text-white ml-2">Country </label>
@@ -56,7 +56,7 @@
 			<label class="text-white ml-2 mt-3">Card Number</label>
 			<div ref="card" class="form-control rounded-pill"></div>
 			<div class="mt-4 mb-3 text-right">
-				<button class="btn btn-primary validate-button" @click.prevent="submitPayment">
+				<button class="btn btn-success validate-button br-30" @click.prevent="submitPayment">
 					Validate
 				</button>
 			</div>
@@ -168,5 +168,8 @@ export default {
 	font-size: 20px;
 	margin-top: 5px;
 
+}
+.br-30 {
+  border-radius: 30px;
 }
 </style>
