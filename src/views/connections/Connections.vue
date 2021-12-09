@@ -3,193 +3,197 @@
 		<div>
 			<div v-if="isLoading">Loading</div>
 			<div v-else>
-				<Header :user="user" @change-team="changeTeam" />
-				<div class="main-content-wrapper">
-					<Sidebar />
-					<div class="main-content-1">
-						<div class="d-flex mb-3">
-							<h5 class="mt-2">
-								Recent all connection activity <span class="mr-2"></span>
-							</h5>
-							<select
-								v-if="user.account_type === 3"
-								v-model="teamId"
-								class="custom-select w-50"
-							>
-								<option
-									v-for="team in teams"
-									:key="team.id"
-									:value="team.team_id"
-								>
-									{{ team.name }}
-								</option>
-							</select>
-						</div>
-						<!-- <div v-for="(connectionDetails, type) in connections" :key="type">
-							<candidate
-								v-for="connection in connectionDetails"
-								:key="connection.connection_id"
-								:connection="connection"
-								:type="type"
-								@selected-connection="selectedConnection"
-								@accept-request="acceptRequest"
-								@disconnect-team="disconnectTeam"
-								@decline-request="declineRequest"
-								@connect-request="connectRequest"
-							></candidate>
-						</div> -->
+				<Layout>
+          <div class="row">
+            <div class="col-md-9">
+              <div class="main-content-1">
+                <div class="d-flex mb-3">
+                  <h5 class="mt-2 px-4">
+                    Recent all connection activity <span class="mr-2"></span>
+                  </h5>
+                  <select
+                      v-if="user.account_type === 3"
+                      v-model="teamId"
+                      class="custom-select w-50"
+                  >
+                    <option
+                        v-for="team in teams"
+                        :key="team.id"
+                        :value="team.team_id"
+                    >
+                      {{ team.name }}
+                    </option>
+                  </select>
+                </div>
+                <!-- <div v-for="(connectionDetails, type) in connections" :key="type">
+                  <candidate
+                    v-for="connection in connectionDetails"
+                    :key="connection.connection_id"
+                    :connection="connection"
+                    :type="type"
+                    @selected-connection="selectedConnection"
+                    @accept-request="acceptRequest"
+                    @disconnect-team="disconnectTeam"
+                    @decline-request="declineRequest"
+                    @connect-request="connectRequest"
+                  ></candidate>
+                </div> -->
 
-						<candidate
-							v-for="connection in connectionReports.result"
-							:key="connection.connection_id"
-							:connection="connection"
-							@selected-connection="selectedConnection"
-							@accept-request="acceptRequest"
-							@disconnect-team="disconnectTeam"
-							@decline-request="declineRequest"
-							@connect-request="connectRequest"
-							@block-candidate="blockCandidate"
-						></candidate>
-						<!-- <pre>
-							{{ connectionReports.result }}
-						</pre
-						> -->
-					</div>
+                <candidate-grid-view />
+                <candidate
+                    style="display: none"
+                    v-for="connection in connectionReports.result"
+                    :key="connection.connection_id"
+                    :connection="connection"
+                    @selected-connection="selectedConnection"
+                    @accept-request="acceptRequest"
+                    @disconnect-team="disconnectTeam"
+                    @decline-request="declineRequest"
+                    @connect-request="connectRequest"
+                    @block-candidate="blockCandidate"
+                ></candidate>
+                <!-- <pre>
+                  {{ connectionReports.result }}
+                </pre
+                > -->
+              </div>
+            </div>
+            <div class="col-md-3">
+              <!-- Connection Status -->
+              <div class="main-content-2">
+                <!-- <div class="shadow-default connection-history">
+                  <h6>Connection History</h6>
+                </div> -->
+                <div class="shadow-default connection-status p-3">
+                  <p class="fs-18 text-center">Connection Status</p>
+                  <hr />
+                  <!-- Connection stats -->
+                  <div v-if="!connectionOverview">
+                    <!-- Teams Connected -->
+                    <div class="row mt-3">
+                      <div class="col-3">
+                        <div class="item connected">
+											<span class="item-number flex-center-center fs-22">{{
+                          connectionReports.connected_teams
+                        }}</span>
+                        </div>
+                      </div>
+                      <div class="col-9 mt-2 fs-18">Teams connected</div>
+                    </div>
+                    <!-- Teams Request Received -->
+                    <div class="row mt-3">
+                      <div class="col-3">
+                        <div class="item received">
+											<span class="item-number flex-center-center fs-22">{{
+                          connectionReports.request_received
+                        }}</span>
+                        </div>
+                      </div>
+                      <div class="col-9 fs-18">Teams Request Received</div>
+                    </div>
+                    <!-- Teams Request Sent -->
+                    <div class="row mt-3">
+                      <div class="col-3">
+                        <div class="item request-sent">
+											<span class="item-number flex-center-center fs-22">{{
+                          connectionReports.request_sent
+                        }}</span>
+                        </div>
+                      </div>
+                      <div class="col-9 mt-2 fs-18">Teams Request Sent</div>
+                    </div>
+                    <!-- We declined team request -->
+                    <div class="row mt-3">
+                      <div class="col-3">
+                        <div class="item we-declined">
+											<span class="item-number flex-center-center fs-22">{{
+                          connectionReports.we_declined
+                        }}</span>
+                        </div>
+                      </div>
+                      <div class="col-9 fs-18">We declined Team request</div>
+                    </div>
+                    <!-- They declined Our team request -->
+                    <div class="row mt-3">
+                      <div class="col-3">
+                        <div class="item they-declined">
+											<span class="item-number flex-center-center fs-22">{{
+                          connectionReports.they_declined
+                        }}</span>
+                        </div>
+                      </div>
+                      <div class="col-9 fs-18">They declined Our team request</div>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <div>
+                      <h6>This Profile Connection Overview</h6>
+                      <hr />
 
-					<!-- Connection Status -->
-					<div class="main-content-2">
-						<!-- <div class="shadow-default connection-history">
-							<h6>Connection History</h6>
-						</div> -->
-						<div class="shadow-default connection-status p-3">
-							<p class="fs-18 text-center">Connection Status</p>
-							<hr />
-							<!-- Connection stats -->
-							<div v-if="!connectionOverview">
-								<!-- Teams Connected -->
-								<div class="row mt-3">
-									<div class="col-3">
-										<div class="item connected">
-											<span class="item-number flex-center-center fs-22">{{
-												connectionReports.connected_teams
-											}}</span>
-										</div>
-									</div>
-									<div class="col-9 mt-2 fs-18">Teams connected</div>
-								</div>
-								<!-- Teams Request Received -->
-								<div class="row mt-3">
-									<div class="col-3">
-										<div class="item received">
-											<span class="item-number flex-center-center fs-22">{{
-												connectionReports.request_received
-											}}</span>
-										</div>
-									</div>
-									<div class="col-9 fs-18">Teams Request Received</div>
-								</div>
-								<!-- Teams Request Sent -->
-								<div class="row mt-3">
-									<div class="col-3">
-										<div class="item request-sent">
-											<span class="item-number flex-center-center fs-22">{{
-												connectionReports.request_sent
-											}}</span>
-										</div>
-									</div>
-									<div class="col-9 mt-2 fs-18">Teams Request Sent</div>
-								</div>
-								<!-- We declined team request -->
-								<div class="row mt-3">
-									<div class="col-3">
-										<div class="item we-declined">
-											<span class="item-number flex-center-center fs-22">{{
-												connectionReports.we_declined
-											}}</span>
-										</div>
-									</div>
-									<div class="col-9 fs-18">We declined Team request</div>
-								</div>
-								<!-- They declined Our team request -->
-								<div class="row mt-3">
-									<div class="col-3">
-										<div class="item they-declined">
-											<span class="item-number flex-center-center fs-22">{{
-												connectionReports.they_declined
-											}}</span>
-										</div>
-									</div>
-									<div class="col-9 fs-18">They declined Our team request</div>
-								</div>
-							</div>
-							<div v-else>
-								<div>
-									<h6>This Profile Connection Overview</h6>
-									<hr />
+                      <div class="connection-overview">
+                        <p>
+                          Connection Status:
+                          <!-- {{ connectionStatus }} -->
+                          {{ connectionOverview.connection }}
+                        </p>
+                        <p>
+                          Connected date:
+                          <!-- {{ connectedDate }} -->
+                          {{ dateFromDateTime(connectionOverview.responded_at) }}
+                        </p>
+                        <p>
+                          Connection requested by:
+                          {{ connectionOverview.requested_by.full_name }}
+                        </p>
 
-									<div class="connection-overview">
-										<p>
-											Connection Status:
-											<!-- {{ connectionStatus }} -->
-											{{ connectionOverview.connection }}
-										</p>
-										<p>
-											Connected date:
-											<!-- {{ connectedDate }} -->
-											{{ dateFromDateTime(connectionOverview.responded_at) }}
-										</p>
-										<p>
-											Connection requested by:
-											{{ connectionOverview.requested_by.full_name }}
-										</p>
+                        <p>
+                          Request Date:
+                          {{ dateFromDateTime(connectionOverview.requested_at) }}
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <h6>This Profile Team Overview</h6>
+                      <hr />
+                      <div class="profile-team-overview">
+                        <p>
+                          Team name:
+                          <!-- {{ teamName }} -->
+                          {{ connectionOverview.team_name }}
+                        </p>
+                        <p>
+                          Team members:
+                          <!-- {{ memberCount }} -->
+                          {{ connectionOverview.total_teamMember }}
+                        </p>
+                        <p>
+                          Team creation date:
+                          <!-- {{ teamCreationDate }} -->
+                          {{
+                            dateFromTimeStamp(connectionOverview.team_created_date)
+                          }}
+                        </p>
 
-										<p>
-											Request Date:
-											{{ dateFromDateTime(connectionOverview.requested_at) }}
-										</p>
-									</div>
-								</div>
-								<div>
-									<h6>This Profile Team Overview</h6>
-									<hr />
-									<div class="profile-team-overview">
-										<p>
-											Team name:
-											<!-- {{ teamName }} -->
-											{{ connectionOverview.team_name }}
-										</p>
-										<p>
-											Team members:
-											<!-- {{ memberCount }} -->
-											{{ connectionOverview.total_teamMember }}
-										</p>
-										<p>
-											Team creation date:
-											<!-- {{ teamCreationDate }} -->
-											{{
-												dateFromTimeStamp(connectionOverview.team_created_date)
-											}}
-										</p>
-
-										<p>
-											Team created by:
-											<!-- {{ teamCreatedBy }} -->
-											{{ connectionOverview.team_created_by }}
-										</p>
-									</div>
-								</div>
-								<!-- {{ connectionOverview }} -->
-								<button
-									class="mt-2 btn btn-primary btn-block"
-									@click="gotoConnectionStatus"
-								>
-									Go Back to Connection Status
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<Footer />
+                        <p>
+                          Team created by:
+                          <!-- {{ teamCreatedBy }} -->
+                          {{ connectionOverview.team_created_by }}
+                        </p>
+                      </div>
+                    </div>
+                    <!-- {{ connectionOverview }} -->
+                    <button
+                        class="mt-2 btn btn-primary btn-block"
+                        @click="gotoConnectionStatus"
+                    >
+                      Go Back to Connection Status
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Layout>
 			</div>
 		</div>
 	</div>
@@ -202,9 +206,11 @@ import Footer from "@/components/auth/Footer.vue";
 import Candidate from "@/components/connections/Candidate.vue";
 import JwtService from "@/services/jwt.service";
 import { dateFromDateTime, dateFromTimeStamp } from "@/common/helpers.js";
+import CandidateGridView from "../../components/connections/CandidateGridView";
 export default {
 	name: "Connections",
 	components: {
+    CandidateGridView,
 		Header,
 		Sidebar,
 		Footer,
@@ -588,78 +594,71 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
-.main-content-wrapper {
-	min-height: 88vh;
-	//margin-right: 0px;
-	@media (max-width: 1024px) {
-		flex-wrap: wrap;
-	}
-	.main-content-1 {
-		width: calc(100% - 550px);
-		margin: 20px 10px;
-		//margin-left: 260px;
-		@media (max-width: 1024px) {
-			width: calc(100% - 270px);
-		}
-	}
-	.main-content-2 {
-		margin: 15px;
-		width: 300px;
-		.connection-history {
-			padding: 10px;
-		}
-		.connection-status {
-			padding: 10px;
-			.row {
-				padding: 10px;
-				.item {
-					width: 50px;
-					height: 50px;
-					border-radius: 8px;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					margin: auto;
-					transform: rotate(45deg);
-					.item-text {
-						font-size: 22px;
-						font-weight: 700;
-					}
-					.item-number {
-						color: white;
-						font-size: 22px;
-						transform: rotate(-45deg);
-					}
-				}
+.main-content-1 {
+  //width: calc(100% - 550px);
+  margin: 20px 10px;
+  //margin-left: 260px;
+  @media (max-width: 1024px) {
+    width: calc(100% - 270px);
+  }
+}
+.main-content-2 {
+  margin: 15px;
+  //width: 300px;
+  .connection-history {
+    padding: 10px;
+  }
+  .connection-status {
+    padding: 10px;
+    .row {
+      padding: 10px;
+      .item {
+        width: 50px;
+        height: 50px;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        transform: rotate(45deg);
+        .item-text {
+          font-size: 22px;
+          font-weight: 700;
+        }
+        .item-number {
+          color: white;
+          font-size: 22px;
+          transform: rotate(-45deg);
+        }
+      }
 
-				.connected {
-					background-color: $bg-success !important;
-				}
-				.received {
-					background-color: $bg-warning;
-				}
-				.request-sent {
-					background-color: $bg-info;
-				}
-				.we-declined {
-					background-color: $bg-danger;
-				}
-				.they-declined {
-					background-color: $bg-secondary;
-				}
-			}
-			.connection-overview {
-				p {
-					font-size: 12px;
-				}
-			}
-			.profile-team-overview {
-				p {
-					font-size: 12px;
-				}
-			}
-		}
-	}
+      .connected {
+        background-color: $bg-success !important;
+      }
+      .received {
+        background-color: $bg-warning;
+      }
+      .request-sent {
+        background-color: $bg-info;
+      }
+      .we-declined {
+        background-color: $bg-danger;
+      }
+      .they-declined {
+        background-color: $bg-secondary;
+      }
+    }
+    .connection-overview {
+      p {
+        font-size: 12px;
+      }
+    }
+    .profile-team-overview {
+      p {
+        font-size: 12px;
+      }
+    }
+  }
 }
 .footer {
 	height: 20px;
