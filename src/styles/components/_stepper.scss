@@ -56,10 +56,6 @@
       background: $bg-primary;
       border-radius: 5px;
       color: $color-white !important;
-      font-size: 14px;
-      @media (min-width: 768px) {
-        font-size: 20px;
-      }
     }
 
     .ant-switch-checked {
