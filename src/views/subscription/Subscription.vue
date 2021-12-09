@@ -4,7 +4,7 @@
 		<div v-else>
 			<Layout>
 				<!-- Heading -->
-				<div class="section-header text-center mt-5 px-2">
+				<div class="section-header text-center heading-text px-2">
 					<h4 class="heading color-primary font-weight-bolder">
 						Choose a Subscription Plan that Works for You
 					</h4>
@@ -18,7 +18,7 @@
 				</div>
 				<!-- Subscription details -->
 				<div class="subscription-details container-fluid mt-4">
-					<div class="row">
+					<div class="row" :class="{'mobile-section': activeStep > 1}">
 						<div class="col-12 col-md-4 col-xl-3" :class="{'mobile-block': activeStep !== 1}">
 							<!-- Card 1 -->
 							<div
@@ -108,9 +108,9 @@
 							</div>
 
               <div class="position-absolute buttons-position">
-                <div class="d-flex">
-                  <button class="btn bg-danger px-4 py-2 text-white br-20" @click="nextStep(1)">Back</button>
-                  <button class="btn btn-success px-4 py-2 ml-2 br-20" @click="nextStep(3)">Next</button>
+                <div class="d-flex justify-content-between">
+                  <button class="btn bg-danger px-4 py-2 text-white br-20 btn-back" @click="nextStep(1)">Back</button>
+                  <button class="btn btn-success px-4 py-2 ml-2 br-20 btn-next" @click="nextStep(3)">Next</button>
                 </div>
               </div>
 						</div>
@@ -193,8 +193,8 @@
 							</button>
 
               <div class="position-absolute buttons-position">
-                <div class="d-flex">
-                  <button class="btn bg-danger px-4 py-2 text-white br-20" @click="nextStep(2)">Back</button>
+                <div class="d-flex justify-content-between">
+                  <button class="btn bg-danger px-4 py-2 text-white br-20 w-full" @click="nextStep(2)">Back</button>
                 </div>
               </div>
 						</div>
@@ -649,9 +649,10 @@ export default {
   display: none;
 }
 .buttons-position {
-  top: 30px;
-  right: 30px;
+  top: -24px;
+  left: 15px;
   z-index: 9;
+  width: 90%;
 }
 .btn-payment {
   margin-top: 30px;
@@ -661,6 +662,18 @@ export default {
 }
 .height-2 {
   height: 406px;
+}
+.btn-back {
+  width: 50%;
+}
+.btn-next {
+  width: 50%;
+}
+.heading-text {
+  margin-top: 12px;
+}
+.mobile-section {
+  margin-top: 50px;
 }
 @media (min-width: 768px) {
  .subscription-details {
@@ -683,6 +696,12 @@ export default {
   }
   .height-2 {
     height: 485px;
+  }
+  .heading-text {
+    margin-top: 4rem;
+  }
+  .mobile-section {
+    margin-top: 0;
   }
 }
 

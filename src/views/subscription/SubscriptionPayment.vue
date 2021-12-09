@@ -2,13 +2,13 @@
 	<div>
 		<div>
       <Layout>
-        <div class="container-fluid mt-5 px-4">
+        <div class="container-fluid mt-5 section-padding-payment">
           <div class="d-flex flex-mb-direction">
             <div class="w-d-50 bg-1 col-flex position-relative shadow-default" :class="{'mobile-block': activeStep !== 1}">
               <div class="div-1">
                 <div class="section-heading">
-                  <h4 class="fs-30">Team Subscription & Payment</h4>
-                  <p class="text-center">
+                  <h4 class="heading-title-payment">Team Subscription & Payment</h4>
+                  <p class="text-center heading-desc-payment">
                     We don't want people to be looking for someone for too
                     long. <br />
                     The sooner you find someone suitable we feel we have
@@ -16,7 +16,7 @@
                   </p>
                 </div>
                 <div class="card-info-div mt-4">
-                  <h6 class="text-center">Validate Your Card</h6>
+                  <h6 class="text-center validate-text">Validate Your Card</h6>
                   <div class="card-info-form">
                     <card-input
                         :clientSecret="clientSecret"
@@ -105,7 +105,7 @@
               </div>
               <div class="position-absolute buttons-position">
                 <div class="d-flex">
-                  <button class="btn bg-danger px-4 py-2 text-white br-20" @click="nextStep(1)">Back</button>
+                  <button class="btn bg-danger px-4 py-2 text-white br-20 w-full" @click="nextStep(1)">Back</button>
                 </div>
               </div>
             </div>
@@ -308,34 +308,37 @@ export default {
     }
     p {
       text-align: justify;
-      font-size: 14px;
       color: white;
     }
   }
   .card-info-div {
-    padding: 15px;
-    background-color: white;
     border-radius: 5px;
     height: 77%;
+    @media (min-width: 768px) {
+      padding: 15px;
+      background-color: white;
+    }
     .card-info-form {
-      padding: 10px;
-      background-image: linear-gradient(
-              to right top,
-              #522e8e,
-              #602d8d,
-              #6e2b8c,
-              #7a2a8a,
-              #852888,
-              #912787,
-              #9d2585,
-              #a82483,
-              #b72181,
-              #c51f7e,
-              #d31f7b,
-              #e02076
-      );
       height: 93%;
       border-radius: 5px;
+      @media (min-width: 768px) {
+        padding: 10px;
+        background-image: linear-gradient(
+                to right top,
+                #522e8e,
+                #602d8d,
+                #6e2b8c,
+                #7a2a8a,
+                #852888,
+                #912787,
+                #9d2585,
+                #a82483,
+                #b72181,
+                #c51f7e,
+                #d31f7b,
+                #e02076
+        );
+      }
     }
     .form-group {
       line-height: 0.5;
@@ -630,11 +633,26 @@ export default {
   display: none;
 }
 .buttons-position {
-  top: 3px;
-  right: -15px;
+  top: -44px;
+  left: 8px;
   z-index: 9;
+  width: 100%
+}
+.heading-title-payment {
+  font-size: 16px;
+}
+.heading-desc-payment {
+  font-size: 12px;
+}
+.validate-text {
+  color: #f9f9f9;
+  padding-bottom: 8px;
 }
 @media (min-width: 768px) {
+  .validate-text {
+    color: #000000;
+    padding-bottom: 0;
+  }
   .desktop-non-margin {
     //margin-left: -1.75rem;
   }
@@ -658,6 +676,15 @@ export default {
   }
   .buttons-position {
     display: none;
+  }
+  .section-padding-payment {
+    padding: 0 1.5rem;
+  }
+  .heading-title-payment {
+    font-size: 30px;
+  }
+  .heading-desc-payment {
+    font-size: 14x;
   }
 }
 </style>

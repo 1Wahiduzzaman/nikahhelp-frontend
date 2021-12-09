@@ -16,6 +16,7 @@
               class="ms-2"
               src="@/assets/icon/pencil-square.svg"
               alt="icon"
+              @click="$emit('toggleStep', 0)"
             />
           </div>
           <div class="row">
@@ -263,6 +264,7 @@
               class="ms-2"
               src="@/assets/icon/pencil-square.svg"
               alt="icon"
+              @click="$emit('toggleStep', 1)"
             />
           </div>
           <div class="row h-100">
@@ -546,6 +548,7 @@
               class="ms-2"
               src="@/assets/icon/pencil-square.svg"
               alt="icon"
+              @click="$emit('toggleStep', 3)"
             />
           </div>
           <div class="row">
@@ -625,6 +628,7 @@
               class="ms-2"
               src="@/assets/icon/pencil-square.svg"
               alt="icon"
+              @click="$emit('toggleStep', 5)"
             />
           </div>
           <div class="row">
