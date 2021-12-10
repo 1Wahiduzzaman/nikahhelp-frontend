@@ -2,28 +2,32 @@
 	<div class="shortlist-wrapper">
 		<div class="top" :class="classObject">
 			<div class="shortlist-by">
-				Team: {{ connection.team_name }} <span></span>
+<!--				Team: {{ connection.team_name }} <span></span>-->
+				Team: My team <span></span>
 			</div>
 		</div>
 
 		<div class="bottom">
 			<div class="user-img">
+<!--        :src="-->
+<!--        connection.candidate_image ? connection.candidate_image : avatarSrc-->
+<!--        "-->
 				<img
-					:src="
-						connection.candidate_image ? connection.candidate_image : avatarSrc
-					"
-					alt=""
+					src="https://picsum.photos/200"
+					alt="image"
 					class="avatar-img"
 				/>
 				<div class="name-address">
 					<p>
-						{{ connection.candidateInfo.candidate_fname }}
-						{{ connection.candidateInfo.candidate_lname }}
+<!--						{{ connection.candidateInfo.candidate_fname }}-->
+<!--						{{ connection.candidateInfo.candidate_lname }}-->
+            Candidate
 					</p>
 					<p class="address">
-						{{ connection.candidateInfo.candidate_location }},
-						{{ getAge(connection.candidateInfo.candidate_age) }} Years,
-						{{ connection.candidateInfo.candidate_religion }}
+<!--						{{ connection.candidateInfo.candidate_location }},-->
+<!--						{{ getAge(connection.candidateInfo.candidate_age) }} Years,-->
+<!--						{{ connection.candidateInfo.candidate_religion }}-->
+            London, UK, 27 Yrs
 					</p>
 				</div>
 			</div>
@@ -315,7 +319,7 @@ export default {
 		background-color: #8983bf;
 		border-top-left-radius: 15px;
 		border-top-right-radius: 100px;
-		width: 100%;
+		width: 94%;
 		max-width: 400px;
 		position: absolute;
 		top: 0;
@@ -374,6 +378,7 @@ export default {
 		justify-content: space-between;
 		align-items: center;
 		border: 3px solid #ffffff;
+    margin-right: 15px;
 		@media (max-width: 1024px) {
 			flex-direction: column;
 			align-items: flex-start;
