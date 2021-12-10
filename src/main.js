@@ -4,7 +4,7 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "vue-select/src/scss/vue-select.scss";
 import Layout from '@/views/design/Layout'
-
+import AdminLayout from "@/components/admin/layout/AdminLayout.vue";
 import Antd from "ant-design-vue";
 import App from "./App.vue";
 import router from "./router";
@@ -26,6 +26,7 @@ Vue.use(VueCompositionAPI);
 Vue.use(Antd);
 //Vue.use(require('vue-moment'));
 Vue.component('Layout', Layout);
+Vue.component('AdminLayout', AdminLayout);
 import VueSocketIO from 'vue-socket.io'
 import SocketIO from 'socket.io-client'
 const socketConnection = SocketIO('https://matrimonyassist.com/chat_nodejs/');

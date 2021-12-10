@@ -1,5 +1,5 @@
 <template>
-	<div class="mt-4">
+	<div class="container-fluid vh-100 overflow-auto">
 		<div class="row welcome align-items-center" >
 			<div class="col-lg-3">
 				<div class="item flex-center-center">
