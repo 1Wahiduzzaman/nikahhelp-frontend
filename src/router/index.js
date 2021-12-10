@@ -55,7 +55,13 @@ import AdminHome from "@/views/admin/AdminHome.vue";
 import AddAdmin from "@/views/admin/AddAdmin.vue";
 import UserReport from "@/views/admin/UserReport.vue";
 import PendingUserList from "@/views/admin/PendingUserList.vue";
-import SubscriptionReport from "@/views/admin/SubscriptionReport.vue";
+import AdminFlag from "@/views/admin/flag.vue";
+import AdminSystem from "@/views/admin/admin-system.vue";
+import AdminUsers from "@/views/admin/users.vue";
+import AdminTeams from "@/views/admin/teams.vue";
+import AdminSupport from "@/views/admin/support.vue";
+import AdminApproval from "@/views/admin/approval.vue";
+import SystemAdmin from "@/views/admin/system-admin.vue";
 
 import Test from "../components/development/Test.vue";
 import TestChat from "../components/development/Chat.vue";
@@ -280,33 +286,48 @@ const AppRouter = new VueRouter({
                 },
                 {
                     path: "/admin",
-                    name: "AdminDashboard",
-                    component: AdminDashboard,
+                    name: "Admin",
+                    component: AdminSystem,
 
 
                     children: [{
                         path: "",
-                        component: AdminHome,
+                        component: AdminDashboard,
 
                     },
                     {
-                        path: "add-admin",
-                        component: AddAdmin,
+                        path: "dashboard",
+                        component: AdminDashboard,
 
                     },
                     {
-                        path: "user-report",
-                        component: UserReport,
+                        path: "users",
+                        component: AdminUsers,
 
                     },
                     {
-                        path: "pending-user-list",
-                        component: PendingUserList,
+                        path: "teams",
+                        component: AdminTeams,
 
                     },
                     {
-                        path: "subscription-report",
-                        component: SubscriptionReport,
+                        path: "approval",
+                        component: AdminApproval,
+
+                    },
+                    {
+                        path: "support",
+                        component: AdminSupport,
+
+                    },
+                    {
+                        path: "flag",
+                        component: AdminFlag,
+
+                    },
+                    {
+                        path: "system_admin",
+                        component: SystemAdmin,
 
                     },
                     ],
