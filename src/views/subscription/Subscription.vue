@@ -4,11 +4,11 @@
 		<div v-else>
 			<Layout>
 				<!-- Heading -->
-				<div class="section-header text-center mt-5">
-					<h4 class="heading fs-30 color-primary font-weight-bolder">
+				<div class="section-header text-center heading-text px-2">
+					<h4 class="heading color-primary font-weight-bolder">
 						Choose a Subscription Plan that Works for You
 					</h4>
-					<p class="fs-14 font-weight-bold">
+					<p class="font-weight-bold sub-heading">
 						Matrimony Assist Subscription is Team Based. Only
 						<b>ONE</b> member pays
 						<br />
@@ -18,12 +18,11 @@
 				</div>
 				<!-- Subscription details -->
 				<div class="subscription-details container-fluid mt-4">
-					<div class="row">
-						<div class="col-12 col-md-3">
+					<div class="row" :class="{'mobile-section': activeStep > 1}">
+						<div class="col-12 col-md-4 col-xl-3" :class="{'mobile-block': activeStep !== 1}">
 							<!-- Card 1 -->
 							<div
-								class="custom-card card-1 shadow-default background-design-cardfooter br-10 position-relative"
-								style="height: 400px"
+								class="custom-card card-1 shadow-default background-design-cardfooter br-10 position-relative height-1"
 							>
 								<div class="div-1 background-design text-center px-2 pb-2 br-top-10">
 									<h3 class="text-white">Choose Plan</h3>
@@ -80,11 +79,10 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-12 col-md-6">
+						<div class="col-12 col-md-4 col-xl-6 position-relative" :class="{'mobile-block': activeStep !== 2}">
 							<!-- Card 2 -->
 							<div
-								class="custom-card card-2 shadow-default background-design-middle"
-								style="height: 400px"
+								class="custom-card card-2 shadow-default background-design-middle height-1"
 							>
 								<div class="div-1 text-center">
 									<img
@@ -106,13 +104,20 @@
 										time limit
 									</p>
 								</div>
+
 							</div>
+
+              <div class="position-absolute buttons-position">
+                <div class="d-flex justify-content-between">
+                  <button class="btn bg-danger px-4 py-2 text-white br-20 btn-back" @click="nextStep(1)">Back</button>
+                  <button class="btn btn-success px-4 py-2 ml-2 br-20 btn-next" @click="nextStep(3)">Next</button>
+                </div>
+              </div>
 						</div>
-						<div class="col-12 col-md-3">
+						<div class="col-12 col-md-4 col-xl-3" :class="{'mobile-block': activeStep !== 3}">
 							<!-- Card 3 -->
 							<div
-								class="custom-card card-3 shadow-default background-design-rightcard"
-								style="height: 352px"
+								class="custom-card card-3 shadow-default background-design-rightcard height-2"
 							>
 								<h1 class="px-4 text-white pt-2 fs-30 text-center">Select Team</h1>
 
@@ -181,11 +186,17 @@
 							</div>
 							<button
 								@click="handleContinue"
-								class="btn bg-success btn-payment mt-2 w-100 text-white d-flex align-items-center justify-content-center br-10"
+								class="btn bg-success btn-payment w-100 text-white d-flex align-items-center justify-content-center br-10"
 							>
 								Continue to payment
                 <a-icon type="arrow-right" class="ml-2 mt-1" />
 							</button>
+
+              <div class="position-absolute buttons-position">
+                <div class="d-flex justify-content-between">
+                  <button class="btn bg-danger px-4 py-2 text-white br-20 w-full" @click="nextStep(2)">Back</button>
+                </div>
+              </div>
 						</div>
 					</div>
 				</div>
@@ -220,7 +231,8 @@ export default {
 			savedAmount: 0.0,
 			teams: [],
 			teamSelected: null,
-      contentShow: 'details'
+      contentShow: 'details',
+      activeStep: 1
 		};
 	},
 	created() {
@@ -319,6 +331,9 @@ export default {
 				this.teamSelected = team;
 			}
 		},
+    nextStep(step) {
+      this.activeStep = step;
+    },
 		firstOption() {
 			this.isSelected1 = !this.isSelected1;
 			this.isSelected2 = false;
@@ -326,7 +341,7 @@ export default {
 			this.isSelected4 = false;
 			this.amount = 10.0;
 			this.savedAmount = 0.0;
-			console.log(this.isSelected1);
+      this.nextStep(2);
 		},
 		secondOption() {
 			this.isSelected2 = !this.isSelected2;
@@ -335,7 +350,7 @@ export default {
 			this.isSelected4 = false;
 			this.amount = 24.0;
 			this.savedAmount = 6.0;
-			console.log(this.isSelected2);
+      this.nextStep(2);
 		},
 		thirdOption() {
 			this.isSelected3 = !this.isSelected3;
@@ -344,7 +359,7 @@ export default {
 			this.isSelected4 = false;
 			this.amount = 42.0;
 			this.savedAmount = 18.0;
-			console.log(this.isSelected3);
+      this.nextStep(2);
 		},
 		fourthOption() {
 			this.isSelected4 = !this.isSelected4;
@@ -353,7 +368,7 @@ export default {
 			this.isSelected3 = false;
 			this.amount = 0.0;
 			this.savedAmount = 0.0;
-			console.log(this.isSelected3);
+      this.nextStep(2);
 		},
 		handleContinue() {
 			var subId;
@@ -383,8 +398,6 @@ export default {
 				});
 				return;
 			}
-			console.log(subId);
-			console.log(this.teamSelected);
 			this.$router.push(
 				`/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${subId}`
 			);
@@ -626,12 +639,81 @@ export default {
   outline-style: solid;
   outline-color: #cfcece;
 }
+.heading {
+  font-size: 20px;
+}
+.sub-heading {
+  font-size: 14px;
+}
+.mobile-block {
+  display: none;
+}
+.buttons-position {
+  top: -24px;
+  left: 15px;
+  z-index: 9;
+  width: 90%;
+}
+.btn-payment {
+  margin-top: 30px;
+}
+.height-1 {
+  height: 450px;
+}
+.height-2 {
+  height: 406px;
+}
+.btn-back {
+  width: 50%;
+}
+.btn-next {
+  width: 50%;
+}
+.heading-text {
+  margin-top: 12px;
+}
+.mobile-section {
+  margin-top: 50px;
+}
 @media (min-width: 768px) {
  .subscription-details {
    padding: 0 2rem;
  }
   .desktop-py {
     padding: 16px 0;
+  }
+  .heading {
+    font-size: 30px;
+  }
+  .mobile-block {
+    display: block;
+  }
+  .buttons-position {
+    display: none;
+  }
+  .height-1 {
+    height: 550px;
+  }
+  .height-2 {
+    height: 485px;
+  }
+  .heading-text {
+    margin-top: 4rem;
+  }
+  .mobile-section {
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 992px) {
+  .btn-payment {
+    margin-top: 0.5rem;
+  }
+  .height-1 {
+    height: 450px;
+  }
+  .height-2 {
+    height: 406px;
   }
 }
 </style>

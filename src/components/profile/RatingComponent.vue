@@ -1,12 +1,12 @@
 <template>
   <div style="margin-right: 0px" class="row mb-2">
-    <div class="col-6 mt-2">
+    <div class="col-6 mt-2 label-text">
       {{ title }}
     </div>
-    <div class="col-4 text-center">
+    <div class="col-6 text-right review none-r-padding">
       <a-rate disabled :value="value" />
     </div>
-    <div class="col-2 mt-2 text-center value-string">{{ valueString }}</div>
+<!--    <div class="col-2 mt-2 text-center value-string">{{ valueString }}</div>-->
   </div>
 </template>
 
@@ -26,5 +26,11 @@ export default {
   background-color: $color-primary;
   color: white;
   border-radius: 20px;
+}
+.none-r-padding {
+  padding-right: 0;
+}
+.label-text {
+  font-weight: 600;
 }
 </style>

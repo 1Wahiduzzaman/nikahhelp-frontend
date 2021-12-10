@@ -57,10 +57,13 @@
       border-radius: 5px;
       color: $color-white !important;
     }
-  
+
     .ant-switch-checked {
       background-color: $color-primary;
     }
 
   }
+}
+.ant-steps-item-title {
+  line-height: normal;
 }

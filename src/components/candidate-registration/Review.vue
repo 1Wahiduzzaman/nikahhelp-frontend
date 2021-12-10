@@ -1,9 +1,9 @@
 <template>
-  <div class="review-publish">
+  <div class="review-publish px-2">
     <!-- <pre>{{ candidateData }}</pre> -->
     <fieldset v-if="candidateDetails && candidateData.personal" class="review">
-      <h4 class="fw-700">Review and Publish Profile</h4>
-      <p class="mb-5">
+      <h4 class="fw-700 px-2">Review and Publish Profile</h4>
+      <p class="mb-5 px-2">
         If anything needs to be editted, then go back to previous page by
         pressing previous button
       </p>
@@ -16,6 +16,7 @@
               class="ms-2"
               src="@/assets/icon/pencil-square.svg"
               alt="icon"
+              @click="$emit('toggleStep', 0)"
             />
           </div>
           <div class="row">
@@ -256,18 +257,19 @@
         <!-- Rating section  -->
 
         <!-- Personal Information -->
-        <div class="review-edit">
+        <div class="review-edit mt-5">
           <div class="review-edit-label">
             Personal Information
             <img
               class="ms-2"
               src="@/assets/icon/pencil-square.svg"
               alt="icon"
+              @click="$emit('toggleStep', 1)"
             />
           </div>
           <div class="row h-100">
             <div class="col-md-8 mb-3">
-              <div class="card-custom h-67 shadow-default card-height-design">
+              <div class="card-custom shadow-default personal-height">
                 <ul style="line-height: 160%">
                   <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text">Name</span
@@ -433,19 +435,19 @@
                 </p>
               </div>
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3 mobile-margin-top">
               <div class="card-custom shadow-default">
                 <div class="badge-info">
                   <span class="badge-info-label"
                     ><span class="inner">Marital Status</span></span
                   >
-                  <span>{{ candidateData.personal.per_marital_status }}</span>
+                  <span class="value-text">{{ candidateData.personal.per_marital_status }}</span>
                 </div>
                 <div class="badge-info">
                   <span class="badge-info-label"
                     ><span class="inner">Currently living with</span></span
                   >
-                  <span>{{
+                  <span class="value-text">{{
                     candidateData.personal.per_currently_living_with
                   }}</span>
                 </div>
@@ -453,19 +455,20 @@
                   <span class="badge-info-label"
                     ><span class="inner">Willing to relocate</span></span
                   >
-                  <span
+                  <span class="value-text"
                     v-if="candidateData.personal.per_willing_to_relocate == 1"
                   >
                     Yes
                   </span>
                   <span
+                      class="value-text"
                     v-else-if="
                       candidateData.personal.per_willing_to_relocate == 2
                     "
                   >
                     No
                   </span>
-                  <span
+                  <span class="value-text"
                     v-if="candidateData.personal.per_willing_to_relocate == 3"
                   >
                     Let's Discuss
@@ -475,10 +478,10 @@
                   <span class="badge-info-label"
                     ><span class="inner">Smoker</span></span
                   >
-                  <span v-if="candidateData.personal.per_smoker == true">
+                  <span class="value-text" v-if="candidateData.personal.per_smoker == true">
                     Yes
                   </span>
-                  <span v-if="candidateData.personal.per_smoker == false">
+                  <span class="value-text" v-if="candidateData.personal.per_smoker == false">
                     No
                   </span>
                 </div>
@@ -486,13 +489,13 @@
                   <span class="badge-info-label"
                     ><span class="inner">Language</span></span
                   >
-                  <span>{{ candidateData.personal.per_language_speak }}</span>
+                  <span class="value-text">{{ candidateData.personal.per_language_speak }}</span>
                 </div>
                 <div class="badge-info">
                   <span class="badge-info-label"
                     ><span class="inner">My Hobbies & Interests</span></span
                   >
-                  <span>{{
+                  <span class="value-text">{{
                     candidateData.personal.per_hobbies_interests
                   }}</span>
                 </div>
@@ -500,7 +503,7 @@
                   <span class="badge-info-label"
                     ><span class="inner">Food & Cuisine I like</span></span
                   >
-                  <span>{{
+                  <span class="value-text">{{
                     candidateData.personal.per_food_cuisine_like
                   }}</span>
                 </div>
@@ -508,13 +511,13 @@
                   <span class="badge-info-label"
                     ><span class="inner">Things I Enjoy</span>
                   </span>
-                  <span>{{ candidateData.personal.per_things_enjoy }}</span>
+                  <span class="value-text">{{ candidateData.personal.per_things_enjoy }}</span>
                 </div>
                 <div class="badge-info">
                   <span class="badge-info-label">
                     <span class="inner">I am Thankfull for</span>
                   </span>
-                  <span>{{ candidateData.personal.per_thankfull_for }}</span>
+                  <span class="value-text">{{ candidateData.personal.per_thankfull_for }}</span>
                 </div>
               </div>
             </div>
@@ -526,7 +529,7 @@
 								</p>
 							</div>
 						</div> -->
-            <div class="col-md-12 mb-3">
+            <div class="col-md-12 mb-3 mt-16px">
               <div class="card-custom shadow-default">
                 <h4>Additional Information</h4>
                 <p class="mb-0">
@@ -536,14 +539,16 @@
             </div>
           </div>
         </div>
+
         <!-- Family Information -->
-        <div class="review-edit">
+        <div class="review-edit mt-5">
           <div class="review-edit-label">
             Family Information
             <img
               class="ms-2"
               src="@/assets/icon/pencil-square.svg"
               alt="icon"
+              @click="$emit('toggleStep', 3)"
             />
           </div>
           <div class="row">
@@ -614,22 +619,24 @@
             </div>
           </div>
         </div>
-        <!-- UPloaded Image -->
-        <div class="review-edit">
+
+        <!-- Uploaded Image -->
+        <div class="review-edit mt-5">
           <div class="review-edit-label">
             My Uploaded Image
             <img
               class="ms-2"
               src="@/assets/icon/pencil-square.svg"
               alt="icon"
+              @click="$emit('toggleStep', 5)"
             />
           </div>
           <div class="row">
-            <!-- <div class="card-custom shadow-default"></div> -->
-            <div class="col-md-6 col-6 mb-3">
+            <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
                 <img
-                  :src="candidateData.personal.per_avatar_url"
+                    :src="candidateData.personal.per_avatar_url"
+                  class="user-image"
                   alt="img"
                   height="250"
                   width="200"
@@ -637,67 +644,81 @@
                 <p class="text-center">Avatar</p>
               </div>
             </div>
-            <div class="col-md-6 col-6 mb-3">
+            <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
                 <img
-                  :src="candidateData.personal.per_main_image_url"
-                  alt="img"
-                  height="250"
-                  width="200"
+                    :src="candidateData.personal.per_main_image_url"
+                    class="user-image"
+                    alt="img"
+                    height="250"
+                    width="200"
                 />
                 <p class="text-center">Main image</p>
               </div>
             </div>
 
-            <div class="col-md-12 col-6">
+<!--            <div class="col-12 col-md-4 mb-3">-->
+<!--              <div class="profile-img text-center">-->
+<!--                <img-->
+<!--                    :src="candidateData.personal.per_main_image_url"-->
+<!--                    class="user-image"-->
+<!--                    alt="img"-->
+<!--                    height="250"-->
+<!--                    width="200"-->
+<!--                />-->
+<!--                <p class="text-center">Additional image</p>-->
+<!--              </div>-->
+<!--            </div>-->
+
+            <div class="col-12">
               <div class="card-custom shadow-default">
                 <h4>Image setting</h4>
-                <p class="mb-1">
+                <div class="d-flex">
                   <a-icon
-                    v-if="candidateData.personal.anybody_can_see == 0"
-                    class="color-danger mt-2 mr-2 fs-16 fw-500"
-                    type="stop"
+                      v-if="candidateData.personal.anybody_can_see == 0"
+                      class="color-danger mt-2 mr-2 fs-16 fw-500"
+                      type="stop"
                   />
                   <a-icon
-                    v-else
-                    class="color-success mt-2 mr-2 fs-16 fw-500"
-                    type="check"
+                      v-else
+                      class="color-success mt-2 mr-2 fs-16 fw-500"
+                      type="check"
                   />
                   <span class="fs-16"
-                    >I would like to share my all picture with anyone on this
+                  >I would like to share my all picture with anyone on this
                     plarform</span
                   >
-                </p>
-                <p class="mb-1">
+                </div>
+                <div class="d-flex">
                   <a-icon
-                    v-if="candidateData.personal.only_team_can_see == 0"
-                    class="color-danger mt-2 mr-2 fs-16 fw-500"
-                    type="stop"
+                      v-if="candidateData.personal.only_team_can_see == 0"
+                      class="color-danger mt-2 mr-2 fs-16 fw-500"
+                      type="stop"
                   />
                   <a-icon
-                    v-else
-                    class="color-success mt-2 mr-2 fs-16 fw-500"
-                    type="check"
+                      v-else
+                      class="color-success mt-2 mr-2 fs-16 fw-500"
+                      type="check"
                   />
                   <span class="fs-16"
-                    >I would like to share all my images with my team</span
+                  >I would like to share all my images with my team</span
                   >
-                </p>
-                <p class="mb-1">
+                </div>
+                <div class="d-flex">
                   <a-icon
-                    v-if="candidateData.personal.team_connection_can_see == 0"
-                    class="color-danger mt-2 mr-2 fs-16 fw-500"
-                    type="stop"
+                      v-if="candidateData.personal.team_connection_can_see == 0"
+                      class="color-danger mt-2 mr-2 fs-16 fw-500"
+                      type="stop"
                   />
                   <a-icon
-                    v-else
-                    class="color-success mt-2 mr-2 fs-16 fw-500"
-                    type="check"
+                      v-else
+                      class="color-success mt-2 mr-2 fs-16 fw-500"
+                      type="check"
                   />
-                  <span>
+                  <span class="fs-16">
                     I would like to share all my images with connected team(s)
                   </span>
-                </p>
+                </div>
               </div>
             </div>
           </div>
@@ -773,7 +794,7 @@ export default {
     }
     ul {
       .label-text {
-        opacity: 0.8;
+        //opacity: 0.8;
       }
     }
     .profile-img {
@@ -816,5 +837,41 @@ export default {
 
 .card-height-design {
   height: 360px;
+}
+
+.mobile-margin-top {
+  margin-top: 54px;
+}
+.label-text {
+  //font-size: 14px;
+  font-weight: 600;
+}
+.flex-50 > .ml-3 {
+  //font-size: 14px;
+  font-weight: 900;
+}
+.inner {
+  font-weight: 600;
+}
+.value-text {
+  font-weight: bold;
+}
+.mt-16px {
+  margin-top: 16px;
+}
+.personal-height {
+  height: auto;
+}
+.user-image {
+  width: 100%;
+  height: 300px;
+}
+@media (min-width: 992px) {
+  .mobile-margin-top {
+    margin-top: 0;
+  }
+  .personal-height {
+    height: 360px;
+  }
 }
 </style>

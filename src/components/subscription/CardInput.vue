@@ -6,12 +6,12 @@
 				<input
 					type="text"
 					id="name"
-					class="w-100 p-2"
+					class="w-100 py-2 px-4"
 					v-model="name"
 					placeholder="Your name on card"
-				/> 
+				/>
 			</div>
-			<div class="form-group">
+			<div class="form-group mt-3">
 				<label for="billingAddress" class="text-white ml-2">Country </label>
 				<!-- <input
 					type="text"
@@ -20,7 +20,7 @@
 					v-model="country"
 					placeholder="Example: US, CA, BD"
 				/> -->
-				<select class="custom-select" v-model="country">
+				<select class="custom-select px-4" v-model="country">
 					<option value="" disabled>Select Country</option>
 					<option
 						v-for="c in $store.state.candidateInfo.countries"
@@ -31,13 +31,13 @@
 					</option>
 				</select>
 			</div>
-			<div class="form-row">
+			<div class="form-row mt-3">
 				<div class="form-group col-md-6">
 					<label for="postCode" class="text-white ml-2">Post Code </label>
 					<input
 						type="text"
 						id="postCode"
-						class="w-100 p-2"
+						class="w-100 py-2 px-4"
 						v-model="postCode"
 						placeholder="Example: 1234"
 					/>
@@ -47,16 +47,16 @@
 					<input
 						type="text"
 						id="country"
-						class="w-100 p-2"
+						class="w-100 py-2 px-4"
 						v-model="city"
 						placeholder="New York"
 					/>
 				</div>
 			</div>
-			<label for="" class="text-white ml-2">Card Number</label>
-			<div ref="card" class="form-control rounded-pill"></div>
-			<div class="mt-2 text-center">
-				<button class="btn btn-primary validate-button" @click.prevent="submitPayment">
+			<label class="text-white ml-2 mt-3">Card Number</label>
+			<div ref="card" class="form-control rounded-pill px-4 cspt-9"></div>
+			<div class="mt-4 mb-3 text-right">
+				<button class="btn btn-success validate-button br-30 py-2" @click.prevent="submitPayment">
 					Validate
 				</button>
 			</div>
@@ -168,5 +168,11 @@ export default {
 	font-size: 20px;
 	margin-top: 5px;
 
+}
+.br-30 {
+  border-radius: 30px;
+}
+.cspt-9 {
+  padding-top: 9px;
 }
 </style>
