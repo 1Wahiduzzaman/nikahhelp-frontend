@@ -1,3 +1,4 @@
+
 import Vue from "vue";
 import VueCompositionAPI from "@vue/composition-api";
 import "bootstrap";
@@ -14,8 +15,23 @@ import store from "./store/index.js";
 import Storage from "vue-web-storage";
 // * ApiService for the application
 import ApiService from "./services/api.service";
+import Vuetify from 'vuetify';
+Vue.use(Vuetify, 
+  {
+  iconfont: 'fa',
+  theme: {
+    primary: '#828282',
+    secondary: '#424242',
+    accent: '#82B1FF',
+    error: '#FF5252',
+    info: '#2196F3',
+    success: '#4CAF50',
+    warning: '#FFC107',
+  },
 
+}
 
+);
 Vue.use(Storage, {
   prefix: "",
   drivers: ["local"],
@@ -24,7 +40,6 @@ ApiService.init();
 
 Vue.use(VueCompositionAPI);
 Vue.use(Antd);
-//Vue.use(require('vue-moment'));
 Vue.component('Layout', Layout);
 Vue.component('AdminLayout', AdminLayout);
 import VueSocketIO from 'vue-socket.io'
@@ -32,9 +47,9 @@ import SocketIO from 'socket.io-client'
 const socketConnection = SocketIO('https://matrimonyassist.com/chat_nodejs/');
 
 Vue.use(new VueSocketIO({
-    debug: true,
-    connection:socketConnection 
-  })
+  debug: true,
+  connection: socketConnection
+})
 );
 
 new Vue({

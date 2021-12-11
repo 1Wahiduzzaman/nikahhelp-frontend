@@ -78,8 +78,7 @@
         <!-- :class="{ disabled: !enabledNextBtn }"
           :disabled="!enabledNextBtn" -->
         <a-button
-          :class="{ disabled: !enabledNextBtn }"
-          :disabled="!enabledNextBtn"
+ 
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
@@ -460,7 +459,7 @@ export default {
             ""
           );
         }
-        this.current = response.data.data.user.data_input_status;
+       // this.current = response.data.data.user.data_input_status;
         this.checkExistData();
       }
     },
