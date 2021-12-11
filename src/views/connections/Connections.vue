@@ -7,23 +7,31 @@
           <div class="row">
             <div class="col-md-9">
               <div class="main-content-1">
-                <div class="d-flex mb-3">
+                <div class="d-flex justify-content-between mb-3 align-items-center mr-4">
                   <h5 class="mt-2 px-4">
                     Recent all connection activity <span class="mr-2"></span>
                   </h5>
-                  <select
-                      v-if="user.account_type === 3"
-                      v-model="teamId"
-                      class="custom-select w-50"
-                  >
-                    <option
-                        v-for="team in teams"
-                        :key="team.id"
-                        :value="team.team_id"
+                  <div class="d-flex align-items-center">
+                    <div class="cursor-pointer" @click="displayMode = 'grid'">
+                      <img src="@/assets/icon/grid_icon.svg" alt="icon" width="30" class="opacity-60" :class="{'opacity-100': displayMode === 'grid'}" />
+                    </div>
+                    <div class="cursor-pointer ml-4" @click="displayMode = 'list'">
+                      <img src="@/assets/icon/list_icon.svg" alt="icon" width="25" class="opacity-60" :class="{'opacity-100': displayMode === 'list'}" />
+                    </div>
+                    <select
+                        v-if="user.account_type === 3"
+                        v-model="teamId"
+                        class="custom-select w-50"
                     >
-                      {{ team.name }}
-                    </option>
-                  </select>
+                      <option
+                          v-for="team in teams"
+                          :key="team.id"
+                          :value="team.team_id"
+                      >
+                        {{ team.name }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
                 <!-- <div v-for="(connectionDetails, type) in connections" :key="type">
                   <candidate
@@ -39,23 +47,20 @@
                   ></candidate>
                 </div> -->
 
-                <candidate-grid-view />
-                <candidate
-                    style="display: none"
-                    v-for="connection in connectionReports.result"
-                    :key="connection.connection_id"
-                    :connection="connection"
-                    @selected-connection="selectedConnection"
-                    @accept-request="acceptRequest"
-                    @disconnect-team="disconnectTeam"
-                    @decline-request="declineRequest"
-                    @connect-request="connectRequest"
-                    @block-candidate="blockCandidate"
-                ></candidate>
-                <!-- <pre>
-                  {{ connectionReports.result }}
-                </pre
-                > -->
+                <candidate-grid-view v-if="displayMode === 'grid'" />
+                <candidate v-if="displayMode === 'list'" />
+<!--                <candidate-->
+<!--                    v-if="displayMode === 'list'"-->
+<!--                    v-for="connection in connectionReports.result"-->
+<!--                    :key="connection.connection_id"-->
+<!--                    :connection="connection"-->
+<!--                    @selected-connection="selectedConnection"-->
+<!--                    @accept-request="acceptRequest"-->
+<!--                    @disconnect-team="disconnectTeam"-->
+<!--                    @decline-request="declineRequest"-->
+<!--                    @connect-request="connectRequest"-->
+<!--                    @block-candidate="blockCandidate"-->
+<!--                ></candidate>-->
               </div>
             </div>
             <div class="col-md-3">
@@ -227,6 +232,7 @@ export default {
 			teams: null,
 			teamId: null,
 			connectionOverview: null,
+      displayMode: 'grid'
 		};
 	},
 	// computed: {
@@ -595,12 +601,12 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .main-content-1 {
-  //width: calc(100% - 550px);
   margin: 20px 10px;
+  width: 100%;
   //margin-left: 260px;
-  @media (max-width: 1024px) {
-    width: calc(100% - 270px);
-  }
+  //@media (max-width: 1024px) {
+  //  width: calc(100% - 270px);
+  //}
 }
 .main-content-2 {
   margin: 15px;
@@ -660,7 +666,14 @@ export default {
     }
   }
 }
+.opacity-60 {
+  opacity: 0.6;
+}
+.opacity-100 {
+  opacity: 1;
+}
 .footer {
 	height: 20px;
 }
+
 </style>

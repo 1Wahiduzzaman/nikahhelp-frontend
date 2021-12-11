@@ -1,8 +1,8 @@
 <template>
   <div class="shortlist-wrapper">
     <div class="row px-3">
-      <div class="col-12 col-md-6">
-        <div class="m-2 shadow-default gridCardDesign position-relative">
+      <div class="col-12 col-md-6 mobile-margin" v-for="(item, index) in 4" :key="index">
+        <div class="m-2 shadow-default gridCardDesign position-relative grid-item">
           <div class="row no-gutters p-1">
             <div class="col-12 col-md-6" id="flex-container">
               <img
@@ -14,58 +14,73 @@
             <div class="col-12 col-md-6" id="flex-container-list">
               <div class="card-body py-2 d-flex flex-column h-full justify-content-between">
                 <div>
-                  <h5 class="card-title">Candidate</h5>
+                  <h5 class="card-title border-bottom pb-2">Candidate</h5>
 
                   <ul class="desc-list">
+                    <!-- Team -->
+                    <li class="flex-between-start">
+                      <span class="flex-30 label-text">Team</span>
+                      <span class="flex-70">:<span class="ml-3 badge badge-primary team-badge">My team</span></span>
+                    </li>
                     <!-- Location -->
                     <li class="flex-between-start">
                       <span class="flex-30 label-text">Location</span>
-                      <span class="flex-70">:
-									<span class="ml-1">Location</span>
-								</span>
+                      <span class="flex-70">:<span class="ml-3">London, UK </span></span>
                     </li>
                     <!-- Age -->
                     <li class="flex-between-start">
-								<span class="flex-30 label-text">Age</span
-                ><span class="flex-70"
-                    >:
-									<span class="ml-1">Age </span></span
-                    >
+                      <span class="flex-30 label-text">Age</span>
+                      <span class="flex-70">:<span class="ml-3">27 Yrs</span></span>
                     </li>
                     <!-- Religion -->
                     <li class="flex-between-start">
-								<span class="flex-30 label-text">Religion</span
-                ><span class="flex-70"
-                    >:
-									<span class="ml-1">Religion
-									</span></span>
+                      <span class="flex-30 label-text">Religion</span>
+                      <span class="flex-70">:<span class="ml-3">Islam</span></span>
                     </li>
-
+                    <!-- Ethnicity -->
                     <li class="flex-between-start">
                       <span class="flex-30 label-text">Ethnicity</span>
-                      <span class="flex-70">:
-									<span class="ml-1">Ethnicity </span>
-								</span>
+                      <span class="flex-70">:<span class="ml-3">Ethnicity </span></span>
                     </li>
                   </ul>
 
                 </div>
                 <div class="mt-2">
-                  <div class="d-flex align-items-center justify-content-between mb-3">
+                  <div class="d-flex align-items-center justify-content-between mb-1">
                     <a-button
-                        type="primary" block class="d-flex align-items-center mr-2" shape="round" size="small">
-                      Shortlist
+                        @click="block(item.id)"
+                        type="primary" block
+                        class="d-flex align-items-center mr-2 justify-content-center block-button grid-action-btn"
+                        shape="round" size="small">
+                      <a-icon type="stop"/>
+                      Block
                     </a-button>
-                    <a-button type="primary" block class="d-flex align-items-center ml-2"  shape="round" size="small">
-                      Team listed
+                    <a-button type="primary" block
+                              @click="disconnectTeam()"
+                              class="d-flex align-items-center ml-2 bg-dark justify-content-center grid-action-btn"
+                              shape="round" size="small">
+                      <a-icon type="disconnect"/>
+                      Disconnect
                     </a-button>
                   </div>
-                  <a-button
-                      shape="round"
-                      block
-                  >
-                    View More Details
-                  </a-button>
+                  <div class="d-flex align-items-center justify-content-between">
+                    <a-button
+                        @click="startConversation()"
+                        type="primary" block
+                        class="d-flex align-items-center mr-2 justify-content-center grid-action-btn" shape="round"
+                        size="small">
+                      <a-icon type="wechat"/>
+                      Chat
+                    </a-button>
+                    <a-button
+                        @click="viewProfile()"
+                        type="primary" block
+                        class="d-flex align-items-center ml-2 justify-content-center grid-action-btn" shape="round"
+                        size="small">
+                      <a-icon type="user"/>
+                      View Profile
+                    </a-button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -79,8 +94,9 @@
 
 <script>
 import firebase from "../../configs/firebase";
-import { getAge } from "@/common/helpers.js";
+import {getAge} from "@/common/helpers.js";
 import JwtService from "@/services/jwt.service";
+
 export default {
   name: "CandidateGridView",
   props: ["connection"],
@@ -234,10 +250,12 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+
 .card {
   @media (max-width: 558px) {
     height: 280px;
   }
+
   .card-img {
     height: 250px;
     float: left;
@@ -276,6 +294,7 @@ export default {
       height: 60%;
     }
   }
+
   .card-body {
     float: right;
     overflow: hidden;
@@ -284,6 +303,7 @@ export default {
       margin-left: -10px;
       margin-top: -8px;
     }
+
     .desc-list {
       line-height: 1.5;
 
@@ -300,13 +320,15 @@ export default {
       }
 
 
-      @media (max-width:365px) {
+      @media (max-width: 365px) {
         font-size: 8px;
       }
     }
+
     .btn-brand {
       background: $color-brand;
     }
+
     .card-title {
       @media (max-width: 610px) {
         font-size: 15px;
@@ -342,6 +364,7 @@ export default {
     display: flex;
   }
 }
+
 .candidate-top-right-corner {
   width: 45px;
   height: 45px;
@@ -350,6 +373,7 @@ export default {
   top: 0;
   right: 0;
 }
+
 .candidate-top-right-corner:after {
   content: '';
   width: 0;
@@ -361,165 +385,63 @@ export default {
   top: 0;
   position: absolute;
 }
-#viewMoreDetails {
-  align-items: center;
-  width: 80%;
-  padding: 3px 0;
-  position: absolute;
-  bottom: 5px;
 
-
-  @media (max-width: 671px) {
-    bottom: -60px;
-  }
-
-
-  @media (max-width: 584px) {
-    font-size: 12px;
-  }
-
-  @media (max-width: 542px) {
-    font-size: 10px;
-    bottom: -100px;
-  }
-
-
-  @media (max-width: 501px) {
-    font-size: 10px;
-    bottom: -115px;
-  }
-  @media (max-width: 482px) {
-    font-size: 10px;
-    bottom: -100px;
-    padding: 1px 2px;
-  }
+.block-button {
+  background: $bg-brand;
 }
-#connectButton {
-  margin: 7px;
-  padding-left: 9px;
-  padding-right: 9px;
-  margin-bottom: 0px;
-  position: absolute;
-  right: 25px;
-  bottom: 35px;
 
-
-
-  @media (max-width: 772px) {
-    bottom: 35px;
-  }
-
-
-
-  @media (max-width: 671px) {
-    bottom: -30px;
-    margin-left: -100px;
-    left: 128px;
-  }
-
-  @media (max-width: 542px) {
-    font-size: 10px;
-    bottom: -75px;
-  }
-
-  @media (max-width: 511px) {
-    margin-left: -110px;
-  }
-  @media (max-width: 482px) {
-    font-size: 8px;
-    bottom: -60px;
-    padding: 1px 2px;
-  }
+.grid-action-btn {
+  border-color: #f9f9f9;
 }
-#shortlistButton {
-  margin-left: 7px;
-  padding-left: 9px;
-  padding-right: 9px;
-  margin-bottom: 0px;
-  position: absolute;
-  bottom: 35px;
-
-  @media (max-width: 772px) {
-    bottom: 60px;
-  }
 
 
-  @media (max-width: 671px) {
-    bottom: -7px;
-  }
-
-  @media (max-width: 542px) {
-    font-size: 10px;
-    bottom: -55px;
-  }
-  @media (max-width: 482px) {
-    font-size: 8px;
-    bottom: -40px;
-    padding: 1px 2px;
-  }
-
-}
-.gridCardDesign {
-  @media (max-width: 666px) {
-    margin-right: 0px;
-    margin-left: 5px;
-  }
-  @media (max-width: 463px) {
-    height: 270px;
-  }
-  @media (max-width: 444px) {
-    margin: 4px -25px 4px -20px;
-  }
-  @media (max-width: 380px) {
-    margin: 2px -25px 4px -40px;
-  }
-  @media (max-width: 370px) {
-    height: 290px;
-    margin: 4px -25px 4px -40px;
-  }
-  @media (max-width: 359px) {
-    margin: 4px -35px 4px -50px;
-  }
-  @media (max-width: 335px) {
-    margin: 4px -40px 4px -40px;
-  }
-  @media (max-width: 330px) {
-    margin: 4px -50px 4px -40px;
-  }
-}
 #card-image {
   height: 250px;
   width: 100%;
   float: left;
   margin-right: 30px;
   display: flex;
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-  @media (max-width: 368px) {
-    height: 80%;
-    width: 80%;
-    display: block;
-  }
-  @media (max-width: 358px) {
-    height: 80%;
-    width: 80%;
-    display: block;
-  }
+  //@media (max-width: 768px) {
+  //  width: 100%;
+  //}
+  //@media (max-width: 368px) {
+  //  height: 80%;
+  //  width: 80%;
+  //  display: block;
+  //}
+  //@media (max-width: 358px) {
+  //  height: 80%;
+  //  width: 80%;
+  //  display: block;
+  //}
 }
+
 .connected-bg:after {
   border-color: transparent #3ab549 transparent transparent;
 }
+
 .request-received-bg {
   border-color: transparent #fbb03b transparent transparent;
 }
+
 .request-sent-bg {
   border-color: transparent #1bb9c2 transparent transparent;
 }
+
 .self-declined-bg {
   border-color: transparent #fa4942 transparent transparent;
 }
+
 .they-declined-bg {
   border-color: transparent #522e8e transparent transparent;
+}
+.grid-item:hover {
+  border: 3px solid #3f9de7;
+}
+.mobile-margin {
+  margin-left: -10px;
+  @media (min-width: 768px) {
+    margin-left: 0;
+  }
 }
 </style>

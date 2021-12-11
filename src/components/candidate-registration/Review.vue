@@ -13,8 +13,8 @@
           <div class="review-edit-label">
             My partner preference
             <img
-              class="ms-2"
-              src="@/assets/icon/pencil-square.svg"
+              class="ms-2 edit-step"
+              src="@/assets/icon/edit_step.svg"
               alt="icon"
               @click="$emit('toggleStep', 0)"
             />
@@ -261,8 +261,8 @@
           <div class="review-edit-label">
             Personal Information
             <img
-              class="ms-2"
-              src="@/assets/icon/pencil-square.svg"
+              class="ms-2 edit-step"
+              src="@/assets/icon/edit_step.svg"
               alt="icon"
               @click="$emit('toggleStep', 1)"
             />
@@ -545,8 +545,8 @@
           <div class="review-edit-label">
             Family Information
             <img
-              class="ms-2"
-              src="@/assets/icon/pencil-square.svg"
+              class="ms-2 edit-step"
+              src="@/assets/icon/edit_step.svg"
               alt="icon"
               @click="$emit('toggleStep', 3)"
             />
@@ -625,8 +625,8 @@
           <div class="review-edit-label">
             My Uploaded Image
             <img
-              class="ms-2"
-              src="@/assets/icon/pencil-square.svg"
+              class="ms-2 edit-step"
+              src="@/assets/icon/edit_step.svg"
               alt="icon"
               @click="$emit('toggleStep', 5)"
             />
@@ -865,6 +865,10 @@ export default {
 .user-image {
   width: 100%;
   height: 300px;
+}
+.edit-step {
+  width: 20px;
+  height: 20px;
 }
 @media (min-width: 992px) {
   .mobile-margin-top {
