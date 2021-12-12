@@ -51,10 +51,6 @@ import ProfileView from "@/views/profile/ProfileView.vue";
 
 //Admin Section
 import AdminDashboard from "@/views/admin/AdminDashboard.vue";
-import AdminHome from "@/views/admin/AdminHome.vue";
-import AddAdmin from "@/views/admin/AddAdmin.vue";
-import UserReport from "@/views/admin/UserReport.vue";
-import PendingUserList from "@/views/admin/PendingUserList.vue";
 import AdminFlag from "@/views/admin/flag.vue";
 import AdminSystem from "@/views/admin/admin-system.vue";
 import AdminUsers from "@/views/admin/users.vue";
@@ -62,7 +58,7 @@ import AdminTeams from "@/views/admin/teams.vue";
 import AdminSupport from "@/views/admin/support.vue";
 import AdminApproval from "@/views/admin/approval.vue";
 import SystemAdmin from "@/views/admin/system-admin.vue";
-
+import UsersList from "@/views/admin/user-list.vue";
 import Test from "../components/development/Test.vue";
 import TestChat from "../components/development/Chat.vue";
 
@@ -100,7 +96,7 @@ const AppRouter = new VueRouter({
             name: 'root',
             component: MatrimonySystem,
             redirect: '/dashboard',
-            beforeEnter: InitRoute,
+            //beforeEnter: InitRoute,
             children: [
 
                 {
@@ -328,6 +324,16 @@ const AppRouter = new VueRouter({
                     {
                         path: "system_admin",
                         component: SystemAdmin,
+
+                    },
+                    {
+                        path: "active_users",
+                        component: UsersList,
+
+                    },
+                    {
+                        path: "deleted_users",
+                        component: UsersList,
 
                     },
                     ],

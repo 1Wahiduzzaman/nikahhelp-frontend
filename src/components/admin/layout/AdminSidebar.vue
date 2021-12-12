@@ -22,7 +22,7 @@
           <a-badge
             class="ml-auto"
             :number-style="{ backgroundColor: '#e42076' }"
-            count="17"
+            count="0"
           />
         </router-link>
       </li>
@@ -37,7 +37,7 @@
           <a-badge
             class="ml-auto"
             :number-style="{ backgroundColor: '#e42076' }"
-            count="17"
+            count="0"
           />
         </router-link>
       </li>
@@ -52,7 +52,7 @@
           <a-badge
             class="ml-auto"
             :number-style="{ backgroundColor: '#e42076' }"
-            count="17"
+            count="0"
           />
         </router-link>
       </li>
@@ -87,13 +87,13 @@
         </router-link>
       </li>
     </ul>
-    <ul class="links" v-show="!collapsed">
+    <!-- <ul class="links" v-show="!collapsed">
       <li><a href="#">Help</a></li>
       <li><a href="#">About</a></li>
       <li><a href="#">Safety & Guidance</a></li>
       <li><a href="#">Terms & Conditation</a></li>
       <li><a href="/privacy-policy">Privacy Policy & Cookie Policy</a></li>
-    </ul>
+    </ul> -->
     <div class="trigger" @click="$emit('collapseSideBar')">
       <a-icon
         :type="collapsed ? 'caret-right' : 'caret-left'"
