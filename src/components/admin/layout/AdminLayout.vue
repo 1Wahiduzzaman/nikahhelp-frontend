@@ -1,7 +1,7 @@
 <template>
   <div class="container-admin">
-    <header class="bg-secondary shadow-default radius-none px-4">
-      <div class="d-flex align-items-center">
+    <header class="header-container bg-secondary shadow-default radius-none px-4">
+      <div class="header-content d-flex align-items-center">
         <div style="flex: auto" class="shrink-none">
           <a href="/" class="navbar-brand">
             <img
@@ -11,7 +11,13 @@
             />
           </a>
         </div>
-        <ul class="header-nav-icons d-none d-sm-flex">
+      
+        <div
+          class="header-right user-avatar-area shrink-none"
+          style="align-self: center"
+        >
+        <div style="padding-right:25px">
+            <ul class="header-nav-icons d-none d-sm-flex">
           <li class="nav-item shrink-none">
             <a class="nav-link" aria-current="page" href="/dashboard">
               <img
@@ -109,12 +115,9 @@
             </a-dropdown>
           </li>
         </ul>
-        <div
-          class="ml-4 d-flex align-items-start user-avatar-area shrink-none"
-          style="align-self: center"
-        >
-          <!-- <a-avatar :size="40" src="@/assets/mike.jpg" /> -->
-          <img class="avatar-image" src="@/assets/mike.jpg" width="35" alt="" />
+        </div>
+   <div style="display:flex">
+            <img class="avatar-image" src="@/assets/mike.jpg" width="35" alt="" />
           <div style="align-self: center">
             <div class="ml-2 text-white">
               <h6 class="mb-0 text-white fs-14">Selina Parvez Shumi</h6>
@@ -149,6 +152,7 @@
               </div>
             </div>
           </div>
+   </div>
         </div>
         <div class="d-sm-none">
           <a-dropdown :trigger="['click']">
@@ -253,7 +257,7 @@
        
       </a-layout>
     </a-layout>
-      <Footer />
+      <!-- <Footer /> -->
   </div>
 </template>
 
@@ -284,7 +288,6 @@ export default {
 <style lang="scss" scoped>
 .container-admin{
     overflow: hidden;
-    height: 100vh;
     display: flex;
     flex-direction: column;
 }

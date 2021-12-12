@@ -1,12 +1,22 @@
 <template>
   <div class="panel-container">
-    <div class="panel-header"></div>
-    <div class="panel-content"></div>
+    <div class="panel-header">
+      <v-btn depressed color="primary"> Primary </v-btn>
+    </div>
+    <div class="panel-content">
+      <v-data-table
+        :headers="headers"
+        :items="desserts"
+        :items-per-page="5"
+        class="dt-table"
+      ></v-data-table>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  components: {},
   data() {
     return {
       headers: [
@@ -106,8 +116,7 @@ export default {
       ],
     };
   },
-  components: {},
-  created() {},
+
   methods: {},
 };
 </script>
@@ -115,9 +124,9 @@ export default {
 <style lang="scss" scoped>
 .panel-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
-  height: calc(100vh - 180px);
+  height: calc(100vh - 135px);
   overflow: hidden;
   border: 2px solid #ddd;
   border-radius: 15px;
@@ -125,5 +134,105 @@ export default {
   box-shadow: 0px 10px 30px #fff;
   margin: 20px;
   opacity: 1;
+  .panel-header {
+    border-bottom: 1px solid;
+  }
+  .panel-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 50px;
+    .dt-table {
+      --table-height: 40px;
+      --header-font-weight: 500;
+      --header-font-size: 13px;
+      --header-text-align: center;
+      --column-separator: 1px solid transparent;
+      --tb-layout: auto;
+
+      --tbody-overflow: inherit;
+      --tbody-max-height: inherit;
+
+      table {
+        table-layout: var(--tb-layout) !important;
+      }
+
+      thead {
+        tr:first-child {
+          height: var(--table-height) !important;
+          border-bottom: 1px solid var(--bc-accent);
+
+          th {
+            text-align: var(--header-text-align);
+            font-weight: var(--header-font-weight) !important;
+            font-size: var(--header-font-size) !important;
+          }
+
+          th.column.sortable {
+            position: relative;
+
+            &.active {
+              color: var(--text-accent);
+              i {
+                opacity: 0;
+              }
+
+              &::after {
+                font-size: 22px;
+                position: relative;
+                margin-left: -18.42px;
+              }
+
+              &.asc::after {
+                content: "⌃";
+                top: 5px;
+              }
+              &.desc::after {
+                content: "⌄";
+                top: -5px;
+              }
+            }
+
+            &:hover:not(.active) {
+              i {
+                // display: none;
+                opacity: 0;
+              }
+
+              &::after {
+                font-size: 22px;
+                position: relative;
+                content: "⌃";
+                top: 5px;
+                margin-left: -18.42px;
+              }
+            }
+
+            &:focus {
+              outline: none;
+            }
+          }
+        }
+      }
+
+      tbody {
+        overflow: var(--tbody-overflow);
+        max-height: var(--tbody-max-height);
+
+        tr {
+          td {
+            overflow: hidden;
+            word-wrap: break-word;
+            white-space: pre;
+            max-width: 200px;
+            height: 40px;
+
+            border-left: var(--column-separator);
+          }
+        }
+      }
+    }
+  }
 }
 </style>

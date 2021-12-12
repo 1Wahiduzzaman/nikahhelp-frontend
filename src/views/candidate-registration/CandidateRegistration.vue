@@ -16,7 +16,11 @@
         :hideScrollUp="propsData.hideScrollUp"
       >
         <div class="step-bar">
-          <a-steps class="desktop-block" :current="current" labelPlacement="vertical">
+          <a-steps
+            class="desktop-block"
+            :current="current"
+            labelPlacement="vertical"
+          >
             <a-step
               v-for="item in steps"
               :key="item.title"
@@ -24,13 +28,30 @@
             />
           </a-steps>
           <div class="mobile-header">
-            <h4 class="mobile-step-text color-primary text-center fw-bold">{{ mobileSteps[current] }}</h4>
+            <h4 class="mobile-step-text color-primary text-center fw-bold">
+              {{ mobileSteps[current] }}
+            </h4>
             <div class="mobile-block px-3">
-              <div class="mobile-step" :class="{'bg-primary': current >= 0}"></div>
-              <div class="mobile-step ml-2" :class="{'bg-primary': current >= 1}"></div>
-              <div class="mobile-step ml-2" :class="{'bg-primary': current >= 2}"></div>
-              <div class="mobile-step ml-2" :class="{'bg-primary': current >= 3}"></div>
-              <div class="mobile-step ml-2" :class="{'bg-primary': current >= 4}"></div>
+              <div
+                class="mobile-step"
+                :class="{ 'bg-primary': current >= 0 }"
+              ></div>
+              <div
+                class="mobile-step ml-2"
+                :class="{ 'bg-primary': current >= 1 }"
+              ></div>
+              <div
+                class="mobile-step ml-2"
+                :class="{ 'bg-primary': current >= 2 }"
+              ></div>
+              <div
+                class="mobile-step ml-2"
+                :class="{ 'bg-primary': current >= 3 }"
+              ></div>
+              <div
+                class="mobile-step ml-2"
+                :class="{ 'bg-primary': current >= 4 }"
+              ></div>
             </div>
           </div>
         </div>
@@ -68,7 +89,10 @@
         />
       </div>
       <div class="steps-content" v-if="current == 4">
-        <UploadProfile  @valueChange="onDataChange($event)" :imageModel="candidateDetails.imageModel" />
+        <UploadProfile
+          @valueChange="onDataChange($event)"
+          :imageModel="candidateDetails.imageModel"
+        />
       </div>
       <div class="steps-content" v-if="current == 5">
         <Review :candidateDetails="candidateDetails" @toggleStep="toggleStep" />
@@ -78,7 +102,6 @@
         <!-- :class="{ disabled: !enabledNextBtn }"
           :disabled="!enabledNextBtn" -->
         <a-button
- 
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
@@ -200,7 +223,14 @@ export default {
           content: "Last-content",
         },
       ],
-      mobileSteps: ['Preference', 'Personal Information', 'Verification', 'Family Information', 'Image Upload', 'Review & Publish']
+      mobileSteps: [
+        "Preference",
+        "Personal Information",
+        "Verification",
+        "Family Information",
+        "Image Upload",
+        "Review & Publish",
+      ],
     };
   },
   methods: {
@@ -240,7 +270,9 @@ export default {
           imageModel: {
             ...response.data.data.candidate_image,
             additionalImageSrc:
-              response.data.data.candidate_image.other_images.length > 0 ? response.data.data.candidate_image.other_images[0].image_path : null,
+              response.data.data.candidate_image.other_images.length > 0
+                ? response.data.data.candidate_image.other_images[0].image_path
+                : null,
           },
           occupations: response.data.data.occupations,
           religions: response.data.data.religions,
@@ -336,6 +368,11 @@ export default {
           },
           preferenceData: {
             ...this.nullToUndefined(response.data.data.user.preference),
+            pre_occupation:
+              typeof response.data.data.user.preference.pre_occupation ==
+              "string"
+                ? JSON.parse(response.data.data.user.preference.pre_occupation)
+                : "",
             pre_height_min:
               response.data.data.user.preference.pre_height_min == 0
                 ? undefined
@@ -459,7 +496,7 @@ export default {
             ""
           );
         }
-       // this.current = response.data.data.user.data_input_status;
+        // this.current = response.data.data.user.data_input_status;
         this.checkExistData();
       }
     },
@@ -611,10 +648,11 @@ export default {
           }).every((x) => x !== undefined && x !== null && x !== "");
           break;
         case 4:
-          const {avatar_image_url,main_image_url}=this.candidateDetails.imageModel
-          isEnabled =  Object.values({avatar_image_url,main_image_url}).every(
-                (x) => x !== undefined && x !== null && x !== ""
-              )
+          const { avatar_image_url, main_image_url } =
+            this.candidateDetails.imageModel;
+          isEnabled = Object.values({ avatar_image_url, main_image_url }).every(
+            (x) => x !== undefined && x !== null && x !== ""
+          );
           break;
       }
 
@@ -634,9 +672,8 @@ export default {
       this.$router.push("/login");
     },
     doneBtn() {
-       this.saveDataInputStatus(6);
+      this.saveDataInputStatus(6);
       this.$router.push("/dashboard");
-
     },
     toggleStep(step) {
       this.current = step;
@@ -674,7 +711,6 @@ export default {
       this.current--;
       this.checkExistData();
     },
-
   },
 };
 </script>
