@@ -4,7 +4,7 @@
 			<a class="navbar-brand" href="/dashboard"
 				><img src="@/assets/logo.png" alt="logo"
 			/></a>
-			<button
+			<!-- <button
 				class="navbar-toggler"
 				type="button"
 				data-bs-toggle="collapse"
@@ -14,7 +14,8 @@
 				aria-label="Toggle navigation"
 			>
 				<span class="navbar-toggler-icon"></span>
-			</button>
+			</button> -->
+			<slot name="toggler"></slot>
 			<div class="collapse navbar-collapse" id="navbarNavDropdown">
 				<ul class="navbar-nav ml-auto my-2 my-lg-0">
 					<li class="nav-item">
