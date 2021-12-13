@@ -10,6 +10,26 @@
 body {
     font-family: 'Poppins', sans-serif;
 }
+
+.header-container{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: unset;
+    .header-content{
+        width: 100%;
+        height: 100%;
+        .header-right{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+           
+        }
+    }
+}
 .main-content-wrapper {
     display: flex;
     margin-top: 76px;
@@ -142,6 +162,7 @@ body {
 }
 .ant-layout {
     background: #fff !important;
+    height: 100% !important;
 }
 // end css for ant slider
 .ant-slider {

@@ -1,25 +1,25 @@
 <template>
-	<div class="position-relative">
-		<router-view />
-	</div>
+  <div class="main-container">
+    <router-view />
+  </div>
 </template>
 
 <script>
 export default {
-data(){
-	return {};
-},
-created(){
-	console.log('created called from app.vue');
-	var user_id = this.$store.state.user.user.id;//this.user_id;
-	if(user_id !== null || user_id !== ""){
-		console.log('inbox loaded for:',user_id);
-		this.$store.dispatch('getConversations',user_id);
-		this.$store.dispatch('getMsgs');
-		this.$store.dispatch('getUnreadRecords',user_id);
-	}
-}
-}
+  data() {
+    return {};
+  },
+  created() {
+    console.log("created called from app.vue");
+    var user_id = this.$store.state.user.user.id; //this.user_id;
+    if (user_id !== null || user_id !== "") {
+      console.log("inbox loaded for:", user_id);
+      this.$store.dispatch("getConversations", user_id);
+      this.$store.dispatch("getMsgs");
+      this.$store.dispatch("getUnreadRecords", user_id);
+    }
+  },
+};
 </script>
 
 
@@ -29,6 +29,11 @@ created(){
 @import "@/styles/style";
 
 .ant-card-head-title {
-	font-size: 50px;
+  font-size: 50px;
+}
+.main-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 </style>

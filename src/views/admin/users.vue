@@ -1,12 +1,12 @@
 <template>
   <div class="panel-container">
-    <div class="panel-content">
-      <div class="content">
-        <img
-          class="mr-3"
-          src="@/assets/icon/person-fill-secondary.svg"
-          alt="icon"
-        />
+    <div class="panel-content border-content">
+      <img
+        class="mr-3"
+        src="@/assets/icon/person-fill-secondary.svg"
+        alt="icon"
+      />
+      <router-link to="/admin/active_users">
         <a-button
           shape="round"
           type="primary"
@@ -15,15 +15,15 @@
         >
           Active Users
         </a-button>
-      </div>
+      </router-link>
     </div>
     <div class="panel-content">
-      <div class="content">
-        <img
-          class="mr-3"
-          src="@/assets/icon/person-fill-secondary.svg"
-          alt="icon"
-        />
+      <img
+        class="mr-3"
+        src="@/assets/icon/person-fill-secondary.svg"
+        alt="icon"
+      />
+      <router-link to="/admin/deleted_users">
         <a-button
           shape="round"
           type="primary"
@@ -32,7 +32,7 @@
         >
           Deleted Users
         </a-button>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -53,36 +53,29 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 100%;
-  position: relative;
-  height: 100%;
+  height: calc(100vh - 135px);
   overflow: hidden;
+  border: 2px solid #ddd;
+  border-radius: 15px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 10px 30px #fff;
+  margin: 20px;
+  opacity: 1;
   .panel-content {
     display: flex;
-    border: 1px solid #ddd;
-    background: #ffffff 0% 0% no-repeat padding-box;
-    box-shadow: 0px 10px 30px #fff;
-    margin: 10px 5px 0px 10px;
-    opacity: 1; //padding: 0px 20px;
     width: 100%;
-    overflow: auto;
-    flex-direction: column;
-    @media (min-width: 320px) and (max-width: 480px) {
-      width: 100%;
+    justify-content: center;
+    align-items: center;
+    &.border-content {
+      border-right: 2px solid #ddd;
     }
-    .content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      img {
-        width: 100px;
-      }
-      .ant-btn {
-        width: 150px;
-        height: 35px;
-      }
+    flex-direction: column;
+    img {
+      width: 150px;
+    }
+    .ant-btn {
+      width: 150px;
+      height: 35px;
     }
   }
 }
