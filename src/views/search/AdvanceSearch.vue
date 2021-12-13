@@ -90,14 +90,14 @@
 <script>
 import Header from "@/components/dashboard/layout/Header.vue";
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
-import Footer from "@/components/auth/Footer.vue";
-import SearchForm from "@/components/search/SearchForm.vue";
+// import Footer from "@/components/auth/Footer.vue";
+import SearchForm from "@/components/search/CandidateProfile.vue";
 export default {
 	name: "AdvanceSearch",
 	components: {
 		Header,
 		Sidebar,
-		Footer,
+		// Footer,
 		SearchForm,
 	},
 	data() {

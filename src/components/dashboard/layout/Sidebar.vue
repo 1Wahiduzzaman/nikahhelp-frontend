@@ -1,26 +1,18 @@
 <template>
 	<div class="d-sidebar" style="padding-right: 15px">
-		<template v-if="path == 'AdvanceSearch'">
+		<template v-if="showMenu && path == 'AdvanceSearch'">
 			<div>
-				<SidebarHeader v-if="!collapsed"/>
-				<div class="mt-5">
-					<div class="select-box">
-						<select class="custom-select" v-model="maritalStatus">
-							<option value="">Select Maritial Status</option>
-							<option value="single">Single</option>
-							<option value="married">Married</option>
-							<option value="divorced">Divorced</option>
-						</select>
-					</div>
-					
+				<SidebarHeader @onClickBack="showMenu = false" v-if="!collapsed"/>
+				<div v-if="!collapsed" class="mt-5">
+					<SimpleSearch />
 				</div>
 			
 			</div>
 		</template>
 		<template v-else>
 			<ul class="sidebar-list" v-show="!collapsed">
-				<li  class="list-item">
-					<router-link to="/search"
+				<li @click.prevent="showMenu = true"  class="list-item">
+					<router-link to="/search/advance"
 						><img
 							class="mr-3"
 							src="@/assets/icon/search-love-secondary.svg"
@@ -153,11 +145,17 @@
 
 <script>
 import SidebarHeader from '@/components/dashboard/layout/SidebarHeader'
+import SimpleSearch from "@/components/search/SimpleSearch.vue";
+
 export default {
 	name: "Sidebar",
 	components: {
-		SidebarHeader
+		SidebarHeader,
+		SimpleSearch
 	},
+	data: () => ({
+		showMenu: true
+	}),
 	computed: {
 		path() {
 			return this.$route.name

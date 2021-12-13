@@ -15,7 +15,8 @@ export default {
     name: 'SidebarHeader',
     methods: {
         goBack() {
-            this.$router.push({name: 'ManageTeam'})
+            // this.$router.push({name: 'ManageTeam'});
+            this.$emit('onClickBack')
         }
     }
 }
