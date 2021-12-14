@@ -4,7 +4,7 @@
 			<div>
 				<SidebarHeader @onClickBack="showMenu = false" v-if="!collapsed"/>
 				<div v-if="!collapsed" class="mt-5">
-					<SimpleSearch />
+					<slot name="search"> </slot>
 				</div>
 			
 			</div>
@@ -145,13 +145,10 @@
 
 <script>
 import SidebarHeader from '@/components/dashboard/layout/SidebarHeader'
-import SimpleSearch from "@/components/search/SimpleSearch.vue";
-
 export default {
 	name: "Sidebar",
 	components: {
 		SidebarHeader,
-		SimpleSearch
 	},
 	data: () => ({
 		showMenu: true

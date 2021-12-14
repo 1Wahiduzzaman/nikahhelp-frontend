@@ -64,7 +64,14 @@
 						breakpoint="sm"
 						@breakpoint="responsiveToggle"
 					>
-						<Sidebar :collapsed="collapsed" @collapseSideBar="collapsed = !collapsed" />
+						<Sidebar 
+							:collapsed="collapsed" 
+							@collapseSideBar="collapsed = !collapsed" 
+						>
+						<template v-slot:search>
+							<SimpleSearch />
+						</template>
+						</Sidebar>
 					</a-layout-sider>
 					<a-layout>  
 						<a-layout-content>
@@ -91,12 +98,14 @@
 import Header from "@/components/dashboard/layout/Header.vue";
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 // import Footer from "@/components/auth/Footer.vue";
+import SimpleSearch from "@/components/search/SimpleSearch.vue";
 import SearchForm from "@/components/search/CandidateProfile.vue";
 export default {
 	name: "AdvanceSearch",
 	components: {
 		Header,
 		Sidebar,
+		SimpleSearch,
 		// Footer,
 		SearchForm,
 	},
