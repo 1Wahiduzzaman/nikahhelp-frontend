@@ -44,7 +44,7 @@ Vue.component('Layout', Layout);
 Vue.component('AdminLayout', AdminLayout);
 import VueSocketIO from 'vue-socket.io'
 import SocketIO from 'socket.io-client'
-const socketConnection = SocketIO('https://matrimonyassist.com/chat_nodejs/');
+const socketConnection = SocketIO('https://biya.arranzed.com:4009');
 
 Vue.use(new VueSocketIO({
   debug: true,
