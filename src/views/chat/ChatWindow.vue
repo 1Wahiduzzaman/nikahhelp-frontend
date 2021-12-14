@@ -4,7 +4,7 @@
       <div style="margin-bottom: 5px; padding-right: 1000px"></div>   <!--plz ignore this div -->
       <div class="row">
         <div class="col-12">
-          <div class="chat-wrapper my-4">
+          <div class="chat-wrapper my-2">
             <div class="chat-left" :class="{'chat-hide': conversationTitle}">
               <div class="chat-title d-chat-title">My {{ chatTab }} chats</div>
               <div class="chat-search">
@@ -12,8 +12,10 @@
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.02 40.76">
                     <g id="Layer_2" data-name="Layer 2">
                       <g id="draw_boxes" data-name="draw boxes">
-                        <path fill="#cccccc" class="cls-1" d="M41.67,35.89A1.33,1.33,0,0,0,41.58,34L30.34,23.79a1.34,1.34,0,0,0-1.88.09l-4,4.44a1.34,1.34,0,0,0,.09,1.88L35.78,40.41a1.32,1.32,0,0,0,1.88-.09Z"/>
-                        <path fill="#cccccc" class="cls-1" d="M14.72,0A14.72,14.72,0,1,1,9.91.81,14.73,14.73,0,0,1,14.72,0m0,4a10.82,10.82,0,0,0-3.51.59h0A10.73,10.73,0,1,0,14.72,4Z"/>
+                        <path fill="#cccccc" class="cls-1"
+                              d="M41.67,35.89A1.33,1.33,0,0,0,41.58,34L30.34,23.79a1.34,1.34,0,0,0-1.88.09l-4,4.44a1.34,1.34,0,0,0,.09,1.88L35.78,40.41a1.32,1.32,0,0,0,1.88-.09Z"/>
+                        <path fill="#cccccc" class="cls-1"
+                              d="M14.72,0A14.72,14.72,0,1,1,9.91.81,14.73,14.73,0,0,1,14.72,0m0,4a10.82,10.82,0,0,0-3.51.59h0A10.73,10.73,0,1,0,14.72,4Z"/>
                       </g>
                     </g>
                   </svg>
@@ -21,54 +23,80 @@
                 </div>
               </div>
               <div class="chat-category">
-                <nav >
+                <nav>
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
-                      <div class="category-item"  @click="setChatTab('Recent')">
+                    <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                       aria-controls="nav-home" aria-selected="true">
+                      <div class="category-item" @click="setChatTab('Recent')">
                         <a href="#">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="recent-icon" viewBox="0 0 33.75 33.75" style="margin-top:3px">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="recent-icon" viewBox="0 0 33.75 33.75"
+                               style="margin-top:3px">
                             <g id="Layer_2" data-name="Layer 2">
                               <g id="middle">
-                                <path class="cls-1" d="M16.88,3A13.88,13.88,0,1,1,3,16.88,13.89,13.89,0,0,1,16.88,3m0-3A16.88,16.88,0,1,0,33.75,16.88,16.88,16.88,0,0,0,16.88,0Z"/>
-                                <polygon class="cls-1" points="25.49 19.47 13.92 19.47 13.92 10.67 15.92 10.67 15.92 17.47 25.49 17.47 25.49 19.47"/>
+                                <path class="cls-1"
+                                      d="M16.88,3A13.88,13.88,0,1,1,3,16.88,13.89,13.89,0,0,1,16.88,3m0-3A16.88,16.88,0,1,0,33.75,16.88,16.88,16.88,0,0,0,16.88,0Z"/>
+                                <polygon class="cls-1"
+                                         points="25.49 19.47 13.92 19.47 13.92 10.67 15.92 10.67 15.92 17.47 25.49 17.47 25.49 19.47"/>
                               </g>
                             </g>
                           </svg>
-                          <span class="countOfChat">{{totalUnreadCount}}</span>
+                          <span class="countOfChat">{{ totalUnreadCount }}</span>
                           <p class="category-name">Recent</p>
                         </a>
                       </div>
                     </a>
-                    <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">
+                    <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                       aria-controls="nav-profile" aria-selected="false">
                       <div class="category-item" @click="setChatTab('Team')">
                         <a href="#">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.02 31.17" style="margin-top:3px">
                             <g id="Layer_2" data-name="Layer 2">
                               <g id="middle">
-                                <path class="cls-1" d="M9.37,20.31A13.43,13.43,0,0,0,6.8,24.07,14.3,14.3,0,0,0,5.64,28c0,.34-.07.68-.09,1s0,.67,0,1v1.08H2A2,2,0,0,1,.59,30.5,2,2,0,0,1,0,29.09,12.63,12.63,0,0,1,6,18.34,9.73,9.73,0,0,0,9.37,20.31Zm4.13-3.68a8.66,8.66,0,0,1-1.61-1.7,9.2,9.2,0,0,1-1.74-5.72A8.93,8.93,0,0,1,11,5.64a9.08,9.08,0,0,1,1.72-2.52A8.06,8.06,0,0,0,7.47,17.38a8.16,8.16,0,0,0,2.93,1.54c.28-.28.56-.52.84-.75l.34-.28c.3-.23.58-.44.86-.63a1.43,1.43,0,0,1,1.27-.16l.93.34A8.39,8.39,0,0,1,13.5,16.63Zm19.15,3.68a13.64,13.64,0,0,1,2.57,3.76A14.3,14.3,0,0,1,36.38,28c0,.34.07.68.09,1s0,.67,0,1v1.08H40a2,2,0,0,0,1.42-.59A2,2,0,0,0,42,29.09a12.63,12.63,0,0,0-6-10.75A9.73,9.73,0,0,1,32.65,20.31Zm-5.27-2.87.93-.34a1.43,1.43,0,0,1,1.27.16c.28.19.56.4.86.63l.34.28c.28.23.56.47.84.75a8.06,8.06,0,0,0-2.33-15.8A9.08,9.08,0,0,1,31,5.64a8.93,8.93,0,0,1,.86,3.57,9.2,9.2,0,0,1-1.74,5.72,8.66,8.66,0,0,1-1.61,1.7A8.39,8.39,0,0,1,27.38,17.44Zm2-11.93A9.23,9.23,0,0,0,20.92,0,9.23,9.23,0,0,0,11.7,9.22a9.14,9.14,0,0,0,1.94,5.66,8.6,8.6,0,0,0,1.65,1.65,9.21,9.21,0,0,0,3,1.53,9.21,9.21,0,0,0,8.28-1.53A9,9,0,0,0,28.1,15a9.23,9.23,0,0,0,1.26-9.5Zm-.45,13.11h0a4.06,4.06,0,0,0-.36-.26,1.1,1.1,0,0,0-.14-.09A16.08,16.08,0,0,1,25,19.8a17.09,17.09,0,0,1-4.08.58c-1.2.11-3.87-.67-5.72-1.28l-.48-.16-1.5-.52c-.26.17-.51.36-.75.55l-.32.27A14.67,14.67,0,0,0,11,20.31a13.86,13.86,0,0,0-2.57,3.76A14.28,14.28,0,0,0,7.26,28c0,.34-.07.68-.1,1s0,.67,0,1v1.17L34.7,31v-1.2a13.67,13.67,0,0,0-1.77-6.73,14.08,14.08,0,0,0-3.38-4Zm-.37-.26a4.06,4.06,0,0,1,.36.26m-.36-.26a4.06,4.06,0,0,1,.36.26"/>
+                                <path class="cls-1"
+                                      d="M9.37,20.31A13.43,13.43,0,0,0,6.8,24.07,14.3,14.3,0,0,0,5.64,28c0,.34-.07.68-.09,1s0,.67,0,1v1.08H2A2,2,0,0,1,.59,30.5,2,2,0,0,1,0,29.09,12.63,12.63,0,0,1,6,18.34,9.73,9.73,0,0,0,9.37,20.31Zm4.13-3.68a8.66,8.66,0,0,1-1.61-1.7,9.2,9.2,0,0,1-1.74-5.72A8.93,8.93,0,0,1,11,5.64a9.08,9.08,0,0,1,1.72-2.52A8.06,8.06,0,0,0,7.47,17.38a8.16,8.16,0,0,0,2.93,1.54c.28-.28.56-.52.84-.75l.34-.28c.3-.23.58-.44.86-.63a1.43,1.43,0,0,1,1.27-.16l.93.34A8.39,8.39,0,0,1,13.5,16.63Zm19.15,3.68a13.64,13.64,0,0,1,2.57,3.76A14.3,14.3,0,0,1,36.38,28c0,.34.07.68.09,1s0,.67,0,1v1.08H40a2,2,0,0,0,1.42-.59A2,2,0,0,0,42,29.09a12.63,12.63,0,0,0-6-10.75A9.73,9.73,0,0,1,32.65,20.31Zm-5.27-2.87.93-.34a1.43,1.43,0,0,1,1.27.16c.28.19.56.4.86.63l.34.28c.28.23.56.47.84.75a8.06,8.06,0,0,0-2.33-15.8A9.08,9.08,0,0,1,31,5.64a8.93,8.93,0,0,1,.86,3.57,9.2,9.2,0,0,1-1.74,5.72,8.66,8.66,0,0,1-1.61,1.7A8.39,8.39,0,0,1,27.38,17.44Zm2-11.93A9.23,9.23,0,0,0,20.92,0,9.23,9.23,0,0,0,11.7,9.22a9.14,9.14,0,0,0,1.94,5.66,8.6,8.6,0,0,0,1.65,1.65,9.21,9.21,0,0,0,3,1.53,9.21,9.21,0,0,0,8.28-1.53A9,9,0,0,0,28.1,15a9.23,9.23,0,0,0,1.26-9.5Zm-.45,13.11h0a4.06,4.06,0,0,0-.36-.26,1.1,1.1,0,0,0-.14-.09A16.08,16.08,0,0,1,25,19.8a17.09,17.09,0,0,1-4.08.58c-1.2.11-3.87-.67-5.72-1.28l-.48-.16-1.5-.52c-.26.17-.51.36-.75.55l-.32.27A14.67,14.67,0,0,0,11,20.31a13.86,13.86,0,0,0-2.57,3.76A14.28,14.28,0,0,0,7.26,28c0,.34-.07.68-.1,1s0,.67,0,1v1.17L34.7,31v-1.2a13.67,13.67,0,0,0-1.77-6.73,14.08,14.08,0,0,0-3.38-4Zm-.37-.26a4.06,4.06,0,0,1,.36.26m-.36-.26a4.06,4.06,0,0,1,.36.26"/>
                               </g>
                             </g>
                           </svg>
-                          <span class="countOfChat">{{teamUnreadCount}}</span>
+                          <span class="countOfChat">{{ teamUnreadCount }}</span>
                           <p class="category-name">Team</p>
                         </a>
                       </div>
                     </a>
-                    <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">
-                      <div class="category-item"  @click="setChatTab('Connected')">
+                    <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+                       aria-controls="nav-contact" aria-selected="false">
+                      <div class="category-item" @click="setChatTab('Connected')">
                         <a href="#">
                           <!-- <img src="@/assets/icon/connected.svg" alt="connected icon"/> -->
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.52 39.16" style="margin-top:3px">
                             <g id="Layer_2" data-name="Layer 2">
                               <g id="middle">
-                                <path class="cls-1" d="M24.46,14.64c1.43,1.43,1.62,4.38-3.42,7-5-2.6-4.85-5.55-3.42-7S21,14.17,21,15.3C21,14.17,23,13.2,24.46,14.64ZM8.59,25.1a6.48,6.48,0,1,0-6.48-6.48A6.48,6.48,0,0,0,8.59,25.1Zm1.29,0H7.3A7.37,7.37,0,0,0,0,31.59a.84.84,0,0,0,.85.91H16.32a.84.84,0,0,0,.85-.91A7.37,7.37,0,0,0,9.88,25.15Zm24-7.43a6.48,6.48,0,1,0-6.48-6.48A6.48,6.48,0,0,0,33.93,17.72Zm1.29.05H32.64a7.38,7.38,0,0,0-7.3,6.44.85.85,0,0,0,.86.91H41.66a.84.84,0,0,0,.85-.91A7.37,7.37,0,0,0,35.22,17.77ZM7,11a1.53,1.53,0,0,0,.68.23,1.48,1.48,0,0,0,1.38-.65,12.12,12.12,0,0,1,11-4.86l-.92,2.71,8.72-1.76L22,0,21,2.84A15.07,15.07,0,0,0,6.59,8.94,1.49,1.49,0,0,0,7,11ZM37,26a1.49,1.49,0,0,0-2,.73A12.15,12.15,0,0,1,25,33.22l.48-2.83-8.34,3.1L24,39.16l.51-3h.63a15.08,15.08,0,0,0,12.68-8.25A1.49,1.49,0,0,0,37,26Z"/>
+                                <path class="cls-1"
+                                      d="M24.46,14.64c1.43,1.43,1.62,4.38-3.42,7-5-2.6-4.85-5.55-3.42-7S21,14.17,21,15.3C21,14.17,23,13.2,24.46,14.64ZM8.59,25.1a6.48,6.48,0,1,0-6.48-6.48A6.48,6.48,0,0,0,8.59,25.1Zm1.29,0H7.3A7.37,7.37,0,0,0,0,31.59a.84.84,0,0,0,.85.91H16.32a.84.84,0,0,0,.85-.91A7.37,7.37,0,0,0,9.88,25.15Zm24-7.43a6.48,6.48,0,1,0-6.48-6.48A6.48,6.48,0,0,0,33.93,17.72Zm1.29.05H32.64a7.38,7.38,0,0,0-7.3,6.44.85.85,0,0,0,.86.91H41.66a.84.84,0,0,0,.85-.91A7.37,7.37,0,0,0,35.22,17.77ZM7,11a1.53,1.53,0,0,0,.68.23,1.48,1.48,0,0,0,1.38-.65,12.12,12.12,0,0,1,11-4.86l-.92,2.71,8.72-1.76L22,0,21,2.84A15.07,15.07,0,0,0,6.59,8.94,1.49,1.49,0,0,0,7,11ZM37,26a1.49,1.49,0,0,0-2,.73A12.15,12.15,0,0,1,25,33.22l.48-2.83-8.34,3.1L24,39.16l.51-3h.63a15.08,15.08,0,0,0,12.68-8.25A1.49,1.49,0,0,0,37,26Z"/>
                               </g>
                             </g>
                           </svg>
-                          <span class="countOfChat">{{connectedUnreadCount}}</span>
+                          <span class="countOfChat">{{ connectedUnreadCount }}</span>
                           <p class="category-name">Connected</p>
                         </a>
                       </div>
+                    </a>
+                    <a class="nav-link mt-2">
+                      <a-dropdown>
+                        <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                          <a-icon type="more" class="fs-30 font-weight-bolder br-50 bg-c9 color-primary"/>
+                        </a>
+                        <a-menu slot="overlay" class="text-center px-2">
+                          <a-menu-item class="border-bottom">
+                            <a class="fs-12 color-primary">Private chat request</a>
+                          </a-menu-item>
+                          <a-menu-item class="border-bottom">
+                            <a class="fs-12 color-primary">Chat history</a>
+                          </a-menu-item>
+                          <a-menu-item class="border-bottom">
+                            <a class="fs-12 color-primary">Archived chat</a>
+                          </a-menu-item>
+                        </a-menu>
+                      </a-dropdown>
                     </a>
                   </div>
                 </nav>
@@ -124,13 +152,16 @@
               </div>
             </div>
             <div class="chat-right" :class="{'chat-hide': !conversationTitle}">
-              <button class="btn btn-primary my-4 d-md-none" @click="backToTabList()">Back</button>
+              <button class="btn btn-primary flex justify-content-center align-items-center my-2 d-md-none"
+                      @click="backToTabList()">
+                <a-icon type="caret-left"/>
+              </button>
               <div class="header clearfix">
                 <div class="left">
-                  <div  class="top">
+                  <div class="top">
                     <div class="item-img">
                       <img src="../../assets/info-img.png" alt="info image">
-                      <span ></span>
+                      <span></span>
                     </div>
                     <div class="chat-info">
                       <div class="chat-name">{{ conversationTitle }}</div>
@@ -142,7 +173,28 @@
                   <div class="chat-group">{{ getChatType }} chat</div>
                 </div>
                 <div class="right">
-
+                  <a-dropdown>
+                    <a class="ant-dropdown-link py-2" @click="e => e.preventDefault()">
+                      <a-icon type="more" class="fs-30 font-weight-bolder rotate-90 br-50 bg-c9 color-primary"/>
+                    </a>
+                    <a-menu slot="overlay" class="text-center px-2">
+                      <a-menu-item class="border-bottom">
+                        <a class="fs-12 color-primary">Mute this chat</a>
+                      </a-menu-item>
+                      <a-menu-item class="border-bottom">
+                        <a class="fs-12 color-primary">Mark as read</a>
+                      </a-menu-item>
+                      <a-menu-item class="border-bottom">
+                        <a class="fs-12 color-primary">Add to chat history</a>
+                      </a-menu-item>
+                      <a-menu-item class="border-bottom">
+                        <a class="fs-12 color-primary">Archive chat</a>
+                      </a-menu-item>
+                      <a-menu-item>
+                        <a class="text-danger fs-12">Delete chat</a>
+                      </a-menu-item>
+                    </a-menu>
+                  </a-dropdown>
                 </div>
               </div>
               <div class="chat-area">
@@ -157,24 +209,30 @@
                       <span></span>
                     </div>
                     <div class="message">
-                      <p class="msg-text">{{item.body || ''}}</p>
+                      <p class="msg-text">{{ item.body || '' }}</p>
                       <p class="date-time"> {{ messageCreatedAt(item.created_at) }} </p>
                     </div>
 
                   </div>
                 </div>
                 <div class="footer">
-                  <!-- <div class="footer-top"><strong>Hossain</strong> is typing...</div> -->
+<!--                   <div class="footer-top"><strong>Someone</strong> is typing...</div>-->
                   <div class="footer-bottom">
                     <form action="#" @submit.prevent="sendMsg">
                       <div class="left">
                         <div class="message-box">
-                          <!-- <button class="btn-emoji">&#128528;</button> -->
-                          <textarea name="message" id="" cols="30" rows="10" placeholder="Enter message..." v-model="msg_text"></textarea>
-
+                          <button class="btn-emoji px-2">&#128528;</button>
+                          <textarea name="message" id="" cols="30" rows="10" placeholder="Enter message..."
+                                    v-model="msg_text"></textarea>
+                          <div class="position-absolute msgbox-right">
+                            <div class="flex">
+                              <button><img src="../../assets/icon/microphone.png" alt="icon" class="mr-2 microphone" /></button>
+                              <button><a-icon type="file-image" class="color-primary" /></button>
+                            </div>
+                          </div>
                         </div>
                         <!-- <button :disabled="returnMsgSendBtnDeactiveStatus" class="btn btn-primary btn-submit js-msg-send">  -->
-                        <button  class="btn btn-primary btn-submit js-msg-send">
+                        <button class="btn btn-primary btn-submit js-msg-send">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.68 18.77">
                             <g id="Layer_2" data-name="Layer 2">
                               <g id="middle" fill="white">
@@ -203,9 +261,10 @@
 <script>
 import ChatListItem from '@/components/notification/ChatListItem';
 import ApiService from '@/services/api.service';
-import { pick, map } from 'lodash';
+import {pick, map} from 'lodash';
+
 const messageKeys = ['id', 'user_id', 'chat_id', 'team_id', 'body', 'seen', 'created_at'];
-import { format } from 'timeago.js'
+import {format} from 'timeago.js'
 
 export default {
   name: 'ChatWindow',
@@ -217,7 +276,7 @@ export default {
       console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
     }
   },
-  data(){
+  data() {
     return {
       conversationTitle: '',
       type: 'team chat',
@@ -238,11 +297,11 @@ export default {
   components: {
     ChatListItem
   },
-  watch:{
-    scrollFlag (newValue, oldValue) {
+  watch: {
+    scrollFlag(newValue, oldValue) {
       // Our fancy notification (2).
       // console.log(oldValue);
-      if(newValue){
+      if (newValue) {
         console.log('scroll down needed now');
 
         // var msg_list = this.$store.state.chat.messages;
@@ -261,52 +320,51 @@ export default {
 
         // this.$refs.chatbox.scrollTop = this.$refs.chatbox.lastElementChild.offsetTop;
         //
-        this.$store.dispatch('setScrollDownStatus',false);
+        this.$store.dispatch('setScrollDownStatus', false);
       }
     }
   },
   computed: {
-    scrollFlag: function(){
+    scrollFlag: function () {
       return this.$store.state.chat.scrolldown_msg;
     },
-    totalUnreadCount: function(){
+    totalUnreadCount: function () {
       return this.$store.state.chat.unread_records.length;
     },
-    teamUnreadCount: function(){
+    teamUnreadCount: function () {
       var count = 0;
-      for(var i = 0; i<this.$store.state.chat.unread_records.length; i++){
-        if(this.$store.state.chat.unread_records[i].conv_type == 'team chat'){
+      for (var i = 0; i < this.$store.state.chat.unread_records.length; i++) {
+        if (this.$store.state.chat.unread_records[i].conv_type == 'team chat') {
           count = count + 1;
         }
       }
       return count;
     },
-    connectedUnreadCount: function(){
+    connectedUnreadCount: function () {
       var count = 0;
-      for(var i = 0; i<this.$store.state.chat.unread_records.length; i++){
-        if(this.$store.state.chat.unread_records[i].conv_type == 'connected'){
+      for (var i = 0; i < this.$store.state.chat.unread_records.length; i++) {
+        if (this.$store.state.chat.unread_records[i].conv_type == 'connected') {
           count = count + 1;
         }
       }
       return count;
     },
-    connectedConversations: function() {
+    connectedConversations: function () {
       var connectedConversations = [];
-      if(this.conv_search_key == null || this.conv_search_key == ""){
-        for(var i=0;i<this.$store.state.chat.conversations.length; i++){
-          if(this.$store.state.chat.conversations[i].type == 'connected'){
+      if (this.conv_search_key == null || this.conv_search_key == "") {
+        for (var i = 0; i < this.$store.state.chat.conversations.length; i++) {
+          if (this.$store.state.chat.conversations[i].type == 'connected') {
             connectedConversations.push(this.$store.state.chat.conversations[i]);
           }
         }
         return connectedConversations;
-      }
-      else{
+      } else {
         var lKey = this.conv_search_key.toLowerCase();
-        for(var i=0;i<this.$store.state.chat.conversations.length; i++){
+        for (var i = 0; i < this.$store.state.chat.conversations.length; i++) {
           var lTitle = this.$store.state.chat.conversations[i].title.toLowerCase();
-          if(this.$store.state.chat.conversations[i].type == 'connected'){
+          if (this.$store.state.chat.conversations[i].type == 'connected') {
 
-            if(lTitle.includes(lKey)){
+            if (lTitle.includes(lKey)) {
               connectedConversations.push(this.$store.state.chat.conversations[i]);
             }
           }
@@ -316,32 +374,32 @@ export default {
     },
     getAuthUserId() {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
-      if(loggedUser) {
+      if (loggedUser) {
         return loggedUser.id;
       }
       return null;
     },
     getChatType() {
-      if(this.inConnectedChat) {
+      if (this.inConnectedChat) {
         return 'Connected Group';
       } else {
-       return this.one_to_one_user ? 'Private' : this.conversationTitle + ' Group'
+        return this.one_to_one_user ? 'Private' : this.conversationTitle + ' Group'
       }
     }
   },
-  created(){
+  created() {
     this.loadTeamChat();
     this.loadChatHistory();
     this.loadConnectedGroup();
   },
   mounted() {
     let loggedUser = JSON.parse(localStorage.getItem('user'));
-    if(loggedUser) {
+    if (loggedUser) {
       this.$socket.emit('ping', {user_id: loggedUser.id});
 
       this.sockets.subscribe('ping_success', function (res) {
         // console.log(res);
-        if(res && res.online_users) {
+        if (res && res.online_users) {
           this.online_users = res.online_users;
         }
       });
@@ -353,7 +411,7 @@ export default {
       });
     }
   },
-  methods:{
+  methods: {
     setChatTab(type) {
       this.chatTab = type;
     },
@@ -384,6 +442,7 @@ export default {
           state: 'seen',
           name: item.user?.full_name || 'user name',
           logo: item.user?.avatar,
+          user_id: item.user_id,
           message: pick(item.last_message, messageKeys)
         }
       });
@@ -409,10 +468,10 @@ export default {
 
       return [...lastGroupMsg, ...singleChat, ...privateChat];
     },
-    async loadTeamChat(){
+    async loadTeamChat() {
       try {
-        let { data }  = await ApiService.get('/v1/team-chat').then(res => res.data);
-        if(data && data.team_members) {
+        let {data} = await ApiService.get('/v1/team-chat').then(res => res.data);
+        if (data && data.team_members) {
           this.teamMembers = map(data.team_members, item => {
             return item.user_id.toString();
           });
@@ -427,8 +486,8 @@ export default {
         let payload = {
           team_id: 1
         };
-        let { data }  = await ApiService.post('/v1/connection-list-chat', payload).then(res => res.data);
-        if(data && data.connected_teams) {
+        let {data} = await ApiService.post('/v1/connection-list-chat', payload).then(res => res.data);
+        if (data && data.connected_teams) {
           this.connectedTeam = map(data.connected_teams, item => {
             return {
               label: 'Connected Team',
@@ -443,19 +502,19 @@ export default {
         console.error(e);
       }
     },
-    async loadChatHistory(){
+    async loadChatHistory() {
       try {
-        let { data }  = await ApiService.get('/v1/chat-history').then(res => res.data);
+        let {data} = await ApiService.get('/v1/chat-history').then(res => res.data);
         this.chatHistory = this.processChatHistoryResponse(data);
       } catch (e) {
         console.error(e);
       }
     },
 
-    async loadIndividualChatHistory(payload){
+    async loadIndividualChatHistory(payload) {
       try {
-        let { data }  = await ApiService.post('/v1/individual-chat-history', payload).then(res => res.data);
-        if(data && data.message_history) {
+        let {data} = await ApiService.post('/v1/individual-chat-history', payload).then(res => res.data);
+        if (data && data.message_history) {
           data = data.message_history;
         }
         return data.map(item => {
@@ -474,7 +533,7 @@ export default {
         let payload = {
           to_team_id: 1
         };
-        let { data }  = await ApiService.post('/v1/connected-team-chat-history', payload).then(res => res.data);
+        let {data} = await ApiService.post('/v1/connected-team-chat-history', payload).then(res => res.data);
         this.chats = data.map(item => {
           item.senderId = item.sender?.id
           return item;
@@ -483,7 +542,7 @@ export default {
         console.error(e);
       }
     },
-    async getIndividualChat({ message : {chat_id, team_id}, name, user_id }) {
+    async getIndividualChat({message: {chat_id, team_id}, name, user_id}) {
       const payload = {
         type: chat_id ? 'single' : 'team',
         chat_id,
@@ -515,14 +574,14 @@ export default {
     backToTabList() {
       this.conversationTitle = '';
     },
-    createConversations(){
+    createConversations() {
       // console.log('create conv clicked');
       // var member_1 = Math.floor(Math.random() * 6) + 1;
       // var member_2 = Math.floor(Math.random() * 7) + 1;
       // var member_3 = Math.floor(Math.random() * 8) + 1;
       // var member_4 = Math.floor(Math.random() * 9) + 1;
 
-      var members = [8,9,10,11];
+      var members = [8, 9, 10, 11];
       // members = this.unique(members);
 
       // var conv_title = 'Group:'+members[0].toString()+","+members[1].toString()+','+members[2].toString();
@@ -546,9 +605,9 @@ export default {
         last_msg: ''
       }
     },
-    selectConversation(conv_id){
+    selectConversation(conv_id) {
       // this.current_conversation = conv_id;
-      this.$store.dispatch('setCurrentConversation',conv_id);
+      this.$store.dispatch('setCurrentConversation', conv_id);
 
       var user_id = this.$store.state.user.user.id;
       var payload = {
@@ -556,12 +615,12 @@ export default {
         conv_id: conv_id
       }
 
-      this.$store.dispatch('clearUnreadMsg',payload);
+      this.$store.dispatch('clearUnreadMsg', payload);
     },
-    async sendMsg(e){
+    async sendMsg(e) {
       console.log(e);
-      if(this.msg_text) {
-        if(this.inConnectedChat) {
+      if (this.msg_text) {
+        if (this.inConnectedChat) {
           await this.sendConnectedTeamMessage();
         } else {
           await this.sendTeamMessage();
@@ -574,25 +633,27 @@ export default {
       let payload = {
         team_id: this.activeTeam.toString(),
         body: this.msg_text,
+        message: this.msg_text,
         created_at: new Date(),
         senderId: loggedUser.id.toString(),
         senderInfo: loggedUser
       }
 
-      if(this.one_to_one_user) {
+      if (this.one_to_one_user) {
         payload.receiver = this.one_to_one_user.toString();
         url = 'send-message';
       } else {
-        payload.receivers = JSON.stringify(this.teamMembers);
+        payload.receivers = this.teamMembers;
         url = 'send-message-to-team';
       }
 
-      if(this.one_to_one_user) {
+      if (this.one_to_one_user) {
         payload.sender = loggedUser;
         payload.to = this.one_to_one_user.toString();
         this.chats.unshift(payload);
         this.$socket.emit('send_message', payload);
       } else {
+        this.chats.unshift(payload);
         this.$socket.emit('send_message_in_group', payload);
       }
       payload.sender = loggedUser.id.toString();
@@ -609,53 +670,52 @@ export default {
         body: this.msg_text,
         created_at: new Date(),
         senderId: loggedUser.id.toString(),
-        senderInfo: loggedUser
+        senderInfo: loggedUser,
       };
       this.$socket.emit('send_message_in_group', payload);
       this.msg_text = null;
       await ApiService.post(`/v1/send-message-team-to-team`, payload).then(res => res.data);
     },
-    unique(array){
-      return array.filter(function(el, index, arr) {
+    unique(array) {
+      return array.filter(function (el, index, arr) {
         return index == arr.indexOf(el);
       });
     },
-    checkUnread: function(conv_id){
-      for(var i = 0; i < this.$store.state.chat.unread_records.length; i++){
-        if(this.$store.state.chat.unread_records[i].conv_id == conv_id){
+    checkUnread: function (conv_id) {
+      for (var i = 0; i < this.$store.state.chat.unread_records.length; i++) {
+        if (this.$store.state.chat.unread_records[i].conv_id == conv_id) {
           return true;
         }
       }
       return false;
     },
-    getUserImage(user_id){
-      for(var i = 0; i<this.$store.state.chat.user_info.length; i++){
+    getUserImage(user_id) {
+      for (var i = 0; i < this.$store.state.chat.user_info.length; i++) {
         // console.log(user_id,this.$store.state.chat.user_info[i].user_id);
-        if(this.$store.state.chat.user_info[i].user_id == user_id){
+        if (this.$store.state.chat.user_info[i].user_id == user_id) {
           return this.$store.state.chat.user_info[i].per_main_image_url
         }
       }
       return '../../assets/info-img.png';
       // return '../../assets/r-join2.png';
     },
-    getMsgDate(msg_date){
+    getMsgDate(msg_date) {
       var success = "";
       var date = "";
-      try{
+      try {
         date = msg_date.toDate();
         success = "t";
         //return date;
-      }catch(e){
+      } catch (e) {
         success = "f";
         var seconds = msg_date.seconds
-        date = new Date(seconds*1000);
+        date = new Date(seconds * 1000);
       }
 
-      if(success == "t"){
-        console.log("DateParse:success:",msg_date);
-      }
-      else{
-        console.log("DateParse:fail:",msg_date);
+      if (success == "t") {
+        console.log("DateParse:success:", msg_date);
+      } else {
+        console.log("DateParse:fail:", msg_date);
       }
 
       return date;
@@ -670,20 +730,28 @@ export default {
 .container {
   width: 100% !important;
 }
+
 @media (min-width: 1200px) {
   .container, .container-lg, .container-md, .container-sm, .container-xl {
     max-width: 100%;
   }
 }
+.msgbox-right {
+  top: 10px;
+  right: 10px;
+}
 .chat-hide {
   display: none;
 }
+
 .chat-show {
   display: block;
 }
+
 .d-chat-title {
   display: none;
 }
+
 @media (min-width: 992px) {
   .chat-hide {
     display: block;
@@ -692,6 +760,7 @@ export default {
     display: block;
   }
 }
+
 .clearfix {
   &::after {
     content: "";
@@ -699,6 +768,7 @@ export default {
     display: table;
   }
 }
+
 .chat-wrapper {
   margin: auto;
   padding: 20px;
@@ -709,6 +779,7 @@ export default {
   @media (max-width: 991px) {
     padding: 10px;
   }
+
   &::after {
     content: "";
     display: table;
@@ -716,21 +787,20 @@ export default {
     overflow: hidden;
 
   }
+
   .chat-left {
     float: left;
     width: 400px;
     max-width: 100%;
     padding-right: 5px;
-    min-height: 600px;
+    //min-height: 600px;
+    //height: calc(100vh - 195px);
     border-right: 2px solid #e5e5e5;
-
-
-
-
     @media (max-width: 913px) {
       .category-item {
         padding-bottom: 0px;
         margin-bottom: -20px;
+
         &::after {
           margin-bottom: 20px;
         }
@@ -754,14 +824,17 @@ export default {
       padding-right: 0;
       border-right: 0;
     }
+
     .chat-title {
       font-size: 30px;
       padding-left: 10px;
       margin-bottom: 15px;
     }
+
     .chat-search {
       position: relative;
       margin: 0 10px 10px;
+
       .has-search {
         svg {
           width: 24px;
@@ -771,12 +844,14 @@ export default {
           transform: translate(0, -50%);
         }
       }
+
       .has-search .form-control {
         padding-left: 50px;
 
         border: 0;
         border-radius: 10px;
         background: #f2f2f2;
+
         &::after {
           content: "";
           position: absolute;
@@ -789,6 +864,7 @@ export default {
 
         }
       }
+
       .has-search .form-control-feedback {
         position: absolute;
         z-index: 2;
@@ -801,6 +877,7 @@ export default {
         color: #aaa;
       }
     }
+
     .chat-category {
       display: flex;
       padding-bottom: 4px;
@@ -812,12 +889,16 @@ export default {
       @media (max-width: 991px) {
         padding-bottom: 10px;
       }
+
       nav {
-        width: calc(100% - 44px);
+        //width: calc(100% - 44px);
+        width: 100%;
+
         .nav-tabs {
           border: 0;
           display: flex;
           justify-content: space-between;
+          //align-items: center;
           .nav-link {
             margin-bottom: -2px;
             border: 0;
@@ -831,22 +912,27 @@ export default {
             @media (max-width: 375px) {
               padding: 0 3px;
             }
+
             .category-item {
               display: inline-block;
               text-align: center;
               position: relative;
+
               a {
                 min-height: 48px;
                 display: block;
+
                 svg {
                   width: 26px;
                   height: 26px;
                   fill: #cccccc;
                 }
               }
+
               img {
                 width: 26px;
               }
+
               .category-name {
                 color: #cccccc;
                 font-size: 14px;
@@ -888,6 +974,7 @@ export default {
                 right: 20px;
                 left: auto !important;
                 top: 27px !important;
+
                 .dropdown-item {
                   padding: 3px 0;
                   margin-bottom: 2px;
@@ -896,18 +983,21 @@ export default {
                   border-radius: 3px;
                   color: #3a3092;
                   background-color: #e6e6e6;
+
                   &:hover {
                     color: #ffffff;
                     background-color: #e51f76;
                   }
                 }
               }
+
               a {
                 p {
                   margin: 0;
                 }
               }
             }
+
             &.active {
               .category-item {
                 &::after {
@@ -920,9 +1010,11 @@ export default {
                   left: 0;
                   bottom: -6px;
                 }
+
                 svg {
                   fill: #6059a7;
                 }
+
                 .category-name {
                   color: #6059a7;
                 }
@@ -931,8 +1023,10 @@ export default {
           }
         }
       }
+
       .info-button {
         position: relative;
+
         button {
           &::after {
             border: 0;
@@ -942,6 +1036,7 @@ export default {
             background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAUCAIAAADOcrCxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNFMkU1NjBEQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNFMkU1NjBFQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0UyRTU2MEJCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0UyRTU2MENCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7zerWhAAABDElEQVR42mL4DwZfv/wEkt+//4ZwWRgYGG7ffH3tyksGMPAP1gGSTN++/oILAcHGtVf+/fvPxMXNxoAKmJgYmX78+IMsxMYOMpOJg4PFwEgaLqRvKAVkMAJtBFIgs5gYEYZAqJcvPgPJVy+/QLggUy6ce/rw/nsIX1VdVEtHnOnTxx9wIYjbf/38w/Tz5180l/389ZdJWIQLWYiPn4OXl50JaLW1naKgEEhORJTH2FQG4TJ07wExUOLm9Vcgq269gYiC1B47/OD1K6hLZWQFjM1kmN69+wYXAoInjz98//ab6f8/dEP//f8PcpmAACdcSEycl5ubDWQuMDBvXHsJ9KGSijDQu8zMTAABBgDuN39O859xpAAAAABJRU5ErkJggg==) no-repeat right center;
           }
         }
+
         .dropdown-menu {
           z-index: 1061;
           margin-top: 7px;
@@ -951,6 +1046,7 @@ export default {
           right: 0px;
           left: auto !important;
           top: 27px !important;
+
           .dropdown-item {
             padding: 3px 0;
             margin-bottom: 2px;
@@ -959,6 +1055,7 @@ export default {
             border-radius: 3px;
             color: #3a3092;
             background-color: #e6e6e6;
+
             &:hover {
               color: #ffffff;
               background-color: #e51f76;
@@ -966,6 +1063,7 @@ export default {
           }
         }
       }
+
       .pending-message {
         display: inline-block;
         background-color: #e51f76;
@@ -984,18 +1082,22 @@ export default {
         }
       }
     }
+
     .chat-item-wrapper {
       height: 500px;
       overflow-y: auto;
       @media (max-width: 991px) {
         height: 400px;
       }
+
       .chat-item {
         padding-top: 15px;
         padding-bottom: 10px;
         border-bottom: 1px solid #ececec;
+
         .top {
           display: flex;
+
           .item-img {
             height: 60px;
             width: 50px;
@@ -1004,11 +1106,13 @@ export default {
               height: 50px;
               width: 35px;
             }
+
             img {
               width: 50px;
               border: 2px solid #3ab54a;
               border-radius: 50%;
             }
+
             span {
               right: 1px;
               bottom: 11px;
@@ -1020,12 +1124,14 @@ export default {
               border: 2px solid #ffffff;
             }
           }
+
           .chat-info {
             max-width: 72%;
             padding-left: 15px;
             @media (max-width: 991px) {
               max-width: 66%;
             }
+
             .chat-group {
               background-color: #b1acd4;
               padding: 0px 5px;
@@ -1037,12 +1143,14 @@ export default {
               font-size: 12px;
               color: #ffffff;
             }
+
             .chat-name {
               font-size: 14px;
               color: #4e4e4e;
               font-weight: bold;
               clear: both;
             }
+
             .last-chat {
               color: #a7a7a7;
               width: 100%;
@@ -1052,10 +1160,12 @@ export default {
 
             }
           }
+
           .status-info {
             display: flex;
             padding-top: 13px;
             align-items: flex-start;
+
             .status {
               width: 16px;
               height: 16px;
@@ -1065,8 +1175,10 @@ export default {
               margin-top: 10px;
               margin-right: 5px;
             }
+
             .info-button {
               position: relative;
+
               button {
                 &::after {
                   border: 0;
@@ -1076,6 +1188,7 @@ export default {
                   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAUCAIAAADOcrCxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNFMkU1NjBEQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNFMkU1NjBFQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0UyRTU2MEJCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0UyRTU2MENCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7zerWhAAABDElEQVR42mL4DwZfv/wEkt+//4ZwWRgYGG7ffH3tyksGMPAP1gGSTN++/oILAcHGtVf+/fvPxMXNxoAKmJgYmX78+IMsxMYOMpOJg4PFwEgaLqRvKAVkMAJtBFIgs5gYEYZAqJcvPgPJVy+/QLggUy6ce/rw/nsIX1VdVEtHnOnTxx9wIYjbf/38w/Tz5180l/389ZdJWIQLWYiPn4OXl50JaLW1naKgEEhORJTH2FQG4TJ07wExUOLm9Vcgq269gYiC1B47/OD1K6hLZWQFjM1kmN69+wYXAoInjz98//ab6f8/dEP//f8PcpmAACdcSEycl5ubDWQuMDBvXHsJ9KGSijDQu8zMTAABBgDuN39O859xpAAAAABJRU5ErkJggg==) no-repeat right center;
                 }
               }
+
               .dropdown-menu {
                 z-index: 1061;
                 margin-top: 7px;
@@ -1085,6 +1198,7 @@ export default {
                 right: 0px;
                 left: auto !important;
                 top: 27px !important;
+
                 .dropdown-item {
                   padding: 3px 0;
                   margin-bottom: 2px;
@@ -1093,6 +1207,7 @@ export default {
                   border-radius: 3px;
                   color: #3a3092;
                   background-color: #e6e6e6;
+
                   &:hover {
                     color: #ffffff;
                     background-color: #e51f76;
@@ -1102,11 +1217,13 @@ export default {
             }
           }
         }
+
         .bottom {
           display: flex;
           justify-content: space-between;
           position: relative;
           font-size: 12px;
+
           .typing {
             color: #776db2;
             padding-left: 65px;
@@ -1114,17 +1231,20 @@ export default {
               padding-left: 51px;
             }
           }
+
           .chat-time {
             color: #776db2;
             padding-right: 24px;
           }
         }
+
         &.offline {
           .top {
             .item-img {
               img {
-                border-color:#fa4943;
+                border-color: #fa4943;
               }
+
               span {
                 background-color: #fa4943;
               }
@@ -1134,6 +1254,7 @@ export default {
       }
     }
   }
+
   .chat-right {
     float: left;
     padding-left: 20px;
@@ -1145,6 +1266,7 @@ export default {
       width: 100%;
       padding-left: 0;
     }
+
     .header {
       border-bottom: 1px solid #d9d9d9;
       padding-bottom: 10px;
@@ -1152,11 +1274,14 @@ export default {
       @media (max-width: 991px) {
         position: relative;
       }
+
       .left {
         float: left;
         min-width: 277px;
+
         .top {
           display: flex;
+
           .item-img {
             width: 50px;
             position: relative;
@@ -1164,11 +1289,13 @@ export default {
               width: 35px;
               height: 38px;
             }
+
             img {
               width: 50px;
               border: 2px solid #3ab54a;
               border-radius: 50%;
             }
+
             span {
               right: 2px;
               bottom: -3px;
@@ -1180,12 +1307,14 @@ export default {
               border: 2px solid #ffffff;
             }
           }
+
           .chat-info {
             max-width: 72%;
             padding-left: 15px;
             @media (max-width: 767px) {
               max-width: 57%;
             }
+
             .chat-group {
               background-color: #b1acd4;
               padding: 0px 5px;
@@ -1197,12 +1326,14 @@ export default {
               font-size: 12px;
               color: #ffffff;
             }
+
             .chat-name {
               font-size: 14px;
               color: #4e4e4e;
               font-weight: bold;
               clear: both;
             }
+
             .last-chat {
               color: #6059a7;
               font-size: 12px;
@@ -1213,10 +1344,12 @@ export default {
 
             }
           }
+
           .status-info {
             display: flex;
             padding-top: 13px;
             align-items: flex-start;
+
             .status {
               width: 16px;
               height: 16px;
@@ -1226,8 +1359,10 @@ export default {
               margin-top: 10px;
               margin-right: 5px;
             }
+
             .info-button {
               position: relative;
+
               button {
                 &::after {
                   border: 0;
@@ -1237,6 +1372,7 @@ export default {
                   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAUCAIAAADOcrCxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNFMkU1NjBEQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNFMkU1NjBFQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0UyRTU2MEJCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0UyRTU2MENCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7zerWhAAABDElEQVR42mL4DwZfv/wEkt+//4ZwWRgYGG7ffH3tyksGMPAP1gGSTN++/oILAcHGtVf+/fvPxMXNxoAKmJgYmX78+IMsxMYOMpOJg4PFwEgaLqRvKAVkMAJtBFIgs5gYEYZAqJcvPgPJVy+/QLggUy6ce/rw/nsIX1VdVEtHnOnTxx9wIYjbf/38w/Tz5180l/389ZdJWIQLWYiPn4OXl50JaLW1naKgEEhORJTH2FQG4TJ07wExUOLm9Vcgq269gYiC1B47/OD1K6hLZWQFjM1kmN69+wYXAoInjz98//ab6f8/dEP//f8PcpmAACdcSEycl5ubDWQuMDBvXHsJ9KGSijDQu8zMTAABBgDuN39O859xpAAAAABJRU5ErkJggg==) no-repeat right center;
                 }
               }
+
               .dropdown-menu {
                 z-index: 1061;
                 margin-top: 7px;
@@ -1246,6 +1382,7 @@ export default {
                 right: 0px;
                 left: auto !important;
                 top: 27px !important;
+
                 .dropdown-item {
                   padding: 3px 0;
                   margin-bottom: 2px;
@@ -1254,6 +1391,7 @@ export default {
                   border-radius: 3px;
                   color: #3a3092;
                   background-color: #e6e6e6;
+
                   &:hover {
                     color: #ffffff;
                     background-color: #e51f76;
@@ -1264,6 +1402,7 @@ export default {
           }
         }
       }
+
       .middle {
         float: left;
         @media (max-width: 991px) {
@@ -1272,6 +1411,7 @@ export default {
         @media (max-width: 767px) {
           clear: both;
         }
+
         .chat-group {
           background-color: #8882be;
           padding: 0 5px;
@@ -1281,12 +1421,14 @@ export default {
           border-radius: 5px;
         }
       }
+
       .right {
         float: right;
         @media (max-width: 991px) {
           position: absolute;
           right: 0;
         }
+
         .chat-search {
           float: left;
           position: absolute;
@@ -1298,6 +1440,7 @@ export default {
           @media (max-width: 767px) {
             right: 10px;
           }
+
           .has-search {
             position: relative;
             padding-right: 30px;
@@ -1307,6 +1450,7 @@ export default {
             height: 40px;
             transition: 0.5s;
             padding: 0;
+
             svg {
               width: 21px;
               position: absolute;
@@ -1316,6 +1460,7 @@ export default {
               transform: translate(0, -50%);
             }
           }
+
           .has-search .form-control {
             padding-right: 30px;
             border: 0;
@@ -1328,12 +1473,14 @@ export default {
             background: transparent;
             box-shadow: none;
             cursor: pointer;
+
             &:focus {
               width: 230px;
               transition: 0.5s;
               border-radius: 7px;
             }
           }
+
           .has-search .form-control-feedback {
             position: absolute;
             z-index: 2;
@@ -1346,9 +1493,11 @@ export default {
             color: #aaa;
           }
         }
+
         .info-button {
           float: left;
           position: relative;
+
           button {
             &::after {
               border: 0;
@@ -1358,6 +1507,7 @@ export default {
               background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAUCAIAAADOcrCxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNFMkU1NjBEQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNFMkU1NjBFQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0UyRTU2MEJCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0UyRTU2MENCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7zerWhAAABDElEQVR42mL4DwZfv/wEkt+//4ZwWRgYGG7ffH3tyksGMPAP1gGSTN++/oILAcHGtVf+/fvPxMXNxoAKmJgYmX78+IMsxMYOMpOJg4PFwEgaLqRvKAVkMAJtBFIgs5gYEYZAqJcvPgPJVy+/QLggUy6ce/rw/nsIX1VdVEtHnOnTxx9wIYjbf/38w/Tz5180l/389ZdJWIQLWYiPn4OXl50JaLW1naKgEEhORJTH2FQG4TJ07wExUOLm9Vcgq269gYiC1B47/OD1K6hLZWQFjM1kmN69+wYXAoInjz98//ab6f8/dEP//f8PcpmAACdcSEycl5ubDWQuMDBvXHsJ9KGSijDQu8zMTAABBgDuN39O859xpAAAAABJRU5ErkJggg==) no-repeat right center;
             }
           }
+
           .dropdown-menu {
             z-index: 1061;
             margin-top: 7px;
@@ -1367,6 +1517,7 @@ export default {
             right: 0px;
             left: auto !important;
             top: 27px !important;
+
             .dropdown-item {
               padding: 3px 0;
               margin-bottom: 2px;
@@ -1375,6 +1526,7 @@ export default {
               border-radius: 3px;
               color: #3a3092;
               background-color: #e6e6e6;
+
               &:hover {
                 color: #ffffff;
                 background-color: #e51f76;
@@ -1384,6 +1536,7 @@ export default {
         }
       }
     }
+
     .chat-area {
       min-height: 620px;
       display: flex;
@@ -1395,6 +1548,7 @@ export default {
       @media (max-width: 991px) {
         //min-height: auto;
       }
+
       .chat-box {
         height: 545px;
         overflow-y: auto;
@@ -1403,19 +1557,23 @@ export default {
         @media (max-width: 991px) {
           height: 500px;
         }
+
         .chats {
           display: flex;
           margin-bottom: 20px;
+
           .item-img {
             width: 30px;
             height: 30px;
             position: relative;
             margin-right: 10px;
+
             img {
               width: 50px;
               border: 2px solid #3ab54a;
               border-radius: 50%;
             }
+
             span {
               right: 1px;
               right: 1px;
@@ -1428,11 +1586,13 @@ export default {
               border: 1px solid #ffffff;
             }
           }
+
           .message {
             max-width: 60%;
             @media (max-width: 991px) {
               max-width: 76%;
             }
+
             .msg-text {
               font-size: 14px;
               background: #eceaf5;
@@ -1440,9 +1600,11 @@ export default {
               padding: 5px;
               margin-bottom: 5px;
             }
+
             .date-time {
               font-size: 10px;
               margin: 0;
+
               span {
                 background-color: #6159a7;
                 color: #ffffff;
@@ -1451,8 +1613,10 @@ export default {
               }
             }
           }
+
           .info-button {
             position: relative;
+
             button {
               &::after {
                 border: 0;
@@ -1462,6 +1626,7 @@ export default {
                 background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAUCAIAAADOcrCxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNFMkU1NjBEQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNFMkU1NjBFQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0UyRTU2MEJCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0UyRTU2MENCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7zerWhAAABDElEQVR42mL4DwZfv/wEkt+//4ZwWRgYGG7ffH3tyksGMPAP1gGSTN++/oILAcHGtVf+/fvPxMXNxoAKmJgYmX78+IMsxMYOMpOJg4PFwEgaLqRvKAVkMAJtBFIgs5gYEYZAqJcvPgPJVy+/QLggUy6ce/rw/nsIX1VdVEtHnOnTxx9wIYjbf/38w/Tz5180l/389ZdJWIQLWYiPn4OXl50JaLW1naKgEEhORJTH2FQG4TJ07wExUOLm9Vcgq269gYiC1B47/OD1K6hLZWQFjM1kmN69+wYXAoInjz98//ab6f8/dEP//f8PcpmAACdcSEycl5ubDWQuMDBvXHsJ9KGSijDQu8zMTAABBgDuN39O859xpAAAAABJRU5ErkJggg==) no-repeat right center;
               }
             }
+
             .dropdown-menu {
               z-index: 1061;
               margin-top: 7px;
@@ -1471,6 +1636,7 @@ export default {
               right: 0px;
               left: auto;
               top: 27px !important;
+
               .dropdown-item {
                 padding: 3px 0;
                 margin-bottom: 2px;
@@ -1479,6 +1645,7 @@ export default {
                 border-radius: 3px;
                 color: #3a3092;
                 background-color: #e6e6e6;
+
                 &:hover {
                   color: #ffffff;
                   background-color: #e51f76;
@@ -1486,51 +1653,61 @@ export default {
               }
             }
           }
+
           &.me {
             flex-direction: row-reverse;
+
             .item-img {
               margin-right: 0;
               margin-left: 10px;
             }
+
             .dropdown-menu {
               left: auto !important;
               @media (max-width: 767px) {
                 left: 0 !important;
               }
             }
+
             .msg-text {
               background-color: #3f9de7;
               color: #ffffff;
             }
+
             .date-time {
               text-align: right;
             }
           }
         }
       }
+
       .footer {
         position: absolute;
         bottom: 0;
         left: 0;
         width: 100%;
+
         .footer-top {
           font-size: 12px;
           color: #818181;
           margin-bottom: 30px;
         }
+
         .footer-bottom {
           .left {
             width: 100%;
             display: flex;
             justify-content: space-between;
+
             .message-box {
               position: relative;
               width: 100%;
+
               textarea {
                 height: 36px;
                 width: 100%;
                 border: 0;
-                padding: 7px 15px 7px 40px;
+                padding: 7px 54px 7px 40px;
                 border-radius: 18px;
                 background-color: #eceaf5;
                 resize: none;
@@ -1538,6 +1715,7 @@ export default {
                   padding-left: 32px;
                 }
               }
+
               .btn-emoji, .btn-multimedia, .btn-files {
                 position: absolute;
                 top: -3px;
@@ -1547,28 +1725,39 @@ export default {
                   right: 6px;
                 }
               }
+
               .btn-emoji {
                 right: auto;
                 left: -8px;
                 top: 3px;
               }
+
               .btn-multimedia {
                 right: 45px;
                 @media (max-width: 767px) {
                   right: 30px;
                 }
               }
+
               svg {
-                .cls-1{fill:#fff;}
-                .cls-2{fill:#8983be;}
+                .cls-1 {
+                  fill: #fff;
+                }
+
+                .cls-2 {
+                  fill: #8983be;
+                }
+
                 .files {
                   fill: #6159a8;
                 }
+
                 .multimedia {
                   fill: #6159a8;
                 }
               }
             }
+
             button {
               display: flex;
               justify-content: space-between;
@@ -1578,13 +1767,21 @@ export default {
               @media (max-width: 767px) {
                 min-width: auto;
               }
+
               svg {
                 width: 18px;
                 float: left;
                 margin-top: 9px;
                 margin-left: 6px;
-                .cls-1{fill:#fff;}
-                .cls-2{fill:#8983be;}
+
+                .cls-1 {
+                  fill: #fff;
+                }
+
+                .cls-2 {
+                  fill: #8983be;
+                }
+
                 @media (max-width: 767px) {
                   display: none;
                 }
@@ -1597,6 +1794,21 @@ export default {
   }
 }
 
+.rotate-90 {
+  transform: rotate(90deg);
+}
+
+.br-50 {
+  border-radius: 50%;
+}
+
+.bg-c9:hover {
+  background: #c9c9c9;
+}
+.microphone {
+  width: 15px;
+  height: 15px;
+}
 
 // css custom scrollbar
 /* width */
@@ -1621,5 +1833,6 @@ export default {
 ::-webkit-scrollbar-thumb:hover {
   background: #bcb5de;
 }
+
 // end css for chat
 </style>

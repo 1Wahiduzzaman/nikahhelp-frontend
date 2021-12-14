@@ -21,22 +21,22 @@
 					</router-link>
 				</li>
 				<li class="list-item">
-					<router-link to="/manageteam" class="d-flex align-items-center">
+					<router-link to="/manageteam" class="flex align-items-center">
 						<img class="mr-3" src="@/assets/icon/group-fill-secondary.svg" alt="icon" />
 						<span class="mb-0">Manage Team</span>
 						<a-badge
-							class="ml-auto"
+							class="ml-2"
 							:number-style="{ backgroundColor: '#e42076'}"
 							count="100"
 						/>
 					</router-link>
 				</li>
 				<li class="list-item">
-					<router-link to="/connections" class="d-flex align-items-center">
+					<router-link to="/connections" class="flex align-items-center">
 						<img class="mr-3" src="@/assets/icon/connection-secondary.svg" alt="icon" />
 						<span class="mb-0">Connection</span>
 						<a-badge
-							class="ml-auto"
+							class="ml-2"
 							:number-style="{ backgroundColor: '#e42076'}"
 							count="17"
 						/>
@@ -52,22 +52,22 @@
 					</router-link>
 				</li>
 				<li class="list-item">
-					<router-link to="/notifications" class="d-flex align-items-center">
+					<router-link to="/notifications" class="flex align-items-center">
 						<img class="mr-3" src="@/assets/icon/bell-fill-secondary.svg" alt="icon" />
 						<span class="mb-0">Notification</span>
 						<a-badge
-							class="ml-auto"
+							class="ml-2"
 							:number-style="{ backgroundColor: '#e42076'}"
 							count="40"
 						/>
 					</router-link>
 				</li>
 				<li class="list-item">
-					<router-link to="/chat-window" class="d-flex align-items-center">
+					<router-link to="/chat-window" class="flex align-items-center">
 						<img class="mr-3" src="@/assets/icon/chat-dots-fill-secondary.svg" alt="icon" />
 						<span class="mb-0">Chat</span>
 						<a-badge
-							class="ml-auto"
+							class="ml-2"
 							:number-style="{ backgroundColor: '#e42076'}"
 							count="10"
 						/>
