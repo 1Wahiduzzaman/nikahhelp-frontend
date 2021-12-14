@@ -588,6 +588,9 @@ export default {
 .switch-text {
   font-size: 14px;
 }
+.ant-switch{
+  max-width: 20px;
+}
 @media (min-width: 768px) {
   .form-right-content {
     float: right;

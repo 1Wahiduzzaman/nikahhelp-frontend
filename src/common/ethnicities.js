@@ -411,7 +411,6 @@ const ethnicities = [
   "Pacific Islander",
   "Paiwan",
   "Pakistani",
-  "Pakistani Bangladeshi",
   "Palauan",
   "Palestinian",
   "Palestinian Christian",

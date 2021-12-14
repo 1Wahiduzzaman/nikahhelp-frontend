@@ -814,6 +814,9 @@ export default {
   height: 32%;
   margin-top: 1%;
 }
+.anticon {
+  max-width: 15px;
+}
 .badge-info {
   background: $bg-white !important;
   color: black;

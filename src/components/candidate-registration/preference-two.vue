@@ -27,7 +27,7 @@
           class="form-ma"
         >
           <!-- Preferred Age -->
-          <div class="row mt-3 border-bottom">
+          <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -84,7 +84,7 @@
           </div>
 
           <!-- Preferred Height -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-3 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -146,7 +146,7 @@
           </div>
 
           <!-- Preferred country -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -349,7 +349,7 @@
           </div>
 
           <!-- Disallowed country -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -447,7 +447,7 @@
           </div>
 
           <!-- Religion -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -512,7 +512,7 @@
           </div>
 
           <!-- Ethnic Background -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -532,7 +532,7 @@
                 @input="onValueChange"
                 v-model.lazy="preferenceData.pre_ethnicities"
                 label="name"
-                :options="ethnicityList"
+                :options="[`Don't Mind`, ...ethnicityList]"
               >
                 <template #open-indicator> <a-icon type="down" /> </template
               ></v-select>
@@ -570,7 +570,7 @@
             </div>
           </div>
 
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -644,7 +644,7 @@
           </div>
 
           <!-- Education and study level -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -663,12 +663,15 @@
                 <v-select
                   :clearable="false"
                   class="style-chooser w-full form-right-content"
-                  @input="onValueChange"
+                   @input="onValueChange"
                   :reduce="(option) => option.id"
                   placeholder="Please select your education status"
                   v-model.lazy="preferenceData.pre_study_level_id"
                   label="name"
-                  :options="candidateDetails.studylevels"
+                  :options="[
+                    { id: -1, name: `Don't Mind` },
+                    ...candidateDetails.studylevels,
+                  ]"
                 >
                   <template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
@@ -708,7 +711,7 @@
           </div>
 
           <!-- Employment Status -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -728,11 +731,14 @@
                   :clearable="false"
                   class="style-chooser w-full form-right-content"
                   :reduce="(option) => option.value"
-                  @input="onValueChange"
+                 @input="onValueChange"
                   placeholder="Please select your employment status"
                   v-model.lazy="preferenceData.pre_employment_status"
                   label="name"
-                  :options="employment_Statuses"
+                  :options="[
+                    { value: 'other', name: `Don't Mind` },
+                    ...employment_Statuses,
+                  ]"
                 >
                   <template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
@@ -772,7 +778,7 @@
           </div>
 
           <!-- Occupations -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -788,13 +794,15 @@
                 <v-select
                   :clearable="false"
                   :multiple="true"
-                  @input="onMultiValueChange($event, 'pre_occupation')"
-                   class="nationality-select form-right-content w-full"
+                  @input="onMultiNameChange($event, 'pre_occupation')"
+                  class="nationality-select form-right-content w-full"
                   v-model.lazy="preferenceData.pre_occupation"
                   placeholder="Please select your preferred occupation"
                   label="name"
-                  
-                  :options="candidateDetails.occupations"
+                  :options="[
+                    `Don't Mind`,
+                    ...candidateDetails.occupations,
+                  ]"
                 >
                   <template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
@@ -832,11 +840,10 @@
           </div>
 
           <!-- Divorcee -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                  v-if="preferenceData.pre_preferred_divorcee"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />Are you willing to accept a divorcee?
@@ -904,7 +911,7 @@
           </div>
 
           <!-- Other Preference -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -965,7 +972,7 @@
           </div>
 
           <!-- Description -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -1813,7 +1820,7 @@ export default {
       });
     },
     onNationalityValueChange(e, name) {
-      if (this.preferenceData[name].length > 3) {
+      if (this.preferenceData[name][this.preferenceData[name].length - 1].name !=  `Don't Mind` && this.preferenceData[name].length > 3) {
         this.preferenceData[name] = this.preferenceData[name].splice(0, 3);
         return;
       }
@@ -1828,7 +1835,10 @@ export default {
       this.savePreference();
     },
     onMultiValueChange(e, name) {
-      if (this.preferenceData[name].length > 3) {
+      if (
+        this.preferenceData[name][this.preferenceData[name].length - 1] != -1 &&
+        this.preferenceData[name].length > 3
+      ) {
         this.preferenceData[name] = this.preferenceData[name].splice(0, 3);
         return;
       }
@@ -1839,7 +1849,24 @@ export default {
 
       this.savePreference();
     },
-    onValueChange(e) {
+     onMultiNameChange(e, name) {
+      if (
+        this.preferenceData[name][this.preferenceData[name].length - 1] !=  `Don't Mind` &&
+        this.preferenceData[name].length > 3
+      ) {
+        this.preferenceData[name] = this.preferenceData[name].splice(0, 3);
+        return;
+      }
+      this.preferenceData[name] =
+        this.preferenceData[name][this.preferenceData[name].length - 1] ==  `Don't Mind`
+          ? [ `Don't Mind`]
+          : this.preferenceData[name].filter((item) => item != `Don't Mind`);
+
+
+      this.savePreference();
+    },
+    onValueChange(e,name) {
+     
       this.savePreference();
     },
     onRateChange(e, name) {

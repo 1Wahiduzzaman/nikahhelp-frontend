@@ -29,7 +29,7 @@
           class="form-ma"
         >
           <!-- Gender -->
-          <div class="row mt-3 border-bottom">
+          <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -105,7 +105,7 @@
           </div>
 
           <!-- DOB -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -162,7 +162,7 @@
           </div>
 
           <!-- Height -->
-          <div class="row mt-3 border-bottom">
+          <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -234,7 +234,7 @@
           </div>
 
           <!-- Employment status -->
-          <div class="row mt-3 border-bottom">
+          <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -320,7 +320,7 @@
           </div>
 
           <!-- Occupations -->
-          <div class="row mt-3 border-bottom">
+          <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -405,7 +405,7 @@
           </div>
 
           <!-- Education Level -->
-          <div class="row mt-3 border-bottom">
+          <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -496,7 +496,7 @@
           </div>
 
           <!-- Religion -->
-          <div class="row mt-3 border-bottom">
+          <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -611,7 +611,7 @@
           class="form-ma"
         >
           <!-- Ethnicity -->
-          <div class="row mt-3 border-bottom">
+          <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -694,7 +694,7 @@
           </div>
 
           <!-- Mother Tongue -->
-          <div class="row mt-3 border-bottom">
+          <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -780,7 +780,7 @@
           </div>
 
           <!-- Nationality -->
-          <div class="row mt-3 border-bottom">
+          <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -864,7 +864,7 @@
           </div>
 
           <!-- Country Of Birth -->
-          <div class="row mt-3 border-bottom">
+          <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -946,7 +946,7 @@
           </div>
 
           <!-- General Health and Well being -->
-          <div class="row mt-3 border-bottom">
+          <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -1031,7 +1031,7 @@
           :rules="rules"
         >
           <!-- Current Residence -->
-          <div class="row mt-3 border-bottom">
+          <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -1246,7 +1246,7 @@
           </div>
 
           <!-- Permanent Residence -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -1392,7 +1392,7 @@
           </div>
 
           <!-- Home Permanent Address  -->
-          <div class="row mt-3 border-bottom">
+          <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -1450,7 +1450,7 @@
           </div>
 
           <!-- Mobile Number -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -1535,7 +1535,7 @@
           </div>
 
           <!-- Email Address -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -1620,7 +1620,7 @@
           class="form-ma"
         >
           <!-- Martial Status -->
-          <div class="row mt-3 border-bottom">
+          <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -1713,7 +1713,7 @@
           </div>
 
           <!-- Current Living Arrangement -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -1735,7 +1735,7 @@
                     class="style-chooser"
                     @input="onValueChange($event, 'more_about')"
                     id="per_currently_living_with"
-                    placeholder="Currently Living With"
+                    placeholder="Please select Currently Living With"
                     v-model="
                         personalInformation.more_about.per_currently_living_with
                       "
@@ -1814,7 +1814,7 @@
           </div>
 
           <!-- Willing to relocate -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -1909,7 +1909,7 @@
           </div>
 
           <!-- Smoker? -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -1926,7 +1926,7 @@
                     class="style-chooser"
                     @input="onValueChange($event, 'more_about')"
                     id="per_smoker"
-                    placeholder="Are you a Smoker"
+                    placeholder="Please select Are you a Smoker"
                     v-model="personalInformation.more_about.per_smoker"
                     :reduce="(option) => option.value"
                     label="name"
@@ -1996,7 +1996,7 @@
           </div>
 
           <!-- Language I speak -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -2023,7 +2023,7 @@
                           'more_about'
                         )
                       "
-                    placeholder="Select the language you speak"
+                    placeholder="Please select the languages you speak"
                     v-model="
                         personalInformation.more_about.per_language_speak
                       "
@@ -2103,7 +2103,7 @@
           </div>
 
           <!-- Hobbies -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -2128,7 +2128,7 @@
                         'more_about'
                       )
                     "
-                  placeholder="Select your hobbies"
+                  placeholder="Please select your hobbies"
                   v-model="
                       personalInformation.more_about.per_hobbies_interests
                     "
@@ -2171,7 +2171,7 @@
           </div>
 
           <!-- Food and cuisine -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -2200,7 +2200,7 @@
                           'more_about'
                         )
                       "
-                    placeholder="Food and Cuisine I like"
+                    placeholder="Please select your Food and Cuisine you like"
                     v-model="
                         personalInformation.more_about.per_food_cuisine_like
                       "
@@ -2281,7 +2281,7 @@
           </div>
 
           <!-- Things I enjoy -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -2304,7 +2304,7 @@
                         'more_about'
                       )
                     "
-                  placeholder="Select your hobbies"
+                  placeholder="Please select your hobbies"
                   v-model="personalInformation.more_about.per_things_enjoy"
                   label="name"
                   :options="candidateDetails.hobbies"
@@ -2345,7 +2345,7 @@
           </div>
 
           <!-- Thankful for-->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -2372,7 +2372,7 @@
                           'more_about'
                         )
                       "
-                    placeholder="I'm Thankfull For"
+                    placeholder="Please select your Thankfull For"
                     :reduce="(option) => option.value"
                     v-model="personalInformation.more_about.per_thankfull_for"
                     label="label"
@@ -2449,7 +2449,7 @@
           </div>
 
           <!-- About Me -->
-          <div class="row pt-3 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon

@@ -282,6 +282,9 @@ body {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        input[type='search']{
+            color: #555;
+        }
 
     }
     .style-chooser .vs__selected span {
@@ -298,6 +301,16 @@ body {
     .style-chooser .vs__clear,
     .style-chooser .vs__open-indicator {
         fill: #e6e6e6;
+    }
+    .nationality-select .vs__selected-options{
+        max-width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        input[type='search']{
+            color: #555;
+        }
+
     }
     .nationality-select .vs__dropdown-toggle {
         background: white;
