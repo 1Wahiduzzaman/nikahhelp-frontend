@@ -16,22 +16,7 @@ import Storage from "vue-web-storage";
 // * ApiService for the application
 import ApiService from "./services/api.service";
 import Vuetify from 'vuetify';
-Vue.use(Vuetify, 
-  {
-  iconfont: 'fa',
-  theme: {
-    primary: '#828282',
-    secondary: '#424242',
-    accent: '#82B1FF',
-    error: '#FF5252',
-    info: '#2196F3',
-    success: '#4CAF50',
-    warning: '#FFC107',
-  },
-
-}
-
-);
+Vue.use(Vuetify);
 Vue.use(Storage, {
   prefix: "",
   drivers: ["local"],
@@ -55,5 +40,21 @@ Vue.use(new VueSocketIO({
 new Vue({
   router,
   store,
+  vuetify: new Vuetify({
+    icons: {
+      iconfont: 'md',  // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4'
+    },
+    theme: {
+      dark: false,
+    },
+    themes: {
+      light: {
+        primary: "#4682b4",
+        secondary: "#b0bec5",
+        accent: "#8c9eff",
+        error: "#b71c1c",
+      },
+    },
+  }),
   render: (h) => h(App),
 }).$mount("#app");

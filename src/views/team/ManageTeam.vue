@@ -3,7 +3,7 @@
 		<div v-if="isLoading">Loading</div>
 		<div v-else>
 			<Layout >
-				<div class="container-fluid vh-100 overflow-auto">
+				<div>
           <!--teams.length == 0 && !joinTeamShow && !createTeamShow-->
           <a-modal v-model="welcomeModal" @ok="hideWelcomeModal">
             <div class="d-flex justify-content-center align-items-center welcome-text mt-2">
