@@ -107,6 +107,11 @@
 								<!-- </svg> -->
 								Search
 							</button>
+							<select-team-modal
+								:selectTeamModal="showActiveTeamModal"
+								@handle-cancel="showActiveTeamModal = false"
+								@handle-team="handleSearch"
+							></select-team-modal>
 							
 						</div>
 					</div>
@@ -118,10 +123,11 @@
 </template>
 
 <script>
+import SelectTeamModal from "@/components/team/Modals/SelectTeamModal.vue";
+import ApiService from "@/services/api.service";
 import ethnicities from "@/common/ethnicities.js";
 import languages from "@/common/languages.js";
 import hobbies from "@/common/hobbies.js";
-// import ApiService from "@/services/api.service";
 
 export default {
 	data() {
@@ -162,7 +168,7 @@ export default {
 		this.getOccupations();
 	},
 	components: {
-		// SelectTeamModal,
+		SelectTeamModal,
 	},
 	methods: {
 		async getOccupations() {
@@ -175,40 +181,42 @@ export default {
 					console.log(error);
 				});
 		},
-		handleSearch() {
-			if (localStorage.getItem("teamidappwide")) {
-				this.activeTeamId = localStorage.getItem("teamidappwide");
-				this.activeTeamId = this.activeTeamId.slice(1, -1);
-			} else if (this.$store.state.team.teamInfo) {
-				console.log(this.$store.state.team.teamInfo);
-				this.candidateActiveTeam = this.$store.state.team.teamInfo;
-				this.activeTeamId = this.$store.state.team.teamInfo.team_id;
-			} else {
-				this.showActiveTeamModal = true;
-				return;
-			}
+		getQuery() {
+			console.log(this.$store.state.team.teamInfo,'>>>>>>>>>>>>>>>')
+			// if (localStorage.getItem("teamidappwide")) {
+			// 	this.activeTeamId = localStorage.getItem("teamidappwide");
+			// 	this.activeTeamId = this.activeTeamId.slice(1, -1);
+			// } else if (this.$store.state.team.teamInfo) {
+			// 	console.log(this.$store.state.team.teamInfo);
+			// 	this.candidateActiveTeam = this.$store.state.team.teamInfo;
+			// 	this.activeTeamId = this.$store.state.team.teamInfo.team_id;
+			// } else {
+			// 	this.showActiveTeamModal = true;
+			// 	return;
+			// }
 
 			let params = {
 				age_min: this.age[0],
 				age_max: this.age[1],
 			};
-			let _payload = `?page=0&parpage=10&min_age=${params.age_min}&max_age=${params.age_max}&active_team_id=${this.activeTeamId}`;
+			// let _payload = `?page=0&parpage=10&min_age=${params.age_min}&max_age=${params.age_max}&active_team_id=${this.activeTeamId}`;
+			let _payload = `?page=0&parpage=10&min_age=${params.age_min}&max_age=${params.age_max}`;
 
 			// if (this.gender != 0) {
 			// 	_payload += `&gender=${this.gender}`;
 			// }
-			if (this.heightMin > 0 || this.minHeightFt > 0) {
-				if (this.minHeightFt) {
-					this.heightMin = this.minHeightFt * 30.48;
-				}
-				_payload += `&min_height=${this.heightMin}`;
-			}
-			if (this.heightMax > 0 || this.maxHeightFt > 0) {
-				if (this.maxHeightFt) {
-					this.heightMax = this.maxHeightFt * 30.48;
-				}
-				_payload += `&max_height=${this.heightMax}`;
-			}
+			// if (this.heightMin > 0 || this.minHeightFt > 0) {
+			// 	if (this.minHeightFt) {
+			// 		this.heightMin = this.minHeightFt * 30.48;
+			// 	}
+			// 	_payload += `&min_height=${this.heightMin}`;
+			// }
+			// if (this.heightMax > 0 || this.maxHeightFt > 0) {
+			// 	if (this.maxHeightFt) {
+			// 		this.heightMax = this.maxHeightFt * 30.48;
+			// 	}
+			// 	_payload += `&max_height=${this.heightMax}`;
+			// }
 			if (this.country != "") {
 				_payload += `&country=${this.country}`;
 			}
@@ -253,8 +261,14 @@ export default {
 			}
 
 			console.log(_payload);
-			//alert(_payload);
-			this.$emit("handle-search", _payload);
+			return _payload;
+			// this.$emit("handle-search", _payload);
+		},
+		async handleSearch() {
+			let query = this.getQuery();
+			console.log(query, '>>>>>>>>>>>>>>>>')
+			const res = await ApiService.get(`v1/home-searches${query}`);
+			console.log(res, '>>>>>>>>>>>>>>>>')
 		},
 		onAfterChangeSlider(value) {
 			this.age = value;
