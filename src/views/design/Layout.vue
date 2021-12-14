@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-container">
     <header
       class="header-container bg-secondary shadow-default radius-none px-4"
     >
@@ -283,6 +283,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.main-container{
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100vh
+}
 .notification-wrapper {
   padding: 10px;
   background-color: #fff;
