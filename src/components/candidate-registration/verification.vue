@@ -424,7 +424,7 @@
               <div class="col-12 col-md-6 none-padding">
                 <div class="mb-2 font-weight-bold">
                   <a-icon
-                    v-if="verification.ver_recommender_title"
+                    v-if="verification.ver_recommences_title"
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
                   />Person of community standing who know you?
@@ -496,18 +496,18 @@
                   prop="ver_recommences_address"
                   class="mt-2"
                 >
-                   <a-textarea
-                  @blur="onValueChange"
-                  :rows="3"
-                  autocomplete="off"
-                  autocorrect="off"
-                  autocapitalize="off"
-                  spellcheck="false"
-                  id="ver_recommences_address"
-                  v-model.lazy="verification.ver_recommences_address"
-                  placeholder="Address"
-                  class="w-full form-right-content"
-                />
+                  <a-textarea
+                    @blur="onValueChange"
+                    :rows="3"
+                    autocomplete="off"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    spellcheck="false"
+                    id="ver_recommences_address"
+                    v-model.lazy="verification.ver_recommences_address"
+                    placeholder="Address"
+                    class="w-full form-right-content"
+                  />
                 </a-form-model-item>
                 <a-form-model-item
                   ref="ver_recommences_mobile_no"
@@ -811,8 +811,8 @@ input[type="file"]::-webkit-file-upload-button {
   display: grid;
   place-content: center;
   position: absolute;
-  right: 4.5rem;
-  top: 1.5rem;
+  right: 6.5rem;
+  top: 2.5rem;
   width: 2rem;
   height: 2rem;
   border-radius: 50%;

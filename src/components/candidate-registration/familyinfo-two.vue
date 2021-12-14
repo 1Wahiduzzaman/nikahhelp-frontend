@@ -27,57 +27,56 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="familyInformation.father_profession"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="familyInformation.father_profession"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your father's Profession?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                  ref="father_profession"
-                  prop="father_profession"
+                ref="father_profession"
+                prop="father_profession"
               >
                 <v-select
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="onValueChange"
-                    id="father_profession"
-                    :reduce="(option) => option.name"
-                    placeholder="Please select Father's Profession"
-                    v-model="familyInformation.father_profession"
-                    label="name"
-                    :options="candidateDetails.occupations"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange"
+                  id="father_profession"
+                  :reduce="(option) => option.name"
+                  placeholder="Please select Father's Profession"
+                  v-model="familyInformation.father_profession"
+                  label="name"
+                  :options="candidateDetails.occupations"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapseCandidateFatherProfession"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapseCandidateFatherProfession"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[5].first"
-                          @click="arr[5].first = !arr[5].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[5].first"
+                    @click="arr[5].first = !arr[5].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[5].first = !arr[5].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#familyInfoAccordian"
-                  id="collapseCandidateFatherProfession"
+                class="collapse"
+                data-parent="#familyInfoAccordian"
+                id="collapseCandidateFatherProfession"
               >
                 <div class="card card-body bubble">
                   Select your father's profession
@@ -91,57 +90,56 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="familyInformation.mother_profession"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="familyInformation.mother_profession"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your mother's Profession?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                  ref="mother_profession"
-                  prop="mother_profession"
+                ref="mother_profession"
+                prop="mother_profession"
               >
                 <v-select
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="onValueChange"
-                    id="mother_profession"
-                    placeholder="Please select Mother's Profession"
-                    v-model="familyInformation.mother_profession"
-                    label="name"
-                    :reduce="(option) => option.name"
-                    :options="candidateDetails.occupations"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange"
+                  id="mother_profession"
+                  placeholder="Please select Mother's Profession"
+                  v-model="familyInformation.mother_profession"
+                  label="name"
+                  :reduce="(option) => option.name"
+                  :options="candidateDetails.occupations"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapseCandidateMotherProfession"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapseCandidateMotherProfession"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[3].first"
-                          @click="arr[3].first = !arr[3].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[3].first"
+                    @click="arr[3].first = !arr[3].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[3].first = !arr[3].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#familyInfoAccordian"
-                  id="collapseCandidateMotherProfession"
+                class="collapse"
+                data-parent="#familyInfoAccordian"
+                id="collapseCandidateMotherProfession"
               >
                 <div class="card card-body bubble">
                   Select your mothers' profession
@@ -155,52 +153,50 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="familyInformation.siblings_desc"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="familyInformation.siblings_desc"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />Do you have any siblings?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="siblings_desc" prop="siblings_desc">
                 <a-textarea
-                    @blur="onValueChange"
-                    id="siblings_desc"
-                    placeholder="2 Brothers, 2 Sisters"
-                    :rows="3"
-                    v-model="familyInformation.siblings_desc"
+                  @blur="onValueChange"
+                  id="siblings_desc"
+                  placeholder="2 Brothers, 2 Sisters"
+                  :rows="3"
+                  v-model="familyInformation.siblings_desc"
                 ></a-textarea>
               </a-form-model-item>
             </div>
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapseSiblingsInfomation"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapseSiblingsInfomation"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[2].first"
-                          @click="arr[2].first = !arr[2].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[2].first"
+                    @click="arr[2].first = !arr[2].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[2].first = !arr[2].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#familyInfoAccordian"
-                  id="collapseSiblingsInfomation"
+                class="collapse"
+                data-parent="#familyInfoAccordian"
+                id="collapseSiblingsInfomation"
               >
-                <div class="card card-body bubble">
-                  Siblings information
-                </div>
+                <div class="card card-body bubble">Siblings information</div>
               </div>
             </div>
           </div>
@@ -210,9 +206,9 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="familyInformation.family_info"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="familyInformation.family_info"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />Would you like to share any other information about your
                 family?
               </div>
@@ -220,39 +216,39 @@
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="family_info" prop="family_info">
                 <a-textarea
-                    @blur="onValueChange"
-                    id="family_info"
-                    placeholder="Would you like to share any other information about your family"
-                    :rows="3"
-                    v-model="familyInformation.family_info"
+                  @blur="onValueChange"
+                  id="family_info"
+                  placeholder="Would you like to share any other information about your family"
+                  :rows="3"
+                  v-model="familyInformation.family_info"
                 ></a-textarea>
               </a-form-model-item>
             </div>
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapseAnyotherFamilyLike"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapseAnyotherFamilyLike"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[1].first"
-                          @click="arr[1].first = !arr[1].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[1].first"
+                    @click="arr[1].first = !arr[1].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[1].first = !arr[1].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#familyInfoAccordian"
-                  id="collapseAnyotherFamilyLike"
+                class="collapse"
+                data-parent="#familyInfoAccordian"
+                id="collapseAnyotherFamilyLike"
               >
                 <div class="card card-body bubble">
                   Any other family info you would like to share
@@ -266,59 +262,61 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="familyInformation.country_of_origin"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="familyInformation.country_of_origin"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />Is your ancestral home same as your country of birth?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                  ref="country_of_origin"
-                  prop="country_of_origin"
+                ref="country_of_origin"
+                prop="country_of_origin"
               >
                 <v-select
-                    :calculate-position="withPopper"
-                    append-to-body
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="onValueChange"
-                    id="country_of_origin"
-                    :reduce="(option) => option.name"
-                    placeholder="Please select country of origin"
-                    v-model="familyInformation.country_of_origin"
-                    label="name"
-                    :options="candidateDetails.countries"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  :calculate-position="withPopper"
+                  append-to-body
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange"
+                  id="country_of_origin"
+                  :reduce="(option) => option.name"
+                  placeholder="Please select country of origin"
+                  v-model="familyInformation.country_of_origin"
+                  label="name"
+                  :options="[
+                    { name: 'Yes', value: 'Yes' },
+                    { name: 'No', value: 'No' },
+                  ]"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapseSelectCountryOfBirth"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapseSelectCountryOfBirth"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[0].first"
-                          @click="arr[0].first = !arr[0].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[0].first"
+                    @click="arr[0].first = !arr[0].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[0].first = !arr[0].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#familyInfoAccordian"
-                  id="collapseSelectCountryOfBirth"
+                class="collapse"
+                data-parent="#familyInfoAccordian"
+                id="collapseSelectCountryOfBirth"
               >
                 <div class="card card-body bubble">
                   Select your country of birth
@@ -378,10 +376,10 @@ export default {
     this.checkDisabled();
   },
   methods: {
-        withPopper(dropdownList, component, { width }) {
+    withPopper(dropdownList, component, { width }) {
       dropdownList.style.width = width;
       const popper = createPopper(component.$refs.toggle, dropdownList, {
-        placement: 'top',
+        placement: "top",
         modifiers: [
           {
             name: "offset",

@@ -102,6 +102,8 @@
         <!-- :class="{ disabled: !enabledNextBtn }"
           :disabled="!enabledNextBtn" -->
         <a-button
+          :class="{ disabled: !enabledNextBtn }"
+          :disabled="!enabledNextBtn"
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
@@ -496,7 +498,7 @@ export default {
             ""
           );
         }
-        // this.current = response.data.data.user.data_input_status;
+        this.current = response.data.data.user.data_input_status;
         this.checkExistData();
       }
     },
@@ -579,6 +581,7 @@ export default {
             pre_study_level_id,
             pre_employment_status,
             pre_occupation,
+            pre_preferred_divorcee,
           } = this.candidateDetails.preferenceData;
           isEnabled = Object.values({
             pre_partner_age_max,
@@ -591,17 +594,20 @@ export default {
             pre_study_level_id,
             pre_employment_status,
             pre_occupation,
+            pre_preferred_divorcee,
           }).every((x) => x !== undefined && x !== null && x !== "");
           break;
         case 1:
-          const { essential, general, contact } =
+          const { essential, general, contact, more_about } =
             this.candidateDetails.personalInformation;
-          Object.values({ essential, general, contact }).forEach((ob) => {
-            isEnabled = Object.values(ob).every(
-              (x) => x !== undefined && x !== null && x !== ""
-            );
-            if (!isEnabled) return;
-          });
+          Object.values({ essential, general, contact, more_about }).forEach(
+            (ob) => {
+              isEnabled = Object.values(ob).every(
+                (x) => x !== undefined && x !== null && x !== ""
+              );
+              if (!isEnabled) return;
+            }
+          );
 
           break;
         case 2:

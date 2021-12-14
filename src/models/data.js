@@ -371,9 +371,9 @@ export const AGES=[
     value:'Unemployment' ,name:'Unemployment'
   },
 
-  {
-    value:'Other' ,name:"Don't Mind"
-  }
+  // {
+  //   value:'Other' ,name:"Don't Mind"
+  // }
 
 
   ]
