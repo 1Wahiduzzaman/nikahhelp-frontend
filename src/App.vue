@@ -1,13 +1,16 @@
 <template>
-  <div class="main-container">
+  <v-app>
     <router-view />
-  </div>
+  </v-app>
 </template>
 
 <script>
 export default {
   data() {
     return {};
+  },
+  mounted() {
+    window.VAPP = this;
   },
   created() {
     console.log("created called from app.vue");
@@ -35,5 +38,6 @@ export default {
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
 }
 </style>

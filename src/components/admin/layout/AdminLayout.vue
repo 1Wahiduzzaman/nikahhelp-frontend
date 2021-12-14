@@ -290,6 +290,7 @@ export default {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    height: 100vh
 }
 .notification-wrapper {
   padding: 10px;
