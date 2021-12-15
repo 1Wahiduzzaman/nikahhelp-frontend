@@ -202,7 +202,7 @@
                   <div
                       v-for="item in chats"
                       :key="item.id"
-                      :class="['chats', (parseInt(item.senderId) == parseInt(getAuthUserId)) ? 'me' : '']"
+                      :class="['chats', (parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId)) ? 'me' : '']"
                   >
                     <div class="item-img">
                       <img src="../../assets/info-img.png" alt="info image"/>
@@ -291,6 +291,7 @@ export default {
       online_users: [],
       one_to_one_user: null,
       inConnectedChat: false,
+      chat_type: null,
       chatTab: 'Recent'
     }
   },
@@ -407,7 +408,26 @@ export default {
       this.sockets.subscribe('receive_message', function (res) {
         // console.log(res);
         res.sender = res.senderInfo;
-        this.chats.unshift(res);
+        if(this.chat_type && (this.activeTeam == res.target_opened_chat || this.one_to_one_user == res.target_opened_chat)) {
+          this.chats.unshift(res);
+        }
+
+        let teamPersonalChat = this.teamChat.find(item => item.user_id == res.senderId);
+        if(teamPersonalChat) {
+          teamPersonalChat.message.body = res.body;
+          teamPersonalChat.message.created_at = res.created_at;
+          teamPersonalChat.message.seen = 0;
+        }
+        let teamChat = this.teamChat.find(item => item.team_id == res.target_opened_chat);
+        if(teamChat) {
+          teamChat.last_group_message.body = res.body;
+          teamChat.last_group_message.created_at = res.created_at;
+          teamChat.last_group_message.seen = 0;
+
+          teamChat.message.body = res.body;
+          teamChat.message.created_at = res.created_at;
+          teamChat.message.seen = 0;
+        }
       });
     }
   },
@@ -558,6 +578,11 @@ export default {
       // this.activeTeam = team_id;
       this.conversationTitle = name;
       this.inConnectedChat = false;
+      if(this.one_to_one_user) {
+        this.chat_type = 'one-to-one';
+      } else {
+        this.chat_type = 'team';
+      }
       this.chats = await this.loadIndividualChatHistory(payload);
       this.chats = this.chats.reverse();
 
@@ -641,9 +666,13 @@ export default {
 
       if (this.one_to_one_user) {
         payload.receiver = this.one_to_one_user.toString();
+        payload.target_opened_chat = loggedUser.id;
+        payload.target_opened_chat_type = 'one-to-one';
         url = 'send-message';
       } else {
         payload.receivers = this.teamMembers;
+        payload.target_opened_chat = this.activeTeam;
+        payload.target_opened_chat_type = 'team';
         url = 'send-message-to-team';
       }
 
@@ -653,7 +682,7 @@ export default {
         this.chats.unshift(payload);
         this.$socket.emit('send_message', payload);
       } else {
-        this.chats.unshift(payload);
+        // this.chats.unshift(payload);
         this.$socket.emit('send_message_in_group', payload);
       }
       payload.sender = loggedUser.id.toString();

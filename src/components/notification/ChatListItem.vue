@@ -12,9 +12,9 @@
         <p class="mb-0 text-margin">{{ item.message ? item.message.body : '' }}</p>
         <!--                <p class="color-primary mb-0">Team listed by - Pervez alam</p>-->
       </div>
-      <span class="online-icon"></span>
+      <span class="online-icon" v-if="item.message && item.message.seen == 0"></span>
       <a-dropdown>
-        <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+        <a class="ant-dropdown-link dropdown-box" @click="e => e.preventDefault()">
           <a-icon type="more" class="fs-28 font-weight-bolder br-50 bg-c9 color-primary icon-30"/>
         </a>
         <a-menu slot="overlay" class="text-center px-2">
@@ -129,5 +129,8 @@ export default {
       color: #522e8e;
     }
   }
+}
+.dropdown-box {
+  height: 25px;
 }
 </style>
