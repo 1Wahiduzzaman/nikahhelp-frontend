@@ -3,7 +3,7 @@
     <header
       class="header-container bg-secondary shadow-default radius-none px-4"
     >
-      <div class="header-content d-flex align-items-center">
+      <div class="header-content d-flex align-items-center justify-content-between">
         <div class="shrink-none">
           <a href="/" class="navbar-brand">
             <img

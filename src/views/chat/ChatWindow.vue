@@ -406,10 +406,13 @@ export default {
       });
 
       this.sockets.subscribe('receive_message', function (res) {
-        // console.log(res);
         res.sender = res.senderInfo;
-        if(this.chat_type && (this.activeTeam == res.target_opened_chat || this.one_to_one_user == res.target_opened_chat)) {
-          this.chats.unshift(res);
+        if(this.chat_type && (this.activeTeam == res.target_opened_chat || this.one_to_one_user == res.target_opened_chat || this.inConnectedChat)) {
+          if(this.chats.length <= 0) {
+            this.chats.push(res);
+          } else {
+            this.chats.unshift(res);
+          }
         }
 
         let teamPersonalChat = this.teamChat.find(item => item.user_id == res.senderId);
@@ -428,6 +431,13 @@ export default {
           teamChat.message.created_at = res.created_at;
           teamChat.message.seen = 0;
         }
+
+        // let connectedTeamChat = this.connectedTeam.find(item => item.team_id == res.target_opened_chat);
+        // if(connectedTeamChat) {
+        //   connectedTeamChat.message.body = res.body;
+        //   connectedTeamChat.message.created_at = res.created_at;
+        //   connectedTeamChat.message.seen = 0;
+        // }
       });
     }
   },
@@ -550,6 +560,7 @@ export default {
         console.log(item)
         this.conversationTitle = item.name;
         this.inConnectedChat = true;
+        this.chat_type = 'connected-team';
         let payload = {
           to_team_id: 1
         };
@@ -693,14 +704,17 @@ export default {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       let payload = {
         to_team_id: 1,
+        from_team_id: this.activeTeam,
         sender: loggedUser.id,
-        receivers: JSON.stringify(this.teamMembers),
+        receivers: this.teamMembers,
         message: this.msg_text,
         body: this.msg_text,
         created_at: new Date(),
         senderId: loggedUser.id.toString(),
         senderInfo: loggedUser,
+        target_opened_chat_type: 'connected-team'
       };
+      payload.target_opened_chat = payload.to_team_id;
       this.$socket.emit('send_message_in_group', payload);
       this.msg_text = null;
       await ApiService.post(`/v1/send-message-team-to-team`, payload).then(res => res.data);

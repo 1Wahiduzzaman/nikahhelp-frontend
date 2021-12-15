@@ -211,6 +211,7 @@ export default {
 	position: relative;
 	background-color: $bg-white;
 	.sidebar-list {
+    padding-left: 0;
 		a {
 			color: $color-secondary;
 		}
