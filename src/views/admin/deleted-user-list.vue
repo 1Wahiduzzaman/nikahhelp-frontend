@@ -4,16 +4,7 @@
       <div class="top-header">
         <div>
           <v-btn style="background-color: #522e8e; color: #fff" large>
-            Active Users
-          </v-btn>
-        </div>
-        <div class="top-right">
-          <v-btn style="background-color: #522e8e; color: #fff" small>
-            Add New User
-          </v-btn>
-          <v-btn style="background-color: rgb(61 185 156); color: #fff" small>
-            <v-icon dark> md-minus </v-icon>
-            Suspended Users
+            Deleted Users
           </v-btn>
         </div>
       </div>
@@ -24,7 +15,7 @@
           <v-tab
             ><v-badge color="red" content="6">Representative</v-badge></v-tab
           >
-          <v-tab><v-badge color="red" content="6">Rep.to Cand.</v-badge></v-tab>
+
           <v-tab><v-badge color="red" content="6">Matchmaker</v-badge></v-tab>
         </v-tabs>
       </div>
@@ -68,45 +59,38 @@
             <td class="composer">{{ item["fat"] }}</td>
             <td class="composer">{{ item["carbs"] }}</td>
             <td class="publisher">
-              <a
-                :href="'https://www.ncbi.nlm.nih.gov/pubmed/' + item.pmid"
-                target="_blank"
-                >Yes</a
-              >
+              {{ item["carbs"] }}
             </td>
-            <td class="publisher">
-              <a
-                :href="'https://www.ncbi.nlm.nih.gov/pubmed/' + item.pmid"
-                target="_blank"
-                >Yes</a
-              >
-            </td>
+
             <td class="Actions">
               <div>
                 <v-btn style="background-color: #522e8e; color: #fff" small>
                   view
                 </v-btn>
-                <v-btn
-                  style="background-color: rgb(42 205 100); color: #fff"
-                  small
-                >
-                  Edit
-                </v-btn>
+
                 <v-btn
                   style="background-color: rgb(61 185 156); color: #fff"
                   small
                 >
-                  Suspend
+                  Note
                 </v-btn>
                 <v-btn
-                  style="background-color: rgb(191 20 67); color: #fff"
+                  style="background-color: rgb(42 205 100); color: #fff"
                   small
                 >
-                  Note
+                  Reinstate
                 </v-btn>
               </div>
             </td>
           </tr>
+        </template>
+        <template v-slot:bottom="{ pagination, options, updateOptions }">
+          <v-data-footer
+            :pagination="pagination"
+            :options="options"
+            @update:options="updateOptions"
+            items-per-page-text="$vuetify.dataTable.itemsPerPageText"
+          />
         </template>
       </v-data-table>
     </div>
@@ -126,12 +110,10 @@ export default {
           sortable: false,
           value: "name",
         },
-        { text: "Created", value: "calories" },
+        { text: "Deleted", value: "calories" },
         { text: "Name", value: "fat" },
         { text: "Type", value: "carbs" },
-        { text: "Documents", value: "protein" },
-        { text: "Images", value: "protein" },
-
+        { text: "Deleted By", value: "protein" },
         { text: "actions", value: "actions", sortable: false, align: "start" },
       ],
       desserts: [
@@ -250,11 +232,6 @@ export default {
       align-items: center;
       width: 100%;
       padding: 5px;
-
-      .top-right .v-btn {
-        margin-right: 5px;
-        border-radius: 20px;
-      }
     }
   }
   .panel-content {
@@ -293,10 +270,11 @@ export default {
           }
         }
       }
+
     }
   }
 }
-.v-select .v-select__selections input {
-  display: none;
+ .v-select .v-select__selections input {
+    display: none;
 }
 </style>

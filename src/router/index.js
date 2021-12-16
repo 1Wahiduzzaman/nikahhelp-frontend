@@ -59,6 +59,7 @@ import AdminSupport from "@/views/admin/support.vue";
 import AdminApproval from "@/views/admin/approval.vue";
 import SystemAdmin from "@/views/admin/system-admin.vue";
 import UsersList from "@/views/admin/user-list.vue";
+import DeletedUsersList from "@/views/admin/deleted-user-list.vue";
 import Test from "../components/development/Test.vue";
 import TestChat from "../components/development/Chat.vue";
 
@@ -333,7 +334,7 @@ const AppRouter = new VueRouter({
                     },
                     {
                         path: "deleted_users",
-                        component: UsersList,
+                        component: DeletedUsersList,
 
                     },
                     ],
