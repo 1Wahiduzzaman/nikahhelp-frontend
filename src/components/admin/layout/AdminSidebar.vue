@@ -45,7 +45,7 @@
         <router-link to="/admin/teams" class="d-flex align-items-center">
           <img
             class="mr-3"
-            src="@/assets/icon/team.svg"
+            src="@/assets/icon/group-fill-secondary.svg"
             alt="icon"
           />
           <span class="mb-0">Teams</span>
