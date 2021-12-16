@@ -215,6 +215,7 @@ export default {
   overflow: hidden;
   border: 2px solid #ddd;
   border-radius: 15px;
+  height: calc(100vh - 150px);
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 10px 30px #fff;
   margin: 20px;
@@ -270,11 +271,10 @@ export default {
           }
         }
       }
-
     }
   }
 }
- .v-select .v-select__selections input {
-    display: none;
+.v-select .v-select__selections input {
+  display: none;
 }
 </style>

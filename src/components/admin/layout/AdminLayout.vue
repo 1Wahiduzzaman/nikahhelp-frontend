@@ -1,6 +1,8 @@
 <template>
   <div class="container-admin">
-    <header class="header-container bg-secondary shadow-default radius-none px-4">
+    <header
+      class="header-container bg-secondary shadow-default radius-none px-4"
+    >
       <div class="header-content d-flex align-items-center">
         <div style="flex: auto" class="shrink-none">
           <a href="/" class="navbar-brand">
@@ -11,148 +13,153 @@
             />
           </a>
         </div>
-      
+
         <div
           class="header-right user-avatar-area shrink-none"
           style="align-self: center"
         >
-        <div style="padding-right:25px">
+          <div style="padding-right: 25px">
             <ul class="header-nav-icons d-none d-sm-flex">
-          <li class="nav-item shrink-none">
-            <a class="nav-link" aria-current="page" href="/dashboard">
-              <img
-                width="25"
-                src="@/assets/icon/house-door-fill-white.svg"
-                alt="img"
-              />
-            </a>
-          </li>
-          <li class="nav-item shrink-none">
-            <!-- <a class="nav-link" aria-current="page" href="/manageteam">
-                            <img width="25" src="@/assets/icon/group-fill-white.svg" alt="img"/>
-                        </a> -->
-            <a-dropdown :trigger="['click']" placement="bottomRight">
-              <a
-                class="nav-link"
-                aria-current="page"
-                @click.self="(e) => e.preventDefault()"
-              >
-                <img
-                  width="25"
-                  src="@/assets/icon/group-fill-white.svg"
-                  alt="img"
-                />
-              </a>
-              <template v-slot:overlay>
-                <NotificationPopup :items="[]" use-for="team" />
-              </template>
-            </a-dropdown>
-          </li>
-          <li class="nav-item shrink-none">
-            <!-- <a class="nav-link" aria-current="page" href="/shortlist">
-                            <img width="25" src="@/assets/icon/star-fill-white.svg" alt="img"/>
-                        </a> -->
-            <a-dropdown :trigger="['click']" placement="bottomRight">
-              <a
-                class="nav-link"
-                aria-current="page"
-                @click.self="(e) => e.preventDefault()"
-              >
-                <img
-                  width="25"
-                  src="@/assets/icon/star-fill-white.svg"
-                  alt="img"
-                />
-              </a>
-              <template v-slot:overlay>
-                <NotificationPopup :items="[]" use-for="shortlist" />
-              </template>
-            </a-dropdown>
-          </li>
-          <li class="nav-item shrink-none">
-            <a-dropdown :trigger="['click']" placement="bottomRight">
-              <a
-                class="nav-link"
-                aria-current="page"
-                @click.self="(e) => e.preventDefault()"
-              >
-                <a-badge count="2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    style="width: 30px"
-                    viewBox="0 0 20 20"
-                    fill="#fff"
-                  >
-                    <path
-                      d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"
-                    />
-                  </svg>
-                </a-badge>
-              </a>
-              <template v-slot:overlay>
-                <NotificationPopup :items="[]" use-for="notification" />
-              </template>
-            </a-dropdown>
-          </li>
-          <li class="nav-item shrink-none">
-            <a-dropdown :trigger="['click']" placement="bottomRight">
-              <a
-                class="nav-link"
-                aria-current="page"
-                @click.self="(e) => e.preventDefault()"
-              >
-                <a-badge count="5">
+              <li class="nav-item shrink-none">
+                <a class="nav-link" aria-current="page" href="/dashboard">
                   <img
                     width="25"
-                    src="@/assets/icon/chat-dots-fill-white.svg"
+                    src="@/assets/icon/house-door-fill-white.svg"
                     alt="img"
                   />
-                </a-badge>
-              </a>
-              <template v-slot:overlay>
-                <NotificationPopup count="29" :items="[]" use-for="chat" />
-              </template>
-            </a-dropdown>
-          </li>
-        </ul>
-        </div>
-   <div style="display:flex">
-            <img class="avatar-image" src="@/assets/mike.jpg" width="35" alt="" />
-          <div style="align-self: center">
-            <div class="ml-2 text-white">
-              <h6 class="mb-0 text-white fs-14">Selina Parvez Shumi</h6>
-              <div
-                class="d-flex justify-content-between align-items-center mt-1"
-              >
+                </a>
+              </li>
+              <li class="nav-item shrink-none">
+                <!-- <a class="nav-link" aria-current="page" href="/manageteam">
+                            <img width="25" src="@/assets/icon/group-fill-white.svg" alt="img"/>
+                        </a> -->
                 <a-dropdown :trigger="['click']" placement="bottomRight">
-                  <span
+                  <a
+                    class="nav-link"
+                    aria-current="page"
                     @click.self="(e) => e.preventDefault()"
-                    class="team color-primary pl-2 mr-1 shrink-none"
                   >
-                    Team 1
-                  </span>
+                    <img
+                      width="25"
+                      src="@/assets/icon/group-fill-white.svg"
+                      alt="img"
+                    />
+                  </a>
                   <template v-slot:overlay>
-                    <ul class="avatar-dropdown">
-                      <li class="list-item">
-                        <span>Active now:</span>
-                        <p class="mb-0 color-primary">Team 1</p>
-                      </li>
-                      <li class="list-item">
-                        <span>Team ID:</span>
-                        <p class="mb-0 color-primary">#6302432</p>
-                      </li>
-                      <li class="list-item">
-                        <span>Team Name:</span>
-                        <p class="mb-0 color-primary">Selina's Family</p>
-                      </li>
-                    </ul>
+                    <NotificationPopup :items="[]" use-for="team" />
                   </template>
                 </a-dropdown>
-                <span class="role px-2 ml-1 shrink-none">Admin</span>
+              </li>
+              <li class="nav-item shrink-none">
+                <!-- <a class="nav-link" aria-current="page" href="/shortlist">
+                            <img width="25" src="@/assets/icon/star-fill-white.svg" alt="img"/>
+                        </a> -->
+                <a-dropdown :trigger="['click']" placement="bottomRight">
+                  <a
+                    class="nav-link"
+                    aria-current="page"
+                    @click.self="(e) => e.preventDefault()"
+                  >
+                    <img
+                      width="25"
+                      src="@/assets/icon/star-fill-white.svg"
+                      alt="img"
+                    />
+                  </a>
+                  <template v-slot:overlay>
+                    <NotificationPopup :items="[]" use-for="shortlist" />
+                  </template>
+                </a-dropdown>
+              </li>
+              <li class="nav-item shrink-none">
+                <a-dropdown :trigger="['click']" placement="bottomRight">
+                  <a
+                    class="nav-link"
+                    aria-current="page"
+                    @click.self="(e) => e.preventDefault()"
+                  >
+                    <a-badge count="2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        style="width: 30px"
+                        viewBox="0 0 20 20"
+                        fill="#fff"
+                      >
+                        <path
+                          d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"
+                        />
+                      </svg>
+                    </a-badge>
+                  </a>
+                  <template v-slot:overlay>
+                    <NotificationPopup :items="[]" use-for="notification" />
+                  </template>
+                </a-dropdown>
+              </li>
+              <li class="nav-item shrink-none">
+                <a-dropdown :trigger="['click']" placement="bottomRight">
+                  <a
+                    class="nav-link"
+                    aria-current="page"
+                    @click.self="(e) => e.preventDefault()"
+                  >
+                    <a-badge count="5">
+                      <img
+                        width="25"
+                        src="@/assets/icon/chat-dots-fill-white.svg"
+                        alt="img"
+                      />
+                    </a-badge>
+                  </a>
+                  <template v-slot:overlay>
+                    <NotificationPopup count="29" :items="[]" use-for="chat" />
+                  </template>
+                </a-dropdown>
+              </li>
+            </ul>
+          </div>
+          <div style="display: flex">
+            <img
+              class="avatar-image"
+              src="@/assets/mike.jpg"
+              width="35"
+              alt=""
+            />
+            <div style="align-self: center">
+              <div class="ml-2 text-white">
+                <h6 class="mb-0 text-white fs-14">Selina Parvez Shumi</h6>
+                <div
+                  class="d-flex justify-content-between align-items-center mt-1"
+                >
+                  <a-dropdown :trigger="['click']" placement="bottomRight">
+                    <span
+                      @click.self="(e) => e.preventDefault()"
+                      class="team color-primary pl-2 mr-1 shrink-none"
+                    >
+                      Team 1
+                    </span>
+                    <template v-slot:overlay>
+                      <ul class="avatar-dropdown">
+                        <li class="list-item">
+                          <span>Active now:</span>
+                          <p class="mb-0 color-primary">Team 1</p>
+                        </li>
+                        <li class="list-item">
+                          <span>Team ID:</span>
+                          <p class="mb-0 color-primary">#6302432</p>
+                        </li>
+                        <li class="list-item">
+                          <span>Team Name:</span>
+                          <p class="mb-0 color-primary">Selina's Family</p>
+                        </li>
+                      </ul>
+                    </template>
+                  </a-dropdown>
+                  <span class="role px-2 ml-1 shrink-none">Admin</span>
+                </div>
               </div>
             </div>
           </div>
-   </div>
         </div>
         <div class="d-sm-none">
           <a-dropdown :trigger="['click']">
@@ -254,10 +261,9 @@
         <a-layout-content>
           <slot></slot>
         </a-layout-content>
-       
       </a-layout>
     </a-layout>
-      <!-- <Footer /> -->
+    <!-- <Footer /> -->
   </div>
 </template>
 
@@ -286,11 +292,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container-admin{
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    height: 100vh
+.container-admin {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  .ant-layout {
+    height: calc(100vh - 90px) !important;
+  }
 }
 .notification-wrapper {
   padding: 10px;

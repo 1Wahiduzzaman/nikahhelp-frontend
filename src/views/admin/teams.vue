@@ -39,7 +39,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  height: calc(100vh - 135px);
+height: calc(100vh - 150px);
   overflow: hidden;
   border: 2px solid #ddd;
   border-radius: 15px;
