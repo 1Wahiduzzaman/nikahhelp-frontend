@@ -263,7 +263,7 @@ import ChatListItem from '@/components/notification/ChatListItem';
 import ApiService from '@/services/api.service';
 import {pick, map} from 'lodash';
 
-const messageKeys = ['id', 'user_id', 'chat_id', 'team_id', 'body', 'seen', 'created_at'];
+const messageKeys = ['id', 'user_id', 'chat_id', 'team_id', 'from_team_id', 'to_team_id', 'private_receiver_id', 'private_team_chat_id', 'body', 'seen', 'created_at'];
 import {format} from 'timeago.js'
 
 export default {
@@ -292,7 +292,12 @@ export default {
       one_to_one_user: null,
       inConnectedChat: false,
       chat_type: null,
-      chatTab: 'Recent'
+      chat_id: null,
+      chatTab: 'Recent',
+      private_chat: {
+        to_team_id: null,
+        receiver: null
+      }
     }
   },
   components: {
@@ -407,7 +412,8 @@ export default {
 
       this.sockets.subscribe('receive_message', function (res) {
         res.sender = res.senderInfo;
-        if(this.chat_type && (this.activeTeam == res.target_opened_chat || this.one_to_one_user == res.target_opened_chat || this.inConnectedChat)) {
+        // console.log(res)
+        if(this.chat_type && (this.activeTeam == res.target_opened_chat || this.one_to_one_user == res.target_opened_chat || this.inConnectedChat || this.private_chat)) {
           if(this.chats.length <= 0) {
             this.chats.push(res);
           } else {
@@ -430,6 +436,20 @@ export default {
           teamChat.message.body = res.body;
           teamChat.message.created_at = res.created_at;
           teamChat.message.seen = 0;
+        }
+
+        let recentTeamMemberChat = this.chatHistory.find(item => item.user_id == res.target_opened_chat);
+        if(recentTeamMemberChat) {
+          recentTeamMemberChat.message.body = res.body;
+          recentTeamMemberChat.message.created_at = res.created_at;
+          recentTeamMemberChat.message.seen = 0;
+        }
+
+        let recentPrivateChat = this.chatHistory.find(item => res.target_opened_chat && item.private_team_chat_id == res.target_opened_chat.private_team_chat_id);
+        if(recentPrivateChat) {
+          recentPrivateChat.message.body = res.body;
+          recentPrivateChat.message.created_at = res.created_at;
+          recentPrivateChat.message.seen = 0;
         }
 
         // let connectedTeamChat = this.connectedTeam.find(item => item.team_id == res.target_opened_chat);
@@ -472,11 +492,10 @@ export default {
           state: 'seen',
           name: item.user?.full_name || 'user name',
           logo: item.user?.avatar,
-          user_id: item.user_id,
+          user_id: item.user.id,
           message: pick(item.last_message, messageKeys)
         }
       });
-
 
       let privateChat = map(data.private_chat, item => {
         return {
@@ -484,6 +503,10 @@ export default {
           state: 'seen',
           name: item.private_receiver_data?.full_name || 'user name',
           logo: item.private_receiver_data?.avatar,
+          to_team_id: item.to_team_id,
+          from_team_id: item.from_team_id,
+          private_receiver_id: item.receiver,
+          private_team_chat_id: item.id,
           message: pick(item.last_private_message, messageKeys)
         }
       });
@@ -543,7 +566,11 @@ export default {
 
     async loadIndividualChatHistory(payload) {
       try {
-        let {data} = await ApiService.post('/v1/individual-chat-history', payload).then(res => res.data);
+        let url = 'individual-chat-history';
+        if(payload.team_chat_id) {
+          url = 'connected-team-chat-history';
+        }
+        let {data} = await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
         if (data && data.message_history) {
           data = data.message_history;
         }
@@ -573,7 +600,7 @@ export default {
         console.error(e);
       }
     },
-    async getIndividualChat({message: {chat_id, team_id}, name, user_id}) {
+    async getIndividualChat({message: {chat_id, team_id}, name, user_id, from_team_id, to_team_id, private_receiver_id, private_team_chat_id}) {
       const payload = {
         type: chat_id ? 'single' : 'team',
         chat_id,
@@ -591,8 +618,27 @@ export default {
       this.inConnectedChat = false;
       if(this.one_to_one_user) {
         this.chat_type = 'one-to-one';
+        this.private_chat = {};
       } else {
-        this.chat_type = 'team';
+        if(chat_id) {
+          this.chat_type = 'one-to-one';
+          this.chat_id = chat_id;
+          this.private_chat = {};
+        } else {
+          if(private_receiver_id) {
+            this.chat_type = 'private';
+            this.private_chat = {
+              to_team_id: to_team_id,
+              receiver: private_receiver_id,
+              private_team_chat_id: private_team_chat_id
+            }
+            payload.team_chat_id = private_team_chat_id;
+            payload.to_team_id = 1;
+          } else {
+            this.chat_type = 'team';
+            this.private_chat = {};
+          }
+        }
       }
       this.chats = await this.loadIndividualChatHistory(payload);
       this.chats = this.chats.reverse();
@@ -659,7 +705,11 @@ export default {
         if (this.inConnectedChat) {
           await this.sendConnectedTeamMessage();
         } else {
-          await this.sendTeamMessage();
+          if(!this.private_chat) {
+            await this.sendPrivateMessage();
+          } else {
+            await this.sendTeamMessage();
+          }
         }
       }
     },
@@ -675,10 +725,11 @@ export default {
         senderInfo: loggedUser
       }
 
-      if (this.one_to_one_user) {
-        payload.receiver = this.one_to_one_user.toString();
+      if (this.one_to_one_user || this.chat_id) {
+        payload.receiver = this.one_to_one_user.toString()
         payload.target_opened_chat = loggedUser.id;
         payload.target_opened_chat_type = 'one-to-one';
+        payload.target_opened_chat_id = this.chat_id;
         url = 'send-message';
       } else {
         payload.receivers = this.teamMembers;
@@ -687,8 +738,9 @@ export default {
         url = 'send-message-to-team';
       }
 
-      if (this.one_to_one_user) {
+      if (this.one_to_one_user || this.chat_id) {
         payload.sender = loggedUser;
+        payload.chat_id = this.chat_id;
         payload.to = this.one_to_one_user.toString();
         this.chats.unshift(payload);
         this.$socket.emit('send_message', payload);
@@ -718,6 +770,27 @@ export default {
       this.$socket.emit('send_message_in_group', payload);
       this.msg_text = null;
       await ApiService.post(`/v1/send-message-team-to-team`, payload).then(res => res.data);
+    },
+    async sendPrivateMessage() {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let url = "connected-send-private-message";
+      let payload = {
+        body: this.msg_text,
+        message: this.msg_text,
+        created_at: new Date(),
+        senderId: loggedUser.id.toString(),
+        senderInfo: loggedUser,
+        target_opened_chat_type: 'private-chat',
+        target_opened_chat: this.private_chat,
+        receiver: this.private_chat.receiver.toString()
+      }
+      payload.sender = loggedUser.id.toString();
+      this.chats.unshift(payload);
+      this.$socket.emit('send_message', payload);
+      payload.from_team_id = this.activeTeam;
+      payload.to_team_id = this.private_chat.to_team_id;
+      await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
+      this.msg_text = '';
     },
     unique(array) {
       return array.filter(function (el, index, arr) {
