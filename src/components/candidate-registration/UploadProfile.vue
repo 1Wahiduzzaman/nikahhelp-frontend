@@ -20,12 +20,12 @@
           <div class="col-12">
             <div class="instruction">
               <p>
-                * You are required to upload at least one Avatar and a Main Image.
-                All together you can upload 3 pictures.
+                * You are required to upload at least one Avatar and a Main
+                Image. All together you can upload 3 pictures.
               </p>
               <p>
-                * Select images from your devices. Supported file format are JPG,
-                JPEG, PNG. Maximum file size 2 MB
+                * Select images from your devices. Supported file format are
+                JPG, JPEG, PNG. Maximum file size 2 MB
               </p>
             </div>
           </div>
@@ -37,45 +37,41 @@
             <div class="row">
               <div class="col-12 col-md-4">
                 <div class="text-center">
-                        <span
-                            @click="clearImg('avatar')"
-                            class="close-icon"
-                            v-if="imageModel.avatar_image_url"
-                        ><img src="@/assets/icon/close.svg" alt="img"
-                        /></span>
+                  <span
+                    @click="clearImg('avatar')"
+                    class="close-icon"
+                    v-if="imageModel.avatar_image_url"
+                    ><img src="@/assets/icon/close.svg" alt="img"
+                  /></span>
                   <div class="img-preview mb-2">
                     <img
-                        :src="
-                              avatarSrc
-                                ? avatarSrc
-                                : imageModel.avatar_image_url
-                            "
-                        width="180"
-                        height="200"
-                        v-if="imageModel.avatar_image_url"
+                      :src="avatarSrc ? avatarSrc : imageModel.avatar_image_url"
+                      width="180"
+                      height="200"
+                      v-if="imageModel.avatar_image_url"
                     />
                     <div class="mt-3">Avatar Image</div>
                     <div
-                        class="mt-4 add-icon"
-                        v-if="!imageModel.avatar_image_url"
+                      class="mt-4 add-icon"
+                      v-if="!imageModel.avatar_image_url"
                     >
                       <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 16.69 16.69"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16.69 16.69"
                       >
                         <g id="Layer_2" data-name="Layer 2">
                           <g id="mid_bottom" data-name="mid bottom">
                             <circle
-                                class="cls-1"
-                                cx="8.34"
-                                cy="8.34"
-                                r="8.34"
-                                fill="#e1e1e1"
+                              class="cls-1"
+                              cx="8.34"
+                              cy="8.34"
+                              r="8.34"
+                              fill="#e1e1e1"
                             />
                             <path
-                                class="cls-2"
-                                fill="#ffffff"
-                                d="M13.1,7.51H9.18V3.58a.8.8,0,0,0-1.6,0V7.51H3.65a.8.8,0,1,0,0,1.6H7.58V13a.8.8,0,1,0,1.6,0V9.11H13.1a.8.8,0,1,0,0-1.6Z"
+                              class="cls-2"
+                              fill="#ffffff"
+                              d="M13.1,7.51H9.18V3.58a.8.8,0,0,0-1.6,0V7.51H3.65a.8.8,0,1,0,0,1.6H7.58V13a.8.8,0,1,0,1.6,0V9.11H13.1a.8.8,0,1,0,0-1.6Z"
                             />
                           </g>
                         </g>
@@ -83,54 +79,52 @@
                     </div>
                   </div>
                   <input
-                      type="file"
-                      class="input-image"
-                      name="avatar"
-                      @change="getAvatar"
+                    type="file"
+                    class="input-image"
+                    name="avatar"
+                    @change="getAvatar"
                   />
                 </div>
               </div>
               <div class="col-12 col-md-4 mobile-margin">
                 <div class="text-center">
-                        <span
-                            @click="clearImg('main')"
-                            class="close-icon"
-                            v-if="imageModel.main_image_url"
-                        ><img src="@/assets/icon/close.svg" alt="img"
-                        /></span>
+                  <span
+                    @click="clearImg('main')"
+                    class="close-icon"
+                    v-if="imageModel.main_image_url"
+                    ><img src="@/assets/icon/close.svg" alt="img"
+                  /></span>
                   <div class="img-preview mb-2">
                     <img
-                        :src="
-                              mainImageSrc
-                                ? mainImageSrc
-                                : imageModel.main_image_url
-                            "
-                        width="180"
-                        height="200"
-                        v-if="imageModel.main_image_url"
+                      :src="
+                        mainImageSrc ? mainImageSrc : imageModel.main_image_url
+                      "
+                      width="180"
+                      height="200"
+                      v-if="imageModel.main_image_url"
                     />
                     <div class="mt-3">Main Profile Image</div>
                     <div
-                        class="mt-4 add-icon"
-                        v-if="!imageModel.main_image_url"
+                      class="mt-4 add-icon"
+                      v-if="!imageModel.main_image_url"
                     >
                       <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 16.69 16.69"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16.69 16.69"
                       >
                         <g id="Layer_2" data-name="Layer 2">
                           <g id="mid_bottom" data-name="mid bottom">
                             <circle
-                                class="cls-1"
-                                cx="8.34"
-                                cy="8.34"
-                                r="8.34"
-                                fill="#e1e1e1"
+                              class="cls-1"
+                              cx="8.34"
+                              cy="8.34"
+                              r="8.34"
+                              fill="#e1e1e1"
                             />
                             <path
-                                class="cls-2"
-                                fill="#ffffff"
-                                d="M13.1,7.51H9.18V3.58a.8.8,0,0,0-1.6,0V7.51H3.65a.8.8,0,1,0,0,1.6H7.58V13a.8.8,0,1,0,1.6,0V9.11H13.1a.8.8,0,1,0,0-1.6Z"
+                              class="cls-2"
+                              fill="#ffffff"
+                              d="M13.1,7.51H9.18V3.58a.8.8,0,0,0-1.6,0V7.51H3.65a.8.8,0,1,0,0,1.6H7.58V13a.8.8,0,1,0,1.6,0V9.11H13.1a.8.8,0,1,0,0-1.6Z"
                             />
                           </g>
                         </g>
@@ -138,49 +132,54 @@
                     </div>
                   </div>
                   <input
-                      type="file"
-                      class="input-image"
-                      name="mainImage"
-                      @change="getMainImage"
+                    type="file"
+                    class="input-image"
+                    name="mainImage"
+                    @change="getMainImage"
                   />
                 </div>
               </div>
               <div class="col-12 col-md-4 mobile-margin">
                 <div class="text-center">
-                        <span
-                            @click="clearImg('additional')"
-                            class="close-icon"
-                            v-if="imageModel.additionalImageSrc"
-                        ><img src="@/assets/icon/close.svg" alt="img"
-                        /></span>
+                  <span
+                    @click="clearImg('additional')"
+                    class="close-icon"
+                    v-if="imageModel.additionalImageSrc"
+                    ><img src="@/assets/icon/close.svg" alt="img"
+                  /></span>
                   <div class="img-preview mb-2">
                     <img
-                        :src=" additionalImageSrc
-                                ? additionalImageSrc
-                                : imageModel.additionalImageSrc"
-                        width="180"
-                        height="200"
-                        v-if="imageModel.additionalImageSrc"
+                      :src="
+                        additionalImageSrc
+                          ? additionalImageSrc
+                          : imageModel.additionalImageSrc
+                      "
+                      width="180"
+                      height="200"
+                      v-if="imageModel.additionalImageSrc"
                     />
                     <div class="mt-3">Additional Image</div>
-                    <div class="mt-4 add-icon" v-if="!imageModel.additionalImageSrc">
+                    <div
+                      class="mt-4 add-icon"
+                      v-if="!imageModel.additionalImageSrc"
+                    >
                       <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 16.69 16.69"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16.69 16.69"
                       >
                         <g id="Layer_2" data-name="Layer 2">
                           <g id="mid_bottom" data-name="mid bottom">
                             <circle
-                                class="cls-1"
-                                cx="8.34"
-                                cy="8.34"
-                                r="8.34"
-                                fill="#e1e1e1"
+                              class="cls-1"
+                              cx="8.34"
+                              cy="8.34"
+                              r="8.34"
+                              fill="#e1e1e1"
                             />
                             <path
-                                class="cls-2"
-                                fill="#ffffff"
-                                d="M13.1,7.51H9.18V3.58a.8.8,0,0,0-1.6,0V7.51H3.65a.8.8,0,1,0,0,1.6H7.58V13a.8.8,0,1,0,1.6,0V9.11H13.1a.8.8,0,1,0,0-1.6Z"
+                              class="cls-2"
+                              fill="#ffffff"
+                              d="M13.1,7.51H9.18V3.58a.8.8,0,0,0-1.6,0V7.51H3.65a.8.8,0,1,0,0,1.6H7.58V13a.8.8,0,1,0,1.6,0V9.11H13.1a.8.8,0,1,0,0-1.6Z"
                             />
                           </g>
                         </g>
@@ -188,10 +187,10 @@
                     </div>
                   </div>
                   <input
-                      type="file"
-                      class="input-image"
-                      name="image"
-                      @change="getAdditionalImage"
+                    type="file"
+                    class="input-image"
+                    name="image"
+                    @change="getAdditionalImage"
                   />
                 </div>
               </div>
@@ -216,21 +215,21 @@
             </h3>
             <div class="d-flex">
               <a-switch
-                  v-model="anyoneFlag"
-                  @change="onConfirmationSwitchChnaged1"
+                v-model="anyoneFlag"
+                @change="onConfirmationSwitchChnaged1"
               >
                 <a-icon slot="checkedChildren" type="check" />
                 <a-icon slot="unCheckedChildren" type="close" />
               </a-switch>
               <span class="ml-3 switch-text">
-                  I don't want to share my images with anyone at this moment
-                </span>
+                I don't want to share my images with anyone at this moment
+              </span>
             </div>
             <div class="d-flex mt-4">
               <a-switch
-                  @change="onConfirmationSwitchChnaged2"
-                  v-model="onlyTeamFlag"
-                  :disabled="anyoneFlag"
+                @change="onConfirmationSwitchChnaged2"
+                v-model="onlyTeamFlag"
+                :disabled="anyoneFlag"
               >
                 <a-icon slot="checkedChildren" type="check" />
                 <a-icon slot="unCheckedChildren" type="close" />
@@ -241,9 +240,9 @@
             </div>
             <div class="d-flex mt-4">
               <a-switch
-                  @change="onConfirmationSwitchChnaged3"
-                  v-model="onlyTeamConnectionsFlag"
-                  :disabled="anyoneFlag"
+                @change="onConfirmationSwitchChnaged3"
+                v-model="onlyTeamConnectionsFlag"
+                :disabled="anyoneFlag"
               >
                 <a-icon slot="checkedChildren" type="check" />
                 <a-icon slot="unCheckedChildren" type="close" />
@@ -294,15 +293,15 @@ export default {
       switch (action) {
         case "main":
           this.mainImageSrc = "";
-          this.imageModel.main_image_url="";
+          this.imageModel.main_image_url = "";
           break;
         case "avatar":
           this.avatarSrc = "";
-           this.imageModel.avatar_image_url=""
+          this.imageModel.avatar_image_url = "";
           break;
         case "additional":
           this.additionalImageSrc = "";
-           this.imageModel.additionalImageSrc=""
+          this.imageModel.additionalImageSrc = "";
           break;
       }
     },
@@ -333,7 +332,7 @@ export default {
         },
       });
     },
-    
+
     getImageSharingSettings() {
       const response = this.$store.dispatch("getImageSharingSettings");
       response
@@ -393,7 +392,7 @@ export default {
         file = "";
         return;
       }
-      this.imageModel.additionalImageSrc= e.target.files[0]
+      this.imageModel.additionalImageSrc = e.target.files[0];
       let formData = new FormData();
       formData.append("image[0][image]", e.target.files[0]);
       formData.append("image[0][type]", 2);
@@ -415,28 +414,28 @@ export default {
         this.team_connection_can_see = 0;
       }
       checked == true ? (this.anybody_can_see = 1) : (this.anybody_can_see = 0);
-       this.onChangeCheckBox();
+      this.onChangeCheckBox();
     },
     onConfirmationSwitchChnaged2(checked) {
       console.log(checked);
       checked == true
         ? (this.only_team_can_see = 1)
         : (this.only_team_can_see = 0);
-         this.onChangeCheckBox();
+      this.onChangeCheckBox();
     },
     onConfirmationSwitchChnaged3(checked) {
       console.log(checked);
       checked == true
         ? (this.team_connection_can_see = 1)
         : (this.team_connection_can_see = 0);
-        this.onChangeCheckBox();
+      this.onChangeCheckBox();
     },
-     onChangeCheckBox() {
-       let formData = new FormData();
+    onChangeCheckBox() {
+      let formData = new FormData();
       formData.append("anybody_can_see", this.anybody_can_see);
       formData.append("only_team_can_see", this.only_team_can_see);
       formData.append("team_connection_can_see", this.team_connection_can_see);
-      this.saveImage(formData)
+      this.saveImage(formData);
     },
     async saveImage(data) {
       await this.$store.dispatch("uploadImages", data).then((data) => {
@@ -445,14 +444,16 @@ export default {
             value: {
               avatar_image_url: data.data.data.avatar_image_url,
               main_image_url: data.data.data.main_image_url,
-              additionalImageSrc:data.data.data.other_images.length > 0 ? data.data.data.other_images[0].image_path : this.additionalImageSrc,
+              additionalImageSrc:
+                data.data.data.other_images.length > 0
+                  ? data.data.data.other_images[0].image_path
+                  : this.additionalImageSrc,
             },
             current: 4,
           });
         }
       });
     },
-   
   },
 };
 </script>
@@ -557,7 +558,7 @@ export default {
     place-content: center;
     position: absolute;
     right: 0.5rem;
-    top: -1.5rem;
+    top: -0.7rem;
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
@@ -588,7 +589,7 @@ export default {
 .switch-text {
   font-size: 14px;
 }
-.ant-switch{
+.ant-switch {
   max-width: 20px;
 }
 @media (min-width: 768px) {

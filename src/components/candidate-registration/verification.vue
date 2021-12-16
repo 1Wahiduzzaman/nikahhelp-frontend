@@ -811,7 +811,7 @@ input[type="file"]::-webkit-file-upload-button {
   display: grid;
   place-content: center;
   position: absolute;
-  right: 6.5rem;
+  right: 5rem;
   top: 2.5rem;
   width: 2rem;
   height: 2rem;

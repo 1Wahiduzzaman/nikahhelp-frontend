@@ -274,7 +274,7 @@ export default {
     }
   }
 }
- .v-select .v-select__selections input {
-    display: none;
-}
+//  .v-select .v-select__selections input {
+//     display: none;
+// }
 </style>

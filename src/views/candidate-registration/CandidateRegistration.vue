@@ -359,6 +359,7 @@ export default {
                 : response.data.data.personal_info.more_about.per_food_cuisine_like.split(
                     ","
                   ),
+              per_have_children: "none",
               per_children: [
                 {
                   type: 1,
