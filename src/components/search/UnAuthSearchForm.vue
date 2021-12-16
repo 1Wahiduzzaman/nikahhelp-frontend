@@ -41,7 +41,7 @@
           :uniqueNames="['heightMin', 'heightMax']"
           :options="heightTV"
           :placeholder="'Height'"
-           :size="'large'"
+          :size="'large'"
           :width="'120'"
           :suffixIcon="'true'"
         />
