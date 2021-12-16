@@ -1,5 +1,5 @@
 <template>
-  <div class="panel-container">
+  <div class="admin-deleted-user-container">
     <div class="panel-header">
       <div class="top-header">
         <div>
@@ -8,7 +8,7 @@
           </v-btn>
         </div>
       </div>
-      <div>
+      <div class="bottom-header">
         <v-tabs>
           <v-tab><v-badge color="red" content="6">All</v-badge></v-tab>
           <v-tab><v-badge color="red" content="6">Candidate</v-badge></v-tab>
@@ -18,6 +18,16 @@
 
           <v-tab><v-badge color="red" content="6">Matchmaker</v-badge></v-tab>
         </v-tabs>
+        <v-text-field
+          v-model="search"
+          filled
+          rounded
+          dense
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
       </div>
     </div>
     <div class="panel-content">
@@ -26,6 +36,7 @@
         show-select
         :items="desserts"
         :headers="headers"
+        :search="search"
         :single-select="false"
         item-key="name"
         class="dt-table"
@@ -102,6 +113,7 @@ export default {
   components: {},
   data() {
     return {
+         search: '',
       selectedTasks: [],
       headers: [
         {
@@ -208,14 +220,13 @@ export default {
 </script>
 
 <style lang="scss" >
-.panel-container {
+.admin-deleted-user-container {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   overflow: hidden;
   border: 2px solid #ddd;
   border-radius: 15px;
-  height: calc(100vh - 150px);
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 10px 30px #fff;
   margin: 20px;
@@ -233,6 +244,12 @@ export default {
       align-items: center;
       width: 100%;
       padding: 5px;
+    }
+    .bottom-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
     }
   }
   .panel-content {
@@ -273,8 +290,12 @@ export default {
       }
     }
   }
-}
-.v-select .v-select__selections input {
-  display: none;
+  .v-select .v-select__selections input {
+    display: none;
+  }
+  input {
+    border-radius: none;
+    border: none;
+  }
 }
 </style>
