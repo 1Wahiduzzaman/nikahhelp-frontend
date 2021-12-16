@@ -230,6 +230,10 @@ body {
 }
 
 // end css for ant multiselect
+.v-application ol, .v-application ul {
+    padding: 0;
+    margin:0
+}
 .candidate-registration {
     .anticon {
         svg {
@@ -272,6 +276,7 @@ body {
     .style-chooser .vs__dropdown-menu {
         z-index: 9;
        width: 100%;
+       padding-left: 0;
        li{
         max-width: 100%;
         overflow: hidden;
