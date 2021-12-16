@@ -3,8 +3,8 @@
     <header
       class="header-container bg-secondary shadow-default radius-none px-4"
     >
-      <div class="header-content d-flex align-items-center">
-        <div style="flex: auto" class="shrink-none">
+      <div class="header-content d-flex align-items-center justify-content-between">
+        <div class="shrink-none">
           <a href="/" class="navbar-brand">
             <img
               width="120"

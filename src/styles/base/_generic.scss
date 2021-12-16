@@ -10,10 +10,12 @@
 body {
     font-family: 'Poppins', sans-serif;
 }
-
+.flex {
+    display: flex;
+}
 .header-container{
     width: 100%;
-    height: 100px;
+    //height: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -162,7 +164,7 @@ body {
 }
 .ant-layout {
     background: #fff !important;
-    height: 100% !important;
+    height: calc(100vh - 120px) !important;
 }
 // end css for ant slider
 .ant-slider {
@@ -583,6 +585,9 @@ div[data-unique="second_one"] >  .ant-select-selection{
 }
 .vs__dropdown-menu, .vs__selected-options, .ant-input, .ant-select, .ant-select-selection {
     //font-weight: 600;
+}
+.menu-badge > .ant-badge-count {
+    font-size: 10px;
 }
 @media (min-width: 576px) {
     .ant-layout-sider {
