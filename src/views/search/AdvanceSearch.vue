@@ -53,9 +53,10 @@
 					</template>
 				</Header>
 			</div>
-				<a-layout id="layout" style="background-color: #fff" :style="{ overflow: 'auto', height: 'calc(100vh - 80px)'}">
+				<a-layout id="layout" style="background-color: #fff" :style="{ height: 'calc(100vh - 80px)'}">
 					<a-layout-sider
-						class="bg-white shadow-default"
+						:style="{ height: 'calc(100vh - 80px)', overflowY: 'auto'}"
+						class="bg-white shadow-default fdfdf"
 						v-model="collapsed"
 						:trigger="null"
 						collapsible
