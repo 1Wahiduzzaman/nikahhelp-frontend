@@ -365,7 +365,7 @@
                 <div class="name-short" :class="{'name-short-single': member.role.toString() != 'Owner+Admin' }"><span v-if="member.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(member.role) }}</div>
               </td>
               <td>
-                <div class="name-full cursor-pointer" @click="toggleActiveProfile(member)">{{ member.user.full_name }}</div>
+                <div class="name-full cursor-pointer" @click="toggleActiveProfile(member)">{{ member.user.full_name ? member.user.full_name : 'N/A' }}</div>
               </td>
               <td>
                 <div class="title">
@@ -422,16 +422,17 @@
               <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
             </a-select>
 
-            <a-button
-                v-if="invitedMembers.length <= 0"
-                type="primary"
-                class="ml-1 fs-12 br-20 bg-primary text-white member-btn"
-                :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship"
-                @click="inviteNowWindow">Invite now</a-button>
+<!--            <a-button-->
+<!--                v-if="invitedMembers.length <= 0"-->
+<!--                type="primary"-->
+<!--                class="ml-1 fs-12 br-20 bg-primary text-white member-btn"-->
+<!--                :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship"-->
+<!--                @click="inviteNowWindow">Invite now</a-button>-->
 
-            <a-dropdown class="right-br-20 bg-primary text-white w-25 fs-10 member-btn dropdown-button" v-if="invitedMembers.length > 0">
+            <a-dropdown class="right-br-20 bg-primary text-white w-25 fs-10 member-btn dropdown-button">
               <a-menu slot="overlay">
-                <a-menu-item key="1" @click="submitInvite()">Invitation </a-menu-item>
+                <a-menu-item key="1" @click="inviteNowWindow()">Invite User </a-menu-item>
+                <a-menu-item key="1" @click="submitInvite()">Send Invite </a-menu-item>
                 <a-menu-item key="2" @click="removeInvite()">Remove </a-menu-item>
               </a-menu>
               <a-button class="ml-1 fs-10"> Invite Now <a-icon type="down" /> </a-button>
@@ -1384,6 +1385,7 @@ export default {
       members += this.teamData.team_invited_members.length;
       if(members < 5) {
         this.invitationObject.visible = true;
+        this.createInvitaionLink();
       } else {
         this.$warning({
           title: 'Maximum number reached!',
@@ -1416,6 +1418,7 @@ export default {
     removeInvite() {
       this.invitedMembers = [];
       this.invitationObject.invitation_link = '';
+      this.invitationObject.visible = false;
     },
     async submitInvite() {
       let payload = {
@@ -1602,6 +1605,7 @@ export default {
 }
 .table td, .table th {
   padding: 0 !important;
+  vertical-align: initial;
 }
 .member-add-box {
   margin-top: -14px;
@@ -1637,7 +1641,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
+  font-size: 19px;
   margin-top: 3px;
 }
 .status-box {

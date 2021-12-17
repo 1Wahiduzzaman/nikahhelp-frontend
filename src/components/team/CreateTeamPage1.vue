@@ -1,5 +1,5 @@
 <template>
-  <div class="col-lg-6 col-xl-3 cards">
+  <div class="col-lg-6 col-xl-3 cards mt-3">
     <div class="team-card card" style="min-height: 500px;">
       <div class="d-flex align-items-center justify-content-center joining-header position-relative" style="width: 100%">
         <div class="logo-position position-absolute">

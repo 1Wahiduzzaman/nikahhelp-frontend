@@ -36,14 +36,14 @@
         <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
       </a-select>
 
-      <a-button v-if="invitedUsers.length <= 0"
-                type="primary"
-                class="ml-2 fs-10 br-20"
-                @click="goNextStep()"
-                :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship">Invite now</a-button>
-      <a-dropdown class="right-br-20 bg-primary text-white w-25 fs-10 dropdown-button" v-if="invitedUsers.length > 0">
+<!--      <a-button v-if="invitedUsers.length <= 0"-->
+<!--                type="primary"-->
+<!--                class="ml-2 fs-10 br-20"-->
+<!--                @click="goNextStep()"-->
+<!--                :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship">Invite now</a-button>-->
+      <a-dropdown class="right-br-20 bg-primary text-white w-25 fs-10 dropdown-button">
         <a-menu slot="overlay">
-          <a-menu-item key="1">Invitation </a-menu-item>
+          <a-menu-item key="1" @click="goNextStep()">Invitation </a-menu-item>
           <a-menu-item key="2" @click="removeInvite()">Remove </a-menu-item>
         </a-menu>
         <a-button class="ml-1 fs-10"> Invite Now <a-icon type="down" /> </a-button>
@@ -54,7 +54,7 @@
         <a-button class="back-button button float-left text-white" v-on:click="$emit('cancel_button')">Back</a-button>
       </div>
       <div class="position-absolute footer-conf-btn">
-        <a-button class="confirm-button button float-right bg-primary text-white" @click="addMember()" :disabled="invitedUsers.length <= 0" :title="invitedUsers.length <= 0 ? 'Please choose user' : ''">Save & Continue</a-button>
+        <a-button class="confirm-button button float-right bg-primary text-white" @click="addMember()">Save & Continue</a-button>
       </div>
     </div>
     <InviteMember :team="team"
