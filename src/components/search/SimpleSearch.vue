@@ -2,51 +2,134 @@
 	<div>
 		<!-- start advanced search -->
 		<div class="row">
-			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+			<div class="ml-1 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="">
 					<div class="row mb-5 mt-3">
 						<!-- Age Slider -->
-						<div class="col-md-12 mt-4">
-							<div class="age-slider">
-								<template>
-									<div>
-										<a-slider
-											range
-											v-model="age"
-											@afterChange="onAfterChangeSlider"
-										/>
-										<span class="fs-20 color-primary"
-											>Age:
-											<span class="fw-600">{{ age[0] }} - {{ age[1] }}</span>
-											years old</span
-										>
-									</div>
-								</template>
-							</div>
+						<div class="mt-4 px-3">
+							<SelectGroup
+								style="margin-left: 5px;"
+								@selected="onDropdownChange"
+								:uniqueNames="['min_age', 'max_age']"
+								:size="'medium'"
+								:options="ageTV"
+								:placeholder="'Age'"
+								:width="'100'"
+								:suffixIcon="'true'"
+								:values="[min_age, max_age]"
+							/>
 						</div>
-						
+						<div class="mt-4 px-3">
+							<SelectGroup
+								style="margin-left: 5px;"
+								@selected="onDropdownChange"
+								:uniqueNames="['heightMin', 'heightMax']"
+								:size="'medium'"
+								:options="heithtTV"
+								:placeholder="'Height'"
+								:width="'100'"
+								:suffixIcon="'true'"
+								:values="[heightMin, heightMax]"
+							/>
+						</div>
 					</div>
-					<div class="row">
-						<!-- Select Religion -->
-						<div class="col-md-12">
+					<!-- Select Religion -->
+					<div class="">
+						<div class="select-box">
+							<select class="custom-select" v-model="religion">
+								<option value="">Select Religion</option>
+								<option
+									v-for="r in $store.state.candidateInfo.religion_options"
+									:value="r.id"
+									:key="r.id"
+								>
+									{{ r.name }}
+								</option>
+							</select>
+						</div>
+					</div>
+					<!-- Select County -->
+					<div class=" mt-4">
+						<div class="select-box">
+							<select class="custom-select" v-model="country">
+								<option value="">Select Country</option>
+								<option
+									v-for="c in $store.state.candidateInfo.countries"
+									:value="c.id"
+									:key="c.id"
+								>
+									{{ c.name }}
+								</option>
+							</select>
+						</div>
+					</div>
+					<!-- Select Ethnicity -->
+					<div class=" mt-4">
+						<div class="select-box">
+							<select class="custom-select" v-model="ethnicity">
+								<option value="">Select Ethnicity</option>
+								<option v-for="e in ethnicities" :value="e" :key="e">
+									{{ e }}
+								</option>
+							</select>
+						</div>
+					</div>
+					<!-- Select Maritial Status -->
+					<div class="mt-4">
+						<div class="select-box">
+							<select class="custom-select" v-model="maritalStatus">
+								<option value="">Select Maritial Status</option>
+								<option value="single">Single</option>
+								<option value="married">Married</option>
+								<option value="divorced">Divorced</option>
+							</select>
+						</div>
+					</div>
+					<template v-if="showMoreSeach">
+						<div class="mt-4">
 							<div class="select-box">
-								<select class="custom-select" v-model="religion">
-									<option value="">Select Religion</option>
+								<select class="custom-select" v-model="motherTongue">
+									<option value="">Select Mother Tongue</option>
 									<option
-										v-for="r in $store.state.candidateInfo.religion_options"
-										:value="r.id"
-										:key="r.id"
+										v-for="(spoken_language, key) in languages"
+										:value="spoken_language"
+										:key="key"
 									>
-										{{ r.name }}
+										{{ spoken_language }}
 									</option>
 								</select>
 							</div>
 						</div>
-						<!-- Select County -->
-						<div class="col-md-12 mt-2">
+						<div class="mt-4">
 							<div class="select-box">
-								<select class="custom-select" v-model="country">
-									<option value="">Select Country</option>
+								<select class="custom-select" v-model="employmentStatus">
+									<option value="">Select Employment Status</option>
+
+									<option value="" disabled>Select Employment Status</option>
+									<option value="Employed">Employed</option>
+									<option value="Unemployed">Unemployed</option>
+									<option value="Don't Mind">Don't Mind</option>
+								</select>
+							</div>
+						</div>
+						<div class="mt-4">
+							<div class="select-box">
+								<select class="custom-select" v-model="occupation">
+									<option value="">Select Occupation</option>
+									<option
+										:value="value"
+										:key="key"
+										v-for="(value, key) in occupations"
+									>
+										{{ value }}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="mt-4">
+							<div class="select-box">
+								<select class="custom-select" v-model="nationality">
+									<option value="">Select Nationality</option>
 									<option
 										v-for="c in $store.state.candidateInfo.countries"
 										:value="c.id"
@@ -57,56 +140,105 @@
 								</select>
 							</div>
 						</div>
-
-						<!-- Select Ethnicity -->
-						<div class="col-md-12 mt-2">
+						<div class="mt-4">
 							<div class="select-box">
-								<select class="custom-select" v-model="ethnicity">
-									<option value="">Select Ethnicity</option>
-									<option v-for="e in ethnicities" :value="e" :key="e">
-										{{ e }}
+								<select class="custom-select" v-model="countryOfBirth">
+									<option value="">Select Country of Birth</option>
+									<option
+										v-for="c in $store.state.candidateInfo.countries"
+										:value="c.id"
+										:key="c.id"
+									>
+										{{ c.name }}
 									</option>
 								</select>
 							</div>
 						</div>
-
-						<!-- Select Maritial Status -->
-						<div class="col-md-12 mt-2">
+						<div class="mt-4">
 							<div class="select-box">
-								<select class="custom-select" v-model="maritalStatus">
-									<option value="">Select Maritial Status</option>
-									<option value="single">Single</option>
-									<option value="married">Married</option>
-									<option value="divorced">Divorced</option>
+								<select class="custom-select" v-model="currentResidence">
+									<option value="">Select Current Residence</option>
+									<option
+										v-for="c in $store.state.candidateInfo.countries"
+										:value="c.id"
+										:key="c.id"
+									>
+										{{ c.name }}
+									</option>
 								</select>
 							</div>
 						</div>
-					</div>
+						<div class="mt-4">
+							<div class="select-box">
+								<select class="custom-select" v-model="currentlyLivingWith">
+									<option value="">Select Currently Living With</option>
+									<option value="parents">Parents</option>
+
+									<option value="live in my own home">
+										Live in my own home
+									</option>
+									<option value="live in others home">
+										Live in others home
+									</option>
+									<option value="other">Other</option>
+								</select>
+							</div>
+						</div>
+						<div class="mt-4">
+							<div class="select-box">
+								<select class="custom-select" v-model="hobbiesAndInterest">
+									<option value="">Select Hobbies & interests</option>
+									<option
+										v-for="(hobby, key) in hobbies"
+										:key="key"
+										:value="hobby"
+									>
+										{{ hobby }}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="mt-4">
+							<div class="select-box">
+								<select class="custom-select" v-model="smokingStatus">
+									<option :value="0">Select Smoking Status</option>
+									<option :value="1">Yes</option>
+									<option :value="2">No</option>
+									<option :value="3">Former Smoker</option>
+								</select>
+							</div>
+						</div>
+					</template>
 					<div class="row">
-						<div class="col-md-12 mt-2">
-							<button class="btn btn-primary w-100" @click="handleSearch">
-								<img src="@/assets/icon/search.svg" alt="Icon" height="25px" />
-								<g data-v-ac485448="" id="Layer_2" data-name="Layer 2">
-									<g data-v-ac485448="" id="draw_boxes" data-name="draw boxes">
-										<path
-											data-v-ac485448=""
-											d="M41.67,35.89A1.33,1.33,0,0,0,41.58,34L30.34,23.79a1.34,1.34,0,0,0-1.88.09l-4,4.44a1.34,1.34,0,0,0,.09,1.88L35.78,40.41a1.32,1.32,0,0,0,1.88-.09Z"
-											class="cls-1"
-										></path>
-										<path
-											style="fill: #ee5253"
-											d="m282.282 85.465c-54.264-54.262-142.554-54.261-196.817 0-54.262 54.263-54.262 142.555 0 196.817 26.286 26.286 61.235 40.762 98.409 40.762 37.173 0 72.122-14.476 98.408-40.762s40.762-61.235 40.762-98.408c0-37.174-14.476-72.123-40.762-98.409zm-14.142 182.675c-46.464 46.464-122.066 46.466-168.532 0-46.464-46.465-46.464-122.067 0-168.532 23.232-23.232 53.749-34.848 84.266-34.848 30.518 0 61.034 11.615 84.267 34.848 46.463 46.464 46.463 122.067-.001 168.532z"
-										/>
-										<path
-											data-v-ac485448=""
-											d="M14.72,0A14.72,14.72,0,1,1,9.91.81,14.73,14.73,0,0,1,14.72,0m0,4a10.82,10.82,0,0,0-3.51.59h0A10.73,10.73,0,1,0,14.72,4Z"
-											class="cls-1"
-										></path>
+						<div class=" mt-12 pt-10">
+							<div class="btn-adv-search-wrapper">
+								<button class="btn btn-primary" @click="handleSearch">
+									<img src="@/assets/icon/search.svg" alt="Icon" height="25px" />
+									<g data-v-ac485448="" id="Layer_2" data-name="Layer 2">
+										<g data-v-ac485448="" id="draw_boxes" data-name="draw boxes">
+											<path
+												data-v-ac485448=""
+												d="M41.67,35.89A1.33,1.33,0,0,0,41.58,34L30.34,23.79a1.34,1.34,0,0,0-1.88.09l-4,4.44a1.34,1.34,0,0,0,.09,1.88L35.78,40.41a1.32,1.32,0,0,0,1.88-.09Z"
+												class="cls-1"
+											></path>
+											<path
+												style="fill: #ee5253"
+												d="m282.282 85.465c-54.264-54.262-142.554-54.261-196.817 0-54.262 54.263-54.262 142.555 0 196.817 26.286 26.286 61.235 40.762 98.409 40.762 37.173 0 72.122-14.476 98.408-40.762s40.762-61.235 40.762-98.408c0-37.174-14.476-72.123-40.762-98.409zm-14.142 182.675c-46.464 46.464-122.066 46.466-168.532 0-46.464-46.465-46.464-122.067 0-168.532 23.232-23.232 53.749-34.848 84.266-34.848 30.518 0 61.034 11.615 84.267 34.848 46.463 46.464 46.463 122.067-.001 168.532z"
+											/>
+											<path
+												data-v-ac485448=""
+												d="M14.72,0A14.72,14.72,0,1,1,9.91.81,14.73,14.73,0,0,1,14.72,0m0,4a10.82,10.82,0,0,0-3.51.59h0A10.73,10.73,0,1,0,14.72,4Z"
+												class="cls-1"
+											></path>
+										</g>
 									</g>
-								</g>
-								<!-- </svg> -->
-								Search
-							</button>
+									<!-- </svg> -->
+									Search
+								</button>
+								<div>
+									<button @click="showMoreSeach = !showMoreSeach" class="btn-adv-search">Advanced Search</button>
+								</div>
+							</div>
 							<select-team-modal
 								:selectTeamModal="showActiveTeamModal"
 								@handle-cancel="showActiveTeamModal = false"
@@ -128,13 +260,20 @@ import ApiService from "@/services/api.service";
 import ethnicities from "@/common/ethnicities.js";
 import languages from "@/common/languages.js";
 import hobbies from "@/common/hobbies.js";
+import { AGES, HEIGHTS } from "../../models/data";
+import SelectGroup from "@/components/ui/selects/SelectGroup";
 
 export default {
 	data() {
 		return {
+			showMoreSeach: false,
+			ageTV: AGES,
+      		heightTv: HEIGHTS,
+			min_age: undefined,
+        	max_age: undefined,
 			age: [20, 40],
-			heightMin: null,
-			heightMax: null,
+			heightMin: undefined,
+			heightMax: undefined,
 			country: "",
 			religion: "",
 			heightUnit: false,
@@ -169,8 +308,13 @@ export default {
 	},
 	components: {
 		SelectTeamModal,
+		SelectGroup
 	},
 	methods: {
+		onDropdownChange({ name, value }) {
+			console.log({ name, value });
+			this[name] = value;
+		},
 		async getOccupations() {
 			await ApiService.get("v1/occupations")
 				.then((data) => {
@@ -183,40 +327,42 @@ export default {
 		},
 		getQuery() {
 			console.log(this.$store.state.team.teamInfo,'>>>>>>>>>>>>>>>')
-			// if (localStorage.getItem("teamidappwide")) {
-			// 	this.activeTeamId = localStorage.getItem("teamidappwide");
-			// 	this.activeTeamId = this.activeTeamId.slice(1, -1);
-			// } else if (this.$store.state.team.teamInfo) {
-			// 	console.log(this.$store.state.team.teamInfo);
-			// 	this.candidateActiveTeam = this.$store.state.team.teamInfo;
-			// 	this.activeTeamId = this.$store.state.team.teamInfo.team_id;
-			// } else {
-			// 	this.showActiveTeamModal = true;
-			// 	return;
-			// }
+			if (localStorage.getItem("teamidappwide")) {
+				this.activeTeamId = localStorage.getItem("teamidappwide");
+				this.activeTeamId = this.activeTeamId.slice(1, -1);
+			} else if (this.$store.state.team.teamInfo) {
+				console.log(this.$store.state.team.teamInfo);
+				this.candidateActiveTeam = this.$store.state.team.teamInfo;
+				this.activeTeamId = this.$store.state.team.teamInfo.team_id;
+			} else {
+				this.showActiveTeamModal = true;
+				return;
+			}
+
+			console.log('>>>>>>>>>>>>>>>>')
 
 			let params = {
 				age_min: this.age[0],
 				age_max: this.age[1],
 			};
-			// let _payload = `?page=0&parpage=10&min_age=${params.age_min}&max_age=${params.age_max}&active_team_id=${this.activeTeamId}`;
-			let _payload = `?page=0&parpage=10&min_age=${params.age_min}&max_age=${params.age_max}`;
+			let _payload = `?page=0&parpage=10&min_age=${params.age_min}&max_age=${params.age_max}&active_team_id=${this.activeTeamId}`;
+			// let _payload = `?page=0&parpage=10&min_age=${params.age_min}&max_age=${params.age_max}`;
 
-			// if (this.gender != 0) {
-			// 	_payload += `&gender=${this.gender}`;
-			// }
-			// if (this.heightMin > 0 || this.minHeightFt > 0) {
-			// 	if (this.minHeightFt) {
-			// 		this.heightMin = this.minHeightFt * 30.48;
-			// 	}
-			// 	_payload += `&min_height=${this.heightMin}`;
-			// }
-			// if (this.heightMax > 0 || this.maxHeightFt > 0) {
-			// 	if (this.maxHeightFt) {
-			// 		this.heightMax = this.maxHeightFt * 30.48;
-			// 	}
-			// 	_payload += `&max_height=${this.heightMax}`;
-			// }
+			if (this.gender != 0) {
+				_payload += `&gender=${this.gender}`;
+			}
+			if (this.heightMin > 0 || this.minHeightFt > 0) {
+				if (this.minHeightFt) {
+					this.heightMin = this.minHeightFt * 30.48;
+				}
+				_payload += `&min_height=${this.heightMin}`;
+			}
+			if (this.heightMax > 0 || this.maxHeightFt > 0) {
+				if (this.maxHeightFt) {
+					this.heightMax = this.maxHeightFt * 30.48;
+				}
+				_payload += `&max_height=${this.heightMax}`;
+			}
 			if (this.country != "") {
 				_payload += `&country=${this.country}`;
 			}
@@ -266,6 +412,7 @@ export default {
 		},
 		async handleSearch() {
 			let query = this.getQuery();
+			if(!query) return;
 			console.log(query, '>>>>>>>>>>>>>>>>')
 			const res = await ApiService.get(`v1/home-searches${query}`);
 			console.log(res, '>>>>>>>>>>>>>>>>')
@@ -280,6 +427,28 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 // start css for advanced-search
+.btn-adv-search-wrapper {
+	position: fixed;
+	left: 12px;
+	bottom: 10px;
+	.btn:first-child {
+		text-align: center;
+		width: 220px;
+	}
+	.btn-adv-search {
+		margin: 5px auto auto;
+		display: block;
+		border-bottom: 1px solid gray;
+		color: gray;
+		text-align: center;
+		transition: .3s;
+		&:hover {
+			color: black;
+		}
+	}
+	
+}
+
 .advanced-search {
 	justify-content: space-between;
 	width: 100%;

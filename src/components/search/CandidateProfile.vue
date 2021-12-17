@@ -3,11 +3,9 @@
 		<!-- start advanced search -->
 		<div class="row">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<div class="advanced-search">
-					<div class="row">
+				<div class="row">
 					<div v-for="n in 5" :key="n" class="col-sm-12 col-lg-6">
 						<CandidateGrid :candidate="candidate"/>
-					</div>
 					</div>
 				</div>
 			</div>

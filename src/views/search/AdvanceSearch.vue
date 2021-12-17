@@ -55,7 +55,7 @@
 			</div>
 				<a-layout id="layout" style="background-color: #fff" :style="{ height: 'calc(100vh - 80px)'}">
 					<a-layout-sider
-						:style="{ height: 'calc(100vh - 80px)', overflowY: 'auto'}"
+						:style="{ height: 'calc(100vh - 80px)', overflowY: 'auto',overflowX: 'hidden'}"
 						class="bg-white shadow-default fdfdf"
 						v-model="collapsed"
 						:trigger="null"
