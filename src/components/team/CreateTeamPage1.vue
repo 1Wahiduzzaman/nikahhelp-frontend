@@ -1,7 +1,7 @@
 <template>
   <div class="col-lg-6 col-xl-3 cards">
-    <div class="team-card card" style="min-height: 500px;">
-      <div class="d-flex align-items-center justify-content-center joining-header position-relative" style="width: 100%">
+    <div class="team-card card position-relative" style="min-height: 500px;">
+      <div class="d-flex align-items-center justify-content-center joining-header" style="width: 100%">
         <div class="logo-position position-absolute">
           <img
               class="group-logo"
@@ -78,7 +78,7 @@
           <a-button class="confirm-button button float-right" @click="createTeam()" :disabled="checkDisability">Next</a-button>
         </div>
       </div>
-      <CreateAddMember :team="team" :file="file" v-if="step === 2" @cancel_button="$emit('cancel_button')" @goNext="goNextStep" />
+      <CreateAddMember :team="team" :file="file" v-if="step === 2" @cancel_button="$emit('cancel_button')" @goNext="goNextStep" @loadTeams="loadTeams" />
       <TeamCreateSuccess v-if="step === 3" :team="team" />
     </div>
     <a-modal v-model="imageModal" @ok="hideImageModal">
@@ -211,6 +211,9 @@ export default {
     goBack() {
       this.team = {};
       this.$emit('cancel_button');
+    },
+    loadTeams() {
+      this.$emit("loadTeams");
     },
     uploadFile() {
       this.$refs.file.click();
@@ -351,7 +354,7 @@ export default {
 
 // start css for team-card
 .cards {
-  padding: 0;
+  //padding: 0;
   .team-card {
     width: 100%;
     padding: 10px 8px;
@@ -366,7 +369,7 @@ export default {
       padding: 0 20px;
       .logo-position {
         left: 12px;
-        top: -2px;
+        top: 7px;
         .group-logo {
           width: 40px;
           height: 40px;

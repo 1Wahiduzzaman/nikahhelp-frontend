@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="col-lg-6 col-xl-3"
+		class="col-lg-6 col-xl-3 cards"
 	>
 		<div
 			class="team-card card"
@@ -84,6 +84,7 @@ export default {
           await ApiService.post("v1/join-team-by-invitation", payload).then((res) => {
             if(res && res.data && res.data.data) {
               this.success = true;
+              this.$emit("loadTeams");
             }
           }).catch((e) => {
             console.log(e);
