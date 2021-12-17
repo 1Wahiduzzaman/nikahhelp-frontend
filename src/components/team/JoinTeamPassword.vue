@@ -84,6 +84,7 @@ export default {
           await ApiService.post("v1/join-team-by-invitation", payload).then((res) => {
             if(res && res.data && res.data.data) {
               this.success = true;
+              this.$emit("loadTeams");
             }
           }).catch((e) => {
             console.log(e);

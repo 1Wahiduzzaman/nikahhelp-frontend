@@ -1421,6 +1421,7 @@ export default {
       this.invitationObject.visible = false;
     },
     async submitInvite() {
+      this.invitedMembers.push(this.invitationObject);
       let payload = {
         team_id: this.teamData.team_id,
         members: this.invitedMembers

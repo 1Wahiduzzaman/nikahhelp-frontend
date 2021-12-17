@@ -3,7 +3,7 @@
 		<div v-if="isLoading">Loading</div>
 		<div v-else>
 			<Layout >
-				<div>
+				<div class="mt-2">
           <!--teams.length == 0 && !joinTeamShow && !createTeamShow-->
           <a-modal v-model="welcomeModal" @ok="hideWelcomeModal">
             <div class="d-flex justify-content-center align-items-center welcome-text mt-2">
@@ -30,45 +30,45 @@
             </template>
           </a-modal>
           <Banner v-if="1 !== 1" />
-					<a-row :gutter="16">
-						<div class="row justify-content-md-center mx-2">
-							<TeamDetailsCard
-								v-for="(team, teamIndex) in teams"
-								:key="team.id"
-								:teamData="team"
-								:index="teamIndex"
-								@teamListUpdated="loadTeams"
-							/>
-              <JoinCreateTeam
-                  v-if="joinCreateTeamShow && teams.length < 5"
-                  class="d-flex"
-                  style="margin-top: 20px"
-                  @joinATeam="
+          <div class="row justify-content-md-center mx-2">
+            <TeamDetailsCard
+                v-for="(team, teamIndex) in teams"
+                :key="team.id"
+                :teamData="team"
+                :index="teamIndex"
+                @teamListUpdated="loadTeams"
+            />
+            <JoinCreateTeam
+                v-if="joinCreateTeamShow && teams.length < 5"
+                class="d-flex"
+                style="margin-top: 20px"
+                @joinATeam="
 										joinCreateTeamShow = false;
 										joinTeamShow = true;
 									"
-                  @createATeam="
+                @createATeam="
 										joinCreateTeamShow = false;
 										createTeamShow = true;
 									"
-              />
-              <JoinTeam
-                  v-if="joinTeamShow"
-                  @cancel_button="
+            />
+            <JoinTeam
+                v-if="joinTeamShow"
+                @cancel_button="
 										joinCreateTeamShow = true;
 										joinTeamShow = false;
 									"
-                  @toggleToTeamPassword="toggleToTeamPassword" />
-              <JoinTeamPassword
-                  v-if="joinTeamPassword"
-                  :team="joinTeamInfo"
-                  @cancel_button="cancelJoinButton()"/>
-              <CreateTeamPage1
-                  v-if="createTeamShow"
-                  @cancel_button="cancelCreateTeamPage()"
-              />
-						</div>
-					</a-row>
+                @toggleToTeamPassword="toggleToTeamPassword" />
+            <JoinTeamPassword
+                v-if="joinTeamPassword"
+                :team="joinTeamInfo"
+                @cancel_button="cancelJoinButton()"
+                @loadTeams="loadTeams" />
+            <CreateTeamPage1
+                v-if="createTeamShow"
+                @cancel_button="cancelCreateTeamPage()"
+                @loadTeams="loadTeams"
+            />
+          </div>
 				</div>
 			</Layout>
 		</div>

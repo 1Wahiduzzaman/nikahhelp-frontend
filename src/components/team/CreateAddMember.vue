@@ -102,6 +102,7 @@ export default {
       await ApiService.post('/v1/invite-team-members', payload).then(res => {
         if(res && res.data) {
           this.$emit("goNext", 3);
+          this.$emit("loadTeams");
         }
       });
     },

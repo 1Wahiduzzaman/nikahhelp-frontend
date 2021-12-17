@@ -26,7 +26,7 @@
       <div class="link-box px-4 position-absolute w-full">
         <div class="w-full mt-2">
           <input type="text" class="form-control invite-link text-white" id="copyInput" :value="invitationObject.invitation_link" disabled />
-          <button class="copy-button position-absolute" @click="copyToken">Copy</button>
+          <button class="copy-button position-absolute px-2" @click="copyToken">Copy</button>
         </div>
         <p class="fs-10 text-white mt-2">Send this link through email or any messaging platform <br> Only one member can use this link once</p>
       </div>
@@ -83,36 +83,35 @@ export default {
 @import "@/styles/base/_variables.scss";
 .add-member-box {
   height: 500px;
-  width: 286px;
-  top: -63px;
+  width: 100%;
+  top: 0;
   left: 0;
-  margin-left: -8px;
   border-radius: 10px;
   background: $bg-primary;
-  @media (min-width: 360px) {
-    width: 325px;
-  }
-  @media (min-width: 1920px) {
-    width: 411px;
-  }
-  @media (min-width: 576px) {
-    width: 507px;
-  }
-  @media (min-width: 768px) {
-    width: 698px;
-  }
-  @media (min-width: 992px) {
-    width: 444px;
-  }
-  @media (min-width: 1024px) {
-    width: 460px;
-  }
-  @media (min-width: 1200px) {
-    width: 258px;
-  }
-  @media (min-width: 1920px) {
-    width: 414px;
-  }
+  //@media (min-width: 360px) {
+  //  width: 325px;
+  //}
+  //@media (min-width: 1920px) {
+  //  width: 411px;
+  //}
+  //@media (min-width: 576px) {
+  //  width: 507px;
+  //}
+  //@media (min-width: 768px) {
+  //  width: 698px;
+  //}
+  //@media (min-width: 992px) {
+  //  width: 444px;
+  //}
+  //@media (min-width: 1024px) {
+  //  width: 460px;
+  //}
+  //@media (min-width: 1200px) {
+  //  width: 258px;
+  //}
+  //@media (min-width: 1920px) {
+  //  width: 414px;
+  //}
   .member-box {
     .cross-button-box {
       width: 30px;
