@@ -369,7 +369,7 @@ export default {
       padding: 0 20px;
       .logo-position {
         left: 12px;
-        top: -2px;
+        top: 7px;
         .group-logo {
           width: 40px;
           height: 40px;

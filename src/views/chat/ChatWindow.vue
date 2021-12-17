@@ -705,7 +705,7 @@ export default {
         if (this.inConnectedChat) {
           await this.sendConnectedTeamMessage();
         } else {
-          if(!this.private_chat) {
+          if(this.private_chat && this.private_chat.private_team_chat_id) {
             await this.sendPrivateMessage();
           } else {
             await this.sendTeamMessage();
