@@ -6,7 +6,7 @@
         <h4 class="fs-14 text-white invite-txt">Send team invitation</h4>
       </div>
       <div class="px-4 mt-2 position-relative">
-        <a-input ref="userNameInput" placeholder="Search email or user ID" v-model="user_email">
+        <a-input ref="userNameInput" placeholder="Search email or user ID" v-model="user_email" @keyup="searchMember()">
           <a-icon slot="suffix" type="info-circle" style="color: rgba(0,0,0,.45)" />
         </a-input>
         <span class="text-white fs-12 fw-500 ml-2">Invited/Suggested/Searched user</span>
@@ -57,6 +57,11 @@ export default {
     }
   },
   methods: {
+    async searchMember() {
+      await ApiService.get(`/v1/team-invitation-information/${this.user_email}`).then(response => {
+        console.log(response);
+      });
+    },
     inviteMember(id) {
       if(this.from === 'details-card') {
         id = 'mahmud@gmail.com';
