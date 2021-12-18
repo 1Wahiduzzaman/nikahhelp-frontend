@@ -13,7 +13,7 @@
           class="fs-10 w-25"
           v-model="invitationObject.role"
       >
-         <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>
+<!--         <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>-->
         <a-select-option value="Admin"> Admin </a-select-option>
         <a-select-option value="Member"> Member </a-select-option>
       </a-select>
@@ -41,12 +41,12 @@
 <!--                class="ml-2 fs-10 br-20"-->
 <!--                @click="goNextStep()"-->
 <!--                :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship">Invite now</a-button>-->
-      <a-dropdown class="right-br-20 bg-primary text-white w-25 fs-10 dropdown-button">
+      <a-dropdown class="right-br-20 bg-primary text-white w-20 fs-10 dropdown-button">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="goNextStep()">Invitation </a-menu-item>
           <a-menu-item key="2" @click="removeInvite()">Remove </a-menu-item>
         </a-menu>
-        <a-button class="ml-1 fs-10"> Invite Now <a-icon type="down" /> </a-button>
+        <a-button class="ml-1 fs-10"> Invite Now</a-button>
       </a-dropdown>
     </div>
     <div class="position">
@@ -77,12 +77,13 @@ export default {
       showMemberBox: false,
       relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-paw'],
       invitationObject: {
-        role: "Owner+Admin",
+        role: "Admin",
         add_as_a: "Candidate",
         relationship: "Father",
         invitation_link: "",
       },
-      invitedUsers: []
+      invitedUsers: [],
+      invitedObj: null
     }
   },
   methods: {
@@ -143,6 +144,24 @@ export default {
         return result.join("");
       }
       self.invitationObject.invitation_link = makeid(10);
+      self.invitationObject.visible_invitation_link = window.location.host + '/manageteam?invitation=' + self.invitationObject.invitation_link;
+
+      let data = {
+        role: self.invitationObject.role,
+        add_as_a: self.invitationObject.add_as_a,
+        relationship: self.invitationObject.relationship,
+        invitation_link: self.invitationObject.invitation_link,
+        email: null
+      };
+      self.invitedUsers.push(data);
+
+      let payload = {
+        team_id: self.team.team_id,
+        members: self.invitedUsers
+      };
+      ApiService.post('/v1/invite-team-members', payload).then(res => {
+        self.invitedObj = res.data.data;
+      });
     })();
   },
 }
@@ -155,12 +174,15 @@ export default {
 .br-20 {
   border-radius: 20px;
 }
+.w-20 {
+  width: 20%;
+}
 .right-br-20 {
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }
 .dropdown-button {
-  padding: 0 8px !important;
+  padding: 0 4px !important;
 }
 .w-25 {
   width: 25%;

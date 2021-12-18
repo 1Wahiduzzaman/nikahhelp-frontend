@@ -99,7 +99,12 @@ export default {
       team: null
 		};
 	},
-	created() {},
+	created() {
+    if(this.$route.query.invitation) {
+      this.invitationLink = this.$route.query.invitation;
+      this.getTheTeamInvitationInfo();
+    }
+  },
 	computed: {
 		console: () => console,
 		window: () => window,
@@ -135,8 +140,9 @@ export default {
 			// }
 		},
     async getTheTeamInvitationInfo() {
-      if(this.invitationLink) {
-        await ApiService.get(`/v1/team-invitation-information/${this.invitationLink}`).then(res => {
+    let originalLink = this.invitationLink.split('?');
+      if(this.invitationLink && originalLink.length > 0) {
+        await ApiService.get(`/v1/team-invitation-information/${originalLink[0]}`).then(res => {
           if(res && res.data) {
             this.team = res.data.data;
           }

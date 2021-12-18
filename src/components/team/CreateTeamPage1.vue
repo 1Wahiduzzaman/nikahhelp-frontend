@@ -129,7 +129,7 @@ export default {
 			user: {},
 			is_verified: 1,
       imageModal: false,
-      step: 1,
+      step: 2,
       team: {
         name: '',
         description: '',
