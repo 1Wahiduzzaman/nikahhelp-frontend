@@ -25,7 +25,7 @@
       </div>
       <div class="link-box px-4 position-absolute w-full">
         <div class="w-full mt-2">
-          <input type="text" class="form-control invite-link text-white" id="copyInput" :value="invitationObject.invitation_link" disabled />
+          <input type="text" class="form-control invite-link text-white fs-12 py-5" id="copyInput" :value="invitationObject.visible_invitation_link" disabled />
           <button class="copy-button position-absolute px-2" @click="copyToken">Copy</button>
         </div>
         <p class="fs-10 text-white mt-2">Send this link through email or any messaging platform <br> Only one member can use this link once</p>
@@ -158,8 +158,8 @@ export default {
           border-radius: 4px;
         }
         .copy-button {
-          top: 12px;
-          right: 30px;
+          top: 14px;
+          right: 22px;
           height: 30px;
           border-radius: 4px;
           background: $bg-white;

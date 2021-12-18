@@ -589,6 +589,15 @@ div[data-unique="second_one"] >  .ant-select-selection{
 .menu-badge > .ant-badge-count {
     font-size: 10px;
 }
+.dropdown-button > .anticon {
+    margin-left: 2px !important;
+}
+.d-mb-none {
+    display: none;
+}
+.ant-select-dropdown {
+    min-width: 140px !important;
+}
 @media (min-width: 576px) {
     .ant-layout-sider {
         z-index: 9;
@@ -601,5 +610,8 @@ div[data-unique="second_one"] >  .ant-select-selection{
 @media (min-width: 992px) {
     .ant-rate-star:not(:last-child) {
         margin-right: 8px !important;
+    }
+    .d-mb-none {
+        display: block;
     }
 }

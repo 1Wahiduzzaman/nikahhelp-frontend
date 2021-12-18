@@ -113,6 +113,10 @@ export default {
 		//console.log(this.$store.state.team);
 		//this.loadUser();
 		this.loadTeams();
+    if(this.$route.query.invitation) {
+      this.joinCreateTeamShow = false;
+      this.joinTeamShow = true;
+    }
 	},
 	computed: {
 		teams() {

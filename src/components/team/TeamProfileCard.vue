@@ -8,7 +8,8 @@
     </div>
     <div class="profile text-center">
       <img src="https://picsum.photos/200/300?random=1" alt="profile" class="profile-img">
-      <h4 class="fs-16 text-white pt-2">{{ profileActive.user && profileActive.user.full_name ? profileActive.user.full_name : profileActive.user.email }}</h4>
+      <h4 class="fs-16 text-white pt-2" v-if="profileActive.profile_from_type === 'member'">{{ profileActive.user && profileActive.user.full_name ? profileActive.user.full_name : profileActive.user.email }}</h4>
+      <h4 class="fs-16 text-white pt-2" v-else>{{ profileActive.email ? profileActive.email : 'N/A' }}</h4>
       <div class="d-flex justify-content-center mb-2 mt-2">
         <div class="role-section position-relative">
           <button class="btn btn-sm text-white role-btn"
@@ -20,8 +21,8 @@
           </div>
         </div>
         <button class="btn btn-sm text-white remove-btn ml-3"
-                @click="removeInvitation()"
-                :disabled="checkIsOwnerAdmin">Remove</button>
+                :disabled="checkIsOwnerAdmin"
+                @click="removeInvitation()">Remove</button>
       </div>
       <div class="team-profile-short pt-2 text-center d-flex justify-content-center">
         <table class="table table-borderless short-table">
@@ -93,7 +94,12 @@ export default {
       return [day, month, year].join("/");
     },
     removeInvitation() {
-      this.$emit("deleteInvitation", this.profileActive.id);
+      const self = this;
+      if(self.profileActive.profile_from_type === 'member') {
+        self.$emit("deleteTeamMember", self.profileActive.user.id, self.profileActive.user.full_name);
+      } else {
+        self.$emit("deleteInvitation", self.profileActive.id);
+      }
     },
     async changeRole(role) {
       let payload = {
