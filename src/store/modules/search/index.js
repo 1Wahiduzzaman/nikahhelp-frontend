@@ -3,8 +3,12 @@ import actions from "./actions.js";
 import getters from "./getters.js";
 
 export default {
+  namespaced: true,
   state() {
-    return {};
+    return {
+      profiles: [],
+      queryArr: ['male', 'dhaka', '20-30 Yrs']
+    };
   },
   mutations,
   actions,
