@@ -12,7 +12,7 @@
 								<svg  @click="e => e.preventDefault()" xmlns="http://www.w3.org/2000/svg" class="menu-icon-alt" fill="#fff" viewBox="0 0 24 24" stroke="currentColor">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
 								</svg>
-								<a-menu slot="overlay" style="min-width: 250px">
+								<a-menu style="min-width: 250px">
 									<a-menu-item @click="collapsed = !collapsed">
 										<img width="22" src="@/assets/Icons/form.svg" alt="icon" />
 										<span class="ml-2">{{ collapsed ? 'Open' : 'Close' }} left sidebar</span>
@@ -78,10 +78,11 @@
 						<a-layout-content>
 							<div class="main-content-wrapper">
 								<div class="main-content-1">
-									<div class="d-flex">
-										<h4 class="flex-70">Search Results</h4>
-									</div>
-									<search-form></search-form>
+									<component
+										@switchComponent="switchComponent"
+										v-bind:is="currentTabComponent"
+									>
+									</component>
 								</div>
 								<div class="main-content-2">
 									<div class="shadow-default profile-overview"></div>
@@ -100,15 +101,17 @@ import Header from "@/components/dashboard/layout/Header.vue";
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 // import Footer from "@/components/auth/Footer.vue";
 import SimpleSearch from "@/components/search/SimpleSearch.vue";
-import SearchForm from "@/components/search/CandidateProfile.vue";
+import CandidateProfiles from "@/components/search/CandidateProfiles.vue";
+import {mapMutations, mapActions} from 'vuex';
 export default {
 	name: "AdvanceSearch",
 	components: {
+		'ProfileDetail': () => import('@/components/search/CandidateProfileDetails'),
 		Header,
 		Sidebar,
 		SimpleSearch,
 		// Footer,
-		SearchForm,
+		CandidateProfiles,
 	},
 	data() {
 		return {
@@ -116,16 +119,33 @@ export default {
 			user: {},
 			is_verified: 1,
 			error: null,
-			collapsed: false
+			collapsed: false,
+			componentName: 'CandidateProfiles'
 		};
 	},
-	created() {
-		//this.loadUser();
+	computed: {
+		currentTabComponent() {
+			return this.componentName
+		}
 	},
 	methods: {
+		...mapActions({
+			searchUser: 'search/searchUser'
+		}),
+		...mapMutations({
+			setProfiles: 'search/setProfiles'
+		}),
+		async fetchInitialCandidate() {
+			const res = await this.searchUser('v1/home-searches?page=0&parpage=10&min_age=20&max_age=40&ethnicity=Amara&marital_status=single');
+			this.setProfiles(res)
+		},
 		responsiveToggle() {
            this.collapsed = false;
         },
+		switchComponent(name) {
+			console.log(name, '>>>>>>>>>>>>>>>>>')
+			this.componentName = name
+		},
 		async loadUser() {
 			this.isLoading = true;
 			try {
@@ -177,6 +197,9 @@ export default {
 			this.isLoading = false;
 		},
 	},
+	created() {
+		this.fetchInitialCandidate();
+	}
 };
 </script>
 

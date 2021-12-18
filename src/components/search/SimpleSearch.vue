@@ -262,6 +262,7 @@ import languages from "@/common/languages.js";
 import hobbies from "@/common/hobbies.js";
 import { AGES, HEIGHTS } from "../../models/data";
 import SelectGroup from "@/components/ui/selects/SelectGroup";
+import {mapMutations, mapActions} from 'vuex'
 
 export default {
 	data() {
@@ -311,6 +312,12 @@ export default {
 		SelectGroup
 	},
 	methods: {
+		...mapActions({
+			searchUser: 'search/searchUser'
+		}),
+		...mapMutations({
+			setProfiles: 'search/setProfiles'
+		}),
 		onDropdownChange({ name, value }) {
 			console.log({ name, value });
 			this[name] = value;
@@ -414,8 +421,10 @@ export default {
 			let query = this.getQuery();
 			// if(!query) return;
 			console.log(query, '>>>>>>>>>>>>>>>>')
-			const res = await ApiService.get(`v1/home-searches${query}`);
-			console.log(res, '>>>>>>>>>>>>>>>>')
+			// const res = await ApiService.get(`v1/home-searches${query}`);
+			const res = await this.searchUser(`v1/home-searches${query}`);
+			this.setProfiles(res)
+			// console.log(res, 'dtata tatat')
 		},
 		onAfterChangeSlider(value) {
 			this.age = value;
