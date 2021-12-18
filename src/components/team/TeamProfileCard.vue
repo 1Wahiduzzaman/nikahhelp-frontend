@@ -46,6 +46,11 @@
             <td class="fs-12 text-white opacity-60">:</td>
             <td class="fs-12 text-white ml-3">{{ profileActive.role.replace('+', ' & ') }}</td>
           </tr>
+          <tr>
+            <td class="fs-12 text-white opacity-60">Invitation Link</td>
+            <td class="fs-12 text-white opacity-60">:</td>
+            <td class="fs-12 text-white ml-3">{{ profileActive.link }}</td>
+          </tr>
 <!--          <tr>-->
 <!--            <td class="fs-12 text-white opacity-60">Permission</td>-->
 <!--            <td class="fs-12 text-white opacity-60">:</td>-->

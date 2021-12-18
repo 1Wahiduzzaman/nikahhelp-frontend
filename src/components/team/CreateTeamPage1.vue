@@ -1,5 +1,5 @@
 <template>
-  <div class="col-lg-6 col-xl-3 cards">
+  <div class="col-lg-6 col-xl-3 cards position-relative">
     <div class="team-card card position-relative" style="min-height: 500px;">
       <div class="d-flex align-items-center justify-content-center joining-header" style="width: 100%">
         <div class="logo-position position-absolute">
@@ -10,7 +10,7 @@
           />
         </div>
         <h4 class="card-title pt-2">
-          {{ step === 2 ? 'Add team member' : 'Create a team' }}
+          {{ getCardTitle() }}
         </h4>
       </div>
       <div class="box" v-if="step === 1">
@@ -75,7 +75,7 @@
           <a-button class="back-button button float-left" @click="goBack()">Back</a-button>
         </div>
         <div class="position-absolute footer-conf-btn">
-          <a-button class="confirm-button button float-right" @click="createTeam()" :disabled="checkDisability">Next</a-button>
+          <a-button class="confirm-button button float-right" @click="createTeam()" :disabled="checkDisability" :loading="loading">Next</a-button>
         </div>
       </div>
       <CreateAddMember :team="team" :file="file" v-if="step === 2" @cancel_button="$emit('cancel_button')" @goNext="goNextStep" @loadTeams="loadTeams" />
@@ -138,7 +138,8 @@ export default {
       },
       in_progress: false,
       file: '',
-      logoBobUrl: null
+      logoBobUrl: null,
+      loading: false
 		};
 	},
   computed: {
@@ -154,6 +155,15 @@ export default {
   },
 	created() {},
 	methods: {
+    getCardTitle() {
+      if(this.step === 2) {
+        return 'Add team member';
+      } else if(this.step === 3) {
+        return 'Team create confirmation';
+      } else {
+        return 'Create a team';
+      }
+    },
     onConfirmClick(event) {
       this.$emit("toggleToTeamPassword");
     },
@@ -230,6 +240,7 @@ export default {
       this.team = data;
     },
     async createTeam() {
+      this.loading = true;
       this.in_progress = true;
       let formData = new FormData();
       formData.append('logo', this.file);
@@ -238,6 +249,7 @@ export default {
       });
 
       await ApiService.post('/v1/team', formData).then(res => {
+        this.loading = false;
         if(res && res.data) {
           this.updateTeamData(res.data.data);
           this.goNextStep(2);

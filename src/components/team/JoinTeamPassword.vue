@@ -43,7 +43,7 @@
         <a-button class="back-button button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
       </div>
       <div class="position-absolute footer-conf-btn" v-if="!success">
-        <a-button class="confirm-button button float-right" @click="onConfirmClick">Confirm</a-button>
+        <a-button class="confirm-button button float-right" @click="onConfirmClick" :loading="loading">Confirm</a-button>
       </div>
       <div class="position-absolute footer-conf-btn" v-if="success">
         <a-button class="confirm-button button float-right" @click="closeSuccess">Ok</a-button>
@@ -63,7 +63,8 @@ export default {
 			user: {},
 			is_verified: 1,
 			invitationPassword: "",
-      success: false
+      success: false,
+      loading: false
 		};
 	},
 	created() {},
@@ -75,6 +76,7 @@ export default {
 		async onConfirmClick() {
 			if (this.invitationPassword.length > 0) {
         if(this.team.password.toString() === this.invitationPassword.toString()) {
+          this.loading = true;
           let payload = {
             team_id: this.team.team_id,
             invitation_link: this.team.invitation_link,
@@ -82,6 +84,7 @@ export default {
           };
 
           await ApiService.post("v1/join-team-by-invitation", payload).then((res) => {
+            this.loading = false;
             if(res && res.data && res.data.data) {
               this.success = true;
               this.$emit("loadTeams");

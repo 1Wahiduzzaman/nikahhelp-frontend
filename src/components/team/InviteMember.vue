@@ -12,14 +12,16 @@
         <span class="text-white fs-12 fw-500 ml-2">Invited/Suggested/Searched user</span>
       </div>
       <div class="suggestion-box mt-4 mx-4 px-2" :class="{'details-suggestion-card': from === 'details-card'}">
-        <div class="user d-flex position-relative" v-for="(item, index) in 30" :key="index" :class="{'mt-2': index > 0}">
+        <div class="user d-flex position-relative" v-if="userObj && userObj.user">
           <img src="https://picsum.photos/200" alt="avatar" class="user-avatar">
           <div class="d-flex justify-content-between ml-2">
             <div class="short-info">
-              <h4 class="fs-14 text-white fw-700">Selina Parvez</h4>
-              <h4 class="fs-12 text-white fw-500 candidate-type">Profile type: Candidate</h4>
+              <h4 class="fs-14 text-white fw-700">{{ userObj.user && userObj.user.full_name ? userObj.user.full_name : 'N/A' }}</h4>
+              <h4 class="fs-12 text-white fw-500 candidate-type">Profile type: {{ userObj.user ? profileType[userObj.user.account_type] : 'N/A' }}</h4>
             </div>
-            <button class="btn btn-success position-absolute" @click="inviteMember(item)">Invite</button>
+            <button class="btn btn-sent position-absolute text-white cursor-default" v-if="userObj.invitation_status == 2">Joined</button>
+            <button class="btn btn-sent btn-outline-secondary position-absolute text-white cursor-default" v-if="userObj.invitation_status == 1">Sent</button>
+            <button class="btn btn-success position-absolute" v-if="userObj.invitation_status == 0" @click="inviteMember()">Invite</button>
           </div>
         </div>
       </div>
@@ -41,35 +43,27 @@ export default {
   props: ['team', 'invitationObject', 'from'],
   data() {
     return {
-      user_email: ''
-    }
-  },
-  watch: {
-    user_email: function (val) {
-      console.log(val);
-      // ApiService.get('/v1/team/invitations', {
-      //   email: val
-      // }).then(res => {
-      //   console.log(res.data);
-      // }).catch(e => {
-      //   console.log(e);
-      // });
+      user_email: '',
+      profileType: ['N/A', 'Candidate', 'Match Maker', 'Admin'],
+      userObj: {}
     }
   },
   methods: {
     async searchMember() {
-      await ApiService.get(`/v1/team-invitation-information/${this.user_email}`).then(response => {
-        console.log(response);
+      await ApiService.post(`/v1/user-info/`, {
+        email: this.user_email
+      }).then(response => {
+        this.userObj = response.data.data;
       });
     },
-    inviteMember(id) {
-      if(this.from === 'details-card') {
-        id = 'mahmud@gmail.com';
-        this.$emit("executeInviteMember", id);
-      } else {
-        id = 'mahmud@gmail.com';
-        this.$emit('addMember', id);
-        this.$emit('toggleMemberbox');
+    inviteMember() {
+      if(this.userObj) {
+        if(this.from === 'details-card') {
+          this.$emit("executeInviteMember", this.userObj.user.email);
+        } else {
+          this.$emit('addMemberInfo', this.userObj.user.email);
+          this.$emit('toggleMemberbox');
+        }
       }
     },
     copyToken() {
@@ -86,6 +80,9 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+.cursor-default {
+  cursor: default !important;
+}
 .add-member-box {
   height: 500px;
   width: 100%;
@@ -145,7 +142,7 @@ export default {
               margin-top: -8px;
             }
           }
-          .btn-success {
+          .btn-success, .btn-sent {
             border-radius: 20px;
             right: 0;
           }
