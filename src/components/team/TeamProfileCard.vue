@@ -124,6 +124,10 @@ export default {
         this.$message.error(e.response.data.message);
       });
     },
+    getInvitationLink() {
+      let link = window.location.host + '/manageteam?invitation=' + this.profileActive.link;
+      return link;
+    }
   }
 }
 </script>

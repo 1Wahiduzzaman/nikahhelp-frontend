@@ -10,22 +10,22 @@
         <div class="notification__items">
             <a-list
                 size="small"
-                v-for="notification in 20"
-                :key="notification"
+                v-for="(itemObj, index) in getItems"
+                :key="index"
                 item-layout="horizontal"
                 :data-source="[{title: 'user one'}]"
                 style="border-bottom: 1px solid rgb(235, 235, 235);"
             >
-                <a-list-item  slot="renderItem" slot-scope="item">
+                <a-list-item slot="renderItem" slot-scope="item">
                     <slot name="item" :item="item">
-                        <component :is="componentName" :item="item"></component>
+                        <component :is="componentName" :item="itemObj"></component>
                     </slot>
                 </a-list-item>
                 
             </a-list>
         </div>
         <div class="text-center pt-2">
-            <a href="#"> {{ buttonLabel }} </a>
+          <router-link to="manageteam">{{ buttonLabel }}</router-link>
         </div>
     </div>
 </template>
@@ -89,6 +89,13 @@ export default {
         },
         buttonLabel() {
             return selectComponent[this.useFor]?.buttonLabel || '';
+        },
+        getItems() {
+            if(this.useFor == 'team') {
+              return this.items;
+            } else {
+              return 20;
+            }
         }
     }
 }

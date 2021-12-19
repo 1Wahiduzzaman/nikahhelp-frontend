@@ -5,19 +5,19 @@
 			<div v-else>
 				<Layout>
           <div class="row">
-            <div class="col-md-9">
+            <div class="col-12 col-xl-9">
               <div class="main-content-1">
                 <div class="d-flex justify-content-between mb-3 align-items-center mr-4">
-                  <h5 class="mt-2 px-4">
+                  <h5 class="mt-2 px-4 connect-heading-text">
                     Recent all connection activity <span class="mr-2"></span>
                   </h5>
                   <div class="d-flex align-items-center">
-                    <div class="cursor-pointer" @click="displayMode = 'grid'">
-                      <img src="@/assets/icon/grid_icon.svg" alt="icon" width="30" class="opacity-60" :class="{'opacity-100': displayMode === 'grid'}" />
-                    </div>
-                    <div class="cursor-pointer ml-4" @click="displayMode = 'list'">
-                      <img src="@/assets/icon/list_icon.svg" alt="icon" width="25" class="opacity-60" :class="{'opacity-100': displayMode === 'list'}" />
-                    </div>
+<!--                    <div class="cursor-pointer" @click="displayMode = 'grid'">-->
+<!--                      <img src="@/assets/icon/grid_icon.svg" alt="icon" width="30" class="opacity-60" :class="{'opacity-100': displayMode === 'grid'}" />-->
+<!--                    </div>-->
+<!--                    <div class="cursor-pointer ml-4" @click="displayMode = 'list'">-->
+<!--                      <img src="@/assets/icon/list_icon.svg" alt="icon" width="25" class="opacity-60" :class="{'opacity-100': displayMode === 'list'}" />-->
+<!--                    </div>-->
                     <select
                         v-if="user.account_type === 3"
                         v-model="teamId"
@@ -47,23 +47,35 @@
                   ></candidate>
                 </div> -->
 
-                <candidate-grid-view v-if="displayMode === 'grid'" />
-                <candidate v-if="displayMode === 'list'" />
-<!--                <candidate-->
-<!--                    v-if="displayMode === 'list'"-->
-<!--                    v-for="connection in connectionReports.result"-->
-<!--                    :key="connection.connection_id"-->
-<!--                    :connection="connection"-->
-<!--                    @selected-connection="selectedConnection"-->
-<!--                    @accept-request="acceptRequest"-->
-<!--                    @disconnect-team="disconnectTeam"-->
-<!--                    @decline-request="declineRequest"-->
-<!--                    @connect-request="connectRequest"-->
-<!--                    @block-candidate="blockCandidate"-->
-<!--                ></candidate>-->
+                <div class="shortlist-wrapper">
+                  <div class="row px-3">
+                    <div class="col-12 col-lg-6 mobile-margin" v-for="(connection, connecIndex) in connectionReports.result" :key="connecIndex">
+                      <candidate-grid-view v-if="displayMode === 'grid' && connectionReports.result && connectionReports.result.length > 0"
+                                           :connection="connection"
+                                           @selected-connection="selectedConnection"
+                                           @accept-request="acceptRequest"
+                                           @disconnect-team="disconnectTeam"
+                                           @decline-request="declineRequest"
+                                           @connect-request="connectRequest"
+                                           @block-candidate="blockCandidate" />
+                    </div>
+                  </div>
+                </div>
+                <candidate
+                    v-if="displayMode === 'list' && connectionReports.result && connectionReports.result.length > 0"
+                    v-for="connection in connectionReports.result"
+                    :key="connection.connection_id"
+                    :connection="connection"
+                    @selected-connection="selectedConnection"
+                    @accept-request="acceptRequest"
+                    @disconnect-team="disconnectTeam"
+                    @decline-request="declineRequest"
+                    @connect-request="connectRequest"
+                    @block-candidate="blockCandidate"
+                ></candidate>
               </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-12 col-xl-3">
               <!-- Connection Status -->
               <div class="main-content-2">
                 <!-- <div class="shadow-default connection-history">
@@ -131,68 +143,88 @@
                     </div>
                   </div>
                   <div v-else>
-                    <div>
-                      <h6>This Profile Connection Overview</h6>
+                    <div class="pt-5">
+                      <h6 class="pb-2">This Profile Connection Overview</h6>
                       <hr />
 
                       <div class="connection-overview">
-                        <p>
-                          Connection Status:
-                          <!-- {{ connectionStatus }} -->
-                          {{ connectionOverview.connection }}
-                        </p>
-                        <p>
-                          Connected date:
-                          <!-- {{ connectedDate }} -->
-                          {{ dateFromDateTime(connectionOverview.responded_at) }}
-                        </p>
-                        <p>
-                          Connection requested by:
-                          {{ connectionOverview.requested_by.full_name }}
-                        </p>
-
-                        <p>
-                          Request Date:
-                          {{ dateFromDateTime(connectionOverview.requested_at) }}
-                        </p>
+                        <table class="table table-borderless overview-table">
+                          <tr>
+                            <td class="td-60">Connection Status</td>
+                            <td class="text-end">:</td>
+                            <td>{{ connectionOverview.connection }}</td>
+                          </tr>
+                          <tr>
+                            <td class="td-60">Connected date</td>
+                            <td class="text-end">:</td>
+                            <td>{{ dateFromDateTime(connectionOverview.responded_at) }}</td>
+                          </tr>
+                          <tr>
+                            <td class="td-60">Connection requested by</td>
+                            <td class="text-end">:</td>
+                            <td>{{ connectionOverview.requested_by.full_name }}</td>
+                          </tr>
+                          <tr>
+                            <td class="td-60">Request Date</td>
+                            <td class="text-end">:</td>
+                            <td>{{ dateFromDateTime(connectionOverview.requested_at) }}</td>
+                          </tr>
+                        </table>
                       </div>
                     </div>
-                    <div>
-                      <h6>This Profile Team Overview</h6>
+                    <div class="pt-5 mt-5">
+                      <h6 class="pb-2">This Profile Team Overview</h6>
                       <hr />
                       <div class="profile-team-overview">
-                        <p>
-                          Team name:
-                          <!-- {{ teamName }} -->
-                          {{ connectionOverview.team_name }}
-                        </p>
-                        <p>
-                          Team members:
-                          <!-- {{ memberCount }} -->
-                          {{ connectionOverview.total_teamMember }}
-                        </p>
-                        <p>
-                          Team creation date:
-                          <!-- {{ teamCreationDate }} -->
-                          {{
-                            dateFromTimeStamp(connectionOverview.team_created_date)
-                          }}
-                        </p>
-
-                        <p>
-                          Team created by:
-                          <!-- {{ teamCreatedBy }} -->
-                          {{ connectionOverview.team_created_by }}
-                        </p>
+                        <table class="table table-borderless overview-table">
+                          <tr>
+                            <td class="td-60">Team name</td>
+                            <td class="text-end">:</td>
+                            <td>{{ connectionOverview.team_name }}</td>
+                          </tr>
+                          <tr>
+                            <td class="td-60">Team members</td>
+                            <td class="text-end">:</td>
+                            <td>{{ connectionOverview.total_teamMember }}</td>
+                          </tr>
+                          <tr>
+                            <td class="td-60">Team creation date</td>
+                            <td class="text-end">:</td>
+                            <td>{{ dateFromTimeStamp(connectionOverview.team_created_date) }}</td>
+                          </tr>
+                          <tr>
+                            <td class="td-60">Team created by</td>
+                            <td class="text-end">:</td>
+                            <td>{{ connectionOverview.team_created_by }}</td>
+                          </tr>
+                        </table>
                       </div>
                     </div>
                     <!-- {{ connectionOverview }} -->
-                    <button
-                        class="mt-2 btn btn-primary btn-block"
-                        @click="gotoConnectionStatus"
-                    >
-                      Go Back to Connection Status
-                    </button>
+                    <hr class="pb-2">
+                    <div class="flex justify-content-center">
+                      <button
+                          class="mt-2 btn btn-primary outline-border px-5"
+                          @click="profileOverview()"
+                      >
+                        This Profile overview
+                      </button>
+                    </div>
+                    <div class="flex justify-content-center mt-2">
+                      <button
+                          class="mt-2 btn btn-primary outline-border px-5"
+                      >
+                        Profile completion status
+                      </button>
+                    </div>
+<!--                    <div class="flex justify-content-center">-->
+<!--                      <button-->
+<!--                          class="mt-2 btn btn-primary outline-border"-->
+<!--                          @click="gotoConnectionStatus"-->
+<!--                      >-->
+<!--                        Go Back to Connection Status-->
+<!--                      </button>-->
+<!--                    </div>-->
                   </div>
                 </div>
               </div>
@@ -400,15 +432,12 @@ export default {
 			this.isLoading = false;
 		},
 		loadConnectionReports() {
-			console.log("Load Connect Reports");
 			const teamId = JwtService.getTeamIDAppWide();
-			console.log(teamId);
 			try {
 				const response = this.$store.dispatch("loadConnectionReports", teamId);
 				response
 					.then((data) => {
 						this.connectionReports = data.data.data;
-						console.log(this.connectionReports);
 					})
 					.catch((error) => {
 						console.log(error.response.data.message);
@@ -594,6 +623,11 @@ export default {
 				},
 			});
 		},
+    profileOverview() {
+      if(this.connectionOverview && this.connectionOverview.candidateInfo && this.connectionOverview.candidateInfo.candidate_userid) {
+        this.$router.push({ name: 'profile', query: {user_id: this.connectionOverview.candidateInfo.candidate_userid} });
+      }
+    }
 	},
 };
 </script>
@@ -601,7 +635,7 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .main-content-1 {
-  margin: 20px 10px;
+  margin: 20px 0;
   width: 100%;
   //margin-left: 260px;
   //@media (max-width: 1024px) {
@@ -656,12 +690,16 @@ export default {
     }
     .connection-overview {
       p {
-        font-size: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #656565;
       }
     }
     .profile-team-overview {
       p {
-        font-size: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #656565;
       }
     }
   }
@@ -675,5 +713,21 @@ export default {
 .footer {
 	height: 20px;
 }
-
+.td-60 {
+  width: 60%;
+}
+.overview-table td, .overview-table th {
+  padding: 0.25rem 0.75rem;
+}
+.outline-border {
+  border: 1px solid $color-white;
+  outline-style: solid;
+  outline-color: $bg-primary;
+}
+.connect-heading-text {
+  font-size: 14px;
+  @media (min-width: 768px) {
+    font-size: 18px;
+  }
+}
 </style>

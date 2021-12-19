@@ -51,7 +51,8 @@ export default {
   methods: {
     async searchMember() {
       await ApiService.post(`/v1/user-info/`, {
-        email: this.user_email
+        email: this.user_email,
+        team_id: this.team.id
       }).then(response => {
         this.userObj = response.data.data;
       });

@@ -1,94 +1,64 @@
 <template>
-  <div class="shortlist-wrapper">
-    <div class="row px-3">
-      <div class="col-12 col-md-6 mobile-margin" v-for="(item, index) in 4" :key="index">
-        <div class="m-2 shadow-default gridCardDesign position-relative grid-item">
-          <div class="row no-gutters p-1">
-            <div class="col-12 col-md-6" id="flex-container">
-              <img
-                  src="https://picsum.photos/200"
-                  alt="image"
-                  id="card-image"
-              />
-            </div>
-            <div class="col-12 col-md-6" id="flex-container-list">
-              <div class="card-body py-2 d-flex flex-column h-full justify-content-between">
-                <div>
-                  <h5 class="card-title border-bottom pb-2">Candidate</h5>
+  <div class="m-2 shadow-default gridCardDesign position-relative grid-item">
+    <div class="row no-gutters p-1">
+      <div class="col-12 col-lg-6" id="flex-container">
+        <img
+            :src="connection.candidateInfo && connection.candidateInfo.candidate_image ? connection.candidateInfo.candidate_image : avatarSrc"
+            alt="image"
+            id="card-image"
+        />
+      </div>
+      <div class="col-12 col-lg-6" id="flex-container-list">
+        <div class="card-body py-2 d-flex flex-column h-full justify-content-between">
+          <div>
+            <h5 class="card-title border-bottom pb-2">
+              {{ connection.candidateInfo ? connection.candidateInfo.candidate_fname : 'Not found' }}
+              {{ connection.candidateInfo ? connection.candidateInfo.candidate_lname : '' }}
+            </h5>
 
-                  <ul class="desc-list">
-                    <!-- Team -->
-                    <li class="flex-between-start">
-                      <span class="flex-30 label-text">Team</span>
-                      <span class="flex-70">:<span class="ml-3 badge badge-primary team-badge">My team</span></span>
-                    </li>
-                    <!-- Location -->
-                    <li class="flex-between-start">
-                      <span class="flex-30 label-text">Location</span>
-                      <span class="flex-70">:<span class="ml-3">London, UK </span></span>
-                    </li>
-                    <!-- Age -->
-                    <li class="flex-between-start">
-                      <span class="flex-30 label-text">Age</span>
-                      <span class="flex-70">:<span class="ml-3">27 Yrs</span></span>
-                    </li>
-                    <!-- Religion -->
-                    <li class="flex-between-start">
-                      <span class="flex-30 label-text">Religion</span>
-                      <span class="flex-70">:<span class="ml-3">Islam</span></span>
-                    </li>
-                    <!-- Ethnicity -->
-                    <li class="flex-between-start">
-                      <span class="flex-30 label-text">Ethnicity</span>
-                      <span class="flex-70">:<span class="ml-3">Ethnicity </span></span>
-                    </li>
-                  </ul>
-
-                </div>
-                <div class="mt-2">
-                  <div class="d-flex align-items-center justify-content-between mb-1">
-                    <a-button
-                        @click="block(item.id)"
-                        type="primary" block
-                        class="d-flex align-items-center mr-2 justify-content-center block-button grid-action-btn"
-                        shape="round" size="small">
-                      <a-icon type="stop"/>
-                      Block
-                    </a-button>
-                    <a-button type="primary" block
-                              @click="disconnectTeam()"
-                              class="d-flex align-items-center ml-2 bg-dark justify-content-center grid-action-btn"
-                              shape="round" size="small">
-                      <a-icon type="disconnect"/>
-                      Disconnect
-                    </a-button>
-                  </div>
-                  <div class="d-flex align-items-center justify-content-between">
-                    <a-button
-                        @click="startConversation()"
-                        type="primary" block
-                        class="d-flex align-items-center mr-2 justify-content-center grid-action-btn" shape="round"
-                        size="small">
-                      <a-icon type="wechat"/>
-                      Chat
-                    </a-button>
-                    <a-button
-                        @click="viewProfile()"
-                        type="primary" block
-                        class="d-flex align-items-center ml-2 justify-content-center grid-action-btn" shape="round"
-                        size="small">
-                      <a-icon type="user"/>
-                      View Profile
-                    </a-button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ul class="desc-list">
+              <!-- Team -->
+              <li class="flex-between-start">
+                <span class="flex-30 label-text">Team</span>
+                <span class="flex-70">:<span class="ml-3 badge badge-primary team-badge">{{ connection.team_name }}</span></span>
+              </li>
+              <!-- Location -->
+              <li class="flex-between-start">
+                <span class="flex-30 label-text">Location</span>
+                <span class="flex-70">:<span class="ml-3">{{ connection.candidateInfo ? connection.candidateInfo.candidate_location : 'N/A' }} </span></span>
+              </li>
+              <!-- Age -->
+              <li class="flex-between-start">
+                <span class="flex-30 label-text">Age</span>
+                <span class="flex-70">:<span class="ml-3">{{ connection.candidateInfo ? getAge(connection.candidateInfo.candidate_age) : 'Not found' }} Yrs</span></span>
+              </li>
+              <!-- Religion -->
+              <li class="flex-between-start">
+                <span class="flex-30 label-text">Religion</span>
+                <span class="flex-70">:<span class="ml-3">{{ connection.candidateInfo ? connection.candidateInfo.candidate_religion : 'Not found' }}</span></span>
+              </li>
+              <!-- Ethnicity -->
+              <li class="flex-between-start">
+                <span class="flex-30 label-text">Ethnicity</span>
+                <span class="flex-70">:<span class="ml-3">{{ connection.candidateInfo ? connection.candidateInfo.candidate_ethnicity : 'Not found' }} </span></span>
+              </li>
+            </ul>
           </div>
-          <div class="position-absolute candidate-top-right-corner connected-bg"></div>
+
+          <grid-buttons :type="type" @block="block"
+                        @disconnectTeam="disconnectTeam"
+                        @startConversation="startConversation"
+                        @viewProfile="viewProfile"
+                        @acceptRequest="acceptRequest"
+                        @declineRequest="declineRequest" />
         </div>
       </div>
     </div>
+    <div class="position-absolute candidate-top-right-corner"
+         :class="{
+          'connected-bg': type == 'connected',
+          'request-received-bg': type == 'Request received',
+          'request-sent-bg': type == 'Request send',}"></div>
   </div>
 </template>
 
@@ -96,9 +66,11 @@
 import firebase from "../../configs/firebase";
 import {getAge} from "@/common/helpers.js";
 import JwtService from "@/services/jwt.service";
+import GridButtons from "./GridButtons";
 
 export default {
   name: "CandidateGridView",
+  components: {GridButtons},
   props: ["connection"],
   data() {
     return {
@@ -370,8 +342,8 @@ export default {
   height: 45px;
   border-radius: 5px;
   overflow: hidden;
-  top: 0;
-  right: 0;
+  top: -3px;
+  right: -3px;
 }
 
 .candidate-top-right-corner:after {
@@ -420,23 +392,34 @@ export default {
   border-color: transparent #3ab549 transparent transparent;
 }
 
-.request-received-bg {
+.request-received-bg:after {
   border-color: transparent #fbb03b transparent transparent;
 }
 
-.request-sent-bg {
+.request-sent-bg:after {
   border-color: transparent #1bb9c2 transparent transparent;
 }
 
-.self-declined-bg {
+.self-declined-bg:after {
   border-color: transparent #fa4942 transparent transparent;
 }
 
-.they-declined-bg {
+.they-declined-bg:after {
   border-color: transparent #522e8e transparent transparent;
+}
+.grid-item {
+  border: 3px solid #ffffff;
 }
 .grid-item:hover {
   border: 3px solid #3f9de7;
+  //border-top-right-radius: 7px;
+}
+.btn-success {
+  background: #3ab549;
+  color: #FFFFFF;
+}
+.badge-primary {
+  min-width: 0;
 }
 .mobile-margin {
   margin-left: -10px;

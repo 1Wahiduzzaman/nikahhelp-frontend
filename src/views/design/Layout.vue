@@ -46,7 +46,7 @@
                     />
                   </a>
                   <template v-slot:overlay>
-                    <NotificationPopup :items="[]" use-for="team" />
+                    <NotificationPopup :items="teams" :use-for="'team'" />
                   </template>
                 </a-dropdown>
               </li>
@@ -67,7 +67,7 @@
                     />
                   </a>
                   <template v-slot:overlay>
-                    <NotificationPopup :items="[]" use-for="shortlist" />
+                    <NotificationPopup :items="[]" :use-for="'shortlist'" />
                   </template>
                 </a-dropdown>
               </li>
@@ -92,7 +92,7 @@
                     </a-badge>
                   </a>
                   <template v-slot:overlay>
-                    <NotificationPopup :items="[]" use-for="notification" />
+                    <NotificationPopup :items="[]" :use-for="'notification'" />
                   </template>
                 </a-dropdown>
               </li>
@@ -112,7 +112,7 @@
                     </a-badge>
                   </a>
                   <template v-slot:overlay>
-                    <NotificationPopup count="29" :items="[]" use-for="chat" />
+                    <NotificationPopup count="29" :items="[]" :use-for="'chat'" />
                   </template>
                 </a-dropdown>
               </li>
@@ -269,14 +269,36 @@ export default {
     NotificationPopup,
     Sidebar,
   },
+  created() {
+    this.getTeams();
+  },
   data() {
     return {
       collapsed: false,
+      teams: []
     };
   },
   methods: {
     responsiveToggle() {
       this.collapsed = false;
+    },
+    async getTeams() {
+      this.loading = true;
+      try {
+        await this.$store
+            .dispatch("getTeams")
+            .then((data) => {
+              this.teams = data.data.data;
+            })
+            .catch((error) => {
+              console.log(error.response);
+            });
+      } catch (error) {
+        this.error = error.message || "Something went wrong";
+        console.log(this.error);
+        // this.$router.push("/manageteam");
+      }
+      this.isLoading = false;
     },
   },
 };
