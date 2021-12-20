@@ -5,7 +5,7 @@
 			<div v-else>
 				<Layout>
           <div class="row">
-            <div class="col-12 col-xl-9">
+            <div class="col-12">
               <div class="main-content-1">
                 <div class="d-flex justify-content-between mb-3 align-items-center mr-4">
                   <h5 class="mt-2 px-4 connect-heading-text">
@@ -49,7 +49,7 @@
 
                 <div class="shortlist-wrapper">
                   <div class="row px-3">
-                    <div class="col-12 col-lg-6 mobile-margin" v-for="(connection, connecIndex) in connectionReports.result" :key="connecIndex">
+                    <div class="col-12 col-lg-3 mobile-margin" v-for="(connection, connecIndex) in connectionReports.result" :key="connecIndex">
                       <candidate-grid-view v-if="displayMode === 'grid' && connectionReports.result && connectionReports.result.length > 0"
                                            :connection="connection"
                                            @selected-connection="selectedConnection"
@@ -75,12 +75,9 @@
                 ></candidate>
               </div>
             </div>
-            <div class="col-12 col-xl-3">
+            <div class="col-12 col-xl-3 d-none">
               <!-- Connection Status -->
               <div class="main-content-2">
-                <!-- <div class="shadow-default connection-history">
-                  <h6>Connection History</h6>
-                </div> -->
                 <div class="shadow-default connection-status p-3">
                   <p class="fs-18 text-center">Connection Status</p>
                   <hr />

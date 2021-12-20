@@ -1,70 +1,137 @@
 <template>
-  <div class="m-2 shadow-default gridCardDesign position-relative grid-item">
-    <div class="row no-gutters p-1">
-      <div class="col-12 col-lg-6" id="flex-container">
-        <img
-            :src="connection.candidateInfo && connection.candidateInfo.candidate_image ? connection.candidateInfo.candidate_image : avatarSrc"
-            alt="image"
-            id="card-image"
-        />
-      </div>
-      <div class="col-12 col-lg-6" id="flex-container-list">
-        <div class="card-body py-2 d-flex flex-column h-full justify-content-between">
-          <div>
-            <h5 class="card-title border-bottom pb-2">
-              {{ connection.candidateInfo ? connection.candidateInfo.candidate_fname : 'Not found' }}
-              {{ connection.candidateInfo ? connection.candidateInfo.candidate_lname : '' }}
-            </h5>
-
-            <ul class="desc-list">
-              <!-- Team -->
-              <li class="flex-between-start">
-                <span class="flex-30 label-text">Team</span>
-                <span class="flex-70">:<span class="ml-3 badge badge-primary team-badge">{{ connection.team_name }}</span></span>
-              </li>
-              <!-- Location -->
-              <li class="flex-between-start">
-                <span class="flex-30 label-text">Location</span>
-                <span class="flex-70">:<span class="ml-3">{{ connection.candidateInfo ? connection.candidateInfo.candidate_location : 'N/A' }} </span></span>
-              </li>
-              <!-- Age -->
-              <li class="flex-between-start">
-                <span class="flex-30 label-text">Age</span>
-                <span class="flex-70">:<span class="ml-3">{{ connection.candidateInfo ? getAge(connection.candidateInfo.candidate_age) : 'Not found' }} Yrs</span></span>
-              </li>
-              <!-- Religion -->
-              <li class="flex-between-start">
-                <span class="flex-30 label-text">Religion</span>
-                <span class="flex-70">:<span class="ml-3">{{ connection.candidateInfo ? connection.candidateInfo.candidate_religion : 'Not found' }}</span></span>
-              </li>
-              <!-- Ethnicity -->
-              <li class="flex-between-start">
-                <span class="flex-30 label-text">Ethnicity</span>
-                <span class="flex-70">:<span class="ml-3">{{ connection.candidateInfo ? connection.candidateInfo.candidate_ethnicity : 'Not found' }} </span></span>
-              </li>
-            </ul>
-          </div>
-
-          <grid-buttons :type="type" @block="block"
-                        @disconnectTeam="disconnectTeam"
-                        @startConversation="startConversation"
-                        @viewProfile="viewProfile"
-                        @acceptRequest="acceptRequest"
-                        @declineRequest="declineRequest" />
+  <div class="m-2 shadow-default gridCardDesign position-relative flip-card" :class="{'flip-card-toggle': rotated}">
+    <div class="flip-card-inner">
+      <div class="row no-gutters p-1 flip-card-front">
+        <div class="col-12" id="flex-container">
+          <img
+              :src="connection.candidateInfo && connection.candidateInfo.candidate_image ? connection.candidateInfo.candidate_image : avatarSrc"
+              alt=""
+              id="card-image"
+          />
         </div>
+        <div class="col-12" id="flex-container-list">
+          <div class="card-body py-2 d-flex flex-column h-full justify-content-between">
+            <div>
+              <h5 class="card-title">{{ connection.candidateInfo ? connection.candidateInfo.candidate_fname : 'Not found' }} {{ connection.candidateInfo ? connection.candidateInfo.candidate_lname : '' }}</h5>
+
+              <ul class="desc-list">
+                <!-- Team -->
+                <li class="flex-between-start">
+                  <span class="flex-30 label-text">Team</span>
+                  <span class="flex-70">:
+									<span class="ml-1"><router-link class="team-link" :to="{name: 'ManageTeam', query: {team_id: connection.to_team_id}}">{{ connection.to_team_name }}</router-link></span>
+								</span>
+                </li>
+                <!-- Location -->
+                <li class="flex-between-start">
+                  <span class="flex-30 label-text">Location</span>
+                  <span class="flex-70">:
+									<span class="ml-1">{{ connection.candidateInfo ? connection.candidateInfo.candidate_location : 'N/A' }}</span>
+								</span>
+                </li>
+                <!-- Age -->
+                <li class="flex-between-start">
+								<span class="flex-30 label-text">Age</span
+                ><span class="flex-70"
+                >:
+									<span class="ml-1">{{ connection.candidateInfo ? getAge(connection.candidateInfo.candidate_age) : 'Not found' }} Yrs </span></span
+                >
+                </li>
+                <!-- Religion -->
+                <li class="flex-between-start">
+								<span class="flex-30 label-text">Religion</span
+                ><span class="flex-70"
+                >:
+									<span class="ml-1"
+                  >{{ connection.candidateInfo ? connection.candidateInfo.candidate_religion : 'Not found' }}
+									</span></span
+                >
+                </li>
+
+                <li class="flex-between-start">
+                  <span class="flex-30 label-text">Ethnicity</span>
+                  <span class="flex-70">:
+									<span class="ml-1">{{ connection.candidateInfo ? connection.candidateInfo.candidate_ethnicity : 'Not found' }} </span>
+								</span>
+                </li>
+              </ul>
+
+            </div>
+            <div class="mt-2">
+              <grid-buttons :type="type" @block="block"
+                            @disconnectTeam="disconnectTeam"
+                            @startConversation="startConversation"
+                            @viewProfile="viewProfile"
+                            @acceptRequest="acceptRequest"
+                            @declineRequest="declineRequest"/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card-back py-4 px-2 mt-4">
+        <h6 class="pb-2">This Profile Connection Overview</h6>
+        <table class="table table-borderless overview-table">
+          <tr>
+            <td class="td-60">Connection Status</td>
+            <td class="text-end">:</td>
+            <td>{{ connection.connection }}</td>
+          </tr>
+          <tr>
+            <td class="td-60">Connected date</td>
+            <td class="text-end">:</td>
+            <td>{{ dateFromDateTime(connection.responded_at) }}</td>
+          </tr>
+          <tr>
+            <td class="td-60">Connection requested by</td>
+            <td class="text-end">:</td>
+            <td>{{ connection.requested_by.full_name }}</td>
+          </tr>
+          <tr>
+            <td class="td-60">Request Date</td>
+            <td class="text-end">:</td>
+            <td>{{ dateFromDateTime(connection.requested_at) }}</td>
+          </tr>
+        </table>
+
+        <h6 class="pb-2">This Profile Team Overview</h6>
+        <table class="table table-borderless overview-table">
+          <tr>
+            <td class="td-60">Team name</td>
+            <td class="text-end">:</td>
+            <td>{{ connection.to_team_name }}</td>
+          </tr>
+          <tr>
+            <td class="td-60">Team members</td>
+            <td class="text-end">:</td>
+            <td>{{ connection.total_teamMember }}</td>
+          </tr>
+          <tr>
+            <td class="td-60">Team creation date</td>
+            <td class="text-end">:</td>
+            <td>{{ dateFromTimeStamp(connection.team_created_date) }}</td>
+          </tr>
+          <tr>
+            <td class="td-60">Team created by</td>
+            <td class="text-end">:</td>
+            <td>{{ connection.team_created_by }}</td>
+          </tr>
+        </table>
       </div>
     </div>
     <div class="position-absolute candidate-top-right-corner"
          :class="{
-          'connected-bg': type == 'connected',
-          'request-received-bg': type == 'Request received',
-          'request-sent-bg': type == 'Request send',}"></div>
+             'connected-bg': type == 'connected',
+             'request-received-bg': type == 'Request received',
+             'request-sent-bg': type == 'Request send',}"></div>
+    <div class="position-absolute icon-rotate-box cursor-pointer" @click="rotated = !rotated">
+      <a-icon type="rollback" class="rotate-icon" size="large" />
+    </div>
   </div>
 </template>
 
 <script>
 import firebase from "../../configs/firebase";
-import {getAge} from "@/common/helpers.js";
+import {getAge, dateFromDateTime, dateFromTimeStamp} from "@/common/helpers.js";
 import JwtService from "@/services/jwt.service";
 import GridButtons from "./GridButtons";
 
@@ -77,6 +144,7 @@ export default {
       avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
       conversations: [],
       type: this.connection.connection_type,
+      rotated: false
     };
   },
   mounted() {
@@ -125,6 +193,8 @@ export default {
   },
   methods: {
     getAge,
+    dateFromDateTime, //From helpers.js
+    dateFromTimeStamp,
     selectCandidate() {
       console.log(this.connection.team_name);
       this.selectedData = this.connection;
@@ -227,7 +297,6 @@ export default {
   @media (max-width: 558px) {
     height: 280px;
   }
-
   .card-img {
     height: 250px;
     float: left;
@@ -266,7 +335,6 @@ export default {
       height: 60%;
     }
   }
-
   .card-body {
     float: right;
     overflow: hidden;
@@ -275,7 +343,6 @@ export default {
       margin-left: -10px;
       margin-top: -8px;
     }
-
     .desc-list {
       line-height: 1.5;
 
@@ -292,15 +359,13 @@ export default {
       }
 
 
-      @media (max-width: 365px) {
+      @media (max-width:365px) {
         font-size: 8px;
       }
     }
-
     .btn-brand {
       background: $color-brand;
     }
-
     .card-title {
       @media (max-width: 610px) {
         font-size: 15px;
@@ -337,13 +402,163 @@ export default {
   }
 }
 
+
+
+#viewMoreDetails {
+  align-items: center;
+  width: 80%;
+  padding: 3px 0;
+  position: absolute;
+  bottom: 5px;
+
+
+  @media (max-width: 671px) {
+    bottom: -60px;
+  }
+
+
+  @media (max-width: 584px) {
+    font-size: 12px;
+  }
+
+  @media (max-width: 542px) {
+    font-size: 10px;
+    bottom: -100px;
+  }
+
+
+  @media (max-width: 501px) {
+    font-size: 10px;
+    bottom: -115px;
+  }
+  @media (max-width: 482px) {
+    font-size: 10px;
+    bottom: -100px;
+    padding: 1px 2px;
+  }
+}
+
+#connectButton {
+  margin: 7px;
+  padding-left: 9px;
+  padding-right: 9px;
+  margin-bottom: 0px;
+  position: absolute;
+  right: 25px;
+  bottom: 35px;
+
+
+
+  @media (max-width: 772px) {
+    bottom: 35px;
+  }
+
+
+
+  @media (max-width: 671px) {
+    bottom: -30px;
+    margin-left: -100px;
+    left: 128px;
+  }
+
+  @media (max-width: 542px) {
+    font-size: 10px;
+    bottom: -75px;
+  }
+
+  @media (max-width: 511px) {
+    margin-left: -110px;
+  }
+  @media (max-width: 482px) {
+    font-size: 8px;
+    bottom: -60px;
+    padding: 1px 2px;
+  }
+}
+
+
+#shortlistButton {
+  margin-left: 7px;
+  padding-left: 9px;
+  padding-right: 9px;
+  margin-bottom: 0px;
+  position: absolute;
+  bottom: 35px;
+
+  @media (max-width: 772px) {
+    bottom: 60px;
+  }
+
+
+  @media (max-width: 671px) {
+    bottom: -7px;
+  }
+
+  @media (max-width: 542px) {
+    font-size: 10px;
+    bottom: -55px;
+  }
+  @media (max-width: 482px) {
+    font-size: 8px;
+    bottom: -40px;
+    padding: 1px 2px;
+  }
+
+}
+
+
+.gridCardDesign {
+
+  @media (max-width: 666px) {
+    margin-right: 0px;
+    margin-left: 5px;
+  }
+
+  @media (max-width: 463px) {
+    height: 270px;
+  }
+  @media (max-width: 444px) {
+    margin: 4px -25px 4px -20px;
+
+  }
+
+
+
+  @media (max-width: 380px) {
+    margin: 2px -25px 4px -40px;
+  }
+
+
+  @media (max-width: 370px) {
+    height: 290px;
+    margin: 4px -25px 4px -40px;
+
+  }
+
+
+  @media (max-width: 359px) {
+    margin: 4px -35px 4px -50px;
+
+  }
+
+  @media (max-width: 335px) {
+    margin: 4px -40px 4px -40px;
+
+  }
+
+  @media (max-width: 330px) {
+    margin: 4px -50px 4px -40px;
+
+  }
+}
+
 .candidate-top-right-corner {
   width: 45px;
   height: 45px;
   border-radius: 5px;
   overflow: hidden;
-  top: -3px;
-  right: -3px;
+  top: 0;
+  right: 0;
 }
 
 .candidate-top-right-corner:after {
@@ -368,10 +583,9 @@ export default {
 
 
 #card-image {
-  height: 250px;
+  height: 190px;
   width: 100%;
-  float: left;
-  margin-right: 30px;
+  //float: left;
   display: flex;
   //@media (max-width: 768px) {
   //  width: 100%;
@@ -420,6 +634,52 @@ export default {
 }
 .badge-primary {
   min-width: 0;
+}
+.team-link {
+  color: $color-primary;
+  border-bottom: 1px solid $border-primary;
+}
+.team-link:hover {
+  color: $color-brand;
+  border-bottom: 1px solid $border-brand;
+}
+.flip-card {
+  background-color: #FFFFFF;
+  width: 100%;
+  min-height: 430px;
+  perspective: 1000px;
+}
+.flip-card-inner {
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+.flip-card-toggle .flip-card-inner {
+  transform: rotateY(180deg);
+}
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.flip-card-back {
+  color: white;
+  transform: rotateY(180deg);
+}
+.icon-rotate-box {
+  left: 10px;
+  top: 5px;
+}
+.rotate-icon:hover {
+  color: $color-brand;
+}
+.td-60 {
+  width: 60%;
+}
+.overview-table td, .overview-table th {
+  padding: 0.25rem 0.75rem;
 }
 .mobile-margin {
   margin-left: -10px;
