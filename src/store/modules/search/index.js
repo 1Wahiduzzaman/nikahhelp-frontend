@@ -7,7 +7,9 @@ export default {
   state() {
     return {
       profiles: [],
-      queryArr: ['male', 'dhaka', '20-30 Yrs']
+      selectedProfile: {},//profile info 4 r8 sidebar 
+      queryArr: ['male', 'dhaka', '20-30 Yrs'],
+      component: 'addComponent'
     };
   },
   mutations,
