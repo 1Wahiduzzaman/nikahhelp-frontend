@@ -1,6 +1,6 @@
 <template>
     <div class="pt-3 px-5">
-        <p class="text-h6 mb-2 text--secondary">The Profile Overview</p>
+        <p class="text-h6 mb-2 text--secondary">This Profile Overview</p>
         <table>
             <tr>
                 <td class="text--disabled" style="width: 110px">Name</td>

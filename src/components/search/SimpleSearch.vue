@@ -11,11 +11,11 @@
 								style="margin-left: 5px;"
 								@selected="onDropdownChange"
 								:uniqueNames="['min_age', 'max_age']"
-								:size="'medium'"
+								size="default"
 								:options="ageTV"
 								:placeholder="'Age'"
-								:width="'100'"
-								:suffixIcon="'true'"
+								width="98"
+								:suffixIcon="true"
 								:values="[min_age, max_age]"
 							/>
 						</div>
@@ -24,11 +24,11 @@
 								style="margin-left: 5px;"
 								@selected="onDropdownChange"
 								:uniqueNames="['heightMin', 'heightMax']"
-								:size="'medium'"
+								size="default"
 								:options="heithtTV"
 								:placeholder="'Height'"
-								:width="'100'"
-								:suffixIcon="'true'"
+								width="98"
+								:suffixIcon="true"
 								:values="[heightMin, heightMax]"
 							/>
 						</div>
@@ -270,8 +270,8 @@ export default {
 			showMoreSeach: false,
 			ageTV: AGES,
       		heightTv: HEIGHTS,
-			min_age: undefined,
-        	max_age: undefined,
+			min_age: 20,
+        	max_age: 40,
 			age: [20, 40],
 			heightMin: undefined,
 			heightMax: undefined,
@@ -280,8 +280,7 @@ export default {
 			heightUnit: false,
 			minHeightFt: null,
 			maxHeightFt: null,
-
-			ethnicities: ethnicities,
+			ethnicities,
 			ethnicity: "",
 			maritalStatus: "",
 			employmentStatus: "",
@@ -298,10 +297,10 @@ export default {
 			hobbiesAndInterest: "",
 			smokingStatus: 0,
 			tags: "",
-
 			showActiveTeamModal: false,
 			candidateActiveTeam: null,
 			activeTeamId: null,
+			heithtTV : HEIGHTS
 		};
 	},
 	created() {
@@ -316,7 +315,8 @@ export default {
 			searchUser: 'search/searchUser'
 		}),
 		...mapMutations({
-			setProfiles: 'search/setProfiles'
+			setProfiles: 'search/setProfiles',
+			pushQuery: 'search/pushQuery'
 		}),
 		onDropdownChange({ name, value }) {
 			console.log({ name, value });
@@ -347,13 +347,8 @@ export default {
 			// }
 
 			console.log('>>>>>>>>>>>>>>>>')
-
-			let params = {
-				age_min: this.age[0],
-				age_max: this.age[1],
-			};
 			// let _payload = `?page=0&parpage=10&min_age=${params.age_min}&max_age=${params.age_max}&active_team_id=${this.activeTeamId}`;
-			let _payload = `?page=0&parpage=10&min_age=${params.age_min}&max_age=${params.age_max}`;
+			let _payload = `?page=0&parpage=10&min_age=${this.min_age}&max_age=${this.max_age}`;
 
 			// if (this.gender != 0) {
 			// 	_payload += `&gender=1`;
@@ -375,42 +370,54 @@ export default {
 			}
 			if (this.religion != "") {
 				_payload += `&religion=${this.religion}`;
+				this.pushQuery(this.religion)
 			}
 			if (this.ethnicity != "") {
 				_payload += `&ethnicity=${this.ethnicity}`;
+				this.pushQuery(this.ethnicity)
 			}
 			if (this.maritalStatus != "") {
 				_payload += `&marital_status=${this.maritalStatus}`;
+				this.pushQuery(this.maritalStatus)
 			}
 			if (this.employmentStatus != "") {
 				_payload += `&employment_status=${this.employmentStatus}`;
+				this.pushQuery(this.employmentStatus)
 			}
 			if (this.occupation != "") {
 				_payload += `&per_occupation=${this.occupation}`;
+				this.pushQuery(this.occupation)
 			}
 			if (this.education != "") {
 				_payload += `&education_level_id=${this.education}`;
+				this.pushQuery(this.education)
 			}
 			if (this.motherTongue != "") {
 				_payload += `&mother_tongue=${this.motherTongue}`;
 			}
 			if (this.nationality != "") {
 				_payload += `&nationality=${this.nationality}`;
+				this.pushQuery(this.nationality)
 			}
 			if (this.countryOfBirth != "") {
 				_payload += `&country=${this.countryOfBirth}`;
+				this.pushQuery(this.countryOfBirth)
 			}
 			if (this.currentResidence != "") {
 				_payload += `&current_residence_country=${this.currentResidence}`;
+				this.pushQuery(this.currentResidence)
 			}
 			if (this.currentlyLivingWith != "") {
 				_payload += `&currently_living_with=${this.currentlyLivingWith}`;
+				this.pushQuery(this.currentlyLivingWith)
 			}
 			if (this.smokingStatus != "") {
 				_payload += `&smoker=${this.smokingStatus}`;
+				this.pushQuery(this.smokingStatus)
 			}
 			if (this.hobbiesAndInterest != "") {
 				_payload += `&hobbies_interests=${this.hobbiesAndInterest}`;
+				this.pushQuery(this.hobbiesAndInterest)
 			}
 
 			console.log(_payload);

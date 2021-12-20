@@ -145,6 +145,7 @@ import {mapMutations} from 'vuex'
     data: () => ({
       loading: false,
       selection: 1,
+      onceMore: true
     }),
 
     methods: {
