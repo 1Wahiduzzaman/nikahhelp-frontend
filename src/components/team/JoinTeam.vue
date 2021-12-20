@@ -102,7 +102,7 @@ export default {
 	},
 	created() {
     if(this.$route.query.invitation) {
-      this.invitationLink = this.$route.query.invitation;
+      this.invitationLink = window.location.host + '/manageteam?invitation=' + this.$route.query.invitation;
       this.getTheTeamInvitationInfo();
     }
   },
@@ -155,16 +155,18 @@ export default {
       return [year, month, day].join("/");
     },
     async getTheTeamInvitationInfo() {
-    let originalLink = this.invitationLink.split('?');
-      if(this.invitationLink && originalLink.length > 0) {
-        this.loading = true;
-        await ApiService.get(`/v1/team-invitation-information/${originalLink[0]}`).then(res => {
-          this.loading = false;
-          if(res && res.data) {
-            this.team = res.data.data;
-          }
-        });
+      let originalLink = this.invitationLink.split('?invitation=');
+      let link = this.invitationLink;
+      if (originalLink.length > 1) {
+        link = originalLink[1];
       }
+      this.loading = true;
+      await ApiService.get(`/v1/team-invitation-information/${link}`).then(res => {
+        this.loading = false;
+        if (res && res.data) {
+          this.team = res.data.data;
+        }
+      });
     }
 	},
 };
