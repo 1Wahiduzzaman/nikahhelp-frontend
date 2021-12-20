@@ -130,7 +130,7 @@
                 ></candidate>
               </div>
             </div>
-            <div class="col-12 col-xl-3">
+            <div class="col-12 col-xl-3 d-none">
               <!-- Connection Status -->
               <div class="main-content-2">
                 <div class="shadow-default connection-status p-3">
@@ -790,6 +790,12 @@ export default {
 }
 .they-declined {
   background-color: #522e8e !important;
+}
+.mobile-margin {
+  margin-left: -10px;
+  @media (min-width: 768px) {
+    margin-left: 0;
+  }
 }
 .connect-heading-text {
   font-size: 14px;

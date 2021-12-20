@@ -80,18 +80,18 @@
       <div class="d-flex align-items-center justify-content-between mb-1">
         <a-button
             type="primary" block
-            class="d-flex align-items-center mr-2 grid-action-btn btn-info"
+            class="d-flex align-items-center justify-content-center grid-action-btn btn-info"
             shape="round" size="small">
           <a-icon type="cross"/>
           Cancel
         </a-button>
 
-        <a-button type="primary" block
-                  class="d-flex align-items-center ml-2 grid-action-btn btn-info"
-                  shape="round" size="small">
-          <a-icon type="login" />
-          Resend <span style="visibility: hidden">texti</span>
-        </a-button>
+<!--        <a-button type="primary" block-->
+<!--                  class="d-flex align-items-center ml-2 grid-action-btn btn-info"-->
+<!--                  shape="round" size="small">-->
+<!--          <a-icon type="login" />-->
+<!--          Resend <span style="visibility: hidden">texti</span>-->
+<!--        </a-button>-->
       </div>
       <div class="d-flex align-items-center justify-content-between">
         <a-button
