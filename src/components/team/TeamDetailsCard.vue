@@ -367,7 +367,7 @@
               </td>
               <td>
                 <div class="name-full cursor-pointer" @click="toggleActiveProfile(member, 'member')">
-                  {{ member.user.full_name ? member.user.full_name.substring(0, 15) : 'N/A' }}
+                  <span class="team-member-name">{{ member.user.full_name ? member.user.full_name.substring(0, 15) : 'N/A' }}</span>
                 </div>
               </td>
               <td>
@@ -387,7 +387,7 @@
               </td>
               <td>
                 <div class="name-full cursor-pointer" @click="toggleActiveProfile(item, 'invitation')">
-                {{ item.user ? item.user.full_name.substring(0, 15) : 'Not joined yet' }}
+                  <span class="team-member-name">{{ item.user ? item.user.full_name.substring(0, 15) : 'Not joined yet' }}</span>
                 </div>
               </td>
               <td>
@@ -2089,6 +2089,9 @@ export default {
 			cursor: pointer;
 		}
 	}
+}
+.team-member-name:hover {
+  color: $color-brand;
 }
 // end css for team-card
 </style>

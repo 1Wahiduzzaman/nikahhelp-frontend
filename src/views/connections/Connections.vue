@@ -33,23 +33,77 @@
                     </select>
                   </div>
                 </div>
-                <!-- <div v-for="(connectionDetails, type) in connections" :key="type">
-                  <candidate
-                    v-for="connection in connectionDetails"
-                    :key="connection.connection_id"
-                    :connection="connection"
-                    :type="type"
-                    @selected-connection="selectedConnection"
-                    @accept-request="acceptRequest"
-                    @disconnect-team="disconnectTeam"
-                    @decline-request="declineRequest"
-                    @connect-request="connectRequest"
-                  ></candidate>
-                </div> -->
+
+                <div class="d-flex w-full flex-wrap ml-2">
+                  <v-chip
+                      class="ma-2 connected"
+                      color="green"
+                      text-color="white"
+                  >
+                    <v-avatar
+                        left
+                        class="green darken-4"
+                    >
+                      {{ connectionReports.connected_teams }}
+                    </v-avatar>
+                    Connected
+                  </v-chip>
+                  <v-chip
+                      class="ma-2 orange"
+                      text-color="white"
+                  >
+                    <v-avatar
+                        left
+                        class="orange darken-4"
+                    >
+                      {{ connectionReports.request_received }}
+                    </v-avatar>
+                    Received
+                  </v-chip>
+                  <v-chip
+                      class="ma-2"
+                      color="cyan"
+                      text-color="white"
+                  >
+                    <v-avatar
+                        left
+                        class="cyan darken-4"
+                    >
+                      {{ connectionReports.request_sent }}
+                    </v-avatar>
+                    Sent
+                  </v-chip>
+                  <v-chip
+                      class="ma-2"
+                      color="pink"
+                      text-color="white"
+                  >
+                    <v-avatar
+                        left
+                        class="pink darken-4"
+                    >
+                      {{ connectionReports.we_declined }}
+                    </v-avatar>
+                    We declined
+                  </v-chip>
+                  <v-chip
+                      class="ma-2"
+                      color="indigo"
+                      text-color="white"
+                  >
+                    <v-avatar
+                        left
+                        class="indigo darken-4"
+                    >
+                      {{ connectionReports.they_declined }}
+                    </v-avatar>
+                    They declined
+                  </v-chip>
+                </div>
 
                 <div class="shortlist-wrapper">
                   <div class="row px-3">
-                    <div class="col-12 col-lg-3 mobile-margin" v-for="(connection, connecIndex) in connectionReports.result" :key="connecIndex">
+                    <div class="col-12 col-md-4 col-xl-3 mobile-margin" v-for="(connection, connecIndex) in connectionReports.result" :key="connecIndex">
                       <candidate-grid-view v-if="displayMode === 'grid' && connectionReports.result && connectionReports.result.length > 0"
                                            :connection="connection"
                                            @selected-connection="selectedConnection"
@@ -61,6 +115,7 @@
                     </div>
                   </div>
                 </div>
+
                 <candidate
                     v-if="displayMode === 'list' && connectionReports.result && connectionReports.result.length > 0"
                     v-for="connection in connectionReports.result"
@@ -75,7 +130,7 @@
                 ></candidate>
               </div>
             </div>
-            <div class="col-12 col-xl-3 d-none">
+            <div class="col-12 col-xl-3">
               <!-- Connection Status -->
               <div class="main-content-2">
                 <div class="shadow-default connection-status p-3">
@@ -720,6 +775,21 @@ export default {
   border: 1px solid $color-white;
   outline-style: solid;
   outline-color: $bg-primary;
+}
+.connected {
+  background-color: #3ab549 !important;
+}
+.received {
+  background-color: #fbb03b !important;
+}
+.sent {
+  background-color: #1bb9c2 !important;
+}
+.we-declined {
+  background-color: #fa4942 !important;
+}
+.they-declined {
+  background-color: #522e8e !important;
 }
 .connect-heading-text {
   font-size: 14px;

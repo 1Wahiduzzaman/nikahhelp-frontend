@@ -680,9 +680,15 @@ export default {
 }
 .item-duration:hover {
   background: $bg-primary;
+  .duration {
+    color: #FFFFFF;
+  }
 }
 .free-duration:hover {
   background: $bg-brand !important;
+  .duration {
+    color: #FFFFFF;
+  }
 }
 @media (min-width: 768px) {
  .subscription-details {
