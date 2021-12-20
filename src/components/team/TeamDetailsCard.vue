@@ -367,7 +367,7 @@
               </td>
               <td>
                 <div class="name-full cursor-pointer" @click="toggleActiveProfile(member, 'member')">
-                  {{ member.user.full_name ? member.user.full_name.substring(0, 15) : 'N/A' }}
+                  <span class="team-member-name">{{ member.user.full_name ? member.user.full_name.substring(0, 15) : 'N/A' }}</span>
                 </div>
               </td>
               <td>
@@ -387,7 +387,7 @@
               </td>
               <td>
                 <div class="name-full cursor-pointer" @click="toggleActiveProfile(item, 'invitation')">
-                {{ item.user ? item.user.full_name.substring(0, 15) : 'Not joined yet' }}
+                  <span class="team-member-name">{{ item.user ? item.user.full_name.substring(0, 15) : 'Not joined yet' }}</span>
                 </div>
               </td>
               <td>
@@ -429,17 +429,17 @@
               <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
             </a-select>
 
-<!--            <a-button-->
-<!--                v-if="invitedMembers.length <= 0"-->
-<!--                type="primary"-->
-<!--                class="ml-1 fs-12 br-20 bg-primary text-white member-btn"-->
-<!--                :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship"-->
-<!--                @click="inviteNowWindow">Invite now</a-button>-->
+            <a-button
+                v-if="!clickedInviteNow"
+                type="primary"
+                class="ml-1 fs-12 br-20 bg-primary text-white member-btn"
+                :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship"
+                @click="inviteNowWindow">Invite now</a-button>
 
-            <a-dropdown class="right-br-20 bg-primary text-white w-20 fs-10 member-btn dropdown-button right-br-20">
+            <a-dropdown class="right-br-20 bg-primary text-white w-20 fs-10 member-btn dropdown-button right-br-20" v-if="clickedInviteNow">
               <a-menu slot="overlay">
-                <a-menu-item key="1" @click="inviteNowWindow()">Invite User </a-menu-item>
-                <a-menu-item key="1" @click="submitInvite()">Send Invite </a-menu-item>
+                <a-menu-item key="1" @click="agianInviteWindow()">Invite Now </a-menu-item>
+<!--                submitInvite-->
                 <a-menu-item key="2" @click="removeInvite()">Remove </a-menu-item>
               </a-menu>
               <a-button class="ml-1 fs-10"> Invite Now </a-button>
@@ -591,7 +591,8 @@ export default {
 
 			changeRoleEnabled: false,
       profileCard: false,
-      profileActive: null
+      profileActive: null,
+      clickedInviteNow: false
 		};
 	},
 	created() {
@@ -1057,6 +1058,11 @@ export default {
                   self.$emit("teamListUpdated");
                   self.profileActive = null;
                   self.profileCard = false;
+
+                  self.invitedMembers = [];
+                  self.invitationObject.invitation_link = '';
+                  self.invitationObject.visible = false;
+                  self.invitedObj = {};
                 } else {
                   self.$message.error("Something went wrong");
                   self.$emit("teamListUpdated");
@@ -1397,7 +1403,7 @@ export default {
       members += this.teamData.team_invited_members.length;
       if(members < 5) {
         this.invitationObject.visible = true;
-        this.createInvitaionLink();
+        // this.createInvitaionLink();
       } else {
         this.$warning({
           title: 'Maximum number reached!',
@@ -1406,31 +1412,33 @@ export default {
       }
     },
     inviteNowWindow() {
+      this.clickedInviteNow = true;
       this.invitationObject.memberBox = true;
       this.createInvitaionLink();
+    },
+    agianInviteWindow() {
+      this.invitationObject.memberBox = true;
     },
     toggleMemberbox() {
       this.invitationObject.memberBox = false;
     },
-    executeInviteMember(id) {
+    async executeInviteMember(id) {
       this.invitationObject.memberBox = false;
       let data = {
-        role: this.invitationObject.role,
-        add_as_a: this.invitationObject.add_as_a,
-        relationship: this.invitationObject.relationship,
-        invitation_link: this.invitationObject.invitation_link,
+        invitation_id: this.invitedObj.invitation_id,
         email: id
       };
-      if(this.invitedMembers.length > 0) {
-        this.invitedMembers[0] = data;
-      } else {
-        this.invitedMembers.push(data);
-      }
+      await ApiService.post('/v1/invite-team-member-update', data).then(response => {
+        console.log(response)
+        this.invitedObj = null;
+        this.invitationObject.visible = false;
+        this.invitationObject.invitation_link = '';
+        this.clickedInviteNow = false;
+        this.$emit("teamListUpdated");
+      });
     },
     removeInvite() {
-      this.invitedMembers = [];
-      this.invitationObject.invitation_link = '';
-      this.invitationObject.visible = false;
+      this.deleteInvitation(this.invitedObj.invitation_id);
     },
     async submitInvite() {
       this.invitedMembers.push(this.invitationObject);
@@ -1484,7 +1492,8 @@ export default {
           members: self.invitedMembers
         };
         ApiService.post('/v1/invite-team-members', payload).then(res => {
-          self.invitedObj = res.data.data;
+          self.invitedMembers = [];
+          self.invitedObj = res.data.data[0];
         });
 			})();
 		},
@@ -2080,6 +2089,9 @@ export default {
 			cursor: pointer;
 		}
 	}
+}
+.team-member-name:hover {
+  color: $color-brand;
 }
 // end css for team-card
 </style>

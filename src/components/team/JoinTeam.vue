@@ -71,7 +71,7 @@
               <h6 class="fs-14">Team create date</h6>
               <span style="margin-top: -6px">:</span>
             </div>
-            <h6 class="ml-2 fs-14">{{ team.team.created_at | moment("DD/MM/YYYY") }}</h6>
+            <h6 class="ml-2 fs-14">{{ formateDate(team.team.created_at) }}</h6>
           </div>
         </div>
       </div>
@@ -96,12 +96,13 @@ export default {
 			user: {},
 			is_verified: 1,
 			invitationLink: "",
-      team: null
+      team: null,
+      loading: false
 		};
 	},
 	created() {
     if(this.$route.query.invitation) {
-      this.invitationLink = this.$route.query.invitation;
+      this.invitationLink = window.location.host + '/manageteam?invitation=' + this.$route.query.invitation;
       this.getTheTeamInvitationInfo();
     }
   },
@@ -139,15 +140,33 @@ export default {
 			// 	});
 			// }
 		},
-    async getTheTeamInvitationInfo() {
-    let originalLink = this.invitationLink.split('?');
-      if(this.invitationLink && originalLink.length > 0) {
-        await ApiService.get(`/v1/team-invitation-information/${originalLink[0]}`).then(res => {
-          if(res && res.data) {
-            this.team = res.data.data;
-          }
-        });
+    formateDate(date) {
+      if (date == null || date == undefined) {
+        return "  Not Exist";
       }
+      let d = new Date(date),
+          month = "" + (d.getMonth() + 1),
+          day = "" + d.getDate(),
+          year = d.getFullYear();
+
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+
+      return [year, month, day].join("/");
+    },
+    async getTheTeamInvitationInfo() {
+      let originalLink = this.invitationLink.split('?invitation=');
+      let link = this.invitationLink;
+      if (originalLink.length > 1) {
+        link = originalLink[1];
+      }
+      this.loading = true;
+      await ApiService.get(`/v1/team-invitation-information/${link}`).then(res => {
+        this.loading = false;
+        if (res && res.data) {
+          this.team = res.data.data;
+        }
+      });
     }
 	},
 };

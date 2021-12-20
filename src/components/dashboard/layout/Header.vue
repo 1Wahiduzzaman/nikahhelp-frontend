@@ -275,13 +275,24 @@ export default {
 		},
 	},
 	methods: {
-		getTeams() {
-			const response = this.$store.dispatch("getTeams");
-			response.then((data) => {
-				this.teams = data.data.data;
-				console.log(this.teams);
-			});
-		},
+    async getTeams() {
+      this.loading = true;
+      try {
+        await this.$store
+            .dispatch("getTeams")
+            .then((data) => {
+              this.teams = data.data.data;
+            })
+            .catch((error) => {
+              console.log(error.response);
+            });
+      } catch (error) {
+        this.error = error.message || "Something went wrong";
+        console.log(this.error);
+        // this.$router.push("/manageteam");
+      }
+      this.isLoading = false;
+    },
 		changeTeam(event) {
 			console.log(event.target.value);
 			this.$emit("change-team", event.target.value);

@@ -109,7 +109,7 @@
                 :options="heightTV"
                 :placeholder="'Height'"
                 :size="'default'"
-                class="form-right-content w-full"
+                class="form-right-content w-full height-select"
               />
             </div>
             <div class="col-12 mobile-margin mobile-help none-padding">
@@ -1037,7 +1037,7 @@
           shape="round"
           type="primary"
           style="float: right"
-          class="mt-3"
+          class="mt-5"
           @click="handleSubmitFormOne"
         >
           Save & Continue
@@ -1713,7 +1713,7 @@
               shape="round"
               type="primary"
               style="float: right"
-              class="mt-3"
+              class="mt-5"
               @click="handleSubmitFormTwo"
             >
               Save & Continue
