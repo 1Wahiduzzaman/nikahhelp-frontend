@@ -139,6 +139,7 @@
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
   export default {
     props: ["candidate"],
     data: () => ({
@@ -147,10 +148,16 @@
     }),
 
     methods: {
+      ...mapMutations({
+        setComponent: 'search/setComponent',
+        setSelectedProfileInfo: 'search/setSelectedProfileInfo'
+      }),
       shortList() {
         console.log('short list')
       },
       showDetail() {
+        this.setSelectedProfileInfo(this.candidate)
+        this.setComponent('RightSideCandidateDetail')
         console.log('show Detail')
       },
       ViewProfileDetail() {

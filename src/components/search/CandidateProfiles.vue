@@ -37,15 +37,7 @@
 import CandidateGrid from '@/components/search/NewCandidateCard.vue';
 import Tag from '@/components/atom/Tag'
 import {mapGetters} from 'vuex';
-const candidate = {
-    image: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200',
-    candidate: {
-        name: 'John Doe',
-        location_name: 'Dhaka, Bangladesh',
-        religion: 'Islam',
-        ethnicity: 'Bangali'
-    }
-}
+
 export default {
 	name: 'CandidateProfiles',
 	components: {
@@ -53,7 +45,6 @@ export default {
 		Tag
 	},
 	data: () => ({
-		candidate,
 		showAllQuery: false
 	}),
 	computed: {

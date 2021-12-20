@@ -56,7 +56,7 @@
 				<a-layout id="layout" style="background-color: #fff" :style="{ height: 'calc(100vh - 80px)'}">
 					<a-layout-sider
 						:style="{ height: 'calc(100vh - 80px)', overflowY: 'auto',overflowX: 'hidden'}"
-						class="bg-white shadow-default fdfdf"
+						class="bg-white shadow-default"
 						v-model="collapsed"
 						:trigger="null"
 						collapsible
@@ -85,7 +85,13 @@
 									</component>
 								</div>
 								<div class="main-content-2">
-									<div class="shadow-default profile-overview"></div>
+									<v-card
+										style="height: calc(100vh - 140px); overflow-y: auto; position: fixed; right: 10px;"
+										class="mx-auto"
+										width="317"
+									>
+									<component v-bind:is="rightSideComponentName"></component>
+									</v-card>
 								</div>
 							</div>
 						</a-layout-content>
@@ -102,16 +108,19 @@ import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 // import Footer from "@/components/auth/Footer.vue";
 import SimpleSearch from "@/components/search/SimpleSearch.vue";
 import CandidateProfiles from "@/components/search/CandidateProfiles.vue";
-import {mapMutations, mapActions} from 'vuex';
+import AddComponent from '@/components/add/addComponent'
+import {mapGetters, mapMutations, mapActions} from 'vuex';
 export default {
 	name: "AdvanceSearch",
 	components: {
 		'ProfileDetail': () => import('@/components/search/CandidateProfileDetails'),
+		'RightSideCandidateDetail': () => import('@/components/search/RightSideCandidateDetail'),
 		Header,
 		Sidebar,
 		SimpleSearch,
 		// Footer,
 		CandidateProfiles,
+		AddComponent
 	},
 	data() {
 		return {
@@ -124,6 +133,9 @@ export default {
 		};
 	},
 	computed: {
+		...mapGetters({
+			rightSideComponentName: 'search/getComponentName'
+		}),
 		currentTabComponent() {
 			return this.componentName
 		}
@@ -143,7 +155,6 @@ export default {
            this.collapsed = false;
         },
 		switchComponent(name) {
-			console.log(name, '>>>>>>>>>>>>>>>>>')
 			this.componentName = name
 		},
 		async loadUser() {
@@ -215,7 +226,7 @@ export default {
 	}
 	.main-content-1 {
 		width: calc(100% - 350px);
-		margin: 15px 10px;
+		margin: 10px 5px 10px 15px;
 		@media (max-width: 1024px) {
 			width: 100%;
 		}
