@@ -1,7 +1,7 @@
 <template>
-	<Layout>
+	<!-- <Layout> -->
 		<DHomeContent />
-	</Layout>
+	<!-- </Layout> -->
 </template>
 
 <script>

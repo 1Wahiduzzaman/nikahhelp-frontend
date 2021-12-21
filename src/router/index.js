@@ -93,6 +93,20 @@ const AppRouter = new VueRouter({
 
         },
         {
+            path: "/candidate-registration",
+            name: "CandidateRegistration",
+            component: CandidateRegistration,
+            //beforeEnter: InitRoute,
+
+        },
+        {
+            path: "/representative-registration",
+            name: "RepresentativeRegistration",
+            component: RepresentativeRegistration,
+            //beforeEnter: InitRoute,
+
+        },
+        {
             path: "",
             name: 'root',
             component: MatrimonySystem,
@@ -106,20 +120,7 @@ const AppRouter = new VueRouter({
                     component: DHome,
 
                 },
-                {
-                    path: "/candidate-registration",
-                    name: "CandidateRegistration",
-                    component: CandidateRegistration,
 
-
-                },
-                {
-                    path: "/representative-registration",
-                    name: "RepresentativeRegistration",
-                    component: RepresentativeRegistration,
-
-
-                },
                 {
                     path: "/jointeampassword",
                     name: "Join Team Password",
