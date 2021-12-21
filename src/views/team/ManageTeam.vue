@@ -1,78 +1,80 @@
 <template>
-	<div>
-		<div v-if="isLoading">Loading</div>
-		<div v-else>
-			<Layout >
-				<div class="mt-2">
-          <!--teams.length == 0 && !joinTeamShow && !createTeamShow-->
-          <a-modal v-model="welcomeModal" @ok="hideWelcomeModal">
-            <div class="d-flex justify-content-center align-items-center welcome-text mt-2">
-              <h1 class="text-1">Welcome to</h1>
-              <img
-                  src="@/assets/Icons/MT ma large logo.svg"
-                  class="matrimony-logo"
-                  alt="logo"
-                  width="200px"
+  <div>
+    <div>
+      <div v-if="isLoading">Loading</div>
+      <div v-else>
+        <Layout>
+          <div class="mt-2">
+            <!--teams.length == 0 && !joinTeamShow && !createTeamShow-->
+            <a-modal v-model="welcomeModal" @ok="hideWelcomeModal">
+              <div class="d-flex justify-content-center align-items-center welcome-text mt-2">
+                <h1 class="text-1">Welcome to</h1>
+                <img
+                    src="@/assets/Icons/MT ma large logo.svg"
+                    class="matrimony-logo"
+                    alt="logo"
+                    width="200px"
+                />
+                <h1 class="text-2">on-board</h1>
+              </div>
+              <div class="description-text text-center">
+                <p>
+                  Here you can create team, invite family and friends, shortlist
+                  potential <br />
+                  candidates and connect and chat with respective teams.
+                </p>
+              </div>
+              <template slot="footer">
+                <a-button key="back" @click="hideWelcomeModal">
+                  Close
+                </a-button>
+              </template>
+            </a-modal>
+            <Banner v-if="1 !== 1" />
+            <div class="row justify-content-md-center mx-2">
+              <TeamDetailsCard
+                  v-for="(team, teamIndex) in teams"
+                  :key="team.id"
+                  :teamData="team"
+                  :index="teamIndex"
+                  @teamListUpdated="loadTeams"
               />
-              <h1 class="text-2">on-board</h1>
-            </div>
-            <div class="description-text text-center">
-              <p>
-                Here you can create team, invite family and friends, shortlist
-                potential <br />
-                candidates and connect and chat with respective teams.
-              </p>
-            </div>
-            <template slot="footer">
-              <a-button key="back" @click="hideWelcomeModal">
-                Close
-              </a-button>
-            </template>
-          </a-modal>
-          <Banner v-if="1 !== 1" />
-          <div class="row justify-content-md-center mx-2">
-            <TeamDetailsCard
-                v-for="(team, teamIndex) in teams"
-                :key="team.id"
-                :teamData="team"
-                :index="teamIndex"
-                @teamListUpdated="loadTeams"
-            />
-            <JoinCreateTeam
-                v-if="joinCreateTeamShow && teams.length < 5"
-                class="d-flex"
-                style="margin-top: 20px"
-                @joinATeam="
+              <JoinCreateTeam
+                  v-if="joinCreateTeamShow && teams.length < 5"
+                  class="d-flex"
+                  style="margin-top: 20px"
+                  @joinATeam="
 										joinCreateTeamShow = false;
 										joinTeamShow = true;
 									"
-                @createATeam="
+                  @createATeam="
 										joinCreateTeamShow = false;
 										createTeamShow = true;
 									"
-            />
-            <JoinTeam
-                v-if="joinTeamShow"
-                @cancel_button="
+              />
+              <JoinTeam
+                  v-if="joinTeamShow"
+                  @cancel_button="
 										joinCreateTeamShow = true;
 										joinTeamShow = false;
 									"
-                @toggleToTeamPassword="toggleToTeamPassword" />
-            <JoinTeamPassword
-                v-if="joinTeamPassword"
-                :team="joinTeamInfo"
-                @cancel_button="cancelJoinButton()"
-                @loadTeams="loadTeams" />
-            <CreateTeamPage1
-                v-if="createTeamShow"
-                @cancel_button="cancelCreateTeamPage()"
-                @loadTeams="loadTeams"
-            />
+                  @toggleToTeamPassword="toggleToTeamPassword" />
+              <JoinTeamPassword
+                  v-if="joinTeamPassword"
+                  :team="joinTeamInfo"
+                  @cancel_button="cancelJoinButton()"
+                  @loadTeams="loadTeams" />
+              <CreateTeamPage1
+                  v-if="createTeamShow"
+                  @cancel_button="cancelCreateTeamPage()"
+                  @loadTeams="loadTeams"
+              />
+            </div>
           </div>
-				</div>
-			</Layout>
-		</div>
-	</div>
+        </Layout>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

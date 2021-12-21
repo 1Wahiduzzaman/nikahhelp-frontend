@@ -74,7 +74,7 @@
           <tr>
             <td class="td-60">Connection Status</td>
             <td class="text-end">:</td>
-            <td>{{ connection.connection }}</td>
+            <td class="text-capitalize">{{ connection.connection }}</td>
           </tr>
           <tr>
             <td class="td-60">Connected date</td>

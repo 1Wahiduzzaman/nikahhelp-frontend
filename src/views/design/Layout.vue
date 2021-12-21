@@ -30,9 +30,6 @@
                 </a>
               </li>
               <li class="nav-item shrink-none">
-                <!-- <a class="nav-link" aria-current="page" href="/manageteam">
-                            <img width="25" src="@/assets/icon/group-fill-white.svg" alt="img"/>
-                        </a> -->
                 <a-dropdown :trigger="['click']" placement="bottomRight">
                   <a
                     class="nav-link"
@@ -46,7 +43,7 @@
                     />
                   </a>
                   <template v-slot:overlay>
-                    <NotificationPopup :items="teams" :use-for="'team'" />
+                    <NotificationPopup :items="[]" :use-for="'team'" />
                   </template>
                 </a-dropdown>
               </li>
@@ -265,40 +262,22 @@
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import NotificationPopup from "@/components/notification/NotificationPopup";
 export default {
+  name: 'Layout',
   components: {
     NotificationPopup,
     Sidebar,
   },
   created() {
-    this.getTeams();
+
   },
   data() {
     return {
       collapsed: false,
-      teams: []
     };
   },
   methods: {
     responsiveToggle() {
       this.collapsed = false;
-    },
-    async getTeams() {
-      this.loading = true;
-      try {
-        await this.$store
-            .dispatch("getTeams")
-            .then((data) => {
-              this.teams = data.data.data;
-            })
-            .catch((error) => {
-              console.log(error.response);
-            });
-      } catch (error) {
-        this.error = error.message || "Something went wrong";
-        console.log(this.error);
-        // this.$router.push("/manageteam");
-      }
-      this.isLoading = false;
     },
   },
 };

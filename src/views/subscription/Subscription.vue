@@ -646,7 +646,10 @@ export default {
   font-size: 20px;
 }
 .sub-heading {
-  font-size: 14px;
+  font-size: 12px;
+  @media (min-width: 768px) {
+    font-size: 14px;
+  }
 }
 .mobile-block {
   display: none;
