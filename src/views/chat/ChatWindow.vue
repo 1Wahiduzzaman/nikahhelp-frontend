@@ -40,7 +40,8 @@
                               </g>
                             </g>
                           </svg>
-                          <span class="countOfChat">{{ totalUnreadCount }}</span>
+<!--                          <span class="countOfChat">{{ totalUnreadCount }}</span>-->
+                          <span class="countOfChat">{{ chatHistory.length }}</span>
                           <p class="category-name">Recent</p>
                         </a>
                       </div>
@@ -57,7 +58,8 @@
                               </g>
                             </g>
                           </svg>
-                          <span class="countOfChat">{{ teamUnreadCount }}</span>
+<!--                          <span class="countOfChat">{{ teamUnreadCount }}</span>-->
+                          <span class="countOfChat">{{ teamChat.length - 1 }}</span>
                           <p class="category-name">Team</p>
                         </a>
                       </div>
@@ -75,7 +77,8 @@
                               </g>
                             </g>
                           </svg>
-                          <span class="countOfChat">{{ connectedUnreadCount }}</span>
+<!--                          <span class="countOfChat">{{ connectedUnreadCount }}</span>-->
+                          <span class="countOfChat">{{ connectedTeam.length }}</span>
                           <p class="category-name">Connected</p>
                         </a>
                       </div>
@@ -111,13 +114,15 @@
                         class="chat-item"
                         v-for="item in chatHistory"
                         :key="item.team_id"
+                        @click="getIndividualChat(item, item)"
                     >
                       <ChatListItem
                           :item="item"
                           :status="'recent'"
+                          :online_users="online_users"
+                          :teamMembers="teamMembers"
                           action
                           class="w-full pr-3 cursor-pointer"
-                          @click.native="getIndividualChat(item)"
                       />
                     </div>
                   </div>
@@ -126,13 +131,15 @@
                          v-for="item in teamChat"
                          v-if="item.user_id != getAuthUserId"
                          :key="item.team_id"
+                         @click="getIndividualChat(item, item)"
                     >
                       <ChatListItem
                           :item="item"
                           :status="'team'"
+                          :online_users="online_users"
+                          :teamMembers="teamMembers"
                           action
                           class="w-full pr-3 cursor-pointer"
-                          @click.native="getIndividualChat(item)"
                       />
                     </div>
                   </div>
@@ -140,13 +147,15 @@
                     <div class="chat-item"
                          v-for="item in connectedTeam"
                          :key="item.team_id"
+                         @click="getIndividualChat(item, item)"
                     >
                       <ChatListItem
                           :item="item"
                           :status="'connected'"
+                          :online_users="online_users"
+                          :teamMembers="teamMembers"
                           action
                           class="w-full pr-3 cursor-pointer"
-                          @click.native="getConnectedChat(item)"
                       />
                     </div>
                   </div>
@@ -154,7 +163,7 @@
 
               </div>
             </div>
-            <div class="chat-right" :class="{'chat-hide': !conversationTitle}">
+            <div class="chat-right" :class="{'chat-hide': !conversationTitle}" v-if="chats.length > 0">
               <button class="btn btn-primary flex justify-content-center align-items-center my-2 d-md-none"
                       @click="backToTabList()">
                 <a-icon type="caret-left"/>
@@ -164,11 +173,11 @@
                   <div class="top">
                     <div class="item-img">
                       <img src="../../assets/info-img.png" alt="info image">
-                      <span></span>
+<!--                      <span></span>-->
                     </div>
                     <div class="chat-info">
                       <div class="chat-name">{{ conversationTitle }}</div>
-                      <div class="last-chat">Active now (2 members)</div>
+                      <div class="last-chat" v-if="chat_type == 'team'">Active now {{ getTeamOnlineUsers() }}</div>
                     </div>
                   </div>
                 </div>
@@ -225,8 +234,10 @@
                       <div class="left">
                         <div class="message-box">
                           <button class="btn-emoji px-2">&#128528;</button>
-                          <textarea name="message" id="" cols="30" rows="10" placeholder="Enter message..."
-                                    v-model="msg_text" v-on:keyup.enter="sendMsg($event)"></textarea>
+<!--                          <textarea name="message" id="" cols="30" rows="10" placeholder="Enter message..."-->
+<!--                                    v-model="msg_text" v-on:keyup.enter="sendMsg($event)"></textarea>-->
+                          <input type="text" placeholder="Enter message..."
+                                 v-model="msg_text" v-on:keyup.enter="sendMsg($event)">
                           <div class="position-absolute msgbox-right">
                             <div class="flex">
                               <button><img src="../../assets/icon/microphone.png" alt="icon" class="mr-2 microphone" /></button>
@@ -252,6 +263,9 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="chat-right" v-else>
+              <h4 class="fs-16 flex flex-column align-items-center justify-content-center">Select a conversation & start the chat</h4>
             </div>
           </div>
         </div>
@@ -297,10 +311,12 @@ export default {
       chat_type: null,
       chat_id: null,
       chatTab: 'Recent',
+      other_mate_id: null,
       private_chat: {
         to_team_id: null,
         receiver: null
-      }
+      },
+      chatheadopen: null
     }
   },
   components: {
@@ -468,11 +484,43 @@ export default {
     setChatTab(type) {
       this.chatTab = type;
     },
+    ifOnline(item) {
+      if(item.label === 'Group chat') {
+        return this.onlineTeam(item);
+      } else if(item.label == 'Team member' || item.label == 'Private chat') {
+        return this.onlineUser(item);
+      }
+      return false;
+    },
+    getTeamOnlineUsers() {
+      return this.teamMembers.length - 1;
+    },
+    onlineTeam(item) {
+      let team_members = [];
+      if(item && this.teamMembers && this.teamMembers.length > 0) {
+        console.log(this.teamMembers)
+        team_members = this.teamMembers.map(i => {
+          return parseInt(i);
+        });
+      }
+      let online = this.online_users.find(item => team_members.includes(parseInt(item)));
+      if(online) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    onlineUser(item) {
+      if(item && item.other_mate_id && this.online_users.includes(parseInt(item.other_mate_id))) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     // Process team chat response
     processTeamChatResponse(data) {
       // let group = pick(data, ['id', 'name', 'logo']);
       this.activeTeam = data.id;
-      console.log(this.activeTeam)
       let group = data;
       group.message = pick(data.last_group_message, messageKeys);
       group.label = 'Group chat';
@@ -485,6 +533,7 @@ export default {
           state: 'seen',
           name: item.user?.full_name || 'user name',
           logo: item.user?.avatar,
+          other_mate_id: item.user_id,
           message: pick(item.last_message, messageKeys)
         }
       })];
@@ -497,6 +546,7 @@ export default {
           name: item.user?.full_name || 'user name',
           logo: item.user?.avatar,
           user_id: item.user.id,
+          other_mate_id: item.user_id,
           message: pick(item.last_message, messageKeys)
         }
       });
@@ -511,6 +561,7 @@ export default {
           from_team_id: item.from_team_id,
           private_receiver_id: item.receiver,
           private_team_chat_id: item.id,
+          other_mate_id: item.receiver,
           message: pick(item.last_private_message, messageKeys)
         }
       });
@@ -604,7 +655,7 @@ export default {
         console.error(e);
       }
     },
-    async getIndividualChat({message: {chat_id, team_id}, name, user_id, from_team_id, to_team_id, private_receiver_id, private_team_chat_id}) {
+    async getIndividualChat({message: {chat_id, team_id}, name, user_id, from_team_id, to_team_id, private_receiver_id, private_team_chat_id}, item) {
       const payload = {
         type: chat_id ? 'single' : 'team',
         chat_id,
@@ -623,14 +674,17 @@ export default {
       if(this.one_to_one_user) {
         this.chat_type = 'one-to-one';
         this.private_chat = {};
+        this.other_mate_id = user_id;
       } else {
         if(chat_id) {
           this.chat_type = 'one-to-one';
           this.chat_id = chat_id;
           this.private_chat = {};
+          this.other_mate_id = user_id;
         } else {
           if(private_receiver_id) {
             this.chat_type = 'private';
+            this.other_mate_id = private_receiver_id;
             this.private_chat = {
               to_team_id: to_team_id,
               receiver: private_receiver_id,
@@ -644,6 +698,7 @@ export default {
           }
         }
       }
+      this.chatheadopen = item;
       this.chats = await this.loadIndividualChatHistory(payload);
       this.chats = this.chats.reverse();
 
@@ -705,7 +760,7 @@ export default {
     },
     async sendMsg(e) {
       console.log(e);
-      if (this.msg_text) {
+      if (this.msg_text && this.msg_text.length > 0) {
         if (this.inConnectedChat) {
           await this.sendConnectedTeamMessage();
         } else {
@@ -736,7 +791,12 @@ export default {
         payload.target_opened_chat_id = this.chat_id;
         url = 'send-message';
       } else {
-        payload.receivers = this.teamMembers;
+        let teamMembers = this.teamMembers;
+        let selfIndex = this.teamMembers.findIndex(user => parseInt(user) == parseInt(loggedUser.id));
+        if(selfIndex >= 0) {
+          teamMembers.splice(selfIndex, 1);
+        }
+        payload.receivers = teamMembers;
         payload.target_opened_chat = this.activeTeam;
         payload.target_opened_chat_type = 'team';
         url = 'send-message-to-team';
@@ -746,23 +806,40 @@ export default {
         payload.sender = loggedUser;
         payload.chat_id = this.chat_id;
         payload.to = this.one_to_one_user.toString();
-        this.chats.unshift(payload);
+        // this.chats.unshift(payload);
         this.$socket.emit('send_message', payload);
+
+        this.chatheadopen.message.body = this.msg_text;
+        this.chatheadopen.message.created_at = new Date();
+        this.chatheadopen.message.senderId = loggedUser.id.toString();
+        this.chatheadopen.message.senderInfo = loggedUser;
+        this.chatheadopen.message.sender = loggedUser;
       } else {
         // this.chats.unshift(payload);
+        this.chatheadopen.message.body = this.msg_text;
+        this.chatheadopen.message.created_at = new Date();
+        this.chatheadopen.message.senderId = loggedUser.id.toString();
+        this.chatheadopen.message.senderInfo = loggedUser;
+        this.chatheadopen.message.sender = loggedUser;
         this.$socket.emit('send_message_in_group', payload);
       }
+      this.chats.unshift(payload);
       payload.sender = loggedUser.id.toString();
       this.msg_text = '';
       await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
     },
     async sendConnectedTeamMessage() {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let teamMembers = this.teamMembers;
+      let selfIndex = this.teamMembers.findIndex(user => parseInt(user) == parseInt(loggedUser.id));
+      if(selfIndex >= 0) {
+        teamMembers.splice(selfIndex, 1);
+      }
       let payload = {
         to_team_id: 1,
         from_team_id: this.activeTeam,
         sender: loggedUser.id,
-        receivers: this.teamMembers,
+        receivers: teamMembers,
         message: this.msg_text,
         body: this.msg_text,
         created_at: new Date(),
@@ -772,6 +849,7 @@ export default {
       };
       payload.target_opened_chat = payload.to_team_id;
       this.$socket.emit('send_message_in_group', payload);
+      teamMembers.splice(selfIndex, 1);
       this.msg_text = null;
       await ApiService.post(`/v1/send-message-team-to-team`, payload).then(res => res.data);
     },
@@ -790,6 +868,10 @@ export default {
       }
       payload.sender = loggedUser.id.toString();
       this.chats.unshift(payload);
+      this.chatheadopen.message.body = this.msg_text;
+      this.chatheadopen.message.created_at = new Date();
+      this.chatheadopen.message.senderId = loggedUser.id.toString();
+      this.chatheadopen.message.senderInfo = loggedUser;
       this.$socket.emit('send_message', payload);
       payload.from_team_id = this.activeTeam;
       payload.to_team_id = this.private_chat.to_team_id;
@@ -1776,6 +1858,7 @@ export default {
 
           &.me {
             flex-direction: row-reverse;
+            margin-right: 10px;
 
             .item-img {
               margin-right: 0;
@@ -1823,7 +1906,7 @@ export default {
               position: relative;
               width: 100%;
 
-              textarea {
+              input {
                 height: 36px;
                 width: 100%;
                 border: 0;
@@ -1928,6 +2011,10 @@ export default {
 .microphone {
   width: 15px;
   height: 15px;
+}
+.chat-item:hover {
+  background: #efefef;
+  border-radius: 20px;
 }
 
 // css custom scrollbar

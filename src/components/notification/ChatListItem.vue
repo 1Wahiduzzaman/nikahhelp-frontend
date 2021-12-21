@@ -4,7 +4,7 @@
       <div class="avatar-area">
         <img class="avatar" width="45" height="45"
              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="">
-        <span class="online-icon-avatar"></span>
+        <span :class="{'online-icon-avatar': ifOnline}"></span>
       </div>
       <div class="content">
         <span class="label">{{ item.label }}</span>
@@ -44,6 +44,23 @@ export default {
     },
     status: {
       type: String
+    },
+    online_users: {
+      type: Array
+    },
+    teamMembers: {
+      type: Array,
+      required: false
+    }
+  },
+  computed: {
+    ifOnline() {
+      if(this.item.label === 'Group chat') {
+        return this.onlineTeam();
+      } else if(this.item.label == 'Team member' || this.item.label == 'Private chat') {
+        return this.onlineUser();
+      }
+      return false;
     }
   },
   methods: {
@@ -53,6 +70,30 @@ export default {
       }
       return '';
     },
+    onlineTeam() {
+      let team_members = [];
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      if(this.item && this.teamMembers && this.teamMembers.length > 0) {
+        team_members = this.teamMembers.map(i => {
+          if(loggedUser.id != i) {
+            return parseInt(i);
+          }
+        });
+      }
+      let online = this.online_users.find(item => team_members.includes(parseInt(item)));
+      if(online) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    onlineUser() {
+      if(this.item && this.item.other_mate_id && this.online_users.includes(parseInt(this.item.other_mate_id))) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 }
 </script>
