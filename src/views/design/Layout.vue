@@ -30,9 +30,6 @@
                 </a>
               </li>
               <li class="nav-item shrink-none">
-                <!-- <a class="nav-link" aria-current="page" href="/manageteam">
-                            <img width="25" src="@/assets/icon/group-fill-white.svg" alt="img"/>
-                        </a> -->
                 <a-dropdown :trigger="['click']" placement="bottomRight">
                   <a
                     class="nav-link"
@@ -46,7 +43,7 @@
                     />
                   </a>
                   <template v-slot:overlay>
-                    <NotificationPopup :items="[]" use-for="team" />
+                    <NotificationPopup :items="[]" :use-for="'team'" />
                   </template>
                 </a-dropdown>
               </li>
@@ -67,7 +64,7 @@
                     />
                   </a>
                   <template v-slot:overlay>
-                    <NotificationPopup :items="[]" use-for="shortlist" />
+                    <NotificationPopup :items="[]" :use-for="'shortlist'" />
                   </template>
                 </a-dropdown>
               </li>
@@ -92,7 +89,7 @@
                     </a-badge>
                   </a>
                   <template v-slot:overlay>
-                    <NotificationPopup :items="[]" use-for="notification" />
+                    <NotificationPopup :items="[]" :use-for="'notification'" />
                   </template>
                 </a-dropdown>
               </li>
@@ -112,7 +109,7 @@
                     </a-badge>
                   </a>
                   <template v-slot:overlay>
-                    <NotificationPopup count="29" :items="[]" use-for="chat" />
+                    <NotificationPopup count="29" :items="[]" :use-for="'chat'" />
                   </template>
                 </a-dropdown>
               </li>
@@ -265,9 +262,13 @@
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import NotificationPopup from "@/components/notification/NotificationPopup";
 export default {
+  name: 'Layout',
   components: {
     NotificationPopup,
     Sidebar,
+  },
+  created() {
+
   },
   data() {
     return {

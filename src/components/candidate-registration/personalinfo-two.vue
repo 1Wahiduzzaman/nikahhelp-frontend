@@ -116,7 +116,7 @@
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
-              <a-form-model-item ref="dob" prop="dob">
+              <a-form-model-item ref="dob" prop="dob" class="dob-select">
                 <DropdownDatePicker
                     id="dob"
                     displayFormat="dmy"
@@ -587,7 +587,7 @@
             shape="round"
             type="primary"
             style="float: right"
-            class="mt-3"
+            class="mt-5"
             @click="handleSubmitFormOne"
           >
             Save & Continue
@@ -1007,7 +1007,7 @@
             shape="round"
             type="primary"
             style="float: right"
-            class="mt-3"
+            class="mt-5"
             @click="handleSubmitFormTwo"
           >
             Save & Continue
@@ -1594,7 +1594,7 @@
             shape="round"
             type="primary"
             style="float: right"
-            class="mt-3"
+            class="mt-5"
             @click="handleSubmitFormThree"
           >
             Save & Continue
@@ -2507,7 +2507,7 @@
             shape="round"
             type="primary"
             style="float: right"
-            class="mt-3"
+            class="mt-5"
             @click="handleSubmitFormFour"
           >
             Save & Continue

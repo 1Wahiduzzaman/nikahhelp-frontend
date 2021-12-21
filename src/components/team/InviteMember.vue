@@ -6,27 +6,29 @@
         <h4 class="fs-14 text-white invite-txt">Send team invitation</h4>
       </div>
       <div class="px-4 mt-2 position-relative">
-        <a-input ref="userNameInput" placeholder="Search email or user ID" v-model="user_email">
+        <a-input ref="userNameInput" placeholder="Search email or user ID" v-model="user_email" @keyup="searchMember()">
           <a-icon slot="suffix" type="info-circle" style="color: rgba(0,0,0,.45)" />
         </a-input>
         <span class="text-white fs-12 fw-500 ml-2">Invited/Suggested/Searched user</span>
       </div>
-      <div class="suggestion-box mt-4 mx-4 px-2">
-        <div class="user d-flex position-relative" v-for="(item, index) in 30" :key="index" :class="{'mt-2': index > 0}">
+      <div class="suggestion-box mt-4 mx-4 px-2" :class="{'details-suggestion-card': from === 'details-card'}">
+        <div class="user d-flex position-relative" v-if="userObj && userObj.user">
           <img src="https://picsum.photos/200" alt="avatar" class="user-avatar">
           <div class="d-flex justify-content-between ml-2">
             <div class="short-info">
-              <h4 class="fs-14 text-white fw-700">Selina Parvez</h4>
-              <h4 class="fs-12 text-white fw-500 candidate-type">Profile type: Candidate</h4>
+              <h4 class="fs-14 text-white fw-700">{{ userObj.user && userObj.user.full_name ? userObj.user.full_name : 'N/A' }}</h4>
+              <h4 class="fs-12 text-white fw-500 candidate-type">Profile type: {{ userObj.user ? profileType[userObj.user.account_type] : 'N/A' }}</h4>
             </div>
-            <button class="btn btn-success position-absolute" @click="inviteMember(item)">Invite</button>
+            <button class="btn btn-sent position-absolute text-white cursor-default" v-if="userObj.invitation_status == 2">Joined</button>
+            <button class="btn btn-sent btn-outline-secondary position-absolute text-white cursor-default" v-if="userObj.invitation_status == 1">Sent</button>
+            <button class="btn btn-success position-absolute" v-if="userObj.invitation_status == 0" @click="inviteMember()">Invite</button>
           </div>
         </div>
       </div>
       <div class="link-box px-4 position-absolute w-full">
         <div class="w-full mt-2">
-          <input type="text" class="form-control invite-link text-white" id="copyInput" :value="invitationObject.invitation_link" disabled />
-          <button class="copy-button position-absolute" @click="copyToken">Copy</button>
+          <input type="text" class="form-control invite-link text-white fs-12 py-5" id="copyInput" :value="invitationObject.visible_invitation_link" disabled />
+          <button class="copy-button position-absolute px-2" @click="copyToken">Copy</button>
         </div>
         <p class="fs-10 text-white mt-2">Send this link through email or any messaging platform <br> Only one member can use this link once</p>
       </div>
@@ -41,30 +43,28 @@ export default {
   props: ['team', 'invitationObject', 'from'],
   data() {
     return {
-      user_email: ''
-    }
-  },
-  watch: {
-    user_email: function (val) {
-      console.log(val);
-      // ApiService.get('/v1/team/invitations', {
-      //   email: val
-      // }).then(res => {
-      //   console.log(res.data);
-      // }).catch(e => {
-      //   console.log(e);
-      // });
+      user_email: '',
+      profileType: ['N/A', 'Candidate', 'Match Maker', 'Admin'],
+      userObj: {}
     }
   },
   methods: {
-    inviteMember(id) {
-      if(this.from === 'details-card') {
-        id = 'mahmud@gmail.com';
-        this.$emit("executeInviteMember", id);
-      } else {
-        id = 'mahmud@gmail.com';
-        this.$emit('addMember', id);
-        this.$emit('toggleMemberbox');
+    async searchMember() {
+      await ApiService.post(`/v1/user-info/`, {
+        email: this.user_email,
+        team_id: this.team.id
+      }).then(response => {
+        this.userObj = response.data.data;
+      });
+    },
+    inviteMember() {
+      if(this.userObj) {
+        if(this.from === 'details-card') {
+          this.$emit("executeInviteMember", this.userObj.user.email);
+        } else {
+          this.$emit('addMemberInfo', this.userObj.user.email);
+          this.$emit('toggleMemberbox');
+        }
       }
     },
     copyToken() {
@@ -81,14 +81,40 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+.cursor-default {
+  cursor: default !important;
+}
 .add-member-box {
   height: 500px;
-  width: 385px;
-  top: -71px;
+  width: 100%;
+  top: 0;
   left: 0;
-  margin-left: -8px;
   border-radius: 10px;
   background: $bg-primary;
+  //@media (min-width: 360px) {
+  //  width: 325px;
+  //}
+  //@media (min-width: 1920px) {
+  //  width: 411px;
+  //}
+  //@media (min-width: 576px) {
+  //  width: 507px;
+  //}
+  //@media (min-width: 768px) {
+  //  width: 698px;
+  //}
+  //@media (min-width: 992px) {
+  //  width: 444px;
+  //}
+  //@media (min-width: 1024px) {
+  //  width: 460px;
+  //}
+  //@media (min-width: 1200px) {
+  //  width: 258px;
+  //}
+  //@media (min-width: 1920px) {
+  //  width: 414px;
+  //}
   .member-box {
     .cross-button-box {
       width: 30px;
@@ -102,8 +128,7 @@ export default {
         margin-top: 2.5rem;
       }
     }
-    .suggestion-box {
-      height: 332px;
+    .suggestion-box, .details-suggestion-card {
       overflow-y: auto;
       padding-bottom: 80px;
       .user {
@@ -118,7 +143,7 @@ export default {
               margin-top: -8px;
             }
           }
-          .btn-success {
+          .btn-success, .btn-sent {
             border-radius: 20px;
             right: 0;
           }
@@ -136,8 +161,8 @@ export default {
           border-radius: 4px;
         }
         .copy-button {
-          top: 12px;
-          right: 30px;
+          top: 14px;
+          right: 22px;
           height: 30px;
           border-radius: 4px;
           background: $bg-white;
@@ -147,12 +172,18 @@ export default {
   }
 }
 .from-data-card {
-  width: 92%;
-  top: 20px;
+  width: 93%;
+  top: 32px;
   left: -1px;
   height: 500px;
   border-radius: 10px;
   margin-left: 16px;
   background: $bg-primary;
+}
+.details-suggestion-card {
+  height: 350px;
+}
+.suggestion-box {
+  height: 338px;
 }
 </style>

@@ -19,7 +19,7 @@
 				<!-- Subscription details -->
 				<div class="subscription-details container-fluid mt-4">
 					<div class="row" :class="{'mobile-section': activeStep > 1}">
-						<div class="col-12 col-md-4 col-xl-3" :class="{'mobile-block': activeStep !== 1}">
+						<div class="col-12 col-md-4 col-xl-4" :class="{'mobile-block': activeStep !== 1}">
 							<!-- Card 1 -->
 							<div
 								class="custom-card card-1 shadow-default background-design-cardfooter br-10 position-relative height-1"
@@ -27,8 +27,8 @@
 								<div class="div-1 background-design text-center px-2 pb-2 br-top-10">
 									<h3 class="text-white">Choose Plan</h3>
 								</div>
-								<div class="div-2 mt-4 position-relative">
-									<div class="d-flex cursor-pointer py-2 px-4" :class="{'bg-brand-gradient': isSelected1}">
+								<div class="div-2 position-relative pt-4 bg-white">
+									<div class="d-flex cursor-pointer py-2 px-4 item-duration" :class="{'bg-brand-gradient': isSelected1}">
                     <a-icon type="check" class="text-transparent fs-24 icon-check" :class="{'text-white': isSelected1 }" />
                     <h4
                         class="duration"
@@ -38,7 +38,7 @@
                       1 Month
                     </h4>
                   </div>
-									<div class="d-flex cursor-pointer py-2 px-4" :class="{'bg-brand-gradient': isSelected2}">
+									<div class="d-flex cursor-pointer py-3 px-4 item-duration" :class="{'bg-brand-gradient': isSelected2}">
                     <a-icon type="check" class="text-transparent fs-24 icon-check" :class="{'text-white': isSelected2 }" />
                     <h4
                         class="duration"
@@ -48,7 +48,7 @@
                       3 month
                     </h4>
                   </div>
-									<div class="d-flex cursor-pointer py-2 px-4" :class="{'bg-brand-gradient': isSelected3}">
+									<div class="d-flex cursor-pointer py-3 px-4 item-duration" :class="{'bg-brand-gradient': isSelected3}">
                     <a-icon type="check" class="text-transparent fs-24 icon-check" :class="{'text-white': isSelected3 }" />
                     <h4
                         class="duration"
@@ -58,7 +58,7 @@
                       6 month
                     </h4>
                   </div>
-									<div class="d-flex cursor-pointer py-2 px-4 bg-info" :class="{'bg-brand-gradient': isSelected4}">
+									<div class="d-flex cursor-pointer py-3 px-4 bg-info free-duration" :class="{'bg-brand-gradient': isSelected4}">
                     <a-icon type="check" class="text-transparent fs-24 icon-check" :class="{'text-white': isSelected4 }" />
                     <h4
                         class="duration"
@@ -79,7 +79,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-12 col-md-4 col-xl-6 position-relative" :class="{'mobile-block': activeStep !== 2}">
+						<div class="col-12 col-md-4 col-xl-4 position-relative" :class="{'mobile-block': activeStep !== 2}">
 							<!-- Card 2 -->
 							<div
 								class="custom-card card-2 shadow-default background-design-middle height-1"
@@ -114,7 +114,7 @@
                 </div>
               </div>
 						</div>
-						<div class="col-12 col-md-4 col-xl-3" :class="{'mobile-block': activeStep !== 3}">
+						<div class="col-12 col-md-4 col-xl-4" :class="{'mobile-block': activeStep !== 3}">
 							<!-- Card 3 -->
 							<div
 								class="custom-card card-3 shadow-default background-design-rightcard height-2"
@@ -124,11 +124,11 @@
 								<div class="form-group px-4">
 									<select class="w-100 custom-select" v-model="teamSelected">
 										<option
-											v-for="team in teams"
+											v-for="(team, teamIndex) in teams"
 											:value="team"
 											:key="team.id"
 										>
-											{{ team.name }}
+											Team {{ teamIndex + 1 }}
 										</option>
 									</select>
 								</div>
@@ -154,7 +154,7 @@
                     <li class="flex-between-start">
                       <span class="flex-45 px-2">Team Status </span>
                       <span class="flex-55 px-2" v-if="teamSelected">
-											:<span class="ml-2">Active, Valid, Verified</span></span
+											:<span class="ml-2">{{ teamSelected.status == 1 ? 'Active' : 'Inactive' }}, {{ teamSelected.member_count > 1 ? 'Valid' : 'Invalid' }}, Verified</span></span
                       >
                     </li>
                     <li class="flex-between-start">
@@ -316,6 +316,9 @@ export default {
 			await this.$store.dispatch("getTeams");
 			this.teams = this.$store.getters["userTeamList"];
 			console.log(this.teams);
+      if(this.$route.params.id == null && this.teams.length > 0) {
+        this.teamSelected = this.teams[0];
+      }
 		},
 		async getSelectedTeam() {
 			if (this.$route.params.id == null) {
@@ -553,7 +556,7 @@ export default {
 	padding-top: 10px;
 }
 .background-design-cardfooter {
-	background-image: linear-gradient(to right, #8859a7, #6159a7);
+	//background-image: linear-gradient(to right, #8859a7, #6159a7);
 	margin-top: 18px;
 }
 
@@ -643,7 +646,10 @@ export default {
   font-size: 20px;
 }
 .sub-heading {
-  font-size: 14px;
+  font-size: 12px;
+  @media (min-width: 768px) {
+    font-size: 14px;
+  }
 }
 .mobile-block {
   display: none;
@@ -674,6 +680,18 @@ export default {
 }
 .mobile-section {
   margin-top: 50px;
+}
+.item-duration:hover {
+  background: $bg-primary;
+  .duration {
+    color: #FFFFFF;
+  }
+}
+.free-duration:hover {
+  background: $bg-brand !important;
+  .duration {
+    color: #FFFFFF;
+  }
 }
 @media (min-width: 768px) {
  .subscription-details {

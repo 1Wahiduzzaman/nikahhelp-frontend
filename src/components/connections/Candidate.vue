@@ -2,32 +2,26 @@
 	<div class="shortlist-wrapper">
 		<div class="top" :class="classObject">
 			<div class="shortlist-by">
-<!--				Team: {{ connection.team_name }} <span></span>-->
-				Team: My team <span></span>
+				Team: {{ connection.team_name }} <span></span>
 			</div>
 		</div>
 
 		<div class="bottom">
 			<div class="user-img">
-<!--        :src="-->
-<!--        connection.candidate_image ? connection.candidate_image : avatarSrc-->
-<!--        "-->
 				<img
-					src="https://picsum.photos/200"
+            :src="connection.candidateInfo && connection.candidateInfo.candidate_image ? connection.candidateInfo.candidate_image : avatarSrc"
 					alt="image"
 					class="avatar-img"
 				/>
 				<div class="name-address">
-					<p>
-<!--						{{ connection.candidateInfo.candidate_fname }}-->
-<!--						{{ connection.candidateInfo.candidate_lname }}-->
-            Candidate
+					<p v-if="connection.candidateInfo">
+						{{ connection.candidateInfo ? connection.candidateInfo.candidate_fname : '' }}
+						{{ connection.candidateInfo ? connection.candidateInfo.candidate_lname : '' }}
 					</p>
-					<p class="address">
-<!--						{{ connection.candidateInfo.candidate_location }},-->
-<!--						{{ getAge(connection.candidateInfo.candidate_age) }} Years,-->
-<!--						{{ connection.candidateInfo.candidate_religion }}-->
-            London, UK, 27 Yrs
+					<p class="address" v-if="connection.candidateInfo">
+						{{ connection.candidateInfo ? connection.candidateInfo.candidate_location : 'N/A' }},
+						{{ connection.candidateInfo ? getAge(connection.candidateInfo.candidate_age) : 'Not found' }} Years,
+						{{ connection.candidateInfo ? connection.candidateInfo.candidate_religion : 'N/A' }}
 					</p>
 				</div>
 			</div>
@@ -119,7 +113,7 @@
 						alt="report icon"
 						height="13"
 					/>
-					Message
+					Chat
 				</button>
 				<button
 					v-else

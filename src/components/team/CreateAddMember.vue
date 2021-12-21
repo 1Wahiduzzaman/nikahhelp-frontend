@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4 box position-relative">
+  <div class="mt-4 box">
     <div class="px-4">
       <h4 class="fs-14">Team ID: #{{ team.team_id }}</h4>
       <div class="d-flex align-items-center">
@@ -12,8 +12,9 @@
           placeholder="Role"
           class="fs-10 w-25"
           v-model="invitationObject.role"
+          :disabled="invitationObject.invitation_link"
       >
-         <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>
+<!--         <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>-->
         <a-select-option value="Admin"> Admin </a-select-option>
         <a-select-option value="Member"> Member </a-select-option>
       </a-select>
@@ -22,8 +23,9 @@
           placeholder="Add as a"
           class="ml-2 fs-10 w-25"
           v-model="invitationObject.add_as_a"
+          :disabled="invitationObject.invitation_link"
       >
-        <a-select-option value="Candidate"> Candidate </a-select-option>
+<!--        <a-select-option value="Candidate"> Candidate </a-select-option>-->
         <a-select-option value="Representative"> Representative </a-select-option>
         <a-select-option value="Match Maker"> Match Maker </a-select-option>
       </a-select>
@@ -32,21 +34,23 @@
           placeholder="Relationship"
           class="ml-2 fs-10 w-25"
           v-model="invitationObject.relationship"
+          :disabled="invitationObject.invitation_link"
       >
         <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
       </a-select>
 
-      <a-button v-if="invitedUsers.length <= 0"
+      <a-button v-if="!clickedInviteNow"
                 type="primary"
                 class="ml-2 fs-10 br-20"
                 @click="goNextStep()"
                 :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship">Invite now</a-button>
-      <a-dropdown class="right-br-20 bg-primary text-white w-25 fs-10 dropdown-button" v-if="invitedUsers.length > 0">
+
+      <a-dropdown class="right-br-20 bg-primary text-white w-20 fs-10 dropdown-button" v-if="clickedInviteNow">
         <a-menu slot="overlay">
-          <a-menu-item key="1">Invitation </a-menu-item>
-          <a-menu-item key="2" @click="removeInvite()">Remove </a-menu-item>
+          <a-menu-item key="1" @click="toggleMemberbox()">Invite Now </a-menu-item>
+          <a-menu-item key="2" @click="deleteInvitation()">Remove </a-menu-item>
         </a-menu>
-        <a-button class="ml-1 fs-10"> Invite Now <a-icon type="down" /> </a-button>
+        <a-button class="ml-1 fs-10"> Invite Now</a-button>
       </a-dropdown>
     </div>
     <div class="position">
@@ -54,14 +58,14 @@
         <a-button class="back-button button float-left text-white" v-on:click="$emit('cancel_button')">Back</a-button>
       </div>
       <div class="position-absolute footer-conf-btn">
-        <a-button class="confirm-button button float-right bg-primary text-white" @click="addMember()" :disabled="invitedUsers.length <= 0" :title="invitedUsers.length <= 0 ? 'Please choose user' : ''">Save & Continue</a-button>
+        <a-button class="confirm-button button float-right bg-primary text-white" @click="saveAndContinue()" :loading="loading">Save & Continue</a-button>
       </div>
     </div>
     <InviteMember :team="team"
                   :invitationObject="invitationObject"
                   v-if="showMemberBox"
                   @toggleMemberbox="toggleMemberbox"
-                  @addMember="addInvitedMember" />
+                  @addMemberInfo="addMemberInfo" />
   </div>
 </template>
 
@@ -77,72 +81,121 @@ export default {
       showMemberBox: false,
       relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-paw'],
       invitationObject: {
-        role: "Owner+Admin",
-        add_as_a: "Candidate",
+        role: "Admin",
+        add_as_a: "Representative",
         relationship: "Father",
-        invitation_link: "",
+        invitation_link: null,
       },
-      invitedUsers: []
+      invitedUsers: [],
+      invitedObj: null,
+      clickedInviteNow: false,
+      memberEmail: null,
+      loading: false
     }
   },
   methods: {
     goNextStep() {
       // this.$emit("goNext", 4);
-      this.showMemberBox = !this.showMemberBox;
+      this.createInvitaionLink();
     },
     toggleMemberbox() {
       this.showMemberBox = !this.showMemberBox;
     },
-    async addMember() {
-      let payload = {
-        team_id: this.team.team_id,
-        members: this.invitedUsers
-      };
+    addMemberInfo(id) {
+      this.memberEmail = id;
+    },
+    async saveAndContinue() {
+      if(this.invitedObj && this.invitedObj.invitation_id && this.memberEmail) {
+        this.loading = true;
+        let payload = {
+          invitation_id: this.invitedObj.invitation_id,
+          email: this.memberEmail
+        };
 
-      await ApiService.post('/v1/invite-team-members', payload).then(res => {
-        if(res && res.data) {
-          this.$emit("goNext", 3);
-        }
+        await ApiService.post('/v1/invite-team-member-update', payload).then(res => {
+          this.loading = false;
+          if(res && res.data) {
+            this.$emit("goNext", 3);
+            this.$emit("loadTeams");
+          }
+        });
+      } else {
+        this.$emit("goNext", 3);
+        this.$emit("loadTeams");
+      }
+    },
+    async deleteInvitation() {
+      let self = this;
+      this.modal = this.$confirm({
+        title: "Delete Confirmation",
+        content: `Are you sure you want to remove this invitation from ${self.team.name} team?`,
+        okText: "Yes",
+        okType: "danger",
+        cancelText: "No",
+        confirmLoading: true,
+        async onOk() {
+          await ApiService.delete(`/v1/member-invitation-delete?id=${self.invitedObj.invitation_id}`)
+              .then((data) => {
+                console.log(data);
+                if (data.data.status != "FAIL") {
+                  self.$message.success("Invitation removed from " + self.team.name);
+                  self.invitedMembers = [];
+                  self.invitationObject.invitation_link = null;
+                  self.invitedObj = {};
+                  self.clickedInviteNow = false;
+                } else {
+                  self.$message.error("Something went wrong");
+                  self.$emit("teamListUpdated");
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+                self.$message.error("Something went wrong");
+              });
+        },
       });
     },
-    addInvitedMember(id) {
-      let data = {
-        role: this.invitationObject.role,
-        add_as_a: this.invitationObject.add_as_a,
-        relationship: this.invitationObject.relationship,
-        invitation_link: this.invitationObject.invitation_link,
-        email: id
-      };
-      if(this.invitedUsers.length > 0) {
-        this.invitedUsers[0] = data;
-      } else {
-        this.invitedUsers.push(data);
-      }
-    },
-    removeInvite() {
-      this.invitedUsers = [];
-    }
-  },
-  mounted() {
-    // amaizingly, for some reason i need to refer this to
-    // a other variable so my iffe function can access this
-    var self = this;
-    (function createShotLink() {
-      // this is the method i am using to create a short link
-      function makeid(length) {
-        var result = [];
-        var characters =
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        var charactersLength = characters.length;
-        for (var i = 0; i < length; i++) {
-          result.push(
-              characters.charAt(Math.floor(Math.random() * charactersLength))
-          );
+    createInvitaionLink() {
+      // amaizingly, for some reason i need to refer this to
+      // a other variable so my iffe function can access this
+      var self = this;
+      (function createShotLink() {
+        // this is the method i am using to create a short link
+        function makeid(length) {
+          var result = [];
+          var characters =
+              "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+          var charactersLength = characters.length;
+          for (var i = 0; i < length; i++) {
+            result.push(
+                characters.charAt(Math.floor(Math.random() * charactersLength))
+            );
+          }
+          return result.join("");
         }
-        return result.join("");
-      }
-      self.invitationObject.invitation_link = makeid(10);
-    })();
+        self.invitationObject.invitation_link = makeid(10);
+        self.invitationObject.visible_invitation_link = window.location.host + '/manageteam?invitation=' + self.invitationObject.invitation_link;
+
+        let data = {
+          role: self.invitationObject.role,
+          add_as_a: self.invitationObject.add_as_a,
+          relationship: self.invitationObject.relationship,
+          invitation_link: self.invitationObject.invitation_link,
+          email: null
+        };
+        self.invitedUsers.push(data);
+
+        let payload = {
+          team_id: self.team.team_id,
+          members: self.invitedUsers
+        };
+        ApiService.post('/v1/invite-team-members', payload).then(res => {
+          self.clickedInviteNow = true;
+          self.showMemberBox = !self.showMemberBox;
+          self.invitedObj = res.data.data[0];
+        });
+      })();
+    },
   },
 }
 </script>
@@ -154,12 +207,15 @@ export default {
 .br-20 {
   border-radius: 20px;
 }
+.w-20 {
+  width: 20%;
+}
 .right-br-20 {
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }
 .dropdown-button {
-  padding: 0 8px !important;
+  padding: 0 4px !important;
 }
 .w-25 {
   width: 25%;

@@ -235,6 +235,7 @@
                          :teamData="teamData"
                          :profileActive="profileActive"
                          @toggleProfileCard="toggleProfileCard"
+                         @deleteTeamMember="deleteTeamMember"
                          @deleteInvitation="deleteInvitation"
                          @teamListUpdated="teamListUpdated" />
 			<!-- Member stats -->
@@ -359,13 +360,15 @@
 
 				<!-- Member Table -->
 				<div class="member-info-table">
-          <table class="table w-full table-borderless" :class="{'mb-3': invitationObject.visible}">
+          <table class="table w-full table-borderless pb-1" :class="{'mb-3': invitationObject.visible}">
             <tr v-for="(member, mIndex) in sortCandidateFirst(teamData.team_members)" :key="mIndex" class="admin-member">
-              <td>
+              <td class="w-5p">
                 <div class="name-short" :class="{'name-short-single': member.role.toString() != 'Owner+Admin' }"><span v-if="member.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(member.role) }}</div>
               </td>
               <td>
-                <div class="name-full cursor-pointer" @click="toggleActiveProfile(member)">{{ member.user.full_name }}</div>
+                <div class="name-full cursor-pointer" @click="toggleActiveProfile(member, 'member')">
+                  <span class="team-member-name">{{ member.user.full_name ? member.user.full_name.substring(0, 15) : 'N/A' }}</span>
+                </div>
               </td>
               <td>
                 <div class="title">
@@ -373,30 +376,34 @@
                 </div>
               </td>
               <td><div class="status-box bg-success text-white">&#10003;</div></td>
-              <td>
+              <td class="d-mb-none d-dk-block">
                 <div class="relation">{{ member.relationship }}</div>
               </td>
-              <td><div class="minus-icon cursor-pointer" @click="deleteTeamMember(member.user_id, member.user.full_name)">-</div></td>
+<!--              <td><div class="minus-icon cursor-pointer" @click="deleteTeamMember(member.user_id, member.user.full_name)">-</div></td>-->
             </tr>
             <tr v-for="item in teamData.team_invited_members" :key="item.id" class="admin-member">
-              <td>
+              <td class="w-5p">
                 <div class="name-short" :class="{'name-short-single': item.role.toString() != 'Owner+Admin' }"><span v-if="item.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(item.role) }}</div>
               </td>
-              <td><div class="name-full cursor-pointer" @click="toggleActiveProfile(item)">{{ item.user ? item.user.full_name : 'Not joined yet' }}</div></td>
+              <td>
+                <div class="name-full cursor-pointer" @click="toggleActiveProfile(item, 'invitation')">
+                  <span class="team-member-name">{{ item.user ? item.user.full_name.substring(0, 15) : 'Not joined yet' }}</span>
+                </div>
+              </td>
               <td>
                 <div class="title">
                   <span class="badge badge-secondary fs-10" :title="accountTypeReducer(item.user_type)">{{ accountTypeReducer(item.user_type).substr(0, 3) }} {{ item.user_type ? '.' : '' }}</span>
                 </div>
               </td>
               <td><div class="status-box bg-brand text-white">&#10006;</div></td>
-              <td><div class="relation">{{ item.relationship }}</div></td>
-              <td><div class="minus-icon cursor-pointer" @click="deleteInvitation(item.id)">-</div></td>
+              <td class="d-mb-none d-dk-block"><div class="relation">{{ item.relationship }}</div></td>
+<!--              <td><div class="minus-icon cursor-pointer" @click="deleteInvitation(item.id)">-</div></td>-->
             </tr>
           </table>
           <div class="d-flex member-add-box" v-if="invitationObject.visible">
             <a-select
                 placeholder="Role"
-                class="fs-10 w-25"
+                class="fs-10 w-25 member-add"
                 v-model="invitationObject.role"
             >
 <!--              <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>-->
@@ -406,7 +413,7 @@
 
             <a-select
                 placeholder="Add as a"
-                class="ml-1 fs-10 w-25"
+                class="ml-1 fs-10 w-25 member-add"
                 v-model="invitationObject.add_as_a"
             >
               <a-select-option value="Candidate" :disabled="ifHasCandidate()"> Candidate </a-select-option>
@@ -416,25 +423,26 @@
 
             <a-select
                 placeholder="Relationship"
-                class="ml-1 fs-10 w-25"
+                class="ml-1 fs-10 w-25 member-add"
                 v-model="invitationObject.relationship"
             >
               <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
             </a-select>
 
             <a-button
-                v-if="invitedMembers.length <= 0"
+                v-if="!clickedInviteNow"
                 type="primary"
                 class="ml-1 fs-12 br-20 bg-primary text-white member-btn"
                 :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship"
                 @click="inviteNowWindow">Invite now</a-button>
 
-            <a-dropdown class="right-br-20 bg-primary text-white w-25 fs-10 member-btn dropdown-button" v-if="invitedMembers.length > 0">
+            <a-dropdown class="right-br-20 bg-primary text-white w-20 fs-10 member-btn dropdown-button right-br-20" v-if="clickedInviteNow">
               <a-menu slot="overlay">
-                <a-menu-item key="1" @click="submitInvite()">Invitation </a-menu-item>
+                <a-menu-item key="1" @click="agianInviteWindow()">Invite Now </a-menu-item>
+<!--                submitInvite-->
                 <a-menu-item key="2" @click="removeInvite()">Remove </a-menu-item>
               </a-menu>
-              <a-button class="ml-1 fs-10"> Invite Now <a-icon type="down" /> </a-button>
+              <a-button class="ml-1 fs-10"> Invite Now </a-button>
             </a-dropdown>
           </div>
         </div>
@@ -532,6 +540,10 @@ export default {
 			invitation_link: [],
 			invitation_link_show: [],
       relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-paw'],
+      roles: [
+          { text: 'Admin', value: 'Admin' },
+          { text: 'Member', value: 'Member' },
+      ],
       invitationObject: {
         role: "Admin",
         add_as_a: "Representative",
@@ -544,6 +556,7 @@ export default {
 			role: [],
 			relationship: [],
       invitedMembers: [],
+      invitedObj: null,
 
 			edit_button_flag: false,
 			remove_button_flag: false,
@@ -578,7 +591,8 @@ export default {
 
 			changeRoleEnabled: false,
       profileCard: false,
-      profileActive: null
+      profileActive: null,
+      clickedInviteNow: false
 		};
 	},
 	created() {
@@ -1030,7 +1044,7 @@ export default {
       let self = this;
       this.modal = this.$confirm({
         title: "Delete Confirmation",
-        content: `Are you sure you want to remove this invitation of ${this.teamData.name} team?`,
+        content: `Are you sure you want to remove this invitation from ${this.teamData.name} team?`,
         okText: "Yes",
         okType: "danger",
         cancelText: "No",
@@ -1044,6 +1058,11 @@ export default {
                   self.$emit("teamListUpdated");
                   self.profileActive = null;
                   self.profileCard = false;
+
+                  self.invitedMembers = [];
+                  self.invitationObject.invitation_link = '';
+                  self.invitationObject.visible = false;
+                  self.invitedObj = {};
                 } else {
                   self.$message.error("Something went wrong");
                   self.$emit("teamListUpdated");
@@ -1384,6 +1403,7 @@ export default {
       members += this.teamData.team_invited_members.length;
       if(members < 5) {
         this.invitationObject.visible = true;
+        // this.createInvitaionLink();
       } else {
         this.$warning({
           title: 'Maximum number reached!',
@@ -1392,32 +1412,36 @@ export default {
       }
     },
     inviteNowWindow() {
+      this.clickedInviteNow = true;
       this.invitationObject.memberBox = true;
       this.createInvitaionLink();
+    },
+    agianInviteWindow() {
+      this.invitationObject.memberBox = true;
     },
     toggleMemberbox() {
       this.invitationObject.memberBox = false;
     },
-    executeInviteMember(id) {
+    async executeInviteMember(id) {
       this.invitationObject.memberBox = false;
       let data = {
-        role: this.invitationObject.role,
-        add_as_a: this.invitationObject.add_as_a,
-        relationship: this.invitationObject.relationship,
-        invitation_link: this.invitationObject.invitation_link,
+        invitation_id: this.invitedObj.invitation_id,
         email: id
       };
-      if(this.invitedMembers.length > 0) {
-        this.invitedMembers[0] = data;
-      } else {
-        this.invitedMembers.push(data);
-      }
+      await ApiService.post('/v1/invite-team-member-update', data).then(response => {
+        console.log(response)
+        this.invitedObj = null;
+        this.invitationObject.visible = false;
+        this.invitationObject.invitation_link = '';
+        this.clickedInviteNow = false;
+        this.$emit("teamListUpdated");
+      });
     },
     removeInvite() {
-      this.invitedMembers = [];
-      this.invitationObject.invitation_link = '';
+      this.deleteInvitation(this.invitedObj.invitation_id);
     },
     async submitInvite() {
+      this.invitedMembers.push(this.invitationObject);
       let payload = {
         team_id: this.teamData.team_id,
         members: this.invitedMembers
@@ -1452,6 +1476,25 @@ export default {
 					return result.join("");
 				}
 				self.invitationObject.invitation_link = makeid(10);
+				self.invitationObject.visible_invitation_link = window.location.host + '/manageteam?invitation=' + self.invitationObject.invitation_link;
+
+        let data = {
+          role: self.invitationObject.role,
+          add_as_a: self.invitationObject.add_as_a,
+          relationship: self.invitationObject.relationship,
+          invitation_link: self.invitationObject.invitation_link,
+          email: null
+        };
+        self.invitedMembers.push(data);
+
+        let payload = {
+          team_id: self.teamData.team_id,
+          members: self.invitedMembers
+        };
+        ApiService.post('/v1/invite-team-members', payload).then(res => {
+          self.invitedMembers = [];
+          self.invitedObj = res.data.data[0];
+        });
 			})();
 		},
 		accountTypeToName(number) {
@@ -1567,9 +1610,10 @@ export default {
         this.profileActive = null;
       }
     },
-    toggleActiveProfile(item) {
+    toggleActiveProfile(item, type) {
       this.profileCard = true;
       this.profileActive = item;
+      this.profileActive.profile_from_type = type;
     },
     ifHasCandidate() {
       let hasCandidate = this.teamData.team_members.find(item => item.user_type.toString() === 'Candidate');
@@ -1596,12 +1640,16 @@ export default {
 }
 .table {
   border-collapse: separate;
-  border-spacing: 8px;
+  border-spacing: 2px;
   margin-top: -6px;
   margin-bottom: -5px;
 }
+.w-5p {
+  width: 5%;
+}
 .table td, .table th {
   padding: 0 !important;
+  vertical-align: initial;
 }
 .member-add-box {
   margin-top: -14px;
@@ -1628,6 +1676,13 @@ export default {
 .bg-brand {
   background: #E51F76FF;
 }
+.w-20 {
+  width: 20%;
+}
+.right-br-20 {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
 .minus-icon {
   width: 13px;
   height: 13px;
@@ -1637,7 +1692,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
+  font-size: 19px;
   margin-top: 3px;
 }
 .status-box {
@@ -2034,6 +2089,9 @@ export default {
 			cursor: pointer;
 		}
 	}
+}
+.team-member-name:hover {
+  color: $color-brand;
 }
 // end css for team-card
 </style>

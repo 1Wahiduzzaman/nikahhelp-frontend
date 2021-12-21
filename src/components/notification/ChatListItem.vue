@@ -28,7 +28,7 @@
       </a-dropdown>
     </div>
     <div class="flex chat-bottom-place justify-content-between">
-      <div class="date">Typing...</div>
+      <div class="date"></div>
       <div class="date">{{ item.message ? messageCreatedAt(item.message.created_at) : '' }}</div>
     </div>
   </div>

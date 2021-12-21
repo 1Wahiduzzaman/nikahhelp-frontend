@@ -1,5 +1,5 @@
 <template>
-	<div class="col-lg-6 col-xl-3 cards">
+	<div class="col-lg-6 col-xl-3 cards mt-3">
 		<div class="card team-card" style="min-height: 500px;">
       <div class="d-flex align-items-center justify-content-center joining-header position-relative" style="width: 100%">
          <div class="logo-position position-absolute">
@@ -71,7 +71,7 @@
               <h6 class="fs-14">Team create date</h6>
               <span style="margin-top: -6px">:</span>
             </div>
-            <h6 class="ml-2 fs-14">{{ team.team.created_at | moment("DD/MM/YYYY") }}</h6>
+            <h6 class="ml-2 fs-14">{{ formateDate(team.team.created_at) }}</h6>
           </div>
         </div>
       </div>
@@ -96,10 +96,16 @@ export default {
 			user: {},
 			is_verified: 1,
 			invitationLink: "",
-      team: null
+      team: null,
+      loading: false
 		};
 	},
-	created() {},
+	created() {
+    if(this.$route.query.invitation) {
+      this.invitationLink = window.location.host + '/manageteam?invitation=' + this.$route.query.invitation;
+      this.getTheTeamInvitationInfo();
+    }
+  },
 	computed: {
 		console: () => console,
 		window: () => window,
@@ -134,14 +140,33 @@ export default {
 			// 	});
 			// }
 		},
-    async getTheTeamInvitationInfo() {
-      if(this.invitationLink) {
-        await ApiService.get(`/v1/team-invitation-information/${this.invitationLink}`).then(res => {
-          if(res && res.data) {
-            this.team = res.data.data;
-          }
-        });
+    formateDate(date) {
+      if (date == null || date == undefined) {
+        return "  Not Exist";
       }
+      let d = new Date(date),
+          month = "" + (d.getMonth() + 1),
+          day = "" + d.getDate(),
+          year = d.getFullYear();
+
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+
+      return [year, month, day].join("/");
+    },
+    async getTheTeamInvitationInfo() {
+      let originalLink = this.invitationLink.split('?invitation=');
+      let link = this.invitationLink;
+      if (originalLink.length > 1) {
+        link = originalLink[1];
+      }
+      this.loading = true;
+      await ApiService.get(`/v1/team-invitation-information/${link}`).then(res => {
+        this.loading = false;
+        if (res && res.data) {
+          this.team = res.data.data;
+        }
+      });
     }
 	},
 };

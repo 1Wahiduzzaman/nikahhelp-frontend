@@ -378,7 +378,7 @@ export default {
       }
       this.imageModel.main_image_url = e.target.files[0];
       let formData = new FormData();
-      formData.append("main_image_url", this.imageModel.main_image_url);
+      formData.append("per_main_image_url", this.imageModel.main_image_url);
       this.saveImage(formData);
       let reader = new FileReader();
       reader.readAsDataURL(file);

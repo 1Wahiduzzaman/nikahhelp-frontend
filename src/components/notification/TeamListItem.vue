@@ -1,30 +1,40 @@
 <template>
-    <div class="notification-list">
-        <div class="d-flex align-items-center">
-            <img class="avatar" width="45" height="45" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="">
-            <div class="content">
-                <h4 class="mt-1">Justen Web</h4>
-                <p class="mb-0">Lorem ipsum dolor sit amet</p>
-                <p class="color-primary mb-0">Team listed by - Pervez alam</p>
-            </div>
-            <!-- <a-switch default-checked size="small">
-                <a-icon slot="checkedChildren" type="check" />
-                <a-icon slot="unCheckedChildren" type="close" />
-            </a-switch> -->
-            <a-switch size="small" />
+  <div class="notification-list">
+    <div class="d-flex align-items-center">
+      <span class="online-icon"></span>
+      <img class="avatar" width="45" height="45" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="">
 
-        </div>
-        <div class="date">05 min ago</div>
+      <div class="content">
+        <h4>Just</h4>
+        <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam eligendi minima incidunt quia </p>
+      </div>
     </div>
+    <div class="date">23 Nov 2021 at 12:44 pm</div>
+  </div>
 </template>
 
 <script>
+import {format} from "timeago.js";
 export default {
+    name: 'TeamListNotification',
     props: {
         item: {
-            type: Object
+            type: Object,
         }
-    }
+    },
+    data() {
+        return {
+
+        }
+    },
+    methods: {
+      createdAt(time) {
+        if (time) {
+          return format(time);
+        }
+        return '';
+      },
+  },
 }
 </script>
 

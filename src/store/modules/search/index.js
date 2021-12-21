@@ -3,8 +3,14 @@ import actions from "./actions.js";
 import getters from "./getters.js";
 
 export default {
+  namespaced: true,
   state() {
-    return {};
+    return {
+      profiles: [],
+      selectedProfile: {},//profile info 4 r8 sidebar 
+      queryArr: ['male', 'dhaka', '20-30 Yrs'],
+      component: 'addComponent'
+    };
   },
   mutations,
   actions,
