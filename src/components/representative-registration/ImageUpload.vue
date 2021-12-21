@@ -412,4 +412,31 @@ export default {
 .ant-tooltip-inner {
   border-radius: 0px;
 }
+.mobile-margin {
+  margin-top: 0.5rem;
+}
+.mobile-center {
+  text-align: center;
+}
+.mobile-switch {
+  margin-top: 12px;
+}
+@media (min-width: 768px) {
+  .form-right-content {
+    float: right;
+    padding-right: 0;
+  }
+  .mobile-margin {
+    margin-top: 0;
+  }
+  .non-padding-mobile-margin {
+    margin-top: 0;
+  }
+  .mobile-center {
+    text-align: left;
+  }
+  .mobile-switch {
+    margin-top: 0;
+  }
+}
 </style>
