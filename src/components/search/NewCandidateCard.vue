@@ -1,6 +1,6 @@
 <template>
   <v-card
-    @click="showDetail"
+    @click="showDetailRightSide"
     :loading="loading"
     class="mx-auto"
     max-width="374"
@@ -156,13 +156,13 @@ import {mapMutations} from 'vuex'
       shortList() {
         console.log('short list')
       },
-      showDetail() {
+      showDetailRightSide() {
         this.setSelectedProfileInfo(this.candidate)
         this.setComponent('RightSideCandidateDetail')
-        console.log('show Detail')
       },
       ViewProfileDetail() {
         this.$emit('switchComponent')
+        this.setComponent('RightSidebar')
         console.log('show profile Detail')
       },
       reserve () {

@@ -6,7 +6,7 @@
 			<div style="height:80px;">	
 				<Header :user="user"> 
 					<template  v-slot:toggler>
-						<!-- dropdoen menu start -->
+						<!-- dropdown menu start -->
 						<div class="d-sm-none w-2">
 							<a-dropdown :trigger="['click']">
 								<svg  @click="e => e.preventDefault()" xmlns="http://www.w3.org/2000/svg" class="menu-icon-alt" fill="#fff" viewBox="0 0 24 24" stroke="currentColor">
@@ -49,7 +49,7 @@
 								</a-menu>
 							</a-dropdown>
 						</div>
-						<!-- dropdoen menu end -->
+						<!-- dropdown menu end -->
 					</template>
 				</Header>
 			</div>
@@ -85,13 +85,7 @@
 									</component>
 								</div>
 								<div class="main-content-2">
-									<v-card
-										style="height: calc(100vh - 140px); overflow-y: auto; position: fixed; right: 10px;"
-										class="mx-auto"
-										width="317"
-									>
 									<component v-bind:is="rightSideComponentName"></component>
-									</v-card>
 								</div>
 							</div>
 						</a-layout-content>
@@ -115,6 +109,7 @@ export default {
 	components: {
 		'ProfileDetail': () => import('@/components/search/CandidateProfileDetails'),
 		'RightSideCandidateDetail': () => import('@/components/search/RightSideCandidateDetail'),
+		'RightSidebar': () => import('@/components/search/ProfileDetailRight'),
 		Header,
 		Sidebar,
 		SimpleSearch,

@@ -6,7 +6,7 @@
                 rounded
                 color="deep-purple darken-1"
                 dark
-                @click="() => $emit('switchComponent', 'CandidateProfiles')"
+                @click="loadSearchResultComponent"
             >
             <div class="flex justify-center align-center">
                 <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/chevron-left-solid.svg" alt="">
@@ -44,10 +44,20 @@
 
 <script>
 import ProfileBanner from '@/components/atom/ProfileBanner'
+import {mapMutations} from 'vuex'
 export default {
     name: 'CandidateProfileDetails',
     components: {
         ProfileBanner
+    },
+    methods: {
+        ...mapMutations({
+            setComponent: 'search/setComponent'
+        }),
+        loadSearchResultComponent() {
+            this.setComponent('AddComponent')
+            this.$emit('switchComponent', 'CandidateProfiles')
+        }
     }
 }
 </script>
