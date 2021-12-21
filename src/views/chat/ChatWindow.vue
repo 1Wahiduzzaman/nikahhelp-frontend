@@ -114,6 +114,7 @@
                     >
                       <ChatListItem
                           :item="item"
+                          :status="'recent'"
                           action
                           class="w-full pr-3 cursor-pointer"
                           @click.native="getIndividualChat(item)"
@@ -128,6 +129,7 @@
                     >
                       <ChatListItem
                           :item="item"
+                          :status="'team'"
                           action
                           class="w-full pr-3 cursor-pointer"
                           @click.native="getIndividualChat(item)"
@@ -141,6 +143,7 @@
                     >
                       <ChatListItem
                           :item="item"
+                          :status="'connected'"
                           action
                           class="w-full pr-3 cursor-pointer"
                           @click.native="getConnectedChat(item)"
@@ -223,7 +226,7 @@
                         <div class="message-box">
                           <button class="btn-emoji px-2">&#128528;</button>
                           <textarea name="message" id="" cols="30" rows="10" placeholder="Enter message..."
-                                    v-model="msg_text"></textarea>
+                                    v-model="msg_text" v-on:keyup.enter="sendMsg($event)"></textarea>
                           <div class="position-absolute msgbox-right">
                             <div class="flex">
                               <button><img src="../../assets/icon/microphone.png" alt="icon" class="mr-2 microphone" /></button>
@@ -468,7 +471,8 @@ export default {
     // Process team chat response
     processTeamChatResponse(data) {
       // let group = pick(data, ['id', 'name', 'logo']);
-      this.activeTeam = data.team_id;
+      this.activeTeam = data.id;
+      console.log(this.activeTeam)
       let group = data;
       group.message = pick(data.last_group_message, messageKeys);
       group.label = 'Group chat';

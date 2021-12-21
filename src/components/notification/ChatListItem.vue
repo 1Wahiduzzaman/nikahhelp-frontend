@@ -13,7 +13,7 @@
         <!--                <p class="color-primary mb-0">Team listed by - Pervez alam</p>-->
       </div>
       <span class="online-icon" v-if="item.message && item.message.seen == 0"></span>
-      <a-dropdown>
+      <a-dropdown v-if="status == 'connected'">
         <a class="ant-dropdown-link dropdown-box" @click="e => e.preventDefault()">
           <a-icon type="more" class="fs-28 font-weight-bolder br-50 bg-c9 color-primary icon-30"/>
         </a>
@@ -41,6 +41,9 @@ export default {
   props: {
     item: {
       type: Object
+    },
+    status: {
+      type: String
     }
   },
   methods: {
