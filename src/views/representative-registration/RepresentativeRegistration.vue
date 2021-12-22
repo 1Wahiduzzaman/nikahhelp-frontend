@@ -74,21 +74,21 @@
         <p class="color-brand fs-18">Details about you</p>
       </div>
 
-      <div class="steps-content" v-if="current == 0">
+      <div class="steps-content px-2" v-if="current == 0">
         <PersonalInfoTwo
             :representativeDetails="representativeDetails"
             :personalInformation="representativeDetails.personalInformation"
             ref="personInfoRefTwo"
         />
       </div>
-      <div class="steps-content" v-if="current == 1">
+      <div class="steps-content px-2" v-if="current == 1">
         <Verification
             :representativeDetails="representativeDetails"
             :verification="representativeDetails.verification"
             ref="VerificationRef"
         />
       </div>
-      <div class="steps-content" v-if="current == 2">
+      <div class="steps-content px-2" v-if="current == 2">
         <ImageUpload
             :imageModel="representativeDetails.imageModel"
             ref="imageUploadRef"
