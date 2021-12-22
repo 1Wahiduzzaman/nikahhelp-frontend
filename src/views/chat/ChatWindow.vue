@@ -177,7 +177,7 @@
                     </div>
                     <div class="chat-info">
                       <div class="chat-name">{{ conversationTitle }}</div>
-                      <div class="last-chat" v-if="chat_type == 'team'">Active now {{ getTeamOnlineUsers() }}</div>
+                      <div class="last-chat" v-if="chat_type == 'team'">Active now {{ getTeamOnlineUsers() > 0 ? getTeamOnlineUsers() : '' }}</div>
                     </div>
                   </div>
                 </div>
@@ -228,7 +228,6 @@
 <!--                </div>-->
                 <div class="position-relative">
                   <div class="chat-messages py-4 pr-1" id="chat-messages">
-
                     <div v-for="(item, cIndex) in chats" :key="item.id">
                       <div :id="chats.length === cIndex + 1 ? 'messagesid' : ''" class="chat-message-right pb-4 position-relative mb-5" v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))" >
                         <div class="text-right">
@@ -265,7 +264,7 @@
 <!--                          <textarea name="message" id="" cols="30" rows="10" placeholder="Enter message..."-->
 <!--                                    v-model="msg_text" v-on:keyup.enter="sendMsg($event)"></textarea>-->
                           <input type="text" placeholder="Enter message..."
-                                 v-model="msg_text" v-on:keyup.enter="sendMsg($event)">
+                                 v-model="msg_text" v-on:keyup.enter="sendMsg($event)" @keyup="notifyKeyboardStatus">
                           <div class="position-absolute msgbox-right">
                             <div class="flex">
                               <button><img src="../../assets/icon/microphone.png" alt="icon" class="mr-2 microphone" /></button>
@@ -561,6 +560,12 @@ export default {
         //   connectedTeamChat.message.created_at = res.created_at;
         //   connectedTeamChat.message.seen = 0;
         // }
+
+
+      });
+
+      this.sockets.subscribe('lis_typing', function (res) {
+        console.log(res)
       });
     }
   },
@@ -964,6 +969,27 @@ export default {
       payload.to_team_id = this.private_chat.to_team_id;
       await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
       this.msg_text = '';
+    },
+    notifyKeyboardStatus() {
+      let data = {
+        type: this.chatheadopen.label,
+        other_mate_id: this.chatheadopen.other_mate_id
+      };
+      if(data.type === 'Group chat') {
+        data.members = this.teamMembers;
+      }
+      if(this.msg_text && this.msg_text.length > 0) {
+        data = {
+          status: 1,
+          text: 'Typing',
+        };
+      } else {
+        data = {
+          status: 0,
+          text: ''
+        };
+      }
+      this.$socket.emit('typing', data);
     },
     unique(array) {
       return array.filter(function (el, index, arr) {
