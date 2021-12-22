@@ -2,9 +2,7 @@
   <div>
     <div v-if="isLoading">Loading</div>
     <div v-else>
-      <Layout>
-        <Chat />
-      </Layout>
+      <Chat />
     </div>
   </div>
 </template>
@@ -76,26 +74,26 @@ export default {
     async getActiveTeamId() {
       const response = this.$store.dispatch("getTeams");
       response
-          .then((data) => {
-            // let teamId = JwtService.getTeamIDAppWide();
-            // console.log(data.data.data);
-            // if (data.data.data.length == 0) {
-            // 	this.$warning({
-            // 		title: "You don't have a team",
-            // 		content: "Please create or join a team!",
-            // 	});
-            // 	this.$router.push("/manageteam");
-            // } else if (!teamId) {
-            // 	this.$warning({
-            // 		title: "You don't have an active team",
-            // 		content: "Please select an active team to continue!",
-            // 	});
-            // 	this.$router.push("/manageteam");
-            // }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .then((data) => {
+          // let teamId = JwtService.getTeamIDAppWide();
+          // console.log(data.data.data);
+          // if (data.data.data.length == 0) {
+          // 	this.$warning({
+          // 		title: "You don't have a team",
+          // 		content: "Please create or join a team!",
+          // 	});
+          // 	this.$router.push("/manageteam");
+          // } else if (!teamId) {
+          // 	this.$warning({
+          // 		title: "You don't have an active team",
+          // 		content: "Please select an active team to continue!",
+          // 	});
+          // 	this.$router.push("/manageteam");
+          // }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };

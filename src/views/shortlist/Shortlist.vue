@@ -1,301 +1,298 @@
 <template>
-	<div>
-		<div v-if="isLoading">Loading</div>
-		<div v-else>
-			<Header :user="user" />
-			<div class="main-content-wrapper">
-				<Sidebar />
-				<div class="main-content-1">
-					<!-- <ShortlistedCandidate/> -->
-					<!-- Shortlisted Section Header -->
-					<div>
-						<div class="item" style="text-align: left; width: 100%">
-							<span
-								class="item-number flex-center-center"
-								style="float: left"
-								>{{ shortListedCandidates.length }}</span
-							>
-							<span class="m-2 fw-600 fs-18">Shortlisted Candidate</span>
-							<a
-								href="/shortlist/all"
-								type="submit"
-								class="btn btn-sm btn-primary btn-round btn-submit float-right"
-							>
-								See All
-							</a>
-						</div>
-						<div class="shortlisted-candidate">
-							<!-- Shortlisted component goes here -->
-							<candidate
-								v-for="candidate in shortListedCandidates"
-								:key="candidate.id"
-								:candidate="candidate"
-								@selected-candidate="selectedCandidate"
-								@get-candidate-id="getCandidateId"
-								@get-shortlist-id="removeShortlist"
-								@connect-request="getCandidateTeamId"
-								@block-candidate="blockCandidate"
-							></candidate>
-							<select-team-for-teamlist
-								:selectTeamModal="selectTeamModal"
-								@handle-cancel="selectTeamModal = false"
-								@handle-team="storeTeamlist"
-							></select-team-for-teamlist>
-							<select-team-modal
-								:selectTeamModal="selectTeamForConnect"
-								@handle-cancel="selectTeamForConnect = false"
-								@handle-team="connectRequest"
-							></select-team-modal>
-						</div>
-					</div>
-					<!-- Team Listed -->
-					<div class="mt-4">
-						<!-- Team Listed Section Header -->
-						<hr />
-						<div class="item" style="text-align: left; width: 100%">
-							<span
-								class="item-number flex-center-center"
-								style="float: left"
-								>{{ teamShortListedCandidates.length }}</span
-							>
-							<span class="m-2 fw-600 fs-18">Team Listed Candidate</span>
-							<a
-								href="/shortlist/all/team"
-								type="submit"
-								class="btn btn-sm btn-primary btn-round btn-submit float-right"
-							>
-								See All
-							</a>
-						</div>
-						<div class="teamlisted-candidate">
-							<!-- Team listed component goes here	 -->
-							<candidate
-								v-for="candidate in teamShortListedCandidates"
-								:key="candidate.id"
-								:candidate="candidate"
-								@selected-candidate="selectedCandidate"
-								@get-candidate-id="getCandidateId"
-								@get-shortlist-id="removeShortlist"
-								@store-shortlist="storeShortlist"
-								@connect-request="getCandidateTeamId"
-								@block-candidate="blockCandidate"
-							></candidate>
-							<select-team-modal
-								:selectTeamModal="selectTeamForConnect"
-								@handle-cancel="selectTeamForConnect = false"
-								@handle-team="connectRequest"
-							></select-team-modal>
-						</div>
-					</div>
-				</div>
-				<div class="main-content-2">
-					<div v-if="loadingSpinner">
-						<loading-spinner></loading-spinner>
-					</div>
-					<div v-else>
-						<div
-							v-if="candidateProfileInfo"
-							class="shadow-default profile-overview"
-						>
-							<h6>This Profile overview</h6>
-							<hr />
-							<div>
-								<!-- Name -->
-								<li class="flex-between-start">
-									<span class="flex-50 label-text">Name</span
-									><span class="flex-50"
-										>:
-										<span class="ml-3"
-											>{{ candidateProfileInfo.first_name }}
-											{{ candidateProfileInfo.last_name }}</span
-										></span
-									>
-								</li>
-								<!-- Age -->
-								<li class="flex-between-start">
-									<span class="flex-50 label-text">Age</span
-									><span class="flex-50"
-										>:
-										<span class="ml-3">{{
-											candidateProfileInfo.personal.dob
-										}}</span></span
-									>
-								</li>
-								<!-- height -->
-								<li class="flex-between-start">
-									<span class="flex-50 label-text">Height</span
-									><span class="flex-50"
-										>:
-										<span class="ml-3">{{
-											candidateProfileInfo.personal.per_height
-										}}</span></span
-									>
-								</li>
-								<!-- Nationality -->
-								<li class="flex-between-start">
-									<span class="flex-50 label-text">Nationality</span
-									><span class="flex-50"
-										>:
-										<span class="ml-3">{{
-											$store.state.candidateInfo.countries[
-												candidateProfileInfo.personal.per_nationality
-											].name
-										}}</span></span
-									>
-								</li>
-								<!-- Ethnicity -->
-								<li class="flex-between-start">
-									<span class="flex-50 label-text">Ethnicity</span
-									><span class="flex-50 d-inherit"
-										>:
-										<span class="ml-3">
-											{{ candidateProfileInfo.personal.per_ethnicity }}</span
-										></span
-									>
-								</li>
-								<!-- Country Of Birth -->
-								<li class="flex-between-start">
-									<span class="flex-50 label-text">Country of Birth</span
-									><span class="flex-50"
-										>:
-										<span class="ml-3">{{
-											$store.state.candidateInfo.countries[
-												candidateProfileInfo.personal.per_country_of_birth
-											].name
-										}}</span></span
-									>
-								</li>
-								<!-- Current Residence -->
-								<li class="flex-between-start">
-									<span class="flex-50 label-text">Current Residance</span
-									><span class="flex-50"
-										>:
-										<span class="ml-3">{{
-											$store.state.candidateInfo.countries[
-												candidateProfileInfo.personal.per_current_residence
-											].name
-										}}</span></span
-									>
-								</li>
-								<!-- Education -->
-								<li
-									class="flex-between-start"
-									v-if="candidateProfileInfo.personal.per_education_level_id"
-								>
-									<span class="flex-50 label-text">Education</span
-									><span class="flex-50"
-										>:
-										<span class="ml-3">
-											<!-- {{
+  <div>
+    <div v-if="isLoading">Loading</div>
+    <div v-else>
+      <div class="main-content-wrapper">
+        <div class="main-content-1">
+          <!-- <ShortlistedCandidate/> -->
+          <!-- Shortlisted Section Header -->
+          <div>
+            <div class="item" style="text-align: left; width: 100%">
+              <span
+                class="item-number flex-center-center"
+                style="float: left"
+                >{{ shortListedCandidates.length }}</span
+              >
+              <span class="m-2 fw-600 fs-18">Shortlisted Candidate</span>
+              <a
+                href="/shortlist/all"
+                type="submit"
+                class="btn btn-sm btn-primary btn-round btn-submit float-right"
+              >
+                See All
+              </a>
+            </div>
+            <div class="shortlisted-candidate">
+              <!-- Shortlisted component goes here -->
+              <candidate
+                v-for="candidate in shortListedCandidates"
+                :key="candidate.id"
+                :candidate="candidate"
+                @selected-candidate="selectedCandidate"
+                @get-candidate-id="getCandidateId"
+                @get-shortlist-id="removeShortlist"
+                @connect-request="getCandidateTeamId"
+                @block-candidate="blockCandidate"
+              ></candidate>
+              <select-team-for-teamlist
+                :selectTeamModal="selectTeamModal"
+                @handle-cancel="selectTeamModal = false"
+                @handle-team="storeTeamlist"
+              ></select-team-for-teamlist>
+              <select-team-modal
+                :selectTeamModal="selectTeamForConnect"
+                @handle-cancel="selectTeamForConnect = false"
+                @handle-team="connectRequest"
+              ></select-team-modal>
+            </div>
+          </div>
+          <!-- Team Listed -->
+          <div class="mt-4">
+            <!-- Team Listed Section Header -->
+            <hr />
+            <div class="item" style="text-align: left; width: 100%">
+              <span
+                class="item-number flex-center-center"
+                style="float: left"
+                >{{ teamShortListedCandidates.length }}</span
+              >
+              <span class="m-2 fw-600 fs-18">Team Listed Candidate</span>
+              <a
+                href="/shortlist/all/team"
+                type="submit"
+                class="btn btn-sm btn-primary btn-round btn-submit float-right"
+              >
+                See All
+              </a>
+            </div>
+            <div class="teamlisted-candidate">
+              <!-- Team listed component goes here	 -->
+              <candidate
+                v-for="candidate in teamShortListedCandidates"
+                :key="candidate.id"
+                :candidate="candidate"
+                @selected-candidate="selectedCandidate"
+                @get-candidate-id="getCandidateId"
+                @get-shortlist-id="removeShortlist"
+                @store-shortlist="storeShortlist"
+                @connect-request="getCandidateTeamId"
+                @block-candidate="blockCandidate"
+              ></candidate>
+              <select-team-modal
+                :selectTeamModal="selectTeamForConnect"
+                @handle-cancel="selectTeamForConnect = false"
+                @handle-team="connectRequest"
+              ></select-team-modal>
+            </div>
+          </div>
+        </div>
+        <div class="main-content-2">
+          <div v-if="loadingSpinner">
+            <loading-spinner></loading-spinner>
+          </div>
+          <div v-else>
+            <div
+              v-if="candidateProfileInfo"
+              class="shadow-default profile-overview"
+            >
+              <h6>This Profile overview</h6>
+              <hr />
+              <div>
+                <!-- Name -->
+                <li class="flex-between-start">
+                  <span class="flex-50 label-text">Name</span
+                  ><span class="flex-50"
+                    >:
+                    <span class="ml-3"
+                      >{{ candidateProfileInfo.first_name }}
+                      {{ candidateProfileInfo.last_name }}</span
+                    ></span
+                  >
+                </li>
+                <!-- Age -->
+                <li class="flex-between-start">
+                  <span class="flex-50 label-text">Age</span
+                  ><span class="flex-50"
+                    >:
+                    <span class="ml-3">{{
+                      candidateProfileInfo.personal.dob
+                    }}</span></span
+                  >
+                </li>
+                <!-- height -->
+                <li class="flex-between-start">
+                  <span class="flex-50 label-text">Height</span
+                  ><span class="flex-50"
+                    >:
+                    <span class="ml-3">{{
+                      candidateProfileInfo.personal.per_height
+                    }}</span></span
+                  >
+                </li>
+                <!-- Nationality -->
+                <li class="flex-between-start">
+                  <span class="flex-50 label-text">Nationality</span
+                  ><span class="flex-50"
+                    >:
+                    <span class="ml-3">{{
+                      $store.state.candidateInfo.countries[
+                        candidateProfileInfo.personal.per_nationality
+                      ].name
+                    }}</span></span
+                  >
+                </li>
+                <!-- Ethnicity -->
+                <li class="flex-between-start">
+                  <span class="flex-50 label-text">Ethnicity</span
+                  ><span class="flex-50 d-inherit"
+                    >:
+                    <span class="ml-3">
+                      {{ candidateProfileInfo.personal.per_ethnicity }}</span
+                    ></span
+                  >
+                </li>
+                <!-- Country Of Birth -->
+                <li class="flex-between-start">
+                  <span class="flex-50 label-text">Country of Birth</span
+                  ><span class="flex-50"
+                    >:
+                    <span class="ml-3">{{
+                      $store.state.candidateInfo.countries[
+                        candidateProfileInfo.personal.per_country_of_birth
+                      ].name
+                    }}</span></span
+                  >
+                </li>
+                <!-- Current Residence -->
+                <li class="flex-between-start">
+                  <span class="flex-50 label-text">Current Residance</span
+                  ><span class="flex-50"
+                    >:
+                    <span class="ml-3">{{
+                      $store.state.candidateInfo.countries[
+                        candidateProfileInfo.personal.per_current_residence
+                      ].name
+                    }}</span></span
+                  >
+                </li>
+                <!-- Education -->
+                <li
+                  class="flex-between-start"
+                  v-if="candidateProfileInfo.personal.per_education_level_id"
+                >
+                  <span class="flex-50 label-text">Education</span
+                  ><span class="flex-50"
+                    >:
+                    <span class="ml-3">
+                      <!-- {{
 											$store.state.candidateInfo.study_level_options[
 												candidateProfileInfo.personal.per_education_level_id
 											].name
 										}} -->
-											{{ personalStudyLevel }}
-										</span></span
-									>
-								</li>
-							</div>
+                      {{ personalStudyLevel }}
+                    </span></span
+                  >
+                </li>
+              </div>
 
-							<h6 class="mt-3">This Profile Partner Preferences</h6>
-							<hr />
-							<div>
-								<!-- Age -->
-								<li class="flex-between-start">
-									<span class="flex-50 label-text">Age</span
-									><span class="flex-50"
-										>:
-										<span class="ml-3">
-											{{ candidateProfileInfo.preference.pre_partner_age_min }}
-											to
-											{{ candidateProfileInfo.preference.pre_partner_age_max }}
-											years</span
-										></span
-									>
-								</li>
-								<!-- Height -->
-								<li class="flex-between-start">
-									<span class="flex-50 label-text">Height</span
-									><span class="flex-50"
-										>:
-										<span class="ml-3"
-											>{{ candidateProfileInfo.preference.pre_height_min }} inch
-											to
-											{{ candidateProfileInfo.preference.pre_height_max }}
-											inch</span
-										></span
-									>
-								</li>
-								<!-- Religion -->
-								<li class="flex-between-start">
-									<span class="flex-50 label-text">Religion</span
-									><span class="flex-50"
-										>:
-										<span class="ml-3"> Islam </span>
-									</span>
-								</li>
-								<!-- Nationality -->
-								<li class="flex-between-start">
-									<span class="flex-50 label-text">Nationality</span
-									><span class="flex-50 d-inherit"
-										>:
-										<span class="ml-3">
-											<div
-												v-for="nationality in candidateProfileInfo.preference
-													.preferred_nationality"
-												:key="nationality.id"
-											>
-												{{ nationality.name }}
-											</div>
-										</span></span
-									>
-								</li>
-								<!-- Ethnicity -->
-								<li class="flex-between-start">
-									<span class="flex-50 label-text">Ethnicity</span
-									><span class="flex-50 d-inherit"
-										>:
-										<span class="ml-3">
-											{{
-												candidateProfileInfo.preference.pre_ethnicities
-											}}</span
-										></span
-									>
-								</li>
-								<!-- Country Of Birth -->
-								<!-- Current Residence -->
-								<!-- Education -->
-								<li
-									class="flex-between-start"
-									v-if="candidateProfileInfo.preference.pre_study_level_id"
-								>
-									<span class="flex-50 label-text">Education</span
-									><span class="flex-50"
-										>:
-										<span class="ml-3">
-											{{ studyLevel }}
-										</span></span
-									>
-								</li>
-								<!-- Profession -->
-								<!-- Occupation -->
-								<li class="flex-between-start">
-									<span class="flex-50 label-text">Ocupation</span
-									><span class="flex-50"
-										>:
-										<span class="ml-3">{{
-											candidateProfileInfo.preference.pre_occupation
-										}}</span></span
-									>
-								</li>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<Footer style="margin-top: 70px" />
-		</div>
-	</div>
+              <h6 class="mt-3">This Profile Partner Preferences</h6>
+              <hr />
+              <div>
+                <!-- Age -->
+                <li class="flex-between-start">
+                  <span class="flex-50 label-text">Age</span
+                  ><span class="flex-50"
+                    >:
+                    <span class="ml-3">
+                      {{ candidateProfileInfo.preference.pre_partner_age_min }}
+                      to
+                      {{ candidateProfileInfo.preference.pre_partner_age_max }}
+                      years</span
+                    ></span
+                  >
+                </li>
+                <!-- Height -->
+                <li class="flex-between-start">
+                  <span class="flex-50 label-text">Height</span
+                  ><span class="flex-50"
+                    >:
+                    <span class="ml-3"
+                      >{{ candidateProfileInfo.preference.pre_height_min }} inch
+                      to
+                      {{ candidateProfileInfo.preference.pre_height_max }}
+                      inch</span
+                    ></span
+                  >
+                </li>
+                <!-- Religion -->
+                <li class="flex-between-start">
+                  <span class="flex-50 label-text">Religion</span
+                  ><span class="flex-50"
+                    >:
+                    <span class="ml-3"> Islam </span>
+                  </span>
+                </li>
+                <!-- Nationality -->
+                <li class="flex-between-start">
+                  <span class="flex-50 label-text">Nationality</span
+                  ><span class="flex-50 d-inherit"
+                    >:
+                    <span class="ml-3">
+                      <div
+                        v-for="nationality in candidateProfileInfo.preference
+                          .preferred_nationality"
+                        :key="nationality.id"
+                      >
+                        {{ nationality.name }}
+                      </div>
+                    </span></span
+                  >
+                </li>
+                <!-- Ethnicity -->
+                <li class="flex-between-start">
+                  <span class="flex-50 label-text">Ethnicity</span
+                  ><span class="flex-50 d-inherit"
+                    >:
+                    <span class="ml-3">
+                      {{
+                        candidateProfileInfo.preference.pre_ethnicities
+                      }}</span
+                    ></span
+                  >
+                </li>
+                <!-- Country Of Birth -->
+                <!-- Current Residence -->
+                <!-- Education -->
+                <li
+                  class="flex-between-start"
+                  v-if="candidateProfileInfo.preference.pre_study_level_id"
+                >
+                  <span class="flex-50 label-text">Education</span
+                  ><span class="flex-50"
+                    >:
+                    <span class="ml-3">
+                      {{ studyLevel }}
+                    </span></span
+                  >
+                </li>
+                <!-- Profession -->
+                <!-- Occupation -->
+                <li class="flex-between-start">
+                  <span class="flex-50 label-text">Ocupation</span
+                  ><span class="flex-50"
+                    >:
+                    <span class="ml-3">{{
+                      candidateProfileInfo.preference.pre_occupation
+                    }}</span></span
+                  >
+                </li>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -309,431 +306,388 @@ import JwtService from "@/services/jwt.service";
 // import ShortlistedCandidate from "@/components/shortlist/ShortlistedCandidate.vue";
 import Candidate from "@/components/shortlist/Candidate.vue";
 export default {
-	name: "Shortlist",
-	components: {
-		Header,
-		Sidebar,
-		Footer,
-		LoadingSpinner,
-		Candidate,
-		SelectTeamModal,
-		SelectTeamForTeamlist,
-		// ShortlistedCandidate
-	},
-	data() {
-		return {
-			isLoading: false,
-			loadingSpinner: false,
-			user: {},
-			is_verified: 1,
-			error: null,
-			candidateInfo: null,
-			partnerInfo: null,
-			userProfile: null,
-			candidateProfileInfo: null,
-			representativeProfileInfo: null,
-			selectTeamModal: false,
-			selectTeamForConnect: false,
-			candidateId: null,
-			candidateTeamId: null,
-		};
-	},
-	created() {
-		//this.loadUser();
-		this.getActiveTeamId();
-		this.loadShortListedCandidates();
-		this.loadTeamShortListedCandidates();
-		this.$store.dispatch("getCountries");
-		this.$store.dispatch("getStudyLevelOptions");
-		this.$store.dispatch("getReligionOptions");
-		this.$store.dispatch("getOccupations");
-		console.log("Created", this.$store.state.candidateInfo.study_level_options);
-	},
-	computed: {
-		shortListedCandidates() {
-			const candidates = this.$store.getters["shortListedCandidates"];
-			return candidates.filter((candidate) => {
-				if (candidate.team_id == null) {
-					return true;
-				}
-				return false;
-			});
-		},
-		teamShortListedCandidates() {
-			const candidates = this.$store.getters["teamShortListedCandidates"];
-			return candidates;
-		},
-		personalStudyLevel() {
-			if (this.candidateProfileInfo.personal.per_education_level_id) {
-				var results =
-					this.$store.state.candidateInfo.study_level_options.filter(
-						(level) => {
-							return (
-								level.id ==
-								this.candidateProfileInfo.personal.per_education_level_id
-							);
-						}
-					);
-				return results[0].name;
-			} else {
-				return null;
-			}
-		},
-		studyLevel() {
-			if (this.candidateProfileInfo.preference.pre_study_level_id) {
-				var results =
-					this.$store.state.candidateInfo.study_level_options.filter(
-						(level) => {
-							return (
-								level.id ==
-								this.candidateProfileInfo.preference.pre_study_level_id
-							);
-						}
-					);
-				return results[0].name;
-			} else {
-				return null;
-			}
-		},
-	},
-	methods: {
-		async loadUser() {
-			this.isLoading = true;
-			try {
-				await this.$store.dispatch("getUser");
-				this.user = this.$store.getters["userInfo"];
-				this.is_verified = this.user.is_verified;
-				if (this.is_verified == 0) {
-					this.$router.push("/email-verification");
-				}
-				if (this.user.account_type === 0) {
-					this.$router.push("/member-type");
-				}
+  name: "Shortlist",
+  components: {
+    Header,
+    Sidebar,
+    Footer,
+    LoadingSpinner,
+    Candidate,
+    SelectTeamModal,
+    SelectTeamForTeamlist,
+    // ShortlistedCandidate
+  },
+  data() {
+    return {
+      isLoading: false,
+      loadingSpinner: false,
+      user: {},
+      is_verified: 1,
+      error: null,
+      candidateInfo: null,
+      partnerInfo: null,
+      userProfile: null,
+      candidateProfileInfo: null,
+      representativeProfileInfo: null,
+      selectTeamModal: false,
+      selectTeamForConnect: false,
+      candidateId: null,
+      candidateTeamId: null,
+    };
+  },
+  created() {
+  
+    this.getActiveTeamId();
+    this.loadShortListedCandidates();
+    this.loadTeamShortListedCandidates();
+    this.$store.dispatch("getCountries");
+    this.$store.dispatch("getStudyLevelOptions");
+    this.$store.dispatch("getReligionOptions");
+    this.$store.dispatch("getOccupations");
+    console.log("Created", this.$store.state.candidateInfo.study_level_options);
+  },
+  computed: {
+    shortListedCandidates() {
+      const candidates = this.$store.getters["shortListedCandidates"];
+      return candidates.filter((candidate) => {
+        if (candidate.team_id == null) {
+          return true;
+        }
+        return false;
+      });
+    },
+    teamShortListedCandidates() {
+      const candidates = this.$store.getters["teamShortListedCandidates"];
+      return candidates;
+    },
+    personalStudyLevel() {
+      if (this.candidateProfileInfo.personal.per_education_level_id) {
+        var results =
+          this.$store.state.candidateInfo.study_level_options.filter(
+            (level) => {
+              return (
+                level.id ==
+                this.candidateProfileInfo.personal.per_education_level_id
+              );
+            }
+          );
+        return results[0].name;
+      } else {
+        return null;
+      }
+    },
+    studyLevel() {
+      if (this.candidateProfileInfo.preference.pre_study_level_id) {
+        var results =
+          this.$store.state.candidateInfo.study_level_options.filter(
+            (level) => {
+              return (
+                level.id ==
+                this.candidateProfileInfo.preference.pre_study_level_id
+              );
+            }
+          );
+        return results[0].name;
+      } else {
+        return null;
+      }
+    },
+  },
+  methods: {
+   
+    async getActiveTeamId() {
+      console.log("active team id");
+      const response = this.$store.dispatch("getTeams");
+      response
+        .then((data) => {
+          let teamId = JwtService.getTeamIDAppWide();
+          console.log(data.data.data);
+          if (data.data.data.length == 0) {
+            // this.$warning({
+            //   title: "You don't have a team",
+            //   content: "Please create or join a team!",
+            // });
+            // this.$router.push("/manageteam");
+          } else if (!teamId) {
+            // this.$warning({
+            //   title: "You don't have an active team",
+            //   content: "Please select an active team to continue!",
+            // });
+            //this.$router.push("/manageteam");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async loadShortListedCandidates() {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("loadShortListedCandidates");
+      } catch (error) {
+        this.error = error.message || "Something went wrong";
+        console.log(this.error);
+      }
+      this.isLoading = false;
+    },
+    async loadTeamShortListedCandidates() {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("loadTeamShortListedCandidates");
+      } catch (error) {
+        this.error = error.message || "Something went wrong";
+        console.log(this.error);
+      }
+      this.isLoading = false;
+    },
+    async loadUserProfile(id) {
+      this.loadingSpinner = true;
 
-				if (this.user.account_type === 4) {
-					this.$router.push("/admin");
-				}
-				let data_input_status = this.$store.getters["userDataInputStatus"];
-				console.log("data input status", data_input_status);
-				if (data_input_status == 10) {
-					this.$router.push("/member-name/candidate");
-				}
-				if (data_input_status == 20) {
-					this.$router.push("/member-name/representative");
-				}
-				if (data_input_status == 11) {
-					this.$router.push("/candidate-registration");
-				}
-				if (data_input_status == 21) {
-					this.$router.push("/representative-registration");
-				}
-				// if (data_input_status == 12) {
-				// 	this.$router.push("/candidate-registration");
-				// }
-				// if (data_input_status == 22) {
-				// 	this.$router.push("/representative-registration");
-				// }
-			} catch (error) {
-				this.error = error.message || "Something went wrong";
-				//alert(this.error);
-				console.log(this.error);
-				this.$router.push("/shortlist");
-			}
-			this.isLoading = false;
-		},
-		async getActiveTeamId() {
-			console.log("active team id");
-			const response = this.$store.dispatch("getTeams");
-			response
-				.then((data) => {
-					let teamId = JwtService.getTeamIDAppWide();
-					console.log(data.data.data);
-					if (data.data.data.length == 0) {
-						this.$warning({
-							title: "You don't have a team",
-							content: "Please create or join a team!",
-						});
-						this.$router.push("/manageteam");
-					} else if (!teamId) {
-						this.$warning({
-							title: "You don't have an active team",
-							content: "Please select an active team to continue!",
-						});
-						this.$router.push("/manageteam");
-					}
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		},
-		async loadShortListedCandidates() {
-			this.isLoading = true;
-			try {
-				await this.$store.dispatch("loadShortListedCandidates");
-			} catch (error) {
-				this.error = error.message || "Something went wrong";
-				console.log(this.error);
-			}
-			this.isLoading = false;
-		},
-		async loadTeamShortListedCandidates() {
-			this.isLoading = true;
-			try {
-				await this.$store.dispatch("loadTeamShortListedCandidates");
-			} catch (error) {
-				this.error = error.message || "Something went wrong";
-				console.log(this.error);
-			}
-			this.isLoading = false;
-		},
-		async loadUserProfile(id) {
-			this.loadingSpinner = true;
+      try {
+        const payload = {
+          id,
+        };
+        const response = await this.$store.dispatch("getUserProfile", payload);
+        //console.log(response);
+        this.userProfile = response.data.user;
+        //console.log(this.userProfile);
+        if (response.data.user.account_type == 1) {
+          this.candidateProfileInfo = response.data.candidate_information;
+        } else {
+          this.representativeProfileInfo =
+            response.data.representative_information[0];
+        }
+        // this.user = this.$store.getters["userProfileInfo"];
+        // this.candidateProfileInfo = this.$store.getters["candidateProfileInfo"];
+        // this.representativeProfileInfo = this.$store.getters[
+        // 	"representativeProfileInfo"
+        // ];
 
-			try {
-				const payload = {
-					id,
-				};
-				const response = await this.$store.dispatch("getUserProfile", payload);
-				//console.log(response);
-				this.userProfile = response.data.user;
-				//console.log(this.userProfile);
-				if (response.data.user.account_type == 1) {
-					this.candidateProfileInfo = response.data.candidate_information;
-				} else {
-					this.representativeProfileInfo =
-						response.data.representative_information[0];
-				}
-				// this.user = this.$store.getters["userProfileInfo"];
-				// this.candidateProfileInfo = this.$store.getters["candidateProfileInfo"];
-				// this.representativeProfileInfo = this.$store.getters[
-				// 	"representativeProfileInfo"
-				// ];
+        // if (data_input_status == 12) {
+        // 	this.$router.push("/candidate-registration");
+        // }
+        // if (data_input_status == 22) {
+        // 	this.$router.push("/representative-registration");
+        // }
+      } catch (error) {
+        this.error = error.message || "Something went wrong";
+        this.$error({
+          title: "Error!",
+          content: this.error,
+        });
+        //alert(this.error);
+      }
+      this.loadingSpinner = false;
+    },
+    async selectedCandidate(candidate) {
+      await this.loadUserProfile(candidate.user_id);
+      //this.candidateInfo = candidate.candidate;
+      //this.partnerInfo = candidate.partner;
+      //console.log(this.candidateInfo);
+      console.log(this.candidateProfileInfo);
+    },
+    getCandidateId(candidateId) {
+      //this.selectTeamModal = true;
+      this.candidateId = candidateId;
+      this.storeTeamlist();
+    },
+    storeShortlist(candidateId) {
+      const vm = this;
+      this.$confirm({
+        title: "Do you want to shortlist this candidate?",
+        content: "Are you sure?",
+        okText: "Yes",
+        okType: "primary",
+        cancelText: "No",
+        async onOk() {
+          const payload = {
+            user_id: candidateId,
+            shortlisted_by: vm.user.id,
+          };
+          const response = vm.$store.dispatch("storeShortlist", payload); // Action in the shortlist module in action
+          response.then((data) => {
+            console.log(data);
+            vm.$message.success("Candidate Shortlist Done");
+            setTimeout(() => vm.$router.go(), 1000);
+          });
+        },
+        onCancel() {
+          console.log("Cancel");
+        },
+      });
+      // const payload = {
+      // 	user_id: candidateId,
+      // 	shortlisted_by: this.user.id,
+      // };
+      // const response = this.$store.dispatch("storeShortlist", payload); // Action in the shortlist module in action
+      // response.then((data) => {
+      // 	console.log(data);
+      // 	this.$message.success("Candidate Shortlist Done");
+      // });
+    },
+    removeShortlist(shortlistId) {
+      const vm = this;
+      this.$confirm({
+        title: "Are you sure?",
+        content: "Do you want to remove this user from your shortlist?",
+        okText: "Yes",
+        okType: "danger",
+        cancelText: "No",
+        async onOk() {
+          const response = vm.$store.dispatch("removeShortlist", shortlistId); // In Shorltist Module
+          response
+            .then((data) => {
+              console.log(data);
+              vm.$message.success(
+                "Shortlisted candidate removed successfully!"
+              );
+              setTimeout(() => vm.$router.go(), 1000);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        },
+        onCancel() {
+          console.log("Cancel");
+        },
+      });
+    },
+    storeTeamlist() {
+      let teamTableId = JwtService.getTeamID();
+      const _payload = {
+        user_id: this.candidateId,
+        shortlisted_by: this.user.id,
+        shortlisted_for: teamTableId,
+      };
+      console.log(_payload);
+      const response = this.$store.dispatch("storeTeamlist", _payload); // Action in shortlist module
+      response
+        .then((data) => {
+          console.log(data);
+          this.selectTeamModal = false;
+          this.$message.success("Team Listed candidate added successfully!");
+          setTimeout(() => this.$router.go(), 1000);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
 
-				// if (data_input_status == 12) {
-				// 	this.$router.push("/candidate-registration");
-				// }
-				// if (data_input_status == 22) {
-				// 	this.$router.push("/representative-registration");
-				// }
-			} catch (error) {
-				this.error = error.message || "Something went wrong";
-				this.$error({
-					title: "Error!",
-					content: this.error,
-				});
-				//alert(this.error);
-			}
-			this.loadingSpinner = false;
-		},
-		async selectedCandidate(candidate) {
-			await this.loadUserProfile(candidate.user_id);
-			//this.candidateInfo = candidate.candidate;
-			//this.partnerInfo = candidate.partner;
-			//console.log(this.candidateInfo);
-			console.log(this.candidateProfileInfo);
-		},
-		getCandidateId(candidateId) {
-			//this.selectTeamModal = true;
-			this.candidateId = candidateId;
-			this.storeTeamlist();
-		},
-		storeShortlist(candidateId) {
-			const vm = this;
-			this.$confirm({
-				title: "Do you want to shortlist this candidate?",
-				content: "Are you sure?",
-				okText: "Yes",
-				okType: "primary",
-				cancelText: "No",
-				async onOk() {
-					const payload = {
-						user_id: candidateId,
-						shortlisted_by: vm.user.id,
-					};
-					const response = vm.$store.dispatch("storeShortlist", payload); // Action in the shortlist module in action
-					response.then((data) => {
-						console.log(data);
-						vm.$message.success("Candidate Shortlist Done");
-						setTimeout(() => vm.$router.go(), 1000);
-					});
-				},
-				onCancel() {
-					console.log("Cancel");
-				},
-			});
-			// const payload = {
-			// 	user_id: candidateId,
-			// 	shortlisted_by: this.user.id,
-			// };
-			// const response = this.$store.dispatch("storeShortlist", payload); // Action in the shortlist module in action
-			// response.then((data) => {
-			// 	console.log(data);
-			// 	this.$message.success("Candidate Shortlist Done");
-			// });
-		},
-		removeShortlist(shortlistId) {
-			const vm = this;
-			this.$confirm({
-				title: "Are you sure?",
-				content: "Do you want to remove this user from your shortlist?",
-				okText: "Yes",
-				okType: "danger",
-				cancelText: "No",
-				async onOk() {
-					const response = vm.$store.dispatch("removeShortlist", shortlistId); // In Shorltist Module
-					response
-						.then((data) => {
-							console.log(data);
-							vm.$message.success(
-								"Shortlisted candidate removed successfully!"
-							);
-							setTimeout(() => vm.$router.go(), 1000);
-						})
-						.catch((error) => {
-							console.log(error);
-						});
-				},
-				onCancel() {
-					console.log("Cancel");
-				},
-			});
-		},
-		storeTeamlist() {
-			let teamTableId = JwtService.getTeamID();
-			const _payload = {
-				user_id: this.candidateId,
-				shortlisted_by: this.user.id,
-				shortlisted_for: teamTableId,
-			};
-			console.log(_payload);
-			const response = this.$store.dispatch("storeTeamlist", _payload); // Action in shortlist module
-			response
-				.then((data) => {
-					console.log(data);
-					this.selectTeamModal = false;
-					this.$message.success("Team Listed candidate added successfully!");
-					setTimeout(() => this.$router.go(), 1000);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		},
+    getCandidateTeamId(candidateTeamId) {
+      this.candidateTeamId = candidateTeamId;
+      console.log(this.candidateTeamId);
+      // if (!this.$store.state.team.teamInfo) {
+      // 	this.selectTeamForConnect = true;
+      // } else {
+      // 	console.log(this.$store.state.team.teamInfo);
 
-		getCandidateTeamId(candidateTeamId) {
-			this.candidateTeamId = candidateTeamId;
-			console.log(this.candidateTeamId);
-			// if (!this.$store.state.team.teamInfo) {
-			// 	this.selectTeamForConnect = true;
-			// } else {
-			// 	console.log(this.$store.state.team.teamInfo);
+      // 	this.connectRequest(this.$store.state.team.teamInfo);
+      // }
+      let teamId = JwtService.getTeamIDAppWide();
+      this.connectRequest(teamId);
+    },
 
-			// 	this.connectRequest(this.$store.state.team.teamInfo);
-			// }
-			let teamId = JwtService.getTeamIDAppWide();
-			this.connectRequest(teamId);
-		},
+    connectRequest(teamId) {
+      const payload = {
+        from_team_id: teamId,
+        to_team_id: this.candidateTeamId,
+      };
+      console.log(payload);
 
-		connectRequest(teamId) {
-			const payload = {
-				from_team_id: teamId,
-				to_team_id: this.candidateTeamId,
-			};
-			console.log(payload);
-
-			const response = this.$store.dispatch("connectWithTeam", payload);
-			response
-				.then((data) => {
-					console.log(data);
-					this.$success({
-						title: "Connection Request Sent Successfully!",
-						content: data.message,
-						centered: true,
-					});
-				})
-				.catch((error) => {
-					console.log(error);
-					this.$error({
-						title: "Connection Request send not successful!",
-						content: error.response.data.message,
-						centered: true,
-					});
-				});
-			this.selectTeamForConnect = false;
-		},
-		blockCandidate(candidateId) {
-			const vm = this;
-			this.$confirm({
-				title: "Are you sure?",
-				content: "Do you want to block this candidate?",
-				okText: "Yes",
-				okType: "danger",
-				cancelText: "No",
-				async onOk() {
-					const payload = {
-						user_id: candidateId,
-						block_by: vm.user.id,
-						type: "single",
-					};
-					await vm.$store.dispatch("blockCandidate", payload);
-					vm.$message.success("Candidate block listed successfully");
-					vm.$router.go();
-				},
-				onCancel() {
-					console.log("Cancel");
-				},
-			});
-		},
-	},
+      const response = this.$store.dispatch("connectWithTeam", payload);
+      response
+        .then((data) => {
+          console.log(data);
+          this.$success({
+            title: "Connection Request Sent Successfully!",
+            content: data.message,
+            centered: true,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$error({
+            title: "Connection Request send not successful!",
+            content: error.response.data.message,
+            centered: true,
+          });
+        });
+      this.selectTeamForConnect = false;
+    },
+    blockCandidate(candidateId) {
+      const vm = this;
+      this.$confirm({
+        title: "Are you sure?",
+        content: "Do you want to block this candidate?",
+        okText: "Yes",
+        okType: "danger",
+        cancelText: "No",
+        async onOk() {
+          const payload = {
+            user_id: candidateId,
+            block_by: vm.user.id,
+            type: "single",
+          };
+          await vm.$store.dispatch("blockCandidate", payload);
+          vm.$message.success("Candidate block listed successfully");
+          vm.$router.go();
+        },
+        onCancel() {
+          console.log("Cancel");
+        },
+      });
+    },
+  },
 };
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .main-content-wrapper {
-	@media (max-width: 1024px) {
-		flex-wrap: wrap;
-	}
-	.main-content-1 {
-		width: calc(100% - 550px);
-		margin: 20px 10px;
-		//margin-left: 260px;
-		//margin-right: -800px;
-		@media (max-width: 1024px) {
-			width: calc(100% - 270px);
-		}
-		.item {
-			display: inline-block;
-			button {
-				img {
-					width: 20px;
-				}
-			}
-			.item-number {
-				width: 40px;
-				height: 40px;
-				border-radius: 50%;
-				background: $bg-secondary;
-				color: $color-white;
-				margin-left: 8px;
-			}
-		}
-		.shortlisted-candidate {
-			max-height: 350px;
-			overflow-y: auto;
-		}
-		.teamlisted-candidate {
-			max-height: 350px;
-			overflow-y: auto;
-		}
-	}
-	.main-content-2 {
-		margin: 15px;
-		width: 300px;
-		height: 100%;
-		.profile-overview {
-			padding: 10px;
-			height: 100%;
-		}
-	}
+  @media (max-width: 1024px) {
+    flex-wrap: wrap;
+  }
+  .main-content-1 {
+    width: calc(100% - 550px);
+    margin: 20px 10px;
+    //margin-left: 260px;
+    //margin-right: -800px;
+    @media (max-width: 1024px) {
+      width: calc(100% - 270px);
+    }
+    .item {
+      display: inline-block;
+      button {
+        img {
+          width: 20px;
+        }
+      }
+      .item-number {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: $bg-secondary;
+        color: $color-white;
+        margin-left: 8px;
+      }
+    }
+    .shortlisted-candidate {
+      max-height: 350px;
+      overflow-y: auto;
+    }
+    .teamlisted-candidate {
+      max-height: 350px;
+      overflow-y: auto;
+    }
+  }
+  .main-content-2 {
+    margin: 15px;
+    width: 300px;
+    height: 100%;
+    .profile-overview {
+      padding: 10px;
+      height: 100%;
+    }
+  }
 }
 </style>
