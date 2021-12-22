@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div>
-      <Layout>
+    
         <div class="container-fluid mt-5 section-padding-payment">
           <div class="d-flex flex-mb-direction">
             <div class="w-d-50 bg-1 col-flex position-relative shadow-default" :class="{'mobile-block': activeStep !== 1}">
@@ -111,7 +111,7 @@
             </div>
           </div>
         </div>
-      </Layout>
+    
 		</div>
 		<Footer />
 	</div>
@@ -149,7 +149,7 @@ export default {
 		};
 	},
 	created() {
-		this.loadUser();
+	
 		this.getSubscriptionId();
 		this.getClientSecret();
 		this.$store.dispatch("getCountries");
@@ -197,54 +197,7 @@ export default {
 			this.clientSecret = this.$store.getters["clientSecret"];
 			console.log(this.clientSecret);
 		},
-		async loadUser() {
-			this.isLoading = true;
-			try {
-				await this.$store.dispatch("getUser");
-				this.user = this.$store.getters["userInfo"];
-				this.candidateInfo = this.$store.getters["candidateInfo"];
-				this.representativeInfo = this.$store.getters["representativeInfo"];
-				this.is_verified = this.user.is_verified;
-				// if (this.is_verified == 0) {
-				// 	this.$router.push("/email-verification");
-				// }
-				// if (this.user.account_type === 0) {
-				// 	this.$router.push("/member-type");
-				// }
-				//
-				// if (this.user.account_type === 4) {
-				// 	this.$router.push("/admin");
-				// }
-        //
-				// let data_input_status = this.$store.getters["userDataInputStatus"];
-				// console.log("data input status", data_input_status);
-				// if (data_input_status == 10) {
-				// 	this.$router.push("/member-name/candidate");
-				// }
-        //
-				// if (data_input_status == 20) {
-				// 	this.$router.push("/member-name/representative");
-				// }
-        //
-				// if (data_input_status == 11) {
-				// 	this.$router.push("/candidate-registration");
-				// }
-				// if (data_input_status == 21) {
-				// 	this.$router.push("/representative-registration");
-				// }
-
-				// if (data_input_status == 12) {
-				// 	this.$router.push("/candidate-registration");
-				// }
-				// if (data_input_status == 22) {
-				// 	this.$router.push("/representative-registration");
-				// }
-			} catch (error) {
-				this.error = error.message || "Something went wrong";
-				alert(this.error);
-			}
-			this.isLoading = false;
-		},
+	
 		getSubscriptionId() {
 			const team = this.$route.params.team;
 			const subId = this.$route.params.subId;

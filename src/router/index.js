@@ -179,9 +179,7 @@ const AppRouter = new VueRouter({
                     path: "/manageteam",
                     name: "ManageTeam",
                     component: ManageTeam,
-                    meta: {
-                        requiresAuth: true,
-                    },
+                   
                 },
                 {
                     path: "/subscription",
@@ -250,6 +248,12 @@ const AppRouter = new VueRouter({
                     component: Profile,
 
                 },
+                // {
+                //     path: "/edit_profile",
+                //     name: "EditProfile",
+                //     component: C,
+
+                // },
                 {
                     path: "/user/profile/:id",
                     name: "ProfileView",
@@ -257,92 +261,92 @@ const AppRouter = new VueRouter({
 
                 },
 
-                {
-                    path: "/search",
-                    name: "Search",
-                    component: Search,
 
-                },
-                {
-                    path: "/search/advance",
-                    name: "AdvanceSearch",
-                    component: AdvanceSearch,
-
-                },
-                {
-                    path: "/visitor/search",
-                    name: "UnAuthSearch",
-                    component: UnAuthSearch,
-                    props: true,
-
-                },
                 {
                     path: "/settings",
                     name: "Settings",
                     component: Settings,
 
                 },
-                {
-                    path: "/admin",
-                    name: "Admin",
-                    component: AdminSystem,
 
-
-                    children: [{
-                        path: "",
-                        component: AdminDashboard,
-
-                    },
-                    {
-                        path: "dashboard",
-                        component: AdminDashboard,
-
-                    },
-                    {
-                        path: "users",
-                        component: AdminUsers,
-
-                    },
-                    {
-                        path: "teams",
-                        component: AdminTeams,
-
-                    },
-                    {
-                        path: "approval",
-                        component: AdminApproval,
-
-                    },
-                    {
-                        path: "support",
-                        component: AdminSupport,
-
-                    },
-                    {
-                        path: "flag",
-                        component: AdminFlag,
-
-                    },
-                    {
-                        path: "system_admin",
-                        component: SystemAdmin,
-
-                    },
-                    {
-                        path: "active_users",
-                        component: UsersList,
-
-                    },
-                    {
-                        path: "deleted_users",
-                        component: DeletedUsersList,
-
-                    },
-                    ],
-                },
             ]
         },
+        {
+            path: "/search/advance",
+            name: "AdvanceSearch",
+            component: AdvanceSearch,
+            //beforeEnter: InitRoute,
 
+            children: [
+                // {
+                //     path: "advance",
+                //     name: "AdvanceSearch",
+                //     component: AdvanceSearch,
+
+                // },
+
+            ]
+
+        },
+
+        {
+            path: "/admin",
+            name: "Admin",
+            component: AdminSystem,
+            //beforeEnter: InitRoute,
+
+            children: [{
+                path: "",
+                component: AdminDashboard,
+
+            },
+            {
+                path: "dashboard",
+                component: AdminDashboard,
+
+            },
+            {
+                path: "users",
+                component: AdminUsers,
+
+            },
+            {
+                path: "teams",
+                component: AdminTeams,
+
+            },
+            {
+                path: "approval",
+                component: AdminApproval,
+
+            },
+            {
+                path: "support",
+                component: AdminSupport,
+
+            },
+            {
+                path: "flag",
+                component: AdminFlag,
+
+            },
+            {
+                path: "system_admin",
+                component: SystemAdmin,
+
+            },
+            {
+                path: "active_users",
+                component: UsersList,
+
+            },
+            {
+                path: "deleted_users",
+                component: DeletedUsersList,
+
+            },
+            ],
+        },
 
         {
             path: "/signup",

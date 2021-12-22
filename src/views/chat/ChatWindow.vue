@@ -1,286 +1,442 @@
 <template>
-  <Layout>
-    <div class="container-fluid" style="padding-top: 0px;">
-      <div style="margin-bottom: 5px; padding-right: 1000px"></div>   <!--plz ignore this div -->
-      <div class="row">
-        <div class="col-12">
-          <div class="chat-wrapper my-2">
-            <div class="chat-left" :class="{'chat-hide': conversationTitle}">
-              <div class="chat-title d-chat-title">My {{ chatTab }} chats</div>
-              <div class="chat-search">
-                <div class="form-group has-search">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.02 40.76">
-                    <g id="Layer_2" data-name="Layer 2">
-                      <g id="draw_boxes" data-name="draw boxes">
-                        <path fill="#cccccc" class="cls-1"
-                              d="M41.67,35.89A1.33,1.33,0,0,0,41.58,34L30.34,23.79a1.34,1.34,0,0,0-1.88.09l-4,4.44a1.34,1.34,0,0,0,.09,1.88L35.78,40.41a1.32,1.32,0,0,0,1.88-.09Z"/>
-                        <path fill="#cccccc" class="cls-1"
-                              d="M14.72,0A14.72,14.72,0,1,1,9.91.81,14.73,14.73,0,0,1,14.72,0m0,4a10.82,10.82,0,0,0-3.51.59h0A10.73,10.73,0,1,0,14.72,4Z"/>
-                      </g>
+
+  <div class="container-fluid" style="padding-top: 0px">
+    <div style="margin-bottom: 5px; padding-right: 1000px"></div>
+    <!--plz ignore this div -->
+    <div class="row">
+      <div class="col-12">
+        <div class="chat-wrapper my-2">
+          <div class="chat-left" :class="{ 'chat-hide': conversationTitle }">
+            <div class="chat-title d-chat-title">My {{ chatTab }} chats</div>
+            <div class="chat-search">
+              <div class="form-group has-search">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 42.02 40.76"
+                >
+                  <g id="Layer_2" data-name="Layer 2">
+                    <g id="draw_boxes" data-name="draw boxes">
+                      <path
+                        fill="#cccccc"
+                        class="cls-1"
+                        d="M41.67,35.89A1.33,1.33,0,0,0,41.58,34L30.34,23.79a1.34,1.34,0,0,0-1.88.09l-4,4.44a1.34,1.34,0,0,0,.09,1.88L35.78,40.41a1.32,1.32,0,0,0,1.88-.09Z"
+                      />
+                      <path
+                        fill="#cccccc"
+                        class="cls-1"
+                        d="M14.72,0A14.72,14.72,0,1,1,9.91.81,14.73,14.73,0,0,1,14.72,0m0,4a10.82,10.82,0,0,0-3.51.59h0A10.73,10.73,0,1,0,14.72,4Z"
+                      />
                     </g>
-                  </svg>
-                  <input type="text" class="form-control" placeholder="Search..." v-model="conv_search_key">
-                </div>
-              </div>
-              <div class="chat-category">
-                <nav>
-                  <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-                       aria-controls="nav-home" aria-selected="true">
-                      <div class="category-item" @click="setChatTab('Recent')">
-                        <a href="#">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="recent-icon" viewBox="0 0 33.75 33.75"
-                               style="margin-top:3px">
-                            <g id="Layer_2" data-name="Layer 2">
-                              <g id="middle">
-                                <path class="cls-1"
-                                      d="M16.88,3A13.88,13.88,0,1,1,3,16.88,13.89,13.89,0,0,1,16.88,3m0-3A16.88,16.88,0,1,0,33.75,16.88,16.88,16.88,0,0,0,16.88,0Z"/>
-                                <polygon class="cls-1"
-                                         points="25.49 19.47 13.92 19.47 13.92 10.67 15.92 10.67 15.92 17.47 25.49 17.47 25.49 19.47"/>
-                              </g>
-                            </g>
-                          </svg>
-                          <span class="countOfChat">{{ totalUnreadCount }}</span>
-                          <p class="category-name">Recent</p>
-                        </a>
-                      </div>
-                    </a>
-                    <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-                       aria-controls="nav-profile" aria-selected="false">
-                      <div class="category-item" @click="setChatTab('Team')">
-                        <a href="#">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.02 31.17" style="margin-top:3px">
-                            <g id="Layer_2" data-name="Layer 2">
-                              <g id="middle">
-                                <path class="cls-1"
-                                      d="M9.37,20.31A13.43,13.43,0,0,0,6.8,24.07,14.3,14.3,0,0,0,5.64,28c0,.34-.07.68-.09,1s0,.67,0,1v1.08H2A2,2,0,0,1,.59,30.5,2,2,0,0,1,0,29.09,12.63,12.63,0,0,1,6,18.34,9.73,9.73,0,0,0,9.37,20.31Zm4.13-3.68a8.66,8.66,0,0,1-1.61-1.7,9.2,9.2,0,0,1-1.74-5.72A8.93,8.93,0,0,1,11,5.64a9.08,9.08,0,0,1,1.72-2.52A8.06,8.06,0,0,0,7.47,17.38a8.16,8.16,0,0,0,2.93,1.54c.28-.28.56-.52.84-.75l.34-.28c.3-.23.58-.44.86-.63a1.43,1.43,0,0,1,1.27-.16l.93.34A8.39,8.39,0,0,1,13.5,16.63Zm19.15,3.68a13.64,13.64,0,0,1,2.57,3.76A14.3,14.3,0,0,1,36.38,28c0,.34.07.68.09,1s0,.67,0,1v1.08H40a2,2,0,0,0,1.42-.59A2,2,0,0,0,42,29.09a12.63,12.63,0,0,0-6-10.75A9.73,9.73,0,0,1,32.65,20.31Zm-5.27-2.87.93-.34a1.43,1.43,0,0,1,1.27.16c.28.19.56.4.86.63l.34.28c.28.23.56.47.84.75a8.06,8.06,0,0,0-2.33-15.8A9.08,9.08,0,0,1,31,5.64a8.93,8.93,0,0,1,.86,3.57,9.2,9.2,0,0,1-1.74,5.72,8.66,8.66,0,0,1-1.61,1.7A8.39,8.39,0,0,1,27.38,17.44Zm2-11.93A9.23,9.23,0,0,0,20.92,0,9.23,9.23,0,0,0,11.7,9.22a9.14,9.14,0,0,0,1.94,5.66,8.6,8.6,0,0,0,1.65,1.65,9.21,9.21,0,0,0,3,1.53,9.21,9.21,0,0,0,8.28-1.53A9,9,0,0,0,28.1,15a9.23,9.23,0,0,0,1.26-9.5Zm-.45,13.11h0a4.06,4.06,0,0,0-.36-.26,1.1,1.1,0,0,0-.14-.09A16.08,16.08,0,0,1,25,19.8a17.09,17.09,0,0,1-4.08.58c-1.2.11-3.87-.67-5.72-1.28l-.48-.16-1.5-.52c-.26.17-.51.36-.75.55l-.32.27A14.67,14.67,0,0,0,11,20.31a13.86,13.86,0,0,0-2.57,3.76A14.28,14.28,0,0,0,7.26,28c0,.34-.07.68-.1,1s0,.67,0,1v1.17L34.7,31v-1.2a13.67,13.67,0,0,0-1.77-6.73,14.08,14.08,0,0,0-3.38-4Zm-.37-.26a4.06,4.06,0,0,1,.36.26m-.36-.26a4.06,4.06,0,0,1,.36.26"/>
-                              </g>
-                            </g>
-                          </svg>
-                          <span class="countOfChat">{{ teamUnreadCount }}</span>
-                          <p class="category-name">Team</p>
-                        </a>
-                      </div>
-                    </a>
-                    <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
-                       aria-controls="nav-contact" aria-selected="false">
-                      <div class="category-item" @click="setChatTab('Connected')">
-                        <a href="#">
-                          <!-- <img src="@/assets/icon/connected.svg" alt="connected icon"/> -->
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.52 39.16" style="margin-top:3px">
-                            <g id="Layer_2" data-name="Layer 2">
-                              <g id="middle">
-                                <path class="cls-1"
-                                      d="M24.46,14.64c1.43,1.43,1.62,4.38-3.42,7-5-2.6-4.85-5.55-3.42-7S21,14.17,21,15.3C21,14.17,23,13.2,24.46,14.64ZM8.59,25.1a6.48,6.48,0,1,0-6.48-6.48A6.48,6.48,0,0,0,8.59,25.1Zm1.29,0H7.3A7.37,7.37,0,0,0,0,31.59a.84.84,0,0,0,.85.91H16.32a.84.84,0,0,0,.85-.91A7.37,7.37,0,0,0,9.88,25.15Zm24-7.43a6.48,6.48,0,1,0-6.48-6.48A6.48,6.48,0,0,0,33.93,17.72Zm1.29.05H32.64a7.38,7.38,0,0,0-7.3,6.44.85.85,0,0,0,.86.91H41.66a.84.84,0,0,0,.85-.91A7.37,7.37,0,0,0,35.22,17.77ZM7,11a1.53,1.53,0,0,0,.68.23,1.48,1.48,0,0,0,1.38-.65,12.12,12.12,0,0,1,11-4.86l-.92,2.71,8.72-1.76L22,0,21,2.84A15.07,15.07,0,0,0,6.59,8.94,1.49,1.49,0,0,0,7,11ZM37,26a1.49,1.49,0,0,0-2,.73A12.15,12.15,0,0,1,25,33.22l.48-2.83-8.34,3.1L24,39.16l.51-3h.63a15.08,15.08,0,0,0,12.68-8.25A1.49,1.49,0,0,0,37,26Z"/>
-                              </g>
-                            </g>
-                          </svg>
-                          <span class="countOfChat">{{ connectedUnreadCount }}</span>
-                          <p class="category-name">Connected</p>
-                        </a>
-                      </div>
-                    </a>
-                    <a class="nav-link mt-2">
-                      <a-dropdown>
-                        <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                          <a-icon type="more" class="fs-30 font-weight-bolder br-50 bg-c9 color-primary"/>
-                        </a>
-                        <a-menu slot="overlay" class="text-center px-2">
-                          <a-menu-item class="border-bottom">
-                            <a class="fs-12 color-primary">Private chat request</a>
-                          </a-menu-item>
-                          <a-menu-item class="border-bottom">
-                            <a class="fs-12 color-primary">Chat history</a>
-                          </a-menu-item>
-                          <a-menu-item class="border-bottom">
-                            <a class="fs-12 color-primary">Archived chat</a>
-                          </a-menu-item>
-                        </a-menu>
-                      </a-dropdown>
-                    </a>
-                  </div>
-                </nav>
-                <div class="category-item">
-
-                </div>
-              </div>
-              <div class="chat-item-wrapper">
-                <div class="tab-content" id="nav-tabContent">
-                  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <div
-                        class="chat-item"
-                        v-for="item in chatHistory"
-                        :key="item.team_id"
-                    >
-                      <ChatListItem
-                          :item="item"
-                          action
-                          class="w-full pr-3 cursor-pointer"
-                          @click.native="getIndividualChat(item)"
-                      />
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                    <div class="chat-item"
-                         v-for="item in teamChat"
-                         v-if="item.user_id != getAuthUserId"
-                         :key="item.team_id"
-                    >
-                      <ChatListItem
-                          :item="item"
-                          action
-                          class="w-full pr-3 cursor-pointer"
-                          @click.native="getIndividualChat(item)"
-                      />
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                    <div class="chat-item"
-                         v-for="item in connectedTeam"
-                         :key="item.team_id"
-                    >
-                      <ChatListItem
-                          :item="item"
-                          action
-                          class="w-full pr-3 cursor-pointer"
-                          @click.native="getConnectedChat(item)"
-                      />
-                    </div>
-                  </div>
-                </div>
-
+                  </g>
+                </svg>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Search..."
+                  v-model="conv_search_key"
+                />
               </div>
             </div>
-            <div class="chat-right" :class="{'chat-hide': !conversationTitle}">
-              <button class="btn btn-primary flex justify-content-center align-items-center my-2 d-md-none"
-                      @click="backToTabList()">
-                <a-icon type="caret-left"/>
-              </button>
-              <div class="header clearfix">
-                <div class="left">
-                  <div class="top">
-                    <div class="item-img">
-                      <img src="../../assets/info-img.png" alt="info image">
-                      <span></span>
+            <div class="chat-category">
+              <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                  <a
+                    class="nav-link active"
+                    id="nav-home-tab"
+                    data-toggle="tab"
+                    href="#nav-home"
+                    role="tab"
+                    aria-controls="nav-home"
+                    aria-selected="true"
+                  >
+                    <div class="category-item" @click="setChatTab('Recent')">
+                      <a href="#">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="recent-icon"
+                          viewBox="0 0 33.75 33.75"
+                          style="margin-top: 3px"
+                        >
+                          <g id="Layer_2" data-name="Layer 2">
+                            <g id="middle">
+                              <path
+                                class="cls-1"
+                                d="M16.88,3A13.88,13.88,0,1,1,3,16.88,13.89,13.89,0,0,1,16.88,3m0-3A16.88,16.88,0,1,0,33.75,16.88,16.88,16.88,0,0,0,16.88,0Z"
+                              />
+                              <polygon
+                                class="cls-1"
+                                points="25.49 19.47 13.92 19.47 13.92 10.67 15.92 10.67 15.92 17.47 25.49 17.47 25.49 19.47"
+                              />
+                            </g>
+                          </g>
+                        </svg>
+                        <span class="countOfChat">{{ totalUnreadCount }}</span>
+                        <p class="category-name">Recent</p>
+                      </a>
                     </div>
-                    <div class="chat-info">
-                      <div class="chat-name">{{ conversationTitle }}</div>
-                      <div class="last-chat">Active now (2 members)</div>
+                  </a>
+                  <a
+                    class="nav-link"
+                    id="nav-profile-tab"
+                    data-toggle="tab"
+                    href="#nav-profile"
+                    role="tab"
+                    aria-controls="nav-profile"
+                    aria-selected="false"
+                  >
+                    <div class="category-item" @click="setChatTab('Team')">
+                      <a href="#">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 42.02 31.17"
+                          style="margin-top: 3px"
+                        >
+                          <g id="Layer_2" data-name="Layer 2">
+                            <g id="middle">
+                              <path
+                                class="cls-1"
+                                d="M9.37,20.31A13.43,13.43,0,0,0,6.8,24.07,14.3,14.3,0,0,0,5.64,28c0,.34-.07.68-.09,1s0,.67,0,1v1.08H2A2,2,0,0,1,.59,30.5,2,2,0,0,1,0,29.09,12.63,12.63,0,0,1,6,18.34,9.73,9.73,0,0,0,9.37,20.31Zm4.13-3.68a8.66,8.66,0,0,1-1.61-1.7,9.2,9.2,0,0,1-1.74-5.72A8.93,8.93,0,0,1,11,5.64a9.08,9.08,0,0,1,1.72-2.52A8.06,8.06,0,0,0,7.47,17.38a8.16,8.16,0,0,0,2.93,1.54c.28-.28.56-.52.84-.75l.34-.28c.3-.23.58-.44.86-.63a1.43,1.43,0,0,1,1.27-.16l.93.34A8.39,8.39,0,0,1,13.5,16.63Zm19.15,3.68a13.64,13.64,0,0,1,2.57,3.76A14.3,14.3,0,0,1,36.38,28c0,.34.07.68.09,1s0,.67,0,1v1.08H40a2,2,0,0,0,1.42-.59A2,2,0,0,0,42,29.09a12.63,12.63,0,0,0-6-10.75A9.73,9.73,0,0,1,32.65,20.31Zm-5.27-2.87.93-.34a1.43,1.43,0,0,1,1.27.16c.28.19.56.4.86.63l.34.28c.28.23.56.47.84.75a8.06,8.06,0,0,0-2.33-15.8A9.08,9.08,0,0,1,31,5.64a8.93,8.93,0,0,1,.86,3.57,9.2,9.2,0,0,1-1.74,5.72,8.66,8.66,0,0,1-1.61,1.7A8.39,8.39,0,0,1,27.38,17.44Zm2-11.93A9.23,9.23,0,0,0,20.92,0,9.23,9.23,0,0,0,11.7,9.22a9.14,9.14,0,0,0,1.94,5.66,8.6,8.6,0,0,0,1.65,1.65,9.21,9.21,0,0,0,3,1.53,9.21,9.21,0,0,0,8.28-1.53A9,9,0,0,0,28.1,15a9.23,9.23,0,0,0,1.26-9.5Zm-.45,13.11h0a4.06,4.06,0,0,0-.36-.26,1.1,1.1,0,0,0-.14-.09A16.08,16.08,0,0,1,25,19.8a17.09,17.09,0,0,1-4.08.58c-1.2.11-3.87-.67-5.72-1.28l-.48-.16-1.5-.52c-.26.17-.51.36-.75.55l-.32.27A14.67,14.67,0,0,0,11,20.31a13.86,13.86,0,0,0-2.57,3.76A14.28,14.28,0,0,0,7.26,28c0,.34-.07.68-.1,1s0,.67,0,1v1.17L34.7,31v-1.2a13.67,13.67,0,0,0-1.77-6.73,14.08,14.08,0,0,0-3.38-4Zm-.37-.26a4.06,4.06,0,0,1,.36.26m-.36-.26a4.06,4.06,0,0,1,.36.26"
+                              />
+                            </g>
+                          </g>
+                        </svg>
+                        <span class="countOfChat">{{ teamUnreadCount }}</span>
+                        <p class="category-name">Team</p>
+                      </a>
                     </div>
+                  </a>
+                  <a
+                    class="nav-link"
+                    id="nav-contact-tab"
+                    data-toggle="tab"
+                    href="#nav-contact"
+                    role="tab"
+                    aria-controls="nav-contact"
+                    aria-selected="false"
+                  >
+                    <div class="category-item" @click="setChatTab('Connected')">
+                      <a href="#">
+                        <!-- <img src="@/assets/icon/connected.svg" alt="connected icon"/> -->
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 42.52 39.16"
+                          style="margin-top: 3px"
+                        >
+                          <g id="Layer_2" data-name="Layer 2">
+                            <g id="middle">
+                              <path
+                                class="cls-1"
+                                d="M24.46,14.64c1.43,1.43,1.62,4.38-3.42,7-5-2.6-4.85-5.55-3.42-7S21,14.17,21,15.3C21,14.17,23,13.2,24.46,14.64ZM8.59,25.1a6.48,6.48,0,1,0-6.48-6.48A6.48,6.48,0,0,0,8.59,25.1Zm1.29,0H7.3A7.37,7.37,0,0,0,0,31.59a.84.84,0,0,0,.85.91H16.32a.84.84,0,0,0,.85-.91A7.37,7.37,0,0,0,9.88,25.15Zm24-7.43a6.48,6.48,0,1,0-6.48-6.48A6.48,6.48,0,0,0,33.93,17.72Zm1.29.05H32.64a7.38,7.38,0,0,0-7.3,6.44.85.85,0,0,0,.86.91H41.66a.84.84,0,0,0,.85-.91A7.37,7.37,0,0,0,35.22,17.77ZM7,11a1.53,1.53,0,0,0,.68.23,1.48,1.48,0,0,0,1.38-.65,12.12,12.12,0,0,1,11-4.86l-.92,2.71,8.72-1.76L22,0,21,2.84A15.07,15.07,0,0,0,6.59,8.94,1.49,1.49,0,0,0,7,11ZM37,26a1.49,1.49,0,0,0-2,.73A12.15,12.15,0,0,1,25,33.22l.48-2.83-8.34,3.1L24,39.16l.51-3h.63a15.08,15.08,0,0,0,12.68-8.25A1.49,1.49,0,0,0,37,26Z"
+                              />
+                            </g>
+                          </g>
+                        </svg>
+                        <span class="countOfChat">{{
+                          connectedUnreadCount
+                        }}</span>
+                        <p class="category-name">Connected</p>
+                      </a>
+                    </div>
+                  </a>
+                  <a class="nav-link mt-2">
+                    <a-dropdown>
+                      <a
+                        class="ant-dropdown-link"
+                        @click="(e) => e.preventDefault()"
+                      >
+                        <a-icon
+                          type="more"
+                          class="
+                            fs-30
+                            font-weight-bolder
+                            br-50
+                            bg-c9
+                            color-primary
+                          "
+                        />
+                      </a>
+                      <a-menu slot="overlay" class="text-center px-2">
+                        <a-menu-item class="border-bottom">
+                          <a class="fs-12 color-primary"
+                            >Private chat request</a
+                          >
+                        </a-menu-item>
+                        <a-menu-item class="border-bottom">
+                          <a class="fs-12 color-primary">Chat history</a>
+                        </a-menu-item>
+                        <a-menu-item class="border-bottom">
+                          <a class="fs-12 color-primary">Archived chat</a>
+                        </a-menu-item>
+                      </a-menu>
+                    </a-dropdown>
+                  </a>
+                </div>
+              </nav>
+              <div class="category-item"></div>
+            </div>
+            <div class="chat-item-wrapper">
+              <div class="tab-content" id="nav-tabContent">
+                <div
+                  class="tab-pane fade show active"
+                  id="nav-home"
+                  role="tabpanel"
+                  aria-labelledby="nav-home-tab"
+                >
+                  <div
+                    class="chat-item"
+                    v-for="item in chatHistory"
+                    :key="item.team_id"
+                  >
+                    <ChatListItem
+                      :item="item"
+                      action
+                      class="w-full pr-3 cursor-pointer"
+                      @click.native="getIndividualChat(item)"
+                    />
                   </div>
                 </div>
-                <div class="middle">
-                  <div class="chat-group">{{ getChatType }} chat</div>
+                <div
+                  class="tab-pane fade"
+                  id="nav-profile"
+                  role="tabpanel"
+                  aria-labelledby="nav-profile-tab"
+                >
+                  <ng-container v-if="item.user_id != getAuthUserId">
+                    <div
+                      class="chat-item"
+                      v-for="item in teamChat"
+                      :key="item.team_id"
+                    >
+                      <ChatListItem
+                        :item="item"
+                        action
+                        class="w-full pr-3 cursor-pointer"
+                        @click.native="getIndividualChat(item)"
+                      />
+                    </div>
+                  </ng-container>
                 </div>
-                <div class="right">
-                  <a-dropdown>
-                    <a class="ant-dropdown-link py-2" @click="e => e.preventDefault()">
-                      <a-icon type="more" class="fs-30 font-weight-bolder rotate-90 br-50 bg-c9 color-primary"/>
-                    </a>
-                    <a-menu slot="overlay" class="text-center px-2">
-                      <a-menu-item class="border-bottom">
-                        <a class="fs-12 color-primary">Mute this chat</a>
-                      </a-menu-item>
-                      <a-menu-item class="border-bottom">
-                        <a class="fs-12 color-primary">Mark as read</a>
-                      </a-menu-item>
-                      <a-menu-item class="border-bottom">
-                        <a class="fs-12 color-primary">Add to chat history</a>
-                      </a-menu-item>
-                      <a-menu-item class="border-bottom">
-                        <a class="fs-12 color-primary">Archive chat</a>
-                      </a-menu-item>
-                      <a-menu-item>
-                        <a class="text-danger fs-12">Delete chat</a>
-                      </a-menu-item>
-                    </a-menu>
-                  </a-dropdown>
+                <div
+                  class="tab-pane fade"
+                  id="nav-contact"
+                  role="tabpanel"
+                  aria-labelledby="nav-contact-tab"
+                >
+                  <div
+                    class="chat-item"
+                    v-for="item in connectedTeam"
+                    :key="item.team_id"
+                  >
+                    <ChatListItem
+                      :item="item"
+                      action
+                      class="w-full pr-3 cursor-pointer"
+                      @click.native="getConnectedChat(item)"
+                    />
+                  </div>
                 </div>
               </div>
-              <div class="chat-area">
-                <div class="chat-box" ref="chatbox" id="chat_box">
-                  <div
-                      v-for="item in chats"
-                      :key="item.id"
-                      :class="['chats', (parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId)) ? 'me' : '']"
-                  >
-                    <div class="item-img">
-                      <img src="../../assets/info-img.png" alt="info image"/>
-                      <span></span>
-                    </div>
-                    <div class="message">
-                      <p class="msg-text">{{ item.body || '' }}</p>
-                      <p class="date-time"> {{ messageCreatedAt(item.created_at) }} </p>
-                    </div>
-
+            </div>
+          </div>
+          <div class="chat-right" :class="{ 'chat-hide': !conversationTitle }">
+            <button
+              class="
+                btn btn-primary
+                flex
+                justify-content-center
+                align-items-center
+                my-2
+                d-md-none
+              "
+              @click="backToTabList()"
+            >
+              <a-icon type="caret-left" />
+            </button>
+            <div class="header clearfix">
+              <div class="left">
+                <div class="top">
+                  <div class="item-img">
+                    <img src="../../assets/info-img.png" alt="info image" />
+                    <span></span>
+                  </div>
+                  <div class="chat-info">
+                    <div class="chat-name">{{ conversationTitle }}</div>
+                    <div class="last-chat">Active now (2 members)</div>
                   </div>
                 </div>
-                <div class="footer">
-<!--                   <div class="footer-top"><strong>Someone</strong> is typing...</div>-->
-                  <div class="footer-bottom">
-                    <form action="#" @submit.prevent="sendMsg">
-                      <div class="left">
-                        <div class="message-box">
-                          <button class="btn-emoji px-2">&#128528;</button>
-                          <textarea name="message" id="" cols="30" rows="10" placeholder="Enter message..."
-                                    v-model="msg_text"></textarea>
-                          <div class="position-absolute msgbox-right">
-                            <div class="flex">
-                              <button><img src="../../assets/icon/microphone.png" alt="icon" class="mr-2 microphone" /></button>
-                              <button><a-icon type="file-image" class="color-primary" /></button>
-                            </div>
+              </div>
+              <div class="middle">
+                <div class="chat-group">{{ getChatType }} chat</div>
+              </div>
+              <div class="right">
+                <a-dropdown>
+                  <a
+                    class="ant-dropdown-link py-2"
+                    @click="(e) => e.preventDefault()"
+                  >
+                    <a-icon
+                      type="more"
+                      class="
+                        fs-30
+                        font-weight-bolder
+                        rotate-90
+                        br-50
+                        bg-c9
+                        color-primary
+                      "
+                    />
+                  </a>
+                  <a-menu slot="overlay" class="text-center px-2">
+                    <a-menu-item class="border-bottom">
+                      <a class="fs-12 color-primary">Mute this chat</a>
+                    </a-menu-item>
+                    <a-menu-item class="border-bottom">
+                      <a class="fs-12 color-primary">Mark as read</a>
+                    </a-menu-item>
+                    <a-menu-item class="border-bottom">
+                      <a class="fs-12 color-primary">Add to chat history</a>
+                    </a-menu-item>
+                    <a-menu-item class="border-bottom">
+                      <a class="fs-12 color-primary">Archive chat</a>
+                    </a-menu-item>
+                    <a-menu-item>
+                      <a class="text-danger fs-12">Delete chat</a>
+                    </a-menu-item>
+                  </a-menu>
+                </a-dropdown>
+              </div>
+            </div>
+            <div class="chat-area">
+              <div class="chat-box" ref="chatbox" id="chat_box">
+                <div
+                  v-for="item in chats"
+                  :key="item.id"
+                  :class="[
+                    'chats',
+                    parseInt(item.senderId) == parseInt(getAuthUserId) ||
+                    parseInt(item.sender) == parseInt(getAuthUserId)
+                      ? 'me'
+                      : '',
+                  ]"
+                >
+                  <div class="item-img">
+                    <img src="../../assets/info-img.png" alt="info image" />
+                    <span></span>
+                  </div>
+                  <div class="message">
+                    <p class="msg-text">{{ item.body || "" }}</p>
+                    <p class="date-time">
+                      {{ messageCreatedAt(item.created_at) }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="footer">
+                <!--                   <div class="footer-top"><strong>Someone</strong> is typing...</div>-->
+                <div class="footer-bottom">
+                  <form action="#" @submit.prevent="sendMsg">
+                    <div class="left">
+                      <div class="message-box">
+                        <button class="btn-emoji px-2">&#128528;</button>
+                        <textarea
+                          name="message"
+                          id=""
+                          cols="30"
+                          rows="10"
+                          placeholder="Enter message..."
+                          v-model="msg_text"
+                        ></textarea>
+                        <div class="position-absolute msgbox-right">
+                          <div class="flex">
+                            <button>
+                              <img
+                                src="../../assets/icon/microphone.png"
+                                alt="icon"
+                                class="mr-2 microphone"
+                              />
+                            </button>
+                            <button>
+                              <a-icon type="file-image" class="color-primary" />
+                            </button>
                           </div>
                         </div>
-                        <!-- <button :disabled="returnMsgSendBtnDeactiveStatus" class="btn btn-primary btn-submit js-msg-send">  -->
-                        <button class="btn btn-primary btn-submit js-msg-send">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.68 18.77">
-                            <g id="Layer_2" data-name="Layer 2">
-                              <g id="middle" fill="white">
-                                <polygon class="cls-1" points="8.6 12.29 7.06 13.34 6.86 11.05 8.6 12.29"/>
-                                <polygon class="cls-1" points="0 6.23 25.68 0 17.75 18.77 0 6.23"/>
-                                <polygon class="cls-2" points="6.86 11.05 24.95 0.57 8.6 12.29 6.86 11.05"/>
-                              </g>
-                            </g>
-                          </svg>
-                          Send
-                        </button>
                       </div>
-                    </form>
-                  </div>
+                      <!-- <button :disabled="returnMsgSendBtnDeactiveStatus" class="btn btn-primary btn-submit js-msg-send">  -->
+                      <button class="btn btn-primary btn-submit js-msg-send">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 25.68 18.77"
+                        >
+                          <g id="Layer_2" data-name="Layer 2">
+                            <g id="middle" fill="white">
+                              <polygon
+                                class="cls-1"
+                                points="8.6 12.29 7.06 13.34 6.86 11.05 8.6 12.29"
+                              />
+                              <polygon
+                                class="cls-1"
+                                points="0 6.23 25.68 0 17.75 18.77 0 6.23"
+                              />
+                              <polygon
+                                class="cls-2"
+                                points="6.86 11.05 24.95 0.57 8.6 12.29 6.86 11.05"
+                              />
+                            </g>
+                          </g>
+                        </svg>
+                        Send
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div style="margin-top: 100px;"></div>   <!--plz ignore this div -->
     </div>
-  </Layout>
+    <div style="margin-top: 100px"></div>
+    <!--plz ignore this div -->
+  </div>
 </template>
 
 <script>
-import ChatListItem from '@/components/notification/ChatListItem';
-import ApiService from '@/services/api.service';
-import {pick, map} from 'lodash';
+import ChatListItem from "@/components/notification/ChatListItem";
+import ApiService from "@/services/api.service";
+import { pick, map } from "lodash";
 
-const messageKeys = ['id', 'user_id', 'chat_id', 'team_id', 'from_team_id', 'to_team_id', 'private_receiver_id', 'private_team_chat_id', 'body', 'seen', 'created_at'];
-import {format} from 'timeago.js'
+const messageKeys = [
+  "id",
+  "user_id",
+  "chat_id",
+  "team_id",
+  "from_team_id",
+  "to_team_id",
+  "private_receiver_id",
+  "private_team_chat_id",
+  "body",
+  "seen",
+  "created_at",
+];
+import { format } from "timeago.js";
 
 export default {
-  name: 'ChatWindow',
+  name: "ChatWindow",
   sockets: {
     connect: function () {
-      console.log('socket connected')
+      console.log("socket connected");
     },
     ping: function (data) {
-      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
-    }
+      console.log(
+        'this method was fired by the socket server. eg: io.emit("customEmit", data)'
+      );
+    },
   },
   data() {
     return {
-      conversationTitle: '',
-      type: 'team chat',
-      msg_text: '',
+      conversationTitle: "",
+      type: "team chat",
+      msg_text: "",
       teamChat: [],
       chatHistory: [],
       chats: [],
@@ -293,22 +449,22 @@ export default {
       inConnectedChat: false,
       chat_type: null,
       chat_id: null,
-      chatTab: 'Recent',
+      chatTab: "Recent",
       private_chat: {
         to_team_id: null,
-        receiver: null
-      }
-    }
+        receiver: null,
+      },
+    };
   },
   components: {
-    ChatListItem
+    ChatListItem,
   },
   watch: {
     scrollFlag(newValue, oldValue) {
       // Our fancy notification (2).
       // console.log(oldValue);
       if (newValue) {
-        console.log('scroll down needed now');
+        console.log("scroll down needed now");
 
         // var msg_list = this.$store.state.chat.messages;
         // var last_msg = msg_list[msg_list.length - 1];
@@ -316,19 +472,19 @@ export default {
         // console.log('id found:',last_msg_id);
 
         var element = document.getElementById("chat_box");
-        let height = (element.scrollHeight - element.offsetHeight); // this isn't perfect
-        let offset = (element.offsetHeight - element.clientHeight); // and does this fix it? seems to...
+        let height = element.scrollHeight - element.offsetHeight; // this isn't perfect
+        let offset = element.offsetHeight - element.clientHeight; // and does this fix it? seems to...
         let scrollMax = height + offset;
 
         element.scrollTop = scrollMax;
 
-        console.log(element.scrollHeight)
+        console.log(element.scrollHeight);
 
         // this.$refs.chatbox.scrollTop = this.$refs.chatbox.lastElementChild.offsetTop;
         //
-        this.$store.dispatch('setScrollDownStatus', false);
+        this.$store.dispatch("setScrollDownStatus", false);
       }
-    }
+    },
   },
   computed: {
     scrollFlag: function () {
@@ -340,7 +496,7 @@ export default {
     teamUnreadCount: function () {
       var count = 0;
       for (var i = 0; i < this.$store.state.chat.unread_records.length; i++) {
-        if (this.$store.state.chat.unread_records[i].conv_type == 'team chat') {
+        if (this.$store.state.chat.unread_records[i].conv_type == "team chat") {
           count = count + 1;
         }
       }
@@ -349,7 +505,7 @@ export default {
     connectedUnreadCount: function () {
       var count = 0;
       for (var i = 0; i < this.$store.state.chat.unread_records.length; i++) {
-        if (this.$store.state.chat.unread_records[i].conv_type == 'connected') {
+        if (this.$store.state.chat.unread_records[i].conv_type == "connected") {
           count = count + 1;
         }
       }
@@ -359,19 +515,23 @@ export default {
       var connectedConversations = [];
       if (this.conv_search_key == null || this.conv_search_key == "") {
         for (var i = 0; i < this.$store.state.chat.conversations.length; i++) {
-          if (this.$store.state.chat.conversations[i].type == 'connected') {
-            connectedConversations.push(this.$store.state.chat.conversations[i]);
+          if (this.$store.state.chat.conversations[i].type == "connected") {
+            connectedConversations.push(
+              this.$store.state.chat.conversations[i]
+            );
           }
         }
         return connectedConversations;
       } else {
         var lKey = this.conv_search_key.toLowerCase();
         for (var i = 0; i < this.$store.state.chat.conversations.length; i++) {
-          var lTitle = this.$store.state.chat.conversations[i].title.toLowerCase();
-          if (this.$store.state.chat.conversations[i].type == 'connected') {
-
+          var lTitle =
+            this.$store.state.chat.conversations[i].title.toLowerCase();
+          if (this.$store.state.chat.conversations[i].type == "connected") {
             if (lTitle.includes(lKey)) {
-              connectedConversations.push(this.$store.state.chat.conversations[i]);
+              connectedConversations.push(
+                this.$store.state.chat.conversations[i]
+              );
             }
           }
         }
@@ -379,7 +539,7 @@ export default {
       }
     },
     getAuthUserId() {
-      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let loggedUser = JSON.parse(localStorage.getItem("user"));
       if (loggedUser) {
         return loggedUser.id;
       }
@@ -387,11 +547,13 @@ export default {
     },
     getChatType() {
       if (this.inConnectedChat) {
-        return 'Connected Group';
+        return "Connected Group";
       } else {
-        return this.one_to_one_user ? 'Private' : this.conversationTitle + ' Group'
+        return this.one_to_one_user
+          ? "Private"
+          : this.conversationTitle + " Group";
       }
-    }
+    },
   },
   created() {
     this.loadTeamChat();
@@ -399,36 +561,46 @@ export default {
     this.loadConnectedGroup();
   },
   mounted() {
-    let loggedUser = JSON.parse(localStorage.getItem('user'));
+    let loggedUser = JSON.parse(localStorage.getItem("user"));
     if (loggedUser) {
-      this.$socket.emit('ping', {user_id: loggedUser.id});
+      this.$socket.emit("ping", { user_id: loggedUser.id });
 
-      this.sockets.subscribe('ping_success', function (res) {
+      this.sockets.subscribe("ping_success", function (res) {
         // console.log(res);
         if (res && res.online_users) {
           this.online_users = res.online_users;
         }
       });
 
-      this.sockets.subscribe('receive_message', function (res) {
+      this.sockets.subscribe("receive_message", function (res) {
         res.sender = res.senderInfo;
         // console.log(res)
-        if(this.chat_type && (this.activeTeam == res.target_opened_chat || this.one_to_one_user == res.target_opened_chat || this.inConnectedChat || this.private_chat)) {
-          if(this.chats.length <= 0) {
+        if (
+          this.chat_type &&
+          (this.activeTeam == res.target_opened_chat ||
+            this.one_to_one_user == res.target_opened_chat ||
+            this.inConnectedChat ||
+            this.private_chat)
+        ) {
+          if (this.chats.length <= 0) {
             this.chats.push(res);
           } else {
             this.chats.unshift(res);
           }
         }
 
-        let teamPersonalChat = this.teamChat.find(item => item.user_id == res.senderId);
-        if(teamPersonalChat) {
+        let teamPersonalChat = this.teamChat.find(
+          (item) => item.user_id == res.senderId
+        );
+        if (teamPersonalChat) {
           teamPersonalChat.message.body = res.body;
           teamPersonalChat.message.created_at = res.created_at;
           teamPersonalChat.message.seen = 0;
         }
-        let teamChat = this.teamChat.find(item => item.team_id == res.target_opened_chat);
-        if(teamChat) {
+        let teamChat = this.teamChat.find(
+          (item) => item.team_id == res.target_opened_chat
+        );
+        if (teamChat) {
           teamChat.last_group_message.body = res.body;
           teamChat.last_group_message.created_at = res.created_at;
           teamChat.last_group_message.seen = 0;
@@ -438,15 +610,22 @@ export default {
           teamChat.message.seen = 0;
         }
 
-        let recentTeamMemberChat = this.chatHistory.find(item => item.user_id == res.target_opened_chat);
-        if(recentTeamMemberChat) {
+        let recentTeamMemberChat = this.chatHistory.find(
+          (item) => item.user_id == res.target_opened_chat
+        );
+        if (recentTeamMemberChat) {
           recentTeamMemberChat.message.body = res.body;
           recentTeamMemberChat.message.created_at = res.created_at;
           recentTeamMemberChat.message.seen = 0;
         }
 
-        let recentPrivateChat = this.chatHistory.find(item => res.target_opened_chat && item.private_team_chat_id == res.target_opened_chat.private_team_chat_id);
-        if(recentPrivateChat) {
+        let recentPrivateChat = this.chatHistory.find(
+          (item) =>
+            res.target_opened_chat &&
+            item.private_team_chat_id ==
+              res.target_opened_chat.private_team_chat_id
+        );
+        if (recentPrivateChat) {
           recentPrivateChat.message.body = res.body;
           recentPrivateChat.message.created_at = res.created_at;
           recentPrivateChat.message.seen = 0;
@@ -471,61 +650,68 @@ export default {
       this.activeTeam = data.team_id;
       let group = data;
       group.message = pick(data.last_group_message, messageKeys);
-      group.label = 'Group chat';
-      group.state = 'Typing...'
+      group.label = "Group chat";
+      group.state = "Typing...";
 
-      return [group, ...map(data.team_members, item => {
-        return {
-          label: 'Team member',
-          user_id: item.user_id,
-          state: 'seen',
-          name: item.user?.full_name || 'user name',
-          logo: item.user?.avatar,
-          message: pick(item.last_message, messageKeys)
-        }
-      })];
+      return [
+        group,
+        ...map(data.team_members, (item) => {
+          return {
+            label: "Team member",
+            user_id: item.user_id,
+            state: "seen",
+            name: item.user?.full_name || "user name",
+            logo: item.user?.avatar,
+            message: pick(item.last_message, messageKeys),
+          };
+        }),
+      ];
     },
     processChatHistoryResponse(data) {
-      let singleChat = map(data.single_chat, item => {
+      let singleChat = map(data.single_chat, (item) => {
         return {
-          label: 'Team member',
-          state: 'seen',
-          name: item.user?.full_name || 'user name',
+          label: "Team member",
+          state: "seen",
+          name: item.user?.full_name || "user name",
           logo: item.user?.avatar,
           user_id: item.user.id,
-          message: pick(item.last_message, messageKeys)
-        }
+          message: pick(item.last_message, messageKeys),
+        };
       });
 
-      let privateChat = map(data.private_chat, item => {
+      let privateChat = map(data.private_chat, (item) => {
         return {
-          label: 'Private chat',
-          state: 'seen',
-          name: item.private_receiver_data?.full_name || 'user name',
+          label: "Private chat",
+          state: "seen",
+          name: item.private_receiver_data?.full_name || "user name",
           logo: item.private_receiver_data?.avatar,
           to_team_id: item.to_team_id,
           from_team_id: item.from_team_id,
           private_receiver_id: item.receiver,
           private_team_chat_id: item.id,
-          message: pick(item.last_private_message, messageKeys)
-        }
+          message: pick(item.last_private_message, messageKeys),
+        };
       });
 
-      let lastGroupMsg = [{
-        label: 'Group chat',
-        state: 'Typing...',
-        name: data.last_group_msg.team.name,
-        logo: data.last_group_msg.team.logo,
-        message: pick(data.last_group_msg, messageKeys)
-      }]
+      let lastGroupMsg = [
+        {
+          label: "Group chat",
+          state: "Typing...",
+          name: data.last_group_msg.team.name,
+          logo: data.last_group_msg.team.logo,
+          message: pick(data.last_group_msg, messageKeys),
+        },
+      ];
 
       return [...lastGroupMsg, ...singleChat, ...privateChat];
     },
     async loadTeamChat() {
       try {
-        let {data} = await ApiService.get('/v1/team-chat').then(res => res.data);
+        let { data } = await ApiService.get("/v1/team-chat").then(
+          (res) => res.data
+        );
         if (data && data.team_members) {
-          this.teamMembers = map(data.team_members, item => {
+          this.teamMembers = map(data.team_members, (item) => {
             return item.user_id.toString();
           });
         }
@@ -537,17 +723,20 @@ export default {
     async loadConnectedGroup() {
       try {
         let payload = {
-          team_id: 1
+          team_id: 1,
         };
-        let {data} = await ApiService.post('/v1/connection-list-chat', payload).then(res => res.data);
+        let { data } = await ApiService.post(
+          "/v1/connection-list-chat",
+          payload
+        ).then((res) => res.data);
         if (data && data.connected_teams) {
-          this.connectedTeam = map(data.connected_teams, item => {
+          this.connectedTeam = map(data.connected_teams, (item) => {
             return {
-              label: 'Connected Team',
-              state: 'seen',
-              name: item.team_name ? item.team_name : 'user name',
-              team_id: item.team_id
-            }
+              label: "Connected Team",
+              state: "seen",
+              name: item.team_name ? item.team_name : "user name",
+              team_id: item.team_id,
+            };
           });
         }
         // this.connectedChat = this.processTeamChatResponse(data);
@@ -557,7 +746,9 @@ export default {
     },
     async loadChatHistory() {
       try {
-        let {data} = await ApiService.get('/v1/chat-history').then(res => res.data);
+        let { data } = await ApiService.get("/v1/chat-history").then(
+          (res) => res.data
+        );
         this.chatHistory = this.processChatHistoryResponse(data);
       } catch (e) {
         console.error(e);
@@ -566,16 +757,18 @@ export default {
 
     async loadIndividualChatHistory(payload) {
       try {
-        let url = 'individual-chat-history';
-        if(payload.team_chat_id) {
-          url = 'connected-team-chat-history';
+        let url = "individual-chat-history";
+        if (payload.team_chat_id) {
+          url = "connected-team-chat-history";
         }
-        let {data} = await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
+        let { data } = await ApiService.post(`/v1/${url}`, payload).then(
+          (res) => res.data
+        );
         if (data && data.message_history) {
           data = data.message_history;
         }
-        return data.map(item => {
-          item.senderId = item.sender?.id
+        return data.map((item) => {
+          item.senderId = item.sender?.id;
           return item;
         });
       } catch (e) {
@@ -584,31 +777,42 @@ export default {
     },
     async getConnectedChat(item) {
       try {
-        console.log(item)
+        console.log(item);
         this.conversationTitle = item.name;
         this.inConnectedChat = true;
-        this.chat_type = 'connected-team';
+        this.chat_type = "connected-team";
         let payload = {
-          to_team_id: 1
+          to_team_id: 1,
         };
-        let {data} = await ApiService.post('/v1/connected-team-chat-history', payload).then(res => res.data);
-        this.chats = data.map(item => {
-          item.senderId = item.sender?.id
+        let { data } = await ApiService.post(
+          "/v1/connected-team-chat-history",
+          payload
+        ).then((res) => res.data);
+        this.chats = data.map((item) => {
+          item.senderId = item.sender?.id;
           return item;
         });
       } catch (e) {
         console.error(e);
       }
     },
-    async getIndividualChat({message: {chat_id, team_id}, name, user_id, from_team_id, to_team_id, private_receiver_id, private_team_chat_id}) {
+    async getIndividualChat({
+      message: { chat_id, team_id },
+      name,
+      user_id,
+      from_team_id,
+      to_team_id,
+      private_receiver_id,
+      private_team_chat_id,
+    }) {
       const payload = {
-        type: chat_id ? 'single' : 'team',
+        type: chat_id ? "single" : "team",
         chat_id,
         team_id,
-        user_id
+        user_id,
       };
 
-      this.conversationTitle = '';
+      this.conversationTitle = "";
       this.one_to_one_user = user_id;
 
       // const isAnyKeyValueFalse = !!Object.keys(payload).find(k => !payload[k]);
@@ -616,26 +820,26 @@ export default {
       // this.activeTeam = team_id;
       this.conversationTitle = name;
       this.inConnectedChat = false;
-      if(this.one_to_one_user) {
-        this.chat_type = 'one-to-one';
+      if (this.one_to_one_user) {
+        this.chat_type = "one-to-one";
         this.private_chat = {};
       } else {
-        if(chat_id) {
-          this.chat_type = 'one-to-one';
+        if (chat_id) {
+          this.chat_type = "one-to-one";
           this.chat_id = chat_id;
           this.private_chat = {};
         } else {
-          if(private_receiver_id) {
-            this.chat_type = 'private';
+          if (private_receiver_id) {
+            this.chat_type = "private";
             this.private_chat = {
               to_team_id: to_team_id,
               receiver: private_receiver_id,
-              private_team_chat_id: private_team_chat_id
-            }
+              private_team_chat_id: private_team_chat_id,
+            };
             payload.team_chat_id = private_team_chat_id;
             payload.to_team_id = 1;
           } else {
-            this.chat_type = 'team';
+            this.chat_type = "team";
             this.private_chat = {};
           }
         }
@@ -654,7 +858,7 @@ export default {
       return format(time);
     },
     backToTabList() {
-      this.conversationTitle = '';
+      this.conversationTitle = "";
     },
     createConversations() {
       // console.log('create conv clicked');
@@ -667,7 +871,7 @@ export default {
       // members = this.unique(members);
 
       // var conv_title = 'Group:'+members[0].toString()+","+members[1].toString()+','+members[2].toString();
-      var conv_title = 'test conv';
+      var conv_title = "test conv";
 
       // var total = member_1+member_2+member_3;
       // var conv_type = '';
@@ -678,26 +882,26 @@ export default {
       //   conv_type = 'connected';
       // }
 
-      var conv_type = 'connected';
+      var conv_type = "connected";
 
       var newConv = {
         title: conv_title,
         type: conv_type,
         members: members,
-        last_msg: ''
-      }
+        last_msg: "",
+      };
     },
     selectConversation(conv_id) {
       // this.current_conversation = conv_id;
-      this.$store.dispatch('setCurrentConversation', conv_id);
+      this.$store.dispatch("setCurrentConversation", conv_id);
 
       var user_id = this.$store.state.user.user.id;
       var payload = {
         user_id: user_id,
-        conv_id: conv_id
-      }
+        conv_id: conv_id,
+      };
 
-      this.$store.dispatch('clearUnreadMsg', payload);
+      this.$store.dispatch("clearUnreadMsg", payload);
     },
     async sendMsg(e) {
       console.log(e);
@@ -705,7 +909,7 @@ export default {
         if (this.inConnectedChat) {
           await this.sendConnectedTeamMessage();
         } else {
-          if(this.private_chat && this.private_chat.private_team_chat_id) {
+          if (this.private_chat && this.private_chat.private_team_chat_id) {
             await this.sendPrivateMessage();
           } else {
             await this.sendTeamMessage();
@@ -714,28 +918,28 @@ export default {
       }
     },
     async sendTeamMessage() {
-      let url = '';
-      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let url = "";
+      let loggedUser = JSON.parse(localStorage.getItem("user"));
       let payload = {
         team_id: this.activeTeam.toString(),
         body: this.msg_text,
         message: this.msg_text,
         created_at: new Date(),
         senderId: loggedUser.id.toString(),
-        senderInfo: loggedUser
-      }
+        senderInfo: loggedUser,
+      };
 
       if (this.one_to_one_user || this.chat_id) {
-        payload.receiver = this.one_to_one_user.toString()
+        payload.receiver = this.one_to_one_user.toString();
         payload.target_opened_chat = loggedUser.id;
-        payload.target_opened_chat_type = 'one-to-one';
+        payload.target_opened_chat_type = "one-to-one";
         payload.target_opened_chat_id = this.chat_id;
-        url = 'send-message';
+        url = "send-message";
       } else {
         payload.receivers = this.teamMembers;
         payload.target_opened_chat = this.activeTeam;
-        payload.target_opened_chat_type = 'team';
-        url = 'send-message-to-team';
+        payload.target_opened_chat_type = "team";
+        url = "send-message-to-team";
       }
 
       if (this.one_to_one_user || this.chat_id) {
@@ -743,17 +947,17 @@ export default {
         payload.chat_id = this.chat_id;
         payload.to = this.one_to_one_user.toString();
         this.chats.unshift(payload);
-        this.$socket.emit('send_message', payload);
+        this.$socket.emit("send_message", payload);
       } else {
         // this.chats.unshift(payload);
-        this.$socket.emit('send_message_in_group', payload);
+        this.$socket.emit("send_message_in_group", payload);
       }
       payload.sender = loggedUser.id.toString();
-      this.msg_text = '';
-      await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
+      this.msg_text = "";
+      await ApiService.post(`/v1/${url}`, payload).then((res) => res.data);
     },
     async sendConnectedTeamMessage() {
-      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let loggedUser = JSON.parse(localStorage.getItem("user"));
       let payload = {
         to_team_id: 1,
         from_team_id: this.activeTeam,
@@ -764,15 +968,17 @@ export default {
         created_at: new Date(),
         senderId: loggedUser.id.toString(),
         senderInfo: loggedUser,
-        target_opened_chat_type: 'connected-team'
+        target_opened_chat_type: "connected-team",
       };
       payload.target_opened_chat = payload.to_team_id;
-      this.$socket.emit('send_message_in_group', payload);
+      this.$socket.emit("send_message_in_group", payload);
       this.msg_text = null;
-      await ApiService.post(`/v1/send-message-team-to-team`, payload).then(res => res.data);
+      await ApiService.post(`/v1/send-message-team-to-team`, payload).then(
+        (res) => res.data
+      );
     },
     async sendPrivateMessage() {
-      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let loggedUser = JSON.parse(localStorage.getItem("user"));
       let url = "connected-send-private-message";
       let payload = {
         body: this.msg_text,
@@ -780,17 +986,17 @@ export default {
         created_at: new Date(),
         senderId: loggedUser.id.toString(),
         senderInfo: loggedUser,
-        target_opened_chat_type: 'private-chat',
+        target_opened_chat_type: "private-chat",
         target_opened_chat: this.private_chat,
-        receiver: this.private_chat.receiver.toString()
-      }
+        receiver: this.private_chat.receiver.toString(),
+      };
       payload.sender = loggedUser.id.toString();
       this.chats.unshift(payload);
-      this.$socket.emit('send_message', payload);
+      this.$socket.emit("send_message", payload);
       payload.from_team_id = this.activeTeam;
       payload.to_team_id = this.private_chat.to_team_id;
-      await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
-      this.msg_text = '';
+      await ApiService.post(`/v1/${url}`, payload).then((res) => res.data);
+      this.msg_text = "";
     },
     unique(array) {
       return array.filter(function (el, index, arr) {
@@ -809,10 +1015,10 @@ export default {
       for (var i = 0; i < this.$store.state.chat.user_info.length; i++) {
         // console.log(user_id,this.$store.state.chat.user_info[i].user_id);
         if (this.$store.state.chat.user_info[i].user_id == user_id) {
-          return this.$store.state.chat.user_info[i].per_main_image_url
+          return this.$store.state.chat.user_info[i].per_main_image_url;
         }
       }
-      return '../../assets/info-img.png';
+      return "../../assets/info-img.png";
       // return '../../assets/r-join2.png';
     },
     getMsgDate(msg_date) {
@@ -824,7 +1030,7 @@ export default {
         //return date;
       } catch (e) {
         success = "f";
-        var seconds = msg_date.seconds
+        var seconds = msg_date.seconds;
         date = new Date(seconds * 1000);
       }
 
@@ -835,10 +1041,9 @@ export default {
       }
 
       return date;
-    }
-  }
+    },
+  },
 };
-
 </script>
 
 <style scoped lang="scss">
@@ -848,7 +1053,11 @@ export default {
 }
 
 @media (min-width: 1200px) {
-  .container, .container-lg, .container-md, .container-sm, .container-xl {
+  .container,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container-xl {
     max-width: 100%;
   }
 }
@@ -901,7 +1110,6 @@ export default {
     display: table;
     clear: both;
     overflow: hidden;
-
   }
 
   .chat-left {
@@ -928,7 +1136,6 @@ export default {
         display: none;
         padding-bottom: 0px;
         margin-bottom: -100px;
-
       }
     }
 
@@ -977,7 +1184,6 @@ export default {
           top: 0;
           right: 0;
           background-color: #f2f2f2;
-
         }
       }
 
@@ -1058,7 +1264,6 @@ export default {
                   font-weight: normal;
                 }
               }
-
 
               .countOfChat {
                 background-color: #e51f76;
@@ -1149,7 +1354,8 @@ export default {
             width: 12px;
             height: 20px;
             margin-top: 7px;
-            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAUCAIAAADOcrCxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNFMkU1NjBEQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNFMkU1NjBFQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0UyRTU2MEJCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0UyRTU2MENCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7zerWhAAABDElEQVR42mL4DwZfv/wEkt+//4ZwWRgYGG7ffH3tyksGMPAP1gGSTN++/oILAcHGtVf+/fvPxMXNxoAKmJgYmX78+IMsxMYOMpOJg4PFwEgaLqRvKAVkMAJtBFIgs5gYEYZAqJcvPgPJVy+/QLggUy6ce/rw/nsIX1VdVEtHnOnTxx9wIYjbf/38w/Tz5180l/389ZdJWIQLWYiPn4OXl50JaLW1naKgEEhORJTH2FQG4TJ07wExUOLm9Vcgq269gYiC1B47/OD1K6hLZWQFjM1kmN69+wYXAoInjz98//ab6f8/dEP//f8PcpmAACdcSEycl5ubDWQuMDBvXHsJ9KGSijDQu8zMTAABBgDuN39O859xpAAAAABJRU5ErkJggg==) no-repeat right center;
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAUCAIAAADOcrCxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNFMkU1NjBEQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNFMkU1NjBFQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0UyRTU2MEJCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0UyRTU2MENCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7zerWhAAABDElEQVR42mL4DwZfv/wEkt+//4ZwWRgYGG7ffH3tyksGMPAP1gGSTN++/oILAcHGtVf+/fvPxMXNxoAKmJgYmX78+IMsxMYOMpOJg4PFwEgaLqRvKAVkMAJtBFIgs5gYEYZAqJcvPgPJVy+/QLggUy6ce/rw/nsIX1VdVEtHnOnTxx9wIYjbf/38w/Tz5180l/389ZdJWIQLWYiPn4OXl50JaLW1naKgEEhORJTH2FQG4TJ07wExUOLm9Vcgq269gYiC1B47/OD1K6hLZWQFjM1kmN69+wYXAoInjz98//ab6f8/dEP//f8PcpmAACdcSEycl5ubDWQuMDBvXHsJ9KGSijDQu8zMTAABBgDuN39O859xpAAAAABJRU5ErkJggg==)
+              no-repeat right center;
           }
         }
 
@@ -1273,7 +1479,6 @@ export default {
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
-
             }
           }
 
@@ -1301,7 +1506,8 @@ export default {
                   width: 12px;
                   height: 20px;
                   margin-top: 7px;
-                  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAUCAIAAADOcrCxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNFMkU1NjBEQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNFMkU1NjBFQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0UyRTU2MEJCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0UyRTU2MENCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7zerWhAAABDElEQVR42mL4DwZfv/wEkt+//4ZwWRgYGG7ffH3tyksGMPAP1gGSTN++/oILAcHGtVf+/fvPxMXNxoAKmJgYmX78+IMsxMYOMpOJg4PFwEgaLqRvKAVkMAJtBFIgs5gYEYZAqJcvPgPJVy+/QLggUy6ce/rw/nsIX1VdVEtHnOnTxx9wIYjbf/38w/Tz5180l/389ZdJWIQLWYiPn4OXl50JaLW1naKgEEhORJTH2FQG4TJ07wExUOLm9Vcgq269gYiC1B47/OD1K6hLZWQFjM1kmN69+wYXAoInjz98//ab6f8/dEP//f8PcpmAACdcSEycl5ubDWQuMDBvXHsJ9KGSijDQu8zMTAABBgDuN39O859xpAAAAABJRU5ErkJggg==) no-repeat right center;
+                  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAUCAIAAADOcrCxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNFMkU1NjBEQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNFMkU1NjBFQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0UyRTU2MEJCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0UyRTU2MENCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7zerWhAAABDElEQVR42mL4DwZfv/wEkt+//4ZwWRgYGG7ffH3tyksGMPAP1gGSTN++/oILAcHGtVf+/fvPxMXNxoAKmJgYmX78+IMsxMYOMpOJg4PFwEgaLqRvKAVkMAJtBFIgs5gYEYZAqJcvPgPJVy+/QLggUy6ce/rw/nsIX1VdVEtHnOnTxx9wIYjbf/38w/Tz5180l/389ZdJWIQLWYiPn4OXl50JaLW1naKgEEhORJTH2FQG4TJ07wExUOLm9Vcgq269gYiC1B47/OD1K6hLZWQFjM1kmN69+wYXAoInjz98//ab6f8/dEP//f8PcpmAACdcSEycl5ubDWQuMDBvXHsJ9KGSijDQu8zMTAABBgDuN39O859xpAAAAABJRU5ErkJggg==)
+                    no-repeat right center;
                 }
               }
 
@@ -1457,7 +1663,6 @@ export default {
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
-
             }
           }
 
@@ -1485,7 +1690,8 @@ export default {
                   width: 12px;
                   height: 20px;
                   margin-top: 7px;
-                  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAUCAIAAADOcrCxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNFMkU1NjBEQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNFMkU1NjBFQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0UyRTU2MEJCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0UyRTU2MENCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7zerWhAAABDElEQVR42mL4DwZfv/wEkt+//4ZwWRgYGG7ffH3tyksGMPAP1gGSTN++/oILAcHGtVf+/fvPxMXNxoAKmJgYmX78+IMsxMYOMpOJg4PFwEgaLqRvKAVkMAJtBFIgs5gYEYZAqJcvPgPJVy+/QLggUy6ce/rw/nsIX1VdVEtHnOnTxx9wIYjbf/38w/Tz5180l/389ZdJWIQLWYiPn4OXl50JaLW1naKgEEhORJTH2FQG4TJ07wExUOLm9Vcgq269gYiC1B47/OD1K6hLZWQFjM1kmN69+wYXAoInjz98//ab6f8/dEP//f8PcpmAACdcSEycl5ubDWQuMDBvXHsJ9KGSijDQu8zMTAABBgDuN39O859xpAAAAABJRU5ErkJggg==) no-repeat right center;
+                  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAUCAIAAADOcrCxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNFMkU1NjBEQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNFMkU1NjBFQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0UyRTU2MEJCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0UyRTU2MENCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7zerWhAAABDElEQVR42mL4DwZfv/wEkt+//4ZwWRgYGG7ffH3tyksGMPAP1gGSTN++/oILAcHGtVf+/fvPxMXNxoAKmJgYmX78+IMsxMYOMpOJg4PFwEgaLqRvKAVkMAJtBFIgs5gYEYZAqJcvPgPJVy+/QLggUy6ce/rw/nsIX1VdVEtHnOnTxx9wIYjbf/38w/Tz5180l/389ZdJWIQLWYiPn4OXl50JaLW1naKgEEhORJTH2FQG4TJ07wExUOLm9Vcgq269gYiC1B47/OD1K6hLZWQFjM1kmN69+wYXAoInjz98//ab6f8/dEP//f8PcpmAACdcSEycl5ubDWQuMDBvXHsJ9KGSijDQu8zMTAABBgDuN39O859xpAAAAABJRU5ErkJggg==)
+                    no-repeat right center;
                 }
               }
 
@@ -1620,7 +1826,8 @@ export default {
               width: 12px;
               height: 20px;
               margin-top: 7px;
-              background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAUCAIAAADOcrCxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNFMkU1NjBEQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNFMkU1NjBFQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0UyRTU2MEJCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0UyRTU2MENCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7zerWhAAABDElEQVR42mL4DwZfv/wEkt+//4ZwWRgYGG7ffH3tyksGMPAP1gGSTN++/oILAcHGtVf+/fvPxMXNxoAKmJgYmX78+IMsxMYOMpOJg4PFwEgaLqRvKAVkMAJtBFIgs5gYEYZAqJcvPgPJVy+/QLggUy6ce/rw/nsIX1VdVEtHnOnTxx9wIYjbf/38w/Tz5180l/389ZdJWIQLWYiPn4OXl50JaLW1naKgEEhORJTH2FQG4TJ07wExUOLm9Vcgq269gYiC1B47/OD1K6hLZWQFjM1kmN69+wYXAoInjz98//ab6f8/dEP//f8PcpmAACdcSEycl5ubDWQuMDBvXHsJ9KGSijDQu8zMTAABBgDuN39O859xpAAAAABJRU5ErkJggg==) no-repeat right center;
+              background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAUCAIAAADOcrCxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNFMkU1NjBEQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNFMkU1NjBFQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0UyRTU2MEJCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0UyRTU2MENCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7zerWhAAABDElEQVR42mL4DwZfv/wEkt+//4ZwWRgYGG7ffH3tyksGMPAP1gGSTN++/oILAcHGtVf+/fvPxMXNxoAKmJgYmX78+IMsxMYOMpOJg4PFwEgaLqRvKAVkMAJtBFIgs5gYEYZAqJcvPgPJVy+/QLggUy6ce/rw/nsIX1VdVEtHnOnTxx9wIYjbf/38w/Tz5180l/389ZdJWIQLWYiPn4OXl50JaLW1naKgEEhORJTH2FQG4TJ07wExUOLm9Vcgq269gYiC1B47/OD1K6hLZWQFjM1kmN69+wYXAoInjz98//ab6f8/dEP//f8PcpmAACdcSEycl5ubDWQuMDBvXHsJ9KGSijDQu8zMTAABBgDuN39O859xpAAAAABJRU5ErkJggg==)
+                no-repeat right center;
             }
           }
 
@@ -1739,7 +1946,8 @@ export default {
                 width: 12px;
                 height: 20px;
                 margin-top: 7px;
-                background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAUCAIAAADOcrCxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNFMkU1NjBEQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNFMkU1NjBFQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0UyRTU2MEJCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0UyRTU2MENCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7zerWhAAABDElEQVR42mL4DwZfv/wEkt+//4ZwWRgYGG7ffH3tyksGMPAP1gGSTN++/oILAcHGtVf+/fvPxMXNxoAKmJgYmX78+IMsxMYOMpOJg4PFwEgaLqRvKAVkMAJtBFIgs5gYEYZAqJcvPgPJVy+/QLggUy6ce/rw/nsIX1VdVEtHnOnTxx9wIYjbf/38w/Tz5180l/389ZdJWIQLWYiPn4OXl50JaLW1naKgEEhORJTH2FQG4TJ07wExUOLm9Vcgq269gYiC1B47/OD1K6hLZWQFjM1kmN69+wYXAoInjz98//ab6f8/dEP//f8PcpmAACdcSEycl5ubDWQuMDBvXHsJ9KGSijDQu8zMTAABBgDuN39O859xpAAAAABJRU5ErkJggg==) no-repeat right center;
+                background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAUCAIAAADOcrCxAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNFMkU1NjBEQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNFMkU1NjBFQkVFMTExRUJCREYzRjRFMkMxMERCRjAwIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0UyRTU2MEJCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0UyRTU2MENCRUUxMTFFQkJERjNGNEUyQzEwREJGMDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7zerWhAAABDElEQVR42mL4DwZfv/wEkt+//4ZwWRgYGG7ffH3tyksGMPAP1gGSTN++/oILAcHGtVf+/fvPxMXNxoAKmJgYmX78+IMsxMYOMpOJg4PFwEgaLqRvKAVkMAJtBFIgs5gYEYZAqJcvPgPJVy+/QLggUy6ce/rw/nsIX1VdVEtHnOnTxx9wIYjbf/38w/Tz5180l/389ZdJWIQLWYiPn4OXl50JaLW1naKgEEhORJTH2FQG4TJ07wExUOLm9Vcgq269gYiC1B47/OD1K6hLZWQFjM1kmN69+wYXAoInjz98//ab6f8/dEP//f8PcpmAACdcSEycl5ubDWQuMDBvXHsJ9KGSijDQu8zMTAABBgDuN39O859xpAAAAABJRU5ErkJggg==)
+                  no-repeat right center;
               }
             }
 
@@ -1832,7 +2040,9 @@ export default {
                 }
               }
 
-              .btn-emoji, .btn-multimedia, .btn-files {
+              .btn-emoji,
+              .btn-multimedia,
+              .btn-files {
                 position: absolute;
                 top: -3px;
                 right: 16px;

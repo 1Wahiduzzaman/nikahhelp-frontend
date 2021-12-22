@@ -1,5 +1,5 @@
 <template>
-<Layout>
+
   <div class="container" style="padding-top: 0px;">
     <div style="margin-bottom: 5px; padding-right: 1000px"></div>   <!--plz ignore this div -->
     <div class="row">
@@ -208,7 +208,6 @@
     </div>
     <div style="margin-top: 100px;"></div>   <!--plz ignore this div -->
   </div>
-</Layout>
 </template>
 
 <script>
