@@ -14,4 +14,16 @@ export default {
         });
     });
   },
+  async connectCandidate(context, payload) {
+    return new Promise((resolve, reject) => {
+      ApiService.post(payload.url, payload.data)
+        .then((data) => {
+          console.log(data.data.data);
+          resolve(data.data.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
 };

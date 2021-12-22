@@ -88,10 +88,11 @@
           small
           color="deep-purple darken-1"
           dark
+          @click="onClickConnect"
         >
          <div class="flex justify-center align-center">
           <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/connect.svg" alt="">
-          Contact
+          Connect
         </div>
         </v-btn>
     </div>
@@ -139,7 +140,7 @@
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
+import {mapMutations, mapActions} from 'vuex'
   export default {
     props: ["candidate"],
     data: () => ({
@@ -153,8 +154,22 @@ import {mapMutations} from 'vuex'
         setComponent: 'search/setComponent',
         setSelectedProfileInfo: 'search/setSelectedProfileInfo'
       }),
+      ...mapActions({
+        connectCandidate: 'search/connectCandidate'
+      }),
       shortList() {
         console.log('short list')
+      },
+      async onClickConnect() {
+        console.log('connect candidate');
+        let res = await this.connectCandidate({
+          url: 'v1/send-connection-request',
+          data: {
+            from_team_id: 1,
+            to_team_id: 2
+          }
+        });
+        console.log(res)
       },
       showDetailRightSide() {
         this.setSelectedProfileInfo(this.candidate)
