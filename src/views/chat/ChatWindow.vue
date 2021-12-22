@@ -970,12 +970,17 @@ export default {
       this.msg_text = '';
     },
     notifyKeyboardStatus() {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
       let data = {
         type: this.chatheadopen.label,
-        other_mate_id: this.chatheadopen.other_mate_id
+        other_mate_id: this.chatheadopen.other_mate_id,
+        typer: loggedUser
       };
       if(data.type === 'Group chat') {
         data.members = this.teamMembers;
+        data.receivers = this.teamMembers;
+      } else {
+        data.to = this.chatheadopen.other_mate_id;
       }
       if(this.msg_text && this.msg_text.length > 0) {
         data = {
