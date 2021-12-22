@@ -9,7 +9,7 @@
         <a-icon type="caret-down" :rotate="props.isActive ? 180 : 0" />
       </template>
       <a-collapse-panel key="1" header="1. Upload Images">
-        <h5 class="text-left">Upload your Image</h5>
+        <h5 class="text-left mt-2">Upload your Image</h5>
         <div class="instruction">
           <p>
             * You are required to upload at least one Avatar and a Main Image.
@@ -22,7 +22,7 @@
         <div class="image-and-settings">
           <form class="form-ma">
             <a-row type="flex" align="top">
-              <a-col class="form-item py-3 border-bottom" :span="24">
+              <a-col class="form-item py-3" :span="24">
                 <a-row type="flex" align="top" class="justify-content-around">
                   <a-col>
                     <!-- Avatar Image -->
@@ -88,9 +88,9 @@
         <!-- <button class="btn btn-info" @click="saveImages">Save</button> -->
 
         <!-- Previous Image sharing setting starts here -->
-        <div class="share-settings">
+        <div class="share-settings mt-5">
           <div class="share-settings">
-            <h3 class="text-center">
+            <h5 class="text-center share-text">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="50"
@@ -104,11 +104,11 @@
                 />
               </svg>
               Image Sharing Settings
-            </h3>
-            <p>
+            </h5>
+            <div class="flex permission mt-5">
               <a-switch
-                v-model="imageModel.anybody_can_see"
-                @change="onConfirmationSwitchChnaged1"
+                  v-model="imageModel.anybody_can_see"
+                  @change="onConfirmationSwitchChnaged1"
               >
                 <a-icon slot="checkedChildren" type="check" />
                 <a-icon slot="unCheckedChildren" type="close" />
@@ -116,12 +116,12 @@
               <span class="ml-4">
                 I don't want to share my images with anyone at this moment
               </span>
-            </p>
-            <p>
+            </div>
+            <div class="flex permission mt-3">
               <a-switch
-                v-model="imageModel.only_team_can_see"
-                :disabled="imageModel.anybody_can_see"
-                @change="onConfirmationSwitchChnaged2"
+                  v-model="imageModel.only_team_can_see"
+                  :disabled="imageModel.anybody_can_see"
+                  @change="onConfirmationSwitchChnaged2"
               >
                 <a-icon slot="checkedChildren" type="check" />
                 <a-icon slot="unCheckedChildren" type="close" />
@@ -129,12 +129,12 @@
               <span class="ml-4">
                 I would like to share all my images with my team
               </span>
-            </p>
-            <p>
+            </div>
+            <div class="flex permission mt-3">
               <a-switch
-                v-model="imageModel.team_connection_can_see"
-                :disabled="imageModel.anybody_can_see"
-                @change="onConfirmationSwitchChnaged3"
+                  v-model="imageModel.team_connection_can_see"
+                  :disabled="imageModel.anybody_can_see"
+                  @change="onConfirmationSwitchChnaged3"
               >
                 <a-icon slot="checkedChildren" type="check" />
                 <a-icon slot="unCheckedChildren" type="close" />
@@ -142,7 +142,7 @@
               <span class="ml-4">
                 I would like to share all my images with connected team(s)
               </span>
-            </p>
+            </div>
           </div>
           <!-- {{ imageModel }} -->
 
@@ -329,7 +329,7 @@ export default {
     border: 1px solid $color-secondary;
     padding: 10px;
     border-radius: 5px;
-    width: 90%;
+    //width: 90%;
     margin: 0 auto 10px;
   }
   .image-and-settings {
@@ -349,9 +349,9 @@ export default {
       border-radius: 5px;
       position: relative;
       margin-top: 50px;
-      h3 {
+      .share-text {
         color: #3b3194;
-        font-size: 23px;
+        font-size: 14px;
         font-weight: bold;
         position: absolute;
         top: -25px;
@@ -359,6 +359,12 @@ export default {
         transform: translate(-50%, 0);
         background: #f6f5fb;
         padding: 0 20px;
+        @media (min-width: 768px) {
+          font-size: 18px;
+        }
+        @media (min-width: 1400px) {
+          font-size: 22px;
+        }
         svg {
           margin-right: 9px;
         }
@@ -406,9 +412,17 @@ export default {
     margin-bottom: 5px;
   }
 }
-</style>
-
-<style>
+.permission {
+  span {
+    font-size: 14px;
+    @media (min-width: 768px) {
+      font-size: 16px;
+    }
+    @media (min-width: 1400px) {
+      font-size: 18px;
+    }
+  }
+}
 .ant-tooltip-inner {
   border-radius: 0px;
 }

@@ -11,13 +11,18 @@
 			</p>
 			<p>Follow these tips to make sure your documents are accepted.</p>
 		</div>
-		<div class="confirm mt-3">
-			<a-checkbox v-model="agreementChecked" @change="onChange">
-				<span class="fs-16"
-					>I have consent for the candidate to represent
-				</span>
-			</a-checkbox>
-		</div>
+    <div class="flex align-baseline confirm">
+      <a-checkbox v-model="agreementChecked" @change="onChange" class="mt-3"></a-checkbox>
+      <span class="fs-16 ml-2">I have consent for the candidate to represent</span>
+    </div>
+
+<!--		<div class="confirm mt-3">-->
+<!--			<a-checkbox v-model="agreementChecked" @change="onChange">-->
+<!--				<span class="fs-16"-->
+<!--					>I have consent for the candidate to represent-->
+<!--				</span>-->
+<!--			</a-checkbox>-->
+<!--		</div>-->
 	</div>
 </template>
 
