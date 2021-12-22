@@ -234,7 +234,7 @@
                         <div class="text-right">
                           <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
                         </div>
-                        <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+                        <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10">
                           <!--                        <div class="font-weight-bold mb-1">You</div>-->
                           {{ item.body || '' }}
                         </div>
@@ -245,7 +245,7 @@
                         <div class="text-left">
                           <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
                         </div>
-                        <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+                        <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10">
                           <!--                        <div class="font-weight-bold mb-1">Sharon Lessman</div>-->
                           {{ item.body || '' }}
                         </div>
@@ -293,12 +293,57 @@
               </div>
             </div>
             <div class="chat-right" v-else>
-              <h4 class="fs-16 flex flex-column align-items-center justify-content-center">Select a conversation & start the chat</h4>
+              <div class="flex justify-content-center align-items-center empty-height">
+                <h4 class="fs-20 flex flex-column align-items-center justify-content-center">Select a conversation & start the chat</h4>
+              </div>
+              <conversation class="d-none" />
+              <div class="d-none flex-column justify-content-center align-items-center text-center">
+                <v-stepper alt-labels>
+                  <v-stepper-header>
+                    <v-stepper-step
+                        step="3"
+                        color="secondary"
+                        complete
+                    >
+                      Complete profile
+                    </v-stepper-step>
+
+                    <v-divider></v-divider>
+
+                    <v-stepper-step
+                        step="4"
+                        color="secondary"
+                        complete
+                    >
+                      Verify account
+                    </v-stepper-step>
+
+                    <v-divider></v-divider>
+
+                    <v-stepper-step
+                        color="secondary"
+                        complete
+                        step="5"
+                    >
+                      Connect teams
+                    </v-stepper-step>
+
+                    <v-divider></v-divider>
+
+                    <v-stepper-step
+                        step="6"
+                        color="secondary"
+                        complete>
+                      Communicate
+                    </v-stepper-step>
+                  </v-stepper-header>
+                </v-stepper>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div style="margin-top: 100px;"></div>   <!--plz ignore this div -->
+<!--      <div style="margin-top: 100px;"></div>   &lt;!&ndash;plz ignore this div &ndash;&gt;-->
     </div>
   </Layout>
 </template>
@@ -310,6 +355,7 @@ import {pick, map} from 'lodash';
 
 const messageKeys = ['id', 'user_id', 'chat_id', 'team_id', 'from_team_id', 'to_team_id', 'private_receiver_id', 'private_team_chat_id', 'body', 'seen', 'created_at'];
 import {format} from 'timeago.js'
+import Conversation from "../../components/auth/Conversation";
 
 export default {
   name: 'ChatWindow',
@@ -348,6 +394,7 @@ export default {
     }
   },
   components: {
+    Conversation,
     ChatListItem
   },
   watch: {
@@ -377,7 +424,7 @@ export default {
       }
     },
     chats: function(val) {
-      console.log(val);
+      // console.log(val);
       setTimeout(() => {
         const messages = document.getElementById('chat-messages');
         const messagesid = document.getElementById('messagesid');
@@ -2094,21 +2141,38 @@ export default {
   bottom: -4px;
   left: 6px;
 }
-//.py-3 {
-//  padding-top: 1rem!important;
-//  padding-bottom: 1rem!important;
-//}
-//.px-4 {
-//  padding-right: 1.5rem!important;
-//  padding-left: 1.5rem!important;
-//}
 .flex-grow-0 {
   flex-grow: 0!important;
 }
 .border-top {
   border-top: 1px solid #dee2e6!important;
 }
+.bg-me {
+  background-color: #3f9de7;
+}
+.br-10 {
+  border-radius: 10px;
+}
+.empty-height {
+  display: none;
+  @media (min-width: 992px) {
+    display: flex;
+    height: calc(100vh - 700px);
+  }
+  @media (min-width: 1200px) {
+    height: calc(100vh - 200px);
+  }
+}
+.hints-component {
+  display: none;
+  @media (min-width: 992px) {
+    display: block;
+  }
+}
 
+.chat-messages::-webkit-scrollbar {
+  display: none;
+}
 // css custom scrollbar
 /* width */
 ::-webkit-scrollbar {
