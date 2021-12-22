@@ -13,25 +13,25 @@
             </div>
                
             <div class="row">
-               <div class="col-sm-6 col-lg-3 mb-3">
+               <div class="col-12 col-sm-6 col-xl-3 mb-3">
                   <div class="item">
                      <img class="static-img" src="@/assets/Icons/form.svg" alt="Icon">
                      <span>Complete your profile information & submit</span>
                   </div>
                </div>
-               <div class="col-sm-6 col-lg-3 mb-3">
+               <div class="col-12 col-sm-6 col-xl-3 mb-3">
                   <div class="item">
                      <img class="static-img" src="@/assets/Icons/tick 1.svg" alt="Icon" >
                      <span>Your ID is checked and verified by human expertise</span>
                   </div>
                </div>
-               <div class="col-sm-6 col-lg-3 mb-3">
+               <div class="col-12 col-sm-6 col-xl-3 mb-3">
                   <div class="item">
                      <img class="static-img" src="@/assets/Icons/search.svg" alt="Icon">
                      <span>Find suitable matches and request to connect with teams</span>
                   </div>
                </div>
-               <div class="col-sm-6 col-lg-3 mb-3">
+               <div class="col-12 col-sm-6 col-xl-3 mb-3">
                   <div class="item last">
                      <img class="static-img" src="@/assets/Icons/connected.svg" alt="Icon">
                      <span>Once connected, communicate & find out more</span>

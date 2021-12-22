@@ -56,7 +56,21 @@
         <template slot="headers" slot-scope="props">
           <tr>
             <th v-for="header in props.headers" :key="header.value">
-              {{ header.text }}
+              <span v-if="header.text !== 'actions'"> {{ header.text }}</span>
+              <span v-if="header.text == 'actions'">
+                <v-menu offset-y>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn color="primary" dark v-bind="attrs" v-on="on">
+                      {{ header.text }}
+                    </v-btn>
+                  </template>
+                  <v-list>
+                    <v-list-item>
+                      <v-list-item-title>item 1</v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
+              </span>
             </th>
           </tr>
         </template>

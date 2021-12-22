@@ -18,210 +18,198 @@
           :model="personalInformation.essential"
           class="form-ma"
         >
-          <a-row>
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <!-- <a-row type="flex" justify="between" align="top"> -->
-
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="personalInformation.essential.per_gender"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />What is your gender?
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12">
-                  <!-- ToDo:: need to add a fake option as placeholders are not working -->
-                  <a-form-model-item ref="per_gender" prop="per_gender">
-                    <v-select
-                      :clearable="false"
-                      class="style-chooser"
-                      @input="onValueChange($event, 'per_gender', 'essential')"
-                      id="per_gender"
-                      placeholder="Select gender"
-                      :reduce="(option) => option.value"
-                      v-model="personalInformation.essential.per_gender"
-                      label="name"
-                      :options="[
+          <div class="row mt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="personalInformation.essential.per_gender"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />What is your gender?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item ref="per_gender" prop="per_gender">
+                <v-select
+                    :clearable="false"
+                    class="style-chooser"
+                    @input="onValueChange($event, 'per_gender', 'essential')"
+                    id="per_gender"
+                    placeholder="Select gender"
+                    :reduce="(option) => option.value"
+                    v-model="personalInformation.essential.per_gender"
+                    label="name"
+                    :options="[
                         { name: 'Male', value: 1 },
                         { name: 'Female', value: 2 },
                       ]"
-                      ><template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#Needper_gender"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+                ><template #open-indicator>
+                  <a-icon type="down" /> </template
+                ></v-select>
+              </a-form-model-item>
+            </div>
+            <div class="col-12 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#Needper_gender"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[0].first"
-                        @click="arr[0].first = !arr[0].first"
+                          v-if="arr[0].first"
+                          @click="arr[0].first = !arr[0].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[0].first = !arr[0].first">
+                  <span v-else @click="arr[0].first = !arr[0].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="Needper_gender"
-                  >
-                    <div class="card card-body bubble">
-                      Please provide tooltip texts so we can place it here
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="personalInformation.essential.dob"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />What is your date of birth?
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12" class="date-of-birth text-left">
-                  <a-form-model-item ref="dob" prop="dob">
-                    <DropdownDatePicker
-                      id="dob"
-                      displayFormat="dmy"
-                      dropdownClass="custom-select"
-                      :key="default_date"
-                      :default-date="personalInformation.essential.dob"
-                      v-model="personalInformation.essential.dob"
-                      :on-change="onChangeDD"
-                      :maxYear="new Date().getFullYear() - 18"
-                      :minYear="1940"
-                    ></DropdownDatePicker>
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#Needdob"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="Needper_gender"
+              >
+                <div class="card card-body bubble">
+                  Please provide tooltip texts so we can place it here
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="personalInformation.essential.dob"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />What is your date of birth?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item ref="dob" prop="dob">
+                <DropdownDatePicker
+                    id="dob"
+                    displayFormat="dmy"
+                    dropdownClass="custom-select"
+                    :key="default_date"
+                    :default-date="personalInformation.essential.dob"
+                    v-model="personalInformation.essential.dob"
+                    :on-change="onChangeDD"
+                    :maxYear="new Date().getFullYear() - 18"
+                    :minYear="1940"
+                ></DropdownDatePicker>
+              </a-form-model-item>
+            </div>
+            <div class="col-12 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#Needdob"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[1].first"
-                        @click="arr[1].first = !arr[1].first"
+                          v-if="arr[1].first"
+                          @click="arr[1].first = !arr[1].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[1].first = !arr[1].first">
+                  <span v-else @click="arr[1].first = !arr[1].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div data-parent="#accordion" class="collapse" id="Needdob">
-                    <div class="card card-body bubble">
-                      Please provide tooltip texts so we can place it here
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="personalInformation.essential.per_occupation"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />What is your occupation?
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12">
-                  <a-form-model-item ref="per_occupation" prop="per_occupation">
-                    <v-select
-                      :clearable="false"
-                      class="style-chooser"
-                      @input="
+                </a>
+              </p>
+              <div data-parent="#accordion" class="collapse" id="Needdob">
+                <div class="card card-body bubble">
+                  Please provide tooltip texts so we can place it here
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="personalInformation.essential.per_occupation"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />What is your occupation?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item ref="per_occupation" prop="per_occupation">
+                <v-select
+                    :clearable="false"
+                    :open="true"
+                    class="style-chooser"
+                    @input="
                         onValueChange($event, 'per_occupation', 'essential')
                       "
-                      id="per_occupation"
-                      placeholder="Select Occupation"
-                      :reduce="(option) => option.name"
-                      v-model="personalInformation.essential.per_occupation"
-                      label="name"
-                      :options="representativeDetails.occupations"
-                      ><template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
-                  </a-form-model-item>
+                    id="per_occupation"
+                    placeholder="Select Occupation"
+                    :reduce="(option) => option.name"
+                    v-model="personalInformation.essential.per_occupation"
+                    label="name"
+                    :options="representativeDetails.occupations"
+                ><template #open-indicator>
+                  <a-icon type="down" /> </template
+                ></v-select>
+              </a-form-model-item>
 
-                  <a-input
-                    class="w-100 mt-2"
-                    placeholder="Please specify"
-                    v-if="
+              <a-input
+                  class="w-100 mt-2"
+                  placeholder="Please specify"
+                  v-if="
                       personalInformation.essential.per_occupation == 'Other'
                     "
-                    @blur="onValueChange($event, 'per_occupation', 'essential')"
-                  />
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#Needper_occupation"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+                  @blur="onValueChange($event, 'per_occupation', 'essential')"
+              />
+            </div>
+            <div class="col-12 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#Needper_occupation"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[2].first"
-                        @click="arr[2].first = !arr[2].first"
+                          v-if="arr[2].first"
+                          @click="arr[2].first = !arr[2].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[2].first = !arr[2].first">
+                  <span v-else @click="arr[2].first = !arr[2].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="Needper_occupation"
-                  >
-                    <div class="card card-body bubble">
-                      Please provide tooltip texts so we can place it here
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
-          </a-row>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="Needper_occupation"
+              >
+                <div class="card card-body bubble">
+                  Please provide tooltip texts so we can place it here
+                </div>
+              </div>
+            </div>
+          </div>
+
           <a-button
             shape="round"
             type="primary"
             style="float: right"
-            class="mt-3"
+            class="mt-5"
             @click="handleSubmitFormOne"
           >
             Save & Continue
@@ -240,526 +228,232 @@
           :rules="rules_personal"
           class="form-ma"
         >
-          <a-row>
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row :gutter="[16]" type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="
+          <div class="row mt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="
                         personalInformation.personal
                           .per_current_residence_country &&
                         personalInformation.personal.per_current_residence_city
                       "
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />
-                    Where is your current place of residance?
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12">
-                  <a-row :gutter="[8]">
-                    <a-col :span="12">
-                      <a-form-model-item
-                        ref="per_current_residence_country"
-                        prop="per_current_residence_country"
-                      >
-                        <v-select
-                          :clearable="false"
-                          class="style-chooser"
-                          @input="onCountryChange($event, 'residence')"
-                          id="per_current_residence_country"
-                          :placeholder="'Country'"
-                          v-model="
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />
+                Where is your current place of residance?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <div class="row">
+                <div class="col-12 col-md-6">
+                  <a-form-model-item
+                      ref="per_current_residence_country"
+                      prop="per_current_residence_country"
+                  >
+                    <v-select
+                        :clearable="false"
+                        class="style-chooser"
+                        @input="onCountryChange($event, 'residence')"
+                        id="per_current_residence_country"
+                        :placeholder="'Country'"
+                        v-model="
                             personalInformation.personal
                               .per_current_residence_country
                           "
-                          label="name"
-                          :reduce="(option) => option.id"
-                          :options="representativeDetails.countries"
-                          ><template #open-indicator>
-                            <a-icon type="down" /> </template
-                        ></v-select>
-                      </a-form-model-item>
-                    </a-col>
-                    <a-col :span="12">
-                      <a-form-model-item
-                        ref="per_current_residence_city"
-                        prop="per_current_residence_city"
-                      >
-                        <v-select
-                          :clearable="false"
-                          class="style-chooser"
-                          @input="
+                        label="name"
+                        :reduce="(option) => option.id"
+                        :options="representativeDetails.countries"
+                    ><template #open-indicator>
+                      <a-icon type="down" /> </template
+                    ></v-select>
+                  </a-form-model-item>
+                </div>
+                <div class="col-12 col-md-6">
+                  <a-form-model-item
+                      ref="per_current_residence_city"
+                      prop="per_current_residence_city"
+                  >
+                    <v-select
+                        :clearable="false"
+                        class="style-chooser"
+                        @input="
                             onValueChange(
                               $event,
                               'per_current_residence_city',
                               'contact'
                             )
                           "
-                          id="per_current_residence_city"
-                          placeholder="Select City"
-                          :reduce="(option) => option.name"
-                          v-model="
+                        id="per_current_residence_city"
+                        placeholder="Select City"
+                        :reduce="(option) => option.name"
+                        v-model="
                             personalInformation.personal
                               .per_current_residence_city
                           "
-                          label="name"
-                          :options="
+                        label="name"
+                        :options="
                             personalInformation.personal.residenceCities
                           "
-                          ><template #open-indicator>
-                            <a-icon type="down" /> </template
-                        ></v-select>
-                      </a-form-model-item>
-                    </a-col>
-                  </a-row>
-                  <a-input
-                    class="w-100 mt-2"
-                    v-if="
+                    ><template #open-indicator>
+                      <a-icon type="down" /> </template
+                    ></v-select>
+                  </a-form-model-item>
+                </div>
+              </div>
+              <a-input
+                  class="w-100 mt-2"
+                  v-if="
                       personalInformation.personal
                         .per_current_residence_country == 'Other' ||
                       personalInformation.personal.per_current_residence_city ==
                         'Other'
                     "
-                    placeholder="Please specify"
-                    @change="
+                  placeholder="Please specify"
+                  @change="
                       onValueChange(
                         $event,
                         'per_current_residence_city',
                         'contact'
                       )
                     "
-                  />
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#Needper_current_residence_country"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+              />
+            </div>
+            <div class="col-12 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#Needper_current_residence_country"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[3].first"
-                        @click="arr[3].first = !arr[3].first"
+                          v-if="arr[3].first"
+                          @click="arr[3].first = !arr[3].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[3].first = !arr[3].first">
+                  <span v-else @click="arr[3].first = !arr[3].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="Needper_current_residence_country"
-                  >
-                    <div class="card card-body bubble">
-                      Please provide tooltip texts so we can place it here
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-
-              <a-row
-                class="form-item py-3 border-bottom"
-                :gutter="[16]"
-                type="flex"
-                align="top"
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="Needper_current_residence_country"
               >
-                <a-col :span="24">
-                  <!-- <a-icon
-										v-if="
-											personalInformation.personal.per_permanent_country &&
-											personalInformation.personal.per_permanent_city
-										"
-										class="color-success mr-2 fs-18 fw-500"
-										type="check"
-									/> -->
-                  <div class="mb-2">
-                    <strong> What is your permanent address? </strong>
-                  </div>
-                </a-col>
-
-                <a-col :span="24">
-                  <!-- <a-row class="form-item py-3" :gutter="[16]" type="flex" justify="between" align="top"> -->
-                  <a-row
-                    class="form-item py-3"
-                    :gutter="[16]"
-                    type="flex"
-                    align="top"
-                  >
-                    <a-col :span="12">
-                      <div class="mb-2">
-                        <a-icon
-                          v-if="
-                            personalInformation.personal
-                              .per_permanent_country &&
-                            personalInformation.personal.per_permanent_city
-                          "
-                          class="color-success mr-2 fs-18 fw-500"
-                          type="check"
-                        />Country
-                      </div>
-                    </a-col>
-                    <a-col :span="12">
-                      <a-row :gutter="[8]">
-                        <a-col :span="12">
-                          <a-form-model-item
-                            ref="per_permanent_country"
-                            prop="per_permanent_country"
-                          >
-                            <v-select
-                              :clearable="false"
-                              class="style-chooser"
-                              @input="onCountryChange($event, 'permanant')"
-                              id="per_permanent_country"
-                              :placeholder="'Country'"
-                              :reduce="(option) => option.id"
-                              v-model="
-                                personalInformation.personal
-                                  .per_permanent_country
-                              "
-                              label="name"
-                              :options="representativeDetails.countries"
-                              ><template #open-indicator>
-                                <a-icon type="down" /> </template
-                            ></v-select>
-                          </a-form-model-item>
-                          <!-- <a-select
-                            :showSearch="true"
-                            option-filter-prop="children"
-                            :filter-option="filterOption"
-                            :showArrow="true"
-                            v-model="
-                              personalInformation.personal.per_permanent_country
-                            "
-                            class="select-ma w-100"
-                            placeholder="Select Country"
-                            @change="onChangeCountryPermanent"
-                          >
-                            <a-select-option
-                              :value="value"
-                              :key="key"
-                              style="width: 100px"
-                              v-for="(
-                                value, key
-                              ) in representativeDetails.countries"
-                            >
-                              {{ value.name }}
-                            </a-select-option>
-
-                          
-                          </a-select> -->
-                        </a-col>
-                        <a-col :span="12">
-                          <a-form-model-item
-                            ref="per_permanent_city"
-                            prop="per_permanent_city"
-                          >
-                            <v-select
-                              :clearable="false"
-                              class="style-chooser"
-                              @input="
-                                onValueChange(
-                                  $event,
-                                  'per_permanent_city',
-                                  'contact'
-                                )
-                              "
-                              id="per_permanent_city"
-                              placeholder="Select City"
-                              :reduce="(option) => option.name"
-                              v-model="
-                                personalInformation.personal.per_permanent_city
-                              "
-                              label="name"
-                              :options="
-                                personalInformation.personal.permanantCities
-                              "
-                              ><template #open-indicator>
-                                <a-icon type="down" /> </template
-                            ></v-select>
-                          </a-form-model-item>
-                          <!-- <a-select
-                            :showSearch="true"
-                            option-filter-prop="children"
-                            :filter-option="filterOption"
-                            :showArrow="true"
-                            v-model="
-                              personalInformation.personal.per_permanent_city
-                            "
-                            class="select-ma w-100"
-                            placeholder="Select City"
-                            @change="onValueChange($event, 'contact')"
-                          >
-                            <a-select-option
-                              :value="value"
-                              :key="key"
-                              style="width: 100px"
-                              v-for="(
-                                value, key
-                              ) in representativeDetails.cities"
-                            >
-                              {{ value.name }}
-                            </a-select-option>
-
-                           
-                          </a-select> -->
-                        </a-col>
-                      </a-row>
-                      <a-input
-                        class="w-100 mt-2"
-                        v-if="
-                          personalInformation.personal.per_permanent_country ==
-                            'Other' ||
-                          personalInformation.personal.per_permanent_city ==
-                            'Other'
-                        "
-                        placeholder="Please specify"
-                        @change="
-                          onValueChange($event, 'per_permanent_city', 'contact')
-                        "
-                      />
-                    </a-col>
-                  </a-row>
-                </a-col>
-                <a-col :span="24">
-                  <!-- <a-row class="form-item py-3" :gutter="[16]" type="flex" justify="between" align="top"> -->
-                  <a-row
-                    class="form-item py-3"
-                    :gutter="[16]"
-                    type="flex"
-                    align="top"
-                  >
-                    <a-col :span="12">
-                      <div class="mb-2">
-                        <a-icon
-                          v-if="
-                            personalInformation.personal.per_permanent_post_code
-                          "
-                          class="color-success mr-2 fs-18 fw-500"
-                          type="check"
-                        />Post Code
-                      </div>
-                    </a-col>
-                    <a-col :span="12">
-                      <a-form-model-item
-                        ref="per_permanent_post_code"
-                        prop="per_permanent_post_code"
-                      >
-                        <a-input
-                          class="w-100 mt-2"
-                          placeholder="Please specify"
-                          v-model="
-                            personalInformation.personal.per_permanent_post_code
-                          "
-                          @blur="
-                            onValueChange(
-                              $event,
-                              'per_permanent_post_code',
-                              'contact'
-                            )
-                          "
-                        />
-                      </a-form-model-item>
-                    </a-col>
-                  </a-row>
-                </a-col>
-                <a-col :span="24">
-                  <!-- <a-row class="form-item py-3" :gutter="[16]" type="flex" justify="between" align="top"> -->
-                  <a-row
-                    class="form-item py-3"
-                    :gutter="[16]"
-                    type="flex"
-                    align="top"
-                  >
-                    <a-col :span="12">
-                      <div class="mb-2">
-                        <a-icon
-                          v-if="
-                            personalInformation.personal.per_permanent_address
-                          "
-                          class="color-success mr-2 fs-18 fw-500"
-                          type="check"
-                        />Home Address
-                      </div>
-                    </a-col>
-                    <a-col :span="12">
-                      <template>
-                        <a-form-model-item
-                          ref="per_permanent_address"
-                          prop="per_permanent_address"
-                        >
-                          <a-textarea
-                            placeholder="Sample text here"
-                            :rows="4"
-                            v-model="
-                              personalInformation.personal.per_permanent_address
-                            "
-                            @blur="
-                              onValueChange(
-                                $event,
-                                'per_permanent_address',
-                                'contact'
-                              )
-                            "
-                          />
-                        </a-form-model-item>
-                      </template>
-                    </a-col>
-                  </a-row>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#Needaddress"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
-                      <span
-                        v-if="arr[6].first"
-                        @click="arr[6].first = !arr[6].first"
-                      >
-                        Need Help?
-                      </span>
-                      <span v-else @click="arr[6].first = !arr[6].first">
-                        Hide Help?
-                      </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="Needaddress"
-                  >
-                    <div class="card card-body bubble">
-                      Please provide tooltip texts so we can place it here
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
-            <a-col class="form-item py-3 border-bottom" :span="24">
-              <a-row :gutter="[16]" type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      v-if="personalInformation.personal.mobile_number"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />What is your Phone number?
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12">
-                  <a-form-model-item ref="mobile_number" prop="mobile_number">
-                    <a-input
-                      class="w-100"
-                      placeholder="+8801685117737"
-                      id="inputNumber"
-                      v-model="personalInformation.personal.mobile_number"
-                      @blur="onValueChange($event, 'mobile_number', 'contact')"
-                    />
-                  </a-form-model-item>
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#Needmobile_number"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
-                      <span
-                        v-if="arr[4].first"
-                        @click="arr[4].first = !arr[4].first"
-                      >
-                        Need Help?
-                      </span>
-                      <span v-else @click="arr[4].first = !arr[4].first">
-                        Hide Help?
-                      </span>
-                    </a>
-                  </p>
-                  <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="Needmobile_number"
-                  >
-                    <div class="card card-body bubble">
-                      Please provide tooltip texts so we can place it here
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
-
-            <a-col class="form-item py-3" :span="24">
-              <a-row :gutter="[16]" type="flex" align="top">
-                <a-col :span="10">
-                  <div class="mb-2">
-                    <a-icon
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
-                    />What is your Email address?
-                  </div>
-                </a-col>
-                <a-col :span="2"></a-col>
-                <a-col :span="12">
-                  <a-input
+                <div class="card card-body bubble">
+                  Please provide tooltip texts so we can place it here
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    v-if="personalInformation.personal.mobile_number"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />What is your Phone number?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item ref="mobile_number" prop="mobile_number">
+                <a-input
                     class="w-100"
-                    placeholder="Email Address"
+                    placeholder="+8801685117737"
                     id="inputNumber"
-                    :value="personalInformation.personal.email"
-                    :disabled="true"
-                  />
-                </a-col>
-                <a-col :span="12">
-                  <p>
-                    <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#Needemail"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
-                    >
+                    v-model="personalInformation.personal.mobile_number"
+                    @blur="onValueChange($event, 'mobile_number', 'contact')"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#Needmobile_number"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
                       <span
-                        v-if="arr[5].first"
-                        @click="arr[5].first = !arr[5].first"
+                          v-if="arr[4].first"
+                          @click="arr[4].first = !arr[4].first"
                       >
                         Need Help?
                       </span>
-                      <span v-else @click="arr[5].first = !arr[5].first">
+                  <span v-else @click="arr[4].first = !arr[4].first">
                         Hide Help?
                       </span>
-                    </a>
-                  </p>
-                  <div data-parent="#accordion" class="collapse" id="Needemail">
-                    <div class="card card-body bubble">
-                      Please provide tooltip texts so we can place it here
-                    </div>
-                  </div>
-                </a-col>
-              </a-row>
-            </a-col>
-          </a-row>
+                </a>
+              </p>
+              <div
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="Needmobile_number"
+              >
+                <div class="card card-body bubble">
+                  Please provide tooltip texts so we can place it here
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                />What is your Email address?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-input
+                  class="w-100"
+                  placeholder="Email Address"
+                  id="inputNumber"
+                  :value="personalInformation.personal.email"
+                  :disabled="true"
+              />
+            </div>
+            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#Needemail"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                >
+                      <span
+                          v-if="arr[5].first"
+                          @click="arr[5].first = !arr[5].first"
+                      >
+                        Need Help?
+                      </span>
+                  <span v-else @click="arr[5].first = !arr[5].first">
+                        Hide Help?
+                      </span>
+                </a>
+              </p>
+              <div data-parent="#accordion" class="collapse" id="Needemail">
+                <div class="card card-body bubble">
+                  Please provide tooltip texts so we can place it here
+                </div>
+              </div>
+            </div>
+          </div>
           <a-button
             shape="round"
             type="primary"
             style="float: right"
-            class="mt-3"
+            class="mt-5"
             @click="handleSubmitFormTwo"
           >
             Save & Continue
@@ -935,5 +629,32 @@ export default {
 }
 .ant-tooltip-inner {
   border-radius: 0px;
+}
+.mobile-margin {
+  margin-top: 0.5rem;
+}
+.mobile-center {
+  text-align: center;
+}
+.mobile-switch {
+  margin-top: 12px;
+}
+@media (min-width: 768px) {
+  .form-right-content {
+    float: right;
+    padding-right: 0;
+  }
+  .mobile-margin {
+    margin-top: 0;
+  }
+  .non-padding-mobile-margin {
+    margin-top: 0;
+  }
+  .mobile-center {
+    text-align: left;
+  }
+  .mobile-switch {
+    margin-top: 0;
+  }
 }
 </style>

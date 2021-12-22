@@ -6,7 +6,7 @@
          <div class="p-3">
             <p class="text-h6 text--secondary">Suggestion Match</p>
             <carousel
-                :perPageCustom="[[320, 1],[768, 2], [1280, 3]]"
+                :perPageCustom="[[320, 1],[768, 1], [1280, 1]]"
                 :paginationEnabled="false"
                 navigationEnabled
                 :navigationClickTargetSize="0"
