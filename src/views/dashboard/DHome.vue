@@ -1,7 +1,5 @@
 <template>
-	<Layout>
 		<DHomeContent />
-	</Layout>
 </template>
 
 <script>
@@ -112,13 +110,13 @@ export default {
 					if (this.teams.length == 0) {
 						console.log("Teams count 0");
 						const vm = this;
-						this.$warning({
-							title: "Reminder",
-							content: "You don't have a team. Please create or join a team",
-							onOk() {
-								vm.$router.push("/manageteam");
-							},
-						});
+						// this.$warning({
+						// 	title: "Reminder",
+						// 	content: "You don't have a team. Please create or join a team",
+						// 	onOk() {
+						// 		vm.$router.push("/manageteam");
+						// 	},
+						// });
 					}
 				}
 			});

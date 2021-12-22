@@ -374,13 +374,13 @@ export default {
 							title: "You don't have a team",
 							content: "Please create or join a team!",
 						});
-						this.$router.push("/manageteam");
+						//this.$router.push("/manageteam");
 					} else if (!teamId) {
 						this.$warning({
 							title: "You don't have an active team",
 							content: "Please select an active team to continue!",
 						});
-						this.$router.push("/manageteam");
+						//this.$router.push("/manageteam");
 					}
 				})
 				.catch((error) => {
