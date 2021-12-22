@@ -2,135 +2,141 @@
 <template>
   <div class="r-registration-container">
     <Header />
-    <div class="r-registration my-4">
-      <div class="steps ma-steps">
-        <div class="steper-header text-center heading-text">
-          <h4>REPRESENTATIVE PROFILE FORM</h4>
-          <p>Please answer all question accurately and in full</p>
-        </div>
+    <div class="steps ma-steps">
+      <div class="steper-header text-center heading-text px-3">
+        <h4>REPRESENTATIVE PROFILE FORM</h4>
+        <p>Please answer all question accurately and in full</p>
+      </div>
 
-        <VueFixedHeader
+      <VueFixedHeader
           @change="updateFixedStatus"
           :threshold="propsData.threshold"
           :headerClass="propsData.headerClass"
           :fixedClass="propsData.fixedClass"
           :hideScrollUp="propsData.hideScrollUp"
-        >
-          <div class="step-bar">
-            <a-steps
+      >
+        <div class="step-bar">
+          <a-steps
+              class="desktop-block"
               :current="current"
               style="max-width: 100%"
               labelPlacement="vertical"
-            >
-              <a-step
+          >
+            <a-step
                 v-for="item in steps"
                 :key="item.title"
                 :title="item.title"
-              />
-            </a-steps>
+            />
+          </a-steps>
+          <div class="mobile-header">
+            <h4 class="mobile-step-text color-primary text-center fw-bold">
+              {{ mobileSteps[current] }}
+            </h4>
+            <div class="mobile-block px-3">
+              <div
+                  class="mobile-step"
+                  :class="{ 'bg-primary': current >= 0 }"
+              ></div>
+              <div
+                  class="mobile-step ml-2"
+                  :class="{ 'bg-primary': current >= 1 }"
+              ></div>
+              <div
+                  class="mobile-step ml-2"
+                  :class="{ 'bg-primary': current >= 2 }"
+              ></div>
+              <div
+                  class="mobile-step ml-2"
+                  :class="{ 'bg-primary': current >= 3 }"
+              ></div>
+            </div>
           </div>
-        </VueFixedHeader>
-
-        <div class="text-center" v-if="current == 0">
-          <h5 style="color: #e34184">Personal Information</h5>
-          <p style="color: #e34184; font-size: 14px">Details about you</p>
         </div>
+      </VueFixedHeader>
 
-        <div class="text-center" v-if="current == 1">
-          <h5 style="color: #e34184">Verification Information</h5>
-          <p style="color: #e34184; font-size: 14px">Details about you</p>
-        </div>
+      <div class="text-center mt-5" v-if="current == 0">
+        <h5 class="color-brand fs-20">Personal Information</h5>
+        <p class="color-brand fs-18">Details about you</p>
+      </div>
 
-        <div class="text-center" v-if="current == 2">
-          <h5 style="color: #e34184">Image Upload</h5>
-          <p style="color: #e34184; font-size: 14px">Details about you</p>
-        </div>
+      <div class="text-center mt-5" v-if="current == 1">
+        <h5 class="color-brand fs-20">Verification Information</h5>
+        <p class="color-brand fs-18">Details about you</p>
+      </div>
 
-        <div class="text-center" v-if="current == 3">
-          <h5 style="color: #e34184">Agree & Submit</h5>
-          <p style="color: #e34184; font-size: 14px">Details about you</p>
-        </div>
+      <div class="text-center mt-5" v-if="current == 2">
+        <h5 class="color-brand fs-20">Image Upload</h5>
+        <p class="color-brand fs-18">Details about you</p>
+      </div>
 
-        <div class="steps-content" v-if="current == 0">
-          <PersonalInfoTwo
+      <div class="text-center mt-5" v-if="current == 3">
+        <h5 class="color-brand fs-20">Agree & Submit</h5>
+        <p class="color-brand fs-18">Details about you</p>
+      </div>
+
+      <div class="steps-content" v-if="current == 0">
+        <PersonalInfoTwo
             :representativeDetails="representativeDetails"
             :personalInformation="representativeDetails.personalInformation"
             ref="personInfoRefTwo"
-          />
-        </div>
-        <div class="steps-content" v-if="current == 1">
-          <!-- <VerificationInfo
-           
-            ref="verificationInfoRef"
-            :handleChangeFromProp="handleChangeFromProp"
-            :imageUrlFront="imageUrlFront"
-            :imageUrlBack="imageUrlBack"
-          /> -->
-          <Verification
+        />
+      </div>
+      <div class="steps-content" v-if="current == 1">
+        <Verification
             :representativeDetails="representativeDetails"
             :verification="representativeDetails.verification"
             ref="VerificationRef"
-          />
-        </div>
-        <div class="steps-content" v-if="current == 2">
-          <!-- <ImageUpload
-            v-on:images-uploaded="next"
-            ref="imageUploadRef"
-            :repData="repData"
-          /> -->
-          <ImageUpload
+        />
+      </div>
+      <div class="steps-content" v-if="current == 2">
+        <ImageUpload
             :imageModel="representativeDetails.imageModel"
             ref="imageUploadRef"
-          />
-        </div>
-        <div class="steps-content" v-if="current == 3">
-          <!-- <AgreementSubmit
-            v-on:checked="agreementChecked = $event"
-            :repData="repData"
-          /> -->
-          <AgreementSubmit />
-        </div>
-        <div class="steps-action text-right pb-5 clearfix">
-          <a-button
+        />
+      </div>
+      <div class="steps-content" v-if="current == 3">
+        <AgreementSubmit />
+      </div>
+      <div class="steps-action text-right pb-5 clearfix bottom-padding">
+        <a-button
             v-if="current < steps.length - 1"
             shape="round"
             type="primary"
             style="float: right"
             class="mt-3"
             @click="next"
-          >
-            Next
-          </a-button>
-          <a-button
+        >
+          Next
+        </a-button>
+        <a-button
             v-if="current == steps.length - 1"
             type="primary"
             shape="round"
             style="float: right; margin-top: 15px"
             @click="doneBtn"
-          >
-            Review and Publish
-          </a-button>
-          <a-button
+        >
+          Review and Publish
+        </a-button>
+        <a-button
             v-if="current > 0"
             shape="round"
             style="float: right; margin-right: 10px"
             class="mt-3"
             @click="prev"
-          >
-            Previous
-          </a-button>
+        >
+          Previous
+        </a-button>
 
-          <a-button
+        <a-button
             v-if="current < steps.length - 1"
             shape="round"
             type="primary"
             style="float: left"
             class="mt-3"
             @click="saveExit"
-          >
-            Save & Exit
-          </a-button>
-        </div>
+        >
+          Save & Exit
+        </a-button>
       </div>
     </div>
   </div>
@@ -191,6 +197,12 @@ export default {
         {
           title: "Agree & Submit",
         },
+      ],
+      mobileSteps: [
+        "Personal Info",
+        "Verification",
+        "Image Upload",
+        "Agree & Submit",
       ],
 
       activeKey: 1,
@@ -397,8 +409,12 @@ export default {
 .r-registration-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   .steps-content {
-    padding: 0px;
+    margin: 0;
+    padding: 0;
+    z-index: 9;
   }
   header {
     text-align: center;
@@ -447,13 +463,24 @@ export default {
     width: 100%;
   }
   .heading-text {
-    margin-top: 20px;
+    margin-top: 30px;
     color: $color-brand;
-    width: 100%;
     h4,
     h6 {
       font-weight: bold;
       color: $color-brand;
+    }
+    h4 {
+      font-size: 18px;
+      @media (min-width: 992px) {
+        font-size: 24px;
+      }
+    }
+    h6 {
+      font-size: 14px;
+      @media (min-width: 992px) {
+        font-size: 20px;
+      }
     }
   }
 
@@ -471,12 +498,67 @@ export default {
 }
 
 .step-bar.vue-fixed-header--isFixed {
-  height: 120px;
   position: fixed;
-  top: 0;
+  top: 10px;
   z-index: 1000;
-  width: 800px;
+  width: 100%;
   padding: 0;
-  background: aliceblue;
+  background: #d4e0eb;
+  border-radius: 14px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 8px !important;
+  @media (min-width: 992px) {
+    width: 800px;
+  }
+}
+.bottom-padding {
+  padding: 0 2rem;
+}
+.mobile-step {
+  background-color: #b7b7b7;
+  border-radius: 20px;
+  width: 25%;
+  height: 20px;
+}
+.desktop-block {
+  display: none;
+}
+.mobile-block {
+  display: flex;
+  //justify-content: center;
+}
+.mobile-header {
+  display: block;
+  padding: 10px 0;
+}
+.mobile-step-text {
+  font-size: 18px;
+}
+.bottom-padding {
+  padding: 0 1.5rem;
+}
+@media (min-width: 768px) {
+  .bottom-padding {
+    padding: 1rem;
+  }
+  .desktop-block {
+    display: flex;
+  }
+  .mobile-block {
+    display: none;
+  }
+  .mobile-header {
+    display: none;
+  }
+  .step-bar.vue-fixed-header--isFixed {
+    top: 15px;
+    padding-top: 20px !important;
+  }
+}
+@media (min-width: 992px) {
+  .step-bar.vue-fixed-header--isFixed {
+    width: 800px;
+  }
 }
 </style>
