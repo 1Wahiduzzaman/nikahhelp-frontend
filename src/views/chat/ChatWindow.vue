@@ -210,19 +210,47 @@
                 </div>
               </div>
               <div class="chat-area">
-                <div class="chat-box" ref="chatbox" id="chat_box">
-                  <div
-                      v-for="item in chats"
-                      :key="item.id"
-                      :class="['chats', (parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId)) ? 'me' : '']"
-                  >
-                    <div class="item-img">
-                      <img src="../../assets/info-img.png" alt="info image"/>
-                      <span></span>
-                    </div>
-                    <div class="message">
-                      <p class="msg-text">{{ item.body || '' }}</p>
-                      <p class="date-time"> {{ messageCreatedAt(item.created_at) }} </p>
+<!--                <div class="chat-box" ref="chatbox" id="chat_box">-->
+<!--                  <div-->
+<!--                      v-for="item in chats"-->
+<!--                      :key="item.id"-->
+<!--                      :class="['chats', (parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId)) ? 'me' : '']"-->
+<!--                  >-->
+<!--                    <div class="item-img">-->
+<!--                      <img src="../../assets/info-img.png" alt="info image"/>-->
+<!--                      <span></span>-->
+<!--                    </div>-->
+<!--                    <div class="message">-->
+<!--                      <p class="msg-text">{{ item.body || '' }}</p>-->
+<!--                      <p class="date-time"> {{ messageCreatedAt(item.created_at) }} </p>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+                <div class="position-relative">
+                  <div class="chat-messages py-4 pr-1" id="chat-messages">
+
+                    <div v-for="(item, cIndex) in chats" :key="item.id">
+                      <div :id="chats.length === cIndex + 1 ? 'messagesid' : ''" class="chat-message-right pb-4 position-relative mb-5" v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))" >
+                        <div class="text-right">
+                          <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
+                        </div>
+                        <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+                          <!--                        <div class="font-weight-bold mb-1">You</div>-->
+                          {{ item.body || '' }}
+                        </div>
+                        <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">{{ messageCreatedAt(item.created_at) }}</div>
+                      </div>
+
+                      <div :id="chats.length === cIndex + 1 ? 'messagesid' : ''" class="chat-message-left pb-4 position-relative mb-5" v-else>
+                        <div class="text-left">
+                          <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+                        </div>
+                        <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+                          <!--                        <div class="font-weight-bold mb-1">Sharon Lessman</div>-->
+                          {{ item.body || '' }}
+                        </div>
+                        <div class="text-muted small text-nowrap mt-2 position-absolute msg-left-created-at">{{ messageCreatedAt(item.created_at) }}</div>
+                      </div>
                     </div>
 
                   </div>
@@ -347,6 +375,14 @@ export default {
         //
         this.$store.dispatch('setScrollDownStatus', false);
       }
+    },
+    chats: function(val) {
+      console.log(val);
+      setTimeout(() => {
+        const messages = document.getElementById('chat-messages');
+        const messagesid = document.getElementById('messagesid');
+        messages.scrollTop = messagesid.offsetTop - 10;
+      });
     }
   },
   computed: {
@@ -433,11 +469,12 @@ export default {
         res.sender = res.senderInfo;
         // console.log(res)
         if(this.chat_type && (this.activeTeam == res.target_opened_chat || this.one_to_one_user == res.target_opened_chat || this.inConnectedChat || this.private_chat)) {
-          if(this.chats.length <= 0) {
-            this.chats.push(res);
-          } else {
-            this.chats.unshift(res);
-          }
+          this.chats.push(res);
+          // if(this.chats.length <= 0) {
+          //   this.chats.push(res);
+          // } else {
+          //   this.chats.unshift(res);
+          // }
         }
 
         let teamPersonalChat = this.teamChat.find(item => item.user_id == res.senderId);
@@ -700,7 +737,7 @@ export default {
       }
       this.chatheadopen = item;
       this.chats = await this.loadIndividualChatHistory(payload);
-      this.chats = this.chats.reverse();
+      // this.chats = this.chats.reverse();
 
       // if(!isAnyKeyValueFalse) {
       //   this.conversationTitle = name;
@@ -823,7 +860,8 @@ export default {
         this.chatheadopen.message.sender = loggedUser;
         this.$socket.emit('send_message_in_group', payload);
       }
-      this.chats.unshift(payload);
+      // this.chats.unshift(payload);
+      this.chats.push(payload);
       payload.sender = loggedUser.id.toString();
       this.msg_text = '';
       await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
@@ -849,6 +887,7 @@ export default {
       };
       payload.target_opened_chat = payload.to_team_id;
       this.$socket.emit('send_message_in_group', payload);
+      this.chats.push(payload);
       teamMembers.splice(selfIndex, 1);
       this.msg_text = null;
       await ApiService.post(`/v1/send-message-team-to-team`, payload).then(res => res.data);
@@ -867,7 +906,8 @@ export default {
         receiver: this.private_chat.receiver.toString()
       }
       payload.sender = loggedUser.id.toString();
-      this.chats.unshift(payload);
+      // this.chats.unshift(payload);
+      this.chats.push(payload);
       this.chatheadopen.message.body = this.msg_text;
       this.chatheadopen.message.created_at = new Date();
       this.chatheadopen.message.senderId = loggedUser.id.toString();
@@ -2015,6 +2055,58 @@ export default {
 .chat-item:hover {
   background: #efefef;
   border-radius: 20px;
+}
+
+.chat-online {
+  color: #34ce57
+}
+
+.chat-offline {
+  color: #e4606d
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  max-height: 540px;
+  overflow-y: auto;
+}
+
+.chat-message-left,
+.chat-message-right {
+  display: flex;
+  flex-shrink: 0
+}
+
+.chat-message-left {
+  margin-right: auto
+}
+
+.chat-message-right {
+  flex-direction: row-reverse;
+  margin-left: auto
+}
+.msg-right-created-at {
+  bottom: -4px;
+  right: 6px;
+}
+.msg-left-created-at {
+  bottom: -4px;
+  left: 6px;
+}
+//.py-3 {
+//  padding-top: 1rem!important;
+//  padding-bottom: 1rem!important;
+//}
+//.px-4 {
+//  padding-right: 1.5rem!important;
+//  padding-left: 1.5rem!important;
+//}
+.flex-grow-0 {
+  flex-grow: 0!important;
+}
+.border-top {
+  border-top: 1px solid #dee2e6!important;
 }
 
 // css custom scrollbar
