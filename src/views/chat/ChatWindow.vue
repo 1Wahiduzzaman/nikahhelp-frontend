@@ -176,14 +176,15 @@
 <!--                      <span></span>-->
                     </div>
                     <div class="chat-info">
+                      <div class="chat-group bg-primary">{{ getChatType }} chat</div>
                       <div class="chat-name">{{ conversationTitle }}</div>
                       <div class="last-chat" v-if="chat_type == 'team'">Active now {{ getTeamOnlineUsers() > 0 ? getTeamOnlineUsers() : '' }}</div>
                     </div>
                   </div>
                 </div>
-                <div class="middle">
-                  <div class="chat-group">{{ getChatType }} chat</div>
-                </div>
+<!--                <div class="middle">-->
+<!--                  <div class="chat-group">{{ getChatType }} chat</div>-->
+<!--                </div>-->
                 <div class="right">
                   <a-dropdown>
                     <a class="ant-dropdown-link py-2" @click="e => e.preventDefault()">
@@ -228,33 +229,35 @@
 <!--                </div>-->
                 <div class="position-relative">
                   <div class="chat-messages py-4 pr-1" id="chat-messages">
-                    <div v-for="(item, cIndex) in chats" :key="item.id">
+                    <div v-for="(item, cIndex) in chats" :key="item.id" class="position-relative">
                       <div :id="chats.length === cIndex + 1 ? 'messagesid' : ''"
                            class="chat-message-right pb-4 position-relative"
-                           :class="{'mb-5': chats.length !== cIndex + 1}"
+                           :class="{'conv-mb': chats.length !== cIndex + 1}"
                            v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))" >
                         <div class="text-right">
                           <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
                         </div>
-                        <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10">
+                        <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 white-space-pre" v-html="item.body">
                           <!--                        <div class="font-weight-bold mb-1">You</div>-->
-                          {{ item.body || '' }}
+<!--                          {{ item.body || '' }}-->
                         </div>
                         <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">{{ messageCreatedAt(item.created_at) }}</div>
                       </div>
 
                       <div :id="chats.length === cIndex + 1 ? 'messagesid' : ''"
                            class="chat-message-left pb-4 position-relative"
-                           :class="{'mb-5': chats.length !== cIndex + 1}" v-else>
+                           :class="{'conv-mb': chats.length !== cIndex + 1}" v-else>
                         <div class="text-left">
                           <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
                         </div>
-                        <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10">
+                        <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 white-space-pre" v-html="item.body">
                           <!--                        <div class="font-weight-bold mb-1">Sharon Lessman</div>-->
-                          {{ item.body || '' }}
+<!--                          {{ item.body || '' }}-->
                         </div>
                         <div class="text-muted small text-nowrap mt-2 position-absolute msg-left-created-at">{{ messageCreatedAt(item.created_at) }}</div>
                       </div>
+
+                      <div class="position-absolute conv-user color-primary" v-if="chatheadopen.label == 'Group chat'">{{ item.sender ? item.sender.full_name : '' }}</div>
                     </div>
 
                   </div>
@@ -263,17 +266,30 @@
                    <div class="footer-top"><strong>{{ chatheadopen.typer_name }}</strong> {{ chatheadopen.typing_text }}</div>
                   <div class="footer-bottom">
                     <form action="#" @submit.prevent="sendMsg">
-                      <div class="left">
+                      <div class="left flex justify-content-end align-items-end">
                         <div class="message-box">
-                          <button class="btn-emoji px-2">&#128528;</button>
-<!--                          <textarea name="message" id="" cols="30" rows="10" placeholder="Enter message..."-->
-<!--                                    v-model="msg_text" v-on:keyup.enter="sendMsg($event)"></textarea>-->
-                          <input type="text" placeholder="Enter message..."
-                                 v-model="msg_text" v-on:keyup.enter="sendMsg($event)" @keyup="notifyKeyboardStatus">
+                          <a-tooltip>
+                            <template slot="title">
+                              Coming soon
+                            </template>
+                            <button class="btn-emoji px-2" title="Coming soon">&#128528;</button>
+                          </a-tooltip>
+                          <textarea name="message" id="" cols="30" rows="4" placeholder="Enter message..."
+                                    v-model="msg_text" @keydown.enter.exact.prevent="sendMsg($event)" @keyup="notifyKeyboardStatus"></textarea>
                           <div class="position-absolute msgbox-right">
                             <div class="flex">
-                              <button><img src="../../assets/icon/microphone.png" alt="icon" class="mr-2 microphone" /></button>
-                              <button><a-icon type="file-image" class="color-primary" /></button>
+                              <a-tooltip>
+                                <template slot="title">
+                                  Coming soon
+                                </template>
+                                <button><img src="../../assets/icon/microphone.png" alt="icon" class="mr-2 microphone" /></button>
+                              </a-tooltip>
+                              <a-tooltip>
+                                <template slot="title">
+                                  Coming soon
+                                </template>
+                                <button><a-icon type="file-image" class="color-primary" /></button>
+                              </a-tooltip>
                             </div>
                           </div>
                         </div>
@@ -2074,6 +2090,21 @@ export default {
                 border-radius: 18px;
                 background-color: #eceaf5;
                 resize: none;
+                //v-on:keyup.enter="sendMsg($event)"
+                @media (max-width: 767px) {
+                  padding-left: 32px;
+                }
+              }
+
+              textarea {
+                width: 100%;
+                border: 0;
+                padding: 7px 54px 7px 40px;
+                border-radius: 18px;
+                background-color: #eceaf5;
+                resize: none;
+                max-height: 70px;
+                overflow-y: hidden;
                 @media (max-width: 767px) {
                   padding-left: 32px;
                 }
@@ -2239,6 +2270,15 @@ export default {
 .chat-messages::-webkit-scrollbar {
   display: none;
 }
+.conv-user {
+  top: -20px;
+  right: 10px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.conv-mb {
+  margin-bottom: 30px;
+}
 // css custom scrollbar
 /* width */
 ::-webkit-scrollbar {
@@ -2264,46 +2304,46 @@ export default {
 }
 .chat-item-wrapper {
   //height: 500px;
-  height: calc(100vh - 300px);
+  height: calc(100vh - 250px);
   @media (min-width: 410px) {
-    height: calc(100vh - 300px);
+    height: calc(100vh - 250px);
   }
   @media (min-width: 576px) {
-    height: calc(100vh - 300px);
+    height: calc(100vh - 250px);
   }
   @media (min-width: 768px) {
-    height: calc(100vh - 300px);
+    height: calc(100vh - 250px);
   }
   @media (min-width: 992px) {
     height: calc(100vh - 395px);
   }
   @media (min-width: 1200px) {
-    height: calc(100vh - 395px);
+    height: calc(100vh - 345px);
   }
   @media (min-width: 1920px) {
-    height: calc(100vh - 395px);
+    height: calc(100vh - 345px);
   }
 }
 .chat-area {
   //min-height: 600px;
-  min-height: calc(100vh - 305px);
+  min-height: calc(100vh - 260px);
   @media (min-width: 410px) {
-    min-height: calc(100vh - 305px);
+    min-height: calc(100vh - 260px);
   }
   @media (min-width: 576px) {
-    min-height: calc(100vh - 305px);
+    min-height: calc(100vh - 260px);
   }
   @media (min-width: 768px) {
-    min-height: calc(100vh - 300px);
+    min-height: calc(100vh - 260px);
   }
   @media (min-width: 992px) {
-    min-height: calc(100vh - 270px);
+    min-height: calc(100vh - 250px);
   }
   @media (min-width: 1200px) {
-    min-height: calc(100vh - 270px);
+    min-height: calc(100vh - 250px);
   }
   @media (min-width: 1920px) {
-    min-height: calc(100vh - 270px);
+    min-height: calc(100vh - 250px);
   }
 }
 .chat-messages {
@@ -2313,13 +2353,13 @@ export default {
   max-height: calc(100vh - 370px);
   overflow-y: auto;
   @media (min-width: 410px) {
-    max-height: calc(100vh - 370px);
+    max-height: calc(100vh - 350px);
   }
   @media (min-width: 576px) {
-    max-height: calc(100vh - 370px);
+    max-height: calc(100vh - 350px);
   }
   @media (min-width: 768px) {
-    max-height: calc(100vh - 370px);
+    max-height: calc(100vh - 350px);
   }
   @media (min-width: 992px) {
     max-height: calc(100vh - 340px);

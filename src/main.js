@@ -13,6 +13,7 @@ import store from "./store/index.js";
 // import axios from "axios";
 // * This is the vue-web-storage package
 import Storage from "vue-web-storage";
+import TextareaAutosize from 'vue-textarea-autosize';
 // * ApiService for the application
 import ApiService from "./services/api.service";
 import Vuetify from 'vuetify';
@@ -27,6 +28,7 @@ Vue.use(VueCompositionAPI);
 Vue.use(Antd);
 Vue.component('Layout', Layout);
 Vue.component('AdminLayout', AdminLayout);
+Vue.use(TextareaAutosize)
 import VueSocketIO from 'vue-socket.io'
 import SocketIO from 'socket.io-client'
 const socketConnection = SocketIO('https://biya.arranzed.com:4009');
