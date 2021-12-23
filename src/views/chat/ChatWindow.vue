@@ -255,7 +255,7 @@
                   </div>
                 </div>
                 <div class="footer">
-<!--                   <div class="footer-top"><strong>Someone</strong> is typing...</div>-->
+                   <div class="footer-top"><strong>{{ chatheadopen.typer_name }}</strong> {{ chatheadopen.typing_text }}</div>
                   <div class="footer-bottom">
                     <form action="#" @submit.prevent="sendMsg">
                       <div class="left">
@@ -559,12 +559,32 @@ export default {
         //   connectedTeamChat.message.created_at = res.created_at;
         //   connectedTeamChat.message.seen = 0;
         // }
-
-
       });
 
       this.sockets.subscribe('lis_typing', function (res) {
-        console.log(res)
+        if(res.team_id) {
+          if(this.chatHistory.length > 0) {
+            this.chatHistory[0].typing_status = res.status;
+            this.chatHistory[0].typing_text = res.text;
+            this.chatHistory[0].typer_name = res.typer_name;
+          }
+          if(this.teamChat.length > 0) {
+            this.teamChat[0].typing_status = res.status;
+            this.teamChat[0].typing_text = res.text;
+            this.teamChat[0].typer_name = res.typer_name;
+          }
+        } else {
+          let teamPersonalChat = this.teamChat.find(item => item.other_mate_id == res.typer_id);
+          if(teamPersonalChat) {
+            teamPersonalChat.typing_status = res.status;
+            teamPersonalChat.typing_text = res.text;
+          }
+          let recentChat = this.chatHistory.find(item => item.other_mate_id == res.typer_id);
+          if(recentChat) {
+            recentChat.typing_status = res.status;
+            recentChat.typing_text = res.text;
+          }
+        }
       });
     }
   },
@@ -612,7 +632,9 @@ export default {
       let group = data;
       group.message = pick(data.last_group_message, messageKeys);
       group.label = 'Group chat';
-      group.state = 'Typing...'
+      group.state = 'Typing...';
+      group.typing_status = 0;
+      group.typing_text = '';
 
       return [group, ...map(data.team_members, item => {
         return {
@@ -622,6 +644,8 @@ export default {
           name: item.user?.full_name || 'user name',
           logo: item.user?.avatar,
           other_mate_id: item.user_id,
+          typing_status: 0,
+          typing_text: '',
           message: pick(item.last_message, messageKeys)
         }
       })];
@@ -635,6 +659,8 @@ export default {
           logo: item.user?.avatar,
           user_id: item.user.id,
           other_mate_id: item.user_id,
+          typing_status: 0,
+          typing_text: '',
           message: pick(item.last_message, messageKeys)
         }
       });
@@ -650,6 +676,8 @@ export default {
           private_receiver_id: item.receiver,
           private_team_chat_id: item.id,
           other_mate_id: item.receiver,
+          typing_status: 0,
+          typing_text: '',
           message: pick(item.last_private_message, messageKeys)
         }
       });
@@ -659,6 +687,8 @@ export default {
         state: 'Typing...',
         name: data.last_group_msg.team.name,
         logo: data.last_group_msg.team.logo,
+        typing_status: 0,
+        typing_text: '',
         message: pick(data.last_group_msg, messageKeys)
       }]
 
@@ -744,6 +774,10 @@ export default {
       }
     },
     async getIndividualChat({message: {chat_id, team_id}, name, user_id, from_team_id, to_team_id, private_receiver_id, private_team_chat_id}, item) {
+      if(this.msg_text) {
+        this.msg_text = '';
+        this.notifyKeyboardStatus();
+      }
       const payload = {
         type: chat_id ? 'single' : 'team',
         chat_id,
@@ -974,26 +1008,36 @@ export default {
       let data = {
         type: this.chatheadopen.label,
         other_mate_id: this.chatheadopen.other_mate_id,
+        typer_id: loggedUser.id,
         typer: loggedUser
       };
       if(data.type === 'Group chat') {
         data.members = this.teamMembers;
-        data.receivers = this.teamMembers;
+        data.team_id = this.activeTeam;
+        data.typer_name = loggedUser.full_name;
       } else {
-        data.to = this.chatheadopen.other_mate_id;
+        data.to = this.chatheadopen.other_mate_id.toString();
+        data.typer_name = '';
       }
       if(this.msg_text && this.msg_text.length > 0) {
-        data = {
-          status: 1,
-          text: 'Typing',
-        };
+        data.status = 1;
+        data.text = 'Typing';
       } else {
-        data = {
-          status: 0,
-          text: ''
-        };
+        data.status = 0;
+        data.text = '';
+        data.typer_name = '';
       }
-      this.$socket.emit('typing', data);
+
+      if(data.team_id) {
+        this.teamMembers.forEach(item => {
+          if(item != loggedUser.id) {
+            data.to = item.toString();
+            this.$socket.emit('typing', data);
+          }
+        });
+      } else {
+        this.$socket.emit('typing', data);
+      }
     },
     unique(array) {
       return array.filter(function (el, index, arr) {
@@ -2010,7 +2054,7 @@ export default {
         .footer-top {
           font-size: 12px;
           color: #818181;
-          margin-bottom: 30px;
+          margin-bottom: 12px;
         }
 
         .footer-bottom {

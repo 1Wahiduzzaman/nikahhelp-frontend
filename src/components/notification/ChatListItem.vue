@@ -28,7 +28,7 @@
       </a-dropdown>
     </div>
     <div class="flex chat-bottom-place justify-content-between">
-      <div class="date"></div>
+      <div class="date">{{ item.typing_text }}</div>
       <div class="date">{{ item.message ? messageCreatedAt(item.message.created_at) : '' }}</div>
     </div>
   </div>
@@ -61,6 +61,11 @@ export default {
         return this.onlineUser();
       }
       return false;
+    },
+  },
+  watch: {
+    item: function(newVal, oldVal) {
+      console.log(newVal, oldVal)
     }
   },
   methods: {
