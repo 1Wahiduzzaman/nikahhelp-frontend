@@ -164,7 +164,7 @@
               </div>
             </div>
             <div class="chat-right" :class="{'chat-hide': !conversationTitle}" v-if="chats.length > 0">
-              <button class="btn btn-primary flex justify-content-center align-items-center my-2 d-md-none"
+              <button class="btn btn-primary flex justify-content-center align-items-center my-2 d-lg-none"
                       @click="backToTabList()">
                 <a-icon type="caret-left"/>
               </button>
@@ -229,7 +229,10 @@
                 <div class="position-relative">
                   <div class="chat-messages py-4 pr-1" id="chat-messages">
                     <div v-for="(item, cIndex) in chats" :key="item.id">
-                      <div :id="chats.length === cIndex + 1 ? 'messagesid' : ''" class="chat-message-right pb-4 position-relative mb-5" v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))" >
+                      <div :id="chats.length === cIndex + 1 ? 'messagesid' : ''"
+                           class="chat-message-right pb-4 position-relative"
+                           :class="{'mb-5': chats.length !== cIndex + 1}"
+                           v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))" >
                         <div class="text-right">
                           <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
                         </div>
@@ -240,7 +243,9 @@
                         <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">{{ messageCreatedAt(item.created_at) }}</div>
                       </div>
 
-                      <div :id="chats.length === cIndex + 1 ? 'messagesid' : ''" class="chat-message-left pb-4 position-relative mb-5" v-else>
+                      <div :id="chats.length === cIndex + 1 ? 'messagesid' : ''"
+                           class="chat-message-left pb-4 position-relative"
+                           :class="{'mb-5': chats.length !== cIndex + 1}" v-else>
                         <div class="text-left">
                           <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
                         </div>
@@ -295,7 +300,6 @@
               <div class="flex justify-content-center align-items-center empty-height">
                 <h4 class="fs-20 flex flex-column align-items-center justify-content-center">Select a conversation & start the chat</h4>
               </div>
-              <conversation class="d-none" />
               <div class="d-none flex-column justify-content-center align-items-center text-center">
                 <v-stepper alt-labels>
                   <v-stepper-header>
@@ -392,7 +396,6 @@ export default {
     }
   },
   components: {
-    Conversation,
     ChatListItem
   },
   watch: {
@@ -1153,7 +1156,8 @@ export default {
 
   .chat-left {
     float: left;
-    width: 400px;
+    //width: 400px;
+    width: 100%;
     max-width: 100%;
     padding-right: 5px;
     //min-height: 600px;
@@ -1170,6 +1174,10 @@ export default {
       }
     }
 
+    @media (min-width: 992px) {
+      width: 400px;
+    }
+
     @media (max-width: 913px) {
       .category-name {
         display: none;
@@ -1179,9 +1187,6 @@ export default {
       }
     }
 
-    @media (max-width: 991px) {
-      width: 45%;
-    }
     @media (max-width: 767px) {
       width: 100%;
       padding-right: 0;
@@ -1447,11 +1452,7 @@ export default {
     }
 
     .chat-item-wrapper {
-      height: 500px;
       overflow-y: auto;
-      @media (max-width: 991px) {
-        height: 400px;
-      }
 
       .chat-item {
         padding-top: 15px;
@@ -1621,14 +1622,18 @@ export default {
   .chat-right {
     float: left;
     padding-left: 20px;
-    width: calc(100% - 400px);
-    @media (max-width: 991px) {
-      width: calc(100% - 302px);
+    width: 100%;
+    //width: calc(100% - 400px);
+    @media (min-width: 992px) {
+      width: calc(100% - 400px)
     }
-    @media (max-width: 767px) {
-      width: 100%;
-      padding-left: 0;
-    }
+    //@media (max-width: 991px) {
+    //  width: calc(100% - 302px);
+    //}
+    //@media (max-width: 767px) {
+    //  width: 100%;
+    //  padding-left: 0;
+    //}
 
     .header {
       border-bottom: 1px solid #d9d9d9;
@@ -1901,16 +1906,10 @@ export default {
     }
 
     .chat-area {
-      min-height: 620px;
+      //min-height: 620px;
       display: flex;
       flex-direction: column;
       position: relative;
-      @media (max-width: 991px) {
-        min-height: 600px;
-      }
-      @media (max-width: 991px) {
-        //min-height: auto;
-      }
 
       .chat-box {
         height: 545px;
@@ -2186,13 +2185,6 @@ export default {
   color: #e4606d
 }
 
-.chat-messages {
-  display: flex;
-  flex-direction: column;
-  max-height: 540px;
-  overflow-y: auto;
-}
-
 .chat-message-left,
 .chat-message-right {
   display: flex;
@@ -2270,6 +2262,74 @@ export default {
 ::-webkit-scrollbar-thumb:hover {
   background: #bcb5de;
 }
-
+.chat-item-wrapper {
+  //height: 500px;
+  height: calc(100vh - 300px);
+  @media (min-width: 410px) {
+    height: calc(100vh - 300px);
+  }
+  @media (min-width: 576px) {
+    height: calc(100vh - 300px);
+  }
+  @media (min-width: 768px) {
+    height: calc(100vh - 300px);
+  }
+  @media (min-width: 992px) {
+    height: calc(100vh - 395px);
+  }
+  @media (min-width: 1200px) {
+    height: calc(100vh - 395px);
+  }
+  @media (min-width: 1920px) {
+    height: calc(100vh - 395px);
+  }
+}
+.chat-area {
+  //min-height: 600px;
+  min-height: calc(100vh - 305px);
+  @media (min-width: 410px) {
+    min-height: calc(100vh - 305px);
+  }
+  @media (min-width: 576px) {
+    min-height: calc(100vh - 305px);
+  }
+  @media (min-width: 768px) {
+    min-height: calc(100vh - 300px);
+  }
+  @media (min-width: 992px) {
+    min-height: calc(100vh - 270px);
+  }
+  @media (min-width: 1200px) {
+    min-height: calc(100vh - 270px);
+  }
+  @media (min-width: 1920px) {
+    min-height: calc(100vh - 270px);
+  }
+}
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  //max-height: 540px;
+  max-height: calc(100vh - 370px);
+  overflow-y: auto;
+  @media (min-width: 410px) {
+    max-height: calc(100vh - 370px);
+  }
+  @media (min-width: 576px) {
+    max-height: calc(100vh - 370px);
+  }
+  @media (min-width: 768px) {
+    max-height: calc(100vh - 370px);
+  }
+  @media (min-width: 992px) {
+    max-height: calc(100vh - 340px);
+  }
+  @media (min-width: 1200px) {
+    max-height: calc(100vh - 340px);
+  }
+  @media (min-width: 1920px) {
+    max-height: calc(100vh - 340px);
+  }
+}
 // end css for chat
 </style>
