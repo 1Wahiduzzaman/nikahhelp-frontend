@@ -61,7 +61,7 @@
 				</div>
 
 				<!-- Edit Buttons -->
-				<div class="middle">
+				<div :class="{'disabled-team': !turnOn}" class="middle">
 					<a-tooltip placement="top" title="Edit Team Info">
 						<button class="close">
 							<img
@@ -147,7 +147,7 @@
 						</div>
 					</div>
 					<!-- Default dropleft button -->
-					<div class="btn-group dropleft">
+					<div class="btn-group dropleft" :class="{'disabled-team': !turnOn}">
 						<a-tooltip
 							placement="top"
 							title="Change Roles, Preferences, Delete and Leave Team"
@@ -175,7 +175,7 @@
 				</div>
 			</div>
 			<!-- Team Info -->
-			<div class="card-info">
+			<div class="card-info" :class="{'disabled-team': !turnOn}">
 				<!-- Team Logo -->
 				<div class="img mt-2">
 					<button>
@@ -239,7 +239,7 @@
                          @deleteInvitation="deleteInvitation"
                          @teamListUpdated="teamListUpdated" />
 			<!-- Member stats -->
-			<div class="member-area">
+			<div class="member-area" :class="{'disabled-team': !turnOn}">
 				<div class="members">
 					<p>
 						<span>{{ teamData.teamlisted_short_listed.length }}</span>
@@ -273,7 +273,7 @@
 			</div>
 
 			<!-- Add or Remove Member Button -->
-			<div class="member-action">
+			<div class="member-action" :class="{'disabled-team': !turnOn}">
 				<div class="add-remove">
 					<button class="add-member" @click="handleAddMemberclick">
 						<img src="../../assets/icon/add.svg" alt="add" /> Add member
@@ -387,7 +387,7 @@
               </td>
               <td>
                 <div class="name-full cursor-pointer" @click="toggleActiveProfile(item, 'invitation')">
-                  <span class="team-member-name">{{ item.user ? item.user.full_name.substring(0, 15) : 'Not joined yet' }}</span>
+                  <span class="team-member-name fs-12">{{ item.user ? item.user.full_name.substring(0, 15) : 'Not joined' }}</span>
                 </div>
               </td>
               <td>
@@ -458,7 +458,7 @@
 				</a-tooltip>
 			</div>
 			<!-- Invitations History -->
-			<div class="team-invitations mr-3">
+			<div class="team-invitations mr-3" :class="{'disabled-team': !turnOn}">
 				<!-- Team Invitation History Modal -->
 				<a-modal
 					:width="700"
@@ -489,7 +489,7 @@
 			</div>
 
 			<!-- Subscription Information -->
-			<div class="team-card-footer">
+			<div class="team-card-footer" :class="{'disabled-team': !turnOn}">
 				<div class="left">
 					<p>Team Creation Date : {{ formateDate(teamData.created_at) }}</p>
 					<p class="text-success" v-if="!subTextShow">
@@ -535,6 +535,14 @@ export default {
 	name: "TeamDetailsCard",
 	props: ["teamData", "index"],
 	components: {TeamProfileCard, InviteMember, DeletionModal, PreferenceModal, LTModal, TNCModal, TDCModal },
+  sockets: {
+    connect: function () {
+      console.log('socket connected')
+    },
+    ping: function (data) {
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
 	data() {
 		return {
 			invitation_link: [],
@@ -634,6 +642,14 @@ export default {
 		this.checkCurrentUser();
 	},
 	methods: {
+    socketNotification(payload) {
+      if(payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map(item => {
+          return item.toString();
+        });
+        this.$socket.emit('notification', payload);
+      }
+    },
 		showInvitation() {
 			this.showTeamInvitation = true;
 		},
@@ -2092,6 +2108,11 @@ export default {
 }
 .team-member-name:hover {
   color: $color-brand;
+  border-bottom: 1px solid $border-brand;
+}
+.disabled-team {
+  opacity: 0.5;
+  pointer-events: none;
 }
 // end css for team-card
 </style>

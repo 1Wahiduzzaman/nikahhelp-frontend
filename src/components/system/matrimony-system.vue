@@ -15,8 +15,29 @@ export default {
     InstantNotification,
     Layout,
   },
+  sockets: {
+    connect: function () {
+      console.log('socket connected')
+    },
+    ping: function (data) {
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
   data() {
     return {};
+  },
+  mounted() {
+    let loggedUser = JSON.parse(localStorage.getItem('user'));
+    if (loggedUser) {
+      this.$socket.emit('ping', {user_id: loggedUser.id});
+
+      this.sockets.subscribe('ping_success', function (res) {
+        // console.log(res);
+        if (res && res.online_users) {
+          this.online_users = res.online_users;
+        }
+      });
+    }
   },
   created() {},
 };

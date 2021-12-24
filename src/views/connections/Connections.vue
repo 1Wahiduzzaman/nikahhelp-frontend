@@ -311,6 +311,14 @@ export default {
     Footer,
     Candidate,
   },
+  sockets: {
+    connect: function () {
+      console.log('socket connected')
+    },
+    ping: function (data) {
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
   data() {
     return {
       isLoading: false,
@@ -388,7 +396,14 @@ export default {
   methods: {
     dateFromDateTime, //From helpers.js
     dateFromTimeStamp, //From helpers.js
-   
+    socketNotification(payload) {
+      if(payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map(item => {
+          return item.toString();
+        });
+        this.$socket.emit('notification', payload);
+      }
+    },
     async getActiveTeamId() {
       const response = this.$store.dispatch("getTeams");
       response

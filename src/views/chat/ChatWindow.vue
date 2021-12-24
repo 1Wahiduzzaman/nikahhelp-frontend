@@ -163,11 +163,12 @@
 
               </div>
             </div>
-            <div class="chat-right" :class="{'chat-hide': !conversationTitle}" v-if="chats.length > 0">
-              <button class="btn btn-primary flex justify-content-center align-items-center my-2 d-lg-none"
-                      @click="backToTabList()">
-                <a-icon type="caret-left"/>
-              </button>
+            <div class="chat-right position-relative" :class="{'chat-hide': !conversationTitle}" v-if="chats.length > 0">
+<!--              <button class="btn btn-primary flex justify-content-center align-items-center my-2 d-lg-none position-absolute btn-short-back"-->
+<!--                      @click="backToTabList()">-->
+<!--                <a-icon type="caret-left"/>-->
+<!--              </button>-->
+              <h4 class="cursor-pointer position-absolute btn-short-back" @click="backToTabList()">&#8592;</h4>
               <div class="header clearfix">
                 <div class="left">
                   <div class="top">
@@ -229,8 +230,8 @@
 <!--                </div>-->
                 <div class="position-relative">
                   <div class="chat-messages py-4 pr-1" id="chat-messages">
-                    <div v-for="(item, cIndex) in chats" :key="item.id" class="position-relative">
-                      <div :id="chats.length === cIndex + 1 ? 'messagesid' : ''"
+                    <div v-for="(item, cIndex) in chats" :key="item.id" class="position-relative" :id="chats.length === cIndex + 1 ? 'messagesid' : ''">
+                      <div
                            class="chat-message-right pb-4 position-relative"
                            :class="{'conv-mb': chats.length !== cIndex + 1}"
                            v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))" >
@@ -244,7 +245,7 @@
                         <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">{{ messageCreatedAt(item.created_at) }}</div>
                       </div>
 
-                      <div :id="chats.length === cIndex + 1 ? 'messagesid' : ''"
+                      <div
                            class="chat-message-left pb-4 position-relative"
                            :class="{'conv-mb': chats.length !== cIndex + 1}" v-else>
                         <div class="text-left">
@@ -2268,7 +2269,8 @@ export default {
 }
 
 .chat-messages::-webkit-scrollbar {
-  display: none;
+  //display: none;
+  width: 4px;
 }
 .conv-user {
   top: -20px;
@@ -2301,6 +2303,11 @@ export default {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #bcb5de;
+}
+.btn-short-back {
+  top: -20px;
+  left: -10px;
+  padding: 4px;
 }
 .chat-item-wrapper {
   //height: 500px;
@@ -2349,9 +2356,9 @@ export default {
 .chat-messages {
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
   //max-height: 540px;
   max-height: calc(100vh - 370px);
-  overflow-y: auto;
   @media (min-width: 410px) {
     max-height: calc(100vh - 350px);
   }

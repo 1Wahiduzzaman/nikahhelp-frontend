@@ -6,12 +6,14 @@
         <div class="main-content-wrapper">
           <div class="main-content-1 px-4">
             <div class="flex border-bottom pb-4 mb-4 justify-content-between align-items-center">
-              <h4 class="">All Notifications</h4>
-              <div class="flex justify-content-end align-items-center">
+              <h4 class="d-sm-none d-md-block">All Notifications</h4>
+              <div class="flex justify-content-end align-items-center w-full flex-wrap">
                 <v-btn
                     rounded
                     color="primary"
                     dark
+                    small
+                    @click="notiType = 'all'"
                 >
                   All
                 </v-btn>
@@ -20,6 +22,8 @@
                     color="error"
                     dark
                     class="ml-2"
+                    small
+                    @click="notiType = 0"
                 >
                   Unread
                 </v-btn>
@@ -28,15 +32,16 @@
                     color="success"
                     dark
                     class="ml-2"
+                    small
                 >
                   <a-icon type="check" color="success" class="pr-2" />
                   Mark as read
                 </v-btn>
               </div>
             </div>
-            <div class="notification-page-height">
+            <div class="notification-page-height pr-3">
               <notification
-                  v-for="(notification, index) in notifications"
+                  v-for="(notification, index) in filteredNotifications"
                   :key="index"
                   :notification="notification" />
             </div>
@@ -81,8 +86,17 @@ import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import Footer from "@/components/auth/Footer.vue";
 import Notification from "@/components/notification/Notification.vue";
 import JwtService from "@/services/jwt.service";
+import ApiService from "@/services/api.service";
 export default {
   name: "NotificationPage",
+  sockets: {
+    connect: function () {
+      console.log('socket connected')
+    },
+    ping: function (data) {
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
   components: {
     Header,
     Sidebar,
@@ -96,13 +110,28 @@ export default {
       is_verified: 1,
       error: null,
       teamId: null,
-      notifications: [{ id: 1 }, { id: 2 }, { id: 3 }],
+      notiType: 'all',
+      notifications: [],
     };
+  },
+  computed: {
+    filteredNotifications() {
+      if(this.notiType == 'all') {
+        return this.notifications;
+      } else {
+        return this.notifications.filter(item => item.seen == this.notiType);
+      }
+    }
+  },
+  mounted() {
+    this.sockets.subscribe('receive_notification', function (res) {
+      this.notifications.unshift(res);
+    });
   },
   created() {
     //this.loadUser();
     this.getActiveTeamId();
-    // this.loadNotifications();
+    this.loadNotifications();
   },
   methods: {
     async loadUser() {
@@ -186,20 +215,15 @@ export default {
     async loadNotifications() {
       this.isLoading = true;
       try {
-        const response = this.$store.dispatch("loadNotifications");
-        response
-          .then((data) => {
-            this.notifications = data.data.data;
-            console.log(this.notifications);
-            this.isLoading = false;
-          })
-          .catch((error) => {
-            console.log(error);
-            //alert(error);
-            this.isLoading = false;
-          });
+        ApiService.get("v1/list-notification").then(response => {
+          this.notifications = response.data.data;
+          this.isLoading = false;
+        }).catch(e => {
+          console.log(e);
+          this.isLoading = false;
+        })
       } catch (error) {
-        this.error = errror.message || "Something went wrong! Try again!";
+        this.error = error.message || "Something went wrong! Try again!";
         console.log(this.error);
         this.isLoading = false;
       }
@@ -292,6 +316,19 @@ export default {
   // 		display: none;
   // 	}
   // }
+}
+.d-sm-none {
+  display: none;
+  @media (min-width: 992px) {
+    display: block;
+  }
+}
+.d-md-block {
+  display: none;
+  @media (min-width: 992px) {
+    display: flex !important;
+    width: 100%;
+  }
 }
 .notification-page-height {
   height: calc(100vh - 165px);
