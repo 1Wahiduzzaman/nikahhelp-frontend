@@ -4,14 +4,41 @@
       <div v-if="isLoading">Loading</div>
       <div v-else>
         <div class="main-content-wrapper">
-          <div class="main-content-1">
-            <h4>All Notifications</h4>
-            <div>
+          <div class="main-content-1 px-4">
+            <div class="flex border-bottom pb-4 mb-4 justify-content-between align-items-center">
+              <h4 class="">All Notifications</h4>
+              <div class="flex justify-content-end align-items-center">
+                <v-btn
+                    rounded
+                    color="primary"
+                    dark
+                >
+                  All
+                </v-btn>
+                <v-btn
+                    rounded
+                    color="error"
+                    dark
+                    class="ml-2"
+                >
+                  Unread
+                </v-btn>
+                <v-btn
+                    rounded
+                    color="success"
+                    dark
+                    class="ml-2"
+                >
+                  <a-icon type="check" color="success" class="pr-2" />
+                  Mark as read
+                </v-btn>
+              </div>
+            </div>
+            <div class="notification-page-height">
               <notification
-                v-for="notification in notifications"
-                :key="notification.id"
-                :notification="notification"
-              ></notification>
+                  v-for="(notification, index) in notifications"
+                  :key="index"
+                  :notification="notification" />
             </div>
           </div>
           <!-- <div class="main-content-2">
@@ -69,13 +96,13 @@ export default {
       is_verified: 1,
       error: null,
       teamId: null,
-      notifications: null,
+      notifications: [{ id: 1 }, { id: 2 }, { id: 3 }],
     };
   },
   created() {
     //this.loadUser();
     this.getActiveTeamId();
-    this.loadNotifications();
+    // this.loadNotifications();
   },
   methods: {
     async loadUser() {
@@ -84,33 +111,34 @@ export default {
         await this.$store.dispatch("getUser");
         this.user = this.$store.getters["userInfo"];
         this.is_verified = this.user.is_verified;
-        if (this.is_verified == 0) {
-          this.$router.push("/email-verification");
-        }
-        if (this.user.account_type === 0) {
-          this.$router.push("/member-type");
-        }
-
-        if (this.user.account_type === 4) {
-          this.$router.push("/admin");
-        }
-
-        let data_input_status = this.$store.getters["userDataInputStatus"];
-        console.log("data input status", data_input_status);
-        if (data_input_status == 10) {
-          this.$router.push("/member-name/candidate");
-        }
-
-        if (data_input_status == 20) {
-          this.$router.push("/member-name/representative");
-        }
-
-        if (data_input_status == 11) {
-          this.$router.push("/candidate-registration");
-        }
-        if (data_input_status == 21) {
-          this.$router.push("/representative-registration");
-        }
+        this.isLoading = false;
+        // if (this.is_verified == 0) {
+        //   this.$router.push("/email-verification");
+        // }
+        // if (this.user.account_type === 0) {
+        //   this.$router.push("/member-type");
+        // }
+        //
+        // if (this.user.account_type === 4) {
+        //   this.$router.push("/admin");
+        // }
+        //
+        // let data_input_status = this.$store.getters["userDataInputStatus"];
+        // console.log("data input status", data_input_status);
+        // if (data_input_status == 10) {
+        //   this.$router.push("/member-name/candidate");
+        // }
+        //
+        // if (data_input_status == 20) {
+        //   this.$router.push("/member-name/representative");
+        // }
+        //
+        // if (data_input_status == 11) {
+        //   this.$router.push("/candidate-registration");
+        // }
+        // if (data_input_status == 21) {
+        //   this.$router.push("/representative-registration");
+        // }
 
         // if (data_input_status == 12) {
         // 	this.$router.push("/candidate-registration");
@@ -163,14 +191,17 @@ export default {
           .then((data) => {
             this.notifications = data.data.data;
             console.log(this.notifications);
+            this.isLoading = false;
           })
           .catch((error) => {
             console.log(error);
             //alert(error);
+            this.isLoading = false;
           });
       } catch (error) {
         this.error = errror.message || "Something went wrong! Try again!";
         console.log(this.error);
+        this.isLoading = false;
       }
     },
     changeTeam(data) {
@@ -184,6 +215,7 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .main-content-wrapper {
+  margin-top: 8px;
   .side-bar {
     max-width: 250px;
   }
@@ -219,52 +251,7 @@ export default {
   }
 
   .main-content-1 {
-    // width: calc(100% - 550px);
-    //width: 100%;
-    //margin: 8px 10px 20px 10px;
-    //margin-left: 265px;
-    flex: 0 0 80%;
-    @media (max-width: 1080px) {
-      // width: calc(100% - 270px);
-      flex: 0 0 64%;
-      padding-left: 1%;
-    }
-
-    @media (max-width: 767px) {
-      width: 50%;
-      flex: 0 0 66%;
-      padding-left: 4%;
-      margin: 0%;
-      .footer-portion {
-        // display: none;
-        display: inline;
-      }
-    }
-
-    @media (max-width: 541px) {
-      flex: 0 0 50%;
-      padding-left: 0%;
-      margin-left: 24%;
-      margin-right: 0%;
-      .footer-portion {
-        // display: none;
-        display: inline;
-      }
-    }
-
-    @media (max-width: 421px) {
-      flex: 1 0 121%;
-      padding-left: 58%;
-      padding-right: -288%;
-      margin-left: -59%;
-      font-size: 4px;
-      margin-right: -56%;
-      .footer-portion {
-        //
-        display: inline;
-      }
-    }
-
+    flex: 0 0 100%;
     h4 {
       padding-top: 10px;
       padding-left: 8px;
@@ -305,5 +292,13 @@ export default {
   // 		display: none;
   // 	}
   // }
+}
+.notification-page-height {
+  height: calc(100vh - 165px);
+  overflow-y: unset;
+  @media (min-width: 992px) {
+    height: calc(100vh - 165px);
+    overflow-y: auto;
+  }
 }
 </style>
