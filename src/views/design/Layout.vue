@@ -291,15 +291,19 @@
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 //import SimpleSearch from "@/components/search/SimpleSearch.vue";
 import NotificationPopup from "@/components/notification/NotificationPopup";
+// import ApiService from "@/services/api.service";
 export default {
   name: 'Layout',
   components: {
     NotificationPopup,
     Sidebar,
-    SimpleSearch: () => import('@/components/search/SimpleSearch.vue')
   },
   created() {
-
+    // ApiService.get("v1/list-notification").then(response => {
+    //   console.log(response.data.data);
+    // }).catch(e => {
+    //   console.log(e);
+    // })
   },
   data() {
     return {

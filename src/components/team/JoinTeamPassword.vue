@@ -87,8 +87,9 @@ export default {
           await ApiService.post("v1/join-team-by-invitation", payload).then((res) => {
             this.loading = false;
             if(res && res.data && res.data.data) {
+              let receivers = this.team.team_members.map(opt => opt.user_id);
               let socketData = {
-                receivers: [78],
+                receivers: receivers,
                 team_id: this.team.id,
                 title: `joined ${this.team.name} team as ${this.team.role}`,
                 team_temp_name: this.team.name

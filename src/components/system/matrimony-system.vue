@@ -10,6 +10,7 @@
 <script>
 import Layout from "@/views/design/Layout";
 import InstantNotification from "../notification/InstantNotification";
+// import ApiService from "@/services/api.service";
 export default {
   components: {
     InstantNotification,
@@ -24,7 +25,9 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      notifications: []
+    };
   },
   mounted() {
     let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -39,7 +42,13 @@ export default {
       });
     }
   },
-  created() {},
+  created() {
+    // ApiService.get("v1/list-notification").then(response => {
+    //   this.notifications = response.data.data;
+    // }).catch(e => {
+    //   console.log(e);
+    // });
+  },
 };
 </script>
 
