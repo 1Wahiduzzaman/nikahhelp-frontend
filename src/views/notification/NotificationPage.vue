@@ -5,7 +5,7 @@
       <div v-else>
         <div class="main-content-wrapper">
           <div class="main-content-1 px-4">
-            <div class="flex border-bottom pb-4 mb-4 justify-content-between align-items-center">
+            <div class="flex border-bottom pb-4 justify-content-between align-items-center">
               <h4 class="d-sm-none d-md-block">All Notifications</h4>
               <div class="flex justify-content-end align-items-center w-full flex-wrap">
                 <v-btn
@@ -31,15 +31,15 @@
                     rounded
                     color="success"
                     dark
-                    class="ml-2"
+                    class="ml-2 read-btn"
                     small
                 >
                   <a-icon type="check" color="success" class="pr-2" />
-                  Mark as read
+                  Mark all as read
                 </v-btn>
               </div>
             </div>
-            <div class="notification-page-height pr-3">
+            <div class="notification-page-height pr-3 mt-4">
               <notification
                   v-for="(notification, index) in filteredNotifications"
                   :key="index"
@@ -334,8 +334,14 @@ export default {
   height: calc(100vh - 165px);
   overflow-y: unset;
   @media (min-width: 992px) {
-    height: calc(100vh - 165px);
+    height: calc(100vh - 175px);
     overflow-y: auto;
+  }
+}
+.read-btn {
+  margin-top: 6px;
+  @media (min-width: 768px) {
+    margin-top: 0;
   }
 }
 </style>

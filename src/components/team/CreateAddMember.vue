@@ -117,8 +117,8 @@ export default {
           if(res && res.data) {
             let socketData = {
               receivers: [this.memberInfo.id],
-              team_id: this.team.id,
-              title: `invited you to ${this.team.name} team as ${this.invitationObject.role}`,
+              // team_id: this.team.id,
+              title: `invited you to join ${this.team.name} team as ${this.invitationObject.role}`,
               team_temp_name: this.team.name
             };
             this.$emit("socketNotification", socketData);

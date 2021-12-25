@@ -1491,7 +1491,7 @@ export default {
         this.clickedInviteNow = false;
         let notifyObj = {
           receivers: data.receivers,
-          title: `invited you to ${this.teamData.name} team as ${this.invitationObject.role}`,
+          title: `invited you to join ${this.teamData.name} team as ${this.invitationObject.role}`,
           team_id: this.teamData.id,
           team_temp_name: this.teamData.name
         };
