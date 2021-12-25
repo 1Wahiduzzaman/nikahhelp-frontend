@@ -265,14 +265,14 @@
 
 <script>
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
-import SimpleSearch from "@/components/search/SimpleSearch.vue";
+//import SimpleSearch from "@/components/search/SimpleSearch.vue";
 import NotificationPopup from "@/components/notification/NotificationPopup";
 export default {
   name: 'Layout',
   components: {
     NotificationPopup,
     Sidebar,
-    SimpleSearch
+    SimpleSearch: () => import('@/components/search/SimpleSearch.vue')
   },
   created() {
 
