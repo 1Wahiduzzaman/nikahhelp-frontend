@@ -24,22 +24,22 @@
 					<router-link to="/manageteam" class="flex align-items-center">
 						<img class="mr-3" src="@/assets/icon/group-fill-secondary.svg" alt="icon" />
 						<span class="mb-0">Manage Team</span>
-						<a-badge
-							class="ml-2"
-							:number-style="{ backgroundColor: '#e42076'}"
-							count="100"
-						/>
+<!--						<a-badge-->
+<!--							class="ml-2"-->
+<!--							:number-style="{ backgroundColor: '#e42076'}"-->
+<!--							count="100"-->
+<!--						/>-->
 					</router-link>
 				</li>
 				<li class="list-item">
 					<router-link to="/connections" class="flex align-items-center">
 						<img class="mr-3" src="@/assets/icon/connection-secondary.svg" alt="icon" />
 						<span class="mb-0">Connection</span>
-						<a-badge
-							class="ml-2"
-							:number-style="{ backgroundColor: '#e42076'}"
-							count="17"
-						/>
+<!--						<a-badge-->
+<!--							class="ml-2"-->
+<!--							:number-style="{ backgroundColor: '#e42076'}"-->
+<!--							count="17"-->
+<!--						/>-->
 					</router-link>
 				</li>
 				<li class="list-item">
@@ -58,7 +58,7 @@
 						<a-badge
 							class="ml-2"
 							:number-style="{ backgroundColor: '#e42076'}"
-							count="40"
+							:count="unreadNotification"
 						/>
 					</router-link>
 				</li>
@@ -66,11 +66,11 @@
 					<router-link to="/chat-window" class="flex align-items-center">
 						<img class="mr-3" src="@/assets/icon/chat-dots-fill-secondary.svg" alt="icon" />
 						<span class="mb-0">Chat</span>
-						<a-badge
-							class="ml-2"
-							:number-style="{ backgroundColor: '#e42076'}"
-							count="10"
-						/>
+<!--						<a-badge-->
+<!--							class="ml-2"-->
+<!--							:number-style="{ backgroundColor: '#e42076'}"-->
+<!--							count="10"-->
+<!--						/>-->
 					</router-link>
 				</li>
 				<li class="list-item">
@@ -101,33 +101,33 @@
 						/>Subscription
 					</router-link>
 				</li>
-				<li class="list-item">
-					<a href="#"
-						><img
-							class="mr-3"
-							src="@/assets/icon/support-secondary.svg"
-							alt="icon"
-						/>Support</a
-					>
-				</li>
-				<li class="list-item">
-					<router-link to="/settings"
-						><img
-							class="mr-3"
-							src="@/assets/icon/gear-fill-secondary.svg"
-							alt="icon"
-						/>Setting
-					</router-link>
-				</li>
-				<li class="list-item">
-					<a @click.prevent="logout"
-						><img
-							class="mr-3"
-							src="@/assets/icon/logout.svg"
-							alt="icon"
-						/>Logout</a
-					>
-				</li>
+<!--				<li class="list-item">-->
+<!--					<a href="#"-->
+<!--						><img-->
+<!--							class="mr-3"-->
+<!--							src="@/assets/icon/support-secondary.svg"-->
+<!--							alt="icon"-->
+<!--						/>Support</a-->
+<!--					>-->
+<!--				</li>-->
+<!--				<li class="list-item">-->
+<!--					<router-link to="/settings"-->
+<!--						><img-->
+<!--							class="mr-3"-->
+<!--							src="@/assets/icon/gear-fill-secondary.svg"-->
+<!--							alt="icon"-->
+<!--						/>Setting-->
+<!--					</router-link>-->
+<!--				</li>-->
+<!--				<li class="list-item">-->
+<!--					<a @click.prevent="logout"-->
+<!--						><img-->
+<!--							class="mr-3"-->
+<!--							src="@/assets/icon/logout.svg"-->
+<!--							alt="icon"-->
+<!--						/>Logout</a-->
+<!--					>-->
+<!--				</li>-->
 			</ul>
 			<ul class="links" v-show="!collapsed">
 				<li><a href="#">Help</a></li>
@@ -156,7 +156,10 @@ export default {
 	computed: {
 		path() {
 			return this.$route.name
-		}
+		},
+    unreadNotification() {
+      return this.$store.state.notification.notifications.filter(item => item.seen == 0).length;
+    }
 	},
 	props: {
 		collapsed: Boolean

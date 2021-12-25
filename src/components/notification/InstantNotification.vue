@@ -43,6 +43,7 @@ export default {
     const self = this;
     self.sockets.subscribe('receive_notification', function (res) {
       self.notification = res;
+      self.$store.state.notification.notifications.unshift(res);
       self.instantNotification = true;
       setTimeout(() => {
         self.instantNotification = false;

@@ -111,7 +111,6 @@ export default {
       error: null,
       teamId: null,
       notiType: 'all',
-      notifications: [],
     };
   },
   computed: {
@@ -121,6 +120,9 @@ export default {
       } else {
         return this.notifications.filter(item => item.seen == this.notiType);
       }
+    },
+    notifications() {
+      return this.$store.state.notification.notifications;
     }
   },
   mounted() {
@@ -131,7 +133,7 @@ export default {
   created() {
     //this.loadUser();
     this.getActiveTeamId();
-    this.loadNotifications();
+    // this.loadNotifications();
   },
   methods: {
     async loadUser() {

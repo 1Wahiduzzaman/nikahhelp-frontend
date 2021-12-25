@@ -152,8 +152,9 @@ export default {
       },
 */
     socketNotification(payload) {
-      Notification.storeNotification(payload);
       let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.sender = loggedUser.id;
+      Notification.storeNotification(payload);
       payload.created_at = new Date();
       payload.seen = 0;
       payload.sender = loggedUser;

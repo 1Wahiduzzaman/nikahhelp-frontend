@@ -390,7 +390,7 @@
             </div>
           </div>
 
-          <div class="d-flex member-add-box" v-if="invitationObject.visible">
+          <div class="d-flex member-add-box pb-2" v-if="invitationObject.visible">
             <a-select
                 placeholder="Role"
                 class="fs-10 w-25 member-add"
@@ -635,8 +635,9 @@ export default {
 	},
 	methods: {
     socketNotification(payload) {
-      Notification.storeNotification(payload);
       let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.sender = loggedUser.id;
+      Notification.storeNotification(payload);
       payload.created_at = new Date();
       payload.seen = 0;
       payload.sender = loggedUser;
@@ -2180,6 +2181,7 @@ export default {
   width: 100%;
   margin-top: 2px;
   padding-top: 2px;
+  font-size: 14px;
   &:hover {
     color: $color-brand;
     text-decoration: underline;
