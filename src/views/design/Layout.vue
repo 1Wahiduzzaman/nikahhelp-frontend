@@ -235,6 +235,7 @@
       :style="{ overflow: 'auto', height: 'calc(100vh - 80px)' }"
     >
       <a-layout-sider
+        :style="{ overflow: 'hidden auto', height: 'calc(100vh - 80px)' }"
         class="bg-white shadow-default"
         v-model="collapsed"
         :trigger="null"
@@ -247,7 +248,11 @@
         <Sidebar
           :collapsed="collapsed"
           @collapseSideBar="collapsed = !collapsed"
-        />
+        >
+          <template v-slot:search>
+            <SimpleSearch />
+          </template>
+        </Sidebar>
       </a-layout-sider>
       <a-layout>
         <a-layout-content>
@@ -260,12 +265,14 @@
 
 <script>
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
+import SimpleSearch from "@/components/search/SimpleSearch.vue";
 import NotificationPopup from "@/components/notification/NotificationPopup";
 export default {
   name: 'Layout',
   components: {
     NotificationPopup,
     Sidebar,
+    SimpleSearch
   },
   created() {
 

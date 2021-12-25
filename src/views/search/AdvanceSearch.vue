@@ -2,58 +2,8 @@
 	<div>
 		<div v-if="isLoading">Loading</div>
 		<div v-else>
-		<div style="height:80px;">	
-			<Header :user="user"> 
-				<template  v-slot:toggler>
-					<!-- dropdown menu start -->
-					<div class="d-sm-none w-2">
-						<a-dropdown :trigger="['click']">
-							<svg  @click="e => e.preventDefault()" xmlns="http://www.w3.org/2000/svg" class="menu-icon-alt" fill="#fff" viewBox="0 0 24 24" stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-							</svg>
-							<a-menu style="min-width: 250px">
-								<a-menu-item @click="collapsed = !collapsed">
-									<img width="22" src="@/assets/Icons/form.svg" alt="icon" />
-									<span class="ml-2">{{ collapsed ? 'Open' : 'Close' }} left sidebar</span>
-								</a-menu-item>
-								<a-divider class="m-0" />
-								<a-menu-item class="d-flex align-items-center">
-									<img width="22" src="@/assets/icon/group-fill-secondary.svg" alt="icon" />
-									<span class="ml-2">Manage Team</span>
-								</a-menu-item>
-								
-								<a-menu-item class="d-flex align-items-center">
-									<img width="22" src="@/assets/icon/star-fill-secondary.svg" alt="icon" />
-									<span class="ml-2">Shortlist</span>
-								</a-menu-item>
-
-								<a-menu-item>
-									<img width="22" src="@/assets/icon/bell-fill-secondary.svg" alt="icon" />
-									<span class="ml-2">Notification</span>
-									<a-badge
-										class="ml-auto"
-										:number-style="{ backgroundColor: '#e42076'}"
-										count="40"
-									/>
-								</a-menu-item>
-								<a-menu-item>
-									<img width="22" src="@/assets/icon/chat-dots-fill-secondary.svg" alt="icon" />
-									<span class="ml-2">Chat</span>
-									<a-badge
-										class="ml-auto"
-										:number-style="{ backgroundColor: '#e42076'}"
-										count="120"
-									/>
-								</a-menu-item>
-							</a-menu>
-						</a-dropdown>
-					</div>
-					<!-- dropdown menu end -->
-				</template>
-			</Header>
-		</div>
 			<a-layout id="layout" style="background-color: #fff" :style="{ height: 'calc(100vh - 80px) !important', overflow: 'hidden'}">
-				<a-layout-sider
+				<!-- <a-layout-sider
 					:style="{ height: 'calc(100vh - 80px)', overflowY: 'auto',overflowX: 'hidden'}"
 					class="bg-white shadow-default"
 					v-model="collapsed"
@@ -68,11 +18,11 @@
 						:collapsed="collapsed" 
 						@collapseSideBar="collapsed = !collapsed" 
 					>
-					<template v-slot:search>
-						<SimpleSearch />
-					</template>
+						<template v-slot:search>
+							<SimpleSearch />
+						</template>
 					</Sidebar>
-				</a-layout-sider>
+				</a-layout-sider> -->
 				<a-layout>  
 					<a-layout-content>
 						<div class="main-content-wrapper">
