@@ -11,22 +11,32 @@
                 <!-- <v-card-title>Top 10 Australian beaches</v-card-title> -->
             </v-img>
         </v-card>
-            <v-img
-                style="border: 2px solid white; margin-top: -74px"
-                class="white--text align-end rounded mx-auto block"
-                width="150px"
-                src="/candidate.png"
-            >
-                <!-- <v-card-title>Top 10 Australian beaches</v-card-title> -->
-            </v-img>
-        <div>
-
+        <v-img
+            style="border: 2px solid white; margin-top: -74px"
+            class="white--text align-end rounded mx-auto block"
+            width="150px"
+            :src="image"
+        >
+            <!-- <v-card-title>Top 10 Australian beaches</v-card-title> -->
+        </v-img>
+        <div class="text-center">
+            <span class="text-h5 font-weight-bold text--secondary">{{name}} </span>   
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'PrifileBanner'
+    name: 'ProfileBanner',
+    props: {
+        name: {
+            type: String,
+            default: 'John doe'
+        },
+        image: {
+            type: String,
+            default: '/candidate.png'
+        }
+    }
 }
 </script>

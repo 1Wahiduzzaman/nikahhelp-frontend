@@ -605,6 +605,12 @@ div[data-unique="second_one"] >  .ant-select-selection{
     width: 100%;
     margin: 12px 0;
 }
+.ant-layout {
+    height: calc(100vh - 70px) !important;
+}
+.white-space-pre {
+    white-space: pre;
+}
 #dob {
     .custom-select {
         margin-top: 8px;

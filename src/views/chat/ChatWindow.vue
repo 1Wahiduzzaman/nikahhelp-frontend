@@ -163,11 +163,12 @@
 
               </div>
             </div>
-            <div class="chat-right" :class="{'chat-hide': !conversationTitle}" v-if="chats.length > 0">
-              <button class="btn btn-primary flex justify-content-center align-items-center my-2 d-md-none"
-                      @click="backToTabList()">
-                <a-icon type="caret-left"/>
-              </button>
+            <div class="chat-right position-relative" :class="{'chat-hide': !conversationTitle}" v-if="chats.length > 0">
+<!--              <button class="btn btn-primary flex justify-content-center align-items-center my-2 d-lg-none position-absolute btn-short-back"-->
+<!--                      @click="backToTabList()">-->
+<!--                <a-icon type="caret-left"/>-->
+<!--              </button>-->
+              <h4 class="cursor-pointer position-absolute btn-short-back" @click="backToTabList()">&#8592;</h4>
               <div class="header clearfix">
                 <div class="left">
                   <div class="top">
@@ -176,14 +177,15 @@
 <!--                      <span></span>-->
                     </div>
                     <div class="chat-info">
+                      <div class="chat-group bg-primary">{{ getChatType }} chat</div>
                       <div class="chat-name">{{ conversationTitle }}</div>
-                      <div class="last-chat" v-if="chat_type == 'team'">Active now {{ getTeamOnlineUsers() }}</div>
+                      <div class="last-chat" v-if="chat_type == 'team'">Active now {{ getTeamOnlineUsers() > 0 ? getTeamOnlineUsers() : '' }}</div>
                     </div>
                   </div>
                 </div>
-                <div class="middle">
-                  <div class="chat-group">{{ getChatType }} chat</div>
-                </div>
+<!--                <div class="middle">-->
+<!--                  <div class="chat-group">{{ getChatType }} chat</div>-->
+<!--                </div>-->
                 <div class="right">
                   <a-dropdown>
                     <a class="ant-dropdown-link py-2" @click="e => e.preventDefault()">
@@ -228,48 +230,67 @@
 <!--                </div>-->
                 <div class="position-relative">
                   <div class="chat-messages py-4 pr-1" id="chat-messages">
-
-                    <div v-for="(item, cIndex) in chats" :key="item.id">
-                      <div :id="chats.length === cIndex + 1 ? 'messagesid' : ''" class="chat-message-right pb-4 position-relative mb-5" v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))" >
+                    <div v-for="(item, cIndex) in chats" :key="item.id" class="position-relative" :id="chats.length === cIndex + 1 ? 'messagesid' : ''">
+                      <div
+                           class="chat-message-right pb-4 position-relative"
+                           :class="{'conv-mb': chats.length !== cIndex + 1}"
+                           v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))" >
                         <div class="text-right">
                           <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
                         </div>
-                        <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10">
+                        <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 white-space-pre" v-html="item.body">
                           <!--                        <div class="font-weight-bold mb-1">You</div>-->
-                          {{ item.body || '' }}
+<!--                          {{ item.body || '' }}-->
                         </div>
                         <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">{{ messageCreatedAt(item.created_at) }}</div>
                       </div>
 
-                      <div :id="chats.length === cIndex + 1 ? 'messagesid' : ''" class="chat-message-left pb-4 position-relative mb-5" v-else>
+                      <div
+                           class="chat-message-left pb-4 position-relative"
+                           :class="{'conv-mb': chats.length !== cIndex + 1}" v-else>
                         <div class="text-left">
                           <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
                         </div>
-                        <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10">
+                        <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 white-space-pre" v-html="item.body">
                           <!--                        <div class="font-weight-bold mb-1">Sharon Lessman</div>-->
-                          {{ item.body || '' }}
+<!--                          {{ item.body || '' }}-->
                         </div>
                         <div class="text-muted small text-nowrap mt-2 position-absolute msg-left-created-at">{{ messageCreatedAt(item.created_at) }}</div>
                       </div>
+
+                      <div class="position-absolute conv-user color-primary" v-if="chatheadopen.label == 'Group chat'">{{ item.sender ? item.sender.full_name : '' }}</div>
                     </div>
 
                   </div>
                 </div>
                 <div class="footer">
-<!--                   <div class="footer-top"><strong>Someone</strong> is typing...</div>-->
+                   <div class="footer-top"><strong>{{ chatheadopen.typer_name }}</strong> {{ chatheadopen.typing_text }}</div>
                   <div class="footer-bottom">
                     <form action="#" @submit.prevent="sendMsg">
-                      <div class="left">
+                      <div class="left flex justify-content-end align-items-end">
                         <div class="message-box">
-                          <button class="btn-emoji px-2">&#128528;</button>
-<!--                          <textarea name="message" id="" cols="30" rows="10" placeholder="Enter message..."-->
-<!--                                    v-model="msg_text" v-on:keyup.enter="sendMsg($event)"></textarea>-->
-                          <input type="text" placeholder="Enter message..."
-                                 v-model="msg_text" v-on:keyup.enter="sendMsg($event)">
+                          <a-tooltip>
+                            <template slot="title">
+                              Coming soon
+                            </template>
+                            <button class="btn-emoji px-2" title="Coming soon">&#128528;</button>
+                          </a-tooltip>
+                          <textarea name="message" id="" cols="30" rows="4" placeholder="Enter message..."
+                                    v-model="msg_text" @keydown.enter.exact.prevent="sendMsg($event)" @keyup="notifyKeyboardStatus"></textarea>
                           <div class="position-absolute msgbox-right">
                             <div class="flex">
-                              <button><img src="../../assets/icon/microphone.png" alt="icon" class="mr-2 microphone" /></button>
-                              <button><a-icon type="file-image" class="color-primary" /></button>
+                              <a-tooltip>
+                                <template slot="title">
+                                  Coming soon
+                                </template>
+                                <button><img src="../../assets/icon/microphone.png" alt="icon" class="mr-2 microphone" /></button>
+                              </a-tooltip>
+                              <a-tooltip>
+                                <template slot="title">
+                                  Coming soon
+                                </template>
+                                <button><a-icon type="file-image" class="color-primary" /></button>
+                              </a-tooltip>
                             </div>
                           </div>
                         </div>
@@ -296,7 +317,6 @@
               <div class="flex justify-content-center align-items-center empty-height">
                 <h4 class="fs-20 flex flex-column align-items-center justify-content-center">Select a conversation & start the chat</h4>
               </div>
-              <conversation class="d-none" />
               <div class="d-none flex-column justify-content-center align-items-center text-center">
                 <v-stepper alt-labels>
                   <v-stepper-header>
@@ -393,7 +413,6 @@ export default {
     }
   },
   components: {
-    Conversation,
     ChatListItem
   },
   watch: {
@@ -561,6 +580,32 @@ export default {
         //   connectedTeamChat.message.seen = 0;
         // }
       });
+
+      this.sockets.subscribe('lis_typing', function (res) {
+        if(res.team_id) {
+          if(this.chatHistory.length > 0) {
+            this.chatHistory[0].typing_status = res.status;
+            this.chatHistory[0].typing_text = res.text;
+            this.chatHistory[0].typer_name = res.typer_name;
+          }
+          if(this.teamChat.length > 0) {
+            this.teamChat[0].typing_status = res.status;
+            this.teamChat[0].typing_text = res.text;
+            this.teamChat[0].typer_name = res.typer_name;
+          }
+        } else {
+          let teamPersonalChat = this.teamChat.find(item => item.other_mate_id == res.typer_id);
+          if(teamPersonalChat) {
+            teamPersonalChat.typing_status = res.status;
+            teamPersonalChat.typing_text = res.text;
+          }
+          let recentChat = this.chatHistory.find(item => item.other_mate_id == res.typer_id);
+          if(recentChat) {
+            recentChat.typing_status = res.status;
+            recentChat.typing_text = res.text;
+          }
+        }
+      });
     }
   },
   methods: {
@@ -607,7 +652,9 @@ export default {
       let group = data;
       group.message = pick(data.last_group_message, messageKeys);
       group.label = 'Group chat';
-      group.state = 'Typing...'
+      group.state = 'Typing...';
+      group.typing_status = 0;
+      group.typing_text = '';
 
       return [group, ...map(data.team_members, item => {
         return {
@@ -617,6 +664,8 @@ export default {
           name: item.user?.full_name || 'user name',
           logo: item.user?.avatar,
           other_mate_id: item.user_id,
+          typing_status: 0,
+          typing_text: '',
           message: pick(item.last_message, messageKeys)
         }
       })];
@@ -630,6 +679,8 @@ export default {
           logo: item.user?.avatar,
           user_id: item.user.id,
           other_mate_id: item.user_id,
+          typing_status: 0,
+          typing_text: '',
           message: pick(item.last_message, messageKeys)
         }
       });
@@ -645,6 +696,8 @@ export default {
           private_receiver_id: item.receiver,
           private_team_chat_id: item.id,
           other_mate_id: item.receiver,
+          typing_status: 0,
+          typing_text: '',
           message: pick(item.last_private_message, messageKeys)
         }
       });
@@ -654,6 +707,8 @@ export default {
         state: 'Typing...',
         name: data.last_group_msg.team.name,
         logo: data.last_group_msg.team.logo,
+        typing_status: 0,
+        typing_text: '',
         message: pick(data.last_group_msg, messageKeys)
       }]
 
@@ -739,6 +794,10 @@ export default {
       }
     },
     async getIndividualChat({message: {chat_id, team_id}, name, user_id, from_team_id, to_team_id, private_receiver_id, private_team_chat_id}, item) {
+      if(this.msg_text) {
+        this.msg_text = '';
+        this.notifyKeyboardStatus();
+      }
       const payload = {
         type: chat_id ? 'single' : 'team',
         chat_id,
@@ -964,6 +1023,42 @@ export default {
       await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
       this.msg_text = '';
     },
+    notifyKeyboardStatus() {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let data = {
+        type: this.chatheadopen.label,
+        other_mate_id: this.chatheadopen.other_mate_id,
+        typer_id: loggedUser.id,
+        typer: loggedUser
+      };
+      if(data.type === 'Group chat') {
+        data.members = this.teamMembers;
+        data.team_id = this.activeTeam;
+        data.typer_name = loggedUser.full_name;
+      } else {
+        data.to = this.chatheadopen.other_mate_id.toString();
+        data.typer_name = '';
+      }
+      if(this.msg_text && this.msg_text.length > 0) {
+        data.status = 1;
+        data.text = 'Typing';
+      } else {
+        data.status = 0;
+        data.text = '';
+        data.typer_name = '';
+      }
+
+      if(data.team_id) {
+        this.teamMembers.forEach(item => {
+          if(item != loggedUser.id) {
+            data.to = item.toString();
+            this.$socket.emit('typing', data);
+          }
+        });
+      } else {
+        this.$socket.emit('typing', data);
+      }
+    },
     unique(array) {
       return array.filter(function (el, index, arr) {
         return index == arr.indexOf(el);
@@ -1078,7 +1173,8 @@ export default {
 
   .chat-left {
     float: left;
-    width: 400px;
+    //width: 400px;
+    width: 100%;
     max-width: 100%;
     padding-right: 5px;
     //min-height: 600px;
@@ -1095,6 +1191,10 @@ export default {
       }
     }
 
+    @media (min-width: 992px) {
+      width: 400px;
+    }
+
     @media (max-width: 913px) {
       .category-name {
         display: none;
@@ -1104,9 +1204,6 @@ export default {
       }
     }
 
-    @media (max-width: 991px) {
-      width: 45%;
-    }
     @media (max-width: 767px) {
       width: 100%;
       padding-right: 0;
@@ -1372,11 +1469,7 @@ export default {
     }
 
     .chat-item-wrapper {
-      height: 500px;
       overflow-y: auto;
-      @media (max-width: 991px) {
-        height: 400px;
-      }
 
       .chat-item {
         padding-top: 15px;
@@ -1546,14 +1639,18 @@ export default {
   .chat-right {
     float: left;
     padding-left: 20px;
-    width: calc(100% - 400px);
-    @media (max-width: 991px) {
-      width: calc(100% - 302px);
+    width: 100%;
+    //width: calc(100% - 400px);
+    @media (min-width: 992px) {
+      width: calc(100% - 400px)
     }
-    @media (max-width: 767px) {
-      width: 100%;
-      padding-left: 0;
-    }
+    //@media (max-width: 991px) {
+    //  width: calc(100% - 302px);
+    //}
+    //@media (max-width: 767px) {
+    //  width: 100%;
+    //  padding-left: 0;
+    //}
 
     .header {
       border-bottom: 1px solid #d9d9d9;
@@ -1826,16 +1923,10 @@ export default {
     }
 
     .chat-area {
-      min-height: 620px;
+      //min-height: 620px;
       display: flex;
       flex-direction: column;
       position: relative;
-      @media (max-width: 991px) {
-        min-height: 600px;
-      }
-      @media (max-width: 991px) {
-        //min-height: auto;
-      }
 
       .chat-box {
         height: 545px;
@@ -1979,7 +2070,7 @@ export default {
         .footer-top {
           font-size: 12px;
           color: #818181;
-          margin-bottom: 30px;
+          margin-bottom: 12px;
         }
 
         .footer-bottom {
@@ -2000,6 +2091,21 @@ export default {
                 border-radius: 18px;
                 background-color: #eceaf5;
                 resize: none;
+                //v-on:keyup.enter="sendMsg($event)"
+                @media (max-width: 767px) {
+                  padding-left: 32px;
+                }
+              }
+
+              textarea {
+                width: 100%;
+                border: 0;
+                padding: 7px 54px 7px 40px;
+                border-radius: 18px;
+                background-color: #eceaf5;
+                resize: none;
+                max-height: 70px;
+                overflow-y: hidden;
                 @media (max-width: 767px) {
                   padding-left: 32px;
                 }
@@ -2111,13 +2217,6 @@ export default {
   color: #e4606d
 }
 
-.chat-messages {
-  display: flex;
-  flex-direction: column;
-  max-height: 540px;
-  overflow-y: auto;
-}
-
 .chat-message-left,
 .chat-message-right {
   display: flex;
@@ -2170,7 +2269,17 @@ export default {
 }
 
 .chat-messages::-webkit-scrollbar {
-  display: none;
+  //display: none;
+  width: 4px;
+}
+.conv-user {
+  top: -20px;
+  right: 10px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.conv-mb {
+  margin-bottom: 30px;
 }
 // css custom scrollbar
 /* width */
@@ -2195,6 +2304,79 @@ export default {
 ::-webkit-scrollbar-thumb:hover {
   background: #bcb5de;
 }
-
+.btn-short-back {
+  top: -20px;
+  left: -10px;
+  padding: 4px;
+}
+.chat-item-wrapper {
+  //height: 500px;
+  height: calc(100vh - 250px);
+  @media (min-width: 410px) {
+    height: calc(100vh - 250px);
+  }
+  @media (min-width: 576px) {
+    height: calc(100vh - 250px);
+  }
+  @media (min-width: 768px) {
+    height: calc(100vh - 250px);
+  }
+  @media (min-width: 992px) {
+    height: calc(100vh - 395px);
+  }
+  @media (min-width: 1200px) {
+    height: calc(100vh - 345px);
+  }
+  @media (min-width: 1920px) {
+    height: calc(100vh - 345px);
+  }
+}
+.chat-area {
+  //min-height: 600px;
+  min-height: calc(100vh - 260px);
+  @media (min-width: 410px) {
+    min-height: calc(100vh - 260px);
+  }
+  @media (min-width: 576px) {
+    min-height: calc(100vh - 260px);
+  }
+  @media (min-width: 768px) {
+    min-height: calc(100vh - 260px);
+  }
+  @media (min-width: 992px) {
+    min-height: calc(100vh - 250px);
+  }
+  @media (min-width: 1200px) {
+    min-height: calc(100vh - 250px);
+  }
+  @media (min-width: 1920px) {
+    min-height: calc(100vh - 250px);
+  }
+}
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  //max-height: 540px;
+  max-height: calc(100vh - 370px);
+  @media (min-width: 410px) {
+    max-height: calc(100vh - 350px);
+  }
+  @media (min-width: 576px) {
+    max-height: calc(100vh - 350px);
+  }
+  @media (min-width: 768px) {
+    max-height: calc(100vh - 350px);
+  }
+  @media (min-width: 992px) {
+    max-height: calc(100vh - 340px);
+  }
+  @media (min-width: 1200px) {
+    max-height: calc(100vh - 340px);
+  }
+  @media (min-width: 1920px) {
+    max-height: calc(100vh - 340px);
+  }
+}
 // end css for chat
 </style>

@@ -4,14 +4,46 @@
       <div v-if="isLoading">Loading</div>
       <div v-else>
         <div class="main-content-wrapper">
-          <div class="main-content-1">
-            <h4>All Notifications</h4>
-            <div>
+          <div class="main-content-1 px-4">
+            <div class="flex border-bottom pb-4 justify-content-between align-items-center">
+              <h4 class="d-sm-none d-md-block">All Notifications</h4>
+              <div class="flex justify-content-end align-items-center w-full flex-wrap">
+                <v-btn
+                    rounded
+                    color="primary"
+                    dark
+                    small
+                    @click="notiType = 'all'"
+                >
+                  All
+                </v-btn>
+                <v-btn
+                    rounded
+                    color="error"
+                    dark
+                    class="ml-2"
+                    small
+                    @click="notiType = 0"
+                >
+                  Unread
+                </v-btn>
+                <v-btn
+                    rounded
+                    color="success"
+                    dark
+                    class="ml-2 read-btn"
+                    small
+                >
+                  <a-icon type="check" color="success" class="pr-2" />
+                  Mark all as read
+                </v-btn>
+              </div>
+            </div>
+            <div class="notification-page-height pr-3 mt-4">
               <notification
-                v-for="notification in notifications"
-                :key="notification.id"
-                :notification="notification"
-              ></notification>
+                  v-for="(notification, index) in filteredNotifications"
+                  :key="index"
+                  :notification="notification" />
             </div>
           </div>
           <!-- <div class="main-content-2">
@@ -54,8 +86,17 @@ import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import Footer from "@/components/auth/Footer.vue";
 import Notification from "@/components/notification/Notification.vue";
 import JwtService from "@/services/jwt.service";
+import ApiService from "@/services/api.service";
 export default {
   name: "NotificationPage",
+  sockets: {
+    connect: function () {
+      console.log('socket connected')
+    },
+    ping: function (data) {
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
   components: {
     Notification,
   },
@@ -66,8 +107,23 @@ export default {
       is_verified: 1,
       error: null,
       teamId: null,
-      notifications: null,
+      notiType: 'all',
+      notifications: [],
     };
+  },
+  computed: {
+    filteredNotifications() {
+      if(this.notiType == 'all') {
+        return this.notifications;
+      } else {
+        return this.notifications.filter(item => item.seen == this.notiType);
+      }
+    }
+  },
+  mounted() {
+    this.sockets.subscribe('receive_notification', function (res) {
+      this.notifications.unshift(res);
+    });
   },
   created() {
     //this.loadUser();
@@ -81,33 +137,34 @@ export default {
         await this.$store.dispatch("getUser");
         this.user = this.$store.getters["userInfo"];
         this.is_verified = this.user.is_verified;
-        if (this.is_verified == 0) {
-          this.$router.push("/email-verification");
-        }
-        if (this.user.account_type === 0) {
-          this.$router.push("/member-type");
-        }
-
-        if (this.user.account_type === 4) {
-          this.$router.push("/admin");
-        }
-
-        let data_input_status = this.$store.getters["userDataInputStatus"];
-        console.log("data input status", data_input_status);
-        if (data_input_status == 10) {
-          this.$router.push("/member-name/candidate");
-        }
-
-        if (data_input_status == 20) {
-          this.$router.push("/member-name/representative");
-        }
-
-        if (data_input_status == 11) {
-          this.$router.push("/candidate-registration");
-        }
-        if (data_input_status == 21) {
-          this.$router.push("/representative-registration");
-        }
+        this.isLoading = false;
+        // if (this.is_verified == 0) {
+        //   this.$router.push("/email-verification");
+        // }
+        // if (this.user.account_type === 0) {
+        //   this.$router.push("/member-type");
+        // }
+        //
+        // if (this.user.account_type === 4) {
+        //   this.$router.push("/admin");
+        // }
+        //
+        // let data_input_status = this.$store.getters["userDataInputStatus"];
+        // console.log("data input status", data_input_status);
+        // if (data_input_status == 10) {
+        //   this.$router.push("/member-name/candidate");
+        // }
+        //
+        // if (data_input_status == 20) {
+        //   this.$router.push("/member-name/representative");
+        // }
+        //
+        // if (data_input_status == 11) {
+        //   this.$router.push("/candidate-registration");
+        // }
+        // if (data_input_status == 21) {
+        //   this.$router.push("/representative-registration");
+        // }
 
         // if (data_input_status == 12) {
         // 	this.$router.push("/candidate-registration");
@@ -155,19 +212,17 @@ export default {
     async loadNotifications() {
       this.isLoading = true;
       try {
-        const response = this.$store.dispatch("loadNotifications");
-        response
-          .then((data) => {
-            this.notifications = data.data.data;
-            console.log(this.notifications);
-          })
-          .catch((error) => {
-            console.log(error);
-            //alert(error);
-          });
+        ApiService.get("v1/list-notification").then(response => {
+          this.notifications = response.data.data;
+          this.isLoading = false;
+        }).catch(e => {
+          console.log(e);
+          this.isLoading = false;
+        })
       } catch (error) {
-        this.error = errror.message || "Something went wrong! Try again!";
+        this.error = error.message || "Something went wrong! Try again!";
         console.log(this.error);
+        this.isLoading = false;
       }
     },
     changeTeam(data) {
@@ -181,6 +236,7 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .main-content-wrapper {
+  margin-top: 8px;
   .side-bar {
     max-width: 250px;
   }
@@ -216,52 +272,7 @@ export default {
   }
 
   .main-content-1 {
-    // width: calc(100% - 550px);
-    //width: 100%;
-    //margin: 8px 10px 20px 10px;
-    //margin-left: 265px;
-    flex: 0 0 80%;
-    @media (max-width: 1080px) {
-      // width: calc(100% - 270px);
-      flex: 0 0 64%;
-      padding-left: 1%;
-    }
-
-    @media (max-width: 767px) {
-      width: 50%;
-      flex: 0 0 66%;
-      padding-left: 4%;
-      margin: 0%;
-      .footer-portion {
-        // display: none;
-        display: inline;
-      }
-    }
-
-    @media (max-width: 541px) {
-      flex: 0 0 50%;
-      padding-left: 0%;
-      margin-left: 24%;
-      margin-right: 0%;
-      .footer-portion {
-        // display: none;
-        display: inline;
-      }
-    }
-
-    @media (max-width: 421px) {
-      flex: 1 0 121%;
-      padding-left: 58%;
-      padding-right: -288%;
-      margin-left: -59%;
-      font-size: 4px;
-      margin-right: -56%;
-      .footer-portion {
-        //
-        display: inline;
-      }
-    }
-
+    flex: 0 0 100%;
     h4 {
       padding-top: 10px;
       padding-left: 8px;
@@ -302,5 +313,32 @@ export default {
   // 		display: none;
   // 	}
   // }
+}
+.d-sm-none {
+  display: none;
+  @media (min-width: 992px) {
+    display: block;
+  }
+}
+.d-md-block {
+  display: none;
+  @media (min-width: 992px) {
+    display: flex !important;
+    width: 100%;
+  }
+}
+.notification-page-height {
+  height: calc(100vh - 165px);
+  overflow-y: unset;
+  @media (min-width: 992px) {
+    height: calc(100vh - 175px);
+    overflow-y: auto;
+  }
+}
+.read-btn {
+  margin-top: 6px;
+  @media (min-width: 768px) {
+    margin-top: 0;
+  }
 }
 </style>

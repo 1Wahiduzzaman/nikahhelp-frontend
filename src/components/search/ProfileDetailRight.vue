@@ -1,7 +1,7 @@
 <template>
     <div>
         <AcceptDecline />
-        <SuggestionCandidate />
+        <SuggestionCandidate class="mt-5"/>
     </div>
 </template>
 

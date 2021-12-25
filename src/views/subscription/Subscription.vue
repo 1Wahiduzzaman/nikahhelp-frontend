@@ -42,6 +42,7 @@
                 <div
                   class="d-flex cursor-pointer py-2 px-4 item-duration"
                   :class="{ 'bg-brand-gradient': isSelected1 }"
+                  @click="firstOption"
                 >
                   <a-icon
                     type="check"
@@ -51,7 +52,6 @@
                   <h4
                     class="duration"
                     :class="{ selected: isSelected1 }"
-                    @click="firstOption"
                   >
                     1 Month
                   </h4>
@@ -59,6 +59,7 @@
                 <div
                   class="d-flex cursor-pointer py-3 px-4 item-duration"
                   :class="{ 'bg-brand-gradient': isSelected2 }"
+                  @click="secondOption"
                 >
                   <a-icon
                     type="check"
@@ -68,7 +69,6 @@
                   <h4
                     class="duration"
                     :class="{ selected: isSelected2 }"
-                    @click="secondOption"
                   >
                     3 month
                   </h4>
@@ -76,6 +76,7 @@
                 <div
                   class="d-flex cursor-pointer py-3 px-4 item-duration"
                   :class="{ 'bg-brand-gradient': isSelected3 }"
+                  @click="thirdOption"
                 >
                   <a-icon
                     type="check"
@@ -85,7 +86,6 @@
                   <h4
                     class="duration"
                     :class="{ selected: isSelected3 }"
-                    @click="thirdOption"
                   >
                     6 month
                   </h4>
@@ -93,6 +93,7 @@
                 <div
                   class="d-flex cursor-pointer py-3 px-4 bg-info free-duration"
                   :class="{ 'bg-brand-gradient': isSelected4 }"
+                  @click="fourthOption"
                 >
                   <a-icon
                     type="check"
@@ -102,7 +103,6 @@
                   <h4
                     class="duration"
                     :class="{ selected: isSelected4 }"
-                    @click="fourthOption"
                   >
                     Free 1 Day
                   </h4>

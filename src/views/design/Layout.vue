@@ -4,7 +4,7 @@
       class="header-container bg-secondary shadow-default radius-none px-4"
     >
       <div class="header-content d-flex align-items-center justify-content-between">
-        <div class="shrink-none">
+        <div class="shrink-none none-mobile">
           <a href="/" class="navbar-brand">
             <img
               width="120"
@@ -18,7 +18,7 @@
           class="header-right user-avatar-area shrink-none"
           style="align-self: center"
         >
-          <div style="padding-right:25px">
+          <div>
             <ul class="header-nav-icons d-none d-sm-flex">
               <li class="nav-item shrink-none">
                 <a class="nav-link" aria-current="page" href="/dashboard">
@@ -93,7 +93,7 @@
                   </template>
                 </a-dropdown>
               </li>
-              <li class="nav-item shrink-none">
+              <li class="nav-item shrink-none mr-6">
                 <a-dropdown :trigger="['click']" placement="bottomRight">
                   <a
                     class="nav-link"
@@ -223,6 +223,30 @@
                   count="120"
                 />
               </a-menu-item>
+              <a-menu-item>
+                <img
+                    width="22"
+                    src="@/assets/icon/support-secondary.svg"
+                    alt="icon"
+                />
+                <span class="ml-2">Support</span>
+              </a-menu-item>
+              <a-menu-item>
+                <img
+                    width="22"
+                    src="@/assets/icon/gear-fill-secondary.svg"
+                    alt="icon"
+                />
+                <span class="ml-2">Setting</span>
+              </a-menu-item>
+              <a-menu-item @click="logout">
+                <img
+                    width="22"
+                    src="@/assets/icon/logout.svg"
+                    alt="icon"
+                />
+                <span class="ml-2">Logout</span>
+              </a-menu-item>
             </a-menu>
           </a-dropdown>
         </div>
@@ -235,6 +259,7 @@
       :style="{ overflow: 'auto', height: 'calc(100vh - 80px)' }"
     >
       <a-layout-sider
+        :style="{ overflow: 'hidden auto', height: 'calc(100vh - 80px)' }"
         class="bg-white shadow-default"
         v-model="collapsed"
         :trigger="null"
@@ -247,7 +272,11 @@
         <Sidebar
           :collapsed="collapsed"
           @collapseSideBar="collapsed = !collapsed"
-        />
+        >
+          <template v-slot:search>
+            <SimpleSearch />
+          </template>
+        </Sidebar>
       </a-layout-sider>
       <a-layout>
         <a-layout-content>
@@ -260,15 +289,22 @@
 
 <script>
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
+//import SimpleSearch from "@/components/search/SimpleSearch.vue";
 import NotificationPopup from "@/components/notification/NotificationPopup";
+// import ApiService from "@/services/api.service";
 export default {
   name: 'Layout',
   components: {
     NotificationPopup,
     Sidebar,
+    SimpleSearch: () => import('@/components/search/SimpleSearch.vue')
   },
   created() {
-
+    // ApiService.get("v1/list-notification").then(response => {
+    //   console.log(response.data.data);
+    // }).catch(e => {
+    //   console.log(e);
+    // })
   },
   data() {
     return {
@@ -278,6 +314,24 @@ export default {
   methods: {
     responsiveToggle() {
       this.collapsed = false;
+    },
+    logout() {
+      console.log("Logout clicked");
+      const vm = this;
+      this.$confirm({
+        title: "Are you sure?",
+        content: "Do you want to logout?",
+        okText: "Yes",
+        okType: "danger",
+        cancelText: "No",
+        async onOk() {
+          await vm.$store.dispatch("logout");
+          vm.$router.replace("/");
+        },
+        onCancel() {
+          console.log("Cancel");
+        },
+      });
     },
   },
 };
@@ -366,6 +420,20 @@ export default {
       font-size: 13px;
       border-radius: 2px;
     }
+  }
+}
+.none-mobile {
+  display: none;
+  @media (min-width: 768px) {
+    display: flex;
+  }
+}
+.header-container {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  @media (min-width: 768px) {
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }
 </style>

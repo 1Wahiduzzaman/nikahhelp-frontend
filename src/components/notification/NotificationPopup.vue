@@ -35,7 +35,7 @@
 import ChatListItem from "./ChatListItem";
 import NotificationListItem from "./NotificationListItem";
 import ShortListItem from "./ShortListItem";
-import TeamListItem from "./TeamListItem"
+import TeamListItem from "./TeamListItem";
 const selectComponent = {
     chat: {
         component: 'ChatListItem',
@@ -60,6 +60,7 @@ const selectComponent = {
 
 }
 export default {
+    name: 'NotificationPopup',
     props: {
         useFor: {
             type: String,
@@ -97,6 +98,9 @@ export default {
               return 20;
             }
         }
+    },
+    created() {
+
     }
 }
 </script>

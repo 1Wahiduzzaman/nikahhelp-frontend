@@ -16,7 +16,7 @@
 <script>
 import {format} from "timeago.js";
 export default {
-    name: 'TeamListNotification',
+    name: 'TeamListItem',
     props: {
         item: {
             type: Object,

@@ -39,21 +39,54 @@
         <ProfileBanner
             class="mt-5"
         />
+
+        <!-- button section -->
+        <div class="flex justify-space-between flex-wrap mt-10">
+            <template
+                v-for="(item, i) in btnData"
+            >
+                <ButtonComponent
+                    class="mb-3"
+                    :key="i"
+                    :title="item.title"
+                    :customEvent="item.eventName"
+                    :icon="item.icon"
+                    :bgColor="item.bgColor"
+                    @onClickButton="handleClick"
+                />
+            </template>
+        </div>
+        <!-- button section -->
+
+        <!-- personal information -->
+        <PersonalInformation />
+        <!-- personal information -->
     </div>
 </template>
 
 <script>
+import PersonalInformation from '@/components/search/personal-information/PersonalInformation'
+import {btnData} from '@/data/candidate.button'
+import ButtonComponent from '@/components/atom/ButtonComponent'
 import ProfileBanner from '@/components/atom/ProfileBanner'
 import {mapMutations} from 'vuex'
 export default {
     name: 'CandidateProfileDetails',
+    data: () => ({
+        btnData
+    }),
     components: {
-        ProfileBanner
+        ProfileBanner,
+        ButtonComponent,
+        PersonalInformation
     },
     methods: {
         ...mapMutations({
             setComponent: 'search/setComponent'
         }),
+        handleClick(data) {
+            console.log(data,'>>>>>>>>>>>>>>>>>')
+        },
         loadSearchResultComponent() {
             this.setComponent('AddComponent')
             this.$emit('switchComponent', 'CandidateProfiles')
