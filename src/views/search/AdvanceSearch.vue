@@ -48,7 +48,7 @@
 import Header from "@/components/dashboard/layout/Header.vue";
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 // import Footer from "@/components/auth/Footer.vue";
-import SimpleSearch from "@/components/search/SimpleSearch.vue";
+//import SimpleSearch from "@/components/search/SimpleSearch.vue";
 import CandidateProfiles from "@/components/search/CandidateProfiles.vue";
 import AddComponent from '@/components/add/addComponent'
 import {mapGetters, mapMutations, mapActions} from 'vuex';
@@ -60,7 +60,7 @@ export default {
 		'RightSidebar': () => import('@/components/search/ProfileDetailRight'),
 		Header,
 		Sidebar,
-		SimpleSearch,
+		//SimpleSearch,
 		// Footer,
 		CandidateProfiles,
 		AddComponent
