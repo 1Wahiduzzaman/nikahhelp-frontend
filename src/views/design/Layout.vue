@@ -297,6 +297,7 @@ export default {
   components: {
     NotificationPopup,
     Sidebar,
+    SimpleSearch: () => import('@/components/search/SimpleSearch.vue')
   },
   created() {
     // ApiService.get("v1/list-notification").then(response => {
