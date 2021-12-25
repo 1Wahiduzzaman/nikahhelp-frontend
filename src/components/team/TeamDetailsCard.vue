@@ -360,46 +360,36 @@
 
 				<!-- Member Table -->
 				<div class="member-info-table">
-          <table class="table w-full table-borderless pb-1" :class="{'mb-3': invitationObject.visible}">
-            <tr v-for="(member, mIndex) in sortCandidateFirst(teamData.team_members)" :key="mIndex" class="admin-member">
-              <td class="w-5p">
-                <div class="name-short" :class="{'name-short-single': member.role.toString() != 'Owner+Admin' }"><span v-if="member.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(member.role) }}</div>
-              </td>
-              <td>
-                <div class="name-full cursor-pointer" @click="toggleActiveProfile(member, 'member')">
-                  <span class="team-member-name">{{ member.user.full_name ? member.user.full_name.substring(0, 15) : 'N/A' }}</span>
-                </div>
-              </td>
-              <td>
-                <div class="title">
-                  <span class="badge badge-secondary fs-10" :title="accountTypeReducer(member.user_type)">{{ accountTypeReducer(member.user_type).substr(0, 3) }} {{ member.user_type ? '.' : '' }}</span>
-                </div>
-              </td>
-              <td><div class="status-box bg-success text-white">&#10003;</div></td>
-              <td class="d-mb-none d-dk-block">
-                <div class="relation">{{ member.relationship }}</div>
-              </td>
-<!--              <td><div class="minus-icon cursor-pointer" @click="deleteTeamMember(member.user_id, member.user.full_name)">-</div></td>-->
-            </tr>
-            <tr v-for="item in teamData.team_invited_members" :key="item.id" class="admin-member">
-              <td class="w-5p">
-                <div class="name-short" :class="{'name-short-single': item.role.toString() != 'Owner+Admin' }"><span v-if="item.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(item.role) }}</div>
-              </td>
-              <td>
-                <div class="name-full cursor-pointer" @click="toggleActiveProfile(item, 'invitation')">
-                  <span class="team-member-name fs-12">{{ item.user ? item.user.full_name.substring(0, 15) : 'Not joined' }}</span>
-                </div>
-              </td>
-              <td>
-                <div class="title">
-                  <span class="badge badge-secondary fs-10" :title="accountTypeReducer(item.user_type)">{{ accountTypeReducer(item.user_type).substr(0, 3) }} {{ item.user_type ? '.' : '' }}</span>
-                </div>
-              </td>
-              <td><div class="status-box bg-brand text-white">&#10006;</div></td>
-              <td class="d-mb-none d-dk-block"><div class="relation">{{ item.relationship }}</div></td>
-<!--              <td><div class="minus-icon cursor-pointer" @click="deleteInvitation(item.id)">-</div></td>-->
-            </tr>
-          </table>
+          <div class="admin-member" :class="{'mb-4': invitationObject.visible}">
+            <div class="flex align-items-center pb-2" v-for="(member, mIndex) in sortCandidateFirst(teamData.team_members)" :key="mIndex" >
+              <div class="w-5p name-short" :class="{'name-short-single': member.role.toString() != 'Owner+Admin' }"><span v-if="member.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(member.role) }}</div>
+              <div class="member-name-td cursor-pointer" @click="toggleActiveProfile(member, 'member')">
+                <span class="team-member-name ellipse">{{ member.user ? member.user.full_name : 'N/A' }}</span>
+              </div>
+              <div class="member-type">
+                <span class="badge badge-secondary fs-10" :title="accountTypeReducer(member.user_type)">{{ accountTypeReducer(member.user_type).substr(0, 3) }} {{ member.user_type ? '.' : '' }}</span>
+              </div>
+              <div class="check-tick">
+                <div class="status-box bg-success text-white">&#10003;</div>
+              </div>
+              <div class="d-mb-none d-dk-block relation-p ellipse">{{ member.relationship }}</div>
+            </div>
+
+            <div class="flex align-items-center pb-2" v-for="item in teamData.team_invited_members" :key="item.id">
+              <div class="w-5p name-short" :class="{'name-short-single': item.role.toString() != 'Owner+Admin' }"><span v-if="item.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(item.role) }}</div>
+              <div class="member-name-td cursor-pointer" @click="toggleActiveProfile(item, 'invitation')">
+                <span class="team-member-name ellipse">{{ item.user ? item.user.full_name : 'Not joined' }}</span>
+              </div>
+              <div class="member-type">
+                <span class="badge badge-secondary fs-10" :title="accountTypeReducer(item.user_type)">{{ accountTypeReducer(item.user_type).substr(0, 3) }} {{ item.user_type ? '.' : '' }}</span>
+              </div>
+              <div class="check-tick">
+                <div class="status-box bg-success text-white">&#10003;</div>
+              </div>
+              <div class="d-mb-none d-dk-block relation-p ellipse">{{ item.relationship }}</div>
+            </div>
+          </div>
+
           <div class="d-flex member-add-box" v-if="invitationObject.visible">
             <a-select
                 placeholder="Role"
@@ -438,7 +428,7 @@
 
             <a-dropdown class="right-br-20 bg-primary text-white w-20 fs-10 member-btn dropdown-button right-br-20" v-if="clickedInviteNow">
               <a-menu slot="overlay">
-                <a-menu-item key="1" @click="agianInviteWindow()">Invite Now </a-menu-item>
+                <a-menu-item key="1" @click="againInviteWindow()">Invite Now </a-menu-item>
 <!--                submitInvite-->
                 <a-menu-item key="2" @click="removeInvite()">Remove </a-menu-item>
               </a-menu>
@@ -531,6 +521,7 @@ import TDCModal from "./Modals/TeamDescriptionChange.vue";
 import firebase from "../../configs/firebase";
 import InviteMember from "./InviteMember";
 import TeamProfileCard from "./TeamProfileCard";
+import Notification from "@/common/notification.js";
 export default {
 	name: "TeamDetailsCard",
 	props: ["teamData", "index"],
@@ -600,7 +591,8 @@ export default {
 			changeRoleEnabled: false,
       profileCard: false,
       profileActive: null,
-      clickedInviteNow: false
+      clickedInviteNow: false,
+      text: 'Md. Jahangir Alam Shamim'
 		};
 	},
 	created() {
@@ -643,6 +635,11 @@ export default {
 	},
 	methods: {
     socketNotification(payload) {
+      Notification.storeNotification(payload);
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.created_at = new Date();
+      payload.seen = 0;
+      payload.sender = loggedUser;
       if(payload && payload.receivers.length > 0) {
         payload.receivers = payload.receivers.map(item => {
           return item.toString();
@@ -790,6 +787,19 @@ export default {
 							center: true,
 						});
 						this.edit_button_flag = false;
+
+            if(this.teamData && this.teamData.team_members && this.teamData.team_members.length > 1) {
+              let loggedUser = JSON.parse(localStorage.getItem('user'));
+              let receivers = this.teamData.team_members.filter(item => item.user_id != loggedUser.id).map(opt => opt.user_id);
+              let payload = {
+                receivers: receivers,
+                title: `changed ${this.teamData.name} team information`,
+                team_temp_name: this.teamData.name,
+                team_id: this.teamData.id
+              };
+              this.socketNotification(payload);
+            }
+
 						setTimeout(() => this.$router.go(), 1200);
 					}
 				})
@@ -1036,6 +1046,22 @@ export default {
 						.then((data) => {
 							console.log(data);
 							if (data.data.status != "FAIL") {
+
+                self.profileCard = false;
+                self.profileActive = null;
+
+                if(self.teamData && self.teamData.team_members && self.teamData.team_members.length > 1) {
+                  let loggedUser = JSON.parse(localStorage.getItem('user'));
+                  let receivers = self.teamData.team_members.filter(item => item.user_id != loggedUser.id).map(opt => opt.user_id);
+                  let payload = {
+                    receivers: receivers,
+                    title: `deleted ${full_name} from ${self.teamData.name} team`,
+                    team_temp_name: self.teamData.name,
+                    team_id: self.teamData.id
+                  };
+                  self.socketNotification(payload);
+                }
+
 								self.$message.success(
 									full_name + " removed from " + self.teamData.name + " "
 								);
@@ -1107,7 +1133,6 @@ export default {
 			});
 		},
 		async handleOkDeletion(bundle) {
-			console.log("Coming here");
 			let {
 				passwordTeam: password,
 				deletionReasonDetail,
@@ -1136,13 +1161,26 @@ export default {
 					if (data.data.status != "FAIL" && data.data.status_code == 200) {
 						this.$message.success("Team Deleted Succesfully");
 
+            if(this.teamData && this.teamData.team_members && this.teamData.team_members.length > 1) {
+              let loggedUser = JSON.parse(localStorage.getItem('user'));
+              let receivers = this.teamData.team_members.filter(item => item.user_id != loggedUser.id).map(opt => opt.user_id);
+              let payload = {
+                receivers: receivers,
+                title: `deleted ${this.teamData.name} team`,
+                team_temp_name: this.teamData.name,
+                team_id: this.teamData.id
+              };
+              this.socketNotification(payload);
+            }
+
 						await ApiService.post("v1/delete-reason-submit", {
 							team_id: this.teamData.team_id,
 							reason_type: deletionReasonType,
 							reason_text: deletionReasonDetail,
 						})
-							.then((data) => console.log(data))
-							.catch((error) => console.log(error));
+							.then((data) => {
+                console.log(data)
+              }).catch((error) => console.log(error));
 
 						this.showModalDeletion = false;
 						this.$emit("teamListUpdated");
@@ -1432,17 +1470,18 @@ export default {
       this.invitationObject.memberBox = true;
       this.createInvitaionLink();
     },
-    agianInviteWindow() {
+    againInviteWindow() {
       this.invitationObject.memberBox = true;
     },
     toggleMemberbox() {
       this.invitationObject.memberBox = false;
     },
-    async executeInviteMember(id) {
+    async executeInviteMember(user) {
       this.invitationObject.memberBox = false;
       let data = {
         invitation_id: this.invitedObj.invitation_id,
-        email: id
+        email: user.email,
+        receivers: [user.id]
       };
       await ApiService.post('/v1/invite-team-member-update', data).then(response => {
         console.log(response)
@@ -1450,6 +1489,14 @@ export default {
         this.invitationObject.visible = false;
         this.invitationObject.invitation_link = '';
         this.clickedInviteNow = false;
+        let notifyObj = {
+          receivers: data.receivers,
+          title: `invited you to ${this.teamData.name} team as ${this.invitationObject.role}`,
+          team_id: this.teamData.id,
+          team_temp_name: this.teamData.name
+        };
+        this.socketNotification(notifyObj);
+
         this.$emit("teamListUpdated");
       });
     },
@@ -1651,8 +1698,8 @@ export default {
 @import "@/styles/base/_variables.scss";
 .member-info-table {
   border: 1px solid #d9d9d9;
-  padding: 4px;
   border-radius: 4px;
+  padding: 4px 4px 0;
 }
 .table {
   border-collapse: separate;
@@ -1985,17 +2032,17 @@ export default {
 				margin-right: 10px;
 			}
 			.name-short {
-        padding: 5px 5px;
+        padding: 7px 5px;
         font-size: 8px;
         font-weight: bold;
         color: #ffffff;
-        width: 22px;
-        height: 22px;
+        width: 24px;
+        height: 24px;
         background: #3a3092;
         border-radius: 50%;
 			}
       .name-short-single {
-        padding: 5px 8px;
+        padding: 7px 8px;
       }
       .name-full {
         font-size: 14px;
@@ -2106,13 +2153,47 @@ export default {
 		}
 	}
 }
-.team-member-name:hover {
-  color: $color-brand;
-  border-bottom: 1px solid $border-brand;
+.member-name-td {
+  width: 60%;
+  @media (min-width: 992px) {
+    width: 50%;
+  }
+}
+.member-type {
+  width: 25%;
+  margin-left: 4px;
+  margin-top: -6px;
+  @media (min-width: 992px) {
+    width: 15%;
+  }
+}
+.check-tick {
+  width: 10%;
+  margin-left: 4px;
+  margin-top: -6px;
+}
+.relation-p {
+  width: 20%;
+  margin-left: 4px;
+}
+.team-member-name {
+  width: 100%;
+  margin-top: 2px;
+  padding-top: 2px;
+  &:hover {
+    color: $color-brand;
+    text-decoration: underline;
+    //border-bottom: 1px solid $border-brand;
+  }
 }
 .disabled-team {
   opacity: 0.5;
   pointer-events: none;
+}
+.ellipse {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 // end css for team-card
 </style>

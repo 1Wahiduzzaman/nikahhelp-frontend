@@ -89,7 +89,7 @@ export default {
       invitedUsers: [],
       invitedObj: null,
       clickedInviteNow: false,
-      memberEmail: null,
+      memberInfo: null,
       loading: false
     }
   },
@@ -101,20 +101,27 @@ export default {
     toggleMemberbox() {
       this.showMemberBox = !this.showMemberBox;
     },
-    addMemberInfo(id) {
-      this.memberEmail = id;
+    addMemberInfo(user) {
+      this.memberInfo = user;
     },
     async saveAndContinue() {
-      if(this.invitedObj && this.invitedObj.invitation_id && this.memberEmail) {
+      if(this.invitedObj && this.invitedObj.invitation_id && this.memberInfo && this.memberInfo.email && this.memberInfo.id) {
         this.loading = true;
         let payload = {
           invitation_id: this.invitedObj.invitation_id,
-          email: this.memberEmail
+          email: this.memberInfo.email
         };
 
         await ApiService.post('/v1/invite-team-member-update', payload).then(res => {
           this.loading = false;
           if(res && res.data) {
+            let socketData = {
+              receivers: [this.memberInfo.id],
+              team_id: this.team.id,
+              title: `invited you to ${this.team.name} team as ${this.invitationObject.role}`,
+              team_temp_name: this.team.name
+            };
+            this.$emit("socketNotification", socketData);
             this.$emit("goNext", 3);
             this.$emit("loadTeams");
           }

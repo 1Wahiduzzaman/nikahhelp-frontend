@@ -15,6 +15,7 @@
 
 <script>
 export default {
+    name: 'NotificationListItem',
     props: {
         item: {
             type: Object

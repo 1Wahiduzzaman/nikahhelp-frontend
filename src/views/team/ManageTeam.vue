@@ -70,11 +70,13 @@
               :team="joinTeamInfo"
               @cancel_button="cancelJoinButton()"
               @loadTeams="loadTeams"
+              @socketNotification="socketNotification"
             />
             <CreateTeamPage1
               v-if="createTeamShow"
               @cancel_button="cancelCreateTeamPage()"
               @loadTeams="loadTeams"
+              @socketNotification="socketNotification"
             />
           </div>
         </div>
@@ -91,6 +93,7 @@ import TeamDetailsCard from "@/components/team/TeamDetailsCard.vue";
 import JoinTeamPassword from "@/components/team/JoinTeamPassword.vue";
 import Layout from "@/views/design/Layout";
 import Banner from "@/components/team/Banner.vue";
+import Notification from "@/common/notification.js";
 
 export default {
   name: "ManageTeam",
@@ -102,6 +105,14 @@ export default {
     CreateTeamPage1,
     TeamDetailsCard,
     JoinTeamPassword,
+  },
+  sockets: {
+    connect: function () {
+      console.log('socket connected')
+    },
+    ping: function (data) {
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
   },
   data() {
     return {
@@ -140,6 +151,19 @@ export default {
 
       },
 */
+    socketNotification(payload) {
+      Notification.storeNotification(payload);
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.created_at = new Date();
+      payload.seen = 0;
+      payload.sender = loggedUser;
+      if(payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map(item => {
+          return item.toString();
+        });
+        this.$socket.emit('notification', payload);
+      }
+    },
     async loadTeams() {
       this.loading = true;
       try {
