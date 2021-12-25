@@ -57,9 +57,6 @@ import JwtService from "@/services/jwt.service";
 export default {
   name: "NotificationPage",
   components: {
-    Header,
-    Sidebar,
-    Footer,
     Notification,
   },
   data() {
