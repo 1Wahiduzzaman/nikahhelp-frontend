@@ -446,7 +446,7 @@ export default {
 .btn-adv-search-wrapper {
 	position: fixed;
 	left: 12px;
-	bottom: 10px;
+	bottom: 25px;
 	.btn:first-child {
 		text-align: center;
 		width: 220px;
