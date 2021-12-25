@@ -256,7 +256,7 @@
 
 <script>
 import SelectTeamModal from "@/components/team/Modals/SelectTeamModal.vue";
-//import ApiService from "@/services/api.service";
+import ApiService from "@/services/api.service";
 import ethnicities from "@/common/ethnicities.js";
 import languages from "@/common/languages.js";
 import hobbies from "@/common/hobbies.js";
@@ -446,7 +446,7 @@ export default {
 .btn-adv-search-wrapper {
 	position: fixed;
 	left: 12px;
-	bottom: 10px;
+	bottom: 25px;
 	.btn:first-child {
 		text-align: center;
 		width: 220px;
