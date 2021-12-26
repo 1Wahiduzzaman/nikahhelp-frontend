@@ -129,7 +129,6 @@ export default {
     };
   },
   created() {
-    
     this.loadTeams();
     if (this.$route.query.invitation) {
       this.joinCreateTeamShow = false;

@@ -616,6 +616,12 @@ div[data-unique="second_one"] >  .ant-select-selection{
         margin-top: 8px;
     }
 }
+.quick-switch > .ant-switch-inner {
+    margin-top: -4px;
+}
+.quick-switch-box > .ant-switch-checked {
+    background: #39b54a;
+}
 @media (min-width: 576px) {
     .ant-layout-sider {
         z-index: 9;

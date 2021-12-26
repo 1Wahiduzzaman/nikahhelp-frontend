@@ -18,7 +18,7 @@
             >
                 <a-list-item slot="renderItem" slot-scope="item">
                     <slot name="item" :item="item">
-                        <component :is="componentName" :item="itemObj"></component>
+                        <component :is="componentName" :item="itemObj" :index="index"></component>
                     </slot>
                 </a-list-item>
 

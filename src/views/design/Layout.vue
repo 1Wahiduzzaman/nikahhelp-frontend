@@ -43,7 +43,7 @@
                     />
                   </a>
                   <template v-slot:overlay>
-                    <NotificationPopup :items="[]" :use-for="'team'" />
+                    <NotificationPopup :items="teams" :use-for="'team'" />
                   </template>
                 </a-dropdown>
               </li>
@@ -359,6 +359,7 @@ import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 //import SimpleSearch from "@/components/search/SimpleSearch.vue";
 import NotificationPopup from "@/components/notification/NotificationPopup";
 import ApiService from "@/services/api.service";
+import JwtService from "../../services/jwt.service";
 export default {
   name: 'Layout',
   components: {
@@ -368,10 +369,12 @@ export default {
   },
   created() {
     this.loadNotifications();
+    this.loadTeams();
   },
   data() {
     return {
       collapsed: false,
+      activeTeam: null
     };
   },
   computed: {
@@ -380,7 +383,16 @@ export default {
     },
     unreadNotification() {
       return this.notifications.filter(item => item.seen == 0).length;
-    }
+    },
+    teams() {
+      let teams = this.$store.state.team.team_list;
+      let activeIndex = teams.findIndex(item => item.id == this.activeTeam);
+      if(activeIndex >= 0) {
+        teams.unshift(teams[activeIndex]);
+        teams.splice(activeIndex, 1);
+      }
+      return teams;
+    },
   },
   methods: {
     responsiveToggle() {
@@ -393,8 +405,26 @@ export default {
         console.log(e);
       })
     },
+    async loadTeams() {
+      const self = this;
+      try {
+        await this.$store
+            .dispatch("getTeams")
+            .then((data) => {
+              console.log(data.data.data);
+              self.checkTurnedOnSwitch();
+            })
+            .catch((error) => {
+              console.log(error.response);
+            });
+      } catch (error) {
+        this.error = error.message || "Something went wrong";
+      }
+    },
+    checkTurnedOnSwitch() {
+      this.activeTeam = JwtService.getTeamIDAppWide();
+    },
     logout() {
-      console.log("Logout clicked");
       const vm = this;
       this.$confirm({
         title: "Are you sure?",

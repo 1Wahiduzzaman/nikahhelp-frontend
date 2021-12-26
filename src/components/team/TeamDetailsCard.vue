@@ -592,7 +592,6 @@ export default {
       profileCard: false,
       profileActive: null,
       clickedInviteNow: false,
-      text: 'Md. Jahangir Alam Shamim'
 		};
 	},
 	created() {
@@ -1843,7 +1842,7 @@ export default {
 				background-color: #ea4c91;
 				.ant-switch-loading-icon,
 				&::after {
-					top: 2px;
+					top: 1px;
 				}
 			}
 			.ant-switch-checked {

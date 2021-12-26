@@ -51,6 +51,10 @@ export default {
     teamMembers: {
       type: Array,
       required: false
+    },
+    index: {
+      type: Number,
+      required: false
     }
   },
   computed: {
