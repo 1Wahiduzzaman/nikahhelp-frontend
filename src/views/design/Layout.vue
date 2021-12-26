@@ -272,6 +272,7 @@ export default {
   components: {
     NotificationPopup,
     Sidebar,
+    // SimpleSearch
     SimpleSearch: () => import('@/components/search/SimpleSearch.vue')
   },
   created() {

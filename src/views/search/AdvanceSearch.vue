@@ -169,7 +169,10 @@ export default {
 	}
 	.main-content-1 {
 		width: calc(100% - 350px);
-		margin: 10px 5px 10px 15px;
+		margin: 10px 0px 10px 15px;
+		height: calc(100vh - 80px);
+		padding-right: 5px;
+		overflow-y: auto;
 		@media (max-width: 1024px) {
 			width: calc(100% - 25px);
 		}
