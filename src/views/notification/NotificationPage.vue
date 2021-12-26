@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div v-if="isLoading">Loading</div>
+      <Loader v-if="isLoading" :isLoading="isLoading" />
       <div v-else>
         <div class="main-content-wrapper">
           <div class="main-content-1 px-4">
@@ -81,12 +81,10 @@
 </template>
 
 <script>
-import Header from "@/components/dashboard/layout/Header.vue";
-import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
-import Footer from "@/components/auth/Footer.vue";
 import Notification from "@/components/notification/Notification.vue";
 import JwtService from "@/services/jwt.service";
 import ApiService from "@/services/api.service";
+import { openModalRoute } from "@/plugins/modal/modal.mixin";
 export default {
   name: "NotificationPage",
   sockets: {
@@ -192,17 +190,9 @@ export default {
           let teamId = JwtService.getTeamIDAppWide();
           console.log(data.data.data);
           if (data.data.data.length == 0) {
-            // this.$warning({
-            //   title: "You don't have a team",
-            //   content: "Please create or join a team!",
-            // });
-           // this.$router.push("/manageteam");
+             openModalRoute(this, "manage_team_redirect");
           } else if (!teamId) {
-            // this.$warning({
-            //   title: "You don't have an active team",
-            //   content: "Please select an active team to continue!",
-            // });
-           // this.$router.push("/manageteam");
+             openModalRoute(this, "manage_team_redirect");
           }
         })
         .catch((error) => {

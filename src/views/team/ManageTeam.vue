@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div v-if="isLoading">Loading</div>
+      <Loader v-if="isLoading" :isLoading="isLoading" />
       <div v-else>
         <div class="mt-2">
           <!--teams.length == 0 && !joinTeamShow && !createTeamShow-->
@@ -94,7 +94,7 @@ import JoinTeamPassword from "@/components/team/JoinTeamPassword.vue";
 import Layout from "@/views/design/Layout";
 import Banner from "@/components/team/Banner.vue";
 import Notification from "@/common/notification.js";
-
+import { openModalRoute } from "@/plugins/modal/modal.mixin";
 export default {
   name: "ManageTeam",
   components: {
@@ -178,7 +178,7 @@ export default {
       } catch (error) {
         this.error = error.message || "Something went wrong";
         console.log(this.error);
-        //this.$router.push("/manageteam");
+         openModalRoute(this, "manage_team_redirect");
       }
       this.isLoading = false;
     },

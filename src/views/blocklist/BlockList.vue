@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="isLoading">Loading</div>
+    <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else>
       <div class="main-content-wrapper">
         <div class="main-content">
@@ -22,10 +22,11 @@
 import Header from "@/components/dashboard/layout/Header.vue";
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import Footer from "@/components/auth/Footer";
-
 import BlockedCandidate from "@/components/blocklist/BlockedCandidate.vue";
 import BlockedTeam from "@/components/blocklist/BlockedTeam.vue";
 import JwtService from "@/services/jwt.service";
+import { openModalRoute } from "@/plugins/modal/modal.mixin";
+
 export default {
   name: "BlockList",
   components: {
@@ -67,7 +68,6 @@ export default {
     },
   },
   methods: {
-    
     async getActiveTeamId() {
       const response = this.$store.dispatch("getTeams");
       response
@@ -75,17 +75,9 @@ export default {
           let teamId = JwtService.getTeamIDAppWide();
           console.log(data.data.data);
           if (data.data.data.length == 0) {
-            this.$warning({
-              title: "You don't have a team",
-              content: "Please create or join a team!",
-            });
-            //this.$router.push("/manageteam");
+            openModalRoute(this, "manage_team_redirect");
           } else if (!teamId) {
-            this.$warning({
-              title: "You don't have an active team",
-              content: "Please select an active team to continue!",
-            });
-            //this.$router.push("/manageteam");
+            openModalRoute(this, "manage_team_redirect");
           }
         })
         .catch((error) => {

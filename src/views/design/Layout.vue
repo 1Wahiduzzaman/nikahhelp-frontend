@@ -3,7 +3,9 @@
     <header
       class="header-container bg-secondary shadow-default radius-none px-4"
     >
-      <div class="header-content d-flex align-items-center justify-content-between">
+      <div
+        class="header-content d-flex align-items-center justify-content-between"
+      >
         <div class="shrink-none none-mobile">
           <a href="/" class="navbar-brand">
             <img
@@ -109,49 +111,58 @@
                     </a-badge>
                   </a>
                   <template v-slot:overlay>
-                    <NotificationPopup count="29" :items="[]" :use-for="'chat'" />
+                    <NotificationPopup
+                      count="29"
+                      :items="[]"
+                      :use-for="'chat'"
+                    />
                   </template>
                 </a-dropdown>
               </li>
             </ul>
           </div>
-        <div style="display:flex">
-              <img class="avatar-image" src="@/assets/mike.jpg" width="35" alt="" />
-          <div style="align-self: center">
-            <div class="ml-2 text-white">
-              <h6 class="mb-0 text-white fs-14">Selina Parvez Shumi</h6>
-              <div
-                class="d-flex justify-content-between align-items-center mt-1"
-              >
-                <a-dropdown :trigger="['click']" placement="bottomRight">
-                  <span
-                    @click.self="(e) => e.preventDefault()"
-                    class="team color-primary pl-2 mr-1 shrink-none"
-                  >
-                    Team 1
-                  </span>
-                  <template v-slot:overlay>
-                    <ul class="avatar-dropdown">
-                      <li class="list-item">
-                        <span>Active now:</span>
-                        <p class="mb-0 color-primary">Team 1</p>
-                      </li>
-                      <li class="list-item">
-                        <span>Team ID:</span>
-                        <p class="mb-0 color-primary">#6302432</p>
-                      </li>
-                      <li class="list-item">
-                        <span>Team Name:</span>
-                        <p class="mb-0 color-primary">Selina's Family</p>
-                      </li>
-                    </ul>
-                  </template>
-                </a-dropdown>
-                <span class="role px-2 ml-1 shrink-none">Admin</span>
+          <div style="display: flex">
+            <img
+              class="avatar-image"
+              src="@/assets/mike.jpg"
+              width="35"
+              alt=""
+            />
+            <div style="align-self: center">
+              <div class="ml-2 text-white">
+                <h6 class="mb-0 text-white fs-14">Selina Parvez Shumi</h6>
+                <div
+                  class="d-flex justify-content-between align-items-center mt-1"
+                >
+                  <a-dropdown :trigger="['click']" placement="bottomRight">
+                    <span
+                      @click.self="(e) => e.preventDefault()"
+                      class="team color-primary pl-2 mr-1 shrink-none"
+                    >
+                      Team 1
+                    </span>
+                    <template v-slot:overlay>
+                      <ul class="avatar-dropdown">
+                        <li class="list-item">
+                          <span>Active now:</span>
+                          <p class="mb-0 color-primary">Team 1</p>
+                        </li>
+                        <li class="list-item">
+                          <span>Team ID:</span>
+                          <p class="mb-0 color-primary">#6302432</p>
+                        </li>
+                        <li class="list-item">
+                          <span>Team Name:</span>
+                          <p class="mb-0 color-primary">Selina's Family</p>
+                        </li>
+                      </ul>
+                    </template>
+                  </a-dropdown>
+                  <span class="role px-2 ml-1 shrink-none">Admin</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
         </div>
         <div class="d-sm-none">
           <a-dropdown :trigger="['click']">
@@ -225,26 +236,22 @@
               </a-menu-item>
               <a-menu-item>
                 <img
-                    width="22"
-                    src="@/assets/icon/support-secondary.svg"
-                    alt="icon"
+                  width="22"
+                  src="@/assets/icon/support-secondary.svg"
+                  alt="icon"
                 />
                 <span class="ml-2">Support</span>
               </a-menu-item>
               <a-menu-item>
                 <img
-                    width="22"
-                    src="@/assets/icon/gear-fill-secondary.svg"
-                    alt="icon"
+                  width="22"
+                  src="@/assets/icon/gear-fill-secondary.svg"
+                  alt="icon"
                 />
                 <span class="ml-2">Setting</span>
               </a-menu-item>
               <a-menu-item @click="logout">
-                <img
-                    width="22"
-                    src="@/assets/icon/logout.svg"
-                    alt="icon"
-                />
+                <img width="22" src="@/assets/icon/logout.svg" alt="icon" />
                 <span class="ml-2">Logout</span>
               </a-menu-item>
             </a-menu>
@@ -284,20 +291,26 @@
         </a-layout-content>
       </a-layout>
     </a-layout>
+    <ModalContainer :modalKey="'manageTeamRedirect'" :width="'wide'" :fullscreen="true" :hideOverlay="false">
+      <ManageTeamRedirect />
+    </ModalContainer>
   </div>
 </template>
 
 <script>
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
-//import SimpleSearch from "@/components/search/SimpleSearch.vue";
 import NotificationPopup from "@/components/notification/NotificationPopup";
-// import ApiService from "@/services/api.service";
+import ModalContainer from "@/plugins/modal/modal-container";
+import ManageTeamRedirect from "@/views/design/ManageTeamRedirect.vue";
+import { createModalMixin, openModalRoute } from "@/plugins/modal/modal.mixin";
 export default {
-  name: 'Layout',
+  name: "Layout",
   components: {
     NotificationPopup,
     Sidebar,
-    SimpleSearch: () => import('@/components/search/SimpleSearch.vue')
+    ModalContainer,
+    ManageTeamRedirect,
+    SimpleSearch: () => import("@/components/search/SimpleSearch.vue"),
   },
   created() {
     // ApiService.get("v1/list-notification").then(response => {
@@ -311,6 +324,7 @@ export default {
       collapsed: false,
     };
   },
+  mixins: [createModalMixin("manageTeamRedirect")],
   methods: {
     responsiveToggle() {
       this.collapsed = false;
@@ -338,11 +352,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.main-container{
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    height: 100vh
+.main-container {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 .notification-wrapper {
   padding: 10px;

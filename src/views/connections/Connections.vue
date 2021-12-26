@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div v-if="isLoading">Loading</div>
+      <Loader v-if="isLoading" :isLoading="isLoading" />
       <div v-else>
         <div class="row">
           <div class="col-12">
@@ -41,32 +41,59 @@
                 </div>
               </div>
 
-              <div v-if="connectionReports" class="d-flex w-full flex-wrap ml-2">
-                <v-chip class="ma-2 connected" color="green" text-color="white" @click="connection_type_choosed = 'connected'">
+              <div
+                v-if="connectionReports"
+                class="d-flex w-full flex-wrap ml-2"
+              >
+                <v-chip
+                  class="ma-2 connected"
+                  color="green"
+                  text-color="white"
+                  @click="connection_type_choosed = 'connected'"
+                >
                   <v-avatar left class="green darken-4">
                     {{ connectionReports.connected_teams }}
                   </v-avatar>
                   Connected
                 </v-chip>
-                <v-chip class="ma-2 orange" text-color="white" @click="connection_type_choosed = 'Request received'">
+                <v-chip
+                  class="ma-2 orange"
+                  text-color="white"
+                  @click="connection_type_choosed = 'Request received'"
+                >
                   <v-avatar left class="orange darken-4">
                     {{ connectionReports.request_received }}
                   </v-avatar>
                   Received
                 </v-chip>
-                <v-chip class="ma-2" color="cyan" text-color="white" @click="connection_type_choosed = 'Request send'">
+                <v-chip
+                  class="ma-2"
+                  color="cyan"
+                  text-color="white"
+                  @click="connection_type_choosed = 'Request send'"
+                >
                   <v-avatar left class="cyan darken-4">
                     {{ connectionReports.request_sent }}
                   </v-avatar>
                   Sent
                 </v-chip>
-                <v-chip class="ma-2" color="pink" text-color="white" @click="connection_type_choosed = 'We declined'">
+                <v-chip
+                  class="ma-2"
+                  color="pink"
+                  text-color="white"
+                  @click="connection_type_choosed = 'We declined'"
+                >
                   <v-avatar left class="pink darken-4">
                     {{ connectionReports.we_declined }}
                   </v-avatar>
                   We declined
                 </v-chip>
-                <v-chip class="ma-2" color="indigo" text-color="white" @click="connection_type_choosed = 'They declined'">
+                <v-chip
+                  class="ma-2"
+                  color="indigo"
+                  text-color="white"
+                  @click="connection_type_choosed = 'They declined'"
+                >
                   <v-avatar left class="indigo darken-4">
                     {{ connectionReports.they_declined }}
                   </v-avatar>
@@ -78,9 +105,7 @@
                 <div class="row px-3">
                   <div
                     class="col-12 col-md-4 col-xl-3 mobile-margin"
-                    v-for="(
-                      connection, connecIndex
-                    ) in getFilteredConnections"
+                    v-for="(connection, connecIndex) in getFilteredConnections"
                     :key="connecIndex"
                   >
                     <candidate-grid-view
@@ -102,7 +127,8 @@
               </div>
               <ng-container
                 v-if="
-                  displayMode === 'list' && connectionReports &&
+                  displayMode === 'list' &&
+                  connectionReports &&
                   connectionReports.result &&
                   connectionReports.result.length > 0
                 "
@@ -230,7 +256,10 @@
                   <div class="pt-5 mt-5">
                     <h6 class="pb-2">This Profile Team Overview</h6>
                     <hr />
-                    <div v-if="connectionOverview" class="profile-team-overview">
+                    <div
+                      v-if="connectionOverview"
+                      class="profile-team-overview"
+                    >
                       <table class="table table-borderless overview-table">
                         <tr>
                           <td class="td-60">Team name</td>
@@ -303,6 +332,7 @@ import JwtService from "@/services/jwt.service";
 import { dateFromDateTime, dateFromTimeStamp } from "@/common/helpers.js";
 import CandidateGridView from "../../components/connections/CandidateGridView";
 import Notification from "@/common/notification.js";
+import { openModalRoute } from "@/plugins/modal/modal.mixin";
 export default {
   name: "Connections",
   components: {
@@ -314,11 +344,13 @@ export default {
   },
   sockets: {
     connect: function () {
-      console.log('socket connected')
+      console.log("socket connected");
     },
     ping: function (data) {
-      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
-    }
+      console.log(
+        'this method was fired by the socket server. eg: io.emit("customEmit", data)'
+      );
+    },
   },
   data() {
     return {
@@ -332,62 +364,72 @@ export default {
       teamId: null,
       connectionOverview: null,
       displayMode: "grid",
-      connection_type_choosed: 'all'
+      connection_type_choosed: "all",
     };
   },
+
   computed: {
     getFilteredConnections() {
-      if(this.connectionReports && this.connectionReports.result && this.connectionReports.result.length > 0) {
-        if(this.connection_type_choosed == 'all') {
+      if (
+        this.connectionReports &&
+        this.connectionReports.result &&
+        this.connectionReports.result.length > 0
+      ) {
+        if (this.connection_type_choosed == "all") {
           return this.connectionReports.result;
         } else {
-          return this.connectionReports.result.filter(item => item.connection_type == this.connection_type_choosed);
+          return this.connectionReports.result.filter(
+            (item) => item.connection_type == this.connection_type_choosed
+          );
         }
       }
       return [];
-    }
-  	// connectionStatus() {
-  	// 	return this.connectionOverview.connection_overview.connection_status;
-  	// },
-  	// connectedDate() {
-  	// 	if (this.connectionOverview.connection_overview.responded_at) {
-  	// 		const date =
-  	// 			this.connectionOverview.connection_overview.responded_at.split(" ");
-  	// 		return date[0];
-  	// 	} else return "N/A";
-  	// },
-  	// connectionRequestedBy() {
-  	// 	return this.connectionOverview.connection_overview.requested_by.full_name;
-  	// },
-  	// requestedDate() {
-  	// 	if (this.connectionOverview.connection_overview.requested_at) {
-  	// 		const date =
-  	// 			this.connectionOverview.connection_overview.requested_at.split(" ");
-  	// 		return date[0];
-  	// 	} else return "N/A";
-  	// },
-  	// teamName() {
-  	// 	return this.connectionOverview.profile_team_overview.team_name;
-  	// },
-  	// memberCount() {
-  	// 	return this.connectionOverview.profile_team_overview.member_count;
-  	// },
-  	// teamCreationDate() {
-  	// 	const date =
-  	// 		this.connectionOverview.profile_team_overview.team_creation_date.split(
-  	// 			"T"
-  	// 		);
-  	// 	return date[0];
-  	// },
-  	// teamCreatedBy() {
-  	// 	return this.connectionOverview.profile_team_overview.team_created_by
-  	// 		.full_name;
-  	// },
+    },
+    // connectionStatus() {
+    // 	return this.connectionOverview.connection_overview.connection_status;
+    // },
+    // connectedDate() {
+    // 	if (this.connectionOverview.connection_overview.responded_at) {
+    // 		const date =
+    // 			this.connectionOverview.connection_overview.responded_at.split(" ");
+    // 		return date[0];
+    // 	} else return "N/A";
+    // },
+    // connectionRequestedBy() {
+    // 	return this.connectionOverview.connection_overview.requested_by.full_name;
+    // },
+    // requestedDate() {
+    // 	if (this.connectionOverview.connection_overview.requested_at) {
+    // 		const date =
+    // 			this.connectionOverview.connection_overview.requested_at.split(" ");
+    // 		return date[0];
+    // 	} else return "N/A";
+    // },
+    // teamName() {
+    // 	return this.connectionOverview.profile_team_overview.team_name;
+    // },
+    // memberCount() {
+    // 	return this.connectionOverview.profile_team_overview.member_count;
+    // },
+    // teamCreationDate() {
+    // 	const date =
+    // 		this.connectionOverview.profile_team_overview.team_creation_date.split(
+    // 			"T"
+    // 		);
+    // 	return date[0];
+    // },
+    // teamCreatedBy() {
+    // 	return this.connectionOverview.profile_team_overview.team_created_by
+    // 		.full_name;
+    // },
   },
   created() {
     this.getActiveTeamId();
     //this.loadConnections();
     this.loadConnectionReports();
+    setTimeout(() => {
+      openModalRoute(this, "manage_team_redirect");
+    }, 2000);
   },
   watch: {
     teamId: function (newQuestion, oldQuestion) {
@@ -399,15 +441,15 @@ export default {
     dateFromTimeStamp, //From helpers.js
     socketNotification(payload) {
       Notification.storeNotification(payload);
-      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let loggedUser = JSON.parse(localStorage.getItem("user"));
       payload.created_at = new Date();
       payload.seen = 0;
       payload.sender = loggedUser;
-      if(payload && payload.receivers.length > 0) {
-        payload.receivers = payload.receivers.map(item => {
+      if (payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map((item) => {
           return item.toString();
         });
-        this.$socket.emit('notification', payload);
+        this.$socket.emit("notification", payload);
       }
     },
     async getActiveTeamId() {
@@ -417,17 +459,9 @@ export default {
           let teamId = JwtService.getTeamIDAppWide();
           console.log(data.data.data);
           if (data.data.data.length == 0) {
-            // this.$warning({
-            //   title: "You don't have a team",
-            //   content: "Please create or join a team!",
-            // });
-            //this.$router.push("/manageteam");
+            openModalRoute(this, "manage_team_redirect");
           } else if (!teamId) {
-            // this.$warning({
-            //   title: "You don't have an active team",
-            //   content: "Please select an active team to continue!",
-            // });
-            //this.$router.push("/manageteam");
+            openModalRoute(this, "manage_team_redirect");
           }
         })
         .catch((error) => {
@@ -685,7 +719,7 @@ export default {
       //   team_id: 2
       // };
       // this.socketNotification(payload);
-    }
+    },
   },
 };
 </script>

@@ -93,6 +93,83 @@ const AppRouter = new VueRouter({
 
         },
         {
+            path: "/candidate-registration",
+            name: "CandidateRegistration",
+            component: CandidateRegistration,
+            // beforeEnter: InitRoute,
+
+        },
+        {
+            path: "/representative-registration",
+            name: "RepresentativeRegistration",
+            component: RepresentativeRegistration,
+            // beforeEnter: InitRoute,
+
+        },
+        {
+            path: "/search/advance",
+            name: "AdvanceSearch",
+            component: AdvanceSearch,
+            // beforeEnter: InitRoute,
+        },
+        {
+            path: "/admin",
+            name: "Admin",
+            component: AdminSystem,
+            // beforeEnter: InitRoute,
+            children: [{
+                path: "",
+                component: AdminDashboard,
+
+            },
+            {
+                path: "dashboard",
+                component: AdminDashboard,
+
+            },
+            {
+                path: "users",
+                component: AdminUsers,
+
+            },
+            {
+                path: "teams",
+                component: AdminTeams,
+
+            },
+            {
+                path: "approval",
+                component: AdminApproval,
+
+            },
+            {
+                path: "support",
+                component: AdminSupport,
+
+            },
+            {
+                path: "flag",
+                component: AdminFlag,
+
+            },
+            {
+                path: "system_admin",
+                component: SystemAdmin,
+
+            },
+            {
+                path: "active_users",
+                component: UsersList,
+
+            },
+            {
+                path: "deleted_users",
+                component: DeletedUsersList,
+
+            },
+            ],
+        },
+        {
             path: "",
             name: 'root',
             component: MatrimonySystem,
@@ -106,20 +183,7 @@ const AppRouter = new VueRouter({
                     component: DHome,
 
                 },
-                {
-                    path: "/candidate-registration",
-                    name: "CandidateRegistration",
-                    component: CandidateRegistration,
 
-
-                },
-                {
-                    path: "/representative-registration",
-                    name: "RepresentativeRegistration",
-                    component: RepresentativeRegistration,
-
-
-                },
                 {
                     path: "/jointeampassword",
                     name: "Join Team Password",
@@ -262,12 +326,7 @@ const AppRouter = new VueRouter({
                     component: Search,
 
                 },
-                {
-                    path: "/search/advance",
-                    name: "AdvanceSearch",
-                    component: AdvanceSearch,
 
-                },
                 {
                     path: "/visitor/search",
                     name: "UnAuthSearch",
@@ -281,64 +340,7 @@ const AppRouter = new VueRouter({
                     component: Settings,
 
                 },
-                {
-                    path: "/admin",
-                    name: "Admin",
-                    component: AdminSystem,
 
-
-                    children: [{
-                        path: "",
-                        component: AdminDashboard,
-
-                    },
-                    {
-                        path: "dashboard",
-                        component: AdminDashboard,
-
-                    },
-                    {
-                        path: "users",
-                        component: AdminUsers,
-
-                    },
-                    {
-                        path: "teams",
-                        component: AdminTeams,
-
-                    },
-                    {
-                        path: "approval",
-                        component: AdminApproval,
-
-                    },
-                    {
-                        path: "support",
-                        component: AdminSupport,
-
-                    },
-                    {
-                        path: "flag",
-                        component: AdminFlag,
-
-                    },
-                    {
-                        path: "system_admin",
-                        component: SystemAdmin,
-
-                    },
-                    {
-                        path: "active_users",
-                        component: UsersList,
-
-                    },
-                    {
-                        path: "deleted_users",
-                        component: DeletedUsersList,
-
-                    },
-                    ],
-                },
             ]
         },
 
