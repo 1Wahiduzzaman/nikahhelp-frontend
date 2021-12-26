@@ -20,7 +20,7 @@
               <div class="cursor-pointer image-plus background-img" @click="imageModal = true" :style="{ backgroundImage: 'url(' + logoBobUrl + ')' }">
                 <h4 class="fs-33 d-flex justify-content-center align-items-center text-white">+</h4>
               </div>
-              <h4 class="fs-14 color-gray ml-2">Add a team image</h4>
+              <h4 class="fs-14 color-gray ml-2 add-team-image cursor-pointer" @click="imageModal = true">Add a team image</h4>
             </div>
             <span class="text-danger fs-12" v-if="in_progress && !file">Please upload team logo</span>
           </a-col>
@@ -43,34 +43,39 @@
                 :auto-size="{ minRows: 3, maxRows: 5 }"
                 v-model="team.description"
                 @input="in_progress = true"
-                :maxLength="250"
+                :maxLength="80"
             />
             <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.description">Team description required</span>
           </a-col>
           <a-col class="mt-1" :span="24">
-            <a-input
-                v-model="team.password"
-                size="large"
-                type="password"
-                class="team-name-input"
-                placeholder="Type Team Password"
-                autocomplete="off"
-                @input="in_progress = true"
-            />
-            <span class="fs-12 text-danger ml-2 fs-12" v-if="team.password && team.password.length !== 4">Password must be 4 digits</span>
-          </a-col>
-          <a-col class="mt-1" :span="24">
-            <a-input
-                v-model="team.confirm_password"
-                size="large"
-                type="password"
-                class="team-name-input"
-                placeholder="Re-Type New Password"
-                autocomplete="off"
-                @input="in_progress = true"
-            />
-            <span class="text-danger mt-2 ml-2 fs-12" v-if="team.password && team.confirm_password && team.password !== team.confirm_password">Password doesn't match.</span>
-            <span v-if="team.confirm_password && team.confirm_password.length !== 4" class="fs-12 text-danger ml-2">Password must be 4 digits</span>
+            <a-row>
+              <a-col :span="11">
+                <a-input
+                    v-model="team.password"
+                    size="large"
+                    type="password"
+                    class="team-name-input"
+                    placeholder="Type Team Password"
+                    autocomplete="off"
+                    @input="in_progress = true"
+                />
+                <span class="fs-12 text-danger ml-2 fs-12" v-if="team.password && team.password.length !== 4">Password must be 4 digits</span>
+              </a-col>
+              <a-col :span="2"></a-col>
+              <a-col :span="11">
+                <a-input
+                    v-model="team.confirm_password"
+                    size="large"
+                    type="password"
+                    class="team-name-input"
+                    placeholder="Re-Type New Password"
+                    autocomplete="off"
+                    @input="in_progress = true"
+                />
+                <span class="text-danger mt-2 ml-2 fs-12" v-if="team.password && team.confirm_password && team.password !== team.confirm_password">Password doesn't match.</span>
+                <span v-if="team.confirm_password && team.confirm_password.length !== 4" class="fs-12 text-danger ml-2">Password must be 4 digits</span>
+              </a-col>
+            </a-row>
           </a-col>
           <a-col class="mt-1" :span="24">
             <div class="d-flex create-role">
@@ -872,5 +877,8 @@ export default {
 }
 .resize-none {
   resize: none;
+}
+.add-team-image:hover {
+  color: $color-brand;
 }
 </style>

@@ -119,7 +119,7 @@
 
                 <a-tooltip>
                   <template slot="title">
-                    Maximum 250 Characters allowed
+                    Maximum 80 Characters allowed
                   </template>
                   <label class="mt-2">Team Description: </label>
                 </a-tooltip>
@@ -127,7 +127,7 @@
 									type="text"
 									v-model="teamInfo.description"
 									:rows="3"
-                  :maxLength="250"
+                  :maxLength="80"
                   placeholder="Team description"
 								/>
 							</div>
@@ -376,7 +376,7 @@
             <div class="flex align-items-center pb-2" v-for="(member, mIndex) in sortCandidateFirst(teamData.team_members)" :key="mIndex" >
               <a-tooltip
                   placement="top"
-                  :title="member.role.toString() == 'Owner+Admin' ? 'O' + firstLetter(member.role) : firstLetter(member.role)"
+                  :title="member.role.replace('+', ' & ')"
               >
                 <div class="w-5p name-short" :class="{'name-short-single': member.role.toString() != 'Owner+Admin' }"><span v-if="member.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(member.role) }}</div>
               </a-tooltip>
@@ -385,10 +385,10 @@
               </div>
               <a-tooltip
                   placement="top"
-                  :title="member.user_type"
+                  :title="accountTypeReducer(member.user_type)"
               >
                 <div class="member-type">
-                  <span class="badge badge-secondary fs-10" :title="accountTypeReducer(member.user_type)">{{ accountTypeReducer(member.user_type).substr(0, 3) }} {{ member.user_type ? '.' : '' }}</span>
+                  <span class="badge badge-secondary fs-10">{{ accountTypeReducer(member.user_type).substr(0, 3) }} {{ member.user_type ? '.' : '' }}</span>
                 </div>
               </a-tooltip>
               <div class="check-tick">
@@ -405,7 +405,7 @@
             <div class="flex align-items-center pb-2" v-for="item in teamData.team_invited_members" :key="item.id">
               <a-tooltip
                   placement="top"
-                  :title="item.role.toString() == 'Owner+Admin' ? 'O' + firstLetter(item.role) : firstLetter(item.role)"
+                  :title="item.role.replace('+', ' & ')"
               >
                 <div class="w-5p name-short" :class="{'name-short-single': item.role.toString() != 'Owner+Admin' }"><span v-if="item.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(item.role) }}</div>
               </a-tooltip>
@@ -414,10 +414,10 @@
               </div>
               <a-tooltip
                   placement="top"
-                  :title="item.user_type"
+                  :title="accountTypeReducer(item.user_type)"
               >
                 <div class="member-type">
-                  <span class="badge badge-secondary fs-10" :title="accountTypeReducer(item.user_type)">{{ accountTypeReducer(item.user_type).substr(0, 3) }} {{ item.user_type ? '.' : '' }}</span>
+                  <span class="badge badge-secondary fs-10">{{ accountTypeReducer(item.user_type).substr(0, 3) }} {{ item.user_type ? '.' : '' }}</span>
                 </div>
               </a-tooltip>
               <div class="check-tick">
@@ -541,10 +541,19 @@
           </div>
 				</div>
 				<div class="right d-subs-dk">
-					<a :href="'subscription/' + teamData.team_id"
-						><img src="../../assets/icon/renew.svg" alt="Renew Subscription" />
-						<span>{{ teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription' }}</span></a
-					>
+          <a-tooltip
+              placement="top"
+              :title="teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription'"
+          >
+            <a :href="'subscription/' + teamData.team_id"
+            ><img src="../../assets/icon/renew.svg" alt="Renew Subscription"/>
+              <span class="display-subs-text">{{ teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription' }}</span></a
+            >
+          </a-tooltip>
+<!--					<a :href="'subscription/' + teamData.team_id"-->
+<!--						><img src="../../assets/icon/renew.svg" alt="Renew Subscription" />-->
+<!--						<span>{{ teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription' }}</span></a-->
+<!--					>-->
 				</div>
 			</div>
 		</div>
@@ -2290,6 +2299,12 @@ export default {
   display: block;
   @media (min-width: 992px) {
     display: none;
+  }
+}
+.display-subs-text {
+  display: none;
+  @media (min-width: 1780px) {
+    display: contents;
   }
 }
 // end css for team-card
