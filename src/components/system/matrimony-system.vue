@@ -8,13 +8,11 @@
 </template>
 
 <script>
-import Layout from "@/views/design/Layout";
 import InstantNotification from "../notification/InstantNotification";
-// import ApiService from "@/services/api.service";
 export default {
   components: {
     InstantNotification,
-    Layout,
+    Layout: () => import("@/views/design/Layout"),
   },
   sockets: {
     connect: function () {
@@ -42,13 +40,7 @@ export default {
       });
     }
   },
-  created() {
-    // ApiService.get("v1/list-notification").then(response => {
-    //   this.notifications = response.data.data;
-    // }).catch(e => {
-    //   console.log(e);
-    // });
-  },
+  created() {},
 };
 </script>
 

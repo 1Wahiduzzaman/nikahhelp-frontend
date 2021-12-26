@@ -94,7 +94,6 @@ import JoinTeamPassword from "@/components/team/JoinTeamPassword.vue";
 import Layout from "@/views/design/Layout";
 import Banner from "@/components/team/Banner.vue";
 import Notification from "@/common/notification.js";
-import { openModalRoute } from "@/plugins/modal/modal.mixin";
 export default {
   name: "ManageTeam",
   components: {
@@ -108,11 +107,13 @@ export default {
   },
   sockets: {
     connect: function () {
-      console.log('socket connected')
+      console.log("socket connected");
     },
     ping: function (data) {
-      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
-    }
+      console.log(
+        'this method was fired by the socket server. eg: io.emit("customEmit", data)'
+      );
+    },
   },
   data() {
     return {
@@ -123,13 +124,12 @@ export default {
       createTeamShow: false,
       joinCreateTeamShow: true,
       createTeamPassword: false,
-      welcomeModal: true,
+      welcomeModal: this.teams.length <= 0,
       joinTeamPassword: false,
       joinTeamInfo: null,
     };
   },
   created() {
-    
     this.loadTeams();
     if (this.$route.query.invitation) {
       this.joinCreateTeamShow = false;
@@ -152,37 +152,39 @@ export default {
       },
 */
     socketNotification(payload) {
+      let loggedUser = JSON.parse(localStorage.getItem("user"));
+      payload.sender = loggedUser.id;
       Notification.storeNotification(payload);
-      let loggedUser = JSON.parse(localStorage.getItem('user'));
       payload.created_at = new Date();
       payload.seen = 0;
       payload.sender = loggedUser;
-      if(payload && payload.receivers.length > 0) {
-        payload.receivers = payload.receivers.map(item => {
+      if (payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map((item) => {
           return item.toString();
         });
-        this.$socket.emit('notification', payload);
+        this.$socket.emit("notification", payload);
       }
     },
     async loadTeams() {
-      this.loading = true;
       try {
+        this.isLoading = true;
         await this.$store
           .dispatch("getTeams")
           .then((data) => {
             this.teams = data.data.data;
+            this.isLoading = false;
           })
           .catch((error) => {
             console.log(error.response);
+            this.isLoading = false;
           });
       } catch (error) {
         this.error = error.message || "Something went wrong";
         console.log(this.error);
-         openModalRoute(this, "manage_team_redirect");
+        this.isLoading = false;
       }
-      this.isLoading = false;
     },
-   
+
     hideWelcomeModal() {
       this.welcomeModal = false;
     },

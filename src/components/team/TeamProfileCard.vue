@@ -21,7 +21,7 @@
           </div>
         </div>
         <button class="btn btn-sm text-white remove-btn ml-3"
-                :disabled="checkIsOwnerAdmin"
+                :disabled="checkDeleteAbility"
                 @click="removeInvitation()">Remove</button>
       </div>
       <div class="team-profile-short pt-2 text-center d-flex justify-content-center">
@@ -29,7 +29,7 @@
           <tr>
             <td class="fs-12 text-white opacity-60" >Team join Date</td>
             <td class="fs-12 text-white opacity-60">:</td>
-            <td class="fs-12 text-white ml-3">{{ formateDate(profileActive.created_at) }}</td>
+            <td class="fs-12 text-white ml-3">{{ profileActive.profile_from_type === 'member' ? formateDate(profileActive.created_at) : 'N/A' }}</td>
           </tr>
           <tr>
             <td class="fs-12 text-white opacity-60">Joined as a</td>
@@ -58,7 +58,7 @@
 <!--          </tr>-->
         </table>
       </div>
-      <router-link :to="{name: 'Profile', query: { user_id: profileActive.user_id }}">
+      <router-link :to="{name: 'Profile', query: { user_id: profileActive.user_id }}" v-if="profileActive.profile_from_type === 'member'">
         <button class="btn btn-sm fs-14 text-white bg-primary mt-1 py-1 prof-detail">Profile Details</button>
       </router-link>
     </div>
@@ -77,6 +77,16 @@ export default {
   },
   computed: {
     checkIsOwnerAdmin() {
+      if(this.profileActive.role == 'Owner+Admin') {
+        return true;
+      } else {
+        if(this.profileActive.profile_from_type !== 'member') {
+          return true;
+        }
+      }
+      return false;
+    },
+    checkDeleteAbility() {
       if(this.profileActive.role == 'Owner+Admin') {
         return true;
       }

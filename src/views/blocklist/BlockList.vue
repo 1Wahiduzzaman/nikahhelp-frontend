@@ -45,7 +45,6 @@ export default {
   },
   created() {
     this.getActiveTeamId();
-    this.loadBlockedCandidates();
   },
   computed: {
     blockedCandidates() {
@@ -68,21 +67,16 @@ export default {
     },
   },
   methods: {
-    async getActiveTeamId() {
-      const response = this.$store.dispatch("getTeams");
-      response
-        .then((data) => {
-          let teamId = JwtService.getTeamIDAppWide();
-          console.log(data.data.data);
-          if (data.data.data.length == 0) {
-            openModalRoute(this, "manage_team_redirect");
-          } else if (!teamId) {
-            openModalRoute(this, "manage_team_redirect");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    getActiveTeamId() {
+      if (!JwtService.getTeamIDAppWide()) {
+        this.isLoading = true;
+        setTimeout(() => {
+          this.isLoading = false;
+          openModalRoute(this, "manage_team_redirect");
+        }, 2000);
+      } else {
+        this.loadBlockedCandidates();
+      }
     },
     async loadBlockedCandidates() {
       this.isLoading = true;

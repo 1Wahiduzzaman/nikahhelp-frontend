@@ -425,11 +425,6 @@ export default {
   },
   created() {
     this.getActiveTeamId();
-    //this.loadConnections();
-    this.loadConnectionReports();
-    setTimeout(() => {
-      openModalRoute(this, "manage_team_redirect");
-    }, 2000);
   },
   watch: {
     teamId: function (newQuestion, oldQuestion) {
@@ -452,21 +447,16 @@ export default {
         this.$socket.emit("notification", payload);
       }
     },
-    async getActiveTeamId() {
-      const response = this.$store.dispatch("getTeams");
-      response
-        .then((data) => {
-          let teamId = JwtService.getTeamIDAppWide();
-          console.log(data.data.data);
-          if (data.data.data.length == 0) {
-            openModalRoute(this, "manage_team_redirect");
-          } else if (!teamId) {
-            openModalRoute(this, "manage_team_redirect");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    getActiveTeamId() {
+      if (!JwtService.getTeamIDAppWide()) {
+        this.isLoading = true;
+        setTimeout(() => {
+          this.isLoading = false;
+          openModalRoute(this, "manage_team_redirect");
+        }, 2000);
+      } else {
+        this.loadConnectionReports();
+      }
     },
     loadConnections() {
       this.isLoading = true;
@@ -505,14 +495,17 @@ export default {
     },
     loadConnectionReports() {
       const teamId = JwtService.getTeamIDAppWide();
+      this.isLoading = true;
       try {
         const response = this.$store.dispatch("loadConnectionReports", teamId);
         response
           .then((data) => {
             this.connectionReports = data.data.data;
+            this.isLoading = false;
           })
           .catch((error) => {
             console.log(error.response.data.message);
+            this.isLoading = false;
           });
       } catch (error) {
         console.log(error.message);

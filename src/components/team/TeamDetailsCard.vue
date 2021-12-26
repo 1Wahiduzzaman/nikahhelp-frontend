@@ -362,35 +362,65 @@
 				<div class="member-info-table">
           <div class="admin-member" :class="{'mb-4': invitationObject.visible}">
             <div class="flex align-items-center pb-2" v-for="(member, mIndex) in sortCandidateFirst(teamData.team_members)" :key="mIndex" >
-              <div class="w-5p name-short" :class="{'name-short-single': member.role.toString() != 'Owner+Admin' }"><span v-if="member.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(member.role) }}</div>
+              <a-tooltip
+                  placement="top"
+                  :title="member.role.toString() == 'Owner+Admin' ? 'O' + firstLetter(member.role) : firstLetter(member.role)"
+              >
+                <div class="w-5p name-short" :class="{'name-short-single': member.role.toString() != 'Owner+Admin' }"><span v-if="member.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(member.role) }}</div>
+              </a-tooltip>
               <div class="member-name-td cursor-pointer" @click="toggleActiveProfile(member, 'member')">
                 <span class="team-member-name ellipse">{{ member.user ? member.user.full_name : 'N/A' }}</span>
               </div>
-              <div class="member-type">
-                <span class="badge badge-secondary fs-10" :title="accountTypeReducer(member.user_type)">{{ accountTypeReducer(member.user_type).substr(0, 3) }} {{ member.user_type ? '.' : '' }}</span>
-              </div>
+              <a-tooltip
+                  placement="top"
+                  :title="member.user_type"
+              >
+                <div class="member-type">
+                  <span class="badge badge-secondary fs-10" :title="accountTypeReducer(member.user_type)">{{ accountTypeReducer(member.user_type).substr(0, 3) }} {{ member.user_type ? '.' : '' }}</span>
+                </div>
+              </a-tooltip>
               <div class="check-tick">
                 <div class="status-box bg-success text-white">&#10003;</div>
               </div>
-              <div class="d-mb-none d-dk-block relation-p ellipse">{{ member.relationship }}</div>
+              <a-tooltip
+                  placement="top"
+                  :title="member.relationship"
+              >
+                <div class="d-mb-none d-dk-block relation-p ellipse">{{ member.relationship }}</div>
+              </a-tooltip>
             </div>
 
             <div class="flex align-items-center pb-2" v-for="item in teamData.team_invited_members" :key="item.id">
-              <div class="w-5p name-short" :class="{'name-short-single': item.role.toString() != 'Owner+Admin' }"><span v-if="item.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(item.role) }}</div>
+              <a-tooltip
+                  placement="top"
+                  :title="item.role.toString() == 'Owner+Admin' ? 'O' + firstLetter(item.role) : firstLetter(item.role)"
+              >
+                <div class="w-5p name-short" :class="{'name-short-single': item.role.toString() != 'Owner+Admin' }"><span v-if="item.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(item.role) }}</div>
+              </a-tooltip>
               <div class="member-name-td cursor-pointer" @click="toggleActiveProfile(item, 'invitation')">
                 <span class="team-member-name ellipse">{{ item.user ? item.user.full_name : 'Not joined' }}</span>
               </div>
-              <div class="member-type">
-                <span class="badge badge-secondary fs-10" :title="accountTypeReducer(item.user_type)">{{ accountTypeReducer(item.user_type).substr(0, 3) }} {{ item.user_type ? '.' : '' }}</span>
-              </div>
+              <a-tooltip
+                  placement="top"
+                  :title="item.user_type"
+              >
+                <div class="member-type">
+                  <span class="badge badge-secondary fs-10" :title="accountTypeReducer(item.user_type)">{{ accountTypeReducer(item.user_type).substr(0, 3) }} {{ item.user_type ? '.' : '' }}</span>
+                </div>
+              </a-tooltip>
               <div class="check-tick">
                 <div class="status-box bg-success text-white">&#10003;</div>
               </div>
-              <div class="d-mb-none d-dk-block relation-p ellipse">{{ item.relationship }}</div>
+              <a-tooltip
+                  placement="top"
+                  :title="item.relationship"
+              >
+                <div class="d-mb-none d-dk-block relation-p ellipse">{{ item.relationship }}</div>
+              </a-tooltip>
             </div>
           </div>
 
-          <div class="d-flex member-add-box" v-if="invitationObject.visible">
+          <div class="d-flex member-add-box pb-2" v-if="invitationObject.visible">
             <a-select
                 placeholder="Role"
                 class="fs-10 w-25 member-add"
@@ -447,6 +477,7 @@
 					</button>
 				</a-tooltip>
 			</div>
+
 			<!-- Invitations History -->
 			<div class="team-invitations mr-3" :class="{'disabled-team': !turnOn}">
 				<!-- Team Invitation History Modal -->
@@ -491,10 +522,10 @@
 						{{ formateDate(teamData.subscription_expire_at) }}
 					</p>
 				</div>
-				<div class="right" v-if="subTextShow">
+				<div class="right">
 					<a :href="'subscription/' + teamData.team_id"
 						><img src="../../assets/icon/renew.svg" alt="Renew Subscription" />
-						{{ subText }}</a
+						{{ teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription' }}</a
 					>
 				</div>
 			</div>
@@ -592,7 +623,6 @@ export default {
       profileCard: false,
       profileActive: null,
       clickedInviteNow: false,
-      text: 'Md. Jahangir Alam Shamim'
 		};
 	},
 	created() {
@@ -635,8 +665,9 @@ export default {
 	},
 	methods: {
     socketNotification(payload) {
-      Notification.storeNotification(payload);
       let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.sender = loggedUser.id;
+      Notification.storeNotification(payload);
       payload.created_at = new Date();
       payload.seen = 0;
       payload.sender = loggedUser;
@@ -1474,7 +1505,16 @@ export default {
       this.invitationObject.memberBox = true;
     },
     toggleMemberbox() {
-      this.invitationObject.memberBox = false;
+      this.clickedInviteNow = false;
+      this.invitationObject = {
+        role: "Admin",
+        add_as_a: "Representative",
+        relationship: "Father",
+        invitation_link: "",
+        visible: false,
+        memberBox: false
+      }
+      this.$emit("teamListUpdated");
     },
     async executeInviteMember(user) {
       this.invitationObject.memberBox = false;
@@ -1842,7 +1882,7 @@ export default {
 				background-color: #ea4c91;
 				.ant-switch-loading-icon,
 				&::after {
-					top: 2px;
+					top: 1px;
 				}
 			}
 			.ant-switch-checked {
@@ -2180,6 +2220,7 @@ export default {
   width: 100%;
   margin-top: 2px;
   padding-top: 2px;
+  font-size: 14px;
   &:hover {
     color: $color-brand;
     text-decoration: underline;

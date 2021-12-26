@@ -24,7 +24,7 @@ export default class Modal {
   render(createElement) {
     return (
       <div
-        class={`dt-modal ${this.id} ${this.loadingFlag ? 'dt-loading' : ''}`}
+        class={`dt-modal ${this.id} ${this.loadingFlag ? 'dt-loading shell--v2' : ''}`}
         onKeyup={this.onKeyup}
         tabindex="0"
         style="height:100%"
