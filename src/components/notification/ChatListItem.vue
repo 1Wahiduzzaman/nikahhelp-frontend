@@ -37,6 +37,7 @@
 import {format} from "timeago.js";
 
 export default {
+  name: 'ChatListItem',
   props: {
     item: {
       type: Object

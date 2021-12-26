@@ -1,6 +1,6 @@
 <template>
-	<div class="border-bottom pt-2 pb-1 position-relative">
-		<div class="flex flex-div">
+	<div class="border-bottom pt-4 position-relative notification-box cursor-pointer" @click="toggleReadStatus()">
+		<div class="flex flex-div px-2">
       <img :src="avatarSrc" alt="avatar" class="user-circle-img">
       <div class="flex flex-column ml-2">
         <h4 class="notification-headline py-2"><strong>{{ notification && notification.sender && notification.sender.full_name ? notification.sender.full_name : '' }}</strong> {{ notification.title }}</h4>
@@ -9,7 +9,7 @@
 <!--        </p>-->
       </div>
     </div>
-    <h4 class="notification-time-text text-end">{{ createdAt(notification.created_at) }}</h4>
+    <h4 class="notification-time-text text-end mr-2">{{ createdAt(notification.created_at) }}</h4>
     <div class="status-box position-absolute bg-brand" v-if="notification.seen == 0"></div>
 	</div>
 </template>
@@ -33,6 +33,9 @@ export default {
       }
       return '';
     },
+    toggleReadStatus() {
+
+    }
   },
   mounted() {
     // console.log(Notification.storeNotification({ id: 1 }))
@@ -66,10 +69,14 @@ export default {
   width: 8px;
   height: 8px;
   top: 12px;
-  right: 2px;
+  right: 8px;
   border-radius: 50%;
 }
 .bg-brand {
   background: #E51F76
+}
+.notification-box:hover {
+  background: #d7d6d6;
+  border-radius: 8px;
 }
 </style>

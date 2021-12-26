@@ -122,6 +122,7 @@ export default {
       if(this.invitationLink && this.team) {
         let payload = this.team.team;
         payload.invitation_link = this.invitationLink;
+        payload.role = this.team.role;
         this.$emit("toggleToTeamPassword", payload);
       }
 			// if (this.invitationLink.length > 0) {

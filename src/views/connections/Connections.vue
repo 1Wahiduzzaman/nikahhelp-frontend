@@ -302,6 +302,7 @@ import Candidate from "@/components/connections/Candidate.vue";
 import JwtService from "@/services/jwt.service";
 import { dateFromDateTime, dateFromTimeStamp } from "@/common/helpers.js";
 import CandidateGridView from "../../components/connections/CandidateGridView";
+import Notification from "@/common/notification.js";
 export default {
   name: "Connections",
   components: {
@@ -397,6 +398,11 @@ export default {
     dateFromDateTime, //From helpers.js
     dateFromTimeStamp, //From helpers.js
     socketNotification(payload) {
+      Notification.storeNotification(payload);
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.created_at = new Date();
+      payload.seen = 0;
+      payload.sender = loggedUser;
       if(payload && payload.receivers.length > 0) {
         payload.receivers = payload.receivers.map(item => {
           return item.toString();
@@ -539,9 +545,9 @@ export default {
           console.log(error);
         });
     },
-    disconnectTeam(connectionId) {
+    disconnectTeam(connection) {
       const payload = {
-        connection_id: connectionId,
+        connection_id: connection.connection_id,
       };
       console.log(payload);
       //return;
@@ -550,6 +556,7 @@ export default {
         .then((data) => {
           console.log(data);
           const vm = this;
+
           this.$success({
             title: "Success",
             content: data.message,
@@ -669,6 +676,16 @@ export default {
         });
       }
     },
+    prepareSocketData(data) {
+      console.log(data);
+      // let payload = {
+      //   receivers: [],
+      //   title: `disconnected this team`,
+      //   team_temp_name: 'Team name',
+      //   team_id: 2
+      // };
+      // this.socketNotification(payload);
+    }
   },
 };
 </script>

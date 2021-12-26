@@ -60,9 +60,9 @@ export default {
     inviteMember() {
       if(this.userObj) {
         if(this.from === 'details-card') {
-          this.$emit("executeInviteMember", this.userObj.user.email);
+          this.$emit("executeInviteMember", this.userObj.user);
         } else {
-          this.$emit('addMemberInfo', this.userObj.user.email);
+          this.$emit('addMemberInfo', this.userObj.user);
           this.$emit('toggleMemberbox');
         }
       }

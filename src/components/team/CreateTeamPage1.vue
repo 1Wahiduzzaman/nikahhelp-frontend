@@ -78,7 +78,7 @@
           <a-button class="confirm-button button float-right" @click="createTeam()" :disabled="checkDisability" :loading="loading">Next</a-button>
         </div>
       </div>
-      <CreateAddMember :team="team" :file="file" v-if="step === 2" @cancel_button="$emit('cancel_button')" @goNext="goNextStep" @loadTeams="loadTeams" />
+      <CreateAddMember :team="team" :file="file" v-if="step === 2" @cancel_button="$emit('cancel_button')" @goNext="goNextStep" @loadTeams="loadTeams" @socketNotification="socketNotification" />
       <TeamCreateSuccess v-if="step === 3" :team="team" />
     </div>
     <a-modal v-model="imageModal" @ok="hideImageModal">
@@ -255,6 +255,9 @@ export default {
           this.goNextStep(2);
         }
       });
+    },
+    socketNotification(data) {
+      this.$emit("socketNotification", data);
     }
   },
 };

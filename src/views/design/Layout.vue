@@ -4,7 +4,7 @@
       class="header-container bg-secondary shadow-default radius-none px-4"
     >
       <div class="header-content d-flex align-items-center justify-content-between">
-        <div class="shrink-none">
+        <div class="shrink-none none-mobile">
           <a href="/" class="navbar-brand">
             <img
               width="120"
@@ -18,7 +18,7 @@
           class="header-right user-avatar-area shrink-none"
           style="align-self: center"
         >
-          <div style="padding-right:25px">
+          <div>
             <ul class="header-nav-icons d-none d-sm-flex">
               <li class="nav-item shrink-none">
                 <a class="nav-link" aria-current="page" href="/dashboard">
@@ -75,7 +75,7 @@
                     aria-current="page"
                     @click.self="(e) => e.preventDefault()"
                   >
-                    <a-badge count="2">
+                    <a-badge :count="unreadNotification">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         style="width: 30px"
@@ -89,11 +89,11 @@
                     </a-badge>
                   </a>
                   <template v-slot:overlay>
-                    <NotificationPopup :items="[]" :use-for="'notification'" />
+                    <NotificationPopup :items="notifications" :use-for="'notification'" />
                   </template>
                 </a-dropdown>
               </li>
-              <li class="nav-item shrink-none">
+              <li class="nav-item shrink-none mr-6">
                 <a-dropdown :trigger="['click']" placement="bottomRight">
                   <a
                     class="nav-link"
@@ -116,10 +116,75 @@
             </ul>
           </div>
         <div style="display:flex">
+          <a-dropdown>
+            <a class="ant-dropdown-link" @click="e => e.preventDefault()">
               <img class="avatar-image" src="@/assets/mike.jpg" width="35" alt="" />
+            </a>
+            <a-menu slot="overlay" class="none-mobile-block">
+              <a-menu-item>
+                <img
+                    width="22"
+                    src="@/assets/icon/support-secondary.svg"
+                    alt="icon"
+                />
+                <span class="ml-2">Support</span>
+              </a-menu-item>
+              <a-menu-item>
+                <router-link to="/settings">
+                  <img
+                      width="22"
+                      src="@/assets/icon/gear-fill-secondary.svg"
+                      alt="icon"
+                  />
+                  <span class="ml-2">Setting</span>
+                </router-link>
+              </a-menu-item>
+              <a-menu-item @click="logout">
+                <img
+                    width="22"
+                    src="@/assets/icon/logout.svg"
+                    alt="icon"
+                />
+                <span class="ml-2">Logout</span>
+              </a-menu-item>
+            </a-menu>
+          </a-dropdown>
+
           <div style="align-self: center">
             <div class="ml-2 text-white">
-              <h6 class="mb-0 text-white fs-14">Selina Parvez Shumi</h6>
+              <a-dropdown>
+                <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                  <h6 class="mb-0 text-white fs-14 name-hover">Selina Parvez Shumi</h6>
+                </a>
+                <a-menu slot="overlay" class="none-mobile-block">
+                  <a-menu-item>
+                    <img
+                        width="22"
+                        src="@/assets/icon/support-secondary.svg"
+                        alt="icon"
+                    />
+                    <span class="ml-2">Support</span>
+                  </a-menu-item>
+                  <a-menu-item>
+                    <router-link to="/settings">
+                      <img
+                          width="22"
+                          src="@/assets/icon/gear-fill-secondary.svg"
+                          alt="icon"
+                      />
+                      <span class="ml-2">Setting</span>
+                    </router-link>
+                  </a-menu-item>
+                  <a-menu-item @click="logout">
+                    <img
+                        width="22"
+                        src="@/assets/icon/logout.svg"
+                        alt="icon"
+                    />
+                    <span class="ml-2">Logout</span>
+                  </a-menu-item>
+                </a-menu>
+              </a-dropdown>
               <div
                 class="d-flex justify-content-between align-items-center mt-1"
               >
@@ -203,11 +268,11 @@
                   src="@/assets/icon/bell-fill-secondary.svg"
                   alt="icon"
                 />
-                <span class="ml-2">Notification</span>
+                <span class="ml-2 mr-2">Notification</span>
                 <a-badge
                   class="ml-auto"
                   :number-style="{ backgroundColor: '#e42076' }"
-                  count="40"
+                  :count="unreadNotification"
                 />
               </a-menu-item>
               <a-menu-item>
@@ -216,12 +281,38 @@
                   src="@/assets/icon/chat-dots-fill-secondary.svg"
                   alt="icon"
                 />
-                <span class="ml-2">Chat</span>
-                <a-badge
-                  class="ml-auto"
-                  :number-style="{ backgroundColor: '#e42076' }"
-                  count="120"
+                <span class="ml-2 mr-2">Chat</span>
+<!--                <a-badge-->
+<!--                  class="ml-auto"-->
+<!--                  :number-style="{ backgroundColor: '#e42076' }"-->
+<!--                  count="120"-->
+<!--                />-->
+              </a-menu-item>
+              <a-menu-item>
+                <img
+                    width="22"
+                    src="@/assets/icon/support-secondary.svg"
+                    alt="icon"
                 />
+                <span class="ml-2">Support</span>
+              </a-menu-item>
+              <a-menu-item>
+                <router-link to="/settings">
+                  <img
+                      width="22"
+                      src="@/assets/icon/gear-fill-secondary.svg"
+                      alt="icon"
+                  />
+                  <span class="ml-2">Setting</span>
+                </router-link>
+              </a-menu-item>
+              <a-menu-item @click="logout">
+                <img
+                    width="22"
+                    src="@/assets/icon/logout.svg"
+                    alt="icon"
+                />
+                <span class="ml-2">Logout</span>
               </a-menu-item>
             </a-menu>
           </a-dropdown>
@@ -267,6 +358,7 @@
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 //import SimpleSearch from "@/components/search/SimpleSearch.vue";
 import NotificationPopup from "@/components/notification/NotificationPopup";
+import ApiService from "@/services/api.service";
 export default {
   name: 'Layout',
   components: {
@@ -276,22 +368,56 @@ export default {
     SimpleSearch: () => import('@/components/search/SimpleSearch.vue')
   },
   created() {
-
+    this.loadNotifications();
   },
   data() {
     return {
       collapsed: false,
     };
   },
+  computed: {
+    notifications() {
+      return this.$store.state.notification.notifications;
+    },
+    unreadNotification() {
+      return this.notifications.filter(item => item.seen == 0).length;
+    }
+  },
   methods: {
     responsiveToggle() {
       this.collapsed = false;
+    },
+    async loadNotifications() {
+      await ApiService.get("v1/list-notification").then(response => {
+        this.$store.state.notification.notifications = response.data.data;
+      }).catch(e => {
+        console.log(e);
+      })
+    },
+    logout() {
+      console.log("Logout clicked");
+      const vm = this;
+      this.$confirm({
+        title: "Are you sure?",
+        content: "Do you want to logout?",
+        okText: "Yes",
+        okType: "danger",
+        cancelText: "No",
+        async onOk() {
+          await vm.$store.dispatch("logout");
+          vm.$router.replace("/");
+        },
+        onCancel() {
+          console.log("Cancel");
+        },
+      });
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/base/_variables.scss";
 .main-container{
     overflow: hidden;
     display: flex;
@@ -374,6 +500,30 @@ export default {
       font-size: 13px;
       border-radius: 2px;
     }
+  }
+}
+.name-hover:hover {
+  color: #E51F76FF !important;
+  text-decoration: underline;
+}
+.none-mobile {
+  display: none;
+  @media (min-width: 768px) {
+    display: flex;
+  }
+}
+.none-mobile-block {
+  display: none;
+  @media (min-width: 768px) {
+    display: block;
+  }
+}
+.header-container {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  @media (min-width: 768px) {
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }
 </style>

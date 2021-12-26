@@ -10,7 +10,7 @@
         <div class="notification__items">
             <a-list
                 size="small"
-                v-for="(itemObj, index) in getItems"
+                v-for="(itemObj, index) in items"
                 :key="index"
                 item-layout="horizontal"
                 :data-source="[{title: 'user one'}]"
@@ -21,11 +21,11 @@
                         <component :is="componentName" :item="itemObj"></component>
                     </slot>
                 </a-list-item>
-                
+
             </a-list>
         </div>
         <div class="text-center pt-2">
-          <router-link to="manageteam">{{ buttonLabel }}</router-link>
+          <router-link :to="{ name: link }">{{ buttonLabel }}</router-link>
         </div>
     </div>
 </template>
@@ -35,31 +35,36 @@
 import ChatListItem from "./ChatListItem";
 import NotificationListItem from "./NotificationListItem";
 import ShortListItem from "./ShortListItem";
-import TeamListItem from "./TeamListItem"
+import TeamListItem from "./TeamListItem";
 const selectComponent = {
     chat: {
         component: 'ChatListItem',
         label: 'chat',
-        buttonLabel: 'Show all chat'
+        buttonLabel: 'Show all chat',
+        link: 'ChatWindow'
     },
     notification: {
         component: 'NotificationListItem',
         label: 'notification',
-        buttonLabel: 'Show all notification'
+        buttonLabel: 'Show all notification',
+        link: 'NotificationPage'
     },
     shortlist: {
         component: 'ShortListItem',
         label: 'shortlist',
-        buttonLabel: 'Show all shortlist'
+        buttonLabel: 'Show all shortlist',
+        link: 'Shortlist'
     },
     team: {
         component: 'TeamListItem',
         label: 'Quick team active',
-        buttonLabel: 'Manage all team'
+        buttonLabel: 'Manage all team',
+        link: 'ManageTeam'
     },
 
 }
 export default {
+    name: 'NotificationPopup',
     props: {
         useFor: {
             type: String,
@@ -90,13 +95,15 @@ export default {
         buttonLabel() {
             return selectComponent[this.useFor]?.buttonLabel || '';
         },
+        link() {
+          return selectComponent[this.useFor]?.link || 'label';
+        },
         getItems() {
-            if(this.useFor == 'team') {
-              return this.items;
-            } else {
-              return 20;
-            }
+          return this.items;
         }
+    },
+    created() {
+
     }
 }
 </script>

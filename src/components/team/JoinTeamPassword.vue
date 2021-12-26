@@ -83,10 +83,19 @@ export default {
             team_password: this.invitationPassword
           };
 
+          const self = this
           await ApiService.post("v1/join-team-by-invitation", payload).then((res) => {
             this.loading = false;
             if(res && res.data && res.data.data) {
-              this.success = true;
+              let receivers = this.team.team_members.map(opt => opt.user_id);
+              let socketData = {
+                receivers: receivers,
+                team_id: this.team.id,
+                title: `joined ${this.team.name} team as ${this.team.role}`,
+                team_temp_name: this.team.name
+              };
+              this.$emit("socketNotification", socketData);
+              self.success = true;
               this.$emit("loadTeams");
             }
           }).catch((e) => {

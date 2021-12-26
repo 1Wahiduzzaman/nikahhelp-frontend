@@ -8,12 +8,11 @@
 </template>
 
 <script>
-import Layout from "@/views/design/Layout";
 import InstantNotification from "../notification/InstantNotification";
 export default {
   components: {
     InstantNotification,
-    Layout,
+    Layout: () => import("@/views/design/Layout"),
   },
   sockets: {
     connect: function () {
@@ -24,7 +23,9 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      notifications: []
+    };
   },
   mounted() {
     let loggedUser = JSON.parse(localStorage.getItem('user'));

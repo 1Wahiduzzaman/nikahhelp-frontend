@@ -210,7 +210,7 @@ export default {
     },
     disconnectTeam() {
       console.log(this.connection.connection_id);
-      this.$emit("disconnect-team", this.connection.connection_id);
+      this.$emit("disconnect-team", this.connection);
     },
     declineRequest() {
       this.$emit("decline-request", this.connection.connection_id);
