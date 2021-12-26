@@ -655,20 +655,20 @@ export default {
 	},
 	created() {
 		this.teamInfo = this.teamData;
-		var self = this;
-		firebase
-			.collection("conversations")
-			.get()
-			.then((querySnapshot) => {
-				console.log(`Found ${querySnapshot.size} documents.`);
-				querySnapshot.forEach((doc) => {
-					var convDetails = doc.data();
-					convDetails.id = doc.id;
-					self.conversations.push(convDetails);
-				});
-			});
-
-		console.log("conversations loaded");
+		// var self = this;
+		// firebase
+		// 	.collection("conversations")
+		// 	.get()
+		// 	.then((querySnapshot) => {
+		// 		console.log(`Found ${querySnapshot.size} documents.`);
+		// 		querySnapshot.forEach((doc) => {
+		// 			var convDetails = doc.data();
+		// 			convDetails.id = doc.id;
+		// 			self.conversations.push(convDetails);
+		// 		});
+		// 	});
+    //
+		// console.log("conversations loaded");
 	},
 	computed: {
 		is_subscribed() {

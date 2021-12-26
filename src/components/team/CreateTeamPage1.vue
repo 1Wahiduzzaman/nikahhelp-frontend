@@ -14,7 +14,7 @@
         </h4>
       </div>
       <div class="box" v-if="step === 1">
-        <a-row class="mt-1 px-4">
+        <a-row class="mt-2 px-4">
           <a-col class="text-center" :span="24">
             <div class="d-flex align-items-center justify-content-center">
               <div class="cursor-pointer image-plus background-img" @click="imageModal = true" :style="{ backgroundImage: 'url(' + logoBobUrl + ')' }">
@@ -24,7 +24,7 @@
             </div>
             <span class="text-danger fs-12" v-if="in_progress && !file">Please upload team logo</span>
           </a-col>
-          <a-col :span="24" class="mt-1">
+          <a-col :span="24" class="mt-2">
             <a-input
                 v-model="team.name"
                 size="large"
@@ -36,7 +36,7 @@
             />
             <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.name">Team name required</span>
           </a-col>
-          <a-col class="mt-1" :span="24">
+          <a-col class="mt-2" :span="24">
             <a-textarea
                 class="team-description team-name-input resize-none"
                 placeholder="Team description"
@@ -47,7 +47,7 @@
             />
             <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.description">Team description required</span>
           </a-col>
-          <a-col class="mt-1" :span="24">
+          <a-col class="mt-2" :span="24">
             <a-row>
               <a-col :span="11">
                 <a-input
@@ -68,7 +68,7 @@
                     size="large"
                     type="password"
                     class="team-name-input"
-                    placeholder="Re-Type New Password"
+                    placeholder="Re-Type Password"
                     autocomplete="off"
                     @input="in_progress = true"
                 />
@@ -77,27 +77,37 @@
               </a-col>
             </a-row>
           </a-col>
-          <a-col class="mt-1" :span="24">
+          <a-col class="mt-2" :span="24">
             <div class="d-flex create-role">
-              <a-select
-                  placeholder="Add as a"
-                  class="ml-1 fs-14 w-50 member-add"
-                  v-model="selfRole.add_as_a"
-                  disabled
-              >
-                <a-select-option value="Candidate"> Candidate </a-select-option>
-                <a-select-option value="Representative"> Representative </a-select-option>
-                <a-select-option value="Match Maker"> Match Maker </a-select-option>
-              </a-select>
+              <a-tooltip>
+                <template slot="title">
+                  You are joining as a
+                </template>
+                <a-select
+                    placeholder="Add as a"
+                    class="ml-1 fs-14 w-50 member-add"
+                    v-model="addAs"
+                    disabled
+                >
+                  <a-select-option value="Candidate"> Candidate </a-select-option>
+                  <a-select-option value="Representative"> Representative </a-select-option>
+                  <a-select-option value="Match Maker"> Match Maker </a-select-option>
+                </a-select>
+              </a-tooltip>
 
-              <a-select
-                  placeholder="Relationship"
-                  class="ml-1 fs-14 w-50 member-add"
-                  v-model="selfRole.relationship"
-                  :disabled="selfRole.add_as_a == 'Candidate'"
-              >
-                <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
-              </a-select>
+              <a-tooltip>
+                <template slot="title">
+                  Your relationship with candidate as
+                </template>
+                <a-select
+                    placeholder="Relationship"
+                    class="ml-1 fs-14 w-50 member-add"
+                    v-model="selfRole.relationship"
+                    :disabled="addAs == 'Candidate'"
+                >
+                  <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
+                </a-select>
+              </a-tooltip>
             </div>
           </a-col>
         </a-row>
@@ -153,6 +163,7 @@ import TeamCreateSuccess from "./TeamCreateSuccess";
 export default {
 	name: "CreateTeam1",
 	components: {TeamCreateSuccess, CreateAddMember},
+  props: ['addAs'],
 	data() {
 		return {
       relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-paw'],
@@ -172,7 +183,6 @@ export default {
       logoBobUrl: null,
       loading: false,
       selfRole: {
-        add_as_a: "Candidate",
         relationship: "Father",
       },
 		};
@@ -189,19 +199,19 @@ export default {
     }
   },
 	created() {
-    let loggedUser = JSON.parse(localStorage.getItem('user'));
-    if(loggedUser && loggedUser.id) {
-      if(loggedUser.account_type == 1) {
-        this.selfRole.add_as_a = 'Candidate';
-        this.selfRole.relationship = 'Own';
-      } else if(loggedUser.account_type == 2) {
-        this.selfRole.add_as_a = 'Representative';
-        this.selfRole.relationship = 'Father';
-      } else if(loggedUser.account_type == 3) {
-        this.selfRole.add_as_a = 'Match Maker';
-        this.selfRole.relationship = 'Father';
-      }
-    }
+    // let loggedUser = JSON.parse(localStorage.getItem('user'));
+    // if(loggedUser && loggedUser.id) {
+    //   if(loggedUser.account_type == 1) {
+    //     this.selfRole.add_as_a = 'Candidate';
+    //     this.selfRole.relationship = 'Own';
+    //   } else if(loggedUser.account_type == 2) {
+    //     this.selfRole.add_as_a = 'Representative';
+    //     this.selfRole.relationship = 'Father';
+    //   } else if(loggedUser.account_type == 3) {
+    //     this.selfRole.add_as_a = 'Match Maker';
+    //     this.selfRole.relationship = 'Father';
+    //   }
+    // }
   },
 	methods: {
     getCardTitle() {
@@ -291,7 +301,7 @@ export default {
     async createTeam() {
       this.loading = true;
       this.in_progress = true;
-      this.team.add_as_a = this.selfRole.add_as_a;
+      this.team.add_as_a = this.addAs;
       this.team.relationship = this.selfRole.relationship;
       let formData = new FormData();
       formData.append('logo', this.file);
