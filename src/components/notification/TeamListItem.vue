@@ -115,30 +115,30 @@ export default {
       }
     },
     async turnOnTeam() {
-      if (this.item.team_members.length < 2) {
-        this.$error({
-          content: "This team do not contain sufficient users. Go to Manage team & add member",
-          centered: true,
-        });
-        return false;
-      }
-
-      let candidateFlag = 0;
-      this.item.team_members.map((_member) => {
-        if (_member.user_type == "Candidate") {
-          candidateFlag++;
-        }
-      });
-
-      if (candidateFlag == 0) {
-        this.$error({
-          content: "This team do not contain any candidate. Go to Manage team & add a candidate",
-          centered: true,
-        });
-        return false;
-      }
-
       if (this.is_subscribed) {
+        if (this.item.team_members.length < 2) {
+          this.$error({
+            content: "This team do not contain sufficient users. Go to Manage team & add member",
+            centered: true,
+          });
+          return false;
+        }
+
+        let candidateFlag = 0;
+        this.item.team_members.map((_member) => {
+          if (_member.user_type == "Candidate") {
+            candidateFlag++;
+          }
+        });
+
+        if (candidateFlag == 0) {
+          this.$error({
+            content: "This team do not contain any candidate. Go to Manage team & add a candidate",
+            centered: true,
+          });
+          return false;
+        }
+
         try {
           await ApiService.post("v1/team-turn-on", {
             team_id: this.item.team_id,

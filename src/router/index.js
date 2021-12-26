@@ -254,7 +254,7 @@ const AppRouter = new VueRouter({
                 },
                 {
                     path: "/subscription/:id?",
-                    name: "Subscription",
+                    name: "SubscriptionTeam",
                     component: Subscription,
 
                 },
