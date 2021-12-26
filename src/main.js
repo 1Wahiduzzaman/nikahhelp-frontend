@@ -4,7 +4,8 @@ import VueCompositionAPI from "@vue/composition-api";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "vue-select/src/scss/vue-select.scss";
-import Layout from '@/views/design/Layout'
+import Layout from '@/views/design/Layout';
+import Loader from "@/plugins/loader/loader";
 import AdminLayout from "@/components/admin/layout/AdminLayout.vue";
 import Antd from "ant-design-vue";
 import App from "./App.vue";
@@ -27,6 +28,7 @@ ApiService.init();
 Vue.use(VueCompositionAPI);
 Vue.use(Antd);
 Vue.component('Layout', Layout);
+Vue.component('Loader', Loader);
 Vue.component('AdminLayout', AdminLayout);
 Vue.use(TextareaAutosize)
 import VueSocketIO from 'vue-socket.io'

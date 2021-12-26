@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="isLoading">Loading</div>
+    <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else>
       <div class="main-content-wrapper">
         <div class="main-content-1">

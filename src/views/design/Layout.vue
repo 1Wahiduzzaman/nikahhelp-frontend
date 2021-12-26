@@ -3,7 +3,9 @@
     <header
       class="header-container bg-secondary shadow-default radius-none px-4"
     >
-      <div class="header-content d-flex align-items-center justify-content-between">
+      <div
+        class="header-content d-flex align-items-center justify-content-between"
+      >
         <div class="shrink-none none-mobile">
           <a href="/" class="navbar-brand">
             <img
@@ -89,7 +91,10 @@
                     </a-badge>
                   </a>
                   <template v-slot:overlay>
-                    <NotificationPopup :items="notifications" :use-for="'notification'" />
+                    <NotificationPopup
+                      :items="notifications"
+                      :use-for="'notification'"
+                    />
                   </template>
                 </a-dropdown>
               </li>
@@ -109,223 +114,255 @@
                     </a-badge>
                   </a>
                   <template v-slot:overlay>
-                    <NotificationPopup count="29" :items="[]" :use-for="'chat'" />
+                    <NotificationPopup
+                      count="29"
+                      :items="[]"
+                      :use-for="'chat'"
+                    />
                   </template>
                 </a-dropdown>
               </li>
             </ul>
           </div>
-        <div style="display:flex">
-          <a-dropdown>
-            <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-              <img class="avatar-image" src="@/assets/mike.jpg" width="35" alt="" />
-            </a>
-            <a-menu slot="overlay" class="none-mobile-block">
-              <a-menu-item>
+          <div style="display: flex">
+            <a-dropdown>
+              <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
                 <img
+                  class="avatar-image"
+                  src="@/assets/mike.jpg"
+                  width="35"
+                  alt=""
+                />
+              </a>
+              <a-menu slot="overlay" class="none-mobile-block">
+                <a-menu-item>
+                  <img
                     width="22"
                     src="@/assets/icon/support-secondary.svg"
                     alt="icon"
-                />
-                <span class="ml-2">Support</span>
-              </a-menu-item>
-              <a-menu-item>
-                <router-link to="/settings">
-                  <img
+                  />
+                  <span class="ml-2">Support</span>
+                </a-menu-item>
+                <a-menu-item>
+                  <router-link to="/settings">
+                    <img
                       width="22"
                       src="@/assets/icon/gear-fill-secondary.svg"
                       alt="icon"
-                  />
-                  <span class="ml-2">Setting</span>
-                </router-link>
-              </a-menu-item>
-              <a-menu-item @click="logout">
-                <img
-                    width="22"
-                    src="@/assets/icon/logout.svg"
-                    alt="icon"
-                />
-                <span class="ml-2">Logout</span>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
-
-          <div style="align-self: center">
-            <div class="ml-2 text-white">
-              <a-dropdown>
-                <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                  <router-link class="" to="/profile">
-                    <h6 class="mb-0 text-white fs-14 name-hover">{{ loggedUser && loggedUser.full_name ? loggedUser.full_name : 'N/A' }}</h6>
+                    />
+                    <span class="ml-2">Setting</span>
                   </router-link>
-                </a>
-                <a-menu slot="overlay" class="none-mobile-block">
-                  <a-menu-item>
-                    <img
+                </a-menu-item>
+                <a-menu-item @click="logout">
+                  <img width="22" src="@/assets/icon/logout.svg" alt="icon" />
+                  <span class="ml-2">Logout</span>
+                </a-menu-item>
+              </a-menu>
+            </a-dropdown>
+
+            <div style="align-self: center">
+              <div class="ml-2 text-white">
+                <a-dropdown>
+                  <a
+                    class="ant-dropdown-link"
+                    @click="(e) => e.preventDefault()"
+                  >
+                    <router-link class="" to="/profile">
+                      <h6 class="mb-0 text-white fs-14 name-hover">
+                        {{
+                          loggedUser && loggedUser.full_name
+                            ? loggedUser.full_name
+                            : "N/A"
+                        }}
+                      </h6>
+                    </router-link>
+                  </a>
+                  <a-menu slot="overlay" class="none-mobile-block">
+                    <a-menu-item>
+                      <img
                         width="22"
                         src="@/assets/icon/support-secondary.svg"
                         alt="icon"
-                    />
-                    <span class="ml-2">Support</span>
-                  </a-menu-item>
-                  <a-menu-item>
-                    <router-link to="/settings">
-                      <img
+                      />
+                      <span class="ml-2">Support</span>
+                    </a-menu-item>
+                    <a-menu-item>
+                      <router-link to="/settings">
+                        <img
                           width="22"
                           src="@/assets/icon/gear-fill-secondary.svg"
                           alt="icon"
-                      />
-                      <span class="ml-2">Setting</span>
-                    </router-link>
-                  </a-menu-item>
-                  <a-menu-item @click="logout">
-                    <img
+                        />
+                        <span class="ml-2">Setting</span>
+                      </router-link>
+                    </a-menu-item>
+                    <a-menu-item @click="logout">
+                      <img
                         width="22"
                         src="@/assets/icon/logout.svg"
                         alt="icon"
-                    />
-                    <span class="ml-2">Logout</span>
-                  </a-menu-item>
-                </a-menu>
-              </a-dropdown>
-              <div
-                class="d-flex justify-content-between align-items-center mt-1"
-              >
-                <a-dropdown :trigger="['click']" placement="bottomRight">
-                  <span
-                    @click.self="(e) => e.preventDefault()"
-                    class="team color-primary pl-2 mr-1 shrink-none"
-                  >
-                    {{ activeTeamIndex >= 0 ? 'Team ' + (activeTeamIndex + 1) : 'N/A' }}
-                  </span>
-                  <template v-slot:overlay>
-                    <ul class="avatar-dropdown">
-                      <li class="list-item">
-                        <span>Active now:</span>
-                        <p class="mb-0 color-primary w-100px ellipse">{{ activeTeamIndex >= 0 ? 'Team ' + (activeTeamIndex + 1) : 'N/A' }}</p>
-                      </li>
-                      <li class="list-item">
-                        <span>Team ID:</span>
-                        <p class="mb-0 color-primary w-100px ellipse">{{ activeTeamInfo && activeTeamInfo.team_id ? activeTeamInfo.team_id.substring(0, 8) : 'N/A' }}</p>
-                      </li>
-                      <li class="list-item">
-                        <span>Team Name:</span>
-                        <p class="mb-0 color-primary w-100px ellipse">{{ activeTeamInfo && activeTeamInfo.name ? activeTeamInfo.name.substring(0, 12) : 'N/A' }}</p>
-                      </li>
-                    </ul>
-                  </template>
+                      />
+                      <span class="ml-2">Logout</span>
+                    </a-menu-item>
+                  </a-menu>
                 </a-dropdown>
-                <span class="role px-2 ml-1 shrink-none">{{ teamRole }}</span>
+                <div
+                  class="d-flex justify-content-between align-items-center mt-1"
+                >
+                  <a-dropdown :trigger="['click']" placement="bottomRight">
+                    <span
+                      @click.self="(e) => e.preventDefault()"
+                      class="team color-primary pl-2 mr-1 shrink-none"
+                    >
+                      {{
+                        activeTeamIndex >= 0
+                          ? "Team " + (activeTeamIndex + 1)
+                          : "N/A"
+                      }}
+                    </span>
+                    <template v-slot:overlay>
+                      <ul class="avatar-dropdown">
+                        <li class="list-item">
+                          <span>Active now:</span>
+                          <p class="mb-0 color-primary w-100px ellipse">
+                            {{
+                              activeTeamIndex >= 0
+                                ? "Team " + (activeTeamIndex + 1)
+                                : "N/A"
+                            }}
+                          </p>
+                        </li>
+                        <li class="list-item">
+                          <span>Team ID:</span>
+                          <p class="mb-0 color-primary w-100px ellipse">
+                            {{
+                              activeTeamInfo && activeTeamInfo.team_id
+                                ? activeTeamInfo.team_id.substring(0, 8)
+                                : "N/A"
+                            }}
+                          </p>
+                        </li>
+                        <li class="list-item">
+                          <span>Team Name:</span>
+                          <p class="mb-0 color-primary w-100px ellipse">
+                            {{
+                              activeTeamInfo && activeTeamInfo.name
+                                ? activeTeamInfo.name.substring(0, 12)
+                                : "N/A"
+                            }}
+                          </p>
+                        </li>
+                      </ul>
+                    </template>
+                  </a-dropdown>
+                  <span class="role px-2 ml-1 shrink-none">{{ teamRole }}</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        </div>
-        <div class="d-sm-none">
-          <a-dropdown :trigger="['click']">
-            <svg
-              @click="(e) => e.preventDefault()"
-              xmlns="http://www.w3.org/2000/svg"
-              class="menu-icon-alt"
-              fill="#fff"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
+          <div class="d-sm-none">
+            <a-dropdown :trigger="['click']">
+              <svg
+                @click="(e) => e.preventDefault()"
+                xmlns="http://www.w3.org/2000/svg"
+                class="menu-icon-alt"
+                fill="#fff"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
 
-            <a-menu slot="overlay" style="min-width: 250px">
-              <a-menu-item @click="collapsed = !collapsed">
-                <img width="22" src="@/assets/Icons/form.svg" alt="icon" />
-                <span class="ml-2"
-                  >{{ collapsed ? "Open" : "Close" }} left sidebar</span
-                >
-              </a-menu-item>
-              <a-divider class="m-0" />
-              <a-menu-item class="d-flex align-items-center">
-                <router-link to="/manageteam">
-                  <img
+              <a-menu slot="overlay" style="min-width: 250px">
+                <a-menu-item @click="collapsed = !collapsed">
+                  <img width="22" src="@/assets/Icons/form.svg" alt="icon" />
+                  <span class="ml-2"
+                    >{{ collapsed ? "Open" : "Close" }} left sidebar</span
+                  >
+                </a-menu-item>
+                <a-divider class="m-0" />
+                <a-menu-item class="d-flex align-items-center">
+                  <router-link to="/manageteam">
+                    <img
                       width="22"
                       src="@/assets/icon/group-fill-secondary.svg"
                       alt="icon"
-                  />
-                  <span class="ml-2">Manage Team</span>
-                </router-link>
-              </a-menu-item>
+                    />
+                    <span class="ml-2">Manage Team</span>
+                  </router-link>
+                </a-menu-item>
 
-              <a-menu-item class="d-flex align-items-center">
-                <router-link to="/shortlist">
-                  <img
+                <a-menu-item class="d-flex align-items-center">
+                  <router-link to="/shortlist">
+                    <img
                       width="22"
                       src="@/assets/icon/star-fill-secondary.svg"
                       alt="icon"
-                  />
-                  <span class="ml-2">Shortlist</span>
-                </router-link>
-              </a-menu-item>
+                    />
+                    <span class="ml-2">Shortlist</span>
+                  </router-link>
+                </a-menu-item>
 
-              <a-menu-item>
-                <router-link to="/notifications">
-                  <img
+                <a-menu-item>
+                  <router-link to="/notifications">
+                    <img
                       width="22"
                       src="@/assets/icon/bell-fill-secondary.svg"
                       alt="icon"
-                  />
-                  <span class="ml-2 mr-2">Notification</span>
-                  <a-badge
+                    />
+                    <span class="ml-2 mr-2">Notification</span>
+                    <a-badge
                       class="ml-auto"
                       :number-style="{ backgroundColor: '#e42076' }"
                       :count="unreadNotification"
-                  />
-                </router-link>
-              </a-menu-item>
-              <a-menu-item>
-                <router-link to="/chat-window">
-                  <img
+                    />
+                  </router-link>
+                </a-menu-item>
+                <a-menu-item>
+                  <router-link to="/chat-window">
+                    <img
                       width="22"
                       src="@/assets/icon/chat-dots-fill-secondary.svg"
                       alt="icon"
-                  />
-                  <span class="ml-2 mr-2">Chat</span>
-                  <!--                <a-badge-->
-                  <!--                  class="ml-auto"-->
-                  <!--                  :number-style="{ backgroundColor: '#e42076' }"-->
-                  <!--                  count="120"-->
-                  <!--                />-->
-                </router-link>
-              </a-menu-item>
-              <a-menu-item>
-                <img
+                    />
+                    <span class="ml-2 mr-2">Chat</span>
+                    <!--                <a-badge-->
+                    <!--                  class="ml-auto"-->
+                    <!--                  :number-style="{ backgroundColor: '#e42076' }"-->
+                    <!--                  count="120"-->
+                    <!--                />-->
+                  </router-link>
+                </a-menu-item>
+                <a-menu-item>
+                  <img
                     width="22"
                     src="@/assets/icon/support-secondary.svg"
                     alt="icon"
-                />
-                <span class="ml-2">Support</span>
-              </a-menu-item>
-              <a-menu-item>
-                <router-link to="/settings">
-                  <img
+                  />
+                  <span class="ml-2">Support</span>
+                </a-menu-item>
+                <a-menu-item>
+                  <router-link to="/settings">
+                    <img
                       width="22"
                       src="@/assets/icon/gear-fill-secondary.svg"
                       alt="icon"
-                  />
-                  <span class="ml-2">Setting</span>
-                </router-link>
-              </a-menu-item>
-              <a-menu-item @click="logout">
-                <img
-                    width="22"
-                    src="@/assets/icon/logout.svg"
-                    alt="icon"
-                />
-                <span class="ml-2">Logout</span>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
+                    />
+                    <span class="ml-2">Setting</span>
+                  </router-link>
+                </a-menu-item>
+                <a-menu-item @click="logout">
+                  <img width="22" src="@/assets/icon/logout.svg" alt="icon" />
+                  <span class="ml-2">Logout</span>
+                </a-menu-item>
+              </a-menu>
+            </a-dropdown>
+          </div>
         </div>
       </div>
     </header>
@@ -361,21 +398,33 @@
         </a-layout-content>
       </a-layout>
     </a-layout>
+    <ModalContainer
+      :modalKey="'manageTeamRedirect'"
+      :width="'wide'"
+      :fullscreen="true"
+      :hideOverlay="false"
+    >
+      <ManageTeamRedirect />
+    </ModalContainer>
   </div>
 </template>
 
 <script>
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
-//import SimpleSearch from "@/components/search/SimpleSearch.vue";
 import NotificationPopup from "@/components/notification/NotificationPopup";
+import ModalContainer from "@/plugins/modal/modal-container";
+import ManageTeamRedirect from "@/views/design/ManageTeamRedirect.vue";
+import { createModalMixin, openModalRoute } from "@/plugins/modal/modal.mixin";
 import ApiService from "@/services/api.service";
 import JwtService from "../../services/jwt.service";
 export default {
-  name: 'Layout',
+  name: "Layout",
   components: {
     NotificationPopup,
     Sidebar,
-    SimpleSearch: () => import('@/components/search/SimpleSearch.vue')
+    ModalContainer,
+    ManageTeamRedirect,
+    SimpleSearch: () => import("@/components/search/SimpleSearch.vue"),
   },
   created() {
     this.loadNotifications();
@@ -387,41 +436,46 @@ export default {
       activeTeamId: null,
     };
   },
+  mixins: [createModalMixin("manageTeamRedirect")],
   computed: {
     loggedUser() {
-      let loggedUser = JSON.parse(localStorage.getItem('user'));
-      if(loggedUser) {
+      let loggedUser = JSON.parse(localStorage.getItem("user"));
+      if (loggedUser) {
         return loggedUser;
       }
       return null;
     },
     activeTeamInfo() {
-      return this.teams.find(item => item.team_id == this.activeTeamId);
+      return this.teams.find((item) => item.team_id == this.activeTeamId);
     },
     activeTeamIndex() {
-      return this.teams.findIndex(item => item.team_id == this.activeTeamId);
+      return this.teams.findIndex((item) => item.team_id == this.activeTeamId);
     },
     teamRole() {
       let team = this.activeTeamInfo;
       let loggedUser = this.loggedUser;
-      if(team && loggedUser && team.team_members) {
-        let member = team.team_members.find(item => item.user_id == loggedUser.id);
-        if(member) {
-          return member.role.replace('+', ' & ');
+      if (team && loggedUser && team.team_members) {
+        let member = team.team_members.find(
+          (item) => item.user_id == loggedUser.id
+        );
+        if (member) {
+          return member.role.replace("+", " & ");
         }
       }
-      return 'N/A';
+      return "N/A";
     },
     notifications() {
       return this.$store.state.notification.notifications;
     },
     unreadNotification() {
-      return this.notifications.filter(item => item.seen == 0).length;
+      return this.notifications.filter((item) => item.seen == 0).length;
     },
     teams() {
       let teams = this.$store.state.team.team_list;
-      let activeIndex = teams.findIndex(item => item.team_id == this.activeTeamId);
-      if(activeIndex >= 0) {
+      let activeIndex = teams.findIndex(
+        (item) => item.team_id == this.activeTeamId
+      );
+      if (activeIndex >= 0) {
         teams.unshift(teams[activeIndex]);
         teams.splice(activeIndex, 1);
       }
@@ -433,24 +487,26 @@ export default {
       this.collapsed = false;
     },
     async loadNotifications() {
-      await ApiService.get("v1/list-notification").then(response => {
-        this.$store.state.notification.notifications = response.data.data;
-      }).catch(e => {
-        console.log(e);
-      })
+      await ApiService.get("v1/list-notification")
+        .then((response) => {
+          this.$store.state.notification.notifications = response.data.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
     async loadTeams() {
       const self = this;
       try {
         await this.$store
-            .dispatch("getTeams")
-            .then((data) => {
-              console.log(data.data.data);
-              self.checkTurnedOnSwitch();
-            })
-            .catch((error) => {
-              console.log(error.response);
-            });
+          .dispatch("getTeams")
+          .then((data) => {
+            console.log(data.data.data);
+            self.checkTurnedOnSwitch();
+          })
+          .catch((error) => {
+            console.log(error.response);
+          });
       } catch (error) {
         this.error = error.message || "Something went wrong";
       }
@@ -481,11 +537,11 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/styles/base/_variables.scss";
-.main-container{
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    height: 100vh
+.main-container {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 .notification-wrapper {
   padding: 10px;
@@ -566,7 +622,7 @@ export default {
   }
 }
 .name-hover:hover {
-  color: #E51F76FF !important;
+  color: #e51f76ff !important;
   text-decoration: underline;
 }
 //.w-100px {

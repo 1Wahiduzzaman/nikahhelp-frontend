@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="isLoading">Loading</div>
+    <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else>
       <div class="main-content-wrapper">
         <div class="main-content-1">
@@ -303,7 +303,7 @@ import Footer from "@/components/dashboard/layout/Footer.vue";
 import SelectTeamModal from "@/components/team/Modals/SelectTeamModal.vue";
 import SelectTeamForTeamlist from "@/components/team/Modals/SelectTeamForTeamlist";
 import JwtService from "@/services/jwt.service";
-// import ShortlistedCandidate from "@/components/shortlist/ShortlistedCandidate.vue";
+import { openModalRoute } from "@/plugins/modal/modal.mixin";
 import Candidate from "@/components/shortlist/Candidate.vue";
 export default {
   name: "Shortlist",
@@ -336,15 +336,7 @@ export default {
     };
   },
   created() {
-  
     this.getActiveTeamId();
-    this.loadShortListedCandidates();
-    this.loadTeamShortListedCandidates();
-    this.$store.dispatch("getCountries");
-    this.$store.dispatch("getStudyLevelOptions");
-    this.$store.dispatch("getReligionOptions");
-    this.$store.dispatch("getOccupations");
-    console.log("Created", this.$store.state.candidateInfo.study_level_options);
   },
   computed: {
     shortListedCandidates() {
@@ -394,31 +386,21 @@ export default {
     },
   },
   methods: {
-   
-    async getActiveTeamId() {
-      console.log("active team id");
-      const response = this.$store.dispatch("getTeams");
-      response
-        .then((data) => {
-          let teamId = JwtService.getTeamIDAppWide();
-          console.log(data.data.data);
-          if (data.data.data.length == 0) {
-            // this.$warning({
-            //   title: "You don't have a team",
-            //   content: "Please create or join a team!",
-            // });
-            // this.$router.push("/manageteam");
-          } else if (!teamId) {
-            // this.$warning({
-            //   title: "You don't have an active team",
-            //   content: "Please select an active team to continue!",
-            // });
-            //this.$router.push("/manageteam");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    getActiveTeamId() {
+      if (!JwtService.getTeamIDAppWide()) {
+        this.isLoading = true;
+        setTimeout(() => {
+          this.isLoading = false;
+          openModalRoute(this, "manage_team_redirect");
+        }, 2000);
+      } else {
+        this.loadShortListedCandidates();
+        this.loadTeamShortListedCandidates();
+        this.$store.dispatch("getCountries");
+        this.$store.dispatch("getStudyLevelOptions");
+        this.$store.dispatch("getReligionOptions");
+        this.$store.dispatch("getOccupations");
+      }
     },
     async loadShortListedCandidates() {
       this.isLoading = true;
