@@ -123,7 +123,7 @@ export default {
       createTeamShow: false,
       joinCreateTeamShow: true,
       createTeamPassword: false,
-      welcomeModal: true,
+      welcomeModal: this.teams.length <= 0,
       joinTeamPassword: false,
       joinTeamInfo: null,
     };

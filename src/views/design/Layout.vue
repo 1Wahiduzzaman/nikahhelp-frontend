@@ -154,7 +154,9 @@
             <div class="ml-2 text-white">
               <a-dropdown>
                 <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                  <h6 class="mb-0 text-white fs-14 name-hover">Selina Parvez Shumi</h6>
+                  <router-link class="" to="/profile">
+                    <h6 class="mb-0 text-white fs-14 name-hover">{{ loggedUser && loggedUser.full_name ? loggedUser.full_name : 'N/A' }}</h6>
+                  </router-link>
                 </a>
                 <a-menu slot="overlay" class="none-mobile-block">
                   <a-menu-item>
@@ -193,26 +195,26 @@
                     @click.self="(e) => e.preventDefault()"
                     class="team color-primary pl-2 mr-1 shrink-none"
                   >
-                    Team 1
+                    {{ activeTeamIndex >= 0 ? 'Team ' + (activeTeamIndex + 1) : 'N/A' }}
                   </span>
                   <template v-slot:overlay>
                     <ul class="avatar-dropdown">
                       <li class="list-item">
                         <span>Active now:</span>
-                        <p class="mb-0 color-primary">Team 1</p>
+                        <p class="mb-0 color-primary w-100px ellipse">{{ activeTeamIndex >= 0 ? 'Team ' + (activeTeamIndex + 1) : 'N/A' }}</p>
                       </li>
                       <li class="list-item">
                         <span>Team ID:</span>
-                        <p class="mb-0 color-primary">#6302432</p>
+                        <p class="mb-0 color-primary w-100px ellipse">{{ activeTeamInfo && activeTeamInfo.team_id ? activeTeamInfo.team_id.substring(0, 8) : 'N/A' }}</p>
                       </li>
                       <li class="list-item">
                         <span>Team Name:</span>
-                        <p class="mb-0 color-primary">Selina's Family</p>
+                        <p class="mb-0 color-primary w-100px ellipse">{{ activeTeamInfo && activeTeamInfo.name ? activeTeamInfo.name.substring(0, 12) : 'N/A' }}</p>
                       </li>
                     </ul>
                   </template>
                 </a-dropdown>
-                <span class="role px-2 ml-1 shrink-none">Admin</span>
+                <span class="role px-2 ml-1 shrink-none">{{ teamRole }}</span>
               </div>
             </div>
           </div>
@@ -245,48 +247,56 @@
               </a-menu-item>
               <a-divider class="m-0" />
               <a-menu-item class="d-flex align-items-center">
-                <img
-                  width="22"
-                  src="@/assets/icon/group-fill-secondary.svg"
-                  alt="icon"
-                />
-                <span class="ml-2">Manage Team</span>
+                <router-link to="/manageteam">
+                  <img
+                      width="22"
+                      src="@/assets/icon/group-fill-secondary.svg"
+                      alt="icon"
+                  />
+                  <span class="ml-2">Manage Team</span>
+                </router-link>
               </a-menu-item>
 
               <a-menu-item class="d-flex align-items-center">
-                <img
-                  width="22"
-                  src="@/assets/icon/star-fill-secondary.svg"
-                  alt="icon"
-                />
-                <span class="ml-2">Shortlist</span>
+                <router-link to="/shortlist">
+                  <img
+                      width="22"
+                      src="@/assets/icon/star-fill-secondary.svg"
+                      alt="icon"
+                  />
+                  <span class="ml-2">Shortlist</span>
+                </router-link>
               </a-menu-item>
 
               <a-menu-item>
-                <img
-                  width="22"
-                  src="@/assets/icon/bell-fill-secondary.svg"
-                  alt="icon"
-                />
-                <span class="ml-2 mr-2">Notification</span>
-                <a-badge
-                  class="ml-auto"
-                  :number-style="{ backgroundColor: '#e42076' }"
-                  :count="unreadNotification"
-                />
+                <router-link to="/notifications">
+                  <img
+                      width="22"
+                      src="@/assets/icon/bell-fill-secondary.svg"
+                      alt="icon"
+                  />
+                  <span class="ml-2 mr-2">Notification</span>
+                  <a-badge
+                      class="ml-auto"
+                      :number-style="{ backgroundColor: '#e42076' }"
+                      :count="unreadNotification"
+                  />
+                </router-link>
               </a-menu-item>
               <a-menu-item>
-                <img
-                  width="22"
-                  src="@/assets/icon/chat-dots-fill-secondary.svg"
-                  alt="icon"
-                />
-                <span class="ml-2 mr-2">Chat</span>
-<!--                <a-badge-->
-<!--                  class="ml-auto"-->
-<!--                  :number-style="{ backgroundColor: '#e42076' }"-->
-<!--                  count="120"-->
-<!--                />-->
+                <router-link to="/chat-window">
+                  <img
+                      width="22"
+                      src="@/assets/icon/chat-dots-fill-secondary.svg"
+                      alt="icon"
+                  />
+                  <span class="ml-2 mr-2">Chat</span>
+                  <!--                <a-badge-->
+                  <!--                  class="ml-auto"-->
+                  <!--                  :number-style="{ backgroundColor: '#e42076' }"-->
+                  <!--                  count="120"-->
+                  <!--                />-->
+                </router-link>
               </a-menu-item>
               <a-menu-item>
                 <img
@@ -374,10 +384,34 @@ export default {
   data() {
     return {
       collapsed: false,
-      activeTeam: null
+      activeTeamId: null,
     };
   },
   computed: {
+    loggedUser() {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      if(loggedUser) {
+        return loggedUser;
+      }
+      return null;
+    },
+    activeTeamInfo() {
+      return this.teams.find(item => item.team_id == this.activeTeamId);
+    },
+    activeTeamIndex() {
+      return this.teams.findIndex(item => item.team_id == this.activeTeamId);
+    },
+    teamRole() {
+      let team = this.activeTeamInfo;
+      let loggedUser = this.loggedUser;
+      if(team && loggedUser && team.team_members) {
+        let member = team.team_members.find(item => item.user_id == loggedUser.id);
+        if(member) {
+          return member.role.replace('+', ' & ');
+        }
+      }
+      return 'N/A';
+    },
     notifications() {
       return this.$store.state.notification.notifications;
     },
@@ -386,7 +420,7 @@ export default {
     },
     teams() {
       let teams = this.$store.state.team.team_list;
-      let activeIndex = teams.findIndex(item => item.id == this.activeTeam);
+      let activeIndex = teams.findIndex(item => item.team_id == this.activeTeamId);
       if(activeIndex >= 0) {
         teams.unshift(teams[activeIndex]);
         teams.splice(activeIndex, 1);
@@ -422,7 +456,7 @@ export default {
       }
     },
     checkTurnedOnSwitch() {
-      this.activeTeam = JwtService.getTeamIDAppWide();
+      this.activeTeamId = JwtService.getTeamIDAppWide();
     },
     logout() {
       const vm = this;
@@ -535,6 +569,14 @@ export default {
   color: #E51F76FF !important;
   text-decoration: underline;
 }
+//.w-100px {
+//  width: 100px;
+//}
+//.ellipse {
+//  white-space: nowrap;
+//  overflow: hidden;
+//  text-overflow: ellipsis;
+//}
 .none-mobile {
   display: none;
   @media (min-width: 768px) {

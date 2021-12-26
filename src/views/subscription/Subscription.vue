@@ -855,6 +855,9 @@ export default {
   .mobile-section {
     margin-top: 0;
   }
+  .row {
+    margin: -12px !important;
+  }
 }
 
 @media (min-width: 992px) {

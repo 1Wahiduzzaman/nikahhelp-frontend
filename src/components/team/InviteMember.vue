@@ -28,7 +28,7 @@
       <div class="link-box px-4 position-absolute w-full">
         <div class="w-full mt-2">
           <input type="text" class="form-control invite-link text-white fs-12 py-5" id="copyInput" :value="invitationObject.visible_invitation_link" disabled />
-          <button class="copy-button position-absolute px-2" @click="copyToken">Copy</button>
+          <button class="copy-button position-absolute px-2" @click="copyToken">{{ copyBtnText }}</button>
         </div>
         <p class="fs-10 text-white mt-2">Send this link through email or any messaging platform <br> Only one member can use this link once</p>
       </div>
@@ -45,7 +45,8 @@ export default {
     return {
       user_email: '',
       profileType: ['N/A', 'Candidate', 'Match Maker', 'Admin'],
-      userObj: {}
+      userObj: {},
+      copyBtnText: 'Copy'
     }
   },
   methods: {
@@ -68,12 +69,17 @@ export default {
       }
     },
     copyToken() {
+      this.copyBtnText = 'Copied';
       let copyText = document.getElementById("copyInput");
       copyText.select();
       copyText.setSelectionRange(0, 99999);
 
       navigator.clipboard.writeText(copyText.value);
-      alert("Copied the text: " + copyText.value);
+
+      const self = this;
+      setTimeout(() => {
+        self.copyBtnText = 'Copy'
+      }, 2000);
     }
   }
 }
