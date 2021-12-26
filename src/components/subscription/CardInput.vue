@@ -72,7 +72,7 @@
 
 <script>
 let stripe = Stripe(
-	"pk_test_51ItV6RKl6A9Ix8PFs3EhQ7mmGV2oi07Bh7jIZ5uyvvecuN7Q4Z8C3D5KdtKF3qh2FVbeAaY9hTQcc9MeTWOXarrO00qMGea7ET"
+	"pk_test_51IsaaMBGUmvLHtCrCZvd5unlKMW6StKdBGOZQi5nwmF1PMZgcVuNKLFlZtawZwhaMbNch0B3fFIYzWdR0jB8UX6I00OBk9xw8o"
 );
 let elements = stripe.elements();
 const style = {
