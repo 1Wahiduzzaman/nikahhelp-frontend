@@ -123,7 +123,7 @@ export default {
       createTeamShow: false,
       joinCreateTeamShow: true,
       createTeamPassword: false,
-      welcomeModal: this.teams.length <= 0,
+      welcomeModal: false,
       joinTeamPassword: false,
       joinTeamInfo: null,
     };
@@ -171,6 +171,9 @@ export default {
           .dispatch("getTeams")
           .then((data) => {
             this.teams = data.data.data;
+            if(this.teams.length <= 0) {
+              this.welcomeModal = true;
+            }
           })
           .catch((error) => {
             console.log(error.response);
