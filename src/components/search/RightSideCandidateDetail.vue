@@ -1,6 +1,6 @@
 <template>
     <v-card
-        style="height: calc(100vh - 20px); overflow-y: auto; position: fixed; right: 10px;"
+        style="height: calc(100vh - 40px); overflow-y: auto; position: fixed; right: 10px;"
         class="mx-auto"
         width="317"
     >
