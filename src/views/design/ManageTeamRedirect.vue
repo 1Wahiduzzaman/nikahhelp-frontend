@@ -7,49 +7,44 @@
         <div class="container-fluid">
           <div class="flex mobile-column">
             <div class="column-margin">
-              <div class="dt-div1">opps. This menu feature are inactive</div>
-              <div class="dt-div2">
-                <span class="span1">Turn</span> <span class="span2">On</span>
+              <div class="flex flex-column">
+                <div class="dt-div1">opps. This menu feature are inactive</div>
+                <div class="dt-div2">
+                  <span class="span1">Turn</span> <span class="span2">On</span>
+                </div>
+                <div class="ml-2">
+                  <h3 class="text-white request-text">To use this feature, please turn a team on first.</h3>
+                  <h3 class="text-white">
+                    You can easily do this from header icon
+                    <router-link to="/manageteam">
+                      <img
+                          width="30"
+                          src="@/assets/icon/group-fill-white.svg"
+                          alt="img"
+                          class="manage-team-icon"
+                      /></router-link>
+                  </h3>
+                </div>
+                <div class="dt-div3 ml-2">
+                  <h3 class="text-white">or</h3>
+                  &nbsp;&nbsp;
+                  <router-link to="/manageteam" class="manage-team-link"> Manage Team </router-link>
+                </div>
+                <div class="ml-2">
+                  <span class="link-text">Don't have a team? please</span>
+                  <span class="link-text ml-2 text-decoration-underline"><router-link to="/manageteam" class="manage-team-link"> create </router-link></span>
+                  <span class="link-text ml-2"> or</span>
+                  <span class="link-text ml-2 text-decoration-underline"><router-link to="/manageteam" class="manage-team-link"> join </router-link></span>
+                  <span class="link-text ml-2"> a team</span>
+                </div>
               </div>
-              <div>
-                <h3 class="text-white">To use this feature,please turn a team on first.</h3>
-                <h3 class="text-white">
-                  You can easily do this from header icon
-                  <router-link to="/manageteam">
-                    <img
-                        width="30"
-                        src="@/assets/icon/group-fill-white.svg"
-                        alt="img"
-                        class="manage-team-icon"
-                    /></router-link>
-                </h3>
-              </div>
-              <div class="dt-div3">
-                <h3 class="text-white">or</h3>
-                &nbsp;&nbsp;
-                <router-link to="/manageteam" class="manage-team-link"> Manage Team </router-link>
-              </div>
-              <div>
-                <span class="link-text">Don't have a team? please</span>
-                <span class="link-text ml-2"><router-link to="/manageteam" class="manage-team-link"> create </router-link></span>
-                <span class="link-text ml-2"> or</span>
-                <span class="link-text ml-2"><router-link to="/manageteam" class="manage-team-link"> join </router-link></span>
-                <span class="link-text ml-2"> a team</span>
-              </div>
-<!--              <div class="dt-div4">-->
-<!--                <h3 class="text-white">Don't have a team? please</h3>-->
-<!--                &nbsp;&nbsp;-->
-<!--                <router-link to="/manageteam" class="manage-team-link"> create </router-link>&nbsp;&nbsp;-->
-<!--                <h3 class="text-white">or</h3>-->
-<!--                &nbsp;&nbsp;-->
-<!--                <router-link to="/manageteam" class="manage-team-link"> join </router-link>&nbsp;&nbsp;-->
-<!--                <h3 class="text-white">a team</h3>-->
-<!--              </div>-->
             </div>
             <div class="position-relative column-margin">
               <img src="@/assets/team_off.svg" alt="img" class="team-img-pos" v-if="!turnOn" />
               <img src="@/assets/team_on.svg" alt="img" class="team-img-pos" v-if="turnOn" />
-              <a-switch class="position-absolute switch-icon" v-model="turnOn" />
+              <div class="switch-box">
+                <a-switch class="position-absolute switch-icon" v-model="turnOn" />
+              </div>
             </div>
           </div>
         </div>
@@ -93,6 +88,7 @@ export default {
     display: flex;
     flex-direction: column;
     height: calc(100vh - 80px);
+    overflow-y: auto;
 
     .dt-modal-content {
       height: 100%;
@@ -102,7 +98,7 @@ export default {
       justify-content: unset;
       margin-top: 4rem;
       //margin-left: 8rem;
-      padding: 0 3rem;
+      padding: 0 2rem;
     }
   }
   .notification-wrapper {
@@ -192,7 +188,8 @@ export default {
   border-radius: 12px;
 }
 .dt-div2 {
-  font-size: 4rem;
+  font-size: 7rem;
+  padding-bottom: 1rem;
   .span1 {
     color: #fff;
     font-weight: 600;
@@ -208,6 +205,7 @@ h3 {
 }
 .dt-div3 {
   display: flex;
+  padding-bottom: 2rem;
   a {
     color: #fff;
     font-size: 1.5rem;
@@ -237,6 +235,10 @@ h3 {
 .manage-team-icon {
   margin-top: -6px;
 }
+.request-text {
+  padding-bottom: 1rem;
+  font-size: 28px;
+}
 .mobile-column {
   flex-direction: column;
   @media (min-width: 768px) {
@@ -252,10 +254,10 @@ h3 {
 .column-margin {
   margin: 0 10px;
   @media (min-width: 768px) {
-    margin: 0 20px;
+    margin: 0 10px;
   }
   @media (min-width: 1920px) {
-    margin: 0 20px;
+    margin: 0 10px;
   }
 }
 .switch-icon {
@@ -289,5 +291,11 @@ h3 {
 .link-text {
   font-size: 28px;
   color: #FFFFFF;
+}
+.switch-box > .ant-switch {
+  background: $bg-brand;
+}
+.switch-box > .ant-switch-checked {
+  background: $bg-primary;
 }
 </style>
