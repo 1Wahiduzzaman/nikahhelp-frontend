@@ -2,9 +2,9 @@
 	<div>
 		<div v-if="isLoading">Loading</div>
 		<div v-else>
-			<a-layout id="layout" style="background-color: #fff" :style="{ height: 'calc(100vh - 80px) !important', overflow: 'hidden'}">
-				<!-- <a-layout-sider
-					:style="{ height: 'calc(100vh - 80px)', overflowY: 'auto',overflowX: 'hidden'}"
+			<a-layout id="layout" style="background-color: #fff" :style="{ height: 'calc(100vh - 10px) !important', overflow: 'hidden'}">
+				<a-layout-sider
+					:style="{ height: 'calc(100vh - 10px)', overflowY: 'auto',overflowX: 'hidden'}"
 					class="bg-white shadow-default"
 					v-model="collapsed"
 					:trigger="null"
@@ -22,7 +22,7 @@
 							<SimpleSearch />
 						</template>
 					</Sidebar>
-				</a-layout-sider> -->
+				</a-layout-sider>
 				<a-layout>  
 					<a-layout-content>
 						<div class="main-content-wrapper">
@@ -58,6 +58,7 @@ export default {
 		'ProfileDetail': () => import('@/components/search/CandidateProfileDetails'),
 		'RightSideCandidateDetail': () => import('@/components/search/RightSideCandidateDetail'),
 		'RightSidebar': () => import('@/components/search/ProfileDetailRight'),
+    	SimpleSearch: () => import("@/components/search/SimpleSearch.vue"),
 		Header,
 		Sidebar,
 		//SimpleSearch,
@@ -170,10 +171,9 @@ export default {
 	}
 	.main-content-1 {
 		width: calc(100% - 350px);
-		margin: 10px 0px 10px 15px;
+		margin: 10px 5px 10px 15px;
 		height: calc(100vh - 80px);
-		padding-right: 5px;
-		overflow-y: auto;
+		overflow:hidden auto;
 		@media (max-width: 1024px) {
 			width: calc(100% - 25px);
 		}
@@ -184,7 +184,7 @@ export default {
 		@media (max-width: 600px) {
 			width: calc(100% - 25px);
 		}
-		height: 70vh;
+		height: 100vh;
 		.profile-overview {
 			padding: 10px;
 			height: 100%;
