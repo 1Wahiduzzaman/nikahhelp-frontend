@@ -18,9 +18,9 @@
           <a-col class="text-center" :span="24">
             <div class="d-flex align-items-center justify-content-center">
               <div class="cursor-pointer image-plus background-img" @click="imageModal = true" :style="{ backgroundImage: 'url(' + logoBobUrl + ')' }">
-                <h4 class="fs-40 d-flex justify-content-center align-items-center text-white">+</h4>
+                <h4 class="fs-33 d-flex justify-content-center align-items-center text-white">+</h4>
               </div>
-              <h4 class="fs-14 color-gray ml-2">Add a team image</h4>
+              <h4 class="fs-14 color-gray ml-2 add-team-image cursor-pointer" @click="imageModal = true">Add a team image</h4>
             </div>
             <span class="text-danger fs-12" v-if="in_progress && !file">Please upload team logo</span>
           </a-col>
@@ -31,44 +31,84 @@
                 class="team-name-input"
                 placeholder="Team name"
                 autocomplete="off"
+                :maxLength="20"
                 @input="in_progress = true"
             />
             <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.name">Team name required</span>
           </a-col>
           <a-col class="mt-2" :span="24">
             <a-textarea
-                class="team-description team-name-input"
+                class="team-description team-name-input resize-none"
                 placeholder="Team description"
                 :auto-size="{ minRows: 3, maxRows: 5 }"
                 v-model="team.description"
                 @input="in_progress = true"
+                :maxLength="80"
             />
             <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.description">Team description required</span>
           </a-col>
           <a-col class="mt-2" :span="24">
-            <a-input
-                v-model="team.password"
-                size="large"
-                type="password"
-                class="team-name-input"
-                placeholder="Type Team Password"
-                autocomplete="off"
-                @input="in_progress = true"
-            />
-            <span class="fs-12 text-danger ml-2 fs-12" v-if="team.password && team.password.length !== 4">Password must be 4 digits</span>
+            <a-row>
+              <a-col :span="11">
+                <a-input
+                    v-model="team.password"
+                    size="large"
+                    type="password"
+                    class="team-name-input"
+                    placeholder="Type Team Password"
+                    autocomplete="off"
+                    @input="in_progress = true"
+                />
+                <span class="fs-12 text-danger ml-2 fs-12" v-if="team.password && team.password.length !== 4">Password must be 4 digits</span>
+              </a-col>
+              <a-col :span="2"></a-col>
+              <a-col :span="11">
+                <a-input
+                    v-model="team.confirm_password"
+                    size="large"
+                    type="password"
+                    class="team-name-input"
+                    placeholder="Re-Type Password"
+                    autocomplete="off"
+                    @input="in_progress = true"
+                />
+                <span class="text-danger mt-2 ml-2 fs-12" v-if="team.password && team.confirm_password && team.password !== team.confirm_password">Password doesn't match.</span>
+                <span v-if="team.confirm_password && team.confirm_password.length !== 4" class="fs-12 text-danger ml-2">Password must be 4 digits</span>
+              </a-col>
+            </a-row>
           </a-col>
           <a-col class="mt-2" :span="24">
-            <a-input
-                v-model="team.confirm_password"
-                size="large"
-                type="password"
-                class="team-name-input"
-                placeholder="Re-Type New Password"
-                autocomplete="off"
-                @input="in_progress = true"
-            />
-            <span class="text-danger mt-2 ml-2 fs-12" v-if="team.password && team.confirm_password && team.password !== team.confirm_password">Password doesn't match.</span>
-            <span v-if="team.confirm_password && team.confirm_password.length !== 4" class="fs-12 text-danger ml-2">Password must be 4 digits</span>
+            <div class="d-flex create-role">
+              <a-tooltip>
+                <template slot="title">
+                  You are joining as a
+                </template>
+                <a-select
+                    placeholder="Add as a"
+                    class="ml-1 fs-14 w-50 member-add"
+                    v-model="addAs"
+                    disabled
+                >
+                  <a-select-option value="Candidate"> Candidate </a-select-option>
+                  <a-select-option value="Representative"> Representative </a-select-option>
+                  <a-select-option value="Match Maker"> Match Maker </a-select-option>
+                </a-select>
+              </a-tooltip>
+
+              <a-tooltip>
+                <template slot="title">
+                  Your relationship with candidate as
+                </template>
+                <a-select
+                    placeholder="Relationship"
+                    class="ml-1 fs-14 w-50 member-add"
+                    v-model="selfRole.relationship"
+                    :disabled="addAs == 'Candidate'"
+                >
+                  <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
+                </a-select>
+              </a-tooltip>
+            </div>
           </a-col>
         </a-row>
         <div class="position-absolute footer-cancel-btn">
@@ -123,8 +163,10 @@ import TeamCreateSuccess from "./TeamCreateSuccess";
 export default {
 	name: "CreateTeam1",
 	components: {TeamCreateSuccess, CreateAddMember},
+  props: ['addAs'],
 	data() {
 		return {
+      relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-paw'],
 			isLoading: false,
 			user: {},
 			is_verified: 1,
@@ -139,7 +181,10 @@ export default {
       in_progress: false,
       file: '',
       logoBobUrl: null,
-      loading: false
+      loading: false,
+      selfRole: {
+        relationship: "Father",
+      },
 		};
 	},
   computed: {
@@ -153,7 +198,21 @@ export default {
       return true;
     }
   },
-	created() {},
+	created() {
+    // let loggedUser = JSON.parse(localStorage.getItem('user'));
+    // if(loggedUser && loggedUser.id) {
+    //   if(loggedUser.account_type == 1) {
+    //     this.selfRole.add_as_a = 'Candidate';
+    //     this.selfRole.relationship = 'Own';
+    //   } else if(loggedUser.account_type == 2) {
+    //     this.selfRole.add_as_a = 'Representative';
+    //     this.selfRole.relationship = 'Father';
+    //   } else if(loggedUser.account_type == 3) {
+    //     this.selfRole.add_as_a = 'Match Maker';
+    //     this.selfRole.relationship = 'Father';
+    //   }
+    // }
+  },
 	methods: {
     getCardTitle() {
       if(this.step === 2) {
@@ -242,6 +301,8 @@ export default {
     async createTeam() {
       this.loading = true;
       this.in_progress = true;
+      this.team.add_as_a = this.addAs;
+      this.team.relationship = this.selfRole.relationship;
       let formData = new FormData();
       formData.append('logo', this.file);
       Object.keys(this.team).map(data =>{
@@ -280,8 +341,8 @@ export default {
 .bg-brand {
   background: #E51F76 !important;
 }
-.fs-40 {
-  font-size: 40px;
+.fs-33 {
+  font-size: 33px;
 }
 .background-img {
   background-size: cover !important;
@@ -289,8 +350,8 @@ export default {
   background-position: center center !important;
 }
 .image-plus {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: $bg-primary;
 }
@@ -824,5 +885,10 @@ export default {
     }
   }
 }
-
+.resize-none {
+  resize: none;
+}
+.add-team-image:hover {
+  color: $color-brand;
+}
 </style>

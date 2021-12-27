@@ -18,6 +18,7 @@
       :visible="showModalProp"
       :confirm-loading="confirmLoading"
       @ok="handleOk"
+      class="preference"
       @cancel="handleCancel"
     >
       <h6 slot="title">Team Preferences</h6>
@@ -32,13 +33,12 @@
       <br />
 
       <div class="justify-content-end">
-        <div class="d-flex justify-content-end" style="width: 70%">
+        <div class="d-flex mobile-column justify-content-end">
           <span
             class="align-bottom"
-            style="padding-top: 5px; padding-right: 10px"
             >Present</span
           >
-          <div style="width: 200px">
+          <div class="input-w">
             <a-input-password
               placeholder="Enter Team Password"
               v-model="old_password"
@@ -48,13 +48,12 @@
       </div>
 
       <div class="justify-content-end mt-2">
-        <div class="d-flex justify-content-end" style="width: 70%">
+        <div class="d-flex mobile-column justify-content-end">
           <span
             class="align-bottom"
-            style="padding-top: 5px; padding-right: 10px"
             >New</span
           >
-          <div style="width: 200px">
+          <div class="input-w">
             <a-input-password
               placeholder="Enter Team Password"
               v-model="new_password"
@@ -63,13 +62,12 @@
         </div>
       </div>
       <div class="justify-content-end mt-2">
-        <div class="d-flex justify-content-end" style="width: 70%">
+        <div class="d-flex mobile-column justify-content-end">
           <span
             class="align-bottom"
-            style="padding-top: 5px; padding-right: 10px"
             >Re-type New</span
           >
-          <div style="width: 200px">
+          <div class="input-w">
             <a-input-password
               placeholder="Enter Team Password"
               v-model="re_password"
@@ -152,3 +150,35 @@
     },
   };
 </script>
+
+<style scoped lang="scss">
+@import "@/styles/base/_variables.scss";
+.mobile-column {
+  width: 100%;
+  margin-left: -2px;
+  @media (min-width: 360px) {
+    width: 90%;
+  }
+  @media (min-width: 410px) {
+    width: 80%;
+  }
+  @media (min-width: 576px) {
+    width: 70%;
+  }
+}
+.align-bottom {
+  font-size: 12px;
+  padding-top: 5px;
+  padding-right: 4px;
+  @media (min-width: 768px) {
+    font-size: 14px;
+    padding-right: 10px;
+  }
+}
+.input-w {
+  width: 196px;
+  @media (min-width: 768px) {
+    width: 200px;
+  }
+}
+</style>

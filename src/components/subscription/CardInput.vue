@@ -57,7 +57,7 @@
 			<div ref="card" class="form-control rounded-pill px-4 cspt-9"></div>
 			<div class="mt-4 mb-3 text-right">
 				<button class="btn btn-success validate-button br-30 py-2" @click.prevent="submitPayment">
-					Validate
+          <a-icon type="loading" class="" v-if="loading" /> Validate
 				</button>
 			</div>
 		</div>
@@ -99,6 +99,7 @@ export default {
 			city: "",
 			postCode: "",
 			payment_method: null,
+      loading: false
 		};
 	},
 	mounted() {
@@ -111,7 +112,7 @@ export default {
 	},
 	methods: {
 		submitPayment() {
-			console.log("Payment clicked");
+      this.loading = true;
 			stripe
 				.confirmCardSetup(this.clientSecret, {
 					payment_method: {
@@ -128,6 +129,7 @@ export default {
 				})
 				.then(
 					function (result) {
+            this.loading = false;
 						if (result.error) {
 							console.log(result.error);
 							//alert(result.error.message);

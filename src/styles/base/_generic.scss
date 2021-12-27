@@ -616,6 +616,23 @@ div[data-unique="second_one"] >  .ant-select-selection{
         margin-top: 8px;
     }
 }
+.quick-switch > .ant-switch-inner {
+    margin-top: -4px;
+}
+.quick-switch-box > .ant-switch-checked {
+    background: #39b54a;
+}
+.preference .ant-modal-body {
+    padding-left: 12px;
+    padding-right: 12px;
+    @media (min-width: 768px) {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+}
+.create-role > .ant-select-disabled {
+    color: #666666;
+}
 @media (min-width: 576px) {
     .ant-layout-sider {
         z-index: 9;

@@ -61,7 +61,7 @@
 				</div>
 
 				<!-- Edit Buttons -->
-				<div :class="{'disabled-team': !turnOn}" class="middle">
+				<div :class="{'disabled-team': !turnOn && !tempActive}" class="middle">
 					<a-tooltip placement="top" title="Edit Team Info">
 						<button class="close">
 							<img
@@ -109,13 +109,25 @@
 
 							<!-- Change Name and Description section -->
 							<div class="col-8">
-								<label class="mt-2">Team Name: </label>
-								<a-input type="text" v-model="teamInfo.name" placeholder="Selina's family" />
-								<label class="mt-2">Team Description: </label>
+                <a-tooltip>
+                  <template slot="title">
+                    Maximum 20 Characters allowed
+                  </template>
+                  <label class="mt-2">Team Name: </label>
+                </a-tooltip>
+								<a-input type="text" v-model="teamInfo.name" placeholder="Selina's family" :maxLength="20" />
+
+                <a-tooltip>
+                  <template slot="title">
+                    Maximum 80 Characters allowed
+                  </template>
+                  <label class="mt-2">Team Description: </label>
+                </a-tooltip>
 								<a-textarea
 									type="text"
 									v-model="teamInfo.description"
 									:rows="3"
+                  :maxLength="80"
                   placeholder="Team description"
 								/>
 							</div>
@@ -175,7 +187,7 @@
 				</div>
 			</div>
 			<!-- Team Info -->
-			<div class="card-info" :class="{'disabled-team': !turnOn}">
+			<div class="card-info" :class="{'disabled-team': !turnOn && !tempActive}">
 				<!-- Team Logo -->
 				<div class="img mt-2">
 					<button>
@@ -239,7 +251,7 @@
                          @deleteInvitation="deleteInvitation"
                          @teamListUpdated="teamListUpdated" />
 			<!-- Member stats -->
-			<div class="member-area" :class="{'disabled-team': !turnOn}">
+			<div class="member-area" :class="{'disabled-team': !turnOn && !tempActive}">
 				<div class="members">
 					<p>
 						<span>{{ teamData.teamlisted_short_listed.length }}</span>
@@ -273,7 +285,7 @@
 			</div>
 
 			<!-- Add or Remove Member Button -->
-			<div class="member-action" :class="{'disabled-team': !turnOn}">
+			<div class="member-action" :class="{'disabled-team': !turnOn && !tempActive}">
 				<div class="add-remove">
 					<button class="add-member" @click="handleAddMemberclick">
 						<img src="../../assets/icon/add.svg" alt="add" /> Add member
@@ -362,31 +374,61 @@
 				<div class="member-info-table">
           <div class="admin-member" :class="{'mb-4': invitationObject.visible}">
             <div class="flex align-items-center pb-2" v-for="(member, mIndex) in sortCandidateFirst(teamData.team_members)" :key="mIndex" >
-              <div class="w-5p name-short" :class="{'name-short-single': member.role.toString() != 'Owner+Admin' }"><span v-if="member.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(member.role) }}</div>
+              <a-tooltip
+                  placement="top"
+                  :title="member.role.replace('+', ' & ')"
+              >
+                <div class="w-5p name-short" :class="{'name-short-single': member.role.toString() != 'Owner+Admin' }"><span v-if="member.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(member.role) }}</div>
+              </a-tooltip>
               <div class="member-name-td cursor-pointer" @click="toggleActiveProfile(member, 'member')">
                 <span class="team-member-name ellipse">{{ member.user ? member.user.full_name : 'N/A' }}</span>
               </div>
-              <div class="member-type">
-                <span class="badge badge-secondary fs-10" :title="accountTypeReducer(member.user_type)">{{ accountTypeReducer(member.user_type).substr(0, 3) }} {{ member.user_type ? '.' : '' }}</span>
-              </div>
+              <a-tooltip
+                  placement="top"
+                  :title="accountTypeReducer(member.user_type)"
+              >
+                <div class="member-type">
+                  <span class="badge badge-secondary fs-10">{{ accountTypeReducer(member.user_type).substr(0, 3) }} {{ member.user_type ? '.' : '' }}</span>
+                </div>
+              </a-tooltip>
               <div class="check-tick">
                 <div class="status-box bg-success text-white">&#10003;</div>
               </div>
-              <div class="d-mb-none d-dk-block relation-p ellipse">{{ member.relationship }}</div>
+              <a-tooltip
+                  placement="top"
+                  :title="member.relationship"
+              >
+                <div class="d-mb-none d-dk-block relation-p ellipse">{{ member.relationship }}</div>
+              </a-tooltip>
             </div>
 
             <div class="flex align-items-center pb-2" v-for="item in teamData.team_invited_members" :key="item.id">
-              <div class="w-5p name-short" :class="{'name-short-single': item.role.toString() != 'Owner+Admin' }"><span v-if="item.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(item.role) }}</div>
+              <a-tooltip
+                  placement="top"
+                  :title="item.role.replace('+', ' & ')"
+              >
+                <div class="w-5p name-short" :class="{'name-short-single': item.role.toString() != 'Owner+Admin' }"><span v-if="item.role.toString() == 'Owner+Admin'">O</span>{{ firstLetter(item.role) }}</div>
+              </a-tooltip>
               <div class="member-name-td cursor-pointer" @click="toggleActiveProfile(item, 'invitation')">
                 <span class="team-member-name ellipse">{{ item.user ? item.user.full_name : 'Not joined' }}</span>
               </div>
-              <div class="member-type">
-                <span class="badge badge-secondary fs-10" :title="accountTypeReducer(item.user_type)">{{ accountTypeReducer(item.user_type).substr(0, 3) }} {{ item.user_type ? '.' : '' }}</span>
-              </div>
+              <a-tooltip
+                  placement="top"
+                  :title="accountTypeReducer(item.user_type)"
+              >
+                <div class="member-type">
+                  <span class="badge badge-secondary fs-10">{{ accountTypeReducer(item.user_type).substr(0, 3) }} {{ item.user_type ? '.' : '' }}</span>
+                </div>
+              </a-tooltip>
               <div class="check-tick">
                 <div class="status-box bg-success text-white">&#10003;</div>
               </div>
-              <div class="d-mb-none d-dk-block relation-p ellipse">{{ item.relationship }}</div>
+              <a-tooltip
+                  placement="top"
+                  :title="item.relationship"
+              >
+                <div class="d-mb-none d-dk-block relation-p ellipse">{{ item.relationship }}</div>
+              </a-tooltip>
             </div>
           </div>
 
@@ -447,8 +489,9 @@
 					</button>
 				</a-tooltip>
 			</div>
+
 			<!-- Invitations History -->
-			<div class="team-invitations mr-3" :class="{'disabled-team': !turnOn}">
+			<div class="team-invitations mr-3" :class="{'disabled-team': !turnOn && !tempActive}">
 				<!-- Team Invitation History Modal -->
 				<a-modal
 					:width="700"
@@ -479,7 +522,7 @@
 			</div>
 
 			<!-- Subscription Information -->
-			<div class="team-card-footer" :class="{'disabled-team': !turnOn}">
+			<div class="team-card-footer" :class="{'disabled-team': !turnOn && !tempActive}">
 				<div class="left">
 					<p>Team Creation Date : {{ formateDate(teamData.created_at) }}</p>
 					<p class="text-success" v-if="!subTextShow">
@@ -490,12 +533,27 @@
 						Subscription Expire :
 						{{ formateDate(teamData.subscription_expire_at) }}
 					</p>
+          <div class="d-subs-mb">
+            <a :href="'subscription/' + teamData.team_id"
+            ><img src="../../assets/icon/renew.svg" alt="Renew Subscription" class="subscription-img" />
+              <span class="ml-2">{{ teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription' }}</span></a
+            >
+          </div>
 				</div>
-				<div class="right" v-if="subTextShow">
-					<a :href="'subscription/' + teamData.team_id"
-						><img src="../../assets/icon/renew.svg" alt="Renew Subscription" />
-						{{ subText }}</a
-					>
+				<div class="right d-subs-dk">
+          <a-tooltip
+              placement="top"
+              :title="teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription'"
+          >
+            <a :href="'subscription/' + teamData.team_id"
+            ><img src="../../assets/icon/renew.svg" alt="Renew Subscription"/>
+              <span class="display-subs-text">{{ teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription' }}</span></a
+            >
+          </a-tooltip>
+<!--					<a :href="'subscription/' + teamData.team_id"-->
+<!--						><img src="../../assets/icon/renew.svg" alt="Renew Subscription" />-->
+<!--						<span>{{ teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription' }}</span></a-->
+<!--					>-->
 				</div>
 			</div>
 		</div>
@@ -592,25 +650,25 @@ export default {
       profileCard: false,
       profileActive: null,
       clickedInviteNow: false,
-      text: 'Md. Jahangir Alam Shamim'
+      tempActive: false
 		};
 	},
 	created() {
 		this.teamInfo = this.teamData;
-		var self = this;
-		firebase
-			.collection("conversations")
-			.get()
-			.then((querySnapshot) => {
-				console.log(`Found ${querySnapshot.size} documents.`);
-				querySnapshot.forEach((doc) => {
-					var convDetails = doc.data();
-					convDetails.id = doc.id;
-					self.conversations.push(convDetails);
-				});
-			});
-
-		console.log("conversations loaded");
+		// var self = this;
+		// firebase
+		// 	.collection("conversations")
+		// 	.get()
+		// 	.then((querySnapshot) => {
+		// 		console.log(`Found ${querySnapshot.size} documents.`);
+		// 		querySnapshot.forEach((doc) => {
+		// 			var convDetails = doc.data();
+		// 			convDetails.id = doc.id;
+		// 			self.conversations.push(convDetails);
+		// 		});
+		// 	});
+    //
+		// console.log("conversations loaded");
 	},
 	computed: {
 		is_subscribed() {
@@ -1319,43 +1377,51 @@ export default {
 			});
 		},
 		async turnOnTeam() {
-			//validation for member
-			if (this.teamData.team_members.length < 2) {
-				// this.$message.error('This team do not contain sufficient users');
-				this.$error({
-					// title: 'This is an error message',
-					content: "This team do not contain sufficient users",
-					centered: true,
-				});
-				return false;
-			}
-
-			// if there's atleast one candidate
-			let candidateFlag = 0;
-			this.teamData.team_members.map((_member) => {
-				if (_member.user_type == "Candidate") {
-					candidateFlag++;
-				}
-			});
-
-			if (candidateFlag == 0) {
-				this.$error({
-					// title: 'This is an error message',
-					content: "This team do not contain any candidate",
-					centered: true,
-				});
-				return false;
-			}
-
+      const self = this;
 			if (this.is_subscribed) {
-				// for testing i am assuming we are subscribed
-				// if (true) {
-				try {
+        if (this.teamData.team_members.length < 2) {
+          this.$confirm({
+            icon: "info-circle",
+            title: "This team do not contain sufficient user",
+            okText: 'Add Member',
+            center: true,
+            confirmLoading: true,
+            onOk() {
+              self.tempActive = true;
+              self.handleAddMemberclick();
+            },
+          });
+          return false;
+        }
+
+        let candidateFlag = 0;
+        this.teamData.team_members.map((_member) => {
+          if (_member.user_type == "Candidate") {
+            candidateFlag++;
+          }
+        });
+
+        if (candidateFlag == 0) {
+          this.$confirm({
+            icon: "info-circle",
+            title: "This team do not contain any candidate",
+            okText: 'Add Candidate',
+            center: true,
+            confirmLoading: true,
+            onOk() {
+              self.tempActive = true;
+              self.invitationObject.add_as_a = 'Candidate';
+              self.handleAddMemberclick();
+            },
+          });
+          return false;
+        }
+
+        try {
 					await ApiService.post("v1/team-turn-on", {
 						team_id: this.teamData.team_id,
 					})
 						.then((data) => {
-							// console.log(data);
 							if (data.data.status == "FAIL") {
 								this.$message.error(data.data.message);
 								return false;
@@ -1368,16 +1434,10 @@ export default {
 									title: "Success",
 									content: "Selected Team Activated",
 									onOk() {
-										// vm.memberInvitation = false;
 										vm.$emit("teamListUpdated");
 										setTimeout(() => vm.$router.go(), 100);
 									},
 								});
-
-								//this.$message.success("Selected Team Activated");
-
-								//this.$emit("teamListUpdated");
-								//this.$router.go();
 								return true;
 							}
 						})
@@ -1391,12 +1451,21 @@ export default {
 					console.log(error);
 				}
 			} else {
-				// this.$message.error('Your Subscription is Over');
-				// this.$message.error('Please Buy Subscription');
-				this.$error({
-					title: "Subscription Needed",
-					content: "Please buy subscription to Activate the team",
-				});
+        this.$confirm({
+          icon: "info-circle",
+          title: "Subscription Needed",
+          content: "Please buy subscription to Activate the team",
+          okText: 'Subscribe Now',
+          center: true,
+          confirmLoading: true,
+          onOk() {
+            self.$router.push({ name: 'SubscriptionTeam', params: {id: self.teamData.team_id} });
+          },
+        });
+				// this.$error({
+				// 	title: "Subscription Needed",
+				// 	content: "Please buy subscription to Activate the team",
+				// });
 				return false;
 			}
 			return true;
@@ -1475,10 +1544,21 @@ export default {
       this.invitationObject.memberBox = true;
     },
     toggleMemberbox() {
-      this.invitationObject.memberBox = false;
+      this.clickedInviteNow = false;
+      this.tempActive = false;
+      this.invitationObject = {
+        role: "Admin",
+        add_as_a: "Representative",
+        relationship: "Father",
+        invitation_link: "",
+        visible: false,
+        memberBox: false
+      }
+      this.$emit("teamListUpdated");
     },
     async executeInviteMember(user) {
       this.invitationObject.memberBox = false;
+      this.tempActive = false;
       let data = {
         invitation_id: this.invitedObj.invitation_id,
         email: user.email,
@@ -1843,7 +1923,7 @@ export default {
 				background-color: #ea4c91;
 				.ant-switch-loading-icon,
 				&::after {
-					top: 2px;
+					top: 1px;
 				}
 			}
 			.ant-switch-checked {
@@ -2034,16 +2114,16 @@ export default {
 			}
 			.name-short {
         padding: 7px 5px;
-        font-size: 8px;
+        font-size: 10px;
         font-weight: bold;
         color: #ffffff;
-        width: 24px;
-        height: 24px;
+        width: 28px;
+        height: 28px;
         background: #3a3092;
         border-radius: 50%;
 			}
       .name-short-single {
-        padding: 7px 8px;
+        padding: 7px 9px;
       }
       .name-full {
         font-size: 14px;
@@ -2127,6 +2207,15 @@ export default {
 				margin: 0;
 				font-size: 12px;
 			}
+      .d-subs-mb {
+        a {
+          span {
+            font-size: 12px;
+            color: #e51f76;
+            text-decoration: underline;
+          }
+        }
+      }
 		}
 		.right {
 			margin-left: 20px;
@@ -2196,6 +2285,27 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.subscription-img {
+  width: 20px;
+}
+.d-subs-dk {
+  display: none;
+  @media (min-width: 992px) {
+    display: block;
+  }
+}
+.d-subs-mb {
+  display: block;
+  @media (min-width: 992px) {
+    display: none;
+  }
+}
+.display-subs-text {
+  display: none;
+  @media (min-width: 1780px) {
+    display: contents;
+  }
 }
 // end css for team-card
 </style>
