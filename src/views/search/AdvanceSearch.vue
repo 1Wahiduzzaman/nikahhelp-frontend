@@ -91,7 +91,8 @@ export default {
 			setProfiles: 'search/setProfiles'
 		}),
 		async fetchInitialCandidate() {
-			const res = await this.searchUser('v1/home-searches?page=0&parpage=10&min_age=20&max_age=40&ethnicity=Amara&marital_status=single');
+			// const res = await this.searchUser('v1/home-searches?page=0&parpage=10&min_age=20&max_age=40&ethnicity=Amara&marital_status=single');
+			const res = await this.searchUser('v1/home-searches?page=0&parpage=10&ethnicity=Aboriginal');
 			this.setProfiles(res)
 		},
 		responsiveToggle() {
