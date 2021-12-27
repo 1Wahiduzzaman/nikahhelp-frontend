@@ -401,7 +401,7 @@
     <ModalContainer
       :modalKey="'manageTeamRedirect'"
       :width="'wide'"
-      :fullscreen="true"
+      :fullscreen="false"
       :hideOverlay="false"
     >
       <ManageTeamRedirect />

@@ -448,15 +448,16 @@ export default {
       }
     },
     getActiveTeamId() {
-      if (!JwtService.getTeamIDAppWide()) {
-        this.isLoading = true;
-        setTimeout(() => {
-          this.isLoading = false;
-          openModalRoute(this, "manage_team_redirect");
-        }, 2000);
-      } else {
-        this.loadConnectionReports();
-      }
+      openModalRoute(this, "manage_team_redirect");
+      // if (!JwtService.getTeamIDAppWide()) {
+      //   this.isLoading = true;
+      //   setTimeout(() => {
+      //     this.isLoading = false;
+      //     openModalRoute(this, "manage_team_redirect");
+      //   }, 2000);
+      // } else {
+      //   this.loadConnectionReports();
+      // }
     },
     loadConnections() {
       this.isLoading = true;
