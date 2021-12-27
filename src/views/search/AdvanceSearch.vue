@@ -91,7 +91,8 @@ export default {
 			setProfiles: 'search/setProfiles'
 		}),
 		async fetchInitialCandidate() {
-			const res = await this.searchUser('v1/home-searches?page=0&parpage=10&min_age=20&max_age=40&ethnicity=Amara&marital_status=single');
+			// const res = await this.searchUser('v1/home-searches?page=0&parpage=10&min_age=20&max_age=40&ethnicity=Amara&marital_status=single');
+			const res = await this.searchUser('v1/home-searches?page=0&parpage=10&ethnicity=Aboriginal');
 			this.setProfiles(res)
 		},
 		responsiveToggle() {
@@ -169,7 +170,10 @@ export default {
 	}
 	.main-content-1 {
 		width: calc(100% - 350px);
-		margin: 10px 5px 10px 15px;
+		margin: 10px 0px 10px 15px;
+		height: calc(100vh - 80px);
+		padding-right: 5px;
+		overflow-y: auto;
 		@media (max-width: 1024px) {
 			width: calc(100% - 25px);
 		}

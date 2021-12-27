@@ -148,14 +148,15 @@ import {mapMutations, mapActions} from 'vuex'
       selection: 1,
       onceMore: true
     }),
-
     methods: {
       ...mapMutations({
         setComponent: 'search/setComponent',
         setSelectedProfileInfo: 'search/setSelectedProfileInfo'
       }),
       ...mapActions({
-        connectCandidate: 'search/connectCandidate'
+        connectCandidate: 'search/connectCandidate',
+        getDetails: 'search/searchUser',
+
       }),
       shortList() {
         console.log('short list')
@@ -175,7 +176,9 @@ import {mapMutations, mapActions} from 'vuex'
         this.setSelectedProfileInfo(this.candidate)
         this.setComponent('RightSideCandidateDetail')
       },
-      ViewProfileDetail() {
+      async ViewProfileDetail() {
+        let res = await this.getDetails('v1/user-profile');
+        console.log(res, '>>>>>>>>>>>>>>')
         this.$emit('switchComponent')
         this.setComponent('RightSidebar')
         console.log('show profile Detail')
