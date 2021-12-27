@@ -8,13 +8,13 @@
           <div class="flex mobile-column">
             <div class="column-margin">
               <div class="flex flex-column">
-                <div class="dt-div1">opps. This menu feature are inactive</div>
+                <div class="dt-div1 color-primary ml-1">Opps. This menu feature are inactive</div>
                 <div class="dt-div2">
-                  <span class="span1">Turn</span> <span class="span2">On</span>
+                  <span class="span1">Turn</span> <span class="span2">ON</span>
                 </div>
                 <div class="ml-2">
                   <h3 class="text-white request-text">To use this feature, please turn a team on first.</h3>
-                  <h3 class="text-white">
+                  <h3 class="text-white request-text">
                     You can easily do this from header icon
                     <router-link to="/manageteam">
                       <img
@@ -28,7 +28,7 @@
                 <div class="dt-div3 ml-2">
                   <h3 class="text-white">or</h3>
                   &nbsp;&nbsp;
-                  <router-link to="/manageteam" class="manage-team-link"> Manage Team </router-link>
+                  <router-link to="/manageteam" class="manage-team-link"> <span>&#8592;</span> Manage Team </router-link>
                 </div>
                 <div class="ml-2">
                   <span class="link-text">Don't have a team? please</span>
@@ -40,8 +40,8 @@
               </div>
             </div>
             <div class="position-relative column-margin">
-              <img src="@/assets/team_off.svg" alt="img" class="team-img-pos" v-if="!turnOn" />
-              <img src="@/assets/team_on.svg" alt="img" class="team-img-pos" v-if="turnOn" />
+              <img src="@/assets/team_off.png" alt="img" class="team-img-pos" v-if="!turnOn" />
+              <img src="@/assets/team_on.png" alt="img" class="team-img-pos" v-if="turnOn" />
               <div class="switch-box">
                 <a-switch class="position-absolute switch-icon" v-model="turnOn" />
               </div>
@@ -98,7 +98,10 @@ export default {
       justify-content: unset;
       margin-top: 4rem;
       //margin-left: 8rem;
-      padding: 0 2rem;
+      padding: 0;
+      @media (min-width: 768px) {
+        padding: 0 2rem;
+      }
     }
   }
   .notification-wrapper {
@@ -183,21 +186,31 @@ export default {
 
 .dt-div1 {
   background: #fff;
-  padding: 5px;
-  font-size: 2rem;
+  padding: 5px 5px 5px 15px;
+  font-size: 1rem;
   border-radius: 12px;
+  font-weight: bold;
+  @media (min-width: 768px) {
+    font-size: 2rem;
+  }
 }
 .dt-div2 {
-  font-size: 7rem;
+  font-size: 3rem;
   padding-bottom: 1rem;
+  @media (min-width: 768px) {
+    font-size: 7rem;
+  }
   .span1 {
     color: #fff;
-    font-weight: 600;
+    font-weight: 700;
   }
   .span2 {
     font-weight: 700;
     color: #35cf65;
-    font-size: 5rem;
+    font-size: 3rem;
+    @media (min-width: 768px) {
+      font-size: 7rem;
+    }
   }
 }
 h3 {
@@ -205,15 +218,19 @@ h3 {
 }
 .dt-div3 {
   display: flex;
+  align-items: center;
   padding-bottom: 2rem;
   a {
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 15px;
     border: 2px solid;
     border-radius: 45px;
     font-family: "Open Sans", sans-serif;
-    width: 180px;
-    padding-left: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    @media (min-width: 768px) {
+      font-size: 1.5rem;
+    }
   }
 }
 
@@ -228,16 +245,25 @@ h3 {
 }
 .manage-team-link {
   color: #FFFFFF !important;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 .manage-team-link:hover {
-  color: $color-success !important;
+  //color: $color-success !important;
+  background: #FFFFFF;
+  color: $color-primary !important;
+  border: none;
+  //padding-top: 4px;
 }
 .manage-team-icon {
   margin-top: -6px;
 }
 .request-text {
   padding-bottom: 1rem;
-  font-size: 28px;
+  font-size: 18px;
+  @media (min-width: 768px) {
+    font-size: 28px;
+  }
 }
 .mobile-column {
   flex-direction: column;
@@ -289,8 +315,11 @@ h3 {
   }
 }
 .link-text {
-  font-size: 28px;
+  font-size: 15px;
   color: #FFFFFF;
+  @media (min-width: 768px) {
+    font-size: 28px;
+  }
 }
 .switch-box > .ant-switch {
   background: $bg-brand;

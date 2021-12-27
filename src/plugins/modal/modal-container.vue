@@ -1,4 +1,4 @@
-<template>
+\<template>
   <div class="dt-dialog-container">
     <template v-if="containerFlag">
       <v-dialog
@@ -65,5 +65,8 @@ export default {
 <style lang="scss">
 .v-dialog {
   transition: none;
+}
+.v-dialog:not(.v-dialog--fullscreen) {
+  height: 90%;
 }
 </style>
