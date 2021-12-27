@@ -8,7 +8,7 @@
           <div class="flex mobile-column">
             <div class="column-margin">
               <div class="flex flex-column">
-                <div class="dt-div1 color-primary ml-1">Opps. This menu feature are inactive</div>
+                <div class="dt-div1 color-primary ml-1 d-mb-none">Opps. This menu feature are inactive</div>
                 <div class="dt-div2">
                   <span class="span1">Turn</span> <span class="span2">ON</span>
                 </div>
@@ -26,9 +26,7 @@
                   </h3>
                 </div>
                 <div class="dt-div3 ml-2">
-                  <h3 class="text-white">or</h3>
-                  &nbsp;&nbsp;
-                  <router-link to="/manageteam" class="manage-team-link"> <span>&#8592;</span> Manage Team </router-link>
+                  <div class="text-white"><span class="ortext">or</span> &nbsp; <router-link to="/manageteam" class="manage-team-link"> <span>&#8592;</span> Manage Team </router-link></div>
                 </div>
                 <div class="ml-2">
                   <span class="link-text">Don't have a team? please</span>
@@ -37,15 +35,19 @@
                   <span class="link-text ml-2 text-decoration-underline"><router-link to="/manageteam" class="manage-team-link"> join </router-link></span>
                   <span class="link-text ml-2"> a team</span>
                 </div>
+                <h4 class="info-text">
+                  * The information of this page relates to team that you turned ON. <span class="text-decoration-underline font-weight-bold cursor-pointer learn-text">learn more...</span>
+                </h4>
               </div>
             </div>
             <div class="position-relative column-margin">
               <img src="@/assets/team_off.png" alt="img" class="team-img-pos" v-if="!turnOn" />
               <img src="@/assets/team_on.png" alt="img" class="team-img-pos" v-if="turnOn" />
               <div class="switch-box">
-                <a-switch class="position-absolute switch-icon" v-model="turnOn" />
+                <a-switch class="position-absolute switch-icon" v-model="turnOn" disabled />
               </div>
             </div>
+            <div class="dt-div1 color-primary ml-1 mb-4 d-dk-none">Opps. This menu feature are inactive</div>
           </div>
         </div>
       </div>
@@ -63,7 +65,10 @@ export default {
     Modal,
   },
   created() {
-
+    const self = this;
+    setInterval(() => {
+      self.turnOn = !self.turnOn;
+    }, 1000);
   },
   data() {
     return {
@@ -71,9 +76,6 @@ export default {
       collapsed: false,
       turnOn: false,
     };
-  },
-  methods: {
-
   },
 };
 </script>
@@ -96,7 +98,7 @@ export default {
       flex-direction: column;
       align-items: flex-start;
       justify-content: unset;
-      margin-top: 4rem;
+      margin-top: 2rem;
       //margin-left: 8rem;
       padding: 0;
       @media (min-width: 768px) {
@@ -190,15 +192,22 @@ export default {
   font-size: 1rem;
   border-radius: 12px;
   font-weight: bold;
-  @media (min-width: 768px) {
+  @media (min-width: 992px) {
     font-size: 2rem;
   }
 }
 .dt-div2 {
   font-size: 3rem;
   padding-bottom: 1rem;
+  text-align: center;
+  margin-top: 30px;
   @media (min-width: 768px) {
+    text-align: left;
+  }
+  @media (min-width: 992px) {
     font-size: 7rem;
+    text-align: left;
+    margin-top: 0;
   }
   .span1 {
     color: #fff;
@@ -208,7 +217,7 @@ export default {
     font-weight: 700;
     color: #35cf65;
     font-size: 3rem;
-    @media (min-width: 768px) {
+    @media (min-width: 992px) {
       font-size: 7rem;
     }
   }
@@ -229,6 +238,9 @@ h3 {
     padding-left: 20px;
     padding-right: 20px;
     @media (min-width: 768px) {
+      font-size: 20px;
+    }
+    @media (min-width: 992px) {
       font-size: 1.5rem;
     }
   }
@@ -262,19 +274,31 @@ h3 {
   padding-bottom: 1rem;
   font-size: 18px;
   @media (min-width: 768px) {
+    font-size: 24px;
+  }
+  @media (min-width: 992px) {
     font-size: 28px;
+    padding-bottom: .2rem;
   }
 }
 .mobile-column {
-  flex-direction: column;
+  flex-direction: column-reverse;
   @media (min-width: 768px) {
     flex-direction: row;
   }
 }
 .team-img-pos {
   width: 100%;
+  margin-bottom: 20px;
   @media (min-width: 768px) {
     width: 385px;
+    margin-bottom: 0;
+  }
+  @media (min-width: 1200px) {
+    margin-left: 30px;
+  }
+  @media (min-width: 1500px) {
+    margin-left: 40px;
   }
 }
 .column-margin {
@@ -287,8 +311,32 @@ h3 {
   }
 }
 .switch-icon {
-  top: 25px;
-  right: 30px;
+  top: 10px;
+  right: 22px;
+  @media (min-width: 360px) {
+    top: 13px;
+    right: 25px;
+  }
+  @media (min-width: 360px) {
+    top: 18px;
+  }
+  @media (min-width: 460px) {
+    top: 23px;
+  }
+  @media (min-width: 460px) {
+    top: 34px;
+    right: 40px;
+  }
+  @media (min-width: 768px) {
+    top: 12px;
+    right: 30px;
+  }
+  @media (min-width: 992px) {
+    top: 18px;
+  }
+  @media (min-width: 1200px) {
+    top: 25px;
+  }
 }
 .name-hover:hover {
   color: #e51f76ff !important;
@@ -318,6 +366,9 @@ h3 {
   font-size: 15px;
   color: #FFFFFF;
   @media (min-width: 768px) {
+    font-size: 22px;
+  }
+  @media (min-width: 992px) {
     font-size: 28px;
   }
 }
@@ -326,5 +377,43 @@ h3 {
 }
 .switch-box > .ant-switch-checked {
   background: $bg-primary;
+}
+.ortext {
+  font-size: 20px;
+  @media (min-width: 768px) {
+    font-size: 28px;
+  }
+  @media (min-width: 992px) {
+    font-size: 32px;
+  }
+}
+.ant-switch-disabled {
+  opacity: 1 !important;
+}
+.info-text {
+  color: #175fe1d1;
+  margin-top: 12px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  @media (min-width: 768px) {
+    font-size: 18px;
+  }
+  @media (min-width: 1200px) {
+    font-size: 24px;
+  }
+}
+.learn-text:hover {
+  color: $bg-brand;
+}
+.d-dk-none {
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+.d-mb-none {
+  display: none;
+  @media (min-width: 768px) {
+    display: block;
+  }
 }
 </style>
