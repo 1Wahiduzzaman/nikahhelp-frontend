@@ -1,4 +1,5 @@
 const languages = [
+  "Other",
   "Afrikaans",
   "Akan",
   "Algerian Arabic",
@@ -27,7 +28,7 @@ const languages = [
   "Deccan",
   "Dhundhari",
   "Dutch",
-  "Eastern Min ",
+  "Eastern Min",
   "Eastern Punjabi",
   "Egyptian Arabic",
   "English",
@@ -114,7 +115,7 @@ const languages = [
   "Somali",
   "South Azeerbaijani",
   "South Levantine Arabic",
-  "Southern Min ",
+  "Southern Min",
   "Spnaish",
   "Sundanese",
   "Swahili",

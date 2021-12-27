@@ -1,15 +1,26 @@
 const thankfulThings = [
   {
-    label: `Don't Mind`,
-    value: `Don't Mind`,
+    label: "For being born",
+    value: "For being born",
     description:
-      `Don't Mind`,
+      "You would not experience life and the wonders of creation if you were not born.",
+  },
+  {
+    label: "Siblings",
+    value: "Siblings",
+    description:
+      "Even if there is sibling rivalary, your sibling is more likely to stand up for you and protect you rather than a stranger.",
+  },
+  {
+    label: "Teacher",
+    value: "Teacher",
+    description:
+      "A good teacher leaves their imprint on your life, listen to you, care for you, they teach you selflessness, co-operation, consideration, empathy, sympathy, curiosity and love of learning, love your questions and make you feel special.",
   },
   {
     label: "Charties and NGOs",
     value: "Charties and NGOs",
-    description:
-      "They are there to help the needy and those who have fallen through the cracks, showing humanity never stops despite borders, prejudice, inquality, war, oppression and couuntless other difficulties.",
+    description: "They are there to help the needy and those who have fallen through the cracks, showing humanity never stops despite borders, prejudice, inquality, war, oppression and couuntless other difficulties.",
   },
   {
     label: "Being able to do charitable work",
@@ -20,29 +31,35 @@ const thankfulThings = [
   {
     label: "Good Health",
     value: "Good Health",
-    description:
-      "Even if your health isn’t great, it could be worse and you likely still have some working parts to be thankful for.",
+    description: "Even if your health isn't great, it could be worse and you likely still have some working parts to be thankful for.",
+  },
+  {
+    label: "Money in the Bank",
+    value: "Money in the Bank",
+    description: "Having just a few coins makes you richer than most people on Earth.",
   },
   {
     label: "Good Friends",
     value: "Good Friends",
-    description: "Often, it’s the quality of friendships, not the quantity.",
+    description:
+      "Often, it's the quality of friendships, not the quantity.",
   },
   {
     label: "Freedom of Religion",
     value: "Freedom of Religion",
-    description:
-      "Being able to worship whomever and however you want is something many people don’t ever experience.",
+    description: "Being able to worship whomever and however you want is something many people don't ever experience.",
   },
   {
     label: "My Parents",
     value: "My Parents",
-    description: "Even if they’re dysfunctional, they gave you life.",
+    description:
+      "Even they�re now in their old age, but they looked after me when I was little. I am what I am now, it is because of them. ",
   },
   {
     label: "Weekends or quiet time",
     value: "Weekends or quiet time",
-    description: "There’s something magical about weekends or quiet time.",
+    description:
+      "There�s something magical about weekends or quiet time",
   },
   {
     label: "Having a Partner",
@@ -53,31 +70,37 @@ const thankfulThings = [
   {
     label: "Pets",
     value: "Pets",
-    description: "Pets offer one of the best examples of unconditional love.",
-  },
-  {
-    label: "Opportunity to Get an Education",
-    value: "Opportunity to Get an Education",
     description:
-      "The opportunity to attend school is something many people don’t have.",
+      "Pets offer one of the best examples of unconditional love.",
   },
   {
     label: "Learning from Mistakes",
     value: "Learning from Mistakes",
     description:
-      "If we never made mistakes, we wouldn’t learn much so it is one of those things we should be thankful for.",
+      "If we never made mistakes, we wouldn�t learn much so it is one of those things we should be thankful for.",
+  },
+  {
+    label: "Opportunity to Get an Education",
+    value: "Opportunity to Get an Education",
+    description:
+      "The opportunity to attend school is something many people don�t have.",
+  },
+  {
+    label: "Laughter",
+    value: "Laughter",
+    description: "Without laughter, the world would be a sad place.",
   },
   {
     label: "Having a Home",
     value: "Having a Home",
     description:
-      "Whether you live in an apartment, a mansion, or a tent, having a place to call home is something to be thankful for.",
+      "Whether you live in an apartment, a mansion, or a tent, having a place to call home is something to be thankful for",
   },
   {
     label: "An Ability to Read",
     value: "An Ability to Read",
     description:
-      "If you’re reading this right now, you have a lot to be thankful for.",
+      "If you�re reading this right now, you have a lot to be thankful for.",
   },
   {
     label: "Breathing Fresh Air",
@@ -89,7 +112,7 @@ const thankfulThings = [
     label: "A Bed to Sleep",
     value: "A Bed to Sleep",
     description:
-      "A bed is one of those things that’s easy to take for granted, until you don’t have one.",
+      "A bed is one of those things that�s easy to take for granted, until you don�t have one.",
   },
   {
     label: "Laughter",
@@ -99,8 +122,7 @@ const thankfulThings = [
   {
     label: "Safety and Security",
     value: "Safety and Security",
-    description:
-      "Being able to wake up without immense fear frees us up to really live life.",
+    description: "Being able to wake up without immense fear frees us up to really live life.",
   },
   {
     label: "Cars and transport",
@@ -112,13 +134,12 @@ const thankfulThings = [
     label: "Sunshine",
     value: "Sunshine",
     description:
-      "The sun’s warmth can brighten any day, benefits us and other life forms.",
+      "The sun�s warmth can brighten any day, benefits us and other life forms.",
   },
   {
     label: "Time",
     value: "Time",
-    description:
-      "Although we often don’t think there’s enough of it, time is something we shouldn’t take for granted.",
+    description: "Although we often don�t think there�s enough of it, time is something we shouldn�t take for granted.",
   },
   {
     label: "Clean Water",
@@ -126,21 +147,19 @@ const thankfulThings = [
     description: "Many people on earth lack access to clean water.",
   },
   {
-    label: "Cell Phones",
-    value: "Cell Phones",
-    description: "Cell phones make talking to loved ones easy.",
-  },
-  {
     label: "Love",
     value: "Love",
-    description:
-      "The world sure would be a different place if we lacked the ability to love.",
+    description: "The world sure would be a different place if we lacked the ability to love.",
+  },
+  {
+    label: "Time",
+    value: "Time",
+    description: "Although we often don�t think there�s enough of it, time is something we shouldn�t take for granted.",
   },
   {
     label: "Books",
     value: "Books",
-    description:
-      "Books provide an opportunity to enter another world all from the comfort of your own home",
+    description: "Books provide an opportunity to enter another world all from the comfort of your own home.",
   },
   {
     label: "Kindness of Strangers",
@@ -232,16 +251,16 @@ const thankfulThings = [
     description: "Entertainment gives us a way to relax and enjoy life.",
   },
   {
+    label: "My Mind",
+    value: "My Mind",
+    description:
+        "Being able to think, remember, and solve problems sure makes life easier.",
+  },
+  {
     label: "Employment",
     value: "Employment",
     description:
       "Even if you don’t like your job, being employed means someone thought you were special enough to hire.",
-  },
-  {
-    label: "My Mind",
-    value: "My Mind",
-    description:
-      "Being able to think, remember, and solve problems sure makes life easier.",
   },
   {
     label: "Diversity",
@@ -357,6 +376,12 @@ const thankfulThings = [
     value: "Being thankful",
     description:
       "Realizing all the things you should be thankful for is the first step, practicing gratitude is what you should start doing.",
+  },
+  {
+    label: "Other",
+    value: "Other",
+    description:
+        "Please add what you are thankful for and the reason why you are thankful",
   },
 ];
 export default thankfulThings;
