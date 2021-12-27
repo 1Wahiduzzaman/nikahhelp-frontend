@@ -422,14 +422,9 @@ export default {
   components: {
     NotificationPopup,
     Sidebar,
-<<<<<<< HEAD
-    // SimpleSearch
-    SimpleSearch: () => import('@/components/search/SimpleSearch.vue')
-=======
     ModalContainer,
     ManageTeamRedirect,
     SimpleSearch: () => import("@/components/search/SimpleSearch.vue"),
->>>>>>> 423248d5324cf989a1d97a048a059261b5169b5f
   },
   created() {
     this.loadNotifications();
