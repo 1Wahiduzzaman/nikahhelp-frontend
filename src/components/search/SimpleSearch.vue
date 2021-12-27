@@ -265,6 +265,7 @@ import SelectGroup from "@/components/ui/selects/SelectGroup";
 import {mapMutations, mapActions} from 'vuex'
 
 export default {
+	name: 'SimpleSearch',
 	data() {
 		return {
 			showMoreSeach: false,
