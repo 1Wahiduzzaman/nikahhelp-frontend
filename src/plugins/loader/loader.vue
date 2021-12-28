@@ -1,7 +1,7 @@
 <template>
   <div  class="overlay-container">
     <v-overlay :opacity="1" :value="isLoading">
-      <v-progress-circular :size="70" :width="7" color="purple" indeterminate>
+      <v-progress-circular :size="100" :width="7" color="purple" indeterminate>
         Loading...
       </v-progress-circular>
     </v-overlay>

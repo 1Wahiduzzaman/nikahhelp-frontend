@@ -1,6 +1,6 @@
 <template>
   <div class="review-publish px-2">
-    <!-- <pre>{{ candidateData }}</pre> -->
+   
     <fieldset v-if="candidateDetails && candidateData.personal" class="review">
       <h4 class="fw-700 px-2">Review and Publish Profile</h4>
       <p class="mb-5 px-2">
@@ -119,9 +119,15 @@
                   <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text">Ocupation</span
                     ><span class="flex-50 px-2 d-inherit"
-                      >:<span class="ml-3">{{
-                        candidateData.preference.pre_occupation
-                      }}</span></span
+                      >:<span class="ml-3">
+                        <div
+                          v-for="occupuation in candidateData.preference
+                            .pre_occupation"
+                          :key="occupuation.id"
+                        >
+                          {{ occupuation.name }}
+                        </div></span
+                      ></span
                     >
                   </li>
                 </ul>
@@ -131,17 +137,25 @@
             <div class="col-md-4 mb-3">
               <div class="card-custom h-100 shadow-default">
                 <h4>What I'm looking for</h4>
-                <p class="mb-0">
-                  {{ candidateData.preference.pre_description }}
-                </p>
+                <a-textarea
+                  style="overflow: hidden; height: 150px"
+                  id="per_about"
+                  :rows="5"
+                  :maxLength="200"
+                  v-model="candidateData.preference.pre_description"
+                />
               </div>
             </div>
             <div class="col-md-12 mb-3">
               <div class="card-custom text-start shadow-default">
                 <h4>Other requirements</h4>
-                <p class="text-start mb-0">
-                  {{ candidateData.preference.pre_other_preference }}
-                </p>
+
+                <a-textarea
+                  id="per_about"
+                  :rows="3"
+                  :maxLength="200"
+                  v-model="candidateData.preference.pre_other_preference"
+                />
               </div>
             </div>
             <!-- Rating unit -->
@@ -276,6 +290,7 @@
                     ><span class="flex-50 px-2"
                       >:<span class="ml-3">
                         {{ candidateData.first_name }}
+                        {{ candidateData.last_name }}
                       </span>
                     </span>
                   </li>
@@ -393,12 +408,14 @@
                     <span class="flex-50 px-2 label-text"
                       >Current Residance</span
                     ><span class="flex-50 px-2 d-inherit"
-                      >:<span class="ml-3">{{candidateDetails.countries[
-                          candidateData.personal.per_current_residence
-                        ]?
+                      >:<span class="ml-3">{{
                         candidateDetails.countries[
                           candidateData.personal.per_current_residence
-                        ].name:""
+                        ]
+                          ? candidateDetails.countries[
+                              candidateData.personal.per_current_residence
+                            ].name
+                          : ""
                       }}</span></span
                     >
                   </li>
@@ -430,9 +447,14 @@
               </div>
               <div class="card-custom h-33 shadow-default">
                 <h4>A little bit about me</h4>
-                <p class="mb-0">
-                  {{ candidateData.personal.per_about }}
-                </p>
+                <div class="mb-0">
+                  <a-textarea
+                    id="per_about"
+                    :rows="4"
+                    :maxLength="200"
+                    v-model="candidateData.personal.per_about"
+                  />
+                </div>
               </div>
             </div>
             <div class="col-md-4 mb-3 mobile-margin-top">
@@ -441,7 +463,9 @@
                   <span class="badge-info-label"
                     ><span class="inner">Marital Status</span></span
                   >
-                  <span class="value-text">{{ candidateData.personal.per_marital_status }}</span>
+                  <span class="value-text">{{
+                    candidateData.personal.per_marital_status
+                  }}</span>
                 </div>
                 <div class="badge-info">
                   <span class="badge-info-label"
@@ -455,20 +479,22 @@
                   <span class="badge-info-label"
                     ><span class="inner">Willing to relocate</span></span
                   >
-                  <span class="value-text"
+                  <span
+                    class="value-text"
                     v-if="candidateData.personal.per_willing_to_relocate == 1"
                   >
                     Yes
                   </span>
                   <span
-                      class="value-text"
+                    class="value-text"
                     v-else-if="
                       candidateData.personal.per_willing_to_relocate == 2
                     "
                   >
                     No
                   </span>
-                  <span class="value-text"
+                  <span
+                    class="value-text"
                     v-if="candidateData.personal.per_willing_to_relocate == 3"
                   >
                     Let's Discuss
@@ -478,10 +504,16 @@
                   <span class="badge-info-label"
                     ><span class="inner">Smoker</span></span
                   >
-                  <span class="value-text" v-if="candidateData.personal.per_smoker == true">
+                  <span
+                    class="value-text"
+                    v-if="candidateData.personal.per_smoker == true"
+                  >
                     Yes
                   </span>
-                  <span class="value-text" v-if="candidateData.personal.per_smoker == false">
+                  <span
+                    class="value-text"
+                    v-if="candidateData.personal.per_smoker == false"
+                  >
                     No
                   </span>
                 </div>
@@ -489,7 +521,9 @@
                   <span class="badge-info-label"
                     ><span class="inner">Language</span></span
                   >
-                  <span class="value-text">{{ candidateData.personal.per_language_speak }}</span>
+                  <span class="value-text">{{
+                    candidateData.personal.per_language_speak
+                  }}</span>
                 </div>
                 <div class="badge-info">
                   <span class="badge-info-label"
@@ -511,13 +545,17 @@
                   <span class="badge-info-label"
                     ><span class="inner">Things I Enjoy</span>
                   </span>
-                  <span class="value-text">{{ candidateData.personal.per_things_enjoy }}</span>
+                  <span class="value-text">{{
+                    candidateData.personal.per_things_enjoy
+                  }}</span>
                 </div>
                 <div class="badge-info">
                   <span class="badge-info-label">
                     <span class="inner">I am Thankfull for</span>
                   </span>
-                  <span class="value-text">{{ candidateData.personal.per_thankfull_for }}</span>
+                  <span class="value-text">{{
+                    candidateData.personal.per_thankfull_for
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -533,7 +571,12 @@
               <div class="card-custom shadow-default">
                 <h4>Additional Information</h4>
                 <p class="mb-0">
-                  {{ candidateData.personal.per_about }}
+                  <a-textarea
+                    id="per_about"
+                    :rows="4"
+                    :maxLength="200"
+                    v-model="candidateData.personal.per_additional_info_text"
+                  />
                 </p>
               </div>
             </div>
@@ -592,9 +635,15 @@
                   <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text">Siblings</span
                     ><span class="flex-50 px-2 d-inherit"
-                      >:<span class="ml-3">{{
-                        candidateData.family.siblings_desc
-                      }}</span></span
+                      >:<span
+                        style="
+                          white-space: nowrap;
+                          overflow: hidden;
+                          text-overflow: ellipsis;
+                        "
+                        class="ml-3"
+                        >{{ candidateData.family.siblings_desc }}</span
+                      ></span
                     >
                   </li>
                   <li class="flex-between-start">
@@ -612,9 +661,13 @@
             <div class="col-md-4 mb-3">
               <div class="card-custom h-100 shadow-default">
                 <h4>About My Family</h4>
-                <p class="mb-0">
-                  {{ candidateData.family.family_info }}
-                </p>
+                <a-textarea
+                  style="overflow: hidden; height: 70px"
+                  id="per_about"
+                  :rows="5"
+                  :maxLength="200"
+                  v-model="candidateData.family.family_info"
+                />
               </div>
             </div>
           </div>
@@ -635,7 +688,7 @@
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
                 <img
-                    :src="candidateData.personal.per_avatar_url"
+                  :src="candidateData.personal.per_avatar_url"
                   class="user-image"
                   alt="img"
                   height="250"
@@ -647,73 +700,73 @@
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
                 <img
-                    :src="candidateData.personal.per_main_image_url"
-                    class="user-image"
-                    alt="img"
-                    height="250"
-                    width="200"
+                  :src="candidateData.personal.per_main_image_url"
+                  class="user-image"
+                  alt="img"
+                  height="250"
+                  width="200"
                 />
                 <p class="text-center">Main image</p>
               </div>
             </div>
 
-<!--            <div class="col-12 col-md-4 mb-3">-->
-<!--              <div class="profile-img text-center">-->
-<!--                <img-->
-<!--                    :src="candidateData.personal.per_main_image_url"-->
-<!--                    class="user-image"-->
-<!--                    alt="img"-->
-<!--                    height="250"-->
-<!--                    width="200"-->
-<!--                />-->
-<!--                <p class="text-center">Additional image</p>-->
-<!--              </div>-->
-<!--            </div>-->
+            <div class="col-12 col-md-4 mb-3">
+              <div class="profile-img text-center">
+                <img
+                  :src="candidateData.personal.per_main_image_url"
+                  class="user-image"
+                  alt="img"
+                  height="250"
+                  width="200"
+                />
+                <p class="text-center">Additional image</p>
+              </div>
+            </div>
 
             <div class="col-12">
               <div class="card-custom shadow-default">
                 <h4>Image setting</h4>
                 <div class="d-flex">
                   <a-icon
-                      v-if="candidateData.personal.anybody_can_see == 0"
-                      class="color-danger mt-2 mr-2 fs-16 fw-500"
-                      type="stop"
+                    v-if="candidateData.personal.anybody_can_see == 0"
+                    class="color-danger mt-2 mr-2 fs-16 fw-500"
+                    type="stop"
                   />
                   <a-icon
-                      v-else
-                      class="color-success mt-2 mr-2 fs-16 fw-500"
-                      type="check"
+                    v-else
+                    class="color-success mt-2 mr-2 fs-16 fw-500"
+                    type="check"
                   />
                   <span class="fs-16"
-                  >I would like to share my all picture with anyone on this
+                    >I would like to share my all picture with anyone on this
                     plarform</span
                   >
                 </div>
                 <div class="d-flex">
                   <a-icon
-                      v-if="candidateData.personal.only_team_can_see == 0"
-                      class="color-danger mt-2 mr-2 fs-16 fw-500"
-                      type="stop"
+                    v-if="candidateData.personal.only_team_can_see == 0"
+                    class="color-danger mt-2 mr-2 fs-16 fw-500"
+                    type="stop"
                   />
                   <a-icon
-                      v-else
-                      class="color-success mt-2 mr-2 fs-16 fw-500"
-                      type="check"
+                    v-else
+                    class="color-success mt-2 mr-2 fs-16 fw-500"
+                    type="check"
                   />
                   <span class="fs-16"
-                  >I would like to share all my images with my team</span
+                    >I would like to share all my images with my team</span
                   >
                 </div>
                 <div class="d-flex">
                   <a-icon
-                      v-if="candidateData.personal.team_connection_can_see == 0"
-                      class="color-danger mt-2 mr-2 fs-16 fw-500"
-                      type="stop"
+                    v-if="candidateData.personal.team_connection_can_see == 0"
+                    class="color-danger mt-2 mr-2 fs-16 fw-500"
+                    type="stop"
                   />
                   <a-icon
-                      v-else
-                      class="color-success mt-2 mr-2 fs-16 fw-500"
-                      type="check"
+                    v-else
+                    class="color-success mt-2 mr-2 fs-16 fw-500"
+                    type="check"
                   />
                   <span class="fs-16">
                     I would like to share all my images with connected team(s)
@@ -756,6 +809,19 @@ export default {
         const response = await ApiService.get(`v1/candidate/info/${user.id}`);
         this.candidateData = {
           ...response.data.data,
+          preference: {
+            ...response.data.data.preference,
+            pre_occupation: JSON.parse(
+              response.data.data.preference.pre_occupation
+            ),
+          },
+          // personal: {
+          //   ...response.data.data.personal,
+          //   per_about: response.data.data.personal.per_about.replace(
+          //     /(?:\r\n|\r|\n)/g,
+          //     "<br />"
+          //   ),
+          // },
         };
       } catch (error) {
         alert(this.error);
@@ -801,6 +867,13 @@ export default {
       border-radius: 5px;
       overflow: hidden;
     }
+  }
+  .ant-input {
+    border: none;
+    pointer-events: none;
+  }
+  textarea {
+    resize: none;
   }
 }
 .h-100 {

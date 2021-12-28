@@ -143,6 +143,17 @@ export default {
         });
     });
   },
+  async savePersonalMoreAboutFile(_, payload) {
+    return new Promise((resolve, reject) => {
+      ApiService.image("v1/candidate/personal-more-about", payload)
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+    });
+  },
   async saveVerificationInfo(_, payload) {
     return new Promise((resolve, reject) => {
       ApiService.post("v1/candidate/personal-verification-info", payload)

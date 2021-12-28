@@ -21,7 +21,7 @@
             <!-- </div> -->
 
             <!-- Upper portion of the code was written by Syed Shadman Bhaiya -->
-            <div v-if="userProfile.account_type == 1">
+            <div v-if="user.account_type == 1">
               <!-- Opposite Candidate Profile Component goes here -->
               <candidate-profile
                 :candidateData="candidateProfileInfo"
@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      user: {},
+      user: null,
       candidateInfo: {},
       representativeInfo: {},
       is_verified: 1,
@@ -72,6 +72,9 @@ export default {
       candidateProfileInfo: {},
       representativeProfileInfo: {},
     };
+  },
+  mounted() {
+    this.user = JSON.parse(localStorage.getItem("user"));
   },
   created() {
     this.loadUserProfile();
@@ -122,7 +125,6 @@ export default {
       }
       this.isLoading = false;
     },
-    
   },
 };
 </script>
