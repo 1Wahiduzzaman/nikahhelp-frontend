@@ -87,6 +87,7 @@
                         ><span class="flex-50 px-2"
                           >:<span class="ml-3">
                             {{ candidateData.first_name }}
+                            {{ candidateData.last_name }}
                           </span>
                         </span>
                       </li>
@@ -149,7 +150,13 @@
                                 (x) =>
                                   x.id ===
                                   candidateData.personal.per_religion_id
-                              ).name
+                              )
+                                ? $store.state.candidateInfo.religion_options.find(
+                                    (x) =>
+                                      x.id ===
+                                      candidateData.personal.per_religion_id
+                                  ).name
+                                : ""
                             }}
                           </span></span
                         >
@@ -177,7 +184,11 @@
                           >:<span class="ml-3">{{
                             $store.state.candidateInfo.countries[
                               candidateData.personal.per_nationality
-                            ].name
+                            ]
+                              ? $store.state.candidateInfo.countries[
+                                  candidateData.personal.per_nationality
+                                ].name
+                              : ""
                           }}</span></span
                         >
                       </li>
@@ -188,7 +199,11 @@
                           >:<span class="ml-3">{{
                             $store.state.candidateInfo.countries[
                               candidateData.personal.per_country_of_birth
-                            ].name
+                            ]
+                              ? $store.state.candidateInfo.countries[
+                                  candidateData.personal.per_country_of_birth
+                                ].name
+                              : ""
                           }}</span></span
                         >
                       </li>
@@ -199,7 +214,11 @@
                           >:<span class="ml-3">{{
                             $store.state.candidateInfo.countries[
                               candidateData.personal.per_current_residence
-                            ].name
+                            ]
+                              ? $store.state.candidateInfo.countries[
+                                  candidateData.personal.per_current_residence
+                                ].name
+                              : ""
                           }}</span></span
                         >
                       </li>
@@ -232,7 +251,12 @@
                   <div class="card-custom h-33 shadow-default">
                     <h4>A little bit about me</h4>
                     <p class="mb-0">
-                      {{ candidateData.personal.per_about }}
+                      <a-textarea
+                        id="per_about"
+                        :rows="4"
+                        :maxLength="200"
+                        v-model="candidateData.personal.per_about"
+                      />
                     </p>
                   </div>
                 </div>
@@ -335,7 +359,14 @@
                   <div class="card-custom shadow-default">
                     <h4>Additional Information</h4>
                     <p class="mb-0">
-                      {{ candidateData.personal.per_about }}
+                      <a-textarea
+                        id="per_about"
+                        :rows="4"
+                        :maxLength="200"
+                        v-model="
+                          candidateData.personal.per_additional_info_text
+                        "
+                      />
                     </p>
                   </div>
                 </div>
@@ -395,9 +426,15 @@
                       <li class="flex-between-start">
                         <span class="flex-50 px-2 label-text">Siblings</span
                         ><span class="flex-50 px-2 d-inherit"
-                          >:<span class="ml-3">{{
-                            candidateData.family.siblings_desc
-                          }}</span></span
+                          >:<span
+                            style="
+                              white-space: nowrap;
+                              overflow: hidden;
+                              text-overflow: ellipsis;
+                            "
+                            class="ml-3"
+                            >{{ candidateData.family.siblings_desc }}</span
+                          ></span
                         >
                       </li>
                       <li class="flex-between-start">
@@ -416,7 +453,13 @@
                   <div class="card-custom h-100 shadow-default">
                     <h4>About My Family</h4>
                     <p class="mb-0">
-                      {{ candidateData.family.family_info }}
+                      <a-textarea
+                        style="overflow: hidden; height: 70px"
+                        id="per_about"
+                        :rows="5"
+                        :maxLength="200"
+                        v-model="candidateData.family.family_info"
+                      />
                     </p>
                   </div>
                 </div>
@@ -474,7 +517,7 @@
                           <span class="ml-3">
                             <div
                               v-for="(country, index) in candidateData
-                                .preference.preferred_countries"
+                                .preference.preferred_countries || []"
                               :key="country.id"
                             >
                               {{ country.name }},
@@ -514,7 +557,7 @@
                           >:<span class="ml-3">
                             <div
                               v-for="nationality in candidateData.preference
-                                .preferred_nationality"
+                                .preferred_nationality || []"
                               :key="nationality.id"
                             >
                               {{ nationality.name }}
@@ -551,9 +594,15 @@
                       <li class="flex-between-start">
                         <span class="flex-50 px-2 label-text">Ocupation</span
                         ><span class="flex-50 px-2 d-inherit"
-                          >:<span class="ml-3">{{
-                            candidateData.preference.pre_occupation
-                          }}</span></span
+                          >:<span class="ml-3">
+                            <div
+                              v-for="occupuation in candidateData.preference
+                                .pre_occupation"
+                              :key="occupuation.id"
+                            >
+                              {{ occupuation.name }}
+                            </div></span
+                          ></span
                         >
                       </li>
                     </ul>
@@ -564,7 +613,13 @@
                   <div class="card-custom h-100 shadow-default">
                     <h4>What I'm looking for</h4>
                     <p class="mb-0">
-                      {{ candidateData.preference.pre_description }}
+                      <a-textarea
+                        style="overflow: hidden; height: 150px"
+                        id="per_about"
+                        :rows="5"
+                        :maxLength="200"
+                        v-model="candidateData.preference.pre_description"
+                      />
                     </p>
                   </div>
                 </div>
@@ -572,7 +627,12 @@
                   <div class="card-custom text-start shadow-default">
                     <h4>Other requirements</h4>
                     <p class="text-start mb-0">
-                      {{ candidateData.preference.pre_other_preference }}
+                      <a-textarea
+                        id="per_about"
+                        :rows="3"
+                        :maxLength="200"
+                        v-model="candidateData.preference.pre_other_preference"
+                      />
                     </p>
                   </div>
                 </div>
@@ -748,6 +808,12 @@ export default {
           this.isLoading = false;
           this.candidateData = {
             ...response.data.data,
+            preference: {
+              ...response.data.data.preference,
+              pre_occupation: JSON.parse(
+                response.data.data.preference.pre_occupation
+              ),
+            },
           };
         }
       } catch (error) {
@@ -966,6 +1032,13 @@ export default {
       border-radius: 5px;
       overflow: hidden;
     }
+  }
+  .ant-input {
+    border: none;
+    pointer-events: none;
+  }
+  textarea {
+    resize: none;
   }
 }
 
