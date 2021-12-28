@@ -317,7 +317,8 @@ export default {
 		}),
 		...mapMutations({
 			setProfiles: 'search/setProfiles',
-			pushQuery: 'search/pushQuery'
+			pushQuery: 'search/pushQuery',
+			setLoading: 'search/setLoading'
 		}),
 		onDropdownChange({ name, value }) {
 			console.log({ name, value });
@@ -430,8 +431,21 @@ export default {
 			// if(!query) return;
 			console.log(query, '>>>>>>>>>>>>>>>>')
 			// const res = await ApiService.get(`v1/home-searches${query}`);
-			const res = await this.searchUser(`v1/home-searches${query}`);
-			this.setProfiles(res)
+			try{
+				this.setLoading(true);
+				const res = await this.searchUser(`v1/home-searches${query}`);
+				this.setLoading(false);
+				if(res == undefined) {
+					this.setProfiles([])
+				}
+				if(res.data && res.data.length ) {
+					this.setProfiles(res.data)
+				} 
+				
+			} catch(err) {
+				this.setLoading(false);
+				console.log(err)
+			}
 			// console.log(res, 'dtata tatat')
 		},
 		onAfterChangeSlider(value) {
