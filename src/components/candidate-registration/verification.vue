@@ -1,10 +1,10 @@
 <template>
-  <div
-    id="accordion"
-    class="verificationInfo p-3 rounded"
-    style="background: #f4f4f9"
-  >
+  <div id="accordion" class="verificationInfo p-3 rounded">
     <div class="verification-content" style="margin-top: 40px">
+      <div class="section-heading heading-text">
+        <h5>Verification Information</h5>
+        <p>Your Verification Information</p>
+      </div>
       <a-collapse
         default-active-key="1"
         :bordered="false"
@@ -273,13 +273,14 @@
                     >The format supported are JPEG, PNG, PDF. Maximum file size
                     2 mb</span
                   >
-                  <span
-                    @click="clearImg('font')"
-                    class="close-icon"
-                    v-if="verification.ver_image_front"
-                    ><img src="@/assets/icon/close.svg" alt="img"
-                  /></span>
+
                   <div class="img-preview mb-2">
+                    <span
+                      @click="clearImg('font')"
+                      class="close-icon"
+                      v-if="verification.ver_image_front"
+                      ><img src="@/assets/icon/close.svg" alt="img"
+                    /></span>
                     <img
                       :src="
                         imageFont ? imageFont : verification.ver_image_front
@@ -356,13 +357,14 @@
                     >The format supported are JPEG, PNG, PDF. Maximum file size
                     2 mb</span
                   >
-                  <span
-                    @click="clearImg('back')"
-                    class="close-icon"
-                    v-if="verification.ver_image_back"
-                    ><img src="@/assets/icon/close.svg" alt="img"
-                  /></span>
+
                   <div class="img-preview mb-2">
+                    <span
+                      @click="clearImg('back')"
+                      class="close-icon"
+                      v-if="verification.ver_image_back"
+                      ><img src="@/assets/icon/close.svg" alt="img"
+                    /></span>
                     <img
                       :src="imageBack ? imageBack : verification.ver_image_back"
                       width="180"
@@ -424,7 +426,14 @@
               <div class="col-12 col-md-6 none-padding">
                 <div class="mb-2 font-weight-bold">
                   <a-icon
-                    v-if="verification.ver_recommences_title"
+                    v-if="
+                      verification.ver_recommences_title &&
+                      verification.ver_recommences_first_name &&
+                      verification.ver_recommences_last_name &&
+                      verification.ver_recommences_occupation &&
+                      verification.ver_recommences_address &&
+                      verification.ver_recommences_mobile_no
+                    "
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
                   />Person of community standing who know you?
@@ -436,6 +445,7 @@
                   prop="ver_recommences_title"
                 >
                   <a-input
+                    :maxLength="10"
                     v-model="verification.ver_recommences_title"
                     class="w-100"
                     placeholder="Title"
@@ -450,6 +460,7 @@
                       prop="ver_recommences_first_name"
                     >
                       <a-input
+                        :maxLength="10"
                         v-model="verification.ver_recommences_first_name"
                         class="w-100 rounded-right"
                         placeholder="First Name"
@@ -465,6 +476,7 @@
                       <a-input
                         v-model="verification.ver_recommences_last_name"
                         class="w-100 rounded-left"
+                        :maxLength="10"
                         placeholder="Last Name"
                         @blur="onValueChange"
                       />
@@ -499,6 +511,7 @@
                   <a-textarea
                     @blur="onValueChange"
                     :rows="3"
+                    :maxLength="200"
                     autocomplete="off"
                     autocorrect="off"
                     autocapitalize="off"
@@ -556,6 +569,17 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <a-button
+                shape="round"
+                type="primary"
+                style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
+                class="mt-5"
+                @click="handleSubmitFormOne"
+              >
+                Save & Continue
+              </a-button>
             </div>
           </a-form-model>
         </a-collapse-panel>
@@ -622,6 +646,18 @@ export default {
   },
 
   methods: {
+    handleSubmitFormOne() {
+      this.$refs.verification.validate((valid) => {
+        if (valid) {
+        } else {
+          setTimeout(() => {
+            const el = document.querySelector(".has-error:first-of-type");
+            el.scrollIntoView();
+          }, 100);
+          return false;
+        }
+      });
+    },
     filterOption(input, option) {
       return option.componentOptions.children[0].text
         .trim()
@@ -756,6 +792,16 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+.section-heading {
+  text-align: center;
+  color: $color-brand;
+  h5 {
+    color: $color-brand;
+  }
+  p {
+    font-size: 14px;
+  }
+}
 .image-container {
   display: flex;
   flex-direction: column;

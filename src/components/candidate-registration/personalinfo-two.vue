@@ -570,7 +570,7 @@
           <a-button
             shape="round"
             type="primary"
-            style="float: right"
+            style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
             class="mt-5"
             @click="handleSubmitFormOne"
           >
@@ -939,6 +939,7 @@
                   id="per_health_condition"
                   placeholder="Exp: Bangladesh"
                   :rows="3"
+                  :maxLength="200"
                   v-model="personalInformation.general.per_health_condition"
                 ></a-textarea>
               </a-form-model-item>
@@ -979,7 +980,7 @@
           <a-button
             shape="round"
             type="primary"
-            style="float: right"
+            style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
             class="mt-5"
             @click="handleSubmitFormTwo"
           >
@@ -1176,6 +1177,7 @@
                 <a-input
                   @blur="onValueChange($event, 'contact')"
                   id="postCode"
+                  :maxLength="10"
                   placeholder="Post Code"
                   v-model="personalInformation.contact.per_permanent_post_code"
                 />
@@ -1376,6 +1378,7 @@
                   @blur="onValueChange($event, 'contact')"
                   id="per_permanent_address"
                   :rows="3"
+                  :maxLength="200"
                   v-model="personalInformation.contact.per_permanent_address"
                   placeholder="Sample Text"
                 ></a-textarea>
@@ -1441,9 +1444,7 @@
                       placeholder="Country Code"
                     >
                       <a-select-option value="">Select</a-select-option>
-                      <a-select-option value="+880">+880</a-select-option>
-                      <a-select-option value="+66">+66</a-select-option>
-                      <a-select-option value="+77">+77</a-select-option>
+                      <a-select-option value="+44">+44</a-select-option>
                     </a-select>
                   </a-form-model-item>
                 </div>
@@ -1452,6 +1453,7 @@
                     <a-input
                       @blur="onValueChange($event, 'contact')"
                       id="mobile_number"
+                      :maxLength="10"
                       v-model="personalInformation.contact.mobile_number"
                       placeholder="Mobile Number"
                     />
@@ -1551,7 +1553,7 @@
           <a-button
             shape="round"
             type="primary"
-            style="float: right"
+            style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
             class="mt-5"
             @click="handleSubmitFormThree"
           >
@@ -2393,24 +2395,24 @@
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                ref="per_thankfull_for"
-                prop="per_thankfull_for"
+                ref="per_improve_myself"
+                prop="per_improve_myself"
               >
                 <v-select
-                  id="per_things_enjoy"
+                  id="per_improve_myself"
                   :clearable="false"
                   :multiple="true"
                   class="nationality-select"
                   @input="
                     onMultiValueChange(
                       $event,
-                      'per_thankfull_for',
+                      'per_improve_myself',
                       'more_about'
                     )
                   "
-                  placeholder="Please select How you improve?"
+                  placeholder="Please select how you improve?"
                   :reduce="(option) => option.value"
-                  v-model="personalInformation.more_about.per_thankfull_for"
+                  v-model="personalInformation.more_about.per_improve_myself"
                   label="label"
                   :options="[]"
                   ><template #open-indicator>
@@ -2456,7 +2458,7 @@
                 <a
                   class="color-blue fw-700 fs-14"
                   data-toggle="collapse"
-                  href="#collapsePersonalInfoThankulFor"
+                  href="#collapsePersonalInfoImproveMyself"
                   role="button"
                   aria-expanded="false"
                   aria-controls="collapseExample"
@@ -2475,11 +2477,9 @@
               <div
                 class="collapse"
                 data-parent="#personalInfoAccordian"
-                id="collapsePersonalInfoThankulFor"
+                id="collapsePersonalInfoImproveMyself"
               >
-                <div class="card card-body bubble">
-                  kind of things are you thankful for
-                </div>
+                <div class="card card-body bubble">Improve myself</div>
               </div>
             </div>
           </div>
@@ -2491,7 +2491,7 @@
                   v-if="personalInformation.more_about.per_about"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />A little about me
+                />A little bit about me
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -2501,6 +2501,7 @@
                   id="per_about"
                   placeholder="Exp: 19/ burder way, england"
                   :rows="3"
+                  :maxLength="200"
                   v-model="personalInformation.more_about.per_about"
                 />
               </a-form-model-item>
@@ -2531,11 +2532,13 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoMoreAboutMe"
               >
-                <div class="card card-body bubble">A little about yourself</div>
+                <div class="card card-body bubble">
+                  A little bit about yourself
+                </div>
               </div>
             </div>
           </div>
-   <!-- Additional Info -->
+          <!-- Additional Info -->
           <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
@@ -2543,26 +2546,47 @@
                   v-if="personalInformation.more_about.per_about"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Additional Information(optional)
+                />Additional Information (optional)
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
-              <a-form-model-item ref="per_about" prop="per_about">
+              <a-form-model-item
+                ref="per_additional_info_text"
+                prop="per_additional_info_text"
+              >
                 <a-textarea
                   @blur="onValueChange($event, 'more_about')"
-                  id="per_about"
-                  placeholder="Exp: 19/ burder way, england"
+                  id="per_additional_info_text"
+                  placeholder="Additional Information"
+                  :maxLength="200"
                   :rows="3"
-                  v-model="personalInformation.more_about.per_about"
+                  v-model="
+                    personalInformation.more_about.per_additional_info_text
+                  "
                 />
               </a-form-model-item>
+              <div class="image-container text-center">
+                <input
+                  type="file"
+                  class="input-image"
+                  name="avatar"
+                  @change="getResume"
+                />
+                <div class="img-preview mb-2">
+                  <div class="mt-3 color-primary">{{ resumeDocument }}</div>
+                </div>
+                <span class="mb-2"
+                  >The format supported are pdf, docx. Maximum file size 15
+                  mb</span
+                >
+              </div>
             </div>
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
               <p>
                 <a
                   class="color-blue fw-700 fs-14"
                   data-toggle="collapse"
-                  href="#collapsePersonalInfoMoreAboutMe"
+                  href="#collapsePersonalInfoMoreAdditionaInfo"
                   role="button"
                   aria-expanded="false"
                   aria-controls="collapseExample"
@@ -2581,16 +2605,16 @@
               <div
                 class="collapse"
                 data-parent="#personalInfoAccordian"
-                id="collapsePersonalInfoMoreAboutMe"
+                id="collapsePersonalInfoMoreAdditionaInfo"
               >
-                <div class="card card-body bubble">A little about yourself</div>
+                <div class="card card-body bubble">Additional Information</div>
               </div>
             </div>
           </div>
           <a-button
             shape="round"
             type="primary"
-            style="float: right"
+            style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
             class="mt-5"
             @click="handleSubmitFormFour"
           >
@@ -2633,6 +2657,7 @@ export default {
     return {
       activeKey: 1,
       default_date: null,
+      resumeDocument: null,
       rules: RULESPERSONALINFO,
       employment_Statuses: Employment_Statuses,
       languages: languages,
@@ -2673,6 +2698,71 @@ export default {
 
       return () => popper.destroy();
     },
+    getResume(e) {
+      let file = e.target.files[0];
+
+      if (!this.imageSizeCheck(file) || !this.ValidateSingleInput(file)) {
+        file = "";
+        this.resumeDocument = "";
+        return;
+      }
+      this.resumeDocument = file.name;
+      this.personalInformation.more_about.per_additional_info_doc =
+        e.target.files[0];
+      this.$store
+        .dispatch("savePersonalMoreAboutFile", {
+          per_additional_info_doc:
+            this.personalInformation.more_about.per_additional_info_doc,
+        })
+        .then((data) => {})
+        .catch((error) => {});
+    },
+    imageSizeCheck(file) {
+      if (file["size"] > 2111775) {
+        this.$error({
+          title: "Validation Error",
+          content: "Image size can't be more than 2 mb",
+          center: true,
+        });
+        return false;
+      }
+      return true;
+    },
+    ValidateSingleInput(oInput) {
+      let _validFileExtensions = [".pdf", ".doc", ".docx"];
+
+      var sFileName = oInput.name;
+      if (sFileName.length > 0) {
+        var blnValid = false;
+        for (var j = 0; j < _validFileExtensions.length; j++) {
+          var sCurExtension = _validFileExtensions[j];
+          if (
+            sFileName
+              .substr(
+                sFileName.length - sCurExtension.length,
+                sCurExtension.length
+              )
+              .toLowerCase() == sCurExtension.toLowerCase()
+          ) {
+            blnValid = true;
+            break;
+          }
+        }
+
+        if (!blnValid) {
+          this.$error({
+            title: "Validation Error",
+            content: "File must be pdf, doc or docx",
+            center: true,
+          });
+          oInput.name = "";
+          return false;
+        }
+      }
+
+      return true;
+    },
+
     changeActivekey(key) {
       this.activeKey = key;
     },
@@ -2773,10 +2863,13 @@ export default {
     },
     async saveEssentialInfo() {
       await this.$store
-        .dispatch(
-          "savePersonalEssentialInfo",
-          this.personalInformation.essential
-        )
+        .dispatch("savePersonalEssentialInfo", {
+          ...this.personalInformation.essential,
+          per_religion_id:
+            this.personalInformation.essential.per_religion_id == 0
+              ? null
+              : this.personalInformation.essential.per_religion_id,
+        })
         .then((data) => {
           this.$emit("valueChange", {
             value: this.personalInformation,
@@ -2808,9 +2901,40 @@ export default {
         .catch((error) => {});
     },
     async saveMoreAboutInfo() {
+      let {
+        per_about,
+        per_additional_info_text,
+        per_children,
+        per_have_children,
+        per_marital_status,
+        per_smoker,
+        per_willing_to_relocate,
+        per_currently_living_with,
+        per_food_cuisine_like,
+        per_hobbies_interests,
+        per_improve_myself,
+        per_language_speak,
+        per_thankfull_for,
+        per_things_enjoy,
+      } = this.personalInformation.more_about;
       await this.$store
         .dispatch("savePersonalMoreAboutInfo", {
-          ...this.personalInformation.more_about,
+          ...{
+            per_about,
+            per_additional_info_text,
+            per_children,
+            per_have_children,
+            per_marital_status,
+            per_smoker,
+            per_willing_to_relocate,
+            per_currently_living_with,
+            per_food_cuisine_like,
+            per_hobbies_interests,
+            per_improve_myself,
+            per_language_speak,
+            per_thankfull_for,
+            per_things_enjoy,
+          },
           per_smoker: this.personalInformation.more_about.per_smoker
             ? this.personalInformation.more_about.per_smoker.toString()
             : "",
@@ -2904,7 +3028,37 @@ export default {
     color: #b3b2b2;
   }
 }
+input[type="file"] {
+  cursor: pointer;
+  width: 100%;
+  height: 34px;
+  overflow: hidden;
+  border-radius: 20px !important;
+}
 
+input[type="file"]:before {
+  width: 100%;
+  height: 32px;
+  font-size: 16px;
+  line-height: 32px;
+  content: "Upload";
+  display: inline-block;
+  color: white;
+  background: #8781bd;
+  border: 1px solid #98a0e2;
+  padding: 0 10px;
+  text-align: center;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+#checkIcon {
+  height: 18px;
+  margin-right: 5px;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  visibility: hidden;
+}
 .mobile-margin {
   margin-top: 0.5rem;
 }

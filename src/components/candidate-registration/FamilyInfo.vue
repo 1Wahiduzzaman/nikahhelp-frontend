@@ -306,7 +306,7 @@
 					<a-button
 						shape="round"
 						type="primary"
-						style="float: right"
+						style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
 						class="mt-3"
 						:loading="loadingButton"
 						@click="saveFamilyInfo"
