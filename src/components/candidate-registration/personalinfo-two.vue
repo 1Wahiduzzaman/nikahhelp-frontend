@@ -123,7 +123,9 @@
                   :key="default_date"
                   :default-date="personalInformation.essential.default_date"
                   v-model="personalInformation.essential.dob"
-                  :on-change="onChangeDD"
+                  v-bind:on-day-change="onDayChange"
+                  v-bind:on-month-change="onMonthChange"
+                  v-bind:on-year-change="onYearChange"
                   :maxYear="new Date().getFullYear() - 18"
                   :minYear="1940"
                 ></DropdownDatePicker>
@@ -2667,6 +2669,11 @@ export default {
       ethnicityList: ethnicities,
       arr: ARR_PersonalInfo,
       heightTV: HEIGHTS,
+      dateOfbirth: {
+        day: null,
+        month: null,
+        year: null,
+      },
     };
   },
 
@@ -2706,7 +2713,7 @@ export default {
         this.resumeDocument = "";
         return;
       }
-      if(!this.ValidateSingleInput(file)){
+      if (!this.ValidateSingleInput(file)) {
         file = "";
         this.resumeDocument = "";
         return;
@@ -2828,8 +2835,27 @@ export default {
         }
       });
     },
-    onChangeDD(d, m, y) {
-      this.save("essential");
+    onDayChange(d) {
+      this.dateOfbirth.day = d;
+      this.onChangeDD();
+    },
+    onMonthChange(m) {
+      this.dateOfbirth.month = m;
+      this.onChangeDD();
+    },
+    onYearChange(y) {
+      this.dateOfbirth.year = y;
+      this.onChangeDD();
+    },
+    onChangeDD() {
+      if (
+        Object.values(this.dateOfbirth).every(
+          (x) => x !== undefined && x !== null && x !== ""
+        )
+      ) {
+        this.personalInformation.essential.dob = `${this.dateOfbirth.year}/${this.dateOfbirth.month}/${this.dateOfbirth.day}`;
+        this.saveEssentialInfo();
+      }
     },
     onMultiValueChange(e, name, action) {
       if (this.personalInformation.more_about[name].length > 3) {
