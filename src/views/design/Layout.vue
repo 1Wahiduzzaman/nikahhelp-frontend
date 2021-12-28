@@ -387,9 +387,9 @@
           :collapsed="collapsed"
           @collapseSideBar="collapsed = !collapsed"
         >
-          <template v-slot:search>
+          <!-- <template v-slot:search>
             <SimpleSearch />
-          </template>
+          </template> -->
         </Sidebar>
       </a-layout-sider>
       <a-layout>
@@ -401,7 +401,7 @@
     <ModalContainer
       :modalKey="'manageTeamRedirect'"
       :width="'wide'"
-      :fullscreen="true"
+      :fullscreen="false"
       :hideOverlay="false"
     >
       <ManageTeamRedirect />
@@ -424,7 +424,6 @@ export default {
     Sidebar,
     ModalContainer,
     ManageTeamRedirect,
-    SimpleSearch: () => import("@/components/search/SimpleSearch.vue"),
   },
   created() {
     this.loadNotifications();
