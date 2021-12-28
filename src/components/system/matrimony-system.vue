@@ -33,9 +33,14 @@ export default {
       this.$socket.emit('ping', {user_id: loggedUser.id});
 
       this.sockets.subscribe('ping_success', function (res) {
-        // console.log(res);
         if (res && res.online_users) {
           this.online_users = res.online_users;
+        }
+      });
+
+      this.sockets.subscribe('receive_message', function (res) {
+        if(res) {
+          this.$store.state.chat.chats.unshift(res);
         }
       });
     }

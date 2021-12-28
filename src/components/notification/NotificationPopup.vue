@@ -3,7 +3,7 @@
         <div>
             <div class="dropdownNotify-title py-2 d-flex align-items-center">
                 <strong class="text-capitalize">{{ label }}</strong>
-                <span v-if="count > 0" class="ml-2 count">{{ count }}</span>
+<!--                <span v-if="count > 0" class="ml-2 count">{{ count }}</span>-->
             </div>
         </div>
         <div class="dropdown-divider"></div>
@@ -32,13 +32,13 @@
 
 <script>
 
-import ChatListItem from "./ChatListItem";
+import NotificationChatItem from "./NotificationChatItem";
 import NotificationListItem from "./NotificationListItem";
 import ShortListItem from "./ShortListItem";
 import TeamListItem from "./TeamListItem";
 const selectComponent = {
     chat: {
-        component: 'ChatListItem',
+        component: 'NotificationChatItem',
         label: 'chat',
         buttonLabel: 'Show all chat',
         link: 'ChatWindow'
@@ -83,7 +83,7 @@ export default {
         NotificationListItem,
         ShortListItem,
         TeamListItem,
-        ChatListItem
+        NotificationChatItem
     },
     computed: {
         componentName() {
