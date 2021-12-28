@@ -66,11 +66,11 @@
 					<router-link to="/chat-window" class="flex align-items-center">
 						<img class="mr-3" src="@/assets/icon/chat-dots-fill-secondary.svg" alt="icon" />
 						<span class="mb-0">Chat</span>
-<!--						<a-badge-->
-<!--							class="ml-2"-->
-<!--							:number-style="{ backgroundColor: '#e42076'}"-->
-<!--							count="10"-->
-<!--						/>-->
+						<a-badge
+							class="ml-2"
+							:number-style="{ backgroundColor: '#e42076'}"
+							:count="chats.length"
+						/>
 					</router-link>
 				</li>
 				<li class="list-item">
@@ -159,6 +159,9 @@ export default {
 		},
     unreadNotification() {
       return this.$store.state.notification.notifications.filter(item => item.seen == 0).length;
+    },
+    chats() {
+      return this.$store.state.chat.chats;
     }
 	},
 	props: {
