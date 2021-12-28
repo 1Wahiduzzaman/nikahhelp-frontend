@@ -17,7 +17,9 @@ import Success from "@/views/auth/Success.vue";
 import ForgetPassword from "@/views/auth/ForgetPassword.vue";
 import ResetPassword from "@/views/auth/ResetPassword.vue";
 import CandidateRegistration from "@/views/candidate-registration/CandidateRegistration.vue";
+import EditCandidateRegistration from "@/views/candidate-registration/EditCandidateRegistration.vue";
 import RepresentativeRegistration from "@/views/representative-registration/RepresentativeRegistration.vue";
+import EditRepresentativeRegistration from "@/views/representative-registration/EditRepresentativeRegistration.vue";
 import MemberTypeSelection from "@/views/MemberType/MemberTypeSelection.vue";
 import MemberNameInput from "@/views/MemberType/MemberNameInput.vue";
 
@@ -99,10 +101,25 @@ const AppRouter = new VueRouter({
             // beforeEnter: InitRoute,
 
         },
+        
         {
             path: "/representative-registration",
             name: "RepresentativeRegistration",
             component: RepresentativeRegistration,
+            // beforeEnter: InitRoute,
+
+        },
+        {
+            path: "/edit_candidate",
+            name: "EditCandidateRegistration",
+            component: EditCandidateRegistration,
+            // beforeEnter: InitRoute,
+
+        },
+        {
+            path: "/edit_representative",
+            name: "EditRepresentativeRegistration",
+            component: EditRepresentativeRegistration,
             // beforeEnter: InitRoute,
 
         },
@@ -207,6 +224,7 @@ const AppRouter = new VueRouter({
                     component: ChatWindow,
 
                 },
+               
 
                 {
                     path: "/shortlist",

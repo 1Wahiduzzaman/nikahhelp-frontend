@@ -21,9 +21,9 @@
 					<button disabled class="btn btn-primary px-4">Gallery</button>
 				</div>
 				<div class="col">
-					<a href="/representative-registration" class="btn btn-primary px-4"
-						><img src="@/assets/icon/pencil-square.svg">Edit Profile</a
-					>
+					 <router-link to="/edit_representative" class="btn btn-primary px-4">
+                <img src="@/assets/icon/pencil-square.svg" />Edit Profile
+              </router-link>
 				</div>
 				<div class="col">
 					<button class="btn btn-primary px-4" @click="startConversation">
@@ -184,20 +184,7 @@ export default {
 		};
 	},
 	created() {
-		var self = this;
-		firebase
-			.collection("conversations")
-			.get()
-			.then((querySnapshot) => {
-				console.log(`Found ${querySnapshot.size} documents.`);
-				querySnapshot.forEach((doc) => {
-					var convDetails = doc.data();
-					convDetails.id = doc.id;
-					self.conversations.push(convDetails);
-				});
-			});
-
-		console.log("conversations loaded");
+		
 	},
 	methods: {
 		startConversation() {

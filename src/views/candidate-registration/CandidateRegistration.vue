@@ -1,8 +1,8 @@
 <template>
   <div class="candidate-registration">
     <Header />
-
-    <div class="steps ma-steps">
+    <Loader v-if="isLoading" :isLoading="isLoading" />
+    <div v-else class="steps ma-steps">
       <div class="steper-header text-center heading-text px-3">
         <h4>CANDIDATE PROFILE AND REQUIREMENT FORM</h4>
         <p>Please answer all question accurately and in full</p>
@@ -190,6 +190,7 @@ export default {
   },
   data() {
     return {
+      isLoading:false,
       fixedStatus: {
         headerIsFixed: false,
       },
@@ -263,10 +264,12 @@ export default {
       }
       this.checkExistData();
     },
-    getCandidateInitialInfo: async function () {
+   getCandidateInitialInfo: async function () {
+      this.isLoading = true;
       const user = JSON.parse(localStorage.getItem("user"));
       const response = await ApiService.get("v1/candidate/initial-info");
       if (response.status === 200) {
+        this.isLoading = false;
         const details = {
           countries: response.data.data.countries,
           imageModel: {
@@ -499,8 +502,10 @@ export default {
             ""
           );
         }
-        this.current = response.data.data.user.data_input_status;
+
         this.checkExistData();
+      } else {
+        this.isLoading = false;
       }
     },
     async saveDataInputStatus(satge) {

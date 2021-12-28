@@ -2,30 +2,31 @@
 <template>
   <div class="r-registration-container">
     <Header />
-    <div class="steps ma-steps">
+    <Loader v-if="isLoading" :isLoading="isLoading" />
+    <div v-else class="steps ma-steps">
       <div class="steper-header text-center heading-text px-3">
         <h4>REPRESENTATIVE PROFILE FORM</h4>
         <p>Please answer all question accurately and in full</p>
       </div>
 
       <VueFixedHeader
-          @change="updateFixedStatus"
-          :threshold="propsData.threshold"
-          :headerClass="propsData.headerClass"
-          :fixedClass="propsData.fixedClass"
-          :hideScrollUp="propsData.hideScrollUp"
+        @change="updateFixedStatus"
+        :threshold="propsData.threshold"
+        :headerClass="propsData.headerClass"
+        :fixedClass="propsData.fixedClass"
+        :hideScrollUp="propsData.hideScrollUp"
       >
         <div class="step-bar">
           <a-steps
-              class="desktop-block"
-              :current="current"
-              style="max-width: 100%"
-              labelPlacement="vertical"
+            class="desktop-block"
+            :current="current"
+            style="max-width: 100%"
+            labelPlacement="vertical"
           >
             <a-step
-                v-for="item in steps"
-                :key="item.title"
-                :title="item.title"
+              v-for="item in steps"
+              :key="item.title"
+              :title="item.title"
             />
           </a-steps>
           <div class="mobile-header">
@@ -34,20 +35,20 @@
             </h4>
             <div class="mobile-block px-3">
               <div
-                  class="mobile-step"
-                  :class="{ 'bg-primary': current >= 0 }"
+                class="mobile-step"
+                :class="{ 'bg-primary': current >= 0 }"
               ></div>
               <div
-                  class="mobile-step ml-2"
-                  :class="{ 'bg-primary': current >= 1 }"
+                class="mobile-step ml-2"
+                :class="{ 'bg-primary': current >= 1 }"
               ></div>
               <div
-                  class="mobile-step ml-2"
-                  :class="{ 'bg-primary': current >= 2 }"
+                class="mobile-step ml-2"
+                :class="{ 'bg-primary': current >= 2 }"
               ></div>
               <div
-                  class="mobile-step ml-2"
-                  :class="{ 'bg-primary': current >= 3 }"
+                class="mobile-step ml-2"
+                :class="{ 'bg-primary': current >= 3 }"
               ></div>
             </div>
           </div>
@@ -76,22 +77,22 @@
 
       <div class="steps-content px-2" v-if="current == 0">
         <PersonalInfoTwo
-            :representativeDetails="representativeDetails"
-            :personalInformation="representativeDetails.personalInformation"
-            ref="personInfoRefTwo"
+          :representativeDetails="representativeDetails"
+          :personalInformation="representativeDetails.personalInformation"
+          ref="personInfoRefTwo"
         />
       </div>
       <div class="steps-content px-2" v-if="current == 1">
         <Verification
-            :representativeDetails="representativeDetails"
-            :verification="representativeDetails.verification"
-            ref="VerificationRef"
+          :representativeDetails="representativeDetails"
+          :verification="representativeDetails.verification"
+          ref="VerificationRef"
         />
       </div>
       <div class="steps-content px-2" v-if="current == 2">
         <ImageUpload
-            :imageModel="representativeDetails.imageModel"
-            ref="imageUploadRef"
+          :imageModel="representativeDetails.imageModel"
+          ref="imageUploadRef"
         />
       </div>
       <div class="steps-content" v-if="current == 3">
@@ -99,41 +100,41 @@
       </div>
       <div class="steps-action text-right pb-5 clearfix bottom-padding">
         <a-button
-            v-if="current < steps.length - 1"
-            shape="round"
-            type="primary"
-            style="float: right"
-            class="mt-3"
-            @click="next"
+          v-if="current < steps.length - 1"
+          shape="round"
+          type="primary"
+          style="float: right"
+          class="mt-3"
+          @click="next"
         >
           Next
         </a-button>
         <a-button
-            v-if="current == steps.length - 1"
-            type="primary"
-            shape="round"
-            style="float: right; margin-top: 15px"
-            @click="doneBtn"
+          v-if="current == steps.length - 1"
+          type="primary"
+          shape="round"
+          style="float: right; margin-top: 15px"
+          @click="doneBtn"
         >
           Review and Publish
         </a-button>
         <a-button
-            v-if="current > 0"
-            shape="round"
-            style="float: right; margin-right: 10px"
-            class="mt-3"
-            @click="prev"
+          v-if="current > 0"
+          shape="round"
+          style="float: right; margin-right: 10px"
+          class="mt-3"
+          @click="prev"
         >
           Previous
         </a-button>
 
         <a-button
-            v-if="current < steps.length - 1"
-            shape="round"
-            type="primary"
-            style="float: left"
-            class="mt-3"
-            @click="saveExit"
+          v-if="current < steps.length - 1"
+          shape="round"
+          type="primary"
+          style="float: left"
+          class="mt-3"
+          @click="saveExit"
         >
           Save & Exit
         </a-button>
@@ -176,6 +177,7 @@ export default {
 
   data() {
     return {
+      isLoading: false,
       fixedStatus: {
         headerIsFixed: false,
       },
@@ -219,19 +221,30 @@ export default {
       this.fixedStatus.headerIsFixed = next;
     },
     getRepresentativeInitialInfo: async function () {
+      this.isLoading = true;
       const user = JSON.parse(localStorage.getItem("user"));
       console.log("user", user);
       const response = await this.$store.dispatch("getRepresentativeData");
       if (response.status === 200) {
+        this.isLoading = false;
         const details = {
           countries: response.data.data.countries,
           occupations: response.data.data.occupations,
           id: user.id,
           imageModel: {
             ...response.data.data.image_upload,
-            only_team_can_see: response.data.data.image_upload.only_team_can_see==0?true:false,
-            team_connection_can_see: response.data.data.image_upload.team_connection_can_seee==0?true:false,
-            anybody_can_see: response.data.data.image_upload.anybody_can_seee==0?true:false,
+            only_team_can_see:
+              response.data.data.image_upload.only_team_can_see == 0
+                ? true
+                : false,
+            team_connection_can_see:
+              response.data.data.image_upload.team_connection_can_seee == 0
+                ? true
+                : false,
+            anybody_can_see:
+              response.data.data.image_upload.anybody_can_seee == 0
+                ? true
+                : false,
           },
           verification: {
             ...response.data.data.verification,
@@ -302,6 +315,8 @@ export default {
           );
         }
         // this.current = response.data.data.user.data_input_status;
+      } else {
+        this.isLoading = false;
       }
     },
     async onChangeCountry(e, name) {

@@ -33,29 +33,28 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.essential.per_gender"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.essential.per_gender"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your gender?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_gender" prop="per_gender">
                 <v-select
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="onValueChange($event, 'essential')"
-                    id="per_gender"
-                    :reduce="(option) => option.value"
-                    placeholder="Select your gender"
-                    v-model="personalInformation.essential.per_gender"
-                    label="name"
-                    :options="[
-                        { name: 'Male', value: 1 },
-                        { name: 'Female', value: 2 },
-                      ]"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange($event, 'essential')"
+                  id="per_gender"
+                  :reduce="(option) => option.value"
+                  placeholder="Select your gender"
+                  v-model="personalInformation.essential.per_gender"
+                  label="name"
+                  :options="[
+                    { name: 'Male', value: 1 },
+                    { name: 'Female', value: 2 },
+                  ]"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
                 <!-- <a-select
                   @change="onValueChange($event, 'essential')"
@@ -76,28 +75,28 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoGender"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoGender"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[27].first"
-                          @click="arr[27].first = !arr[27].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[27].first"
+                    @click="arr[27].first = !arr[27].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[27].first = !arr[27].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  data-parent="#personalInfoAccordian"
-                  class="collapse"
-                  id="collapsePersonalInfoGender"
+                data-parent="#personalInfoAccordian"
+                class="collapse"
+                id="collapsePersonalInfoGender"
               >
                 <div class="card card-body bubble">Select Your Gender</div>
               </div>
@@ -109,52 +108,52 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.essential.dob"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.essential.dob"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your date of birth?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="dob" prop="dob" class="dob-select">
                 <DropdownDatePicker
-                    id="dob"
-                    displayFormat="dmy"
-                    dropdownClass="custom-select"
-                    :key="default_date"
-                    :default-date="personalInformation.essential.default_date"
-                    v-model="personalInformation.essential.dob"
-                    :on-change="onChangeDD"
-                    :maxYear="new Date().getFullYear() - 18"
-                    :minYear="1940"
+                  id="dob"
+                  displayFormat="dmy"
+                  dropdownClass="custom-select"
+                  :key="default_date"
+                  :default-date="personalInformation.essential.default_date"
+                  v-model="personalInformation.essential.dob"
+                  :on-change="onChangeDD"
+                  :maxYear="new Date().getFullYear() - 18"
+                  :minYear="1940"
                 ></DropdownDatePicker>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoDateOfBirth"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoDateOfBirth"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[26].first"
-                          @click="arr[26].first = !arr[26].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[26].first"
+                    @click="arr[26].first = !arr[26].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[26].first = !arr[26].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  data-parent="#personalInfoAccordian"
-                  class="collapse"
-                  id="collapsePersonalInfoDateOfBirth"
+                data-parent="#personalInfoAccordian"
+                class="collapse"
+                id="collapsePersonalInfoDateOfBirth"
               >
                 <div class="card card-body bubble">Choose DOB</div>
               </div>
@@ -166,34 +165,34 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.essential.per_height"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.essential.per_height"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your height?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_height" prop="per_height">
                 <a-select
-                    @change="onValueChange($event, 'essential')"
-                    id="per_height"
-                    :showSearch="true"
-                    option-filter-prop="children"
-                    :filter-option="filterOption"
-                    :showArrow="true"
-                    style="width: 150px"
-                    placeholder="Please select your height"
-                    v-model.number="personalInformation.essential.per_height"
-                    class="select-ma w-100"
+                  @change="onValueChange($event, 'essential')"
+                  id="per_height"
+                  :showSearch="true"
+                  option-filter-prop="children"
+                  :filter-option="filterOption"
+                  :showArrow="true"
+                  style="width: 150px"
+                  placeholder="Please select your height"
+                  v-model.number="personalInformation.essential.per_height"
+                  class="select-ma w-100"
                 >
                   <a-select-option :value="0" disabled
-                  >Select your height</a-select-option
+                    >Select your height</a-select-option
                   >
                   <a-select-option
-                      :value="item.value"
-                      :key="key"
-                      style="width: 100px"
-                      v-for="(item, key) in heightTV"
+                    :value="item.value"
+                    :key="key"
+                    style="width: 100px"
+                    v-for="(item, key) in heightTV"
                   >
                     <div v-html="item.label"></div>
                   </a-select-option>
@@ -203,28 +202,28 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoHeight"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoHeight"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[25].first"
-                          @click="arr[25].first = !arr[25].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[25].first"
+                    @click="arr[25].first = !arr[25].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[25].first = !arr[25].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoHeight"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoHeight"
               >
                 <div class="card card-body bubble">
                   Please provide height in cm
@@ -238,31 +237,28 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.essential.per_employment_status"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.essential.per_employment_status"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your employment status?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                  ref="per_employment_status"
-                  prop="per_employment_status"
+                ref="per_employment_status"
+                prop="per_employment_status"
               >
                 <v-select
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="onValueChange($event, 'essential')"
-                    id="per_employment_status"
-                    :reduce="(option) => option.value"
-                    placeholder="Select your employment status"
-                    v-model="
-                        personalInformation.essential.per_employment_status
-                      "
-                    label="name"
-                    :options="employment_Statuses"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange($event, 'essential')"
+                  id="per_employment_status"
+                  :reduce="(option) => option.value"
+                  placeholder="Select your employment status"
+                  v-model="personalInformation.essential.per_employment_status"
+                  label="name"
+                  :options="employment_Statuses"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
                 <!-- <a-select
                   @change="onValueChange($event, 'essential')"
@@ -289,28 +285,28 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoEmploymentSatus"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoEmploymentSatus"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[24].first"
-                          @click="arr[24].first = !arr[24].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[24].first"
+                    @click="arr[24].first = !arr[24].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[24].first = !arr[24].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  data-parent="#personalInfoAccordian"
-                  class="collapse"
-                  id="collapsePersonalInfoEmploymentSatus"
+                data-parent="#personalInfoAccordian"
+                class="collapse"
+                id="collapsePersonalInfoEmploymentSatus"
               >
                 <div class="card card-body bubble">
                   Your current employment status
@@ -324,26 +320,25 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.essential.per_occupation"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.essential.per_occupation"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your occupation?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_occupation" prop="per_occupation">
                 <v-select
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="onValueChange($event, 'essential')"
-                    id="per_occupation"
-                    placeholder="Please select your occupation"
-                    :reduce="(option) => option.name"
-                    v-model="personalInformation.essential.per_occupation"
-                    label="name"
-                    :options="candidateDetails.occupations"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange($event, 'essential')"
+                  id="per_occupation"
+                  placeholder="Please select your occupation"
+                  :reduce="(option) => option.name"
+                  v-model="personalInformation.essential.per_occupation"
+                  label="name"
+                  :options="candidateDetails.occupations"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
                 <!-- <a-select
                   @change="onValueChange($event, 'essential')"
@@ -374,32 +369,30 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoOccupation"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoOccupation"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[23].first"
-                          @click="arr[23].first = !arr[23].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[23].first"
+                    @click="arr[23].first = !arr[23].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[23].first = !arr[23].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoOccupation"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoOccupation"
               >
-                <div class="card card-body bubble">
-                  Your current profession
-                </div>
+                <div class="card card-body bubble">Your current profession</div>
               </div>
             </div>
           </div>
@@ -409,33 +402,28 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="
-                        personalInformation.essential.per_education_level_id
-                      "
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.essential.per_education_level_id"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your highest level of education?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                  ref="per_education_level_id"
-                  prop="per_education_level_id"
+                ref="per_education_level_id"
+                prop="per_education_level_id"
               >
                 <v-select
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="onValueChange($event, 'essential')"
-                    id="per_education_level_id"
-                    :reduce="(option) => option.id"
-                    placeholder="Please select your education status"
-                    v-model="
-                        personalInformation.essential.per_education_level_id
-                      "
-                    label="name"
-                    :options="candidateDetails.studylevels"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange($event, 'essential')"
+                  id="per_education_level_id"
+                  :reduce="(option) => option.id"
+                  placeholder="Please select your education status"
+                  v-model="personalInformation.essential.per_education_level_id"
+                  label="name"
+                  :options="candidateDetails.studylevels"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
                 <!-- <a-select
                   @change="onValueChange($event, 'essential')"
@@ -465,28 +453,28 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoHighestLevelEducation"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoHighestLevelEducation"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[22].first"
-                          @click="arr[22].first = !arr[22].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[22].first"
+                    @click="arr[22].first = !arr[22].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[22].first = !arr[22].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoHighestLevelEducation"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoHighestLevelEducation"
               >
                 <div class="card card-body bubble">
                   Your highest level of education
@@ -500,31 +488,27 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.essential.per_religion_id"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.essential.per_religion_id"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your religion?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
-              <a-form-model-item
-                  ref="per_religion_id"
-                  prop="per_religion_id"
-              >
+              <a-form-model-item ref="per_religion_id" prop="per_religion_id">
                 <v-select
-                    :calculate-position="withPopper"
-                    append-to-body
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="onValueChange($event, 'essential')"
-                    id="per_religion_id"
-                    :reduce="(option) => option.id"
-                    placeholder="Select your religion"
-                    v-model="personalInformation.essential.per_religion_id"
-                    label="name"
-                    :options="candidateDetails.religions"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  :calculate-position="withPopper"
+                  append-to-body
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange($event, 'essential')"
+                  id="per_religion_id"
+                  :reduce="(option) => option.id"
+                  placeholder="Select your religion"
+                  v-model="personalInformation.essential.per_religion_id"
+                  label="name"
+                  :options="candidateDetails.religions"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
                 <!-- <a-select
                   @change="onValueChange($event, 'essential')"
@@ -553,28 +537,28 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoReligion"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoReligion"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[21].first"
-                          @click="arr[21].first = !arr[21].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[21].first"
+                    @click="arr[21].first = !arr[21].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[21].first = !arr[21].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoReligion"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoReligion"
               >
                 <div class="card card-body bubble">Your religion</div>
               </div>
@@ -615,25 +599,24 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.general.per_ethnicity"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.general.per_ethnicity"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your ethnicity?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_ethnicity" prop="per_ethnicity">
                 <v-select
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="onValueChange($event, 'general')"
-                    id="per_ethnicity"
-                    placeholder="Please select your ethnicities"
-                    v-model="personalInformation.general.per_ethnicity"
-                    label="name"
-                    :options="candidateDetails.ethnicities"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange($event, 'general')"
+                  id="per_ethnicity"
+                  placeholder="Please select your ethnicities"
+                  v-model="personalInformation.general.per_ethnicity"
+                  label="name"
+                  :options="candidateDetails.ethnicities"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
                 <!-- <a-select
                   @change="onValueChange($event, 'general')"
@@ -665,28 +648,28 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoEthnicity"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoEthnicity"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[20].first"
-                          @click="arr[20].first = !arr[20].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[20].first"
+                    @click="arr[20].first = !arr[20].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[20].first = !arr[20].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoEthnicity"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoEthnicity"
               >
                 <div class="card card-body bubble">Your Ethnicity</div>
               </div>
@@ -698,28 +681,27 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.general.per_mother_tongue"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.general.per_mother_tongue"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your mother tongue?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                  ref="per_mother_tongue"
-                  prop="per_mother_tongue"
+                ref="per_mother_tongue"
+                prop="per_mother_tongue"
               >
                 <v-select
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="onValueChange($event, 'general')"
-                    id="per_mother_tongue"
-                    placeholder="Select your mother tongue"
-                    v-model="personalInformation.general.per_mother_tongue"
-                    label="name"
-                    :options="candidateDetails.languages"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange($event, 'general')"
+                  id="per_mother_tongue"
+                  placeholder="Select your mother tongue"
+                  v-model="personalInformation.general.per_mother_tongue"
+                  label="name"
+                  :options="candidateDetails.languages"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
                 <!-- <a-select
                   @change="onValueChange($event, 'general')"
@@ -749,32 +731,30 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoSpeakingLanguage"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoSpeakingLanguage"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[19].first"
-                          @click="arr[19].first = !arr[19].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[19].first"
+                    @click="arr[19].first = !arr[19].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[19].first = !arr[19].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoSpeakingLanguage"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoSpeakingLanguage"
               >
-                <div class="card card-body bubble">
-                  Your Mother Language
-                </div>
+                <div class="card card-body bubble">Your Mother Language</div>
               </div>
             </div>
           </div>
@@ -784,29 +764,25 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.general.per_nationality"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.general.per_nationality"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your nationality?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
-              <a-form-model-item
-                  ref="per_nationality"
-                  prop="per_nationality"
-              >
+              <a-form-model-item ref="per_nationality" prop="per_nationality">
                 <v-select
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="onValueChange($event, 'general')"
-                    id="per_nationality"
-                    placeholder="Select Country"
-                    :reduce="(option) => option.id"
-                    v-model="personalInformation.general.per_nationality"
-                    label="name"
-                    :options="candidateDetails.countries"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange($event, 'general')"
+                  id="per_nationality"
+                  placeholder="Select Country"
+                  :reduce="(option) => option.id"
+                  v-model="personalInformation.general.per_nationality"
+                  label="name"
+                  :options="candidateDetails.countries"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
                 <!-- <a-select
                   @change="onValueChange($event, 'general')"
@@ -835,28 +811,28 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfonationality"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfonationality"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[18].first"
-                          @click="arr[18].first = !arr[18].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[18].first"
+                    @click="arr[18].first = !arr[18].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[18].first = !arr[18].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfonationality"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfonationality"
               >
                 <div class="card card-body bubble">Your Nationality</div>
               </div>
@@ -868,29 +844,28 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.general.per_country_of_birth"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.general.per_country_of_birth"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your country of birth?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                  ref="per_country_of_birth"
-                  prop="per_country_of_birth"
+                ref="per_country_of_birth"
+                prop="per_country_of_birth"
               >
                 <v-select
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="onValueChange($event, 'general')"
-                    id="per_country_of_birth"
-                    placeholder=" Select your Country of birth"
-                    :reduce="(option) => option.id"
-                    v-model="personalInformation.general.per_country_of_birth"
-                    label="name"
-                    :options="candidateDetails.countries"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange($event, 'general')"
+                  id="per_country_of_birth"
+                  placeholder=" Select your Country of birth"
+                  :reduce="(option) => option.id"
+                  v-model="personalInformation.general.per_country_of_birth"
+                  label="name"
+                  :options="candidateDetails.countries"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
                 <!-- <a-select
                   @change="onValueChange($event, 'general')"
@@ -919,28 +894,26 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoCountryOfBirth"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoCountryOfBirth"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[17].first"
-                          @click="arr[17].first = !arr[17].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[17].first"
+                    @click="arr[17].first = !arr[17].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[17].first = !arr[17].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div class="collapse" id="collapsePersonalInfoCountryOfBirth">
-                <div class="card card-body bubble">
-                  Your country of birth
-                </div>
+                <div class="card card-body bubble">Your country of birth</div>
               </div>
             </div>
           </div>
@@ -950,51 +923,51 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.general.per_health_condition"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.general.per_health_condition"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />How would you describe your general health and wellbeing?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                  ref="per_health_condition"
-                  prop="per_health_condition"
+                ref="per_health_condition"
+                prop="per_health_condition"
               >
                 <a-textarea
-                    @blur="onValueChange($event, 'general')"
-                    id="per_health_condition"
-                    placeholder="Exp: Bangladesh"
-                    :rows="3"
-                    v-model="personalInformation.general.per_health_condition"
+                  @blur="onValueChange($event, 'general')"
+                  id="per_health_condition"
+                  placeholder="Exp: Bangladesh"
+                  :rows="3"
+                  v-model="personalInformation.general.per_health_condition"
                 ></a-textarea>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoHealthCondition"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoHealthCondition"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[16].first"
-                          @click="arr[16].first = !arr[16].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[16].first"
+                    @click="arr[16].first = !arr[16].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[16].first = !arr[16].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoHealthCondition"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoHealthCondition"
               >
                 <div class="card card-body bubble">
                   Your current health condition
@@ -1035,13 +1008,12 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="
-                        personalInformation.contact
-                          .per_current_residence_country &&
-                        personalInformation.contact.per_current_residence_city
-                      "
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="
+                    personalInformation.contact.per_current_residence_country &&
+                    personalInformation.contact.per_current_residence_city
+                  "
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your current place of residence?
               </div>
             </div>
@@ -1049,26 +1021,24 @@
               <div class="row">
                 <div class="col-12 col-md-6">
                   <a-form-model-item
-                      ref="per_current_residence_country"
-                      prop="per_current_residence_country"
+                    ref="per_current_residence_country"
+                    prop="per_current_residence_country"
                   >
                     <v-select
-                        :clearable="false"
-                        class="style-chooser"
-                        @input="
-                            onCountryChange($event, 'contact', 'residence')
-                          "
-                        id="per_current_residence_country"
-                        placeholder="Select Country"
-                        v-model="
-                            personalInformation.contact
-                              .per_current_residence_country
-                          "
-                        :reduce="(option) => option.id"
-                        label="name"
-                        :options="candidateDetails.countries"
-                    ><template #open-indicator>
-                      <a-icon type="down" /> </template
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onCountryChange($event, 'contact', 'residence')"
+                      id="per_current_residence_country"
+                      placeholder="Select Country"
+                      v-model="
+                        personalInformation.contact
+                          .per_current_residence_country
+                      "
+                      :reduce="(option) => option.id"
+                      label="name"
+                      :options="candidateDetails.countries"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
                     ></v-select>
                     <!-- <a-select
                       @change="
@@ -1101,24 +1071,23 @@
                 </div>
                 <div class="col-12 col-md-6 mobile-margin">
                   <a-form-model-item
-                      ref="per_current_residence_city"
-                      prop="per_current_residence_city"
+                    ref="per_current_residence_city"
+                    prop="per_current_residence_city"
                   >
                     <v-select
-                        :clearable="false"
-                        class="style-chooser"
-                        @input="onValueChange($event, 'contact')"
-                        id="per_current_residence_city"
-                        placeholder="Select City"
-                        v-model.number="
-                            personalInformation.contact
-                              .per_current_residence_city
-                          "
-                        :reduce="(option) => option.name"
-                        label="name"
-                        :options="personalInformation.contact.residenceCities"
-                    ><template #open-indicator>
-                      <a-icon type="down" /> </template
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange($event, 'contact')"
+                      id="per_current_residence_city"
+                      placeholder="Select City"
+                      v-model.number="
+                        personalInformation.contact.per_current_residence_city
+                      "
+                      :reduce="(option) => option.name"
+                      label="name"
+                      :options="personalInformation.contact.residenceCities"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
                     ></v-select>
                     <!-- <a-select
                       @change="onValueChange($event, 'contact')"
@@ -1151,28 +1120,28 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoCurrentResidenceCity"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoCurrentResidenceCity"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[15].first"
-                          @click="arr[15].first = !arr[15].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[15].first"
+                    @click="arr[15].first = !arr[15].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[15].first = !arr[15].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoCurrentResidenceCity"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoCurrentResidenceCity"
               >
                 <div class="card card-body bubble">
                   Provide current residence's country and city
@@ -1183,7 +1152,9 @@
 
           <!-- Permanent Address Heading -->
           <div class="pt-3">
-            <div class="mb-2 font-weight-bold fs-16">What is your permanent address?</div>
+            <div class="mb-2 font-weight-bold fs-16">
+              What is your permanent address?
+            </div>
           </div>
 
           <!-- Permanent Post Code  -->
@@ -1191,52 +1162,50 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.contact.per_permanent_post_code"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.contact.per_permanent_post_code"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />Post Code
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                  ref="per_permanent_post_code"
-                  prop="per_permanent_post_code"
+                ref="per_permanent_post_code"
+                prop="per_permanent_post_code"
               >
                 <a-input
-                    @blur="onValueChange($event, 'contact')"
-                    id="postCode"
-                    placeholder="Post Code"
-                    v-model="
-                        personalInformation.contact.per_permanent_post_code
-                      "
+                  @blur="onValueChange($event, 'contact')"
+                  id="postCode"
+                  placeholder="Post Code"
+                  v-model="personalInformation.contact.per_permanent_post_code"
                 />
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoPostCode"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoPostCode"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[14].first"
-                          @click="arr[14].first = !arr[14].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[14].first"
+                    @click="arr[14].first = !arr[14].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[14].first = !arr[14].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoPostCode"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoPostCode"
               >
                 <div class="card card-body bubble">
                   Post Code for permanent address
@@ -1250,12 +1219,12 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="
-                        personalInformation.contact.per_permanent_country &&
-                        personalInformation.contact.per_permanent_city
-                      "
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="
+                    personalInformation.contact.per_permanent_country &&
+                    personalInformation.contact.per_permanent_city
+                  "
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />Permanent Country and City
               </div>
             </div>
@@ -1263,25 +1232,23 @@
               <div class="row">
                 <div class="col-12 col-md-6">
                   <a-form-model-item
-                      ref="per_permanent_country"
-                      prop="per_permanent_country"
+                    ref="per_permanent_country"
+                    prop="per_permanent_country"
                   >
                     <v-select
-                        :clearable="false"
-                        class="style-chooser"
-                        @input="
-                            onCountryChange($event, 'contact', 'permanant')
-                          "
-                        id="per_permanent_country"
-                        placeholder="Select Country"
-                        v-model="
-                            personalInformation.contact.per_permanent_country
-                          "
-                        :reduce="(option) => option.id"
-                        label="name"
-                        :options="candidateDetails.countries"
-                    ><template #open-indicator>
-                      <a-icon type="down" /> </template
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onCountryChange($event, 'contact', 'permanant')"
+                      id="per_permanent_country"
+                      placeholder="Select Country"
+                      v-model="
+                        personalInformation.contact.per_permanent_country
+                      "
+                      :reduce="(option) => option.id"
+                      label="name"
+                      :options="candidateDetails.countries"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
                     ></v-select>
                     <!-- <a-select
                       @change="
@@ -1313,23 +1280,21 @@
                 </div>
                 <div class="col-12 col-md-6 mobile-margin">
                   <a-form-model-item
-                      ref="per_permanent_city"
-                      prop="per_permanent_city"
+                    ref="per_permanent_city"
+                    prop="per_permanent_city"
                   >
                     <v-select
-                        :clearable="false"
-                        class="style-chooser"
-                        @input="onValueChange($event, 'contact')"
-                        id="per_permanent_city"
-                        placeholder="Select City"
-                        v-model="
-                            personalInformation.contact.per_permanent_city
-                          "
-                        :reduce="(option) => option.name"
-                        label="name"
-                        :options="personalInformation.contact.permanantCities"
-                    ><template #open-indicator>
-                      <a-icon type="down" /> </template
+                      :clearable="false"
+                      class="style-chooser"
+                      @input="onValueChange($event, 'contact')"
+                      id="per_permanent_city"
+                      placeholder="Select City"
+                      v-model="personalInformation.contact.per_permanent_city"
+                      :reduce="(option) => option.name"
+                      label="name"
+                      :options="personalInformation.contact.permanantCities"
+                      ><template #open-indicator>
+                        <a-icon type="down" /> </template
                     ></v-select>
                     <!-- <a-select
                       @change="onValueChange($event, 'contact')"
@@ -1361,28 +1326,28 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#personalInfoParmanentCountryCity"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#personalInfoParmanentCountryCity"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[13].first"
-                          @click="arr[13].first = !arr[13].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[13].first"
+                    @click="arr[13].first = !arr[13].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[13].first = !arr[13].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="personalInfoParmanentCountryCity"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="personalInfoParmanentCountryCity"
               >
                 <div class="card card-body bubble">
                   Permanent address Country and City
@@ -1396,53 +1361,51 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.contact.per_permanent_address"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.contact.per_permanent_address"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />Home Address
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                  ref="per_permanent_address"
-                  prop="per_permanent_address"
+                ref="per_permanent_address"
+                prop="per_permanent_address"
               >
                 <a-textarea
-                    @blur="onValueChange($event, 'contact')"
-                    id="per_permanent_address"
-                    :rows="3"
-                    v-model="
-                        personalInformation.contact.per_permanent_address
-                      "
-                    placeholder="Sample Text"
+                  @blur="onValueChange($event, 'contact')"
+                  id="per_permanent_address"
+                  :rows="3"
+                  v-model="personalInformation.contact.per_permanent_address"
+                  placeholder="Sample Text"
                 ></a-textarea>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoFullAddress"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoFullAddress"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[12].first"
-                          @click="arr[12].first = !arr[12].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[12].first"
+                    @click="arr[12].first = !arr[12].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[12].first = !arr[12].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoFullAddress"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoFullAddress"
               >
                 <div class="card card-body bubble">Full address</div>
               </div>
@@ -1454,12 +1417,12 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="
-                        personalInformation.contact.mobile_number &&
-                        personalInformation.contact.mobile_country_code
-                      "
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="
+                    personalInformation.contact.mobile_number &&
+                    personalInformation.contact.mobile_country_code
+                  "
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your mobile number?
               </div>
             </div>
@@ -1467,17 +1430,15 @@
               <div class="row">
                 <div class="col-4">
                   <a-form-model-item
-                      ref="mobile_country_code"
-                      prop="mobile_country_code"
+                    ref="mobile_country_code"
+                    prop="mobile_country_code"
                   >
                     <a-select
-                        @change="onValueChange($event, 'contact')"
-                        id="mobile_country_code"
-                        ref="select"
-                        v-model="
-                            personalInformation.contact.mobile_country_code
-                          "
-                        placeholder="Country Code"
+                      @change="onValueChange($event, 'contact')"
+                      id="mobile_country_code"
+                      ref="select"
+                      v-model="personalInformation.contact.mobile_country_code"
+                      placeholder="Country Code"
                     >
                       <a-select-option value="">Select</a-select-option>
                       <a-select-option value="+880">+880</a-select-option>
@@ -1487,15 +1448,12 @@
                   </a-form-model-item>
                 </div>
                 <div class="col-8">
-                  <a-form-model-item
-                      ref="mobile_number"
-                      prop="mobile_number"
-                  >
+                  <a-form-model-item ref="mobile_number" prop="mobile_number">
                     <a-input
-                        @blur="onValueChange($event, 'contact')"
-                        id="mobile_number"
-                        v-model="personalInformation.contact.mobile_number"
-                        placeholder="Mobile Number"
+                      @blur="onValueChange($event, 'contact')"
+                      id="mobile_number"
+                      v-model="personalInformation.contact.mobile_number"
+                      placeholder="Mobile Number"
                     />
                   </a-form-model-item>
                 </div>
@@ -1504,28 +1462,28 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsepersonalInfoContactNumber"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsepersonalInfoContactNumber"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[11].first"
-                          @click="arr[11].first = !arr[11].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[11].first"
+                    @click="arr[11].first = !arr[11].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[11].first = !arr[11].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsepersonalInfoContactNumber"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsepersonalInfoContactNumber"
               >
                 <div class="card card-body bubble">
                   Provide mobile number with country code
@@ -1539,49 +1497,49 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.contact.per_email"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.contact.per_email"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your email address?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_email" prop="per_email">
                 <a-input
-                    @blur="onValueChange($event, 'contact')"
-                    id="per_email"
-                    type="email"
-                    :value="personalInformation.contact.per_email"
-                    placeholder="Sample email"
-                    :disabled="true"
+                  @blur="onValueChange($event, 'contact')"
+                  id="per_email"
+                  type="email"
+                  :value="personalInformation.contact.per_email"
+                  placeholder="Sample email"
+                  :disabled="true"
                 />
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoEmailId"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoEmailId"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[10].first"
-                          @click="arr[10].first = !arr[10].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[10].first"
+                    @click="arr[10].first = !arr[10].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[10].first = !arr[10].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoEmailId"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoEmailId"
               >
                 <div class="card card-body bubble">
                   Your registered email address. Read only field.
@@ -1624,39 +1582,36 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.more_about.per_marital_status"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.more_about.per_marital_status"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your marital status?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                  ref="per_marital_status"
-                  prop="per_marital_status"
+                ref="per_marital_status"
+                prop="per_marital_status"
               >
                 <v-select
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="onValueChange($event, 'more_about')"
-                    id="per_marital_status"
-                    placeholder="Select your Marital Status"
-                    v-model="
-                        personalInformation.more_about.per_marital_status
-                      "
-                    :reduce="(option) => option.value"
-                    label="name"
-                    :options="[
-                        { name: 'Single', value: 'single' },
-                        { name: 'Married', value: 'married' },
-                        { name: 'Divorced', value: 'divorced' },
-                        {
-                          name: 'Divorced with Children',
-                          value: 'divorced_with_children',
-                        },
-                      ]"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange($event, 'more_about')"
+                  id="per_marital_status"
+                  placeholder="Select your Marital Status"
+                  v-model="personalInformation.more_about.per_marital_status"
+                  :reduce="(option) => option.value"
+                  label="name"
+                  :options="[
+                    { name: 'Single', value: 'single' },
+                    { name: 'Married', value: 'married' },
+                    { name: 'Divorced', value: 'divorced' },
+                    {
+                      name: 'Divorced with Children',
+                      value: 'divorced_with_children',
+                    },
+                  ]"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
                 <!-- <a-select
                   @change="onValueChange($event, 'more_about')"
@@ -1682,32 +1637,30 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoMaritalStatus"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoMaritalStatus"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[9].first"
-                          @click="arr[9].first = !arr[9].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[9].first"
+                    @click="arr[9].first = !arr[9].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[9].first = !arr[9].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoMaritalStatus"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoMaritalStatus"
               >
-                <div class="card card-body bubble">
-                  Current Marital Status
-                </div>
+                <div class="card card-body bubble">Current Marital Status</div>
               </div>
             </div>
           </div>
@@ -1717,44 +1670,43 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="
-                        personalInformation.more_about.per_currently_living_with
-                      "
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="
+                    personalInformation.more_about.per_currently_living_with
+                  "
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What is your current living arrangement?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                  ref="per_currently_living_with"
-                  prop="per_currently_living_with"
+                ref="per_currently_living_with"
+                prop="per_currently_living_with"
               >
                 <v-select
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="onValueChange($event, 'more_about')"
-                    id="per_currently_living_with"
-                    placeholder="Please select Currently Living With"
-                    v-model="
-                        personalInformation.more_about.per_currently_living_with
-                      "
-                    :reduce="(option) => option.value"
-                    label="name"
-                    :options="[
-                        { name: 'Parents', value: 'Parents' },
-                        {
-                          name: 'Live in my own home',
-                          value: 'Live in my own home',
-                        },
-                        {
-                          name: 'live in others home',
-                          value: 'live in others home',
-                        },
-                        { name: 'Other', value: 'Other' },
-                      ]"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange($event, 'more_about')"
+                  id="per_currently_living_with"
+                  placeholder="Please select Currently Living With"
+                  v-model="
+                    personalInformation.more_about.per_currently_living_with
+                  "
+                  :reduce="(option) => option.value"
+                  label="name"
+                  :options="[
+                    { name: 'Parents', value: 'Parents' },
+                    {
+                      name: 'Live in my own home',
+                      value: 'Live in my own home',
+                    },
+                    {
+                      name: 'live in others home',
+                      value: 'live in others home',
+                    },
+                    { name: 'Other', value: 'Other' },
+                  ]"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
                 <!-- <a-select
                   @change="onValueChange($event, 'more_about')"
@@ -1783,28 +1735,28 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoCuurentlyLivingWith"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoCuurentlyLivingWith"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[8].first"
-                          @click="arr[8].first = !arr[8].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[8].first"
+                    @click="arr[8].first = !arr[8].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[8].first = !arr[8].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoCuurentlyLivingWith"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoCuurentlyLivingWith"
               >
                 <div class="card card-body bubble">
                   Current living situation
@@ -1818,43 +1770,40 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="
-                        personalInformation.more_about.per_willing_to_relocate
-                      "
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.more_about.per_willing_to_relocate"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />Are you willing to relocate?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                  ref="per_willing_to_relocate"
-                  prop="per_willing_to_relocate"
+                ref="per_willing_to_relocate"
+                prop="per_willing_to_relocate"
               >
                 <v-select
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="onValueChange($event, 'more_about')"
-                    id="per_willing_to_relocate"
-                    placeholder="Willing to relocate"
-                    v-model="
-                        personalInformation.more_about.per_willing_to_relocate
-                      "
-                    :reduce="(option) => option.value"
-                    label="name"
-                    :options="[
-                        { name: 'Yes', value: 1 },
-                        {
-                          name: 'No',
-                          value: 2,
-                        },
-                        {
-                          name: `Let's discuss`,
-                          value: 3,
-                        },
-                      ]"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange($event, 'more_about')"
+                  id="per_willing_to_relocate"
+                  placeholder="Willing to relocate"
+                  v-model="
+                    personalInformation.more_about.per_willing_to_relocate
+                  "
+                  :reduce="(option) => option.value"
+                  label="name"
+                  :options="[
+                    { name: 'Yes', value: 1 },
+                    {
+                      name: 'No',
+                      value: 2,
+                    },
+                    {
+                      name: `Let's discuss`,
+                      value: 3,
+                    },
+                  ]"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
                 <!-- <a-select
                   @change="onValueChange($event, 'more_about')"
@@ -1878,28 +1827,28 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoWillingToRelocate"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoWillingToRelocate"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[7].first"
-                          @click="arr[7].first = !arr[7].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[7].first"
+                    @click="arr[7].first = !arr[7].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[7].first = !arr[7].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoWillingToRelocate"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoWillingToRelocate"
               >
                 <div class="card card-body bubble">
                   Willing To change your location of living
@@ -1913,36 +1862,35 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.more_about.per_smoker"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.more_about.per_smoker"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />Are you a smoker?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_smoker" prop="per_smoker">
                 <v-select
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="onValueChange($event, 'more_about')"
-                    id="per_smoker"
-                    placeholder="Please select Are you a Smoker"
-                    v-model="personalInformation.more_about.per_smoker"
-                    :reduce="(option) => option.value"
-                    label="name"
-                    :options="[
-                        { name: 'Yes', value: 1 },
-                        {
-                          name: 'No',
-                          value: 2,
-                        },
-                        {
-                          name: `Former smoker`,
-                          value: 3,
-                        },
-                      ]"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange($event, 'more_about')"
+                  id="per_smoker"
+                  placeholder="Please select Are you a Smoker"
+                  v-model="personalInformation.more_about.per_smoker"
+                  :reduce="(option) => option.value"
+                  label="name"
+                  :options="[
+                    { name: 'Yes', value: 1 },
+                    {
+                      name: 'No',
+                      value: 2,
+                    },
+                    {
+                      name: `Former smoker`,
+                      value: 3,
+                    },
+                  ]"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
                 <!-- <a-select
                   @change="onValueChange($event, 'more_about')"
@@ -1967,28 +1915,28 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoSmokerOrNot"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoSmokerOrNot"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[6].first"
-                          @click="arr[6].first = !arr[6].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[6].first"
+                    @click="arr[6].first = !arr[6].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[6].first = !arr[6].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoSmokerOrNot"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoSmokerOrNot"
               >
                 <div class="card card-body bubble">Smoker or not</div>
               </div>
@@ -2000,37 +1948,34 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.more_about.per_language_speak"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.more_about.per_language_speak"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What language do you speak?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                  ref="per_language_speak"
-                  prop="per_language_speak"
+                ref="per_language_speak"
+                prop="per_language_speak"
               >
                 <v-select
-                    id="per_language_speak"
-                    :clearable="false"
-                    :multiple="true"
-                    class="nationality-select"
-                    @input="
-                        onMultiValueChange(
-                          $event,
-                          'per_language_speak',
-                          'more_about'
-                        )
-                      "
-                    placeholder="Please select the languages you speak"
-                    v-model="
-                        personalInformation.more_about.per_language_speak
-                      "
-                    label="name"
-                    :options="[`Don't Mind`,...candidateDetails.languages]"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  id="per_language_speak"
+                  :clearable="false"
+                  :multiple="true"
+                  class="nationality-select"
+                  @input="
+                    onMultiValueChange(
+                      $event,
+                      'per_language_speak',
+                      'more_about'
+                    )
+                  "
+                  placeholder="Please select the languages you speak"
+                  v-model="personalInformation.more_about.per_language_speak"
+                  label="name"
+                  :options="[`Don't Mind`, ...candidateDetails.languages]"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
                 <!-- <a-select
                   @change="
@@ -2074,28 +2019,28 @@
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoSpeakingLanguages"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoSpeakingLanguages"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[5].first"
-                          @click="arr[5].first = !arr[5].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[5].first"
+                    @click="arr[5].first = !arr[5].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[5].first = !arr[5].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoSpeakingLanguages"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoSpeakingLanguages"
               >
                 <div class="card card-body bubble">Language you speak</div>
               </div>
@@ -2107,63 +2052,59 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="
-                        personalInformation.more_about.per_hobbies_interests
-                      "
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.more_about.per_hobbies_interests"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What are your hobbies and leisure interests?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <v-select
-                  id="per_hobbies_interests"
-                  :clearable="false"
-                  :multiple="true"
-                  class="nationality-select"
-                  @input="
-                      onMultiValueChange(
-                        $event,
-                        'per_hobbies_interests',
-                        'more_about'
-                      )
-                    "
-                  placeholder="Please select your hobbies"
-                  v-model="
-                      personalInformation.more_about.per_hobbies_interests
-                    "
-                  label="name"
-                  :options="candidateDetails.hobbies"
-              ><template #open-indicator>
-                <a-icon type="down" />
-              </template>
+                id="per_hobbies_interests"
+                :clearable="false"
+                :multiple="true"
+                class="nationality-select"
+                @input="
+                  onMultiValueChange(
+                    $event,
+                    'per_hobbies_interests',
+                    'more_about'
+                  )
+                "
+                placeholder="Please select your hobbies"
+                v-model="personalInformation.more_about.per_hobbies_interests"
+                label="name"
+                :options="candidateDetails.hobbies"
+                ><template #open-indicator>
+                  <a-icon type="down" />
+                </template>
               </v-select>
             </div>
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoHobbies"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoHobbies"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[4].first"
-                          @click="arr[4].first = !arr[4].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[4].first"
+                    @click="arr[4].first = !arr[4].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[4].first = !arr[4].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoHobbies"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoHobbies"
               >
                 <div class="card card-body bubble">Your hobbies</div>
               </div>
@@ -2175,40 +2116,36 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="
-                        personalInformation.more_about.per_food_cuisine_like
-                      "
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.more_about.per_food_cuisine_like"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What are your favorite food and cuisine?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                  ref="per_food_cuisine_like"
-                  prop="per_food_cuisine_like"
+                ref="per_food_cuisine_like"
+                prop="per_food_cuisine_like"
               >
                 <v-select
-                    id="per_food_cuisine_like"
-                    :clearable="false"
-                    :multiple="true"
-                    class="nationality-select"
-                    @input="
-                        onMultiValueChange(
-                          $event,
-                          'per_food_cuisine_like',
-                          'more_about'
-                        )
-                      "
-                    placeholder="Please select your Food and Cuisine you like"
-                    v-model="
-                        personalInformation.more_about.per_food_cuisine_like
-                      "
-                    label="name"
-                    :options="candidateDetails.foods"
-                ><template #open-indicator>
-                  <a-icon type="down" />
-                </template>
+                  id="per_food_cuisine_like"
+                  :clearable="false"
+                  :multiple="true"
+                  class="nationality-select"
+                  @input="
+                    onMultiValueChange(
+                      $event,
+                      'per_food_cuisine_like',
+                      'more_about'
+                    )
+                  "
+                  placeholder="Please select your Food and Cuisine you like"
+                  v-model="personalInformation.more_about.per_food_cuisine_like"
+                  label="name"
+                  :options="candidateDetails.foods"
+                  ><template #open-indicator>
+                    <a-icon type="down" />
+                  </template>
                 </v-select>
                 <!-- <a-select
                   @change="
@@ -2250,28 +2187,28 @@
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoFavoriteFood"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoFavoriteFood"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[3].first"
-                          @click="arr[3].first = !arr[3].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[3].first"
+                    @click="arr[3].first = !arr[3].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[3].first = !arr[3].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoFavoriteFood"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoFavoriteFood"
               >
                 <div class="card card-body bubble">
                   Favorite Food and cuisine.
@@ -2285,59 +2222,55 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.more_about.per_things_enjoy"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.more_about.per_things_enjoy"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What types of things do you enjoy?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <v-select
-                  id="per_things_enjoy"
-                  :clearable="false"
-                  :multiple="true"
-                  class="nationality-select"
-                  @input="
-                      onMultiValueChange(
-                        $event,
-                        'per_things_enjoy',
-                        'more_about'
-                      )
-                    "
-                  placeholder="Please select your hobbies"
-                  v-model="personalInformation.more_about.per_things_enjoy"
-                  label="name"
-                  :options="candidateDetails.hobbies"
-              ><template #open-indicator>
-                <a-icon type="down" />
-              </template>
+                id="per_things_enjoy"
+                :clearable="false"
+                :multiple="true"
+                class="nationality-select"
+                @input="
+                  onMultiValueChange($event, 'per_things_enjoy', 'more_about')
+                "
+                placeholder="Please select your hobbies"
+                v-model="personalInformation.more_about.per_things_enjoy"
+                label="name"
+                :options="candidateDetails.hobbies"
+                ><template #open-indicator>
+                  <a-icon type="down" />
+                </template>
               </v-select>
             </div>
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoEnjoyfullThings"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoEnjoyfullThings"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[2].first"
-                          @click="arr[2].first = !arr[2].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[2].first"
+                    @click="arr[2].first = !arr[2].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[2].first = !arr[2].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoEnjoyfullThings"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoEnjoyfullThings"
               >
                 <div class="card card-body bubble">Things you enjoy</div>
               </div>
@@ -2349,37 +2282,37 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.more_about.per_thankfull_for"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.more_about.per_thankfull_for"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />What kind of things are you thankful for in life?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                  ref="per_thankfull_for"
-                  prop="per_thankfull_for"
+                ref="per_thankfull_for"
+                prop="per_thankfull_for"
               >
                 <v-select
-                    id="per_things_enjoy"
-                    :clearable="false"
-                    :multiple="true"
-                    class="nationality-select"
-                    @input="
-                        onMultiValueChange(
-                          $event,
-                          'per_thankfull_for',
-                          'more_about'
-                        )
-                      "
-                    placeholder="Please select your Thankfull For"
-                    :reduce="(option) => option.value"
-                    v-model="personalInformation.more_about.per_thankfull_for"
-                    label="label"
-                    :options="candidateDetails.thankfulThings"
-                ><template #open-indicator>
-                  <a-icon type="down" />
-                </template>
+                  id="per_things_enjoy"
+                  :clearable="false"
+                  :multiple="true"
+                  class="nationality-select"
+                  @input="
+                    onMultiValueChange(
+                      $event,
+                      'per_thankfull_for',
+                      'more_about'
+                    )
+                  "
+                  placeholder="Please select your Thankfull For"
+                  :reduce="(option) => option.value"
+                  v-model="personalInformation.more_about.per_thankfull_for"
+                  label="label"
+                  :options="candidateDetails.thankfulThings"
+                  ><template #open-indicator>
+                    <a-icon type="down" />
+                  </template>
                 </v-select>
                 <!-- <a-select
                   @change="
@@ -2418,28 +2351,28 @@
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoThankulFor"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoThankulFor"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[1].first"
-                          @click="arr[1].first = !arr[1].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[1].first"
+                    @click="arr[1].first = !arr[1].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[1].first = !arr[1].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoThankulFor"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoThankulFor"
               >
                 <div class="card card-body bubble">
                   kind of things are you thankful for
@@ -2447,62 +2380,213 @@
               </div>
             </div>
           </div>
-
+          <!-- Improve Myself -->
+          <div class="row pt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                  v-if="personalInformation.more_about.per_thankfull_for"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
+                />How I improve myself?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item
+                ref="per_thankfull_for"
+                prop="per_thankfull_for"
+              >
+                <v-select
+                  id="per_things_enjoy"
+                  :clearable="false"
+                  :multiple="true"
+                  class="nationality-select"
+                  @input="
+                    onMultiValueChange(
+                      $event,
+                      'per_thankfull_for',
+                      'more_about'
+                    )
+                  "
+                  placeholder="Please select How you improve?"
+                  :reduce="(option) => option.value"
+                  v-model="personalInformation.more_about.per_thankfull_for"
+                  label="label"
+                  :options="[]"
+                  ><template #open-indicator>
+                    <a-icon type="down" />
+                  </template>
+                </v-select>
+                <!-- <a-select
+                  @change="
+                    onMultiValueChange(
+                      $event,
+                      'per_thankfull_for',
+                      'more_about'
+                    )
+                  "
+                  id="per_thankfull_for"
+                  :showSearch="true"
+                  option-filter-prop="children"
+                  :filter-option="filterOption"
+                  placeholder="I'm Thankfull For"
+                  mode="multiple"
+                  v-model="personalInformation.more_about.per_thankfull_for"
+                  class="select-ma"
+                >
+                  <a-select-option disabled :value="0"
+                    >Select things you are thankful for</a-select-option
+                  >
+                  <a-select-option value="Don't Mind"
+                    >Don't Mind
+                  </a-select-option>
+                  <a-select-option
+                    :value="value.value"
+                    :key="key"
+                    style="width: 100px"
+                    v-for="(value, key) in candidateDetails.thankfulThings"
+                  >
+                    {{ value.label }}
+                  </a-select-option>
+                </a-select> -->
+              </a-form-model-item>
+            </div>
+            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoThankulFor"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  <span
+                    v-if="arr[1].first"
+                    @click="arr[1].first = !arr[1].first"
+                  >
+                    Need Help?
+                  </span>
+                  <span v-else @click="arr[1].first = !arr[1].first">
+                    Hide Help?
+                  </span>
+                </a>
+              </p>
+              <div
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoThankulFor"
+              >
+                <div class="card card-body bubble">
+                  kind of things are you thankful for
+                </div>
+              </div>
+            </div>
+          </div>
           <!-- About Me -->
           <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                    v-if="personalInformation.more_about.per_about"
-                    class="color-success mr-2 fs-18 fw-500"
-                    type="check"
+                  v-if="personalInformation.more_about.per_about"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
                 />A little about me
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_about" prop="per_about">
                 <a-textarea
-                    @blur="onValueChange($event, 'more_about')"
-                    id="per_about"
-                    placeholder="Exp: 19/ burder way, england"
-                    :rows="3"
-                    v-model="personalInformation.more_about.per_about"
+                  @blur="onValueChange($event, 'more_about')"
+                  id="per_about"
+                  placeholder="Exp: 19/ burder way, england"
+                  :rows="3"
+                  v-model="personalInformation.more_about.per_about"
                 />
               </a-form-model-item>
             </div>
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
               <p>
                 <a
-                    class="color-blue fw-700 fs-14"
-                    data-toggle="collapse"
-                    href="#collapsePersonalInfoMoreAboutMe"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoMoreAboutMe"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
                 >
-                      <span
-                          v-if="arr[0].first"
-                          @click="arr[0].first = !arr[0].first"
-                      >
-                        Need Help?
-                      </span>
+                  <span
+                    v-if="arr[0].first"
+                    @click="arr[0].first = !arr[0].first"
+                  >
+                    Need Help?
+                  </span>
                   <span v-else @click="arr[0].first = !arr[0].first">
-                        Hide Help?
-                      </span>
+                    Hide Help?
+                  </span>
                 </a>
               </p>
               <div
-                  class="collapse"
-                  data-parent="#personalInfoAccordian"
-                  id="collapsePersonalInfoMoreAboutMe"
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoMoreAboutMe"
               >
-                <div class="card card-body bubble">
-                  A little about yourself
-                </div>
+                <div class="card card-body bubble">A little about yourself</div>
               </div>
             </div>
           </div>
-
+   <!-- Additional Info -->
+          <div class="row pt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                  v-if="personalInformation.more_about.per_about"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
+                />Additional Information(optional)
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item ref="per_about" prop="per_about">
+                <a-textarea
+                  @blur="onValueChange($event, 'more_about')"
+                  id="per_about"
+                  placeholder="Exp: 19/ burder way, england"
+                  :rows="3"
+                  v-model="personalInformation.more_about.per_about"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoMoreAboutMe"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  <span
+                    v-if="arr[0].first"
+                    @click="arr[0].first = !arr[0].first"
+                  >
+                    Need Help?
+                  </span>
+                  <span v-else @click="arr[0].first = !arr[0].first">
+                    Hide Help?
+                  </span>
+                </a>
+              </p>
+              <div
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoMoreAboutMe"
+              >
+                <div class="card card-body bubble">A little about yourself</div>
+              </div>
+            </div>
+          </div>
           <a-button
             shape="round"
             type="primary"
@@ -2565,7 +2649,7 @@ export default {
     withPopper(dropdownList, component, { width }) {
       dropdownList.style.width = width;
       const popper = createPopper(component.$refs.toggle, dropdownList, {
-        placement: 'top',
+        placement: "top",
         modifiers: [
           {
             name: "offset",

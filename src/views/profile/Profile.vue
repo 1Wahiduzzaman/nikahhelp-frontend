@@ -1,16 +1,14 @@
 <template>
   <div>
-    <div v-if="isLoading">Loading</div>
+    <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else>
       <div class="">
         <div style="margin: 0px auto">
-          <div v-if="user.account_type == 1">
+          <div v-if="user && user.account_type == 1">
             <!-- Candidate Profile Component goes here -->
-            <candidate-profile
-              :candidateData="candidateInfo"
-            ></candidate-profile>
+            <candidate-profile></candidate-profile>
           </div>
-          <div v-else>
+          <div v-if="user && user.account_type !== 1">
             <!-- Representative profile component goes here -->
             <representative-profile
               :representativeData="representativeInfo"
@@ -48,7 +46,13 @@ export default {
       error: null,
     };
   },
+  mounted() {},
   created() {
+    this.isLoading = true;
+    setTimeout(() => {
+      this.isLoading = false;
+      this.user = JSON.parse(localStorage.getItem("user"));
+    }, 1000);
     this.$store.dispatch("getCountries");
     this.$store.dispatch("getStudyLevelOptions");
     this.$store.dispatch("getReligionOptions");
