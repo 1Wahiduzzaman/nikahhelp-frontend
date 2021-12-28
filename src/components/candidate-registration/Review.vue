@@ -1,6 +1,6 @@
 <template>
   <div class="review-publish px-2">
-    <!-- <pre>{{ candidateData }}</pre> -->
+   
     <fieldset v-if="candidateDetails && candidateData.personal" class="review">
       <h4 class="fw-700 px-2">Review and Publish Profile</h4>
       <p class="mb-5 px-2">

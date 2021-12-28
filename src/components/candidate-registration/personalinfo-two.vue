@@ -2701,7 +2701,12 @@ export default {
     getResume(e) {
       let file = e.target.files[0];
 
-      if (!this.imageSizeCheck(file) || !this.ValidateSingleInput(file)) {
+      if (!this.imageSizeCheck(file)) {
+        file = "";
+        this.resumeDocument = "";
+        return;
+      }
+      if(!this.ValidateSingleInput(file)){
         file = "";
         this.resumeDocument = "";
         return;
@@ -2718,10 +2723,10 @@ export default {
         .catch((error) => {});
     },
     imageSizeCheck(file) {
-      if (file["size"] > 2111775) {
+      if (file["size"] / 1024 / 1024 <= 15) {
         this.$error({
           title: "Validation Error",
-          content: "Image size can't be more than 2 mb",
+          content: "Image size can't be more than 15 mb",
           center: true,
         });
         return false;
