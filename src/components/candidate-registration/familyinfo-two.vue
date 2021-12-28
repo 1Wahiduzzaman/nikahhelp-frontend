@@ -166,6 +166,7 @@
                   id="siblings_desc"
                   placeholder="2 Brothers, 2 Sisters"
                   :rows="3"
+                   :maxLength="200"
                   v-model="familyInformation.siblings_desc"
                 ></a-textarea>
               </a-form-model-item>
@@ -220,6 +221,7 @@
                   id="family_info"
                   placeholder="Would you like to share any other information about your family"
                   :rows="3"
+                   :maxLength="200"
                   v-model="familyInformation.family_info"
                 ></a-textarea>
               </a-form-model-item>
@@ -328,7 +330,7 @@
           <a-button
             shape="round"
             type="primary"
-            style="float: right"
+        style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
             class="mt-5"
             @click="handleSubmitForm"
           >

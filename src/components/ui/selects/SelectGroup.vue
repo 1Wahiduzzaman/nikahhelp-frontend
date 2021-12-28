@@ -21,7 +21,7 @@
       :style="{ maxWidth: width + 'px', width: width + 'px' }"
       :id="uniqueNames[0]"
       v-model="values[0]"
-      @select="onSelect"
+      @select="onSelectMin"
       :show-search="true"
       :size="size"
       dropdownClassName="first_one"
@@ -53,7 +53,7 @@
     <a-select
       v-model="values[1]"
       :style="{ maxWidth: width + 'px', width: width + 'px' }"
-      @select="onSelect"
+      @select="onSelectMax"
       :size="size"
       :show-search="true"
       dropdownClassName="second_one"
@@ -64,7 +64,7 @@
     >
       <a-select-option
         :value="option.value"
-        v-for="option in options"
+        v-for="option in optionsMax || options"
         :key="`${uniqueNames[1]}=${option.value}`"
       >
         <div v-html="option.label"></div>
@@ -81,6 +81,7 @@ export default {
   data() {
     return {
       value: "",
+      optionsMax: null,
     };
   },
 
@@ -110,10 +111,22 @@ export default {
     },
   },
   watch: {
-    value(val) {
-      console.log("value", val);
+    values: {
+      handler(val, o) {
+        let data = this.options.find((o) => o.value == val[0]);
+        if (data) {
+          this.optionsMax = this.options.filter(
+            (o) => o.serialNo > data.serialNo
+          );
+        } else {
+          this.optionsMax = [...this.options];
+        }
+      },
+      deep: true,
     },
+    
   },
+
   methods: {
     filterOption(input, option) {
       return (
@@ -127,15 +140,29 @@ export default {
         ? []
         : [searchText, searchText.repeat(2), searchText.repeat(3)];
     },
-    onSelect(value, option) {
-      this.$emit("selected", {
-        value: value,
-        name: option.key.substring(0, option.key.indexOf("=")),
-      });
-      console.log("selected", {
-        value: value,
-        name: option.key.substring(0, option.key.indexOf("=")),
-      });
+    onSelectMin(value, option) {
+      setTimeout(() => {
+        this.$emit("selected", {
+          value: value,
+          name: option.key.substring(0, option.key.indexOf("=")),
+        });
+        console.log("selected", {
+          value: value,
+          name: option.key.substring(0, option.key.indexOf("=")),
+        });
+      }, 100);
+    },
+    onSelectMax(value, option) {
+      setTimeout(() => {
+        this.$emit("selected", {
+          value: value,
+          name: option.key.substring(0, option.key.indexOf("=")),
+        });
+        console.log("selected", {
+          value: value,
+          name: option.key.substring(0, option.key.indexOf("=")),
+        });
+      }, 100);
     },
   },
 };

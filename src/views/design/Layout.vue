@@ -105,7 +105,7 @@
                     aria-current="page"
                     @click.self="(e) => e.preventDefault()"
                   >
-                    <a-badge count="5">
+                    <a-badge :count="chats.length">
                       <img
                         width="25"
                         src="@/assets/icon/chat-dots-fill-white.svg"
@@ -116,7 +116,7 @@
                   <template v-slot:overlay>
                     <NotificationPopup
                       count="29"
-                      :items="[]"
+                      :items="chats"
                       :use-for="'chat'"
                     />
                   </template>
@@ -331,11 +331,11 @@
                       alt="icon"
                     />
                     <span class="ml-2 mr-2">Chat</span>
-                    <!--                <a-badge-->
-                    <!--                  class="ml-auto"-->
-                    <!--                  :number-style="{ backgroundColor: '#e42076' }"-->
-                    <!--                  count="120"-->
-                    <!--                />-->
+                    <a-badge
+                        class="ml-auto"
+                        :number-style="{ backgroundColor: '#e42076' }"
+                        :count="chats.length"
+                    />
                   </router-link>
                 </a-menu-item>
                 <a-menu-item>
@@ -480,6 +480,9 @@ export default {
       }
       return teams;
     },
+    chats() {
+      return this.$store.state.chat.chats;
+    }
   },
   methods: {
     responsiveToggle() {

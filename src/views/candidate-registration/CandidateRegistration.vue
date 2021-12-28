@@ -1,8 +1,8 @@
 <template>
   <div class="candidate-registration">
     <Header />
-
-    <div class="steps ma-steps">
+    <Loader v-if="isLoading" :isLoading="isLoading" />
+    <div v-else class="steps ma-steps">
       <div class="steper-header text-center heading-text px-3">
         <h4>CANDIDATE PROFILE AND REQUIREMENT FORM</h4>
         <p>Please answer all question accurately and in full</p>
@@ -107,6 +107,7 @@
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
+          :style="{ marginRight: current == 0 ? '-15px' : '-5px' }"
           style="float: right"
           class="mt-3"
           @click="next"
@@ -136,7 +137,7 @@
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
-          style="float: left"
+          style="float: left; margin-left: -15px"
           class="mt-3"
           @click="saveExit"
         >
@@ -190,6 +191,7 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       fixedStatus: {
         headerIsFixed: false,
       },
@@ -264,9 +266,11 @@ export default {
       this.checkExistData();
     },
     getCandidateInitialInfo: async function () {
+      this.isLoading = true;
       const user = JSON.parse(localStorage.getItem("user"));
       const response = await ApiService.get("v1/candidate/initial-info");
       if (response.status === 200) {
+        this.isLoading = false;
         const details = {
           countries: response.data.data.countries,
           imageModel: {
@@ -359,7 +363,7 @@ export default {
                 : response.data.data.personal_info.more_about.per_food_cuisine_like.split(
                     ","
                   ),
-              per_have_children: "none",
+              per_have_children: false,
               per_children: [
                 {
                   type: 1,
@@ -499,8 +503,10 @@ export default {
             ""
           );
         }
-        this.current = response.data.data.user.data_input_status;
+
         this.checkExistData();
+      } else {
+        this.isLoading = false;
       }
     },
     async saveDataInputStatus(satge) {
@@ -599,16 +605,46 @@ export default {
           }).every((x) => x !== undefined && x !== null && x !== "");
           break;
         case 1:
-          const { essential, general, contact, more_about } =
+          let { essential, general, contact, more_about } =
             this.candidateDetails.personalInformation;
-          Object.values({ essential, general, contact, more_about }).forEach(
-            (ob) => {
-              isEnabled = Object.values(ob).every(
-                (x) => x !== undefined && x !== null && x !== ""
-              );
-              if (!isEnabled) return;
-            }
-          );
+          let {
+            per_about,
+            per_currently_living_with,
+            per_food_cuisine_like,
+            per_have_children,
+            per_hobbies_interests,
+            per_improve_myself,
+            per_language_speak,
+            per_marital_status,
+            per_smoker,
+            per_thankfull_for,
+            per_things_enjoy,
+            per_willing_to_relocate,
+          } = more_about;
+          Object.values({
+            essential,
+            general,
+            contact,
+            ...{
+              per_about,
+              per_currently_living_with,
+              per_food_cuisine_like,
+              per_have_children,
+              per_hobbies_interests,
+              per_improve_myself,
+              per_language_speak,
+              per_marital_status,
+              per_smoker,
+              per_thankfull_for,
+              per_things_enjoy,
+              per_willing_to_relocate,
+            },
+          }).forEach((ob) => {
+            isEnabled = Object.values(ob).every(
+              (x) => x !== undefined && x !== null && x !== ""
+            );
+            if (!isEnabled) return;
+          });
 
           break;
         case 2:

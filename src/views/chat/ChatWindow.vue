@@ -514,6 +514,7 @@ export default {
     }
   },
   created() {
+    this.$store.state.chat.chats = [];
     this.loadTeamChat();
     this.loadChatHistory();
     this.loadConnectedGroup();
@@ -923,7 +924,8 @@ export default {
         message: this.msg_text,
         created_at: new Date(),
         senderId: loggedUser.id.toString(),
-        senderInfo: loggedUser
+        senderInfo: loggedUser,
+        logo: this.chatheadopen.logo
       }
 
       if (this.one_to_one_user || this.chat_id) {
@@ -931,6 +933,8 @@ export default {
         payload.target_opened_chat = loggedUser.id;
         payload.target_opened_chat_type = 'one-to-one';
         payload.target_opened_chat_id = this.chat_id;
+        payload.conv_title = this.conversationTitle;
+        payload.label = 'Private Message';
         url = 'send-message';
       } else {
         let teamMembers = this.teamMembers;
@@ -941,6 +945,8 @@ export default {
         payload.receivers = teamMembers;
         payload.target_opened_chat = this.activeTeam;
         payload.target_opened_chat_type = 'team';
+        payload.label = 'Group Message';
+        payload.conv_title = this.conversationTitle;
         url = 'send-message-to-team';
       }
 
@@ -988,7 +994,10 @@ export default {
         created_at: new Date(),
         senderId: loggedUser.id.toString(),
         senderInfo: loggedUser,
-        target_opened_chat_type: 'connected-team'
+        target_opened_chat_type: 'connected-team',
+        label: 'Connected',
+        conv_title: this.conversationTitle,
+        logo: this.chatheadopen.logo
       };
       payload.target_opened_chat = payload.to_team_id;
       this.$socket.emit('send_message_in_group', payload);
@@ -1008,7 +1017,10 @@ export default {
         senderInfo: loggedUser,
         target_opened_chat_type: 'private-chat',
         target_opened_chat: this.private_chat,
-        receiver: this.private_chat.receiver.toString()
+        receiver: this.private_chat.receiver.toString(),
+        label: 'Private',
+        conv_title: this.conversationTitle,
+        logo: this.chatheadopen.logo
       }
       payload.sender = loggedUser.id.toString();
       // this.chats.unshift(payload);

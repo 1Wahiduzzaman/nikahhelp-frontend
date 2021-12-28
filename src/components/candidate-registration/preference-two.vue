@@ -929,6 +929,7 @@
                 <a-textarea
                   @blur="onValueChange"
                   :rows="3"
+                   :maxLength="200"
                   autocomplete="off"
                   autocorrect="off"
                   autocapitalize="off"
@@ -979,8 +980,7 @@
                   v-if="preferenceData.pre_description"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Describe your requirements about your preferred partner in max
-                250 words
+                />Describe your requirements about your preferred partner
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -988,6 +988,7 @@
                 <a-textarea
                   @blur="onValueChange"
                   :rows="3"
+                  :maxLength="250"
                   autocomplete="off"
                   autocorrect="off"
                   autocapitalize="off"
@@ -1036,7 +1037,7 @@
         <a-button
           shape="round"
           type="primary"
-          style="float: right"
+          style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
           class="mt-5"
           @click="handleSubmitFormOne"
         >
@@ -1712,7 +1713,7 @@
             <a-button
               shape="round"
               type="primary"
-              style="float: right"
+              style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
               class="mt-5"
               @click="handleSubmitFormTwo"
             >
@@ -1887,6 +1888,7 @@ export default {
     savePreference() {
       const response = this.$store.dispatch("savePreferenceInfoAbout", {
         ...this.preferenceData,
+       
         pre_nationality:
           this.preferenceData.preferred_nationality.length > 0
             ? this.preferenceData.preferred_nationality.map((n) => n.id)
