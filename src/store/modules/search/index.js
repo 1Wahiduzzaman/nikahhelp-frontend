@@ -7,6 +7,8 @@ export default {
   state() {
     return {
       profiles: [],
+      isLoading: false,
+      totalResult: 0,
       selectedProfile: {},//profile info 4 r8 sidebar 
       queryArr: ['male', 'dhaka', '20-30 Yrs'],
       component: 'addComponent'

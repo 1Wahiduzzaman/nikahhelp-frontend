@@ -42,15 +42,18 @@
 				</a-layout>
 			</a-layout>
 		</div>
+		<Loader :isLoading="isFetching"/>
 	</div>
 </template>
 
 <script>
 
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
+import Loader from "@/plugins/loader/loader.vue";
 import CandidateProfiles from "@/components/search/CandidateProfiles.vue";
-import AddComponent from '@/components/add/addComponent'
+import AddComponent from '@/components/add/addComponent';
 import {mapGetters, mapMutations, mapActions} from 'vuex';
+
 export default {
 	name: "AdvanceSearch",
 	components: {
@@ -59,6 +62,9 @@ export default {
 		'RightSidebar': () => import('@/components/search/ProfileDetailRight'),
     	SimpleSearch: () => import("@/components/search/SimpleSearch.vue"),
 		Sidebar,
+		Loader,
+		//SimpleSearch,
+		// Footer,
 		CandidateProfiles,
 		AddComponent
 	},
@@ -74,7 +80,8 @@ export default {
 	},
 	computed: {
 		...mapGetters({
-			rightSideComponentName: 'search/getComponentName'
+			rightSideComponentName: 'search/getComponentName',
+			isFetching: 'search/getLoadingStatus'
 		}),
 		currentTabComponent() {
 			return this.componentName
@@ -128,12 +135,26 @@ export default {
 			searchUser: 'search/searchUser'
 		}),
 		...mapMutations({
-			setProfiles: 'search/setProfiles'
+			setProfiles: 'search/setProfiles',
+			setLoading: 'search/setLoading'
 		}),
 		async fetchInitialCandidate() {
 			// const res = await this.searchUser('v1/home-searches?page=0&parpage=10&min_age=20&max_age=40&ethnicity=Amara&marital_status=single');
-			const res = await this.searchUser('v1/home-searches?page=0&parpage=10&ethnicity=Aboriginal');
-			this.setProfiles(res)
+			this.setLoading(true);
+			try{
+				const res = await this.searchUser('v1/home-searches?page=0&parpage=10&ethnicity=Aboriginal&min_age=20&max_age=40');
+				this.setLoading(false);
+				if(res == undefined) {
+					this.setProfiles([])
+				}
+				if(res.data && res.data.length ) {
+					this.setProfiles(res.data)
+				} 
+				
+			} catch(err) {
+				this.setLoading(false);
+				console.log(err)
+			}
 		},
 		responsiveToggle() {
            this.collapsed = false;
@@ -267,8 +288,7 @@ export default {
 	.main-content-1 {
 		width: calc(100% - 350px);
 		margin: 10px 5px 10px 15px;
-		height: calc(100vh - 80px);
-		overflow:hidden auto;
+		height: calc(100vh - 10px);
 		@media (max-width: 1024px) {
 			width: calc(100% - 25px);
 		}
