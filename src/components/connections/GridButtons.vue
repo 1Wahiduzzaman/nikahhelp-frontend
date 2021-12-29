@@ -2,18 +2,18 @@
   <div class="mt-2">
     <div v-if="type == 'connected'">
       <div class="d-flex align-items-center justify-content-between mb-1">
-        <a-button
-            type="primary" block
-            @click="$emit('block')"
-            class="d-flex align-items-center mr-2 justify-content-center block-button grid-action-btn"
-            shape="round" size="small">
-          <a-icon type="stop"/>
-          Block
-        </a-button>
+<!--        <a-button-->
+<!--            type="primary" block-->
+<!--            @click="$emit('block')"-->
+<!--            class="d-flex align-items-center mr-2 justify-content-center block-button grid-action-btn"-->
+<!--            shape="round" size="small">-->
+<!--          <a-icon type="stop"/>-->
+<!--          Block-->
+<!--        </a-button>-->
 
         <a-button type="primary" block
                   @click="$emit('disconnectTeam')"
-                  class="d-flex align-items-center ml-2 bg-dark justify-content-center grid-action-btn"
+                  class="d-flex align-items-center bg-dark justify-content-center grid-action-btn"
                   shape="round" size="small">
           <a-icon type="disconnect"/>
           Disconnect <span style="visibility: hidden">l</span>
@@ -58,18 +58,18 @@
         </a-button>
       </div>
       <div class="d-flex align-items-center justify-content-between">
-        <a-button
-            type="primary" block
-            @click="$emit('block')"
-            class="d-flex align-items-center mr-4 block-button grid-action-btn" shape="round"
-            size="small">
-          <a-icon type="wechat"/>
-          Block
-        </a-button>
+<!--        <a-button-->
+<!--            type="primary" block-->
+<!--            @click="$emit('block')"-->
+<!--            class="d-flex align-items-center mr-4 block-button grid-action-btn" shape="round"-->
+<!--            size="small">-->
+<!--          <a-icon type="wechat"/>-->
+<!--          Block-->
+<!--        </a-button>-->
         <a-button
             type="primary" block
             @click="$emit('viewProfile')"
-            class="d-flex align-items-center ml-2 grid-action-btn" shape="round"
+            class="d-flex align-items-center grid-action-btn justify-content-center" shape="round"
             size="small">
           <a-icon type="user"/>
           View Profile
@@ -77,14 +77,14 @@
       </div>
     </div>
     <div v-if="type == 'Request send'">
-      <div class="d-flex align-items-center justify-content-between mb-1">
-        <a-button
-            type="primary" block
-            class="d-flex align-items-center justify-content-center grid-action-btn btn-info"
-            shape="round" size="small">
-          <a-icon type="cross"/>
-          Cancel
-        </a-button>
+      <div class="d-none align-items-center justify-content-between mb-1">
+<!--        <a-button-->
+<!--            type="primary" block-->
+<!--            class="d-flex align-items-center justify-content-center grid-action-btn btn-info"-->
+<!--            shape="round" size="small">-->
+<!--          <a-icon type="cross"/>-->
+<!--          Cancel-->
+<!--        </a-button>-->
 
 <!--        <a-button type="primary" block-->
 <!--                  class="d-flex align-items-center ml-2 grid-action-btn btn-info"-->
@@ -93,19 +93,26 @@
 <!--          Resend <span style="visibility: hidden">texti</span>-->
 <!--        </a-button>-->
       </div>
-      <div class="d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center justify-content-between mt-5">
+<!--        <a-button-->
+<!--            type="primary" block-->
+<!--            @click="$emit('block')"-->
+<!--            class="d-flex align-items-center block-button grid-action-btn mr-2" shape="round"-->
+<!--            size="small">-->
+<!--          <a-icon type="stop"/>-->
+<!--          Block-->
+<!--        </a-button>-->
         <a-button
             type="primary" block
-            @click="$emit('block')"
-            class="d-flex align-items-center block-button grid-action-btn mr-2" shape="round"
-            size="small">
-          <a-icon type="stop"/>
-          Block
+            class="d-flex align-items-center justify-content-center grid-action-btn btn-info"
+            shape="round" size="small">
+          <a-icon type="cross"/>
+          Cancel
         </a-button>
         <a-button
             type="primary" block
             @click="$emit('viewProfile')"
-            class="d-flex align-items-center ml-2 grid-action-btn" shape="round"
+            class="d-flex align-items-center ml-2 justify-content-center grid-action-btn" shape="round"
             size="small">
           <a-icon type="user"/>
           View Profile
