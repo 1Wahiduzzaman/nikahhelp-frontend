@@ -121,6 +121,7 @@
                       @decline-request="declineRequest"
                       @connect-request="connectRequest"
                       @block-candidate="blockCandidate"
+                      @decline-connection="declineConnection"
                     />
                   </div>
                 </div>
@@ -688,6 +689,35 @@ export default {
           console.log("Cancel");
         },
       });
+    },
+    declineConnection(connectionId) {
+      const payload = {
+        request_id: connectionId,
+        connection_status: "2",
+      };
+      const response = this.$store.dispatch("respondToRequest", payload);
+      response
+          .then((data) => {
+            console.log(data);
+            const vm = this;
+            this.$success({
+              title: "Success",
+              content: data.message,
+              onOk() {
+                setTimeout(() => {
+                  vm.$router.go();
+                }, 500);
+              },
+            });
+            // this.$message.success("Request declined successfully!");
+
+            // setTimeout(() => {
+            // 	this.$router.go();
+            // }, 1500);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
     profileOverview() {
       if (
