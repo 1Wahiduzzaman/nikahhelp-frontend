@@ -84,6 +84,7 @@
                   You are joining as a
                 </template>
                 <a-select
+                    size="large"
                     placeholder="Add as a"
                     class="ml-1 fs-14 w-50 member-add"
                     v-model="addAs"
@@ -100,8 +101,9 @@
                   Your relationship with candidate as
                 </template>
                 <a-select
+                    size="large"
                     placeholder="Relationship"
-                    class="ml-1 fs-14 w-50 member-add"
+                    class="ml-5 fs-14 w-50 member-add"
                     v-model="selfRole.relationship"
                     :disabled="addAs == 'Candidate'"
                 >

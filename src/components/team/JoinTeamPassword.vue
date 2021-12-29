@@ -77,9 +77,16 @@ export default {
 			if (this.invitationPassword.length > 0) {
         if(this.team.password.toString() === this.invitationPassword.toString()) {
           this.loading = true;
+
+          let originalLink = this.team.invitation_link.split('?invitation=');
+          let link = this.invitationLink;
+          if (originalLink.length > 1) {
+            link = originalLink[1];
+          }
+
           let payload = {
             team_id: this.team.team_id,
-            invitation_link: this.team.invitation_link,
+            invitation_link: link,
             team_password: this.invitationPassword
           };
 
