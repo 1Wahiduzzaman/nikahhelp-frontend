@@ -14,7 +14,7 @@
     </template>
     <v-img
       height="250"
-      src="/candidate.png"
+      :src="candidate.image"
     ></v-img>
 
     <v-card-title>{{ candidate.first_name }} {{ candidate.last_name }}</v-card-title>

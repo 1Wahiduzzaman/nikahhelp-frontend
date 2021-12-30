@@ -7,6 +7,7 @@ export default {
   state() {
     return {
       profiles: [],
+      isSearched: false,
       isLoading: false,
       totalResult: 0,
       selectedProfile: {},//profile info 4 r8 sidebar 

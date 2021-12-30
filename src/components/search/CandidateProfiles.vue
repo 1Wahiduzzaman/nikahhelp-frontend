@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<h4 class="text-xl-h3 text-h4 font-weight-bold text--disabled mb-2">
-			Search Results
+			{{isSearched ? 'Search Results' : 'Suggestion'}}
 		</h4>
-		<span class="text--secondary text-h6">
-			Matches for your requirements: {{ totalProfile }} resutls
+		<span v-if="isSearched" class="text--secondary text-h6">
+			Matches for your requirements: {{ totalProfile }} results
 		</span>
 		<!-- <div class="query-tag flex flex-wrap justify-end align-center my-4">
 			<Tag v-for="(item, index) in query" :key="index" :text="item"/>
@@ -51,7 +51,8 @@ export default {
 		...mapGetters({
 			profiles: 'search/getProfiles',
 			totalProfile: 'search/getProfileCount',
-			queryArr: 'search/getQueryArr'
+			queryArr: 'search/getQueryArr',
+			isSearched: 'search/getSearchStatus'
 		}),
 
 		limitedProfiles() {

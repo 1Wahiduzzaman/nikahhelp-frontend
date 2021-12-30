@@ -85,7 +85,7 @@
 							</select>
 						</div>
 					</div>
-					<template v-if="showMoreSeach">
+					<template v-if="showMoreSearch">
 						<!-- <div class="mt-4">
 							<div class="select-box">
 								<select class="custom-select" v-model="motherTongue">
@@ -236,7 +236,7 @@
 									Search
 								</button>
 								<div>
-									<button @click="showMoreSeach = !showMoreSeach" class="btn-adv-search">Advanced Search</button>
+									<button @click="showMoreSearch = !showMoreSearch" class="btn-adv-search">Advanced Search</button>
 								</div>
 							</div>
 							<select-team-modal
@@ -268,7 +268,7 @@ export default {
 	name: 'SimpleSearch',
 	data() {
 		return {
-			showMoreSeach: false,
+			showMoreSearch: false,
 			ageTV: AGES,
       		heightTv: HEIGHTS,
 			min_age: 20,
@@ -318,7 +318,8 @@ export default {
 		...mapMutations({
 			setProfiles: 'search/setProfiles',
 			pushQuery: 'search/pushQuery',
-			setLoading: 'search/setLoading'
+			setLoading: 'search/setLoading',
+			setSearchStatus: 'search/setSearchStatus'
 		}),
 		onDropdownChange({ name, value }) {
 			console.log({ name, value });
@@ -428,6 +429,7 @@ export default {
 		},
 		async handleSearch() {
 			let query = this.getQuery();
+			this.setSearchStatus(true)
 			// if(!query) return;
 			console.log(query, '>>>>>>>>>>>>>>>>')
 			// const res = await ApiService.get(`v1/home-searches${query}`);
