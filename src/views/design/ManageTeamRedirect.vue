@@ -66,9 +66,9 @@ export default {
   },
   created() {
     const self = this;
-    setInterval(() => {
-      self.turnOn = !self.turnOn;
-    }, 1000);
+    // setInterval(() => {
+    //   self.turnOn = !self.turnOn;
+    // }, 2000);
   },
   data() {
     return {
@@ -335,7 +335,8 @@ h3 {
     top: 18px;
   }
   @media (min-width: 1200px) {
-    top: 25px;
+    top: 20px;
+    right: -8px;
   }
 }
 .name-hover:hover {
