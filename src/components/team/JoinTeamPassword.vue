@@ -43,10 +43,10 @@
         <a-button class="back-button button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
       </div>
       <div class="position-absolute footer-conf-btn" v-if="!success">
-        <a-button class="confirm-button button float-right" @click="onConfirmClick" :loading="loading">Confirm</a-button>
+        <a-button class="confirm-button float-right" @click="onConfirmClick" :loading="loading">Confirm</a-button>
       </div>
       <div class="position-absolute footer-conf-btn" v-if="success">
-        <a-button class="confirm-button button float-right" @click="closeSuccess">Ok</a-button>
+        <a-button class="confirm-button float-right" @click="closeSuccess">Ok</a-button>
       </div>
 		</div>
 	</div>
@@ -160,11 +160,9 @@ export default {
 	border-radius: 25px !important;
 }
 .confirm-button {
-	background-color: #6158a7;
 	border-radius: 25px;
-	padding: 0px 20px;
+	padding: 0 20px;
 	margin-top: 40px;
-	color: white;
 	float: right;
 }
 
