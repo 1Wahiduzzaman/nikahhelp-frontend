@@ -2717,16 +2717,16 @@ export default {
     getResume(e) {
       let file = e.target.files[0];
 
-      // if (!this.imageSizeCheck(file)) {
-      //   file = "";
-      //   this.resumeDocument = "";
-      //   return;
-      // }
-      // if (!this.ValidateSingleInput(file)) {
-      //   file = "";
-      //   this.resumeDocument = "";
-      //   return;
-      // }
+      if (!this.imageSizeCheck(file)) {
+        file = "";
+        this.resumeDocument = "";
+        return;
+      }
+      if (!this.ValidateSingleInput(file)) {
+        file = "";
+        this.resumeDocument = "";
+        return;
+      }
       this.resumeDocument = file.name;
       this.personalInformation.more_about.per_additional_info_doc =
         e.target.files[0];
@@ -2738,11 +2738,11 @@ export default {
         .then((data) => {})
         .catch((error) => {});
     },
-    imageSizeCheck(file) {
-      if (file["size"] / 1024 / 1024 <= 15) {
+   imageSizeCheck(file) {
+      if (file["size"] > 15838312.5) {
         this.$error({
           title: "Validation Error",
-          content: "Image size can't be more than 15 mb",
+          content: "Image size can't be more than 2 mb",
           center: true,
         });
         return false;

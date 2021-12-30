@@ -597,6 +597,7 @@
 import FileUploadOne from "@/components/shared/FileUploadOne.vue";
 import ApiService from "../../services/api.service";
 import vSelect from "vue-select";
+import {VERIFICATION } from "./models/candidate";
 export default {
   name: "Verification",
   props: {
@@ -640,7 +641,7 @@ export default {
           first: true,
         },
       ],
-      rules: {},
+      rules: VERIFICATION,
       cities: [],
       imageBack: null,
       imageFont: null,

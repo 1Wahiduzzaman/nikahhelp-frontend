@@ -40,37 +40,39 @@
                     <span class="flex-50 px-2 label-text">Height</span
                     ><span class="flex-50 px-2"
                       >:
-
-                      <span class="ml-3"
-                        >{{
-                          heightTV.find(
-                            (x) =>
-                              x.value ===
-                              candidateData.preference.pre_height_min
-                          )
-                            ? heightTV.find(
-                                (x) =>
-                                  x.value ===
-                                  candidateData.preference.pre_height_min
-                              ).name
-                            : ""
-                        }}
-                        to
-                        {{
-                          heightTV.find(
-                            (x) =>
-                              x.value ===
-                              candidateData.preference.pre_height_max
-                          )
-                            ? heightTV.find(
-                                (x) =>
-                                  x.value ===
-                                  candidateData.preference.pre_height_max
-                              ).la
-                            : ""
-                        }}
-                      </span></span
-                    >
+                     
+                      <span
+                        v-html="
+                          `${
+                            heightTV.find(
+                              (x) =>
+                                x.value ===
+                                candidateData.preference.pre_height_min
+                            )
+                              ? heightTV.find(
+                                  (x) =>
+                                    x.value ===
+                                    candidateData.preference.pre_height_min
+                                ).label
+                              : ''
+                          } to ${
+                            heightTV.find(
+                              (x) =>
+                                x.value ===
+                                candidateData.preference.pre_height_max
+                            )
+                              ? heightTV.find(
+                                  (x) =>
+                                    x.value ===
+                                    candidateData.preference.pre_height_max
+                                ).label
+                              : ''
+                          }`
+                        "
+                        class="ml-3"
+                      >
+                      </span
+                    ></span>
                   </li>
 
                   <!-- Preferred countries and cities -->
