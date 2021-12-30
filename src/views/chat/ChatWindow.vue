@@ -2,7 +2,8 @@
 
     <div class="container-fluid" style="padding-top: 0px;">
       <div style="margin-bottom: 5px; padding-right: 1000px"></div>   <!--plz ignore this div -->
-      <div class="row">
+      <Loader v-if="isLoading" :isLoading="isLoading" />
+      <div class="row" v-else>
         <div class="col-12">
           <div class="chat-wrapper my-2">
             <div class="chat-left" :class="{'chat-hide': conversationTitle}">
@@ -163,7 +164,7 @@
 
               </div>
             </div>
-            <div class="chat-right position-relative" :class="{'chat-hide': !conversationTitle}" v-if="chats.length > 0">
+            <div class="chat-right position-relative" :class="{'chat-hide': !conversationTitle}" v-if="chatheadopen">
 <!--              <button class="btn btn-primary flex justify-content-center align-items-center my-2 d-lg-none position-absolute btn-short-back"-->
 <!--                      @click="backToTabList()">-->
 <!--                <a-icon type="caret-left"/>-->
@@ -375,6 +376,8 @@ import {pick, map} from 'lodash';
 const messageKeys = ['id', 'user_id', 'chat_id', 'team_id', 'from_team_id', 'to_team_id', 'private_receiver_id', 'private_team_chat_id', 'body', 'seen', 'created_at'];
 import {format} from 'timeago.js'
 import Conversation from "../../components/auth/Conversation";
+import JwtService from "@/services/jwt.service";
+import { openModalRoute } from "@/plugins/modal/modal.mixin";
 
 export default {
   name: 'ChatWindow',
@@ -409,7 +412,8 @@ export default {
         to_team_id: null,
         receiver: null
       },
-      chatheadopen: null
+      chatheadopen: null,
+      isLoading: false
     }
   },
   components: {
@@ -515,9 +519,7 @@ export default {
   },
   created() {
     this.$store.state.chat.chats = [];
-    this.loadTeamChat();
-    this.loadChatHistory();
-    this.loadConnectedGroup();
+    this.getActiveTeamId();
   },
   mounted() {
     let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -610,6 +612,19 @@ export default {
     }
   },
   methods: {
+    getActiveTeamId() {
+      if (!JwtService.getTeamIDAppWide()) {
+        this.isLoading = true;
+        setTimeout(() => {
+          this.isLoading = false;
+          openModalRoute(this, "manage_team_redirect");
+        }, 2000);
+      } else {
+        this.loadTeamChat();
+        this.loadChatHistory();
+        this.loadConnectedGroup();
+      }
+    },
     setChatTab(type) {
       this.chatTab = type;
     },

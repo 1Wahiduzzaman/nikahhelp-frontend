@@ -7,8 +7,8 @@
             <div class="h1-flex justify-content-between w-full">
               <h4 class="fs-24">Support</h4>
               <div class="flex justify-content-end">
-                <v-btn type="primary" color="indigo" class="text-white" rounded>Rating</v-btn>
-                <v-btn type="primary" color="error" class="ml-2" rounded>Feedback</v-btn>
+                <v-btn type="primary" color="indigo" class="text-white rate-btn" rounded outlined>Rating</v-btn>
+                <v-btn type="primary" color="indigo" class="ml-2 text-white rate-btn" rounded outlined>Feedback</v-btn>
               </div>
             </div>
             <div class="none-mobile mt-2">
@@ -47,87 +47,97 @@
         </div>
         <div class="col-12 col-lg-4">
           <div class="card br-10">
-            <div class="flex justify-content-between py-1 px-1">
-              <v-btn color="error" class="text-white w-50 br-10">Start a chat</v-btn>
-              <v-btn text class="w-50 br-10 text-danger">Submit a ticket</v-btn>
-            </div>
-            <div class="chat-area px-4">
-              <div class="position-relative">
-                <div class="chat-messages py-4 pr-1" id="chat-messages">
+            <v-tabs color="error accent-4" class="w-full d-flex justify-content-between support-tab" grow>
+              <v-tab href="#tab-1" @click="tab = 'tab-1'" class="">Start a chat</v-tab>
+              <v-tab href="#tab-2" @click="tab = 'tab-2'" class="">Submit a ticket</v-tab>
+            </v-tabs>
+
+            <v-tabs-items v-model="tab">
+              <v-tab-item value="tab-1">
+                <div class="chat-area px-4">
                   <div class="position-relative">
-                    <div
-                        class="chat-message-right pb-4 position-relative">
-                      <div class="text-right">
-                        <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
-                      </div>
-                      <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 white-space-pre">
-                        hello
-                      </div>
-                      <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">2021-12-31</div>
-                    </div>
-
-                    <div
-                        class="chat-message-left pb-4 position-relative">
-                      <div class="text-left">
-                        <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
-                      </div>
-                      <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 white-space-pre">
-                        Hello
-                      </div>
-                      <div class="text-muted small text-nowrap mt-2 position-absolute msg-left-created-at">2021-12-31</div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-              <div class="footer">
-<!--                <div class="footer-top"><strong>{{ chatheadopen.typer_name }}</strong> {{ chatheadopen.typing_text }}</div>-->
-                <div class="footer-bottom px-4">
-                  <form action="#">
-                    <div class="left flex justify-content-end align-items-end">
-                      <div class="message-box">
-                        <textarea name="message" id="" cols="30" rows="4" placeholder="Enter message..."></textarea>
-                        <div class="position-absolute msgbox-right">
-                          <div class="flex flex-column justify-content-center align-items-center h-full">
-                            <a-tooltip>
-                              <template slot="title">
-                                Coming soon
-                              </template>
-                              <button class="btn-emoji" title="Coming soon">&#128528;</button>
-                            </a-tooltip>
-                            <a-tooltip>
-                              <template slot="title">
-                                Coming soon
-                              </template>
-                              <button><img src="../../assets/icon/microphone.png" alt="icon" class="microphone" /></button>
-                            </a-tooltip>
-                            <a-tooltip>
-                              <template slot="title">
-                                Coming soon
-                              </template>
-                              <button><a-icon type="file-image" class="color-primary" /></button>
-                            </a-tooltip>
+                    <div class="chat-messages py-4 pr-1" id="chat-messages">
+                      <div class="position-relative">
+                        <div
+                            class="chat-message-right pb-4 position-relative">
+                          <div class="text-right">
+                            <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
                           </div>
+                          <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 white-space-pre">
+                            hello
+                          </div>
+                          <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">2021-12-31</div>
+                        </div>
+
+                        <div
+                            class="chat-message-left pb-4 position-relative">
+                          <div class="text-left">
+                            <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+                          </div>
+                          <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 white-space-pre">
+                            Hello
+                          </div>
+                          <div class="text-muted small text-nowrap mt-2 position-absolute msg-left-created-at">2021-12-31</div>
                         </div>
                       </div>
-                      <!-- <button :disabled="returnMsgSendBtnDeactiveStatus" class="btn btn-primary btn-submit js-msg-send">  -->
-                      <button class="btn btn-primary btn-submit js-msg-send">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.68 18.77">
-                          <g id="Layer_2" data-name="Layer 2">
-                            <g id="middle" fill="white">
-                              <polygon class="cls-1" points="8.6 12.29 7.06 13.34 6.86 11.05 8.6 12.29"/>
-                              <polygon class="cls-1" points="0 6.23 25.68 0 17.75 18.77 0 6.23"/>
-                              <polygon class="cls-2" points="6.86 11.05 24.95 0.57 8.6 12.29 6.86 11.05"/>
-                            </g>
-                          </g>
-                        </svg>
-                        Send
-                      </button>
+
                     </div>
-                  </form>
+                  </div>
+                  <div class="footer">
+                    <!--                <div class="footer-top"><strong>{{ chatheadopen.typer_name }}</strong> {{ chatheadopen.typing_text }}</div>-->
+                    <div class="footer-bottom px-4">
+                      <form action="#">
+                        <div class="left flex justify-content-end align-items-end">
+                          <div class="message-box">
+                            <textarea name="message" id="" cols="30" rows="4" placeholder="Enter message..."></textarea>
+                            <div class="position-absolute msgbox-right">
+                              <div class="flex flex-column justify-content-center align-items-center h-full">
+                                <a-tooltip>
+                                  <template slot="title">
+                                    Coming soon
+                                  </template>
+                                  <button class="btn-emoji" title="Coming soon">&#128528;</button>
+                                </a-tooltip>
+                                <a-tooltip>
+                                  <template slot="title">
+                                    Coming soon
+                                  </template>
+                                  <button><img src="../../assets/icon/microphone.png" alt="icon" class="microphone" /></button>
+                                </a-tooltip>
+                                <a-tooltip>
+                                  <template slot="title">
+                                    Coming soon
+                                  </template>
+                                  <button><a-icon type="file-image" class="color-primary" /></button>
+                                </a-tooltip>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- <button :disabled="returnMsgSendBtnDeactiveStatus" class="btn btn-primary btn-submit js-msg-send">  -->
+                          <button class="btn btn-primary btn-submit js-msg-send">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.68 18.77">
+                              <g id="Layer_2" data-name="Layer 2">
+                                <g id="middle" fill="white">
+                                  <polygon class="cls-1" points="8.6 12.29 7.06 13.34 6.86 11.05 8.6 12.29"/>
+                                  <polygon class="cls-1" points="0 6.23 25.68 0 17.75 18.77 0 6.23"/>
+                                  <polygon class="cls-2" points="6.86 11.05 24.95 0.57 8.6 12.29 6.86 11.05"/>
+                                </g>
+                              </g>
+                            </svg>
+                            Send
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </v-tab-item>
+              <v-tab-item value="tab-2">
+                <div class="chat-area px-4">
+                  <h1 class="d-flex justify-content-center align-items-center">Coming soon</h1>
+                </div>
+              </v-tab-item>
+            </v-tabs-items>
           </div>
         </div>
       </div>
@@ -140,6 +150,7 @@ export default {
   name: "Index",
   data() {
     return {
+      tab: 'tab-1',
       text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
       customStyle:
@@ -401,5 +412,9 @@ export default {
     flex-direction: row;
     flex-wrap: wrap;
   }
+}
+.rate-btn:hover {
+  background: $bg-primary;
+  color: #FFFFFF !important;
 }
 </style>
