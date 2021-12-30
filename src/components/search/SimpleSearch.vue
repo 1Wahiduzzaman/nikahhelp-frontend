@@ -86,7 +86,7 @@
 						</div>
 					</div>
 					<template v-if="showMoreSeach">
-						<div class="mt-4">
+						<!-- <div class="mt-4">
 							<div class="select-box">
 								<select class="custom-select" v-model="motherTongue">
 									<option value="">Select Mother Tongue</option>
@@ -99,7 +99,7 @@
 									</option>
 								</select>
 							</div>
-						</div>
+						</div> -->
 						<div class="mt-4">
 							<div class="select-box">
 								<select class="custom-select" v-model="employmentStatus">
@@ -112,7 +112,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="mt-4">
+						<!-- <div class="mt-4">
 							<div class="select-box">
 								<select class="custom-select" v-model="occupation">
 									<option value="">Select Occupation</option>
@@ -125,7 +125,7 @@
 									</option>
 								</select>
 							</div>
-						</div>
+						</div> -->
 						<div class="mt-4">
 							<div class="select-box">
 								<select class="custom-select" v-model="nationality">
@@ -140,7 +140,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="mt-4">
+						<!-- <div class="mt-4">
 							<div class="select-box">
 								<select class="custom-select" v-model="countryOfBirth">
 									<option value="">Select Country of Birth</option>
@@ -153,8 +153,8 @@
 									</option>
 								</select>
 							</div>
-						</div>
-						<div class="mt-4">
+						</div> -->
+						<!-- <div class="mt-4">
 							<div class="select-box">
 								<select class="custom-select" v-model="currentResidence">
 									<option value="">Select Current Residence</option>
@@ -207,7 +207,7 @@
 									<option :value="3">Former Smoker</option>
 								</select>
 							</div>
-						</div>
+						</div> -->
 					</template>
 					<div class="row">
 						<div class=" mt-12 pt-10">
