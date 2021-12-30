@@ -17,8 +17,8 @@
             />
             <img
               :src="
-                candidateData.personal.per_avatar_url
-                  ? candidateData.personal.per_avatar_url
+                candidateData.personal.per_main_image_url
+                  ? candidateData.personal.per_main_image_url
                   : avatarSrc
               "
               alt=""

@@ -102,8 +102,7 @@
         <!-- :class="{ disabled: !enabledNextBtn }"
           :disabled="!enabledNextBtn" -->
         <a-button
-          :class="{ disabled: !enabledNextBtn }"
-          :disabled="!enabledNextBtn"
+         
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"

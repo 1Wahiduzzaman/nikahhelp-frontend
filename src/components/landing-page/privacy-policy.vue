@@ -67,9 +67,9 @@ export default {
   justify-content: center;
   align-items: flex-start;
   overflow: hidden;
+  padding: 0 20px;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 0 20px;
 
 }
 </style>
