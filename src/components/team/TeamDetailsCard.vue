@@ -433,42 +433,56 @@
           </div>
 
           <div class="d-flex member-add-box pb-2" v-if="invitationObject.visible">
-            <a-select
-                placeholder="Role"
-                class="fs-10 w-25 member-add"
-                v-model="invitationObject.role"
+            <a-tooltip
+                placement="top"
+                title="Member role will"
             >
-<!--              <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>-->
-              <a-select-option value="Admin"> Admin </a-select-option>
-              <a-select-option value="Member"> Member </a-select-option>
-            </a-select>
+              <a-select
+                  placeholder="Role"
+                  class="fs-10 w-25 member-add"
+                  v-model="invitationObject.role"
+              >
+                <!--              <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>-->
+                <a-select-option value="Admin"> Admin </a-select-option>
+                <a-select-option value="Member"> Member </a-select-option>
+              </a-select>
+            </a-tooltip>
 
-            <a-select
-                placeholder="Add as a"
-                class="ml-1 fs-10 w-25 member-add"
-                v-model="invitationObject.add_as_a"
+            <a-tooltip
+                placement="top"
+                title="Add as a"
             >
-              <a-select-option value="Candidate" :disabled="ifHasCandidate()"> Candidate </a-select-option>
-              <a-select-option value="Representative"> Representative </a-select-option>
-              <a-select-option value="Match Maker"> Match Maker </a-select-option>
-            </a-select>
+              <a-select
+                  placeholder="Add as a"
+                  class="ml-1 fs-10 w-25 member-add"
+                  v-model="invitationObject.add_as_a"
+              >
+                <a-select-option value="Candidate" :disabled="ifHasCandidate()"> Candidate </a-select-option>
+                <a-select-option value="Representative"> Representative </a-select-option>
+<!--                <a-select-option value="Match Maker"> Match Maker </a-select-option>-->
+              </a-select>
+            </a-tooltip>
 
-            <a-select
-                placeholder="Relationship"
-                class="ml-1 fs-10 w-25 member-add"
-                v-model="invitationObject.relationship"
+            <a-tooltip
+                placement="top"
+                title="Relationship with candidate is"
             >
-              <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
-            </a-select>
+              <a-select
+                  placeholder="Relationship"
+                  class="ml-1 fs-10 w-25 member-add"
+                  v-model="invitationObject.relationship"
+              >
+                <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
+              </a-select>
+            </a-tooltip>
 
             <a-button
                 v-if="!clickedInviteNow"
-                type="primary"
-                class="ml-1 fs-12 br-20 bg-primary text-white member-btn"
+                class="ml-1 confirm-button fs-12 bright-20 member-btn"
                 :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship"
                 @click="inviteNowWindow">Invite now</a-button>
 
-            <a-dropdown class="right-br-20 bg-primary text-white w-20 fs-10 member-btn dropdown-button right-br-20" v-if="clickedInviteNow">
+            <a-dropdown class="confirm-button bright-20 w-20 fs-10 member-btn dropdown-button" v-if="clickedInviteNow">
               <a-menu slot="overlay">
                 <a-menu-item key="1" @click="againInviteWindow()">Invite Now </a-menu-item>
 <!--                submitInvite-->
@@ -2306,6 +2320,9 @@ export default {
   @media (min-width: 1780px) {
     display: contents;
   }
+}
+.bright-20 {
+  border-radius: 0 20px 20px 0;
 }
 // end css for team-card
 </style>

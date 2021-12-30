@@ -20,7 +20,7 @@
             <h4 class="fs-12 py-1 cursor-pointer text-left px-2" @click="changeRole('Member')">Member</h4>
           </div>
         </div>
-        <button class="btn btn-sm text-white remove-btn ml-3"
+        <button class="btn btn-sm text-white cancel-button ml-3 bright-20"
                 :disabled="checkDeleteAbility"
                 @click="removeInvitation()">Remove</button>
       </div>
