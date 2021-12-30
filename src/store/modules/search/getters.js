@@ -4,6 +4,7 @@ export default {
     getTotalResult: state => state.totalResult,
     getLoadingStatus: state => state.isLoading,
     getSearchStatus: state => state.isSearched,
+    getPagination: state => state.pagination,
     getQueryArr: state => state.queryArr,
     getComponentName: state => state.component,
     getSelectedProfileInfo: state => state.selectedProfile

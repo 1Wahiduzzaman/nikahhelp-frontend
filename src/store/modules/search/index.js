@@ -7,6 +7,7 @@ export default {
   state() {
     return {
       profiles: [],
+      pagination: {},
       isSearched: false,
       isLoading: false,
       totalResult: 0,
