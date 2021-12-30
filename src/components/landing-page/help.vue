@@ -68,9 +68,11 @@ export default {
   justify-content: center;
   align-items: flex-start;
   overflow: hidden;
-  padding: 0 20px;
   max-width: 1100px;
   margin: 0 auto;
-
+     padding: 0 10px;
+@media (min-width: 320px) and (max-width: 480px) {
+    padding: 0 20px;
+  }
 }
 </style>
