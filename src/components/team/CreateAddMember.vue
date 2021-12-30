@@ -25,9 +25,9 @@
           v-model="invitationObject.add_as_a"
           :disabled="invitationObject.invitation_link"
       >
-<!--        <a-select-option value="Candidate"> Candidate </a-select-option>-->
-        <a-select-option value="Representative"> Representative </a-select-option>
-        <a-select-option value="Match Maker"> Match Maker </a-select-option>
+        <a-select-option value="Candidate" v-if="team.add_as_a != 'Candidate'"> Candidate </a-select-option>
+        <a-select-option value="Representative" v-if="team.add_as_a != 'Representative'"> Representative </a-select-option>
+<!--        <a-select-option value="Match Maker"> Match Maker </a-select-option>-->
       </a-select>
 
       <a-select
@@ -40,12 +40,11 @@
       </a-select>
 
       <a-button v-if="!clickedInviteNow"
-                type="primary"
-                class="ml-2 fs-10 br-20"
+                class="ml-2 confirm-button fs-10 br-20"
                 @click="goNextStep()"
                 :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship">Invite now</a-button>
 
-      <a-dropdown class="right-br-20 bg-primary text-white w-20 fs-10 dropdown-button" v-if="clickedInviteNow">
+      <a-dropdown class="confirm-button right-br-20 w-20 fs-10 dropdown-button" v-if="clickedInviteNow">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="toggleMemberbox()">Invite Now </a-menu-item>
           <a-menu-item key="2" @click="deleteInvitation()">Remove </a-menu-item>
@@ -55,10 +54,10 @@
     </div>
     <div class="position">
       <div class="position-absolute footer-cancel-btn">
-        <a-button class="back-button button float-left text-white" v-on:click="$emit('cancel_button')">Back</a-button>
+        <a-button class="cancel-button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
       </div>
       <div class="position-absolute footer-conf-btn">
-        <a-button class="confirm-button button float-right bg-primary text-white" @click="saveAndContinue()" :loading="loading">Save & Continue</a-button>
+        <a-button class="confirm-button float-right" @click="saveAndContinue()" :loading="loading">Save & Continue</a-button>
       </div>
     </div>
     <InviteMember :team="team"
@@ -82,7 +81,7 @@ export default {
       relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-paw'],
       invitationObject: {
         role: "Admin",
-        add_as_a: "Representative",
+        add_as_a: this.team.add_as_a != "Candidate" ? "Candidate" : "Representative",
         relationship: "Father",
         invitation_link: null,
       },
@@ -123,12 +122,12 @@ export default {
             };
             this.$emit("socketNotification", socketData);
             this.$emit("goNext", 3);
-            this.$emit("loadTeams");
+            // this.$emit("loadTeams");
           }
         });
       } else {
         this.$emit("goNext", 3);
-        this.$emit("loadTeams");
+        // this.$emit("loadTeams");
       }
     },
     async deleteInvitation() {

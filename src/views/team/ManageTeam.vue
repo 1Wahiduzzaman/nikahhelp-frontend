@@ -127,7 +127,7 @@ export default {
       joinCreateTeamShow: true,
       createTeamPassword: false,
       welcomeModal: false,
-      joinTeamPassword: true,
+      joinTeamPassword: false,
       joinTeamInfo: null,
       relationsShip: 'Father',
       teams: []

@@ -40,7 +40,7 @@
       </div>
 
       <div class="position-absolute footer-cancel-btn" v-if="!success">
-        <a-button class="back-button button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
+        <a-button class="cancel-button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
       </div>
       <div class="position-absolute footer-conf-btn" v-if="!success">
         <a-button class="confirm-button float-right" @click="onConfirmClick" :loading="loading">Confirm</a-button>
