@@ -28,7 +28,7 @@
             @collapseSideBar="collapsed = !collapsed"
           >
             <template v-slot:search>
-              <SimpleSearch />
+              <SimpleSearch ref="simpleSearch"/>
             </template>
           </Sidebar>
         </a-layout-sider>
@@ -41,6 +41,7 @@
                   v-bind:is="currentTabComponent"
                 >
                 </component>
+                <Observer @intersect="onIntersect"/>
               </div>
               <div class="main-content-2">
                 <component v-bind:is="rightSideComponentName"></component>
@@ -56,6 +57,7 @@
 
 <script>
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
+import Observer from "@/components/atom/Observer"
 import Loader from "@/plugins/loader/loader.vue";
 import CandidateProfiles from "@/components/search/CandidateProfiles.vue";
 import AddComponent from "@/components/add/addComponent";
@@ -75,6 +77,7 @@ export default {
     // Footer,
     CandidateProfiles,
     AddComponent,
+    Observer
   },
   data() {
     return {
@@ -103,6 +106,10 @@ export default {
       setProfiles: "search/setProfiles",
       setLoading: "search/setLoading",
     }),
+    onIntersect() {
+      this.$refs.simpleSearch.handleSearch();
+      console.log('intersect')
+    },
     async fetchInitialCandidate() {
       // const res = await this.searchUser('v1/home-searches?page=0&parpage=10&min_age=20&max_age=40&ethnicity=Amara&marital_status=single');
       this.setLoading(true);

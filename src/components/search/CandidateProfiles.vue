@@ -4,7 +4,7 @@
 			{{isSearched ? 'Search Results' : 'Suggestion'}}
 		</h4>
 		<span v-if="isSearched" class="text--secondary text-h6">
-			Matches for your requirements: {{ totalProfile }} results
+			Matches for your requirements: {{ pagination.total_items ? pagination.total_items : 0 }} results
 		</span>
 		<!-- <div class="query-tag flex flex-wrap justify-end align-center my-4">
 			<Tag v-for="(item, index) in query" :key="index" :text="item"/>
@@ -17,10 +17,10 @@
 			</a>
 		</div> -->
 		<!-- start advanced search -->
-		<div class="row">
+		<div class="row mt-2">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="row">
-					<div v-for="(profile, n) in  limitedProfiles" :key="n" class="col-sm-12 col-md-6 col-lg-4">
+					<div v-for="(profile, n) in  profiles" :key="n" class="col-sm-12 col-md-6 col-lg-4">
 						<CandidateGrid
 							:candidate="profile"
 							@switchComponent="()=>$emit('switchComponent', 'ProfileDetail')"
@@ -35,14 +35,14 @@
 
 <script>
 import CandidateGrid from '@/components/search/NewCandidateCard.vue';
-import Tag from '@/components/atom/Tag'
+// import Tag from '@/components/atom/Tag'
 import {mapGetters} from 'vuex';
 
 export default {
 	name: 'CandidateProfiles',
 	components: {
 		CandidateGrid,
-		Tag
+		// Tag
 	},
 	data: () => ({
 		showAllQuery: false
@@ -50,7 +50,8 @@ export default {
 	computed: {
 		...mapGetters({
 			profiles: 'search/getProfiles',
-			totalProfile: 'search/getProfileCount',
+			// pagination.total_items: 'search/getProfileCount',
+			pagination: 'search/getPagination',
 			queryArr: 'search/getQueryArr',
 			isSearched: 'search/getSearchStatus'
 		}),

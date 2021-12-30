@@ -262,7 +262,7 @@ import languages from "@/common/languages.js";
 import hobbies from "@/common/hobbies.js";
 import { AGES, HEIGHTS } from "../../models/data";
 import SelectGroup from "@/components/ui/selects/SelectGroup";
-import {mapMutations, mapActions} from 'vuex'
+import {mapGetters, mapMutations, mapActions} from 'vuex'
 
 export default {
 	name: 'SimpleSearch',
@@ -301,8 +301,15 @@ export default {
 			showActiveTeamModal: false,
 			candidateActiveTeam: null,
 			activeTeamId: null,
-			heithtTV : HEIGHTS
+			heithtTV : HEIGHTS,
+			currentPage: 1,
 		};
+	},
+	computed: {
+		...mapGetters({
+			pagination: 'search/getPagination',
+			isFetching: "search/getLoadingStatus",
+		})
 	},
 	created() {
 		this.getOccupations();
@@ -319,7 +326,8 @@ export default {
 			setProfiles: 'search/setProfiles',
 			pushQuery: 'search/pushQuery',
 			setLoading: 'search/setLoading',
-			setSearchStatus: 'search/setSearchStatus'
+			setSearchStatus: 'search/setSearchStatus',
+			setPagination: 'search/setPaginationData'
 		}),
 		onDropdownChange({ name, value }) {
 			console.log({ name, value });
@@ -351,7 +359,7 @@ export default {
 
 			console.log('>>>>>>>>>>>>>>>>')
 			// let _payload = `?page=0&parpage=10&min_age=${params.age_min}&max_age=${params.age_max}&active_team_id=${this.activeTeamId}`;
-			let _payload = `?page=0&parpage=10&min_age=${this.min_age}&max_age=${this.max_age}`;
+			let _payload = `?page=${this.currentPage}&parpage=10&min_age=${this.min_age}&max_age=${this.max_age}`;
 
 			// if (this.gender != 0) {
 			// 	_payload += `&gender=1`;
@@ -428,6 +436,11 @@ export default {
 			// this.$emit("handle-search", _payload);
 		},
 		async handleSearch() {
+			if(this.isFetching) return;
+			console.log(this.pagination.last_page, '>>>>>>dfdfd>>>>>>>')
+			if(this.pagination.last_page) {
+				if(!this.pagination.last_page>= this.currentPage) return
+			}
 			let query = this.getQuery();
 			this.setSearchStatus(true)
 			// if(!query) return;
@@ -442,6 +455,9 @@ export default {
 				}
 				if(res.data && res.data.length ) {
 					this.setProfiles(res.data)
+					console.log(res.pagination, '>>>>>>>>..res.pagination')
+					this.setPagination(res.pagination)
+					this.updateCurrentPage();
 				} 
 				
 			} catch(err) {
@@ -449,6 +465,13 @@ export default {
 				console.log(err)
 			}
 			// console.log(res, 'dtata tatat')
+		},
+		updateCurrentPage() {
+			console.log(this.pagination.current_page);
+			if(this.currentPage<this.pagination.last_page) {
+				this.currentPage++
+			}
+			console.log(this.currentPage, '>>>>>>>>>current page')
 		},
 		onAfterChangeSlider(value) {
 			this.age = value;
