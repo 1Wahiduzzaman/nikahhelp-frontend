@@ -163,7 +163,7 @@
 
               </div>
             </div>
-            <div class="chat-right position-relative" :class="{'chat-hide': !conversationTitle}" v-if="chats.length > 0">
+            <div class="chat-right position-relative" :class="{'chat-hide': !conversationTitle}" v-if="chatheadopen">
 <!--              <button class="btn btn-primary flex justify-content-center align-items-center my-2 d-lg-none position-absolute btn-short-back"-->
 <!--                      @click="backToTabList()">-->
 <!--                <a-icon type="caret-left"/>-->
