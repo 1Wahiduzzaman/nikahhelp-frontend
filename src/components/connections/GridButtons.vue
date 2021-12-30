@@ -104,6 +104,7 @@
 <!--        </a-button>-->
         <a-button
             type="primary" block
+            @click="$emit('declineConnection')"
             class="d-flex align-items-center justify-content-center grid-action-btn btn-info"
             shape="round" size="small">
           <a-icon type="cross"/>

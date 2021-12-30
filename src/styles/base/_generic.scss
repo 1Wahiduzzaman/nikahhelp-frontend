@@ -638,6 +638,26 @@ div[data-unique="second_one"] >  .ant-select-selection{
     font-size: 16px;
     font-weight: bold;
 }
+.confirm-button {
+    color: #6158a7;
+    border-radius: 20px;
+    border: 1px solid #6158a7;
+}
+.confirm-button:hover {
+    background-color: #6158a7;
+    color: #FFFFFF !important;
+    border: none;
+}
+.cancel-button {
+    color: $color-brand;
+    border-radius: 20px;
+    border: 1px solid $border-brand;
+}
+.cancel-button:hover {
+    background-color: $bg-brand;
+    color: #FFFFFF !important;
+    border: 1px solid #FFFFFF;
+}
 @media (min-width: 576px) {
     .ant-layout-sider {
         z-index: 9;
