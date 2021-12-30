@@ -7,6 +7,8 @@
       </div>
       <a-collapse
         default-active-key="1"
+        @change="changeActivekey"
+        :activeKey="activeKey"
         :bordered="false"
         expand-icon-position="right"
       >
@@ -642,13 +644,18 @@ export default {
       cities: [],
       imageBack: null,
       imageFont: null,
+      activeKey: 1,
     };
   },
 
   methods: {
+    changeActivekey(key) {
+      this.activeKey = key;
+    },
     handleSubmitFormOne() {
       this.$refs.verification.validate((valid) => {
         if (valid) {
+          this.activeKey = null;
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");

@@ -29,7 +29,7 @@
           class="form-ma"
         >
           <!-- Gender -->
-          <div class="row mt-3 pb-2 border-bottom">
+          <div v-if="activeRouteName=='CandidateRegistration'" class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -2669,12 +2669,21 @@ export default {
       ethnicityList: ethnicities,
       arr: ARR_PersonalInfo,
       heightTV: HEIGHTS,
+      activeRouteName:'CandidateRegistration',
       dateOfbirth: {
         day: null,
         month: null,
         year: null,
       },
     };
+  },
+    watch: {
+    $route: {
+      immediate: true,
+      handler: function (to, from) {
+        this.activeRouteName = this.$route.name;
+      },
+    },
   },
 
   methods: {
@@ -2708,16 +2717,16 @@ export default {
     getResume(e) {
       let file = e.target.files[0];
 
-      if (!this.imageSizeCheck(file)) {
-        file = "";
-        this.resumeDocument = "";
-        return;
-      }
-      if (!this.ValidateSingleInput(file)) {
-        file = "";
-        this.resumeDocument = "";
-        return;
-      }
+      // if (!this.imageSizeCheck(file)) {
+      //   file = "";
+      //   this.resumeDocument = "";
+      //   return;
+      // }
+      // if (!this.ValidateSingleInput(file)) {
+      //   file = "";
+      //   this.resumeDocument = "";
+      //   return;
+      // }
       this.resumeDocument = file.name;
       this.personalInformation.more_about.per_additional_info_doc =
         e.target.files[0];

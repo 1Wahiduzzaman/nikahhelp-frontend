@@ -7,6 +7,7 @@ import About from "@/views/auth/About.vue";
 import MatrimonySystem from "@/components/system/matrimony-system.vue";
 import AboutPage from "@/components/landing-page/about.vue";
 import HelpPage from "@/components/landing-page/help.vue";
+import PrivacyPolicy from "@/components/landing-page/privacy-policy.vue";
 import TermsAndConditionPage from "@/components/landing-page/terms-condition.vue";
 import SafetyAndGuidancePage from "@/components/landing-page/safety-guidance.vue";
 import Signup from "@/views/auth/Signup.vue";
@@ -79,7 +80,7 @@ import Header from "../components/header/header.vue";
 
 import ChatWindow from "@/views/chat/ChatWindow.vue";
 
-import PrivacyPolicy from "@/views/privacy-policy/PrivacyPolicy.vue";
+
 import { InitRoute } from './guard/guard'
 
 Vue.use(VueRouter);
@@ -101,7 +102,7 @@ const AppRouter = new VueRouter({
             // beforeEnter: InitRoute,
 
         },
-        
+
         {
             path: "/representative-registration",
             name: "RepresentativeRegistration",
@@ -224,7 +225,7 @@ const AppRouter = new VueRouter({
                     component: ChatWindow,
 
                 },
-               
+
 
                 {
                     path: "/shortlist",
@@ -367,13 +368,13 @@ const AppRouter = new VueRouter({
             path: "/signup",
             name: "Signup",
             component: Signup,
-
+            beforeEnter: InitRoute,
         },
         {
             path: "/login",
             name: "Login",
             component: Login,
-
+            beforeEnter: InitRoute,
         },
 
         {
