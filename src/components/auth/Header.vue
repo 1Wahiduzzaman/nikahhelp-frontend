@@ -49,7 +49,7 @@ export default {
     };
   },
   created() {
-    this.checkAuthentication();
+    //this.checkAuthentication();
   },
   mounted() {
     let scrollpos = window.scrollY;

@@ -7,6 +7,8 @@
       </div>
       <a-collapse
         default-active-key="1"
+        @change="changeActivekey"
+        :activeKey="activeKey"
         :bordered="false"
         expand-icon-position="right"
       >
@@ -595,6 +597,7 @@
 import FileUploadOne from "@/components/shared/FileUploadOne.vue";
 import ApiService from "../../services/api.service";
 import vSelect from "vue-select";
+import {VERIFICATION } from "./models/candidate";
 export default {
   name: "Verification",
   props: {
@@ -638,17 +641,22 @@ export default {
           first: true,
         },
       ],
-      rules: {},
+      rules: VERIFICATION,
       cities: [],
       imageBack: null,
       imageFont: null,
+      activeKey: 1,
     };
   },
 
   methods: {
+    changeActivekey(key) {
+      this.activeKey = key;
+    },
     handleSubmitFormOne() {
       this.$refs.verification.validate((valid) => {
         if (valid) {
+          this.activeKey = null;
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
