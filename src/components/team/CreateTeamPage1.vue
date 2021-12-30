@@ -20,7 +20,7 @@
               <div class="cursor-pointer image-plus background-img" @click="imageModal = true" :style="{ backgroundImage: 'url(' + logoBobUrl + ')' }">
                 <h4 class="fs-33 d-flex justify-content-center align-items-center text-white">+</h4>
               </div>
-              <h4 class="fs-14 color-gray ml-2 add-team-image cursor-pointer" @click="imageModal = true">Add a team image</h4>
+              <h4 class="fs-14 color-gray ml-2 add-team-image cursor-pointer mt-2" @click="imageModal = true">Add a team image</h4>
             </div>
             <span class="text-danger fs-12" v-if="in_progress && !file">Please upload team logo</span>
           </a-col>
@@ -30,15 +30,13 @@
                 size="large"
                 class="team-name-input"
                 placeholder="Team name"
-                autocomplete="off"
-                :maxLength="20"
-                @input="in_progress = true"
+                autoComplete="nope"
             />
             <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.name">Team name required</span>
           </a-col>
           <a-col class="mt-2" :span="24">
             <a-textarea
-                class="team-description team-name-input resize-none"
+                class="team-description team-name-input resize-none fs-16"
                 placeholder="Team description"
                 :auto-size="{ minRows: 3, maxRows: 5 }"
                 v-model="team.description"
@@ -56,7 +54,7 @@
                     type="password"
                     class="team-name-input"
                     placeholder="Type Team Password"
-                    autocomplete="off"
+                    autocomplete="new-password"
                     @input="in_progress = true"
                 />
                 <span class="fs-12 text-danger ml-2 fs-12" v-if="team.password && team.password.length !== 4">Password must be 4 digits</span>
@@ -69,7 +67,7 @@
                     type="password"
                     class="team-name-input"
                     placeholder="Re-Type Password"
-                    autocomplete="off"
+                    autocomplete="new-password"
                     @input="in_progress = true"
                 />
                 <span class="text-danger mt-2 ml-2 fs-12" v-if="team.password && team.confirm_password && team.password !== team.confirm_password">Password doesn't match.</span>
@@ -86,7 +84,7 @@
                 <a-select
                     size="large"
                     placeholder="Add as a"
-                    class="ml-1 fs-14 w-50 member-add"
+                    class="ml-1 fs-14 w-50 member-add mr-2"
                     v-model="addAs"
                     disabled
                 >
@@ -114,10 +112,10 @@
           </a-col>
         </a-row>
         <div class="position-absolute footer-cancel-btn">
-          <a-button class="back-button button float-left" @click="goBack()">Back</a-button>
+          <a-button class="back-button cancel-button float-left" @click="goBack()">Back</a-button>
         </div>
         <div class="position-absolute footer-conf-btn">
-          <a-button class="confirm-button button float-right" @click="createTeam()" :disabled="checkDisability" :loading="loading">Next</a-button>
+          <a-button class="confirm-button float-right" @click="createTeam()" :loading="loading">Next</a-button>
         </div>
       </div>
       <CreateAddMember :team="team" :file="file" v-if="step === 2" @cancel_button="$emit('cancel_button')" @goNext="goNextStep" @loadTeams="loadTeams" @socketNotification="socketNotification" />
@@ -301,23 +299,30 @@ export default {
       this.team = data;
     },
     async createTeam() {
-      this.loading = true;
-      this.in_progress = true;
-      this.team.add_as_a = this.addAs;
-      this.team.relationship = this.selfRole.relationship;
-      let formData = new FormData();
-      formData.append('logo', this.file);
-      Object.keys(this.team).map(data =>{
-        formData.append(data, this.team[data]);
-      });
+      if(!this.checkDisability) {
+        this.loading = true;
+        this.in_progress = true;
+        this.team.add_as_a = this.addAs;
+        this.team.relationship = this.selfRole.relationship;
+        let formData = new FormData();
+        formData.append('logo', this.file);
+        Object.keys(this.team).map(data =>{
+          formData.append(data, this.team[data]);
+        });
 
-      await ApiService.post('/v1/team', formData).then(res => {
-        this.loading = false;
-        if(res && res.data) {
-          this.updateTeamData(res.data.data);
-          this.goNextStep(2);
-        }
-      });
+        await ApiService.post('/v1/team', formData).then(res => {
+          this.loading = false;
+          if(res && res.data && res.data.status != 'FAIL') {
+            res.data.data.add_as_a = this.addAs;
+            this.updateTeamData(res.data.data);
+            this.goNextStep(2);
+          } else {
+            this.$message.error("Something went wrong");
+          }
+        });
+      } else {
+        this.$message.error("Please fill all the fields");
+      }
     },
     socketNotification(data) {
       this.$emit("socketNotification", data);
@@ -398,16 +403,12 @@ export default {
 .form-label {
   text-align: left;
 }
+.disabled {
+  pointer-events: none;
+  opacity: 0.3;
+}
 .form-value {
   text-align: left;
-}
-.back-button {
-  background: $bg-brand;
-  color: $color-white;
-}
-.confirm-button {
-  background-color: $bg-primary;
-  color: $color-white;
 }
 .ant-input-suffix {
   right: 0 !important;

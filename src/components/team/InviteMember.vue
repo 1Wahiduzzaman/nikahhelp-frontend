@@ -9,7 +9,7 @@
         <a-input ref="userNameInput" placeholder="Search email or user ID" v-model="user_email" @keyup="searchMember()">
           <a-icon slot="suffix" type="info-circle" style="color: rgba(0,0,0,.45)" />
         </a-input>
-        <span class="text-white fs-12 fw-500 ml-2">Invited/Suggested/Searched user</span>
+<!--        <span class="text-white fs-12 fw-500 ml-2">Invited/Suggested/Searched user</span>-->
       </div>
       <div class="suggestion-box mt-4 mx-4 px-2" :class="{'details-suggestion-card': from === 'details-card'}">
         <div class="user d-flex position-relative" v-if="userObj && userObj.user">
@@ -56,6 +56,8 @@ export default {
         team_id: this.team.id
       }).then(response => {
         this.userObj = response.data.data;
+      }).catch(e => {
+        this.userObj = {};
       });
     },
     inviteMember() {

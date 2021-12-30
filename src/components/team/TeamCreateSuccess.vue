@@ -110,13 +110,15 @@ export default {
 .sub-btn {
   width: 200px;
   height: 40px;
-  background-color: #e22077;
-  color: white;
-  border: 3px solid white;
+  color: #e22077;
+  border: 3px solid #e22077;
   border-radius: 25px;
   text-align: center;
 }
-
+.sub-btn:hover {
+  background-color: #e22077;
+  color: #FFFFFF;
+}
 .sub-btn-label {
   color: white;
   font-size: 18px;
