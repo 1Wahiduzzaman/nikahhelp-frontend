@@ -42,7 +42,7 @@
                             </g>
                           </svg>
 <!--                          <span class="countOfChat">{{ totalUnreadCount }}</span>-->
-                          <span class="countOfChat">{{ chatHistory.length }}</span>
+<!--                          <span class="countOfChat">{{ chatHistory.length }}</span>-->
                           <p class="category-name">Recent</p>
                         </a>
                       </div>
@@ -60,7 +60,7 @@
                             </g>
                           </svg>
 <!--                          <span class="countOfChat">{{ teamUnreadCount }}</span>-->
-                          <span class="countOfChat">{{ teamChat.length - 1 }}</span>
+<!--                          <span class="countOfChat">{{ teamChat.length - 1 }}</span>-->
                           <p class="category-name">Team</p>
                         </a>
                       </div>
@@ -79,7 +79,7 @@
                             </g>
                           </svg>
 <!--                          <span class="countOfChat">{{ connectedUnreadCount }}</span>-->
-                          <span class="countOfChat">{{ connectedTeam.length }}</span>
+<!--                          <span class="countOfChat">{{ connectedTeam.length }}</span>-->
                           <p class="category-name">Connected</p>
                         </a>
                       </div>
@@ -178,7 +178,7 @@
 <!--                      <span></span>-->
                     </div>
                     <div class="chat-info">
-                      <div class="chat-group bg-primary">{{ getChatType }} chat</div>
+                      <div class="chat-group bg-primary">{{ chatheadopen.label }}</div>
                       <div class="chat-name">{{ conversationTitle }}</div>
                       <div class="last-chat" v-if="chat_type == 'team'">Active now {{ getTeamOnlineUsers() > 0 ? getTeamOnlineUsers() : '' }}</div>
                     </div>
@@ -755,7 +755,9 @@ export default {
               label: 'Connected Team',
               state: 'seen',
               name: item.team_name ? item.team_name : 'user name',
-              team_id: item.team_id
+              team_id: item.team_id,
+              chat_id: null,
+              // message: { chat_id: null }
             }
           });
         }
@@ -2335,6 +2337,9 @@ export default {
   top: -20px;
   left: -10px;
   padding: 4px;
+  @media (min-width: 576px) {
+    display: none;
+  }
 }
 .chat-item-wrapper {
   //height: 500px;

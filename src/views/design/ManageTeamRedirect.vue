@@ -8,7 +8,7 @@
           <div class="flex mobile-column">
             <div class="column-margin">
               <div class="flex flex-column">
-                <div class="dt-div1 color-primary ml-1 d-mb-none">Opps. This menu feature are inactive</div>
+                <div class="dt-div1 color-primary ml-1 d-mb-none"><span>Opps. This menu feature are inactive</span></div>
                 <div class="dt-div2">
                   <span class="span1">Turn</span> <span class="span2">ON</span>
                 </div>
@@ -26,17 +26,17 @@
                   </h3>
                 </div>
                 <div class="dt-div3 ml-2">
-                  <div class="text-white"><span class="ortext">or</span> &nbsp; <router-link to="/manageteam" class="manage-team-link"> <span>&#8592;</span> Manage Team </router-link></div>
+                  <div class="text-white"><span class="ortext">or</span> &nbsp; <router-link to="/manageteam" class="manage-team-link button-link"> <span>&#8592;</span> Manage Team </router-link></div>
                 </div>
                 <div class="ml-2">
                   <span class="link-text">Don't have a team? please</span>
-                  <span class="link-text ml-2 text-decoration-underline"><router-link to="/manageteam" class="manage-team-link"> create </router-link></span>
+                  <span class="link-text ml-2 text-decoration-underline italic"><router-link to="/manageteam" class="manage-team-link"> create </router-link></span>
                   <span class="link-text ml-2"> or</span>
-                  <span class="link-text ml-2 text-decoration-underline"><router-link to="/manageteam" class="manage-team-link"> join </router-link></span>
+                  <span class="link-text ml-2 text-decoration-underline italic"><router-link to="/manageteam" class="manage-team-link"> join </router-link></span>
                   <span class="link-text ml-2"> a team</span>
                 </div>
                 <h4 class="info-text">
-                  * The information of this page relates to team that you turned ON. <span class="text-decoration-underline font-weight-bold cursor-pointer learn-text">learn more...</span>
+                  * The information of this page relates to team that you turned ON. <span class="text-decoration-underline font-weight-bold cursor-pointer learn-text italic">learn more...</span>
                 </h4>
               </div>
             </div>
@@ -47,7 +47,7 @@
                 <a-switch class="position-absolute switch-icon" v-model="turnOn" disabled />
               </div>
             </div>
-            <div class="dt-div1 color-primary ml-1 mb-4 d-dk-none">Opps. This menu feature are inactive</div>
+            <div class="dt-div1 color-primary ml-1 mb-4 d-dk-none"><span>Opps. This menu feature are inactive</span></div>
           </div>
         </div>
       </div>
@@ -188,17 +188,17 @@ export default {
 
 .dt-div1 {
   background: #fff;
-  padding: 5px 5px 5px 15px;
+  padding: 5px 15px 5px 15px;
   font-size: 1rem;
   border-radius: 12px;
   font-weight: bold;
   @media (min-width: 992px) {
     font-size: 2rem;
+    width: fit-content;
   }
 }
 .dt-div2 {
   font-size: 3rem;
-  padding-bottom: 1rem;
   text-align: center;
   margin-top: 30px;
   @media (min-width: 768px) {
@@ -207,7 +207,7 @@ export default {
   @media (min-width: 992px) {
     font-size: 7rem;
     text-align: left;
-    margin-top: 0;
+    margin-top: -10px;
   }
   .span1 {
     color: #fff;
@@ -228,7 +228,7 @@ h3 {
 .dt-div3 {
   display: flex;
   align-items: center;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
   a {
     color: #fff;
     font-size: 15px;
@@ -258,26 +258,26 @@ h3 {
 .manage-team-link {
   color: #FFFFFF !important;
   padding-top: 2px;
-  padding-bottom: 2px;
+  padding-bottom: 5px;
 }
 .manage-team-link:hover {
-  //color: $color-success !important;
-  background: #FFFFFF;
-  color: $color-primary !important;
+  color: $color-brand !important;
   border: none;
-  //padding-top: 4px;
+}
+.button-link:hover {
+  background: #FFFFFF;
 }
 .manage-team-icon {
   margin-top: -6px;
 }
 .request-text {
   padding-bottom: 1rem;
-  font-size: 18px;
+  font-size: 16px;
   @media (min-width: 768px) {
-    font-size: 24px;
+    font-size: 20px;
   }
   @media (min-width: 992px) {
-    font-size: 28px;
+    font-size: 24px;
     padding-bottom: .2rem;
   }
 }
@@ -370,7 +370,7 @@ h3 {
     font-size: 22px;
   }
   @media (min-width: 992px) {
-    font-size: 28px;
+    font-size: 24px;
   }
 }
 .switch-box > .ant-switch {
@@ -392,10 +392,11 @@ h3 {
   opacity: 1 !important;
 }
 .info-text {
-  color: #175fe1d1;
-  margin-top: 12px;
+  color: #0d5cebd1;
+  margin-top: 16px;
   font-size: 14px;
   margin-bottom: 20px;
+  font-weight: 300;
   @media (min-width: 768px) {
     font-size: 18px;
   }
@@ -416,5 +417,8 @@ h3 {
   @media (min-width: 768px) {
     display: block;
   }
+}
+.italic {
+  font-style: italic;
 }
 </style>

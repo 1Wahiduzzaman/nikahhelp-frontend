@@ -14,8 +14,8 @@
       </div>
 
       <div
-        class="header-right user-avatar-area shrink-none"
-        style="align-self: center"
+        class="header-right user-avatar-area shrink-none mobile-menu"
+        style="align-self: center;"
       >
         <div>
           <ul class="header-nav-icons d-none d-sm-flex">
@@ -121,7 +121,7 @@
             </li>
           </ul>
         </div>
-        <div style="display: flex">
+        <div class="mobile-menu" style="display: flex;">
           <a-dropdown>
             <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
               <img
@@ -504,6 +504,12 @@ export default {
 }
 .header-nav-icons .nav-item {
   position: relative;
+}
+.mobile-menu {
+  width: 100%;
+  @media (min-width: 768px) {
+    width: auto;
+  }
 }
 .menu-icon-alt {
   width: 25px;

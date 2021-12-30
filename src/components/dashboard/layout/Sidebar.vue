@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="d-sidebar" >
+		<div class="d-sidebar" style="display: block">
 			<template v-if="showMenu && path == 'AdvanceSearch'">
 				<div class="mt-1">
 					<SidebarHeader @onClickBack="showMenu = false" v-if="!collapsed"/>

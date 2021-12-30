@@ -661,6 +661,12 @@ div[data-unique="second_one"] >  .ant-select-selection{
 .support-tab > .v-item-group {
     width: 100% !important;
 }
+.brleft-20 > .ant-select-selection {
+    border-radius: 20px 0 0 20px;
+}
+.none-radius > .ant-select-selection {
+    border-radius: 4px;
+}
 @media (min-width: 576px) {
     .ant-layout-sider {
         z-index: 9;

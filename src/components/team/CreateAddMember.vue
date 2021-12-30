@@ -7,40 +7,55 @@
         <a-icon type="info-circle" class="ml-2 fs-12" />
       </div>
     </div>
-    <div class="dropdowns d-flex mt-4">
-      <a-select
-          placeholder="Role"
-          class="fs-10 w-25"
-          v-model="invitationObject.role"
-          :disabled="invitationObject.invitation_link"
+    <div class="dropdowns d-flex mt-4 justify-content-center">
+      <a-tooltip
+          placement="top"
+          title="Member role will"
       >
-<!--         <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>-->
-        <a-select-option value="Admin"> Admin </a-select-option>
-        <a-select-option value="Member"> Member </a-select-option>
-      </a-select>
+        <a-select
+            placeholder="Role"
+            class="fs-10 w-20 brleft-20"
+            v-model="invitationObject.role"
+            :disabled="invitationObject.invitation_link"
+        >
+          <!--         <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>-->
+          <a-select-option value="Admin"> Admin </a-select-option>
+          <a-select-option value="Member"> Member </a-select-option>
+        </a-select>
+      </a-tooltip>
 
-      <a-select
-          placeholder="Add as a"
-          class="ml-2 fs-10 w-25"
-          v-model="invitationObject.add_as_a"
-          :disabled="invitationObject.invitation_link"
+      <a-tooltip
+          placement="top"
+          title="Member role will"
       >
-        <a-select-option value="Candidate" v-if="team.add_as_a != 'Candidate'"> Candidate </a-select-option>
-        <a-select-option value="Representative" v-if="team.add_as_a != 'Representative'"> Representative </a-select-option>
-<!--        <a-select-option value="Match Maker"> Match Maker </a-select-option>-->
-      </a-select>
+        <a-select
+            placeholder="Add as a"
+            class="ml-1 fs-10 w-20 none-radius"
+            v-model="invitationObject.add_as_a"
+            :disabled="invitationObject.invitation_link"
+        >
+          <a-select-option value="Candidate" v-if="team.add_as_a != 'Candidate'"> Candidate </a-select-option>
+          <a-select-option value="Representative" v-if="team.add_as_a != 'Representative'"> Representative </a-select-option>
+          <!--        <a-select-option value="Match Maker"> Match Maker </a-select-option>-->
+        </a-select>
+      </a-tooltip>
 
-      <a-select
-          placeholder="Relationship"
-          class="ml-2 fs-10 w-25"
-          v-model="invitationObject.relationship"
-          :disabled="invitationObject.invitation_link"
+      <a-tooltip
+          placement="top"
+          title="Member role will"
       >
-        <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
-      </a-select>
+        <a-select
+            placeholder="Relationship"
+            class="ml-1 fs-10 w-20 none-radius"
+            v-model="invitationObject.relationship"
+            :disabled="invitationObject.invitation_link"
+        >
+          <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
+        </a-select>
+      </a-tooltip>
 
       <a-button v-if="!clickedInviteNow"
-                class="ml-2 confirm-button fs-10 br-20"
+                class="ml-1 confirm-button fs-10 br-20 bright-20"
                 @click="goNextStep()"
                 :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship">Invite now</a-button>
 
@@ -274,5 +289,11 @@ export default {
       }
     }
   }
+}
+.bright-20 {
+  border-radius: 0 20px 20px 0;
+}
+.w-23 {
+  width: 23%;
 }
 </style>
