@@ -29,7 +29,7 @@
           class="form-ma"
         >
           <!-- Gender -->
-          <div class="row mt-3 pb-2 border-bottom">
+          <div v-if="activeRouteName=='CandidateRegistration'" class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -2669,12 +2669,21 @@ export default {
       ethnicityList: ethnicities,
       arr: ARR_PersonalInfo,
       heightTV: HEIGHTS,
+      activeRouteName:'CandidateRegistration',
       dateOfbirth: {
         day: null,
         month: null,
         year: null,
       },
     };
+  },
+    watch: {
+    $route: {
+      immediate: true,
+      handler: function (to, from) {
+        this.activeRouteName = this.$route.name;
+      },
+    },
   },
 
   methods: {
@@ -2729,11 +2738,11 @@ export default {
         .then((data) => {})
         .catch((error) => {});
     },
-    imageSizeCheck(file) {
-      if (file["size"] / 1024 / 1024 <= 15) {
+   imageSizeCheck(file) {
+      if (file["size"] > 15838312.5) {
         this.$error({
           title: "Validation Error",
-          content: "Image size can't be more than 15 mb",
+          content: "Image size can't be more than 2 mb",
           center: true,
         });
         return false;

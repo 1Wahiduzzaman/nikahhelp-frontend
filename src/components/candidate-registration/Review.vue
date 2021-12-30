@@ -1,6 +1,5 @@
 <template>
   <div class="review-publish px-2">
-   
     <fieldset v-if="candidateDetails && candidateData.personal" class="review">
       <h4 class="fw-700 px-2">Review and Publish Profile</h4>
       <p class="mb-5 px-2">
@@ -41,19 +40,45 @@
                     <span class="flex-50 px-2 label-text">Height</span
                     ><span class="flex-50 px-2"
                       >:
-                      <span class="ml-3"
-                        >{{ candidateData.preference.pre_height_min }}
-                        inch to
-                        {{ candidateData.preference.pre_height_max }}
-                        inch</span
-                      ></span
-                    >
+                     
+                      <span
+                        v-html="
+                          `${
+                            heightTV.find(
+                              (x) =>
+                                x.value ===
+                                candidateData.preference.pre_height_min
+                            )
+                              ? heightTV.find(
+                                  (x) =>
+                                    x.value ===
+                                    candidateData.preference.pre_height_min
+                                ).label
+                              : ''
+                          } to ${
+                            heightTV.find(
+                              (x) =>
+                                x.value ===
+                                candidateData.preference.pre_height_max
+                            )
+                              ? heightTV.find(
+                                  (x) =>
+                                    x.value ===
+                                    candidateData.preference.pre_height_max
+                                ).label
+                              : ''
+                          }`
+                        "
+                        class="ml-3"
+                      >
+                      </span
+                    ></span>
                   </li>
 
                   <!-- Preferred countries and cities -->
                   <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text">
-                      Country and cities preferred
+                      Country and city preferred
                     </span>
                     <span class="flex-50 px-2 d-inherit">
                       :
@@ -427,14 +452,14 @@
                       }}</span></span
                     >
                   </li>
-                  <li class="flex-between-start">
+                  <!-- <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text">Telephone NO</span
                     ><span class="flex-50 px-2 d-inherit"
                       >:<span class="ml-3">{{
                         candidateData.personal.per_telephone_no
                       }}</span></span
                     >
-                  </li>
+                  </li> -->
                   <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text">Mobile No</span
                     ><span class="flex-50 px-2 d-inherit"
@@ -784,6 +809,7 @@
 import RatingComponent from "../profile/RatingComponent.vue";
 import ApiService from "@/services/api.service";
 import JwtService from "@/services/jwt.service";
+import { AGES, HEIGHTS, Employment_Statuses } from "../../models/data";
 export default {
   name: "Review",
   components: {
@@ -797,6 +823,7 @@ export default {
   data() {
     return {
       candidateData: {},
+      heightTV: HEIGHTS,
     };
   },
   created() {

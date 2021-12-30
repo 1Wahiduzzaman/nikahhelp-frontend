@@ -1,28 +1,7 @@
 <template>
-  <div class="about-container">
-    <header>
-      <div class="container">
-        <a href="/"><img src="@/assets/logo.png" alt="" /></a>
-        <div class="float-right auth-btn" id="logRegisterBtn">
-          <a
-            href="/login"
-            class="btn btn-sm btn-secondary mr-2"
-            id="signInButton"
-          >
-            Sign In
-          </a>
-          <a
-            href="/register"
-            class="btn btn-sm btn-secondary btn-brand ml-2"
-            id="joinNowButton"
-          >
-            Join Now
-          </a>
-        </div>
-      </div>
-    </header>
-
-    <div class="about-content">
+  <div>
+    <LandingPageHeader />
+    <div class="main-content">
       <h3>About Matrimony Assist</h3>
       <p>
         Matrimony Assist is an online platform to facilitate conversation
@@ -63,18 +42,18 @@
         stress.
       </p>
     </div>
-
     <Footer />
   </div>
 </template>
 
+
 <script>
 import Footer from "@/components/auth/Footer.vue";
-
+import LandingPageHeader from "@/components/landing-page/LandingPageHeader.vue";
 export default {
   name: "PrivacyPolicy",
   components: {
-    //	Header,
+    LandingPageHeader,
     Footer,
   },
 };
@@ -82,44 +61,18 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
-.about-container {
-  header {
-    height: 100px;
-    background-color: $bg-secondary;
-    img {
-      margin-top: 10px;
-      height: 80px;
-    }
 
-    .auth-btn {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 40px;
-      .btn-brand {
-        background-color: $bg-brand;
-      }
-    }
-  }
-  .container {
-    width: 100%;
-    height: 100px;
-    @media (min-width: 768px) {
-      width: 80%;
-    }
-    @media (max-width: 768px) {
-      width: 100%;
-      margin: 0px;
-    }
-  }
-  .about-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    overflow: hidden;
-    padding: 20px;
-    background-color:rgb(248, 236, 247);
+.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+  max-width: 1100px;
+  margin: 0 auto;
+     padding: 0 10px;
+  @media (min-width: 320px) and (max-width: 480px) {
+    padding: 0 20px;
   }
 }
 </style>

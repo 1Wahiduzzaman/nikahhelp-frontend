@@ -7,6 +7,7 @@
     <a-collapse
       accordion
       :activeKey="activeKey"
+      @change="changeActivekey"
       :bordered="false"
       expand-icon-position="right"
     >
@@ -166,7 +167,7 @@
                   id="siblings_desc"
                   placeholder="2 Brothers, 2 Sisters"
                   :rows="3"
-                   :maxLength="200"
+                  :maxLength="200"
                   v-model="familyInformation.siblings_desc"
                 ></a-textarea>
               </a-form-model-item>
@@ -221,7 +222,7 @@
                   id="family_info"
                   placeholder="Would you like to share any other information about your family"
                   :rows="3"
-                   :maxLength="200"
+                  :maxLength="200"
                   v-model="familyInformation.family_info"
                 ></a-textarea>
               </a-form-model-item>
@@ -330,7 +331,7 @@
           <a-button
             shape="round"
             type="primary"
-        style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
+            style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
             class="mt-5"
             @click="handleSubmitForm"
           >
@@ -411,9 +412,13 @@ export default {
         current: 2,
       });
     },
+    changeActivekey(key) {
+      this.activeKey = key;
+    },
     handleSubmitForm() {
       this.$refs.familyInformationForm.validate((valid) => {
         if (valid) {
+          this.activeKey = null;
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
