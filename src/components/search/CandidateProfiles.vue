@@ -6,7 +6,7 @@
 		<span class="text--secondary text-h6">
 			Matches for your requirements: {{ totalProfile }} resutls
 		</span>
-		<div class="query-tag flex flex-wrap justify-end align-center my-4">
+		<!-- <div class="query-tag flex flex-wrap justify-end align-center my-4">
 			<Tag v-for="(item, index) in query" :key="index" :text="item"/>
 			<a
 				class="query-limit"
@@ -15,7 +15,7 @@
 			>
 				{{ showAllQuery ? 'See less' : 'See more' }}
 			</a>
-		</div>
+		</div> -->
 		<!-- start advanced search -->
 		<div class="row">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
