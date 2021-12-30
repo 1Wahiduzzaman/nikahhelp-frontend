@@ -133,12 +133,14 @@
             </a>
             <a-menu slot="overlay" class="none-mobile-block">
               <a-menu-item>
-                <img
-                  width="22"
-                  src="@/assets/icon/support-secondary.svg"
-                  alt="icon"
-                />
-                <span class="ml-2">Support</span>
+                <router-link to="/support">
+                  <img
+                      width="22"
+                      src="@/assets/icon/support-secondary.svg"
+                      alt="icon"
+                  />
+                  <span class="ml-2">Support</span>
+                </router-link>
               </a-menu-item>
               <a-menu-item>
                 <router-link to="/settings">
@@ -173,12 +175,14 @@
                 </a>
                 <a-menu slot="overlay" class="none-mobile-block">
                   <a-menu-item>
-                    <img
-                      width="22"
-                      src="@/assets/icon/support-secondary.svg"
-                      alt="icon"
-                    />
-                    <span class="ml-2">Support</span>
+                    <router-link to="/support">
+                      <img
+                          width="22"
+                          src="@/assets/icon/support-secondary.svg"
+                          alt="icon"
+                      />
+                      <span class="ml-2">Support</span>
+                    </router-link>
                   </a-menu-item>
                   <a-menu-item>
                     <router-link to="/settings">
@@ -329,12 +333,14 @@
                 </router-link>
               </a-menu-item>
               <a-menu-item>
-                <img
-                  width="22"
-                  src="@/assets/icon/support-secondary.svg"
-                  alt="icon"
-                />
-                <span class="ml-2">Support</span>
+                <router-link to="/support">
+                  <img
+                      width="22"
+                      src="@/assets/icon/support-secondary.svg"
+                      alt="icon"
+                  />
+                  <span class="ml-2">Support</span>
+                </router-link>
               </a-menu-item>
               <a-menu-item>
                 <router-link to="/settings">

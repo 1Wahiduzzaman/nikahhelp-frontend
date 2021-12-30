@@ -18,6 +18,7 @@
             class="ant-input-box color-primary"
 						size="large"
             v-model="invitationLink"
+            @keydown.enter="getTheTeamInvitationInfo"
 					>
             <a-icon slot="prefix" type="snippets" class="input-prefix" />
             <a-icon slot="suffix" type="caret-right" class="input-suffix"
@@ -76,10 +77,10 @@
         </div>
       </div>
       <div class="position-absolute footer-cancel-btn">
-        <a-button class="back-button button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
+        <a-button class="back-button cancel-button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
       </div>
       <div class="position-absolute footer-conf-btn">
-        <a-button class="confirm-button button float-right" @click="onConfirmClick">Confirm</a-button>
+        <a-button class="confirm-button float-right" @click="onConfirmClick">Confirm</a-button>
       </div>
 		</div>
 	</div>
@@ -167,6 +168,14 @@ export default {
         if (res && res.data) {
           this.team = res.data.data;
         }
+        if(!this.team) {
+          this.$confirm({
+            icon: "check-circle",
+            title: "Code is not valid!",
+            center: true,
+            confirmLoading: true,
+          });
+        }
       });
     }
 	},
@@ -219,14 +228,6 @@ export default {
 }
 .form-value {
 	text-align: left;
-}
-.back-button {
-  background: $bg-brand;
-  color: $color-white;
-}
-.confirm-button {
-	background-color: $bg-primary;
-	color: $color-white;
 }
 .ant-input-suffix {
   right: 0 !important;

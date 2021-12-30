@@ -26,6 +26,7 @@ import MemberNameInput from "@/views/MemberType/MemberNameInput.vue";
 
 import NotificationPage from "@/views/notification/NotificationPage.vue";
 import BlockList from "@/views/blocklist/BlockList.vue";
+import Support from "@/views/support/Index.vue";
 
 //Shortlist Section
 import Shortlist from "@/views/shortlist/Shortlist.vue";
@@ -225,8 +226,12 @@ const AppRouter = new VueRouter({
                     component: ChatWindow,
 
                 },
+                {
+                    path: "/support",
+                    name: "Support",
+                    component: Support,
 
-
+                },
                 {
                     path: "/shortlist",
                     name: "Shortlist",
