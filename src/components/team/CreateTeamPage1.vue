@@ -76,39 +76,47 @@
             </a-row>
           </a-col>
           <a-col class="mt-2" :span="24">
-            <div class="d-flex create-role">
-              <a-tooltip>
-                <template slot="title">
-                  You are joining as a
-                </template>
-                <a-select
-                    size="large"
-                    placeholder="Add as a"
-                    class="ml-1 fs-14 w-50 member-add mr-2"
-                    v-model="addAs"
-                    disabled
-                >
-                  <a-select-option value="Candidate"> Candidate </a-select-option>
-                  <a-select-option value="Representative"> Representative </a-select-option>
-                  <a-select-option value="Match Maker"> Match Maker </a-select-option>
-                </a-select>
-              </a-tooltip>
-
-              <a-tooltip>
-                <template slot="title">
-                  Your relationship with candidate as
-                </template>
-                <a-select
-                    size="large"
-                    placeholder="Relationship"
-                    class="ml-5 fs-14 w-50 member-add"
-                    v-model="selfRole.relationship"
-                    :disabled="addAs == 'Candidate'"
-                >
-                  <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
-                </a-select>
-              </a-tooltip>
-            </div>
+            <a-row>
+              <a-col :span="11">
+                <a-tooltip>
+                  <template slot="title">
+                    You are joining as a
+                  </template>
+                  <a-select
+                      size="large"
+                      placeholder="Add as a"
+                      class="ml-1 fs-14 member-add mr-2"
+                      v-model="addAs"
+                      style="width: 96%"
+                      disabled
+                  >
+                    <a-select-option value="Candidate"> Candidate </a-select-option>
+                    <a-select-option value="Representative"> Representative </a-select-option>
+                    <a-select-option value="Match Maker"> Match Maker </a-select-option>
+                  </a-select>
+                </a-tooltip>
+              </a-col>
+              <a-col :span="2"></a-col>
+              <a-col :span="11">
+                <a-tooltip>
+                  <template slot="title">
+                    Your relationship with candidate as
+                  </template>
+                  <a-select
+                      size="large"
+                      placeholder="Relationship"
+                      class="fs-14 member-add"
+                      v-model="selfRole.relationship"
+                      :disabled="addAs == 'Candidate'"
+                      style="width: 100%"
+                  >
+                    <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
+                  </a-select>
+                </a-tooltip>
+              </a-col>
+            </a-row>
+<!--            <div class="d-flex create-role">-->
+<!--            </div>-->
           </a-col>
         </a-row>
         <div class="position-absolute footer-cancel-btn">
@@ -166,7 +174,7 @@ export default {
   props: ['addAs'],
 	data() {
 		return {
-      relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-paw'],
+      relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-law'],
 			isLoading: false,
 			user: {},
 			is_verified: 1,
