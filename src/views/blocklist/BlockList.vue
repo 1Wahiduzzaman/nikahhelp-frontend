@@ -4,13 +4,42 @@
     <div v-else>
       <div class="main-content-wrapper">
         <div class="main-content">
+          <div class="flex">
+            <v-chip
+                class="ma-2 cursor-pointer"
+                color="indigo"
+                text-color="white"
+            >
+              <v-avatar left>
+                <a-icon type="check" class="text-white" />
+              </v-avatar>
+              My block list
+            </v-chip>
+
+            <v-chip
+                class="ma-2 cursor-pointer"
+                color="error"
+                text-color="white"
+            >
+              Blocked by team members
+            </v-chip>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-3">
+              <blocked-candidate-grid />
+            </div>
+          </div>
+
           <BlockedCandidate
             :blockedCandidates="blockedCandidates"
             @unblock-candidate="unblockCandidate"
+            class="d-none"
           />
           <BlockedTeam
             :blockedTeams="blockedTeams"
             @unblock-candidate="unblockCandidate"
+            class="d-none"
           />
         </div>
       </div>
@@ -26,10 +55,12 @@ import BlockedCandidate from "@/components/blocklist/BlockedCandidate.vue";
 import BlockedTeam from "@/components/blocklist/BlockedTeam.vue";
 import JwtService from "@/services/jwt.service";
 import { openModalRoute } from "@/plugins/modal/modal.mixin";
+import BlockedCandidateGrid from "../../components/blocklist/BlockedCandidateGrid";
 
 export default {
   name: "BlockList",
   components: {
+    BlockedCandidateGrid,
     Header,
     Sidebar,
     Footer,
@@ -111,10 +142,10 @@ export default {
 
 <style scoped lang="scss">
 .main-content-wrapper {
-  margin-top: 80px;
+  margin-top: 0;
   .main-content {
     width: 100%;
-    //margin-left: 250px;
+    margin: 20px 10px;
   }
 }
 </style>

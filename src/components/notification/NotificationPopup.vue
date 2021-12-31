@@ -1,5 +1,8 @@
 <template>
-  <div class="notification-wrapper">
+  <div class="notification-wrapper"
+       :class="{'chat-wrapper': useFor == 'chat',
+       'team-wrapper': useFor == 'team',
+       'shortlist-wrapper': useFor == 'shortlist',}">
     <div>
       <div class="dropdownNotify-title py-2 d-flex align-items-center">
         <strong class="text-capitalize">{{ label }}</strong>
@@ -120,7 +123,24 @@ export default {
     margin-top: 0;
   }
 }
-
+.team-wrapper {
+  margin-top: -75px;
+  @media (min-width: 768px) {
+    margin-top: 0;
+  }
+}
+.chat-wrapper {
+  margin-top: -175px;
+  @media (min-width: 768px) {
+    margin-top: 0;
+  }
+}
+.shortlist-wrapper {
+  margin-top: -100px;
+  @media (min-width: 768px) {
+    margin-top: 0;
+  }
+}
 .notification__items {
   overflow-y: scroll;
   max-height: 350px;
