@@ -43,7 +43,7 @@
                 >
                   Unread
                 </v-btn>
-                <v-btn rounded color="success" dark class="ml-2 read-btn" small>
+                <v-btn rounded color="success" dark class="ml-2 read-btn" small @click="markAllAsRead()">
                   <a-icon type="check" color="success" class="pr-2" />
                   Mark all as read
                 </v-btn>
@@ -149,6 +149,8 @@ export default {
           this.isLoading = false;
           openModalRoute(this, "manage_team_redirect");
         }, 2000);
+      } else {
+        this.$store.state.notification.instantNotifications = [];
       }
     },
     async loadNotifications() {
@@ -170,9 +172,20 @@ export default {
       }
     },
     changeTeam(data) {
-      console.log(data);
       this.teamId = data;
     },
+    markAllAsRead() {
+      ApiService.get("v1/seen-notification").then(response => {
+        console.log(response);
+        this.loadNotifications();
+        // this.$store.state.notification.instantNotifications.forEach(item => {
+        //   item.seen = 1;
+        // });
+      }).catch(e => {
+        console.log(e);
+        self.$message.error("Something went wrong");
+      });
+    }
   },
 };
 </script>

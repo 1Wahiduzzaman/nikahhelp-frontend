@@ -85,6 +85,32 @@
 							</select>
 						</div>
 					</div>
+					<div class="mt-4">
+						<div class="select-box">
+							<select class="custom-select" v-model="employmentStatus">
+								<option value="">Select Employment Status</option>
+
+								<option value="" disabled>Select Employment Status</option>
+								<option value="Employed">Employed</option>
+								<option value="Unemployed">Unemployed</option>
+								<option value="Don't Mind">Don't Mind</option>
+							</select>
+						</div>
+					</div>
+					<div class="mt-4">
+						<div class="select-box">
+							<select class="custom-select" v-model="nationality">
+								<option value="">Select Nationality</option>
+								<option
+									v-for="c in $store.state.candidateInfo.countries"
+									:value="c.id"
+									:key="c.id"
+								>
+									{{ c.name }}
+								</option>
+							</select>
+						</div>
+					</div>
 					<template v-if="showMoreSearch">
 						<!-- <div class="mt-4">
 							<div class="select-box">
@@ -236,7 +262,7 @@
 									Search
 								</button>
 								<div>
-									<button @click="showMoreSearch = !showMoreSearch" class="btn-adv-search">Advanced Search</button>
+									<button @click="showADvancedSearchModal = true" class="btn-adv-search">Advanced Search</button>
 								</div>
 							</div>
 							<select-team-modal
@@ -244,6 +270,10 @@
 								@handle-cancel="showActiveTeamModal = false"
 								@handle-team="handleSearch"
 							></select-team-modal>
+							<ComingSoonModal
+								@closeDialog="closeDialog"
+								:dialog="showADvancedSearchModal"
+							/>
 							
 						</div>
 					</div>
@@ -256,18 +286,20 @@
 
 <script>
 import SelectTeamModal from "@/components/team/Modals/SelectTeamModal.vue";
+import ComingSoonModal from "@/components/search/ComingSoonModal"
 import ApiService from "@/services/api.service";
 import ethnicities from "@/common/ethnicities.js";
 import languages from "@/common/languages.js";
 import hobbies from "@/common/hobbies.js";
 import { AGES, HEIGHTS } from "../../models/data";
 import SelectGroup from "@/components/ui/selects/SelectGroup";
-import {mapMutations, mapActions} from 'vuex'
+import {mapGetters, mapMutations, mapActions} from 'vuex'
 
 export default {
 	name: 'SimpleSearch',
 	data() {
 		return {
+			showADvancedSearchModal: false,
 			showMoreSearch: false,
 			ageTV: AGES,
       		heightTv: HEIGHTS,
@@ -301,25 +333,37 @@ export default {
 			showActiveTeamModal: false,
 			candidateActiveTeam: null,
 			activeTeamId: null,
-			heithtTV : HEIGHTS
+			heithtTV : HEIGHTS,
+			currentPage: 1,
 		};
+	},
+	computed: {
+		...mapGetters({
+			pagination: 'search/getPagination',
+			isFetching: "search/getLoadingStatus",
+		})
 	},
 	created() {
 		this.getOccupations();
 	},
 	components: {
 		SelectTeamModal,
-		SelectGroup
+		SelectGroup,
+		ComingSoonModal
 	},
 	methods: {
 		...mapActions({
 			searchUser: 'search/searchUser'
 		}),
+		closeDialog() {
+			this.showADvancedSearchModal = false;
+		},
 		...mapMutations({
 			setProfiles: 'search/setProfiles',
 			pushQuery: 'search/pushQuery',
 			setLoading: 'search/setLoading',
-			setSearchStatus: 'search/setSearchStatus'
+			setSearchStatus: 'search/setSearchStatus',
+			setPagination: 'search/setPaginationData'
 		}),
 		onDropdownChange({ name, value }) {
 			console.log({ name, value });
@@ -351,7 +395,7 @@ export default {
 
 			console.log('>>>>>>>>>>>>>>>>')
 			// let _payload = `?page=0&parpage=10&min_age=${params.age_min}&max_age=${params.age_max}&active_team_id=${this.activeTeamId}`;
-			let _payload = `?page=0&parpage=10&min_age=${this.min_age}&max_age=${this.max_age}`;
+			let _payload = `?page=${this.currentPage}&parpage=10&min_age=${this.min_age}&max_age=${this.max_age}`;
 
 			// if (this.gender != 0) {
 			// 	_payload += `&gender=1`;
@@ -428,6 +472,11 @@ export default {
 			// this.$emit("handle-search", _payload);
 		},
 		async handleSearch() {
+			if(this.isFetching) return;
+			// if(!this.pagination.last_page) return
+			if(this.pagination.last_page) {
+				if(!this.pagination.last_page>= this.currentPage) return
+			}
 			let query = this.getQuery();
 			this.setSearchStatus(true)
 			// if(!query) return;
@@ -442,6 +491,9 @@ export default {
 				}
 				if(res.data && res.data.length ) {
 					this.setProfiles(res.data)
+					console.log(res.pagination, '>>>>>>>>..res.pagination')
+					this.setPagination(res.pagination)
+					this.updateCurrentPage();
 				} 
 				
 			} catch(err) {
@@ -449,6 +501,13 @@ export default {
 				console.log(err)
 			}
 			// console.log(res, 'dtata tatat')
+		},
+		updateCurrentPage() {
+			console.log(this.pagination.current_page);
+			if(this.currentPage<this.pagination.last_page) {
+				this.currentPage++
+			}
+			console.log(this.currentPage, '>>>>>>>>>current page')
 		},
 		onAfterChangeSlider(value) {
 			this.age = value;

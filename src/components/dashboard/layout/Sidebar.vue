@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="d-sidebar">
+    <div class="d-sidebar" style="display: block">
       <template v-if="showMenu && path == 'AdvanceSearch'">
         <div class="mt-1">
           <SidebarHeader @onClickBack="showMenu = false" v-if="!collapsed" />
@@ -189,9 +189,7 @@ export default {
       return this.$route.name;
     },
     unreadNotification() {
-      return this.$store.state.notification.notifications.filter(
-        (item) => item.seen == 0
-      ).length;
+      return this.$store.state.notification.instantNotifications.length;
     },
     chats() {
       return this.$store.state.chat.chats;

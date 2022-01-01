@@ -42,7 +42,7 @@
                             </g>
                           </svg>
 <!--                          <span class="countOfChat">{{ totalUnreadCount }}</span>-->
-                          <span class="countOfChat">{{ chatHistory.length }}</span>
+<!--                          <span class="countOfChat">{{ chatHistory.length }}</span>-->
                           <p class="category-name">Recent</p>
                         </a>
                       </div>
@@ -60,7 +60,7 @@
                             </g>
                           </svg>
 <!--                          <span class="countOfChat">{{ teamUnreadCount }}</span>-->
-                          <span class="countOfChat">{{ teamChat.length - 1 }}</span>
+<!--                          <span class="countOfChat">{{ teamChat.length - 1 }}</span>-->
                           <p class="category-name">Team</p>
                         </a>
                       </div>
@@ -79,7 +79,7 @@
                             </g>
                           </svg>
 <!--                          <span class="countOfChat">{{ connectedUnreadCount }}</span>-->
-                          <span class="countOfChat">{{ connectedTeam.length }}</span>
+<!--                          <span class="countOfChat">{{ connectedTeam.length }}</span>-->
                           <p class="category-name">Connected</p>
                         </a>
                       </div>
@@ -148,13 +148,14 @@
                     <div class="chat-item"
                          v-for="item in connectedTeam"
                          :key="item.team_id"
-                         @click="getIndividualChat(item, item)"
+                         @click="getConnectedTeamChatHistory(item)"
                     >
-                      <ChatListItem
+                      <ConnectedTeamChat
                           :item="item"
                           :status="'connected'"
                           :online_users="online_users"
                           :teamMembers="teamMembers"
+                          :activeTeam="activeTeam"
                           action
                           class="w-full pr-3 cursor-pointer"
                       />
@@ -178,7 +179,7 @@
 <!--                      <span></span>-->
                     </div>
                     <div class="chat-info">
-                      <div class="chat-group bg-primary">{{ getChatType }} chat</div>
+                      <div class="chat-group bg-primary">{{ chatheadopen.label }}</div>
                       <div class="chat-name">{{ conversationTitle }}</div>
                       <div class="last-chat" v-if="chat_type == 'team'">Active now {{ getTeamOnlineUsers() > 0 ? getTeamOnlineUsers() : '' }}</div>
                     </div>
@@ -378,6 +379,7 @@ import {format} from 'timeago.js'
 import Conversation from "../../components/auth/Conversation";
 import JwtService from "@/services/jwt.service";
 import { openModalRoute } from "@/plugins/modal/modal.mixin";
+import ConnectedTeamChat from "../../components/chat/ConnectedTeamChat";
 
 export default {
   name: 'ChatWindow',
@@ -417,6 +419,7 @@ export default {
     }
   },
   components: {
+    ConnectedTeamChat,
     ChatListItem
   },
   watch: {
@@ -749,16 +752,19 @@ export default {
           team_id: 1
         };
         let {data} = await ApiService.post('/v1/connection-list-chat', payload).then(res => res.data);
-        if (data && data.connected_teams) {
-          this.connectedTeam = map(data.connected_teams, item => {
-            return {
-              label: 'Connected Team',
-              state: 'seen',
-              name: item.team_name ? item.team_name : 'user name',
-              team_id: item.team_id
-            }
-          });
-        }
+        this.connectedTeam = data;
+        // if (data && data.connected_teams) {
+        //   this.connectedTeam = map(data.connected_teams, item => {
+        //     return {
+        //       label: 'Connected Team',
+        //       state: 'seen',
+        //       name: item.team_name ? item.team_name : 'user name',
+        //       team_id: item.team_id,
+        //       chat_id: null,
+        //       // message: { chat_id: null }
+        //     }
+        //   });
+        // }
         // this.connectedChat = this.processTeamChatResponse(data);
       } catch (e) {
         console.error(e);
@@ -866,6 +872,29 @@ export default {
       // }else {
       //   this.chats = [];
       // }
+    },
+    async getConnectedTeamChatHistory(item) {
+      if(item.from_team_id == this.activeTeam) {
+        this.conversationTitle = item.to_team ? item.to_team.name : 'N/A';
+      } else {
+        this.conversationTitle = item.from_team ? item.from_team.name : 'N/A';
+      }
+      this.private_chat = {};
+      item.label = 'Connected Team';
+      this.chatheadopen = item;
+
+      let url = 'connected-team-chat-history';
+      let payload = {
+        to_team_id: item.to_team_id
+      };
+      let {data} = await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
+      if (data && data.message_history) {
+        data = data.message_history;
+      }
+      this.chats = data.map(item => {
+        item.senderId = item.sender?.id
+        return item;
+      });
     },
     messageCreatedAt(time) {
       return format(time);
@@ -2335,6 +2364,9 @@ export default {
   top: -20px;
   left: -10px;
   padding: 4px;
+  @media (min-width: 576px) {
+    display: none;
+  }
 }
 .chat-item-wrapper {
   //height: 500px;

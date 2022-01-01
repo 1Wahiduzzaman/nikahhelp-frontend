@@ -14,8 +14,8 @@
       </div>
 
       <div
-        class="header-right user-avatar-area shrink-none"
-        style="align-self: center"
+        class="header-right user-avatar-area shrink-none mobile-menu"
+        style="align-self: center;"
       >
         <div>
           <ul class="header-nav-icons d-none d-sm-flex">
@@ -74,7 +74,7 @@
                   aria-current="page"
                   @click.self="(e) => e.preventDefault()"
                 >
-                  <a-badge :count="unreadNotification">
+                  <a-badge :count="unreadNotification.length">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       style="width: 30px"
@@ -89,7 +89,7 @@
                 </a>
                 <template v-slot:overlay>
                   <NotificationPopup
-                    :items="notifications"
+                    :items="unreadNotification"
                     :use-for="'notification'"
                   />
                 </template>
@@ -121,7 +121,7 @@
             </li>
           </ul>
         </div>
-        <div style="display: flex">
+        <div class="mobile-menu" style="display: flex;">
           <a-dropdown>
             <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
               <img
@@ -280,7 +280,7 @@
               />
             </svg>
 
-            <a-menu slot="overlay" style="min-width: 250px">
+            <a-menu slot="overlay" style="min-width: 320px">
               <a-menu-item @click="collapsed = !collapsed">
                 <img width="22" src="@/assets/Icons/form.svg" alt="icon" />
                 <span class="ml-2"
@@ -289,56 +289,101 @@
               </a-menu-item>
               <a-divider class="m-0" />
               <a-menu-item class="d-flex align-items-center">
-                <router-link to="/manageteam">
-                  <img
-                    width="22"
-                    src="@/assets/icon/group-fill-secondary.svg"
-                    alt="icon"
-                  />
-                  <span class="ml-2">Manage Team</span>
-                </router-link>
-              </a-menu-item>
-
-              <a-menu-item class="d-flex align-items-center">
-                <router-link to="/shortlist">
-                  <img
-                    width="22"
-                    src="@/assets/icon/star-fill-secondary.svg"
-                    alt="icon"
-                  />
-                  <span class="ml-2">Shortlist</span>
-                </router-link>
+                <a-dropdown :trigger="['click']" placement="bottomLeft" :getPopupContainer="popupDiv()">
+                  <a
+                      class="nav-link"
+                      aria-current="page"
+                      @click.self="(e) => e.preventDefault()"
+                  >
+                    <img
+                        width="22"
+                        src="@/assets/icon/group-fill-secondary.svg"
+                        alt="icon"
+                    />
+                    <span class="ml-2 mr-2">Manage Team </span>
+<!--                    <a-badge :count="unreadNotification" />-->
+                  </a>
+                  <template v-slot:overlay>
+                    <NotificationPopup
+                        count="29"
+                        :items="teams"
+                        :use-for="'team'"
+                    />
+                  </template>
+                </a-dropdown>
               </a-menu-item>
 
               <a-menu-item>
-                <router-link to="/notifications">
-                  <img
-                    width="22"
-                    src="@/assets/icon/bell-fill-secondary.svg"
-                    alt="icon"
-                  />
-                  <span class="ml-2 mr-2">Notification</span>
-                  <a-badge
-                    class="ml-auto"
-                    :number-style="{ backgroundColor: '#e42076' }"
-                    :count="unreadNotification"
-                  />
-                </router-link>
+                <a-dropdown :trigger="['click']" placement="bottomLeft" :getPopupContainer="popupDiv()">
+                  <a
+                      class="nav-link"
+                      aria-current="page"
+                      @click.self="(e) => e.preventDefault()"
+                  >
+                    <img
+                        width="22"
+                        src="@/assets/icon/star-fill-secondary.svg"
+                        alt="icon"
+                    />
+                    <span class="ml-2 mr-2">Shortlist </span>
+                    <a-badge count="0" />
+                  </a>
+                  <template v-slot:overlay>
+                    <NotificationPopup
+                        count="29"
+                        :items="[]"
+                        :use-for="'shortlist'"
+                    />
+                  </template>
+                </a-dropdown>
               </a-menu-item>
               <a-menu-item>
-                <router-link to="/chat-window">
-                  <img
-                    width="22"
-                    src="@/assets/icon/chat-dots-fill-secondary.svg"
-                    alt="icon"
-                  />
-                  <span class="ml-2 mr-2">Chat</span>
-                  <a-badge
-                    class="ml-auto"
-                    :number-style="{ backgroundColor: '#e42076' }"
-                    :count="chats.length"
-                  />
-                </router-link>
+                <a-dropdown :trigger="['click']" placement="bottomLeft" :getPopupContainer="popupDiv()">
+                  <a
+                      class="nav-link"
+                      aria-current="page"
+                      @click.self="(e) => e.preventDefault()"
+                  >
+                    <img
+                        width="22"
+                        src="@/assets/icon/bell-fill-secondary.svg"
+                        alt="icon"
+                    />
+                    <span class="ml-2 mr-2">Notification </span>
+                    <a-badge :count="unreadNotification.length" />
+                  </a>
+                  <template v-slot:overlay>
+                    <NotificationPopup
+                        count="29"
+                        :items="unreadNotification"
+                        :use-for="'notification'"
+                    />
+                  </template>
+                </a-dropdown>
+              </a-menu-item>
+              <a-menu-item>
+                <a-dropdown :trigger="['click']" placement="bottomLeft" :getPopupContainer="popupDiv()">
+                  <a
+                      class="nav-link"
+                      aria-current="page"
+                      @click.self="(e) => e.preventDefault()"
+                  >
+                    <img
+                        width="22"
+                        src="@/assets/icon/chat-dots-fill-secondary.svg"
+                        alt="icon"
+                    />
+                    <span class="ml-2 mr-2">Chat </span>
+                    <a-badge :count="chats.length" />
+                  </a>
+                  <template v-slot:overlay>
+                    <NotificationPopup
+                        count="29"
+                        :items="chats"
+                        :use-for="'chat'"
+                    />
+                  </template>
+                </a-dropdown>
               </a-menu-item>
               <a-menu-item>
                 <router-link to="/support">
@@ -424,7 +469,7 @@ export default {
       return this.$store.state.notification.notifications;
     },
     unreadNotification() {
-      return this.notifications.filter((item) => item.seen == 0).length;
+      return this.$store.state.notification.instantNotifications;
     },
     teams() {
       let teams = this.$store.state.team.team_list;
@@ -444,6 +489,9 @@ export default {
   methods: {
     responsiveToggle() {
       this.collapsed = false;
+    },
+    popupDiv() {
+      document.getElementById('layout');
     },
     async loadNotifications() {
       await ApiService.get("v1/list-notification")
@@ -510,6 +558,12 @@ export default {
 }
 .header-nav-icons .nav-item {
   position: relative;
+}
+.mobile-menu {
+  width: 100%;
+  @media (min-width: 768px) {
+    width: auto;
+  }
 }
 .menu-icon-alt {
   width: 25px;

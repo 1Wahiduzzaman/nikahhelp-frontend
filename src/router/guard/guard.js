@@ -1,8 +1,11 @@
 export const InitRoute = (to, from, next) => {
     next();
     const user = JSON.parse(localStorage.getItem('user'));
-    if (to.name == 'Signup') {
+    if (!user && to.name == 'Signup') {
         return next({ name: 'Signup' });
+    }
+    if (!user && to.name == 'Home') {
+        return next({ name: 'Home' });
     }
     else if (!user) {
         return next({ name: 'Login' });

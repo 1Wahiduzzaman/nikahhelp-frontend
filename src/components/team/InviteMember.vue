@@ -159,7 +159,7 @@ export default {
       }
     }
     .link-box {
-      bottom: -22px;
+      bottom: -44px;
       background: #3A3092;
       border-radius: 14px;
       .w-full {
