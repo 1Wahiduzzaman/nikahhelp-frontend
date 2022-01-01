@@ -1,5 +1,5 @@
 <template>
-  <nav class="top-menu navbar justify-content-between">
+  <nav id="landing-top-menu" class="landing-top-menu navbar justify-content-between">
     <div class="container">
       <router-link to="/">
         <a href="javascript:void()" class="navbar-brand"
@@ -9,8 +9,8 @@
             alt="logo"
         /></a>
       </router-link>
-      <!-- <form class="login">
-        <div v-if="!isLoggedIn">
+      <form class="login">
+        <div>
           <router-link to="/login"
             ><img
               src="@/assets/Icons/sign in.svg"
@@ -29,10 +29,7 @@
             Join Now
           </router-link>
         </div>
-        <div v-else>
-          <router-link to="/dashboard"> Dashboard </router-link>
-        </div>
-      </form> -->
+      </form>
     </div>
   </nav>
 </template>
@@ -48,17 +45,13 @@ export default {
       is_verified: 1,
     };
   },
-  created() {
-    //this.checkAuthentication();
-  },
+  created() {},
   mounted() {
     let scrollpos = window.scrollY;
-    const header = document.querySelector("nav");
+    const header = document.getElementById("landing-top-menu");
     const header_height = header.offsetHeight;
-
     const add_class_on_scroll = () => header.classList.add("on-scroll");
     const remove_class_on_scroll = () => header.classList.remove("on-scroll");
-
     window.addEventListener("scroll", function () {
       scrollpos = window.scrollY;
 
@@ -75,7 +68,22 @@ export default {
     //   return this.$store.getters.isAuthenticated;
     // },
   },
+
   methods: {
+    handleScroll(event) {
+      let scrollpos = window.scrollY;
+      const header = document.querySelector("nav");
+      const header_height = header.offsetHeight;
+      const add_class_on_scroll = () => header.classList.add("on-scroll");
+      const remove_class_on_scroll = () => header.classList.remove("on-scroll");
+      scrollpos = window.scrollY;
+
+      if (scrollpos >= header_height) {
+        add_class_on_scroll();
+      } else {
+        remove_class_on_scroll();
+      }
+    },
     checkAuthentication() {
       if (!this.isLoggedIn && window.location.pathname !== "/") {
         this.$router.push("/").catch((err) => {
@@ -88,14 +96,14 @@ export default {
 </script>
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
-.top-menu {
+.landing-top-menu {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 10;
   transition: all 0.5s;
-   background: #000000a6;
+  background: #000000a6;
 
   .logo {
     width: 200px;
