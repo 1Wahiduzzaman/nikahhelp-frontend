@@ -6,9 +6,31 @@
           <div class="card p-4 br-10 card-faq">
             <div class="h1-flex justify-content-between w-full">
               <h4 class="fs-24">Support</h4>
-              <div class="flex justify-content-end">
+              <div class="desktop-btns justify-content-end">
                 <v-btn type="primary" color="indigo" class="text-white rate-btn" rounded outlined>Rating</v-btn>
                 <v-btn type="primary" color="indigo" class="ml-2 text-white rate-btn" rounded outlined>Feedback</v-btn>
+              </div>
+              <div class="mobile-btns justify-content-end">
+                <v-tooltip bottom color="indigo">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn type="primary" color="indigo" rounded outlined
+                           v-bind="attrs"
+                           v-on="on">
+                      <a-icon type="star" class="fs-24" />
+                    </v-btn>
+                  </template>
+                  <span>Rating</span>
+                </v-tooltip>
+                <v-tooltip bottom color="indigo">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn class="ml-2" type="primary" color="indigo" rounded outlined
+                           v-bind="attrs"
+                           v-on="on">
+                      <a-icon type="star" class="fs-24" />
+                    </v-btn>
+                  </template>
+                  <span>Feedback</span>
+                </v-tooltip>
               </div>
             </div>
             <div class="none-mobile mt-2">
@@ -394,7 +416,7 @@ export default {
   }
 }
 .h1-flex {
-  display: block;
+  display: flex;
   @media (min-width: 768px) {
     display: flex;
   }
@@ -416,5 +438,17 @@ export default {
 .rate-btn:hover {
   background: $bg-primary;
   color: #FFFFFF !important;
+}
+.desktop-btns {
+  display: none;
+  @media (min-width: 768px) {
+    display: flex;
+  }
+}
+.mobile-btns {
+  display: flex;
+  @media (min-width: 768px) {
+    display: none;
+  }
 }
 </style>

@@ -276,6 +276,8 @@ export default {
 	}
 	.links {
 		padding: 5px;
+    position: fixed;
+    bottom: 15px;
 		&>li {
 			font-size: 12px;
 			margin-bottom: 2px;
