@@ -85,6 +85,32 @@
 							</select>
 						</div>
 					</div>
+					<div class="mt-4">
+						<div class="select-box">
+							<select class="custom-select" v-model="employmentStatus">
+								<option value="">Select Employment Status</option>
+
+								<option value="" disabled>Select Employment Status</option>
+								<option value="Employed">Employed</option>
+								<option value="Unemployed">Unemployed</option>
+								<option value="Don't Mind">Don't Mind</option>
+							</select>
+						</div>
+					</div>
+					<div class="mt-4">
+						<div class="select-box">
+							<select class="custom-select" v-model="nationality">
+								<option value="">Select Nationality</option>
+								<option
+									v-for="c in $store.state.candidateInfo.countries"
+									:value="c.id"
+									:key="c.id"
+								>
+									{{ c.name }}
+								</option>
+							</select>
+						</div>
+					</div>
 					<template v-if="showMoreSearch">
 						<!-- <div class="mt-4">
 							<div class="select-box">
@@ -236,7 +262,7 @@
 									Search
 								</button>
 								<div>
-									<button @click="showMoreSearch = !showMoreSearch" class="btn-adv-search">Advanced Search</button>
+									<button @click="showADvancedSearchModal = true" class="btn-adv-search">Advanced Search</button>
 								</div>
 							</div>
 							<select-team-modal
@@ -244,6 +270,10 @@
 								@handle-cancel="showActiveTeamModal = false"
 								@handle-team="handleSearch"
 							></select-team-modal>
+							<ComingSoonModal
+								@closeDialog="closeDialog"
+								:dialog="showADvancedSearchModal"
+							/>
 							
 						</div>
 					</div>
@@ -256,6 +286,7 @@
 
 <script>
 import SelectTeamModal from "@/components/team/Modals/SelectTeamModal.vue";
+import ComingSoonModal from "@/components/search/ComingSoonModal"
 import ApiService from "@/services/api.service";
 import ethnicities from "@/common/ethnicities.js";
 import languages from "@/common/languages.js";
@@ -268,6 +299,7 @@ export default {
 	name: 'SimpleSearch',
 	data() {
 		return {
+			showADvancedSearchModal: false,
 			showMoreSearch: false,
 			ageTV: AGES,
       		heightTv: HEIGHTS,
@@ -316,12 +348,16 @@ export default {
 	},
 	components: {
 		SelectTeamModal,
-		SelectGroup
+		SelectGroup,
+		ComingSoonModal
 	},
 	methods: {
 		...mapActions({
 			searchUser: 'search/searchUser'
 		}),
+		closeDialog() {
+			this.showADvancedSearchModal = false;
+		},
 		...mapMutations({
 			setProfiles: 'search/setProfiles',
 			pushQuery: 'search/pushQuery',
@@ -437,7 +473,7 @@ export default {
 		},
 		async handleSearch() {
 			if(this.isFetching) return;
-			console.log(this.pagination.last_page, '>>>>>>dfdfd>>>>>>>')
+			// if(!this.pagination.last_page) return
 			if(this.pagination.last_page) {
 				if(!this.pagination.last_page>= this.currentPage) return
 			}
