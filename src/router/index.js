@@ -94,6 +94,7 @@ const AppRouter = new VueRouter({
             path: "/",
             name: "Home",
             component: Home,
+            beforeEnter: InitRoute,
 
         },
         {

@@ -10,7 +10,7 @@
         /></a>
       </router-link>
       <form class="login">
-        <div v-if="!isLoggedIn">
+        <div>
           <router-link to="/login"
             ><img
               src="@/assets/Icons/sign in.svg"
@@ -29,9 +29,9 @@
             Join Now
           </router-link>
         </div>
-        <div v-else>
+        <!-- <div v-else>
           <router-link to="/dashboard"> Dashboard </router-link>
-        </div>
+        </div> -->
       </form>
     </div>
   </nav>
