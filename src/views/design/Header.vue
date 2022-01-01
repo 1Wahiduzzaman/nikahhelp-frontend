@@ -125,6 +125,14 @@
           <a-dropdown>
             <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
               <img
+                v-if="loggedUser.per_main_image_url"
+                class="avatar-image"
+                :src="loggedUser.per_main_image_url"
+                width="35"
+                alt=""
+              />
+              <img
+                v-if="!loggedUser.per_main_image_url"
                 class="avatar-image"
                 src="@/assets/mike.jpg"
                 width="35"
@@ -135,9 +143,9 @@
               <a-menu-item>
                 <router-link to="/support">
                   <img
-                      width="22"
-                      src="@/assets/icon/support-secondary.svg"
-                      alt="icon"
+                    width="22"
+                    src="@/assets/icon/support-secondary.svg"
+                    alt="icon"
                   />
                   <span class="ml-2">Support</span>
                 </router-link>
@@ -177,9 +185,9 @@
                   <a-menu-item>
                     <router-link to="/support">
                       <img
-                          width="22"
-                          src="@/assets/icon/support-secondary.svg"
-                          alt="icon"
+                        width="22"
+                        src="@/assets/icon/support-secondary.svg"
+                        alt="icon"
                       />
                       <span class="ml-2">Support</span>
                     </router-link>
@@ -335,9 +343,9 @@
               <a-menu-item>
                 <router-link to="/support">
                   <img
-                      width="22"
-                      src="@/assets/icon/support-secondary.svg"
-                      alt="icon"
+                    width="22"
+                    src="@/assets/icon/support-secondary.svg"
+                    alt="icon"
                   />
                   <span class="ml-2">Support</span>
                 </router-link>
@@ -365,7 +373,6 @@
 </template>
 
 <script>
-
 import NotificationPopup from "@/components/notification/NotificationPopup";
 
 import ApiService from "@/services/api.service";
@@ -374,7 +381,6 @@ export default {
   name: "Layout",
   components: {
     NotificationPopup,
-    
   },
   created() {
     this.loadNotifications();
@@ -386,7 +392,7 @@ export default {
       activeTeamId: null,
     };
   },
-  
+
   computed: {
     loggedUser() {
       let loggedUser = JSON.parse(localStorage.getItem("user"));
