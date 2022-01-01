@@ -39,6 +39,7 @@ export default {
     self.sockets.subscribe('receive_notification', function (res) {
       self.notifications.push(res);
       self.$store.state.notification.notifications.unshift(res);
+      self.$store.state.notification.instantNotifications.unshift(res);
     });
   }
 }

@@ -74,7 +74,7 @@
                   aria-current="page"
                   @click.self="(e) => e.preventDefault()"
                 >
-                  <a-badge :count="unreadNotification">
+                  <a-badge :count="unreadNotification.length">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       style="width: 30px"
@@ -89,7 +89,7 @@
                 </a>
                 <template v-slot:overlay>
                   <NotificationPopup
-                    :items="notifications"
+                    :items="unreadNotification"
                     :use-for="'notification'"
                   />
                 </template>
@@ -342,12 +342,12 @@
                         alt="icon"
                     />
                     <span class="ml-2 mr-2">Notification </span>
-                    <a-badge :count="unreadNotification" />
+                    <a-badge :count="unreadNotification.length" />
                   </a>
                   <template v-slot:overlay>
                     <NotificationPopup
                         count="29"
-                        :items="notifications"
+                        :items="unreadNotification"
                         :use-for="'notification'"
                     />
                   </template>
@@ -419,7 +419,6 @@ export default {
   name: "Layout",
   components: {
     NotificationPopup,
-    
   },
   created() {
     this.loadNotifications();
@@ -463,7 +462,7 @@ export default {
       return this.$store.state.notification.notifications;
     },
     unreadNotification() {
-      return this.notifications.filter((item) => item.seen == 0).length;
+      return this.$store.state.notification.instantNotifications;
     },
     teams() {
       let teams = this.$store.state.team.team_list;

@@ -162,7 +162,7 @@ export default {
 			return this.$route.name
 		},
     unreadNotification() {
-      return this.$store.state.notification.notifications.filter(item => item.seen == 0).length;
+      return this.$store.state.notification.instantNotifications.length;
     },
     chats() {
       return this.$store.state.chat.chats;

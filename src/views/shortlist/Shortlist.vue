@@ -1,12 +1,39 @@
 <template>
   <div>
     <Loader v-if="isLoading" :isLoading="isLoading" />
+<!--    Short list candidate-->
+<!--    team listed candidate-->
     <div v-else>
-      <div class="main-content-wrapper">
+      <div class="shortlist-content-wrapper">
         <div class="main-content-1">
-          <!-- <ShortlistedCandidate/> -->
+          <div class="flex">
+            <v-chip
+                class="ma-2 cursor-pointer"
+                color="indigo"
+                text-color="white"
+            >
+              <v-avatar left>
+                <a-icon type="check" class="text-white" />
+              </v-avatar>
+              Shortlisted Candidate
+            </v-chip>
+
+            <v-chip
+                class="ma-2 cursor-pointer"
+                color="error"
+                text-color="white"
+            >
+              Team listed Candidate
+            </v-chip>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12 col-md-6 col-lg-3">
+              <candidate-grid />
+            </div>
+          </div>
+
           <!-- Shortlisted Section Header -->
-          <div>
+          <div class="d-none">
             <div class="item" style="text-align: left; width: 100%">
               <span
                 class="item-number flex-center-center"
@@ -47,7 +74,7 @@
             </div>
           </div>
           <!-- Team Listed -->
-          <div class="mt-4">
+          <div class="mt-4 d-none">
             <!-- Team Listed Section Header -->
             <hr />
             <div class="item" style="text-align: left; width: 100%">
@@ -86,7 +113,7 @@
             </div>
           </div>
         </div>
-        <div class="main-content-2">
+        <div class="main-content-2 d-none">
           <div v-if="loadingSpinner">
             <loading-spinner></loading-spinner>
           </div>
@@ -305,9 +332,11 @@ import SelectTeamForTeamlist from "@/components/team/Modals/SelectTeamForTeamlis
 import JwtService from "@/services/jwt.service";
 import { openModalRoute } from "@/plugins/modal/modal.mixin";
 import Candidate from "@/components/shortlist/Candidate.vue";
+import CandidateGrid from "../../components/shortlist/CandidateGrid";
 export default {
   name: "Shortlist",
   components: {
+    CandidateGrid,
     Header,
     Sidebar,
     Footer,
@@ -625,18 +654,17 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
-.main-content-wrapper {
-  @media (max-width: 1024px) {
-    flex-wrap: wrap;
-  }
+.shortlist-content-wrapper {
+  flex-wrap: wrap;
+  margin-top: 20px;
   .main-content-1 {
-    width: calc(100% - 550px);
+    width: 100%;
     margin: 20px 10px;
     //margin-left: 260px;
     //margin-right: -800px;
-    @media (max-width: 1024px) {
-      width: calc(100% - 270px);
-    }
+    //@media (max-width: 1024px) {
+    //  width: calc(100% - 270px);
+    //}
     .item {
       display: inline-block;
       button {
