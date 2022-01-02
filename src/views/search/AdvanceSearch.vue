@@ -32,7 +32,7 @@
             </template>
           </Sidebar>
         </a-layout-sider>
-        <a-layout>
+        <a-layout id="bbx">
           <a-layout-content>
             <div class="main-content-wrapper">
               <div class="main-content-1">
@@ -167,6 +167,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+* {
+  scroll-behavior: smooth;
+}
 @import "@/styles/base/_variables.scss";
 .w-2 {
   width: 2rem;

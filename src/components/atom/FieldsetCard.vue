@@ -1,7 +1,7 @@
 <template>
     <div>
-        <fieldset class="">
-            <legend class="text--secondary text-subtitle-2">{{ title }}</legend>
+        <fieldset>
+            <legend class="text--secondary text-subtitle-2 px-1">{{ title }}</legend>
             <div class="text-center text-subtitle-1">{{ info }}</div>
         </fieldset>
     </div>
@@ -11,11 +11,11 @@
 export default {
     name: 'FieldsetCard',
     props: {
-        info: {
-            default: 'Default Title'
-        },
         title: {
             default: 'Information'
+        },
+        info: {
+            default: 'Default Title'
         }
     }
 }
