@@ -11,8 +11,9 @@
                 class="ma-2 cursor-pointer"
                 color="indigo"
                 text-color="white"
+                @click="type = 'self'"
             >
-              <v-avatar left>
+              <v-avatar left v-if="type == 'self'">
                 <a-icon type="check" class="text-white" />
               </v-avatar>
               Shortlisted Candidate
@@ -22,7 +23,11 @@
                 class="ma-2 cursor-pointer"
                 color="error"
                 text-color="white"
+                @click="type = 'team'"
             >
+              <v-avatar left v-if="type == 'team'">
+                <a-icon type="check" class="text-white" />
+              </v-avatar>
               Team listed Candidate
             </v-chip>
           </div>
@@ -362,6 +367,7 @@ export default {
       selectTeamForConnect: false,
       candidateId: null,
       candidateTeamId: null,
+      type: 'self'
     };
   },
   created() {

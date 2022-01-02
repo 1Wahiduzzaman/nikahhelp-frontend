@@ -3,14 +3,15 @@
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else>
       <div class="main-content-wrapper">
-        <div class="main-content">
+        <div class="block-main-content">
           <div class="flex">
             <v-chip
                 class="ma-2 cursor-pointer"
                 color="indigo"
                 text-color="white"
+                @click="type = 'self'"
             >
-              <v-avatar left>
+              <v-avatar left v-if="type == 'self'">
                 <a-icon type="check" class="text-white" />
               </v-avatar>
               My block list
@@ -20,7 +21,11 @@
                 class="ma-2 cursor-pointer"
                 color="error"
                 text-color="white"
+                @click="type = 'team'"
             >
+              <v-avatar left v-if="type == 'team'">
+                <a-icon type="check" class="text-white" />
+              </v-avatar>
               Blocked by team members
             </v-chip>
           </div>
@@ -72,6 +77,7 @@ export default {
       isLoading: true,
       user: {},
       is_verified: 1,
+      type: 'self'
     };
   },
   created() {
@@ -143,7 +149,8 @@ export default {
 <style scoped lang="scss">
 .main-content-wrapper {
   margin-top: 0;
-  .main-content {
+  width: 100%;
+  .block-main-content {
     width: 100%;
     margin: 20px 10px;
   }

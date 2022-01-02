@@ -7,15 +7,15 @@
         <span :class="{'online-icon-avatar': ifOnline}"></span>
       </div>
       <div class="content">
-        <span class="label">Connected Team</span>
+        <span class="label">{{ item.label }}</span>
         <h4 class="mt-1 fs-14">{{ getTeamName }}</h4>
-        <p class="mb-0 text-margin">{{ item.team_chat ? item.team_chat.last_message : '' }}</p>
+        <p class="mb-0 text-margin">{{ item.message ? item.message.body : '' }}</p>
       </div>
       <!--      <span class="online-icon" v-if="item.message && item.message.seen == 0"></span>-->
     </div>
     <div class="flex chat-bottom-place justify-content-between">
       <div class="date">{{ item.typing_text }}</div>
-      <div class="date">{{ item.team_chat ? messageCreatedAt(item.team_chat.created_at) : '' }}</div>
+      <div class="date">{{ item.message ? messageCreatedAt(item.message.created_at) : '' }}</div>
     </div>
   </div>
 </template>

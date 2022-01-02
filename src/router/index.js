@@ -94,13 +94,14 @@ const AppRouter = new VueRouter({
             path: "/",
             name: "Home",
             component: Home,
+            beforeEnter: InitRoute,
 
         },
         {
             path: "/candidate-registration",
             name: "CandidateRegistration",
             component: CandidateRegistration,
-            // beforeEnter: InitRoute,
+             beforeEnter: InitRoute,
 
         },
 
@@ -108,34 +109,34 @@ const AppRouter = new VueRouter({
             path: "/representative-registration",
             name: "RepresentativeRegistration",
             component: RepresentativeRegistration,
-            // beforeEnter: InitRoute,
+             beforeEnter: InitRoute,
 
         },
         {
             path: "/edit_candidate",
             name: "EditCandidateRegistration",
             component: EditCandidateRegistration,
-            // beforeEnter: InitRoute,
+             beforeEnter: InitRoute,
 
         },
         {
             path: "/edit_representative",
             name: "EditRepresentativeRegistration",
             component: EditRepresentativeRegistration,
-            // beforeEnter: InitRoute,
+             beforeEnter: InitRoute,
 
         },
         {
             path: "/search/advance",
             name: "AdvanceSearch",
             component: AdvanceSearch,
-            // beforeEnter: InitRoute,
+             beforeEnter: InitRoute,
         },
         {
             path: "/admin",
             name: "Admin",
             component: AdminSystem,
-            // beforeEnter: InitRoute,
+            beforeEnter: InitRoute,
             children: [{
                 path: "",
                 component: AdminDashboard,
@@ -193,7 +194,7 @@ const AppRouter = new VueRouter({
             name: 'root',
             component: MatrimonySystem,
             redirect: '/dashboard',
-            // beforeEnter: InitRoute,
+             beforeEnter: InitRoute,
             children: [
 
                 {

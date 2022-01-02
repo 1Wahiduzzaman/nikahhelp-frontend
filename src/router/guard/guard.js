@@ -1,7 +1,13 @@
 export const InitRoute = (to, from, next) => {
     next();
     const user = JSON.parse(localStorage.getItem('user'));
-    if (!user) {
+    if (!user && to.name == 'Signup') {
+        return next({ name: 'Signup' });
+    }
+    else if (!user && to.name == 'Home') {
+        return next({ name: 'Home' });
+    }
+    else if (!user) {
         return next({ name: 'Login' });
     }
     else if (user.is_verified == 0) {
@@ -11,7 +17,7 @@ export const InitRoute = (to, from, next) => {
 
         return next({ name: 'CandidateRegistration' });
     }
-    else if (user.account_type === 2 ) {
+    else if (user.account_type === 2) {
         return next({ name: 'RepresentativeRegistration' });
     }
     else {
