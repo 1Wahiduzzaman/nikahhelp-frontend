@@ -26,7 +26,7 @@
               <div class="chat-category">
                 <nav>
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                    <a class="nav-link" :class="{'active': chatTab == 'Recent'}" id="nav-home-tab" data-toggle="tab" role="tab"
                        aria-controls="nav-home" aria-selected="true">
                       <div class="category-item" @click="setChatTab('Recent')">
                         <a href="#">
@@ -47,7 +47,7 @@
                         </a>
                       </div>
                     </a>
-                    <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+                    <a class="nav-link" :class="{'active': chatTab == 'Team'}" id="nav-profile-tab" data-toggle="tab" role="tab"
                        aria-controls="nav-profile" aria-selected="false">
                       <div class="category-item" @click="setChatTab('Team')">
                         <a href="#">
@@ -65,7 +65,7 @@
                         </a>
                       </div>
                     </a>
-                    <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+                    <a class="nav-link" :class="{'active': chatTab == 'Connected'}" id="nav-contact-tab" data-toggle="tab" role="tab"
                        aria-controls="nav-contact" aria-selected="false">
                       <div class="category-item" @click="setChatTab('Connected')">
                         <a href="#">
@@ -84,14 +84,15 @@
                         </a>
                       </div>
                     </a>
-                    <a class="nav-link mt-2">
+                    <a class="nav-link mt-2" :class="{'active': chatTab == 'Request'}" id="private-request-tab" data-toggle="tab" role="tab">
                       <a-dropdown>
-                        <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                        <a class="ant-dropdown-link position-relative" @click="e => e.preventDefault()">
                           <a-icon type="more" class="fs-30 font-weight-bolder br-50 bg-c9 color-primary"/>
+                          <div class="position-absolute bg-danger chat-request-chip" v-if="privateRequested.length > 0">{{ privateRequested.length }}</div>
                         </a>
                         <a-menu slot="overlay" class="text-center px-2">
-                          <a-menu-item class="border-bottom">
-                            <a class="fs-12 color-primary">Private chat request</a>
+                          <a-menu-item class="border-bottom" @click="setChatTab('Request')">
+                            <a class="fs-12 color-primary">Private chat request <a-badge :count="privateRequested.length"></a-badge></a>
                           </a-menu-item>
                           <a-menu-item class="border-bottom">
                             <a class="fs-12 color-primary">Chat history</a>
@@ -110,7 +111,7 @@
               </div>
               <div class="chat-item-wrapper">
                 <div class="tab-content" id="nav-tabContent">
-                  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                  <div v-if="chatTab == 'Recent'" class="tab-pane fade" :class="{'show active': chatTab == 'Recent'}" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div
                         class="chat-item"
                         v-for="item in chatHistory"
@@ -127,7 +128,7 @@
                       />
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                  <div v-if="chatTab == 'Team'" class="tab-pane fade" :class="{'show active': chatTab == 'Team'}" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <div class="chat-item"
                          v-for="item in teamChat"
                          v-if="item.user_id != getAuthUserId"
@@ -144,7 +145,7 @@
                       />
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                  <div v-if="chatTab == 'Connected'" class="tab-pane fade" :class="{'show active': chatTab == 'Connected'}" role="tabpanel" aria-labelledby="nav-contact-tab">
                     <div class="chat-item"
                          v-for="item in connectedTeam"
                          :key="item.team_id"
@@ -161,8 +162,20 @@
                       />
                     </div>
                   </div>
+                  <div v-if="chatTab == 'Request'" class="tab-pane fade" :class="{'show active': chatTab == 'Request'}" role="tabpanel" aria-labelledby="private-request-tab">
+                    <div class="chat-item cursor-pointer"
+                         v-for="item in privateRequested"
+                         :key="item.id">
+                      <private-request-chat :item="item"
+                                            :status="'connected'"
+                                            :online_users="online_users"
+                                            :teamMembers="teamMembers"
+                                            :activeTeam="activeTeam"
+                                            action
+                                            class="w-full pr-3 cursor-pointer" />
+                    </div>
+                  </div>
                 </div>
-
               </div>
             </div>
             <div class="chat-right position-relative" :class="{'chat-hide': !conversationTitle}" v-if="chatheadopen">
@@ -386,6 +399,7 @@ import Conversation from "../../components/auth/Conversation";
 import JwtService from "@/services/jwt.service";
 import { openModalRoute } from "@/plugins/modal/modal.mixin";
 import ConnectedTeamChat from "../../components/chat/ConnectedTeamChat";
+import PrivateRequestChat from "../../components/chat/PrivateRequestChat";
 
 export default {
   name: 'ChatWindow',
@@ -409,6 +423,7 @@ export default {
       activeTeam: null,
       teamMembers: [],
       connectedTeam: [],
+      privateRequests: [],
       online_users: [],
       one_to_one_user: null,
       inConnectedChat: false,
@@ -426,6 +441,7 @@ export default {
     }
   },
   components: {
+    PrivateRequestChat,
     ConnectedTeamChat,
     ChatListItem
   },
@@ -467,6 +483,9 @@ export default {
   computed: {
     scrollFlag: function () {
       return this.$store.state.chat.scrolldown_msg;
+    },
+    privateRequested() {
+      return this.privateRequests.filter(item => item.is_friend == 0);
     },
     totalUnreadCount: function () {
       return this.$store.state.chat.unread_records.length;
@@ -643,6 +662,7 @@ export default {
         this.loadTeamChat();
         this.loadChatHistory();
         this.loadConnectedGroup();
+        this.getPrivateRequests();
       }
     },
     setChatTab(type) {
@@ -793,6 +813,16 @@ export default {
         console.error(e);
       }
     },
+    async getPrivateRequests() {
+      let {data} = await ApiService.get('/v1/get-all-private-chat-requests').then(res => res.data);
+      this.privateRequests = data.map(item => {
+        item.label = 'Private chat';
+        item.typing_status = 0;
+        item.typing_text = '';
+        // item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
+        return item;
+      });
+    },
     async loadChatHistory() {
       try {
         let {data} = await ApiService.get('/v1/chat-history').then(res => res.data);
@@ -885,6 +915,7 @@ export default {
         }
       }
       this.chatheadopen = item;
+      this.chatheadopen.message.seen = 1;
       this.chats = await this.loadIndividualChatHistory(payload);
       // this.chats = this.chats.reverse();
 
@@ -910,6 +941,7 @@ export default {
       this.private_chat = {};
       item.label = 'Connected Team';
       this.chatheadopen = item;
+      this.chatheadopen.message.seen = 1;
 
       let url = 'connected-team-chat-history';
       let payload = {
@@ -1126,6 +1158,7 @@ export default {
     },
     notifyKeyboardStatus() {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
+      this.chatheadopen.message.seen = 1;
       let data = {
         type: this.chatheadopen.label,
         other_mate_id: this.chatheadopen.other_mate_id,
@@ -2505,6 +2538,17 @@ export default {
   @media (min-width: 1920px) {
     max-height: calc(100vh - 340px);
   }
+}
+.chat-request-chip {
+  width: 20px;
+  height: 20px;
+  top: -12px;
+  right: -8px;
+  border-radius: 50%;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 // end css for chat
 </style>
