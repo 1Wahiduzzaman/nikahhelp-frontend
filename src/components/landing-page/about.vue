@@ -103,11 +103,13 @@ export default {
   justify-content: flex-start;
   align-items: flex-start;
   overflow: hidden;
-  max-width: 1100px;
-  margin:10px auto;
-  padding: 0 10px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 4rem;
+  margin-top: 10rem;
   @media (min-width: 320px) and (max-width: 480px) {
-    padding: 0 20px;
+    padding: 0 1rem;
+    margin-top: 8rem;
   }
 }
 </style>
