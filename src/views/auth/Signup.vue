@@ -3,6 +3,7 @@
     <div class="signup">
       <div v-if="showSignupForm && !errorMessage" class="signup-inner">
         <a href="/" class="logo"><img src="@/assets/logo.png" alt="logo" class="mat-logo" /></a>
+        <h4 class="signup-head">Find your match today!</h4>
         <a-form-model
           ref="signupFormOne"
           :model="signupModel"
@@ -49,6 +50,7 @@
               @click="handleSubmitSignUp"
               class="btn btn-agreeJoin-pink w-100"
             >
+              <a-icon type="loading" class="mr-2 fs-20" v-if="isLoading" />
               Agree & Join
             </button>
 
@@ -65,7 +67,7 @@
           <router-link
             to="/login"
             class="
-              btn btn-sm btn-outline-primary btn-round-sm
+              btn btn-sm btn-round-sm
               ms-2
               text-nowrap
               join-now-btn
@@ -435,17 +437,19 @@ export default {
       margin: 0 !important;
     }
     .btn-agreeJoin-pink {
-      color: $color-white;
-      background: #2cd797;
-      border: 1px solid $border-white;
-      box-shadow: 2px 2px 2px #999;
+      color: #2cd797;
+      //background: #2cd797;
+      border: 1px solid #2cd797;
       border-radius: 20px;
+      font-size: 16px;
       &:hover,
       &:not(:disabled):not(.disabled):active {
         background: #2cd797;
-        border: 1px solid $border-primary;
-        opacity: 0.9;
+        color: $color-white;
+        border: 1px solid $border-white;
+        opacity: 1;
         outline: 0;
+        box-shadow: 2px 2px 2px #999;
       }
       &:disabled,
       &.disabled {
@@ -454,6 +458,10 @@ export default {
         border: 1px solid $border-primary;
         opacity: 0.6;
       }
+      &:focus {
+        outline: none;
+        box-shadow: none;
+      }
       img {
         margin-right: 3px;
       }
@@ -461,7 +469,7 @@ export default {
     .signup-inner {
       max-width: 400px;
       margin: 0 auto;
-      padding: 20px 15px;
+      padding: 10px 15px;
       text-align: center;
       @media (min-width: 768px) {
         padding: 80px 15px;
@@ -479,7 +487,7 @@ export default {
         display: inline-block;
         margin-bottom: 20px;
         .mat-logo {
-          width: 180px;
+          width: 138px;
           @media (min-width: 768px) {
             width: 250px;
           }
@@ -489,7 +497,9 @@ export default {
         background: $bg-white;
         padding: 20px;
         border-radius: 5px;
-        margin-top: 48px;
+        @media (min-width: 768px) {
+          margin-top: 48px;
+        }
         .warning {
           color: red;
           font-size: 14px;
@@ -590,7 +600,21 @@ export default {
   font-size: 14px;
   border: 1px solid #FFFFFF;
 }
+.join-now-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
 .join-now-btn:hover {
   background: $bg-primary;
+  box-shadow: 0 2px 2px #999;
+  border: none;
+}
+.signup-head {
+  font-size: 16px;
+  color: #FFFFFF;
+  margin-top: -12px;
+  background: -webkit-linear-gradient(white, pink, white, #8debf2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 </style>

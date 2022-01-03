@@ -485,7 +485,10 @@ export default {
       return this.$store.state.chat.scrolldown_msg;
     },
     privateRequested() {
-      return this.privateRequests.filter(item => item.is_friend == 0);
+      if(this.teamMembers && this.teamMembers.length > 0) {
+        return this.privateRequests.filter(item => item.is_friend == 0 && this.teamMembers.includes(item.receiver.toString()));
+      }
+      return [];
     },
     totalUnreadCount: function () {
       return this.$store.state.chat.unread_records.length;
@@ -816,7 +819,7 @@ export default {
     async getPrivateRequests() {
       let {data} = await ApiService.get('/v1/get-all-private-chat-requests').then(res => res.data);
       this.privateRequests = data.map(item => {
-        item.label = 'Private chat';
+        item.label = 'Private chat request';
         item.typing_status = 0;
         item.typing_text = '';
         // item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
@@ -836,6 +839,11 @@ export default {
         let url = 'individual-chat-history';
         if(payload.team_chat_id) {
           url = 'connected-team-chat-history';
+        }
+        if(this.chatheadopen.private_team_chat_id) {
+          url = 'connected-private-chat-history';
+          payload.private_team_chat_id = this.chatheadopen.private_team_chat_id;
+          payload.team_chat_id = this.chatheadopen.private_team_chat_id;
         }
         let {data} = await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
         if (data && data.message_history) {
@@ -1141,7 +1149,8 @@ export default {
         receiver: this.private_chat.receiver.toString(),
         label: 'Private',
         conv_title: this.conversationTitle,
-        logo: this.chatheadopen.logo
+        logo: this.chatheadopen.logo,
+        private_team_chat_id: this.chatheadopen.private_team_chat_id
       }
       payload.sender = loggedUser.id.toString();
       // this.chats.unshift(payload);

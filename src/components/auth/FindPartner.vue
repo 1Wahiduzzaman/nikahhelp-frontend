@@ -11,16 +11,16 @@
                <div class="card-facility-border"></div>
                <div class="card-facility rounded">
                   <ul class="facility-list">
-                     <li class="item"><img src="@/assets/Icons/tick 2.svg" alt="icon" id = "checkIcon"> Verified Candidate IDs</li>
-                     <li class="item"><img src="@/assets/Icons/tick 2.svg" alt="icon" id = "checkIcon">Benefit from their collective
-                        wisdom & experience</li>
-                     <li class="item"><img src= "@/assets/Icons/tick 2.svg" alt="icon" id = "checkIcon">Make the right decision with
-                        the wide-ranging information</li>
-                     <li class="item"><img src="@/assets/Icons/tick 2.svg" alt="icon" id = "checkIcon">By registering let them know
-                        the conversation can begin</li>
-                     <li class="item"><img src="@/assets/Icons/tick 2.svg" alt="icon" id = "checkIcon">Facility to involve family and
-                        friend</li>
-                     <li class="item"><img src="@/assets/Icons/tick 2.svg" alt="icon" id = "checkIcon">Avoid romance scams</li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"> <span>Verified Candidate IDs</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Benefit from their collective
+                        wisdom & experience</span></li>
+                     <li class="item"><img src= "@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Make the right decision with
+                        the wide-ranging information</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>By registering let them know
+                        the conversation can begin</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Facility to involve family and
+                        friend</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Avoid romance scams</span></li>
                   </ul>
                </div>
             </div>
@@ -80,10 +80,12 @@ export default {
                   display: flex;
                   align-items: center;
                   margin-bottom: 15px;
-                  opacity: 0.7;
                   img{
                      margin-right: 8px;
                   }
+                 span {
+                   opacity: 0.7;
+                 }
                }
             }
          }

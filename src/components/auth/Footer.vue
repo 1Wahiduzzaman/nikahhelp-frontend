@@ -14,13 +14,13 @@
       <ul class="footer-menu mt-3">
         <li>
           <a href="javascript:void()"
-            ><router-link to="/about"> About </router-link></a
+            ><router-link to="/about" class="color-primary"> About </router-link></a
           >
         </li>
-        <li><a href="javascript:void()"> <router-link to="/privacy-policy"> Privacy & Cookie Policy </router-link></a></li>
-        <li><a href="javascript:void()"><router-link to="/terms_condition"> Terms & Condition </router-link></a></li>
-        <li><a href="javascript:void()"><router-link to="/safety_guidance"> Safety & Guidance </router-link></a></li>
-        <li><a href="javascript:void()"><router-link to="/help"> Help </router-link></a></li>
+        <li><a href="javascript:void()"> <router-link to="/privacy-policy" class="color-primary"> Privacy & Cookie Policy </router-link></a></li>
+        <li><a href="javascript:void()"><router-link to="/terms_condition" class="color-primary"> Terms & Condition </router-link></a></li>
+        <li><a href="javascript:void()"><router-link to="/safety_guidance" class="color-primary"> Safety & Guidance </router-link></a></li>
+        <li><a href="javascript:void()"><router-link to="/help" class="color-primary"> Help </router-link></a></li>
       </ul>
     </div>
   </footer>
@@ -48,5 +48,8 @@ footer {
       padding: 5px 10px;
     }
   }
+}
+.color-primary:hover {
+  text-decoration: underline;
 }
 </style>

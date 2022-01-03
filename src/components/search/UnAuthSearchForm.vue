@@ -9,14 +9,14 @@
         <button
           :class="{ selected: searchModel.gender == 1 }"
           @click="onSelectedGender(1)"
-          class="btn btn-primary btn-round focus-design mr-2"
+          class="btn btn-outline-primary btn-round focus-design mr-2"
         >
           <img src="@/assets/icon/male.svg" alt="male" /> Male
         </button>
         <button
           :class="{ selected: searchModel.gender == 2 }"
           @click="onSelectedGender(2)"
-          class="btn btn-primary btn-round focus-design ml-2"
+          class="btn btn-outline-primary btn-round focus-design ml-2"
         >
           <img src="@/assets/icon/female.svg" alt="female" /> Female
         </button>
@@ -30,6 +30,7 @@
           :placeholder="'Age'"
           :width="'120'"
           :suffixIcon="'true'"
+          :min="[18, 24]"
           :values="[searchModel.min_age, searchModel.max_age]"
         />
       </div>
@@ -95,13 +96,11 @@
         </a-select>
       </div>
       <div>
-        <a-button
+        <button
           :disabled="!filterExists"
           @click="handleSearch"
-          type="primary"
           size="large"
-          block
-          shape="round"
+          class="btn btn-block btn-round btn-outline-primary"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -129,7 +128,7 @@
             </g>
           </svg>
           <span class="ml-3 fs-20"> Search </span>
-        </a-button>
+        </button>
       </div>
     </div>
   </div>
@@ -145,7 +144,7 @@ export default {
   data() {
     return {
       searchModel: {
-        gender: 0,
+        gender: 1,
         country: undefined,
         religion: undefined,
         min_age: undefined,
@@ -221,8 +220,11 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .selected {
-  border: 1px solid rgb(138, 135, 155);
-  background-color: #372ac4;
+  background-color: #411883;
+  color: #FFFFFF !important;
+  img {
+    filter: initial !important;
+  }
 }
 .gender-wrapper {
   button {
@@ -269,5 +271,25 @@ export default {
   background: transparent;
   border-radius: 10px;
   transform: rotate(5deg);
+}
+.btn-outline-primary {
+  color: #411883;
+  border-color: #411883;
+  img {
+    filter: invert(0.6);
+  }
+  svg {
+    filter: invert(0.6);
+  }
+}
+.btn-outline-primary:hover {
+  color: #FFFFFF;
+  background: #411883;
+  img {
+    filter: initial;
+  }
+  svg {
+    filter: initial !important;
+  }
 }
 </style>
