@@ -2316,9 +2316,11 @@ export default {
   }
 }
 .display-subs-text {
-  display: none;
+  display: block;
+  font-size: 10px;
   @media (min-width: 1780px) {
     display: contents;
+    font-size: 14px;
   }
 }
 .bright-20 {

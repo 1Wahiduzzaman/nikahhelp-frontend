@@ -4,8 +4,39 @@
         <div>
             <FieldsetCard
                 class="mt-3"
-                v-for="n in 10"
-                :key="n"
+                title="Marital Status"
+            />
+            <FieldsetCard
+                class="mt-3"
+                title="Currently Living with"
+            />
+            <FieldsetCard
+                class="mt-3"
+                title="Willing to Relocate"
+            />
+            <FieldsetCard
+                class="mt-3"
+                title="Smoker"
+            />
+            <FieldsetCard
+                class="mt-3"
+                title="Language(s) I Speak"
+            />
+            <FieldsetCard
+                class="mt-3"
+                title="My Hobbies & Interest"
+            />
+            <FieldsetCard
+                class="mt-3"
+                title="Foods I Like"
+            />
+            <FieldsetCard
+                class="mt-3"
+                title="Things I Enjoy"
+            />
+            <FieldsetCard
+                class="mt-3"
+                title="I'm Thankfull for"
             />
         </div>
     </v-card>

@@ -3,33 +3,36 @@
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else>
       <div class="main-content-wrapper">
-        <div class="main-content">
-          <div class="flex">
-            <v-chip
-                class="ma-2 cursor-pointer"
-                color="indigo"
-                text-color="white"
-            >
-              <v-avatar left>
-                <a-icon type="check" class="text-white" />
-              </v-avatar>
-              My block list
-            </v-chip>
+        <div class="block-main-content">
+          <v-tabs color="indigo accent-4" class="w-full d-flex justify-content-between support-tab">
+            <v-tab href="#tab-1" @click="tab = 'tab-1'" class="font-weight-bold">All</v-tab>
+            <v-tab href="#tab-2" @click="tab = 'tab-2'" class="font-weight-bold">My block list</v-tab>
+            <v-tab href="#tab-3" @click="tab = 'tab-3'" class="font-weight-bold">Blocked by team members</v-tab>
+          </v-tabs>
 
-            <v-chip
-                class="ma-2 cursor-pointer"
-                color="error"
-                text-color="white"
-            >
-              Blocked by team members
-            </v-chip>
-          </div>
-
-          <div class="row">
-            <div class="col-12 col-md-6 col-lg-3">
-              <blocked-candidate-grid />
-            </div>
-          </div>
+          <v-tabs-items v-model="tab">
+            <v-tab-item value="tab-1">
+              <div class="row mb-4">
+                <div class="col-12 col-md-6 col-lg-3 mt-4">
+                  <blocked-candidate-grid />
+                </div>
+              </div>
+            </v-tab-item>
+            <v-tab-item value="tab-2">
+              <div class="row mb-4">
+                <div class="col-12 col-md-6 col-lg-3 mt-4">
+                  <blocked-candidate-grid />
+                </div>
+              </div>
+            </v-tab-item>
+            <v-tab-item value="tab-3">
+              <div class="row mb-4">
+                <div class="col-12 col-md-6 col-lg-3 mt-4">
+                  <blocked-candidate-grid />
+                </div>
+              </div>
+            </v-tab-item>
+          </v-tabs-items>
 
           <BlockedCandidate
             :blockedCandidates="blockedCandidates"
@@ -67,11 +70,22 @@ export default {
     BlockedCandidate,
     BlockedTeam,
   },
+  sockets: {
+    connect: function () {
+      console.log("socket connected");
+    },
+    ping: function (data) {
+      console.log(
+          'this method was fired by the socket server. eg: io.emit("customEmit", data)'
+      );
+    },
+  },
   data() {
     return {
       isLoading: true,
       user: {},
       is_verified: 1,
+      tab: 'tab-1',
     };
   },
   created() {
@@ -98,6 +112,20 @@ export default {
     },
   },
   methods: {
+    socketNotification(payload) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.sender = loggedUser.id;
+      Notification.storeNotification(payload);
+      payload.created_at = new Date();
+      payload.seen = 0;
+      payload.sender = loggedUser;
+      if(payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map(item => {
+          return item.toString();
+        });
+        this.$socket.emit('notification', payload);
+      }
+    },
     getActiveTeamId() {
       if (!JwtService.getTeamIDAppWide()) {
         this.isLoading = true;
@@ -143,7 +171,8 @@ export default {
 <style scoped lang="scss">
 .main-content-wrapper {
   margin-top: 0;
-  .main-content {
+  width: 100%;
+  .block-main-content {
     width: 100%;
     margin: 20px 10px;
   }

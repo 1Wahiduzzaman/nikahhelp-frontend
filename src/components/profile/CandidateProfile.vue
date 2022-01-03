@@ -2,6 +2,15 @@
   <div>
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else>
+      <ProfileBanner
+        class="px-2 mt-2"
+        :name="candidateData.first_name + ' ' + candidateData.last_name"
+        :image="
+          candidateData.personal.per_main_image_url
+            ? candidateData.personal.per_main_image_url
+            : avatarSrc
+        "
+      />
       <div
         v-if="candidateData"
         class="candidate-profile"
@@ -9,26 +18,6 @@
       >
         <div class="profile-heading">
           <!-- Avatar and cover images -->
-          <div class="text-center">
-            <img
-              src="@/assets/Icons/profile cover.jpg"
-              alt=""
-              class="cover-img"
-            />
-            <img
-              :src="
-                candidateData.personal.per_main_image_url
-                  ? candidateData.personal.per_main_image_url
-                  : avatarSrc
-              "
-              alt=""
-              class="avatar-img"
-            />
-
-            <h3 class="mt-5">
-              {{ candidateData.first_name }} {{ candidateData.last_name }}
-            </h3>
-          </div>
           <!-- Buttons -->
           <div class="row mt-3 mb-3 text-center">
             <div class="col">
@@ -764,12 +753,17 @@
 
 <script>
 import RatingComponent from "./RatingComponent.vue";
+import ProfileBanner from '@/components/atom/ProfileBanner'
 import firebase from "../../configs/firebase";
 import Footer from "@/components/auth/Footer.vue";
 import ApiService from "@/services/api.service";
 export default {
   name: "CandidateProfile",
-  components: { RatingComponent, Footer },
+  components: { 
+    RatingComponent, 
+    Footer,
+    ProfileBanner
+  },
   data() {
     return {
       avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",

@@ -436,16 +436,17 @@ export default {
     dateFromDateTime, //From helpers.js
     dateFromTimeStamp, //From helpers.js
     socketNotification(payload) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.sender = loggedUser.id;
       Notification.storeNotification(payload);
-      let loggedUser = JSON.parse(localStorage.getItem("user"));
       payload.created_at = new Date();
       payload.seen = 0;
       payload.sender = loggedUser;
-      if (payload && payload.receivers.length > 0) {
-        payload.receivers = payload.receivers.map((item) => {
+      if(payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map(item => {
           return item.toString();
         });
-        this.$socket.emit("notification", payload);
+        this.$socket.emit('notification', payload);
       }
     },
     getActiveTeamId() {
