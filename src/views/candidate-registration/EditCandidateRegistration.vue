@@ -92,14 +92,13 @@
       </div>
 
       <div class="steps-action text-right pb-5 clearfix bottom-padding">
-        <!-- :class="{ disabled: !enabledNextBtn }"
-          :disabled="!enabledNextBtn" -->
         <a-button
           :class="{ disabled: !enabledNextBtn }"
           :disabled="!enabledNextBtn"
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
+          :style="{ marginRight: current == 0 ? '-15px' : '-5px' }"
           style="float: right"
           class="mt-3"
           @click="next"
@@ -121,7 +120,7 @@
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
-          style="float: left"
+          style="float: left; margin-left: -15px"
           class="mt-3"
           @click="saveExit"
         >
@@ -138,13 +137,11 @@ const createData = () => ({
   fixedClass: "vue-fixed-header--isFixed",
   hideScrollUp: false,
 });
-import Preference from "@/components/candidate-registration/Preference.vue";
+
 import PreferenceTwo from "@/components/candidate-registration/preference-two.vue";
 import Verification from "@/components/candidate-registration/verification.vue";
-import PersonalInfo from "@/components/candidate-registration/PersonalInfo.vue";
 import PersonalInfoTwo from "@/components/candidate-registration/personalinfo-two.vue";
 import FamilyInfoTwo from "@/components/candidate-registration/familyinfo-two.vue";
-import FamilyInfo from "@/components/candidate-registration/FamilyInfo.vue";
 import UploadProfile from "@/components/candidate-registration/UploadProfile.vue";
 import Review from "@/components/candidate-registration/Review.vue";
 import ApiService from "@/services/api.service";
@@ -158,11 +155,8 @@ import jwtService from "../../services/jwt.service";
 import Header from "../../components/header/header";
 export default {
   components: {
-    Preference,
     PreferenceTwo,
-    PersonalInfo,
     PersonalInfoTwo,
-    FamilyInfo,
     FamilyInfoTwo,
     UploadProfile,
     Review,
@@ -584,16 +578,44 @@ export default {
           }).every((x) => x !== undefined && x !== null && x !== "");
           break;
         case 1:
-          const { essential, general, contact, more_about } =
+          let { essential, general, contact, more_about } =
             this.candidateDetails.personalInformation;
-          Object.values({ essential, general, contact, more_about }).forEach(
-            (ob) => {
-              isEnabled = Object.values(ob).every(
-                (x) => x !== undefined && x !== null && x !== ""
-              );
-              if (!isEnabled) return;
-            }
-          );
+          let {
+            per_about,
+            per_currently_living_with,
+            per_food_cuisine_like,
+            per_have_children,
+            per_hobbies_interests,
+            per_language_speak,
+            per_marital_status,
+            per_smoker,
+            per_thankfull_for,
+            per_things_enjoy,
+            per_willing_to_relocate,
+          } = more_about;
+          Object.values({
+            essential,
+            general,
+            contact,
+            ...{
+              per_about,
+              per_currently_living_with,
+              per_food_cuisine_like,
+              per_have_children,
+              per_hobbies_interests,
+              per_language_speak,
+              per_marital_status,
+              per_smoker,
+              per_thankfull_for,
+              per_things_enjoy,
+              per_willing_to_relocate,
+            },
+          }).forEach((ob) => {
+            isEnabled = Object.values(ob).every(
+              (x) => x !== undefined && x !== null && x !== ""
+            );
+            if (!isEnabled) return;
+          });
 
           break;
         case 2:
@@ -663,7 +685,7 @@ export default {
       this.$router.push("/profile");
     },
     doneBtn() {
-     // this.saveDataInputStatus(6);
+      // this.saveDataInputStatus(6);
       this.$router.push("/dashboard");
     },
     toggleStep(step) {

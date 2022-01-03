@@ -416,7 +416,8 @@ export default {
   }
 }
 .h1-flex {
-  display: flex;
+  display: flex
+;
   @media (min-width: 768px) {
     display: flex;
   }

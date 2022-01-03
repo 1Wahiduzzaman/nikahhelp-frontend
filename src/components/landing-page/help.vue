@@ -51,7 +51,7 @@
 import Footer from "@/components/auth/Footer.vue";
 import LandingPageHeader from "@/components/landing-page/LandingPageHeader.vue";
 export default {
-  name: "PrivacyPolicy",
+  name: "Help",
   components: {
     LandingPageHeader,
     Footer,
@@ -65,13 +65,13 @@ export default {
 .main-content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   overflow: hidden;
   max-width: 1100px;
-  margin: 0 auto;
-     padding: 0 10px;
-@media (min-width: 320px) and (max-width: 480px) {
+  margin:10px auto;
+  padding: 0 10px;
+  @media (min-width: 320px) and (max-width: 480px) {
     padding: 0 20px;
   }
 }

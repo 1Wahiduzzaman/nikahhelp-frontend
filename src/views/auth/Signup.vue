@@ -2,7 +2,7 @@
   <div class="signup-container">
     <div class="signup">
       <div v-if="showSignupForm && !errorMessage" class="signup-inner">
-        <a href="/" class="logo"><img src="@/assets/logo.png" alt="logo" /></a>
+        <a href="/" class="logo"><img src="@/assets/logo.png" alt="logo" class="mat-logo" /></a>
         <a-form-model
           ref="signupFormOne"
           :model="signupModel"
@@ -14,7 +14,7 @@
               <a-form-model-item ref="email" prop="email">
                 <a-input
                   type="email"
-                  class="form-control"
+                  class="form-control fs-14"
                   id="email"
                   v-model="signupModel.email"
                   aria-describedby="emailHelp"
@@ -60,14 +60,15 @@
           </div>
         </a-form-model>
         <p class="flex-center-center mt-3 bottom-text">
-          Already on <span class="logo-text"> Matrimony Assit? </span>
+          Already on <span class="logo-text"> Matrimony Assist? </span>
 
           <router-link
             to="/login"
             class="
-              btn btn-sm btn-outline-primary btn-secondary btn-round-sm
+              btn btn-sm btn-outline-primary btn-round-sm
               ms-2
               text-nowrap
+              join-now-btn
             "
           >
             Sign in
@@ -222,11 +223,7 @@
           <button @click="resetData">
             <router-link
               to="/login"
-              class="
-                btn btn-sm btn-outline-primary btn-secondary btn-round-sm
-                ms-2
-                text-nowrap
-              "
+              class="btn btn-sm btn-outline-primary btn-round-sm ms-2 text-nowrap join-now-btn"
             >
               Sign in
             </router-link>
@@ -439,13 +436,13 @@ export default {
     }
     .btn-agreeJoin-pink {
       color: $color-white;
-      background: #e51f76;
+      background: #2cd797;
       border: 1px solid $border-white;
       box-shadow: 2px 2px 2px #999;
       border-radius: 20px;
       &:hover,
       &:not(:disabled):not(.disabled):active {
-        background: #e51f76;
+        background: #2cd797;
         border: 1px solid $border-primary;
         opacity: 0.9;
         outline: 0;
@@ -464,8 +461,11 @@ export default {
     .signup-inner {
       max-width: 400px;
       margin: 0 auto;
-      padding: 50px 15px;
+      padding: 20px 15px;
       text-align: center;
+      @media (min-width: 768px) {
+        padding: 80px 15px;
+      }
       .error {
         background: #fff;
         height: 80px;
@@ -478,11 +478,18 @@ export default {
         max-width: 250px;
         display: inline-block;
         margin-bottom: 20px;
+        .mat-logo {
+          width: 180px;
+          @media (min-width: 768px) {
+            width: 250px;
+          }
+        }
       }
       .form-signup {
         background: $bg-white;
         padding: 20px;
         border-radius: 5px;
+        margin-top: 48px;
         .warning {
           color: red;
           font-size: 14px;
@@ -513,7 +520,7 @@ export default {
         color: white;
         .logo-text {
           font-family: $header-font;
-          margin-left: 5px;
+          margin-left: 10px;
           margin-right: 5px;
           font-size: 24px;
         }
@@ -577,5 +584,13 @@ export default {
       }
     }
   }
+}
+.join-now-btn {
+  color: #FFFFFF;
+  font-size: 14px;
+  border: 1px solid #FFFFFF;
+}
+.join-now-btn:hover {
+  background: $bg-primary;
 }
 </style>

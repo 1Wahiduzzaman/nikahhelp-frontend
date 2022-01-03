@@ -249,7 +249,7 @@ import MoreAbout from '@/components/search/personal-information/MoreAbout.vue'
 import Scroller from  '@/components/atom/Scroller'
 
 import RatingComponent from "./RatingComponent.vue";
-import ProfileBanner from '@/components/atom/ProfileBanner'
+import ProfileBanner from "@/components/atom/ProfileBanner";
 import firebase from "../../configs/firebase";
 import Footer from "@/components/auth/Footer.vue";
 import ApiService from "@/services/api.service";
@@ -265,7 +265,7 @@ export default {
 
     RatingComponent, 
     Footer,
-    ProfileBanner
+    ProfileBanner,
   },
   data() {
     return {

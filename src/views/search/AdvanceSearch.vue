@@ -79,6 +79,16 @@ export default {
     AddComponent,
     Observer
   },
+  sockets: {
+    connect: function () {
+      console.log("socket connected");
+    },
+    ping: function (data) {
+      console.log(
+          'this method was fired by the socket server. eg: io.emit("customEmit", data)'
+      );
+    },
+  },
   data() {
     return {
       isLoading: false,
@@ -106,6 +116,20 @@ export default {
       setProfiles: "search/setProfiles",
       setLoading: "search/setLoading",
     }),
+    socketNotification(payload) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.sender = loggedUser.id;
+      Notification.storeNotification(payload);
+      payload.created_at = new Date();
+      payload.seen = 0;
+      payload.sender = loggedUser;
+      if(payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map(item => {
+          return item.toString();
+        });
+        this.$socket.emit('notification', payload);
+      }
+    },
     onIntersect() {
       this.$refs.simpleSearch.handleSearch();
       console.log('intersect')

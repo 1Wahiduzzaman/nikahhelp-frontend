@@ -2,11 +2,11 @@
   <div>
     <div class="forget-password">
       <div class="inner">
-        <a href="/" class="logo"><img src="@/assets/logo.png" alt="logo" /></a>
+        <a href="/" class="logo"><img src="@/assets/logo.png" alt="logo" class="mat-logo" /></a>
         <template v-if="!message">
-          <h3>Forget your password?</h3>
-          <h5>Retrieve your password here</h5>
-          <h6>Please enter your email address below. You will receive a link to reset your password.</h6>
+          <h3 class="fs-22">Forget your password?</h3>
+          <h5 class="fs-18">Retrieve your password here</h5>
+          <p class="fs-14 text-white">Please enter your email address below. You will receive a link to reset your password.</p>
         </template>
         <template v-if="message">
           <h3>Reset password link sent</h3>
@@ -125,16 +125,25 @@ export default {
   .inner {
     max-width: 500px;
     margin: 0 auto;
-    padding: 50px 15px;
+    padding: 20px 15px;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    @media (min-width: 768px) {
+      padding: 50px 15px;
+    }
     .logo {
       max-width: 250px;
       display: inline-block;
-      margin-bottom: 20px;
+      margin-bottom: 8px;
+      .mat-logo {
+        width: 180px;
+        @media (min-width: 768px) {
+          width: 250px;
+        }
+      }
     }
     h3,
     h5,

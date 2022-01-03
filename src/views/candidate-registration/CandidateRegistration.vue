@@ -102,7 +102,6 @@
         <!-- :class="{ disabled: !enabledNextBtn }"
           :disabled="!enabledNextBtn" -->
         <a-button
-         
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
@@ -153,13 +152,11 @@ const createData = () => ({
   fixedClass: "vue-fixed-header--isFixed",
   hideScrollUp: false,
 });
-import Preference from "@/components/candidate-registration/Preference.vue";
+
 import PreferenceTwo from "@/components/candidate-registration/preference-two.vue";
 import Verification from "@/components/candidate-registration/verification.vue";
-import PersonalInfo from "@/components/candidate-registration/PersonalInfo.vue";
 import PersonalInfoTwo from "@/components/candidate-registration/personalinfo-two.vue";
 import FamilyInfoTwo from "@/components/candidate-registration/familyinfo-two.vue";
-import FamilyInfo from "@/components/candidate-registration/FamilyInfo.vue";
 import UploadProfile from "@/components/candidate-registration/UploadProfile.vue";
 import Review from "@/components/candidate-registration/Review.vue";
 import ApiService from "@/services/api.service";
@@ -173,11 +170,8 @@ import jwtService from "../../services/jwt.service";
 import Header from "../../components/header/header";
 export default {
   components: {
-    Preference,
     PreferenceTwo,
-    PersonalInfo,
     PersonalInfoTwo,
-    FamilyInfo,
     FamilyInfoTwo,
     UploadProfile,
     Review,
@@ -612,7 +606,6 @@ export default {
             per_food_cuisine_like,
             per_have_children,
             per_hobbies_interests,
-            per_improve_myself,
             per_language_speak,
             per_marital_status,
             per_smoker,
@@ -630,7 +623,6 @@ export default {
               per_food_cuisine_like,
               per_have_children,
               per_hobbies_interests,
-              per_improve_myself,
               per_language_speak,
               per_marital_status,
               per_smoker,

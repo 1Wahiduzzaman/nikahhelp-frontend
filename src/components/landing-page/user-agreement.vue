@@ -1,7 +1,6 @@
 <template>
   <div>
-    <LandingPageHeader class="header" />
-
+    <LandingPageHeader />
     <div class="main-content">
       <h3>About Matrimony Assist</h3>
       <p>
@@ -47,25 +46,15 @@
   </div>
 </template>
 
-
 <script>
 import Footer from "@/components/auth/Footer.vue";
 import LandingPageHeader from "@/components/landing-page/LandingPageHeader.vue";
-
 export default {
-  name: "About",
+  name: "UserAgreement",
   components: {
     LandingPageHeader,
     Footer,
   },
-  data() {
-    return {
-      isLoading: true,
-      user: {},
-      is_verified: 1,
-    };
-  },
-  methods: {},
 };
 </script>
 

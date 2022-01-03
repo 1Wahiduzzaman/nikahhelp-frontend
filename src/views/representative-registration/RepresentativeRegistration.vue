@@ -132,7 +132,7 @@
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
-          style="float: left"
+          style="float: left; margin-left: -15px"
           class="mt-3"
           @click="saveExit"
         >
