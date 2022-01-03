@@ -68,7 +68,7 @@ export default {
   align-items: flex-start;
   overflow: hidden;
   max-width: 1100px;
-  margin: 10px auto;
+  margin:10px auto;
   padding: 0 10px;
   @media (min-width: 320px) and (max-width: 480px) {
     padding: 0 20px;
