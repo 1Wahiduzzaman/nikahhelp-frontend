@@ -94,7 +94,7 @@ const AppRouter = new VueRouter({
         {
             path: "/",
             name: "Home",
-            component: Home,
+            component: () => import('@/views/auth/Home.vue'),
             beforeEnter: InitRoute,
 
         },
