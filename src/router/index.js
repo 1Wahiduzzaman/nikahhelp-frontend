@@ -6,6 +6,7 @@ import Home from "@/views/auth/Home.vue";
 import About from "@/views/auth/About.vue";
 import MatrimonySystem from "@/components/system/matrimony-system.vue";
 import AboutPage from "@/components/landing-page/about.vue";
+import UserAgreement from "@/components/landing-page/user-agreement.vue";
 import HelpPage from "@/components/landing-page/help.vue";
 import PrivacyPolicy from "@/components/landing-page/privacy-policy.vue";
 import TermsAndConditionPage from "@/components/landing-page/terms-condition.vue";
@@ -194,7 +195,7 @@ const AppRouter = new VueRouter({
             name: 'root',
             component: MatrimonySystem,
             redirect: '/dashboard',
-            beforeEnter: InitRoute,
+            //beforeEnter: InitRoute,
             children: [
 
                 {
@@ -422,6 +423,12 @@ const AppRouter = new VueRouter({
             path: "/help",
             name: "Help",
             component: HelpPage,
+
+        },
+        {
+            path: "/user-agreement",
+            name: "UserAgreement",
+            component: UserAgreement,
 
         },
         {
