@@ -65,7 +65,7 @@ export default {
 .main-content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   overflow: hidden;
   max-width: 1100px;
