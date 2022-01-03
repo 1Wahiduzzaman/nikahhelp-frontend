@@ -4,8 +4,9 @@ export const InitRoute = (to, from, next) => {
     if (!user && to.name == 'Signup') {
         return next({ name: 'Signup' });
     }
+    /**please explain how this home route works */
     else if (!user && to.name == 'Home') {
-        return next({ name: 'Home' });
+        return next();
     }
     else if (!user) {
         return next({ name: 'Login' });
