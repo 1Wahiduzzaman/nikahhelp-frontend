@@ -152,13 +152,17 @@
               <router-link to="/safety_guidance">Safety & Guidance</router-link>
             </li>
             <li>
-              <router-link to="/terms_condition"
-                >Terms & Conditation</router-link
-              >
+              <router-link to="/user-agreement"> User Agreement </router-link>
             </li>
             <li>
+              <router-link to="/terms_condition"
+                >Terms & Conditions</router-link
+              >
+            </li>
+
+            <li>
               <router-link to="/privacy-policy"
-                >Privacy Policy & Cookie Policy</router-link
+                >Privacy & Cookie Policy</router-link
               >
             </li>
           </ul>
