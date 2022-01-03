@@ -1,9 +1,9 @@
 <template>
   <div class="login-container">
     <div class="signin">
-      <div class="signin-inner" style="padding-top: 50px">
-        <a class="logo"><img src="@/assets/logo.png" alt="logo" /></a>
-        <h3 id="welcome-back-tag"><b>Welcome Back</b></h3>
+      <div class="signin-inner desktop-padding">
+        <a class="logo"><img src="@/assets/logo.png" alt="logo" class="mat-logo" /></a>
+        <h3 id="welcome-back-tag" class="welcome-back-tag"><b>Welcome Back</b></h3>
       </div>
 
       <div class="welcome-back">
@@ -13,12 +13,12 @@
         </p>
       </div>
 
-      <div class="signin-inner">
+      <div class="signin-inner none-padding">
         <a-form-model
           ref="signinForm"
           :model="signinModel"
           :rules="rules"
-          class="form-signin"
+          class="form-signin pb-1px"
         >
           <!-- <Spinner v-if="isLoading" /> -->
           <p v-if="error">
@@ -34,8 +34,8 @@
               Sign in
             </router-link>
           </p>
-          <div else>
-            <div class="mb-3">
+          <div v-else>
+            <div class="">
               <a-form-model-item ref="email" prop="email">
                 <a-input
                   type="email"
@@ -46,7 +46,7 @@
               </a-form-model-item>
             </div>
 
-            <div class="mb-3">
+            <div class="">
               <a-form-model-item ref="password" prop="password">
                 <a-input-password
                   type="password"
@@ -67,14 +67,12 @@
 
             <p
               class="
-                forgot
-                btn btn-sm btn-outline-primary btn-round-sm
                 ms-2
                 text-nowrap
-                mt-4
+                mt-1
               "
             >
-              <router-link to="/forgot-password" style="color: #ec1fab">
+              <router-link to="/forgot-password" class="forgot-password">
                 Forgot Password?
               </router-link>
             </p>
@@ -83,13 +81,12 @@
 
         <div class="join-now" style="padding-bottom: 50px">
           <p
-            class="flex-center-center mt-3"
+            class="flex-center-center mt-3 text-white"
             style="
-              color: #c2f0fd;
               font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             "
           >
-            New to <strong id="name"> Matrimonial Assist? </strong>
+            New to <span class="logo-text"> Matrimony Assist? </span>
 
             <router-link
               to="/signup"
@@ -97,6 +94,7 @@
                 btn btn-sm btn-outline-primary btn-round-sm
                 ms-2
                 text-nowrap
+                join-now-btn
               "
               style="margin-left: 5px; font-weight: bold"
             >
@@ -170,7 +168,7 @@ export default {
 .login-container {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: auto;
   height: calc(100vh);
 
   .signin {
@@ -185,13 +183,22 @@ export default {
 
     .signin-inner {
       max-width: 400px;
-      padding: 50px, 15px;
+      padding: 20px 15px;
       margin: 0 auto;
       text-align: center;
+      @media (min-width: 768px) {
+        padding: 50px 15px;
+      }
       .logo {
         max-width: 250px;
         display: inline-block;
-        margin-bottom: 20px;
+        margin-bottom: 8px;
+        .mat-logo {
+          width: 180px;
+          @media (min-width: 768px) {
+            width: 250px;
+          }
+        }
       }
       .form-signin {
         background: $bg-white;
@@ -232,10 +239,13 @@ export default {
       padding-top: 0px;
       padding-bottom: 10px;
       text-align: center;
-      margin-top: 0px;
+      margin-top: -20px;
       margin-bottom: 0px;
       color: #c2f0fd;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      @media (min-width: 768px) {
+        margin-top: 0;
+      }
     }
   }
 
@@ -268,5 +278,44 @@ export default {
 
 .ant-form-item {
   margin-bottom: 0px;
+}
+.forgot-password {
+  color: #ec1fab;
+  &:hover {
+    color: #ec1fab;
+    border-bottom: 1px solid #ec1fab;
+  }
+}
+.pb-1px {
+  //padding-bottom: 1px !important;
+}
+.join-now-btn {
+  color: #FFFFFF;
+  font-size: 14px;
+  border: 1px solid #FFFFFF;
+}
+.join-now-btn:hover {
+  background: $bg-primary;
+}
+.welcome-back-tag {
+  @media (min-width: 768px) {
+    margin-top: 12px;
+  }
+}
+.desktop-padding {
+  @media (min-width: 768px) {
+    padding: 50px 0 0 0 !important;
+  }
+}
+.none-padding {
+  @media (min-width: 768px) {
+    padding: 0 !important;
+  }
+}
+.logo-text {
+  font-family: $header-font;
+  margin-left: 10px;
+  margin-right: 5px;
+  font-size: 24px;
 }
 </style>
