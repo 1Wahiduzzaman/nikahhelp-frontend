@@ -2,7 +2,7 @@
     <div>
         <fieldset>
             <legend class="text--secondary text-subtitle-2 px-1">{{ title }}</legend>
-            <div class="text-center text-subtitle-1">{{ info }}</div>
+            <div style="text-transform: capitalize" class="text-center text-subtitle-1">{{ info }}</div>
         </fieldset>
     </div>
 </template>
@@ -15,7 +15,7 @@ export default {
             default: 'Information'
         },
         info: {
-            default: 'Default Title'
+            default: '-'
         }
     }
 }
@@ -25,6 +25,7 @@ export default {
 fieldset {
     border: 1px solid #d3d0e4;
     border-radius: 10px;
+    min-height: 52px;
 }
 legend {
     display: inline-block;

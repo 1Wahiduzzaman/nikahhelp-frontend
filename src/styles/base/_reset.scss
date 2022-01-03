@@ -7,6 +7,9 @@
 //Global Style
 @import url("https://fonts.googleapis.com/css2?family=Rochester&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap");
+* {
+  scroll-behavior: smooth;
+}
 html {
   scroll-behavior: smooth;
 }
