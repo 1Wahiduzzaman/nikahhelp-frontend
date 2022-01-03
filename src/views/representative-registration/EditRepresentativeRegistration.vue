@@ -92,7 +92,7 @@
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
-          style="float: right"
+          :style="{ marginRight: current == 0 ? '-15px' : '-5px' }"
           class="mt-3"
           @click="next"
         >
@@ -102,7 +102,7 @@
         <a-button
           v-if="current > 0"
           shape="round"
-          style="float: right; margin-right: 10px"
+           style="float: right; margin-right: 10px"
           class="mt-3"
           @click="prev"
         >
@@ -113,7 +113,7 @@
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
-          style="float: left"
+          style="float: left; margin-left: -15px"
           class="mt-3"
           @click="saveExit"
         >
@@ -344,7 +344,7 @@ export default {
           this.current = 0;
         }
       }
-    //   this.saveDataInputStatus(this.current);
+      //   this.saveDataInputStatus(this.current);
     },
     prev() {
       this.current--;

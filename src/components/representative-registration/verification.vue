@@ -1,5 +1,5 @@
 <template>
-  <div id="accordion" class="verificationInfo rounded" style="background: #f4f4f9">
+  <div id="accordion" class="verificationInfo rounded">
     <div class="verification-content">
       <a-collapse
         default-active-key="1"
@@ -504,6 +504,17 @@
                 </div>
               </div>
             </div>
+             <div class="d-flex justify-content-end">
+              <a-button
+                shape="round"
+                type="primary"
+                style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
+                class="mt-5"
+                @click="handleSubmitFormOne"
+              >
+                Save & Continue
+              </a-button>
+            </div>
           </a-form-model>
         </a-collapse-panel>
       </a-collapse>
@@ -518,6 +529,7 @@
 import FileUploadOne from "@/components/shared/FileUploadOne.vue";
 import ApiService from "../../services/api.service";
 import vSelect from "vue-select";
+import { VERIFICATION_RULES} from "./models/representative";
 export default {
   name: "VerificationRef",
   props: {
@@ -559,14 +571,28 @@ export default {
         { first: true },
         { first: true },
       ],
-      rules: {},
       cities: [],
       imageBack: null,
       imageFont: null,
+      rules: VERIFICATION_RULES,
+      activeKey: 1,
     };
   },
 
   methods: {
+     handleSubmitFormOne() {
+      this.$refs.verification.validate((valid) => {
+        if (valid) {
+          this.activeKey = null;
+        } else {
+          setTimeout(() => {
+            const el = document.querySelector(".has-error:first-of-type");
+            el.scrollIntoView();
+          }, 100);
+          return false;
+        }
+      });
+    },
     filterOption(input, option) {
       return option.componentOptions.children[0].text
         .trim()

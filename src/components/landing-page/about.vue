@@ -1,6 +1,7 @@
 <template>
   <div>
-    <LandingPageHeader />
+    <LandingPageHeader class="header" />
+
     <div class="main-content">
       <h3>About Matrimony Assist</h3>
       <p>
@@ -50,12 +51,21 @@
 <script>
 import Footer from "@/components/auth/Footer.vue";
 import LandingPageHeader from "@/components/landing-page/LandingPageHeader.vue";
+
 export default {
-  name: "PrivacyPolicy",
+  name: "About",
   components: {
     LandingPageHeader,
     Footer,
   },
+  data() {
+    return {
+      isLoading: true,
+      user: {},
+      is_verified: 1,
+    };
+  },
+  methods: {},
 };
 </script>
 
@@ -65,12 +75,12 @@ export default {
 .main-content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   overflow: hidden;
   max-width: 1100px;
-  margin: 0 auto;
-     padding: 0 10px;
+  margin:10px auto;
+  padding: 0 10px;
   @media (min-width: 320px) and (max-width: 480px) {
     padding: 0 20px;
   }

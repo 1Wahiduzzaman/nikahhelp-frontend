@@ -1,95 +1,80 @@
 <template>
-  <nav id="landing-top-menu" class="landing-top-menu navbar justify-content-between">
-    <div class="container">
-      <router-link to="/">
-        <a href="javascript:void()" class="navbar-brand"
-          ><img
-            class="logo"
-            src="@/assets/Icons/Logo/SVG/White Logo.svg"
-            alt="logo"
-        /></a>
-      </router-link>
-      <form class="login">
-        <div>
-          <router-link to="/login"
+  <VueFixedHeader
+    @change="updateFixedStatus"
+    :threshold="propsData.threshold"
+    :headerClass="propsData.headerClass"
+    :fixedClass="propsData.fixedClass"
+    :hideScrollUp="propsData.hideScrollUp"
+  >
+    <nav
+      id="landing-top-menu"
+      class="landing-top-menu navbar justify-content-between"
+    >
+      <div class="container">
+        <router-link to="/">
+          <a href="javascript:void()" class="navbar-brand"
             ><img
-              src="@/assets/Icons/sign in.svg"
-              alt=""
-              class="signinBtnDesign"
-            />
-            Sign in
-          </router-link>
+              class="logo"
+              src="@/assets/Icons/Logo/SVG/White Logo.svg"
+              alt="logo"
+          /></a>
+        </router-link>
+        <form class="login">
+          <div>
+            <router-link to="/login"
+              ><img
+                src="@/assets/Icons/sign in.svg"
+                alt=""
+                class="signinBtnDesign"
+              />
+              Sign in
+            </router-link>
 
-          <router-link to="/signup"
-            ><img
-              src="@/assets/Icons/join now.svg"
-              alt=""
-              class="signinBtnDesign"
-            />
-            Join Now
-          </router-link>
-        </div>
-      </form>
-    </div>
-  </nav>
+            <router-link to="/signup"
+              ><img
+                src="@/assets/Icons/join now.svg"
+                alt=""
+                class="signinBtnDesign"
+              />
+              Join Now
+            </router-link>
+          </div>
+        </form>
+      </div>
+    </nav>
+  </VueFixedHeader>
 </template>
 
 <script>
+import VueFixedHeader from "vue-fixed-header";
+const createData = () => ({
+  threshold: 0,
+  headerClass: "vue-fixed-header",
+  fixedClass: "vue-fixed-header--isFixed",
+  hideScrollUp: false,
+});
 export default {
   name: "Header",
-  components: {},
+  components: { VueFixedHeader },
   data() {
     return {
+      propsData: { ...createData() },
       isLoading: true,
       user: {},
       is_verified: 1,
+      fixedStatus: {
+        headerIsFixed: false,
+      },
     };
   },
   created() {},
-  mounted() {
-    let scrollpos = window.scrollY;
-    const header = document.getElementById("landing-top-menu");
-    const header_height = header.offsetHeight;
-    const add_class_on_scroll = () => header.classList.add("on-scroll");
-    const remove_class_on_scroll = () => header.classList.remove("on-scroll");
-    window.addEventListener("scroll", function () {
-      scrollpos = window.scrollY;
+  mounted() {},
 
-      if (scrollpos >= header_height) {
-        add_class_on_scroll();
-      } else {
-        remove_class_on_scroll();
-      }
-    });
-  },
-
-  computed: {
-    // isLoggedIn() {
-    //   return this.$store.getters.isAuthenticated;
-    // },
-  },
+  computed: {},
 
   methods: {
-    handleScroll(event) {
-      let scrollpos = window.scrollY;
-      const header = document.querySelector("nav");
-      const header_height = header.offsetHeight;
-      const add_class_on_scroll = () => header.classList.add("on-scroll");
-      const remove_class_on_scroll = () => header.classList.remove("on-scroll");
-      scrollpos = window.scrollY;
-
-      if (scrollpos >= header_height) {
-        add_class_on_scroll();
-      } else {
-        remove_class_on_scroll();
-      }
-    },
-    checkAuthentication() {
-      if (!this.isLoggedIn && window.location.pathname !== "/") {
-        this.$router.push("/").catch((err) => {
-          console.log("err", err);
-        });
-      }
+    updateFixedStatus(next) {
+      this.fixedStatus.headerIsFixed = next;
     },
   },
 };
@@ -97,14 +82,8 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .landing-top-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
   transition: all 0.5s;
   background: #000000a6;
-
   .logo {
     width: 200px;
     transition: all 0.5s;
@@ -143,7 +122,17 @@ export default {
     }
   }
 }
-
+nav.vue-fixed-header--isFixed {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 100px;
+  .logo {
+    max-width: 100px;
+  }
+}
 .signinBtnDesign {
   height: 15px;
 }

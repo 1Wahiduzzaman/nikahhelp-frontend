@@ -102,7 +102,6 @@
         <!-- :class="{ disabled: !enabledNextBtn }"
           :disabled="!enabledNextBtn" -->
         <a-button
-         
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
@@ -612,7 +611,6 @@ export default {
             per_food_cuisine_like,
             per_have_children,
             per_hobbies_interests,
-            per_improve_myself,
             per_language_speak,
             per_marital_status,
             per_smoker,
@@ -630,7 +628,6 @@ export default {
               per_food_cuisine_like,
               per_have_children,
               per_hobbies_interests,
-              per_improve_myself,
               per_language_speak,
               per_marital_status,
               per_smoker,

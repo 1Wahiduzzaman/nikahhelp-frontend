@@ -512,7 +512,10 @@
                               {{ country.name }},
                               {{
                                 candidateData.preference.preferred_cities[index]
-                                  .name
+                                  ? candidateData.preference.preferred_cities[
+                                      index
+                                    ].name
+                                  : ""
                               }}
                             </div>
                           </span>
@@ -753,16 +756,16 @@
 
 <script>
 import RatingComponent from "./RatingComponent.vue";
-import ProfileBanner from '@/components/atom/ProfileBanner'
+import ProfileBanner from "@/components/atom/ProfileBanner";
 import firebase from "../../configs/firebase";
 import Footer from "@/components/auth/Footer.vue";
 import ApiService from "@/services/api.service";
 export default {
   name: "CandidateProfile",
-  components: { 
-    RatingComponent, 
+  components: {
+    RatingComponent,
     Footer,
-    ProfileBanner
+    ProfileBanner,
   },
   data() {
     return {
