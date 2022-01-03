@@ -20,7 +20,7 @@ export const InitRoute = (to, from, next) => {
     else if (user.account_type === 2) {
         return next({ name: 'RepresentativeRegistration' });
     }
-    else if ((user && to.name == 'Signup') || (user && to.name == 'Login') || (user && to.name == 'Home')) {
+    else if (user && (to.name == 'Signup' || to.name == 'Login' || user && to.name == 'Home')) {
         return next({ name: 'root' });
     }
     else {
