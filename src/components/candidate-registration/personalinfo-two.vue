@@ -2575,7 +2575,7 @@
                   @change="getResume"
                 />
                 <div class="img-preview mb-2">
-                  <div class="mt-3 color-primary">{{ resumeDocument }}</div>
+                  <div class="mt-3 color-primary">{{ personalInformation.more_about.per_additional_info_doc_title }}</div>
                 </div>
                 <span class="mb-2"
                   >The format supported are pdf, docx. Maximum file size 15
@@ -2659,7 +2659,6 @@ export default {
     return {
       activeKey: 1,
       default_date: null,
-      resumeDocument: null,
       rules: RULESPERSONALINFO,
       employment_Statuses: Employment_Statuses,
       languages: languages,
@@ -2719,15 +2718,15 @@ export default {
 
       if (!this.imageSizeCheck(file)) {
         file = "";
-        this.resumeDocument = "";
+        this.personalInformation.more_about.per_additional_info_doc_title = "";
         return;
       }
       if (!this.ValidateSingleInput(file)) {
         file = "";
-        this.resumeDocument = "";
+       this.personalInformation.more_about.per_additional_info_doc_title = "";
         return;
       }
-      this.resumeDocument = file.name;
+      this.personalInformation.more_about.per_additional_info_doc_title = file.name;
       this.personalInformation.more_about.per_additional_info_doc =
         e.target.files[0];
       this.$store
@@ -2735,7 +2734,9 @@ export default {
           per_additional_info_doc:
             this.personalInformation.more_about.per_additional_info_doc,
         })
-        .then((data) => {})
+        .then((data) => {
+          this.saveMoreAboutInfo();
+        })
         .catch((error) => {});
     },
    imageSizeCheck(file) {
@@ -2956,6 +2957,7 @@ export default {
         per_language_speak,
         per_thankfull_for,
         per_things_enjoy,
+        per_additional_info_doc_title
       } = this.personalInformation.more_about;
       await this.$store
         .dispatch("savePersonalMoreAboutInfo", {
@@ -2974,7 +2976,9 @@ export default {
             per_language_speak,
             per_thankfull_for,
             per_things_enjoy,
+            per_additional_info_doc_title
           },
+          per_have_children:false,
           per_smoker: this.personalInformation.more_about.per_smoker
             ? this.personalInformation.more_about.per_smoker.toString()
             : "",

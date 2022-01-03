@@ -208,7 +208,7 @@
           <a-button
             shape="round"
             type="primary"
-            style="float: right"
+           style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
             class="mt-5"
             @click="handleSubmitFormOne"
           >
@@ -452,7 +452,7 @@
           <a-button
             shape="round"
             type="primary"
-            style="float: right"
+            style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
             class="mt-5"
             @click="handleSubmitFormTwo"
           >

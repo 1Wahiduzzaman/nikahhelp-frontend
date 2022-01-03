@@ -70,7 +70,8 @@ export default {
   overflow: hidden;
   max-width: 1100px;
   margin: 0 auto;
-     padding: 0 10px;
+  padding: 0 10px;
+  margin-top: 45px;
   @media (min-width: 320px) and (max-width: 480px) {
     padding: 0 20px;
   }
