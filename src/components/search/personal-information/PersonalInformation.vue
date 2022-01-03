@@ -7,7 +7,7 @@
                 <v-row dense>
                     <v-col class="pt-1" cols="12" md="8">
                         <PersonalInformationTable />
-                        <CardInfo class="mt-2"/>
+                        <CardInfo height="269px" class="mt-2"/>
                     </v-col>
                     <v-col ref="family-information" class="pt-1" cols="12" md="4">
                         <MoreAbout />
