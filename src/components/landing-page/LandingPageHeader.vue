@@ -1,5 +1,8 @@
 <template>
-  <nav id="landing-top-menu" class="landing-top-menu navbar justify-content-between">
+  <nav
+    id="landing-top-menu"
+    class="landing-top-menu navbar justify-content-between"
+  >
     <div class="container">
       <router-link to="/">
         <a href="javascript:void()" class="navbar-brand"
@@ -43,24 +46,27 @@ export default {
       isLoading: true,
       user: {},
       is_verified: 1,
+      propsData: { ...createData() },
+      fixedStatus: {
+        headerIsFixed: false,
+      },
     };
   },
   created() {},
   mounted() {
-    let scrollpos = window.scrollY;
-    const header = document.getElementById("landing-top-menu");
-    const header_height = header.offsetHeight;
-    const add_class_on_scroll = () => header.classList.add("on-scroll");
-    const remove_class_on_scroll = () => header.classList.remove("on-scroll");
-    window.addEventListener("scroll", function () {
-      scrollpos = window.scrollY;
-
-      if (scrollpos >= header_height) {
-        add_class_on_scroll();
-      } else {
-        remove_class_on_scroll();
-      }
-    });
+    // let scrollpos = window.scrollY;
+    // const header = document.getElementById("landing-top-menu");
+    // const header_height = header.offsetHeight;
+    // const add_class_on_scroll = () => header.classList.add("on-scroll");
+    // const remove_class_on_scroll = () => header.classList.remove("on-scroll");
+    // window.addEventListener("scroll", function () {
+    //   scrollpos = window.scrollY;
+    //   if (scrollpos >= header_height) {
+    //     add_class_on_scroll();
+    //   } else {
+    //     remove_class_on_scroll();
+    //   }
+    // });
   },
 
   computed: {
@@ -70,6 +76,9 @@ export default {
   },
 
   methods: {
+    updateFixedStatus(next) {
+      this.fixedStatus.headerIsFixed = next;
+    },
     handleScroll(event) {
       let scrollpos = window.scrollY;
       const header = document.querySelector("nav");
@@ -97,12 +106,12 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .landing-top-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-  transition: all 0.5s;
+  // position: fixed;
+  // top: 0;
+  // left: 0;
+  // right: 0;
+  // z-index: 10;
+  // transition: all 0.5s;
   background: #000000a6;
 
   .logo {

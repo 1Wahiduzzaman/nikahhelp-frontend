@@ -1,6 +1,14 @@
 <template>
   <div>
-    <LandingPageHeader />
+    <VueFixedHeader
+      @change="updateFixedStatus"
+      :threshold="propsData.threshold"
+      :headerClass="propsData.headerClass"
+      :fixedClass="propsData.fixedClass"
+      :hideScrollUp="propsData.hideScrollUp"
+    >
+      <LandingPageHeader />
+    </VueFixedHeader>
     <div class="main-content">
       <h3>About Matrimony Assist</h3>
       <p>
@@ -50,18 +58,46 @@
 <script>
 import Footer from "@/components/auth/Footer.vue";
 import LandingPageHeader from "@/components/landing-page/LandingPageHeader.vue";
+const createData = () => ({
+  threshold: 50,
+  headerClass: "vue-fixed-header",
+  fixedClass: "vue-fixed-header--isFixed",
+  hideScrollUp: false,
+});
+import VueFixedHeader from "vue-fixed-header";
 export default {
   name: "PrivacyPolicy",
   components: {
     LandingPageHeader,
     Footer,
   },
+  data() {
+    return {
+      isLoading: true,
+      user: {},
+      is_verified: 1,
+      propsData: { ...createData() },
+      fixedStatus: {
+        headerIsFixed: false,
+      },
+    };
+  },
+   methods: {
+    updateFixedStatus(next) {
+      this.fixedStatus.headerIsFixed = next;
+    },
+   }
 };
 </script>
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
-
+nav.vue-fixed-header--isFixed {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+}
 .main-content {
   display: flex;
   flex-direction: column;
