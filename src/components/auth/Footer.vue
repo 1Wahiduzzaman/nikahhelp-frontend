@@ -17,10 +17,37 @@
             ><router-link to="/about"> About </router-link></a
           >
         </li>
-        <li><a href="javascript:void()"> <router-link to="/privacy-policy"> Privacy & Cookie Policy </router-link></a></li>
-        <li><a href="javascript:void()"><router-link to="/terms_condition"> Terms & Condition </router-link></a></li>
-        <li><a href="javascript:void()"><router-link to="/safety_guidance"> Safety & Guidance </router-link></a></li>
-        <li><a href="javascript:void()"><router-link to="/help"> Help </router-link></a></li>
+        <li>
+          <a href="javascript:void()">
+            <router-link to="/privacy-policy">
+              Privacy & Cookie Policy
+            </router-link></a
+          >
+        </li>
+        <li>
+          <a href="javascript:void()"
+            ><router-link to="/terms_condition">
+              Terms & Condition
+            </router-link></a
+          >
+        </li>
+        <li>
+          <a href="javascript:void()"
+            ><router-link to="/safety_guidance">
+              Safety & Guidance
+            </router-link></a
+          >
+        </li>
+        <li>
+          <a href="javascript:void()"
+            ><router-link to="/user-agreement"> User Agreement </router-link></a
+          >
+        </li>
+        <li>
+          <a href="javascript:void()"
+            ><router-link to="/help"> Help </router-link></a
+          >
+        </li>
       </ul>
     </div>
   </footer>
