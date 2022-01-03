@@ -330,7 +330,7 @@ export default {
   align-items: flex-start;
   overflow: hidden;
   max-width: 1100px;
-  margin: 12rem auto;
+  margin: 10rem auto 8rem auto;
   padding: 0 8rem;
   @media (min-width: 320px) and (max-width: 480px) {
     padding: 0 20px;
