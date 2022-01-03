@@ -93,7 +93,7 @@ const AppRouter = new VueRouter({
         {
             path: "/",
             name: "Home",
-            component: () => import(/* webpackChunkName: "Home" */ '@/views/auth/Home.vue'),
+            component: () => import('@/views/auth/Home.vue'),
             beforeEnter: InitRoute,
 
         },

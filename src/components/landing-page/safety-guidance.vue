@@ -50,7 +50,7 @@
 import Footer from "@/components/auth/Footer.vue";
 import LandingPageHeader from "@/components/landing-page/LandingPageHeader.vue";
 export default {
-  name: "PrivacyPolicy",
+  name: "SafetyAndGuidance",
   components: {
     LandingPageHeader,
     Footer,
