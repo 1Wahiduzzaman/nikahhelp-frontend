@@ -12,7 +12,7 @@ export default {
     context.commit("setUser", {
       token: response.data.data.access_token,
     });
-    router.push({ name: 'DHome' });
+    router.push({ name: 'root' });
   },
   async signup(context, payload) {
     const response = await axios.post("v1/register", payload);
