@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 import DHome from "@/views/dashboard/DHome.vue";
-import Home from "@/views/auth/Home.vue";
+// import Home from "@/views/auth/Home.vue";
 import About from "@/views/auth/About.vue";
 import MatrimonySystem from "@/components/system/matrimony-system.vue";
 import AboutPage from "@/components/landing-page/about.vue";
@@ -21,8 +21,8 @@ import CandidateRegistration from "@/views/candidate-registration/CandidateRegis
 import EditCandidateRegistration from "@/views/candidate-registration/EditCandidateRegistration.vue";
 import RepresentativeRegistration from "@/views/representative-registration/RepresentativeRegistration.vue";
 import EditRepresentativeRegistration from "@/views/representative-registration/EditRepresentativeRegistration.vue";
-import MemberTypeSelection from "@/views/MemberType/MemberTypeSelection.vue";
-import MemberNameInput from "@/views/MemberType/MemberNameInput.vue";
+// import MemberTypeSelection from "@/views/MemberType/MemberTypeSelection.vue";
+// import MemberNameInput from "@/views/MemberType/MemberNameInput.vue";
 
 import NotificationPage from "@/views/notification/NotificationPage.vue";
 import BlockList from "@/views/blocklist/BlockList.vue";
@@ -93,7 +93,7 @@ const AppRouter = new VueRouter({
         {
             path: "/",
             name: "Home",
-            component: Home,
+            component: () => import(/* webpackChunkName: "Home" */ '@/views/auth/Home.vue'),
             beforeEnter: InitRoute,
 
         },
