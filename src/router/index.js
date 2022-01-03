@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 import DHome from "@/views/dashboard/DHome.vue";
-// import Home from "@/views/auth/Home.vue";
+import Home from "@/views/auth/Home.vue";
 import About from "@/views/auth/About.vue";
 import MatrimonySystem from "@/components/system/matrimony-system.vue";
 import AboutPage from "@/components/landing-page/about.vue";
@@ -93,7 +93,7 @@ const AppRouter = new VueRouter({
         {
             path: "/",
             name: "Home",
-            component: () => import(/* webpackChunkName: "Home" */ '@/views/auth/Home.vue'),
+            component: Home,
             beforeEnter: InitRoute,
 
         },
@@ -101,7 +101,7 @@ const AppRouter = new VueRouter({
             path: "/candidate-registration",
             name: "CandidateRegistration",
             component: CandidateRegistration,
-             beforeEnter: InitRoute,
+            beforeEnter: InitRoute,
 
         },
 
@@ -109,28 +109,28 @@ const AppRouter = new VueRouter({
             path: "/representative-registration",
             name: "RepresentativeRegistration",
             component: RepresentativeRegistration,
-             beforeEnter: InitRoute,
+            beforeEnter: InitRoute,
 
         },
         {
             path: "/edit_candidate",
             name: "EditCandidateRegistration",
             component: EditCandidateRegistration,
-             beforeEnter: InitRoute,
+            beforeEnter: InitRoute,
 
         },
         {
             path: "/edit_representative",
             name: "EditRepresentativeRegistration",
             component: EditRepresentativeRegistration,
-             beforeEnter: InitRoute,
+            beforeEnter: InitRoute,
 
         },
         {
             path: "/search/advance",
             name: "AdvanceSearch",
             component: AdvanceSearch,
-             beforeEnter: InitRoute,
+            beforeEnter: InitRoute,
         },
         {
             path: "/admin",
@@ -194,7 +194,7 @@ const AppRouter = new VueRouter({
             name: 'root',
             component: MatrimonySystem,
             redirect: '/dashboard',
-             beforeEnter: InitRoute,
+            beforeEnter: InitRoute,
             children: [
 
                 {

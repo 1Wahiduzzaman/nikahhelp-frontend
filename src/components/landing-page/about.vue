@@ -1,16 +1,7 @@
 <template>
   <div>
-    <!-- <VueFixedHeader
-      @change="updateFixedStatus"
-      :threshold="propsData.threshold"
-      :headerClass="propsData.headerClass"
-      :fixedClass="propsData.fixedClass"
-      :hideScrollUp="propsData.hideScrollUp"
-    >
-      <div class="header-about"> -->
-        <LandingPageHeader class="header" />
-      <!-- </div>
-    </VueFixedHeader> -->
+    <LandingPageHeader class="header" />
+
     <div class="main-content">
       <h3>About Matrimony Assist</h3>
       <p>
@@ -60,18 +51,10 @@
 <script>
 import Footer from "@/components/auth/Footer.vue";
 import LandingPageHeader from "@/components/landing-page/LandingPageHeader.vue";
-import VueFixedHeader from "vue-fixed-header";
-const createData = () => ({
-  threshold: 0,
-  headerClass: "vue-fixed-header",
-  fixedClass: "vue-fixed-header--isFixed",
-  hideScrollUp: false,
-});
 
 export default {
   name: "About",
   components: {
-    VueFixedHeader,
     LandingPageHeader,
     Footer,
   },
@@ -80,17 +63,9 @@ export default {
       isLoading: true,
       user: {},
       is_verified: 1,
-      propsData: { ...createData() },
-      fixedStatus: {
-        headerIsFixed: false,
-      },
     };
   },
-  methods: {
-    updateFixedStatus(next) {
-      this.fixedStatus.headerIsFixed = next;
-    },
-  },
+  methods: {},
 };
 </script>
 
@@ -104,9 +79,8 @@ export default {
   align-items: flex-start;
   overflow: hidden;
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 10px auto;
   padding: 0 4rem;
-  margin-top: 10rem;
   @media (min-width: 320px) and (max-width: 480px) {
     padding: 0 1rem;
     margin-top: 8rem;
