@@ -4,11 +4,11 @@
       <div class="avatar-area">
         <img class="avatar" width="45" height="45"
              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="">
-<!--        <span :class="{'online-icon-avatar': ifOnline}"></span>-->
+        <span :class="{'online-icon-avatar': ifOnline}"></span>
       </div>
       <div class="content">
         <span class="label">{{ item.label }}</span>
-        <h4 class="mt-1 fs-14">User name</h4>
+        <h4 class="mt-1 fs-14">{{ item.private_sender_data ? item.private_sender_data.full_name : 'N/A' }}</h4>
         <p class="mb-0 text-margin">{{ item.message ? item.message.body : '' }}</p>
       </div>
 <!--      <span class="online-icon" v-if="item.message && item.message.seen == 0"></span>-->
@@ -61,6 +61,11 @@ export default {
     activeTeam: {
 
     }
+  },
+  computed: {
+    ifOnline() {
+      return this.online_users.includes(this.item.sender.toString());
+    },
   },
   methods: {
     messageCreatedAt(time) {

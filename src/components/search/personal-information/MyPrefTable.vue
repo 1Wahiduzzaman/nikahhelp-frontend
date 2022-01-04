@@ -4,32 +4,56 @@
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 160px">Age</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">Age</td>
+                <td class="text--secondary text-subtitle-1">
+                    {{ preference.pre_partner_age_min }}
+                    to
+                    {{ preference.pre_partner_age_max }}
+                </td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Height</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">Height</td>
+                <td class="text--secondary text-subtitle-1">
+                    {{ preference.pre_height_min }} inch
+                            to
+                    {{ preference.pre_height_max }}
+                    inch
+                </td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Country & Cities Preferred</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">Country & Cities Preferred</td>
+                <td class="text--secondary text-subtitle-1">
+                    <!-- <div
+                        v-for="(country, index) in countries || []"
+                        :key="country.id"
+                        >
+                            {{ country.name }},
+                            {{
+                            candidateData.preference.preferred_cities[index]
+                                .name
+                            }}
+                    </div> -->
+                </td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Religion</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">Religion</td>
+                <td class="text--secondary text-subtitle-1">
+                    <!-- {{ preference.pre_height_max }} -->
+                </td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Ethnicity</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">2 Brothers, 1 sisters</td>
+                <td class="text--secondary text-subtitle-1">
+                    {{ preference.pre_ethnicities }}
+                </td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Nationality</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">Shyllet, Bangladesh</td>
+                <td class="text--secondary text-subtitle-1">    </td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Education</td>
@@ -39,12 +63,21 @@
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Profession</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">Any</td>
+                <td class="text--secondary text-subtitle-1">
+                    <span class="ml-3 flex">
+                        <div
+                            v-for="occupuation in preference.pre_occupation"
+                            :key="occupuation.id"
+                        >
+                            {{ occupuation.name }}
+                        </div>
+                    </span>
+                </td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Willing to Relocate</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">Let's discuss</td>
+                <td class="text--secondary text-subtitle-1"></td>
             </tr>
         </table>
     </v-card>
@@ -52,6 +85,20 @@
 
 <script>
 export default {
-    name:'MyPrefTable'
+    name:'MyPrefTable',
+    props: {
+        countries: {
+            type: Array,
+            default() {
+                return []
+            }
+        },
+        preference: {
+            type: Object,
+            default () {
+                return {}
+            }
+        }
+    },
 }
 </script>

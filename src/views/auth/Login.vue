@@ -2,15 +2,8 @@
   <div class="login-container">
     <div class="signin">
       <div class="signin-inner desktop-padding">
-        <a class="logo"><img src="@/assets/logo.png" alt="logo" class="mat-logo" /></a>
+        <a class="logo" href="/"><img src="@/assets/logo.png" alt="logo" class="mat-logo" /></a>
         <h3 id="welcome-back-tag" class="welcome-back-tag"><b>Welcome Back</b></h3>
-      </div>
-
-      <div class="welcome-back">
-        <p class="welcome-back-text">
-          Don't miss your next opportunity. Sign in to stay updatd on
-          your<strong id="name">Matrimony Assist</strong> world.
-        </p>
       </div>
 
       <div class="signin-inner none-padding">
@@ -42,6 +35,7 @@
                   id="email"
                   v-model="signinModel.email"
                   placeholder="Enter email"
+                  class="fs-14"
                 />
               </a-form-model-item>
             </div>
@@ -50,18 +44,19 @@
               <a-form-model-item ref="password" prop="password">
                 <a-input-password
                   type="password"
-                  class="form-control"
+                  class="form-control fs-14"
                   id="password"
                   v-model="signinModel.password"
-                  placeholder="password"
+                  placeholder="Password"
                 />
               </a-form-model-item>
             </div>
             <button
               type="button"
               @click="handleSubmit"
-              class="btn btn-primary w-100"
+              class="btn signin-btn w-100"
             >
+              <a-icon type="loading" class="mr-2 fs-20" v-if="isLoading" />
               Sign in
             </button>
 
@@ -79,7 +74,7 @@
           </div>
         </a-form-model>
 
-        <div class="join-now" style="padding-bottom: 50px">
+        <div class="join-now pb-4">
           <p
             class="flex-center-center mt-3 text-white"
             style="
@@ -91,7 +86,7 @@
             <router-link
               to="/signup"
               class="
-                btn btn-sm btn-outline-primary btn-round-sm
+                btn btn-sm btn-round-sm
                 ms-2
                 text-nowrap
                 join-now-btn
@@ -100,6 +95,13 @@
             >
               Join Now
             </router-link>
+          </p>
+        </div>
+
+        <div class="welcome-back">
+          <p class="welcome-back-text">
+            Don't miss your next opportunity. Sign in to stay updatd on
+            your<strong id="name">Matrimony Assist</strong> world.
           </p>
         </div>
       </div>
@@ -144,9 +146,14 @@ export default {
       this.$refs.signinForm.validate((valid) => {
         if (valid) {
           try {
-            this.$store.dispatch("login", this.signinModel);
+            this.isLoading = true;
+            this.$store.dispatch("login", this.signinModel).then(response => {
+              console.log(response)
+              this.isLoading = false;
+            });
           } catch (error) {
             this.error = error.response.data.message;
+            this.isLoading = false;
           }
         } else {
           return false;
@@ -194,7 +201,7 @@ export default {
         display: inline-block;
         margin-bottom: 8px;
         .mat-logo {
-          width: 180px;
+          width: 138px;
           @media (min-width: 768px) {
             width: 250px;
           }
@@ -265,6 +272,7 @@ export default {
     background: -webkit-linear-gradient(white, pink, white, #8debf2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    margin-top: -10px;
   }
 
   .btn-primary {
@@ -287,7 +295,7 @@ export default {
   }
 }
 .pb-1px {
-  //padding-bottom: 1px !important;
+  padding-bottom: 1px !important;
 }
 .join-now-btn {
   color: #FFFFFF;
@@ -296,6 +304,12 @@ export default {
 }
 .join-now-btn:hover {
   background: $bg-primary;
+  box-shadow: 0 2px 2px #999;
+  border: none;
+}
+.join-now-btn:focus {
+  outline: none;
+  box-shadow: none;
 }
 .welcome-back-tag {
   @media (min-width: 768px) {
@@ -303,11 +317,13 @@ export default {
   }
 }
 .desktop-padding {
+  padding: 10px 15px 0 15px !important;
   @media (min-width: 768px) {
     padding: 50px 0 0 0 !important;
   }
 }
 .none-padding {
+  padding: 0 15px !important;
   @media (min-width: 768px) {
     padding: 0 !important;
   }
@@ -317,5 +333,20 @@ export default {
   margin-left: 10px;
   margin-right: 5px;
   font-size: 24px;
+}
+.signin-btn {
+  border: 1px solid #3A3092;
+  color: #3A3092;
+  border-radius: 20px;
+  font-size: 16px;
+}
+.signin-btn:hover {
+  background: #3A3092;
+  color: #FFFFFF;
+  box-shadow: 2px 2px 2px #999;
+}
+.signin-btn:focus {
+  outline: none;
+  box-shadow: none;
 }
 </style>
