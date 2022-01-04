@@ -370,13 +370,13 @@ const AppRouter = new VueRouter({
         {
             path: "/signup",
             name: "Signup",
-            component: Signup,
+            component: lazyLoadView('auth', 'Signup'),
             beforeEnter: InitRoute,
         },
         {
             path: "/login",
             name: "Login",
-            component: Login,
+            component: lazyLoadView('auth', 'Login'),
             beforeEnter: InitRoute,
         },
 
