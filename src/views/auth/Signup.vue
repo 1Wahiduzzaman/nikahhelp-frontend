@@ -1,7 +1,6 @@
 <template>
   <div class="signup-container">
     <div class="signup">
-  
       <div class="type-selection" v-if="showMemberTypeForm && !errorMessage">
         <div class="content">
           <h3 class="mt-3">
