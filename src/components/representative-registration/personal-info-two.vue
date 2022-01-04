@@ -465,7 +465,7 @@
 </template>
 <script>
 import DropdownDatePicker from "vue-dropdown-datepicker";
-import ApiService from "../../services/api.service";
+import ApiService from "@/services/api.service";
 import vSelect from "vue-select";
 import { RULES, RULES_PERSONAL } from "./models/representative";
 export default {

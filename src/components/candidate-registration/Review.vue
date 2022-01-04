@@ -809,7 +809,7 @@
 import RatingComponent from "../profile/RatingComponent.vue";
 import ApiService from "@/services/api.service";
 import JwtService from "@/services/jwt.service";
-import { AGES, HEIGHTS, Employment_Statuses } from "../../models/data";
+import { AGES, HEIGHTS, Employment_Statuses } from "@/models/data";
 export default {
   name: "Review",
   components: {
