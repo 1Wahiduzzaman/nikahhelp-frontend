@@ -54,6 +54,7 @@ export default {
   text-align: center;
   position: relative;
   padding: 150px 0 200px;
+  z-index: 9;
 
   @media (min-height: 720px) {
     height: 800px;

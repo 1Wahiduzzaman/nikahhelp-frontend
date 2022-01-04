@@ -1,5 +1,5 @@
 <template>
-        <div class="find-partner section-padding">
+  <div class="find-partner section-padding position-relative">
       <div class="container">
          <h2 class="color-primary text-center mb-4">Find the right marrige partner with</h2>
          <div class="panel brb-0">
@@ -30,6 +30,11 @@
             <button class="btn btn-round btn-parter-search" id="startBtn" onclick="location.href = '/signup';">Start here</button>
          </div>
       </div>
+
+    <img src="@/assets/icon/bg_layer_1.svg" alt="bg" class="position-absolute bg-layer-1" />
+    <img src="@/assets/icon/bg_layer_1_1.svg" alt="bg" class="position-absolute bg-layer-1-1" />
+    <img src="@/assets/icon/bg_layer_2.svg" alt="bg" class="position-absolute bg-layer-2" />
+    <img src="@/assets/icon/bg_layer_2_1.svg" alt="bg" class="position-absolute bg-layer-2-1" />
    </div>
 </template>
 
@@ -121,4 +126,24 @@ export default {
    #checkIcon {
       height: 25px;
    }
+.bg-layer-1 {
+  bottom: 30px;
+  right: 30px;
+  width: 7%;
+}
+.bg-layer-1-1 {
+  bottom: 28px;
+  right: 32px;
+  width: 7%;
+}
+.bg-layer-2 {
+  top: 80px;
+  left: 70px;
+  width: 7%;
+}
+.bg-layer-2-1 {
+  top: 80px;
+  left: 70px;
+  width: 7%;
+}
 </style>
