@@ -147,6 +147,7 @@
           </ul>
           <ul class="links" v-show="!collapsed">
             <li><router-link to="/help">Help</router-link></li>
+             <li><router-link to="/user-agreement">User Agreement</router-link></li>
             <li><router-link to="/about">About</router-link></li>
             <li>
               <router-link to="/safety_guidance">Safety & Guidance</router-link>
