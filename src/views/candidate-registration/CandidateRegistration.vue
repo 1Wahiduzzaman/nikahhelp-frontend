@@ -513,6 +513,9 @@ export default {
       user.data_input_status = satge;
       localStorage.removeItem("user");
       localStorage.setItem("user", JSON.stringify(user));
+      if (satge === 6) {
+        this.$router.push("/dashboard");
+      }
     },
     async onChangeCountry(e, name, action, isDefault = false) {
       const res = await ApiService.get(`v1/utilities/cities/${e.id}`);
@@ -707,7 +710,6 @@ export default {
     },
     doneBtn() {
       this.saveDataInputStatus(6);
-      this.$router.push("/dashboard");
     },
     toggleStep(step) {
       this.current = step;

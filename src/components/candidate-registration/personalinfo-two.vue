@@ -2636,8 +2636,8 @@ import hobbies from "@/common/hobbies.js";
 import foods from "@/common/foods.js";
 import thankfulThings from "@/common/thankfulThings.js";
 import { ARR_PersonalInfo, RULESPERSONALINFO } from "./models/candidate";
-import { HEIGHTS, Employment_Statuses } from "../../models/data";
-import ApiService from "../../services/api.service";
+import { HEIGHTS, Employment_Statuses } from "@/models/data";
+import ApiService from "@/services/api.service";
 import vSelect from "vue-select";
 import { createPopper } from "@popperjs/core";
 export default {

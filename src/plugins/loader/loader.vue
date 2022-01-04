@@ -1,5 +1,5 @@
 <template>
-  <div  class="overlay-container">
+  <div class="overlay-container">
     <v-overlay :opacity="1" :value="isLoading">
       <v-progress-circular :size="100" :width="7" color="purple" indeterminate>
         Loading...
@@ -20,6 +20,11 @@ export default {
     .v-overlay__scrim {
       background: none !important;
     }
+  }
+  .v-overlay__content {
+    background: #fff !important;
+    padding: 10px !important;
+    border-radius: 10px !important;
   }
 }
 </style>
