@@ -165,8 +165,6 @@
 </template>
 
 <script>
-import axios from "axios";
-import JwtService from "../../services/jwt.service";
 export default {
   name: "UploadImage",
   components: {},

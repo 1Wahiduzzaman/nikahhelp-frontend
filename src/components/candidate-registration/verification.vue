@@ -595,7 +595,7 @@
 </style>
 <script>
 import FileUploadOne from "@/components/shared/FileUploadOne.vue";
-import ApiService from "../../services/api.service";
+import ApiService from "@/services/api.service";
 import vSelect from "vue-select";
 import {VERIFICATION } from "./models/candidate";
 export default {

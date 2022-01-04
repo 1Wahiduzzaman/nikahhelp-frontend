@@ -1,82 +1,7 @@
 <template>
   <div class="signup-container">
     <div class="signup">
-      <div v-if="showSignupForm && !errorMessage" class="signup-inner">
-        <a href="/" class="logo"><img src="@/assets/logo.png" alt="logo" class="mat-logo" /></a>
-        <h4 class="signup-head">Find your match today!</h4>
-        <a-form-model
-          ref="signupFormOne"
-          :model="signupModel"
-          :rules="rules"
-          class="form-signup"
-        >
-          <div>
-            <div class="mb-3">
-              <a-form-model-item ref="email" prop="email">
-                <a-input
-                  type="email"
-                  class="form-control fs-14"
-                  id="email"
-                  v-model="signupModel.email"
-                  aria-describedby="emailHelp"
-                  placeholder="Enter email"
-                />
-              </a-form-model-item>
-            </div>
-            <div class="mb-3">
-              <a-form-model-item ref="password" prop="password">
-                <a-input-password
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  v-model="signupModel.password"
-                  placeholder="Password"
-                />
-              </a-form-model-item>
-            </div>
-            <div class="mb-3">
-              <a-form-model-item ref="confirmPassword" prop="confirmPassword">
-                <a-input-password
-                  type="password"
-                  class="form-control"
-                  id="confirmPassword"
-                  v-model="signupModel.confirmPassword"
-                  placeholder="Confirm password"
-                />
-              </a-form-model-item>
-            </div>
-
-            <button
-              @click="handleSubmitSignUp"
-              class="btn btn-agreeJoin-pink w-100"
-            >
-              <a-icon type="loading" class="mr-2 fs-20" v-if="isLoading" />
-              Agree & Join
-            </button>
-
-            <span class="fs-12 mt-2"
-              >By clicking Agree & Join, you agree to Matrimony Assist
-              <a class="link" href="">User Agreement, Privacy Policy</a> and
-              <a class="link" href="">Cookie Policy</a>
-            </span>
-          </div>
-        </a-form-model>
-        <p class="flex-center-center mt-3 bottom-text">
-          Already on <span class="logo-text"> Matrimony Assist? </span>
-
-          <router-link
-            to="/login"
-            class="
-              btn btn-sm btn-round-sm
-              ms-2
-              text-nowrap
-              join-now-btn
-            "
-          >
-            Sign in
-          </router-link>
-        </p>
-      </div>
+  
       <div class="type-selection" v-if="showMemberTypeForm && !errorMessage">
         <div class="content">
           <h3 class="mt-3">
@@ -128,8 +53,8 @@
             <div cla class="mt-3 footer" v-if="signupModel.account_type > 0">
               <p>
                 <input
+                  v-model="isConfirm"
                   type="checkbox"
-                  @change="onConfirmCheckbox"
                   class="confirm-type"
                 />
                 <span class="confirm-text"
@@ -153,6 +78,88 @@
           </div>
         </div>
       </div>
+      <div v-if="showSignupForm && !errorMessage" class="signup-inner">
+        <a href="/" class="logo"
+          ><img src="@/assets/logo.png" alt="logo" class="mat-logo"
+        /></a>
+        <a-form-model
+          ref="signupFormOne"
+          :model="signupModel"
+          :rules="rules"
+          class="form-signup"
+        >
+          <div>
+            <div class="mb-3">
+              <a-form-model-item ref="email" prop="email">
+                <a-input
+                  type="email"
+                  class="form-control fs-14"
+                  id="email"
+                  v-model="signupModel.email"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter email"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="mb-3">
+              <a-form-model-item ref="password" prop="password">
+                <a-input-password
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  v-model="signupModel.password"
+                  placeholder="Password"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="mb-3">
+              <a-form-model-item ref="confirmPassword" prop="confirmPassword">
+                <a-input-password
+                  type="password"
+                  class="form-control"
+                  id="confirmPassword"
+                  v-model="signupModel.confirmPassword"
+                  placeholder="Confirm password"
+                />
+              </a-form-model-item>
+            </div>
+            <button
+              @click="backToMemberType"
+              class="btn btn-agreeJoin-pink w-100"
+            >
+              Back
+            </button>
+            <button
+              @click="handleSubmitSignUp"
+              class="btn btn-agreeJoin-pink w-100"
+            >
+              Agree & Join
+            </button>
+
+            <span class="fs-12 mt-2"
+              >By clicking Agree & Join, you agree to Matrimony Assist
+              <a class="link" href="">User Agreement, Privacy Policy</a> and
+              <a class="link" href="">Cookie Policy</a>
+            </span>
+          </div>
+        </a-form-model>
+        <p class="flex-center-center mt-3 bottom-text">
+          Already on <span class="logo-text"> Matrimony Assist? </span>
+
+          <router-link
+            to="/login"
+            class="
+              btn btn-sm btn-outline-primary btn-round-sm
+              ms-2
+              text-nowrap
+              join-now-btn
+            "
+          >
+            Sign in
+          </router-link>
+        </p>
+      </div>
+
       <div v-if="showMemberForm && !errorMessage" class="signup-inner">
         <a href="/" class="logo"><img src="@/assets/logo.png" alt="logo" /></a>
 
@@ -209,6 +216,14 @@
               real name to appear on search result.
             </a-tooltip>
             <a-button
+              @click="backToForm"
+              class="btn btn-secondary w-100"
+              type="primary"
+              :loading="isLoading"
+            >
+              Back
+            </a-button>
+            <a-button
               @click="handleSubmit"
               class="btn btn-secondary w-100"
               type="primary"
@@ -225,7 +240,12 @@
           <button @click="resetData">
             <router-link
               to="/login"
-              class="btn btn-sm btn-outline-primary btn-round-sm ms-2 text-nowrap join-now-btn"
+              class="
+                btn btn-sm btn-outline-primary btn-round-sm
+                ms-2
+                text-nowrap
+                join-now-btn
+              "
             >
               Sign in
             </router-link>
@@ -278,8 +298,8 @@ export default {
         account_type: 0,
       },
       showMemberForm: false,
-      showMemberTypeForm: false,
-      showSignupForm: true,
+      showMemberTypeForm: true,
+      showSignupForm: false,
       isLoading: false,
       isConfirm: false,
       rules: {
@@ -339,8 +359,9 @@ export default {
     handleSubmitSignUp() {
       this.$refs.signupFormOne.validate((valid) => {
         if (valid) {
-          this.showMemberTypeForm = true;
+          this.showMemberTypeForm = false;
           this.showSignupForm = false;
+          this.showMemberForm = true;
         } else {
           return false;
         }
@@ -365,16 +386,24 @@ export default {
         first_name: CapitalizeFirstLetter(this.signupModel.first_name),
       };
     },
-
+    backToMemberType() {
+      this.showMemberTypeForm = true;
+      this.showSignupForm = false;
+      this.showMemberForm = false;
+    },
     onHandleContinue() {
       this.showMemberTypeForm = false;
-      this.showSignupForm = false;
-      this.showMemberForm = true;
+      this.showSignupForm = true;
+      this.showMemberForm = false;
     },
-    onConfirmCheckbox() {
-      this.isConfirm = !this.isConfirm;
+    backToForm() {
+      this.showMemberTypeForm = false;
+      this.showSignupForm = true;
+      this.showMemberForm = false;
     },
+
     onSelectAccountType(type) {
+      this.isConfirm = false;
       this.signupModel.account_type = type;
     },
     resetData() {
@@ -596,9 +625,9 @@ export default {
   }
 }
 .join-now-btn {
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 14px;
-  border: 1px solid #FFFFFF;
+  border: 1px solid #ffffff;
 }
 .join-now-btn:focus {
   outline: none;

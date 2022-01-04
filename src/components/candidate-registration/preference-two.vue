@@ -1730,14 +1730,10 @@
 import vSelect from "vue-select";
 import NeedHelp from "@/components/candidate-registration/NeedHelp.vue";
 import ethnicities from "@/common/ethnicities.js";
-
-import Vue from "vue";
 import { ARR, RULES, RULES_RATE } from "./models/candidate";
 import SelectGroup from "@/components/ui/selects/SelectGroup";
-import { ReligionTV } from "../../models/religion";
-import { CountriesTV } from "../../models/country";
-import { AGES, HEIGHTS, Employment_Statuses } from "../../models/data";
-import ApiService from "../../services/api.service";
+import { AGES, HEIGHTS, Employment_Statuses } from "@/models/data";
+import ApiService from "@/services/api.service";
 export default {
   name: "PreferenceTwo",
   components: { vSelect, NeedHelp, SelectGroup },
