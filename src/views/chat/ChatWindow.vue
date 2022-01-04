@@ -116,9 +116,20 @@
                         class="chat-item"
                         v-for="item in chatHistory"
                         :key="item.team_id"
-                        @click="getIndividualChat(item, item)"
+                        @click="item.label == 'Connected Team' ? getConnectedTeamChatHistory(item) : getIndividualChat(item, item)"
                     >
+                      <ConnectedTeamChat
+                          v-if="item.label == 'Connected Team'"
+                          :item="item"
+                          :status="'connected'"
+                          :online_users="online_users"
+                          :teamMembers="teamMembers"
+                          :activeTeam="activeTeam"
+                          action
+                          class="w-full pr-3 cursor-pointer"
+                      />
                       <ChatListItem
+                          v-else
                           :item="item"
                           :status="'recent'"
                           :online_users="online_users"
@@ -753,7 +764,7 @@ export default {
           to_team_id: item.to_team_id,
           from_team_id: item.from_team_id,
           private_receiver_id: item.receiver,
-          private_team_chat_id: item.id,
+          team_private_chat_id: item.id,
           other_mate_id: item.receiver,
           typing_status: 0,
           typing_text: '',
@@ -771,7 +782,16 @@ export default {
         message: pick(data.last_group_msg, messageKeys)
       }]
 
-      return [...lastGroupMsg, ...singleChat, ...privateChat];
+      let connectedMsg = data.connected_team_msgs.map(item => {
+        item.label = 'Connected Team';
+        item.typing_status = 0;
+        item.typing_text = '';
+        item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
+        item.is_friend = item.team_private_chat ? item.team_private_chat.is_friend : 0;
+        return item;
+      });
+
+      return [...lastGroupMsg, ...connectedMsg, ...singleChat, ...privateChat];
     },
     async loadTeamChat() {
       try {
@@ -797,6 +817,7 @@ export default {
           item.typing_status = 0;
           item.typing_text = '';
           item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
+          item.is_friend = item.team_private_chat ? item.team_private_chat.is_friend : 0;
           return item;
         });
         // if (data && data.connected_teams) {
@@ -840,10 +861,10 @@ export default {
         if(payload.team_chat_id) {
           url = 'connected-team-chat-history';
         }
-        if(this.chatheadopen.private_team_chat_id) {
+        if(this.chatheadopen.team_private_chat_id) {
           url = 'connected-private-chat-history';
-          payload.private_team_chat_id = this.chatheadopen.private_team_chat_id;
-          payload.team_chat_id = this.chatheadopen.private_team_chat_id;
+          payload.team_private_chat_id = this.chatheadopen.team_private_chat_id;
+          payload.team_chat_id = this.chatheadopen.team_private_chat_id;
         }
         let {data} = await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
         if (data && data.message_history) {
@@ -1019,7 +1040,7 @@ export default {
         if (this.fromChatItem == 'connected-team') {
           await this.sendConnectedTeamMessage();
         } else {
-          if(this.private_chat && this.private_chat.private_team_chat_id) {
+          if(this.chatheadopen && this.chatheadopen.team_private_chat_id) {
             await this.sendPrivateMessage();
           } else {
             await this.sendTeamMessage();

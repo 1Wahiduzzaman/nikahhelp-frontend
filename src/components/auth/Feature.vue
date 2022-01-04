@@ -1,7 +1,7 @@
 <template>
 	<div class="feature section-padding position-relative">
-    <img src="@/assets/icon/bg_layer_2.svg" alt="bg" class="position-absolute bg-layer-1" />
-    <img src="@/assets/icon/bg_layer_2_1.svg" alt="bg" class="position-absolute bg-layer-1-1" />
+<!--    <img src="@/assets/icon/bg_layer_2.svg" alt="bg" class="position-absolute bg-layer-1" />-->
+<!--    <img src="@/assets/icon/bg_layer_2_1.svg" alt="bg" class="position-absolute bg-layer-1-1" />-->
 		<div class="container">
 			<div class="feature-inner">
 				<h2 class="mb-0 text-center color-brand mb-4">User friendly feature</h2>

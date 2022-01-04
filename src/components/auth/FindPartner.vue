@@ -127,12 +127,12 @@ export default {
       height: 25px;
    }
 .bg-layer-1 {
-  bottom: 30px;
+  bottom: 400px;
   right: 30px;
   width: 7%;
 }
 .bg-layer-1-1 {
-  bottom: 28px;
+  bottom: 400px;
   right: 32px;
   width: 7%;
 }

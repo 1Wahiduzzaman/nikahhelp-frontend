@@ -23,16 +23,6 @@
         alt="bg"
         class="position-absolute bg-layer-1-1"
       />
-      <img
-        src="@/assets/icon/bg_layer_2.svg"
-        alt="bg"
-        class="position-absolute bg-layer-2 layer-2"
-      />
-      <img
-        src="@/assets/icon/bg_layer_2_1.svg"
-        alt="bg"
-        class="position-absolute bg-layer-2-1"
-      />
       <RecentlyJoined />
       <Feature />
       <Conversation />
