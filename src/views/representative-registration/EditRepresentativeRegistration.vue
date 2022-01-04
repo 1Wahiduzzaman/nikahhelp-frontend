@@ -102,7 +102,7 @@
         <a-button
           v-if="current > 0"
           shape="round"
-           style="float: right; margin-right: 10px"
+          style="float: right; margin-right: 10px"
           class="mt-3"
           @click="prev"
         >
@@ -130,7 +130,7 @@ const createData = () => ({
   fixedClass: "vue-fixed-header--isFixed",
   hideScrollUp: false,
 });
-import PersonalInfo from "@/components/representative-registration/PersonalInfo.vue";
+
 import PersonalInfoTwo from "@/components/representative-registration/personal-info-two.vue";
 import VerificationInfo from "@/components/representative-registration/VerificationInfo.vue";
 import Verification from "@/components/representative-registration/verification.vue";
@@ -138,7 +138,6 @@ import ImageUpload from "@/components/representative-registration/ImageUpload.vu
 import AgreementSubmit from "@/components/representative-registration/AgreementSubmit.vue";
 import ApiService from "../../services/api.service";
 import Header from "../../components/header/header";
-
 import { API_URL } from "../../configs/config";
 import VueFixedHeader from "vue-fixed-header";
 import validator from "validator";
@@ -146,7 +145,6 @@ export default {
   name: "RepresentativeRegistration",
 
   components: {
-    PersonalInfo,
     PersonalInfoTwo,
     VerificationInfo,
     Verification,

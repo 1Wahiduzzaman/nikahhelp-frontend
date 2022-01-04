@@ -1,22 +1,46 @@
 <template>
-	<div>
-		<Header />
-		<Banner />
-		<div class="bg-home-page position-relative">
-      <img src="@/assets/icon/home_full_circle.svg" alt="bg" class="position-absolute full-circle" />
-      <img src="@/assets/icon/home_outline_circle.svg" alt="bg" class="position-absolute outline-circle" />
-      <img src="@/assets/icon/bg_layer_1.svg" alt="bg" class="position-absolute bg-layer-1 layer-1" />
-      <img src="@/assets/icon/bg_layer_1_1.svg" alt="bg" class="position-absolute bg-layer-1-1" />
-      <img src="@/assets/icon/bg_layer_2.svg" alt="bg" class="position-absolute bg-layer-2 layer-2" />
-      <img src="@/assets/icon/bg_layer_2_1.svg" alt="bg" class="position-absolute bg-layer-2-1" />
-			<RecentlyJoined />
-			<Feature />
-			<Conversation />
-			<FindPartner />
-			<Footer />
-		</div>
-		<Cookies />
-	</div>
+  <div>
+    <Header />
+    <Banner />
+    <div class="bg-home-page position-relative">
+      <img
+        src="@/assets/icon/home_full_circle.svg"
+        alt="bg"
+        class="position-absolute full-circle"
+      />
+      <img
+        src="@/assets/icon/home_outline_circle.svg"
+        alt="bg"
+        class="position-absolute outline-circle"
+      />
+      <img
+        src="@/assets/icon/bg_layer_1.svg"
+        alt="bg"
+        class="position-absolute bg-layer-1 layer-1"
+      />
+      <img
+        src="@/assets/icon/bg_layer_1_1.svg"
+        alt="bg"
+        class="position-absolute bg-layer-1-1"
+      />
+      <img
+        src="@/assets/icon/bg_layer_2.svg"
+        alt="bg"
+        class="position-absolute bg-layer-2 layer-2"
+      />
+      <img
+        src="@/assets/icon/bg_layer_2_1.svg"
+        alt="bg"
+        class="position-absolute bg-layer-2-1"
+      />
+      <RecentlyJoined />
+      <Feature />
+      <Conversation />
+      <FindPartner />
+      <Footer />
+    </div>
+    <Cookies />
+  </div>
 </template>
 
 <script>
@@ -30,17 +54,33 @@ import Footer from "@/components/auth/Footer.vue";
 import Cookies from "@/components/cookies/Cookies.vue";
 
 export default {
-	name: "Home",
-	components: {
-		Header,
-		Banner,
-		RecentlyJoined,
-		Feature,
-		Conversation,
-		FindPartner,
-		Footer,
-		Cookies,
-	}
+  name: "Home",
+  components: {
+    Header,
+    Banner,
+    RecentlyJoined,
+    Feature,
+    Conversation,
+    FindPartner,
+    Footer,
+    Cookies,
+  },
+  data() {
+    return {
+      isLoading: false,
+      attrs: {
+        class: "mb-6",
+        boilerplate: true,
+        elevation: 2,
+      },
+    };
+  },
+  mounted() {
+    this.isLoading = true;
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1000);
+  },
 };
 </script>
 
