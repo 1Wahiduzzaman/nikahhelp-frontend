@@ -2,7 +2,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import DHome from "@/views/dashboard/DHome.vue";
 import AboutPage from "@/components/landing-page/about.vue";
-import UserAgreement from "@/components/landing-page/user-agreement.vue";
 import HelpPage from "@/components/landing-page/help.vue";
 import PrivacyPolicy from "@/components/landing-page/privacy-policy.vue";
 import TermsAndConditionPage from "@/components/landing-page/terms-condition.vue";
@@ -416,12 +415,6 @@ const AppRouter = new VueRouter({
             path: "/help",
             name: "Help",
             component: HelpPage,
-
-        },
-        {
-            path: "/user-agreement",
-            name: "UserAgreement",
-            component: UserAgreement,
 
         },
         {
