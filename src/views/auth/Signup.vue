@@ -77,88 +77,6 @@
           </div>
         </div>
       </div>
-      <div v-if="showSignupForm && !errorMessage" class="signup-inner">
-        <a href="/" class="logo"
-          ><img src="@/assets/logo.png" alt="logo" class="mat-logo"
-        /></a>
-        <a-form-model
-          ref="signupFormOne"
-          :model="signupModel"
-          :rules="rules"
-          class="form-signup"
-        >
-          <div>
-            <div class="mb-3">
-              <a-form-model-item ref="email" prop="email">
-                <a-input
-                  type="email"
-                  class="form-control fs-14"
-                  id="email"
-                  v-model="signupModel.email"
-                  aria-describedby="emailHelp"
-                  placeholder="Enter email"
-                />
-              </a-form-model-item>
-            </div>
-            <div class="mb-3">
-              <a-form-model-item ref="password" prop="password">
-                <a-input-password
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  v-model="signupModel.password"
-                  placeholder="Password"
-                />
-              </a-form-model-item>
-            </div>
-            <div class="mb-3">
-              <a-form-model-item ref="confirmPassword" prop="confirmPassword">
-                <a-input-password
-                  type="password"
-                  class="form-control"
-                  id="confirmPassword"
-                  v-model="signupModel.confirmPassword"
-                  placeholder="Confirm password"
-                />
-              </a-form-model-item>
-            </div>
-            <button
-              @click="backToMemberType"
-              class="btn btn-agreeJoin-pink w-100"
-            >
-              Back
-            </button>
-            <button
-              @click="handleSubmitSignUp"
-              class="btn btn-agreeJoin-pink w-100"
-            >
-              Agree & Join
-            </button>
-
-            <span class="fs-12 mt-2"
-              >By clicking Agree & Join, you agree to Matrimony Assist
-              <a class="link" href="">User Agreement, Privacy Policy</a> and
-              <a class="link" href="">Cookie Policy</a>
-            </span>
-          </div>
-        </a-form-model>
-        <p class="flex-center-center mt-3 bottom-text">
-          Already on <span class="logo-text"> Matrimony Assist? </span>
-
-          <router-link
-            to="/login"
-            class="
-              btn btn-sm btn-outline-primary btn-round-sm
-              ms-2
-              text-nowrap
-              join-now-btn
-            "
-          >
-            Sign in
-          </router-link>
-        </p>
-      </div>
-
       <div v-if="showMemberForm && !errorMessage" class="signup-inner">
         <a href="/" class="logo"><img src="@/assets/logo.png" alt="logo" /></a>
 
@@ -215,7 +133,7 @@
               real name to appear on search result.
             </a-tooltip>
             <a-button
-              @click="backToForm"
+              @click="backToMemberType"
               class="btn btn-secondary w-100"
               type="primary"
               :loading="isLoading"
@@ -233,6 +151,89 @@
           </div>
         </a-form-model>
       </div>
+      <div v-if="showSignupForm && !errorMessage" class="signup-inner">
+        <a href="/" class="logo"
+          ><img src="@/assets/logo.png" alt="logo" class="mat-logo"
+        /></a>
+        <a-form-model
+          ref="signupFormOne"
+          :model="signupModel"
+          :rules="rules"
+          class="form-signup"
+        >
+          <div>
+            <div class="mb-3">
+              <a-form-model-item ref="email" prop="email">
+                <a-input
+                  type="email"
+                  class="form-control fs-14"
+                  id="email"
+                  v-model="signupModel.email"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter email"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="mb-3">
+              <a-form-model-item ref="password" prop="password">
+                <a-input-password
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  v-model="signupModel.password"
+                  placeholder="Password"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="mb-3">
+              <a-form-model-item ref="confirmPassword" prop="confirmPassword">
+                <a-input-password
+                  type="password"
+                  class="form-control"
+                  id="confirmPassword"
+                  v-model="signupModel.confirmPassword"
+                  placeholder="Confirm password"
+                />
+              </a-form-model-item>
+            </div>
+            <button
+              @click="backToForm"
+              class="btn btn-agreeJoin-pink w-100"
+            >
+              Back
+            </button>
+            <button
+              @click="handleSubmitSignUp"
+              class="btn btn-agreeJoin-pink w-100"
+            >
+              Agree & Join
+            </button>
+
+            <span class="fs-12 mt-2"
+              >By clicking Agree & Join, you agree to Matrimony Assist
+              <a class="link" href="">User Agreement, Privacy Policy</a> and
+              <a class="link" href="">Cookie Policy</a>
+            </span>
+          </div>
+        </a-form-model>
+        <p class="flex-center-center mt-3 bottom-text">
+          Already on <span class="logo-text"> Matrimony Assist? </span>
+
+          <router-link
+            to="/login"
+            class="
+              btn btn-sm btn-outline-primary btn-round-sm
+              ms-2
+              text-nowrap
+              join-now-btn
+            "
+          >
+            Sign in
+          </router-link>
+        </p>
+      </div>
+
+      
       <div v-if="errorMessage" class="signup-inner">
         <p class="error">
           {{ errorMessage }}
@@ -357,10 +358,31 @@ export default {
   methods: {
     handleSubmitSignUp() {
       this.$refs.signupFormOne.validate((valid) => {
-        if (valid) {
-          this.showMemberTypeForm = false;
-          this.showSignupForm = false;
-          this.showMemberForm = true;
+       
+         if (valid) {
+          const {
+            email,
+            password,
+            first_name,
+            last_name,
+            screen_name,
+            account_type,
+          } = this.signupModel;
+
+          try {
+            this.isLoading = true;
+            this.$store.dispatch("signup", {
+              email,
+              password,
+              first_name,
+              last_name,
+              screen_name,
+              account_type,
+            });
+          } catch {
+            this.isLoading = false;
+            this.errorMessage = "The email has already been taken.";
+          }
         } else {
           return false;
         }
@@ -392,13 +414,13 @@ export default {
     },
     onHandleContinue() {
       this.showMemberTypeForm = false;
-      this.showSignupForm = true;
-      this.showMemberForm = false;
+      this.showSignupForm = false;
+      this.showMemberForm = true;
     },
     backToForm() {
       this.showMemberTypeForm = false;
-      this.showSignupForm = true;
-      this.showMemberForm = false;
+      this.showSignupForm = false;
+      this.showMemberForm = true;
     },
 
     onSelectAccountType(type) {
@@ -412,29 +434,9 @@ export default {
     async handleSubmit() {
       this.$refs.signupFormTwo.validate((valid) => {
         if (valid) {
-          const {
-            email,
-            password,
-            first_name,
-            last_name,
-            screen_name,
-            account_type,
-          } = this.signupModel;
-
-          try {
-            this.isLoading = true;
-            this.$store.dispatch("signup", {
-              email,
-              password,
-              first_name,
-              last_name,
-              screen_name,
-              account_type,
-            });
-          } catch {
-            this.isLoading = false;
-            this.errorMessage = "The email has already been taken.";
-          }
+          this.showMemberTypeForm = false;
+          this.showSignupForm = true;
+          this.showMemberForm = false;
         } else {
           return false;
         }
