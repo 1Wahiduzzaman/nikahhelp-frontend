@@ -5,18 +5,18 @@
         <h3 class="title">Find Your Match</h3>
         <p class="sub-title">I am looking for</p>
       </div>
-      <div class="text-center gender-wrapper">
+      <div class="gender-wrapper flex justify-content-between">
         <button
           :class="{ selected: searchModel.gender == 1 }"
           @click="onSelectedGender(1)"
-          class="btn btn-outline-primary btn-round focus-design mr-2"
+          class="btn gender-outline-primary btn-round focus-design mr-2"
         >
           <img src="@/assets/icon/male.svg" alt="male" class="male-icon" /> Male
         </button>
         <button
           :class="{ selected: searchModel.gender == 2 }"
           @click="onSelectedGender(2)"
-          class="btn btn-outline-primary btn-round focus-design ml-2"
+          class="btn gender-outline-primary btn-round focus-design ml-2"
         >
           <img src="@/assets/icon/female.svg" alt="female" class="female-icon" /> Female
         </button>
@@ -103,7 +103,7 @@
         <button
           @click="handleSearch"
           size="large"
-          class="btn btn-block btn-round color-outline-primary br-40"
+          class="btn btn-block btn-round color-outline-primary h-40btn br-40"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -278,7 +278,7 @@ export default {
   border-radius: 10px;
   transform: rotate(5deg);
 }
-.btn-outline-primary, .color-outline-primary {
+.btn-outline-primary, .color-outline-primary, .gender-outline-primary {
   color: $color-primary;
   border-color: $border-primary;
   img {
@@ -299,7 +299,7 @@ export default {
     box-shadow: none;
   }
 }
-.btn-outline-primary:hover {
+.gender-outline-primary:hover {
   color: #FFFFFF;
   background: #411883;
   img {
@@ -307,6 +307,10 @@ export default {
   }
   svg {
     filter: initial !important;
+  }
+  &:focus {
+    outline: none !important;
+    box-shadow: none !important;
   }
 }
 .male-icon {
@@ -317,5 +321,13 @@ export default {
 }
 .br-40 {
   border-radius: 40px !important;
+}
+.h-40btn {
+  height: 40px;
+  padding-top: 3px;
+}
+.gender-outline-primary:focus, .gender-outline-primary:active {
+  outline: none;
+  box-shadow: none;
 }
 </style>
