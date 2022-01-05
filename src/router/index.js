@@ -6,7 +6,6 @@ import Home from "@/views/auth/Home.vue";
 import About from "@/views/auth/About.vue";
 import MatrimonySystem from "@/components/system/matrimony-system.vue";
 import AboutPage from "@/components/landing-page/about.vue";
-import UserAgreement from "@/components/landing-page/user-agreement.vue";
 import HelpPage from "@/components/landing-page/help.vue";
 import PrivacyPolicy from "@/components/landing-page/privacy-policy.vue";
 import TermsAndConditionPage from "@/components/landing-page/terms-condition.vue";
@@ -22,8 +21,8 @@ import CandidateRegistration from "@/views/candidate-registration/CandidateRegis
 import EditCandidateRegistration from "@/views/candidate-registration/EditCandidateRegistration.vue";
 import RepresentativeRegistration from "@/views/representative-registration/RepresentativeRegistration.vue";
 import EditRepresentativeRegistration from "@/views/representative-registration/EditRepresentativeRegistration.vue";
-// import MemberTypeSelection from "@/views/MemberType/MemberTypeSelection.vue";
-// import MemberNameInput from "@/views/MemberType/MemberNameInput.vue";
+import MemberTypeSelection from "@/views/MemberType/MemberTypeSelection.vue";
+import MemberNameInput from "@/views/MemberType/MemberNameInput.vue";
 
 import NotificationPage from "@/views/notification/NotificationPage.vue";
 import BlockList from "@/views/blocklist/BlockList.vue";
@@ -102,7 +101,7 @@ const AppRouter = new VueRouter({
             path: "/candidate-registration",
             name: "CandidateRegistration",
             component: CandidateRegistration,
-            beforeEnter: InitRoute,
+             beforeEnter: InitRoute,
 
         },
 
@@ -110,21 +109,21 @@ const AppRouter = new VueRouter({
             path: "/representative-registration",
             name: "RepresentativeRegistration",
             component: RepresentativeRegistration,
-            beforeEnter: InitRoute,
+             beforeEnter: InitRoute,
 
         },
         {
             path: "/edit_candidate",
             name: "EditCandidateRegistration",
             component: EditCandidateRegistration,
-            beforeEnter: InitRoute,
+             beforeEnter: InitRoute,
 
         },
         {
             path: "/edit_representative",
             name: "EditRepresentativeRegistration",
             component: EditRepresentativeRegistration,
-            beforeEnter: InitRoute,
+             beforeEnter: InitRoute,
 
         },
         {
@@ -195,7 +194,7 @@ const AppRouter = new VueRouter({
             name: 'root',
             component: MatrimonySystem,
             redirect: '/dashboard',
-            //beforeEnter: InitRoute,
+            beforeEnter: InitRoute,
             children: [
 
                 {
@@ -423,12 +422,6 @@ const AppRouter = new VueRouter({
             path: "/help",
             name: "Help",
             component: HelpPage,
-
-        },
-        {
-            path: "/user-agreement",
-            name: "UserAgreement",
-            component: UserAgreement,
 
         },
         {
