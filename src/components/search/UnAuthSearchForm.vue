@@ -5,20 +5,23 @@
         <h3 class="title">Find Your Match</h3>
         <p class="sub-title">I am looking for</p>
       </div>
-      <div class="gender-wrapper flex justify-content-between">
+      <div class="gender-wrapper flex justify-content-between align-items-center">
         <button
           :class="{ selected: searchModel.gender == 1 }"
           @click="onSelectedGender(1)"
           class="btn gender-outline-primary btn-round focus-design mr-2"
         >
-          <img src="@/assets/icon/male.svg" alt="male" class="male-icon" /> Male
+          <img src="@/assets/icon/male_colorized.svg" alt="male" class="male-icon" :class="{'img-selected': searchModel.gender == 1}" />
+          Male
         </button>
+        <span class="color-primary fs-16">or</span>
         <button
           :class="{ selected: searchModel.gender == 2 }"
           @click="onSelectedGender(2)"
           class="btn gender-outline-primary btn-round focus-design ml-2"
         >
-          <img src="@/assets/icon/female.svg" alt="female" class="female-icon" /> Female
+          <img src="@/assets/icon/female_colorized.svg" alt="female" class="female-icon" :class="{'img-selected': searchModel.gender == 2}" />
+          Female
         </button>
       </div>
       <div class="my-4">
@@ -36,19 +39,19 @@
         <h6 v-if="(!searchModel.min_age || !searchModel.max_age) && trying" class="text-danger fs-12 text-left pt-2 pl-2">Minimum and maximum age is required</h6>
       </div>
 
-      <div class="my-4" v-if="useFor != 'home'">
-        <SelectGroup
-          @selected="onDropdownChange"
-          :values="[searchModel.heightMin, searchModel.heightMax]"
-          :uniqueNames="['heightMin', 'heightMax']"
-          :options="heightTV"
-          :placeholder="'Height'"
-          :size="'large'"
-          :width="'120'"
-          :suffixIcon="'true'"
-        />
-<!--        <h6 v-if="!searchModel.heightMin || !searchModel.heightMax" class="text-danger fs-12 text-left pt-2 pl-2">Minimum and maximum height is required</h6>-->
-      </div>
+<!--      <div class="my-4" v-if="useFor != 'home'">-->
+<!--        <SelectGroup-->
+<!--          @selected="onDropdownChange"-->
+<!--          :values="[searchModel.heightMin, searchModel.heightMax]"-->
+<!--          :uniqueNames="['heightMin', 'heightMax']"-->
+<!--          :options="heightTV"-->
+<!--          :placeholder="'Height'"-->
+<!--          :size="'large'"-->
+<!--          :width="'120'"-->
+<!--          :suffixIcon="'true'"-->
+<!--        />-->
+<!--&lt;!&ndash;        <h6 v-if="!searchModel.heightMin || !searchModel.heightMax" class="text-danger fs-12 text-left pt-2 pl-2">Minimum and maximum height is required</h6>&ndash;&gt;-->
+<!--      </div>-->
 
       <div class="my-4">
         <a-select
@@ -105,31 +108,32 @@
           size="large"
           class="btn btn-block btn-round color-outline-primary h-40btn br-40"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 42.02 40.76"
-            style="width: 25px; height: 25px"
-          >
-            <g id="Layer_2" data-name="Layer 2">
-              <g id="draw_boxes" data-name="draw boxes">
-                <path
-                  fill="#fff"
-                  class="cls-1"
-                  d="M41.67,35.89A1.33,1.33,0,0,0,41.58,34L30.34,23.79a1.34,1.34,0,0,0-1.88.09l-4,4.44a1.34,1.34,0,0,0,.09,1.88L35.78,40.41a1.32,1.32,0,0,0,1.88-.09Z"
-                />
-                <path
-                  fill="#fff"
-                  class="cls-1"
-                  d="M14.72,0A14.72,14.72,0,1,1,9.91.81,14.73,14.73,0,0,1,14.72,0m0,4a10.82,10.82,0,0,0-3.51.59h0A10.73,10.73,0,1,0,14.72,4Z"
-                />
-                <path
-                  fill="#fff"
-                  class="cls-1"
-                  d="M14.72,21.39c7.68-4,7.4-8.47,5.22-10.65s-5.22-.71-5.22,1c0-1.73-3-3.2-5.21-1S7,17.43,14.72,21.39Z"
-                />
-              </g>
-            </g>
-          </svg>
+<!--          <svg-->
+<!--            xmlns="http://www.w3.org/2000/svg"-->
+<!--            viewBox="0 0 42.02 40.76"-->
+<!--            style="width: 25px; height: 25px"-->
+<!--          >-->
+<!--            <g id="Layer_2" data-name="Layer 2">-->
+<!--              <g id="draw_boxes" data-name="draw boxes">-->
+<!--                <path-->
+<!--                  fill="#fff"-->
+<!--                  class="cls-1"-->
+<!--                  d="M41.67,35.89A1.33,1.33,0,0,0,41.58,34L30.34,23.79a1.34,1.34,0,0,0-1.88.09l-4,4.44a1.34,1.34,0,0,0,.09,1.88L35.78,40.41a1.32,1.32,0,0,0,1.88-.09Z"-->
+<!--                />-->
+<!--                <path-->
+<!--                  fill="#fff"-->
+<!--                  class="cls-1"-->
+<!--                  d="M14.72,0A14.72,14.72,0,1,1,9.91.81,14.73,14.73,0,0,1,14.72,0m0,4a10.82,10.82,0,0,0-3.51.59h0A10.73,10.73,0,1,0,14.72,4Z"-->
+<!--                />-->
+<!--                <path-->
+<!--                  fill="#fff"-->
+<!--                  class="cls-1"-->
+<!--                  d="M14.72,21.39c7.68-4,7.4-8.47,5.22-10.65s-5.22-.71-5.22,1c0-1.73-3-3.2-5.21-1S7,17.43,14.72,21.39Z"-->
+<!--                />-->
+<!--              </g>-->
+<!--            </g>-->
+<!--          </svg>-->
+          <img src="@/assets/icon/search-love-secondary.svg" alt="search" class="search-icon" />
           <span class="ml-3 fs-20"> Search </span>
         </button>
       </div>
@@ -152,8 +156,8 @@ export default {
         religion: undefined,
         min_age: undefined,
         max_age: undefined,
-        heightMin: null,
-        heightMax: null,
+        heightMin: undefined,
+        heightMax: undefined,
       },
       religionTV: ReligionTV,
       countriesTV: CountriesTV,
@@ -201,20 +205,25 @@ export default {
     },
     handleSearch() {
       this.trying = true;
-      if(this.filterExists) {
-        let _payload = `/v1/home-searches?page=0&parpage=10&min_age=${this.searchModel.min_age}&max_age=${this.searchModel.max_age}`;
+      // if(this.filterExists) {
+        let _payload = `min_age=${this.searchModel.min_age}&max_age=${this.searchModel.max_age}`;
         if (this.searchModel.gender > 0) {
           _payload += `&gender=${this.searchModel.gender}`;
         }
-        if (this.searchModel.country != "") {
+        if (this.searchModel.country) {
           _payload += `&country=${this.searchModel.country}`;
         }
-        if (this.searchModel.religion != "") {
+        if (this.searchModel.religion) {
           _payload += `&religion=${this.searchModel.religion}`;
         }
-
+        if(this.searchModel.heightMin) {
+          _payload += `&min_height=${this.searchModel.heightMin}`
+        }
+        if(this.searchModel.heightMax) {
+          _payload += `&max_height=${this.searchModel.heightMax}`
+        }
         this.$emit("handleSearch", _payload);
-      }
+      // }
     },
     onAfterChangeSlider(value) {
       this.age = value;
@@ -228,9 +237,6 @@ export default {
 .selected {
   background-color: #411883;
   color: #FFFFFF !important;
-  img {
-    filter: initial !important;
-  }
 }
 .gender-wrapper {
   button {
@@ -281,17 +287,12 @@ export default {
 .btn-outline-primary, .color-outline-primary, .gender-outline-primary {
   color: $color-primary;
   border-color: $border-primary;
-  img {
-    filter: invert(0.6);
-  }
-  svg {
-    filter: invert(0.6);
-  }
   &:hover {
-    background: $bg-primary;
-    color: #FFFFFF;
-    img, svg {
-      filter: invert(0);
+    background: $bg-secondary;
+    color: $color-white;
+    text-decoration: none;
+    img {
+      filter: brightness(0) invert(1);
     }
   }
   &:focus {
@@ -302,15 +303,17 @@ export default {
 .gender-outline-primary:hover {
   color: #FFFFFF;
   background: #411883;
-  img {
-    filter: initial;
-  }
-  svg {
-    filter: initial !important;
-  }
   &:focus {
     outline: none !important;
     box-shadow: none !important;
+  }
+  &:hover {
+    background: $bg-secondary;
+    color: $color-white;
+    text-decoration: none;
+    img {
+      filter: brightness(0) invert(1);
+    }
   }
 }
 .male-icon {
@@ -329,5 +332,11 @@ export default {
 .gender-outline-primary:focus, .gender-outline-primary:active {
   outline: none;
   box-shadow: none;
+}
+.img-selected {
+  filter: brightness(0) invert(1);
+}
+.search-icon {
+  width: 24px;
 }
 </style>

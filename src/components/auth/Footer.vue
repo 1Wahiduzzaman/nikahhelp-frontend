@@ -2,7 +2,7 @@
   <footer>
     <div class="container py-3">
       <div class="text-center">
-        <a href="/dashboard">
+        <a href="/">
           <img
             src="@/assets/Icons/Logo/SVG/Black_logo_footer.svg"
             width="150"

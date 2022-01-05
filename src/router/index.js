@@ -348,14 +348,6 @@ const AppRouter = new VueRouter({
                     component: Search,
 
                 },
-
-                {
-                    path: "/visitor/search",
-                    name: "UnAuthSearch",
-                    component: UnAuthSearch,
-                    props: true,
-
-                },
                 {
                     path: "/settings",
                     name: "Settings",
@@ -365,8 +357,13 @@ const AppRouter = new VueRouter({
 
             ]
         },
+        {
+            path: "/visitor/search",
+            name: "UnAuthSearch",
+            component: UnAuthSearch,
+            props: true,
 
-
+        },
         {
             path: "/signup",
             name: "Signup",

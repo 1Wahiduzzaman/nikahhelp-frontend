@@ -1,5 +1,6 @@
 <template>
 	<div class="search-page">
+    <Loader v-if="isLoading" :isLoading="isLoading" />
 		<header>
 			<div class="container">
 				<a href="/"><img src="@/assets/logo.png" alt="" /></a>
@@ -41,13 +42,12 @@
 			</div>
 			
 			<!-- TODO Advanced Search Button -->
-			<div v-if="result || updatedResult">
+			<div>
 				<div
-					v-if="updatedResult"
 					class="search-result"
 					style="margin-bottom: 100px"
 				>
-					<div v-if="updatedResult.length == 0" class="text-center">
+					<div v-if="updatedResult.length == 0 && !isLoading" class="text-center">
 						<span
 							><a-icon
 								type="warning"
@@ -58,31 +58,48 @@
 							criteria.</span
 						>
 					</div>
-					<candidate-grid
-						v-for="candidate in updatedResult"
-						:key="candidate.id"
-						:candidate="candidate"
-					></candidate-grid>
+
+          <div class="row mt-2">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+              <div class="row">
+                <div v-for="(candidate, n) in  updatedResult" :key="n" class="col-sm-12 col-md-6 col-lg-4">
+                  <candidate-grid
+                      :candidate="candidate"
+                  ></candidate-grid>
+                </div>
+              </div>
+            </div>
+          </div>
 				</div>
-				<div v-else class="search-result">
-					<div v-if="result.length == 0" class="text-center">
-						<span
-							><a-icon
-								type="warning"
-								:style="{ fontSize: '50px', color: 'red' }"
-						/></span>
-						<span class="fs-28 px-5"
-							>Sorry! There are no matching candidates matching your search
-							criteria.</span
-						>
-					</div>
-					<candidate-grid
-						v-for="candidate in result"
-						:key="candidate.id"
-						:candidate="candidate"
-					></candidate-grid>
-				</div>
+<!--				<div v-else class="search-result">-->
+<!--					<div v-if="result.length == 0" class="text-center">-->
+<!--						<span-->
+<!--							><a-icon-->
+<!--								type="warning"-->
+<!--								:style="{ fontSize: '50px', color: 'red' }"-->
+<!--						/></span>-->
+
+<!--						<span class="fs-28 px-5"-->
+<!--							>Sorry! There are no matching candidates matching your search-->
+<!--							criteria.</span-->
+<!--						>-->
+<!--					</div>-->
+
+<!--          <div class="row mt-2">-->
+<!--            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">-->
+<!--              <div class="row">-->
+<!--                <div v-for="(candidate, n) in  result" :key="n" class="col-sm-12 col-md-6 col-lg-4">-->
+<!--                  <candidate-grid-->
+<!--                      :candidate="candidate"-->
+<!--                  ></candidate-grid>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--				</div>-->
 			</div>
+
+      <Observer @intersect="onIntersect"/>
 		</div>
 		<un-auth-search-modal
 			v-model="searchModalVisible"
@@ -95,67 +112,82 @@
 </template>
 
 <script>
-import CandidateGrid from "@/components/search/CandidateGrid.vue";
+// import CandidateGrid from "@/components/search/CandidateGrid.vue";
 import UnAuthSearchModal from "@/components/search/UnAuthSearchModal.vue";
 import ApiService from "../../services/api.service";
 import Footer from "@/components/auth/Footer.vue";
-
+import CandidateGrid from '@/components/search/NewCandidateCard.vue';
+import Observer from "@/components/atom/Observer"
 
 export default {
-	props: ["result"],
+	props: ["url"],
 	data() {
 		return {
 			searchModalVisible: false,
-			updatedResult: null,
+			updatedResult: [],
 			searchResult: false,
+      isLoading: false
 		};
 	},
-	components: {
+  created() {
+    let pagination = {
+      page: 0,
+      per_page: 10
+    };
+    this.handleSearch(this.url, pagination);
+  },
+  components: {
 		Footer,
-		CandidateGrid,
+    CandidateGrid,
 		UnAuthSearchModal,
+    Observer
 	},
 	methods: {
 		setSearchModalVisible() {
 			this.searchModalVisible = true;
 		},
-		async handleSearch(payload) {
+		async handleSearch(payload, pagination) {
+      this.isLoading = true;
+      let fromModal = false;
+      if(this.searchModalVisible) {
+        fromModal = true;
+        this.searchModalVisible = false;
+      }
+      if(!pagination) {
+        pagination = {
+          page: 0,
+          per_page: 10
+        };
+      }
+      payload = `?page=${pagination.page}&parpage=${pagination.per_page}&` + payload;
 			let _payload = `v1/home-searches${payload}`;
-			console.log(payload);
-
 			await ApiService.get(_payload)
 				.then((data) => {
-					console.log(data.data.data);
-					this.updatedResult = data.data.data.result;
-					this.updatedResult.reverse();
+          if(fromModal) {
+            this.updatedResult = data.data.data.data;
+          } else {
+            this.updatedResult = [...this.updatedResult, ...data.data.data.data]
+          }
 					this.pagination = data.data.data.pagination;
 					this.searchResult = true;
 					this.searchModalVisible = false;
-
-					// if (data.data.status != "FAIL" && data.data.status_code == 200) {
-					// 	if (data.data.data.password !== this.teamData.password) {
-					// 		this.$message.success("Team Password Updated");
-					// 		this.showModalPreference = false;
-					// 		this.$emit("teamListUpdated");
-					// 	} else {
-					// 		this.$message.error("Something went wrong");
-					// 		this.$message.error(
-					// 			"You enter a wrong password for Present Password"
-					// 		);
-					// 		this.showModalPreference = false;
-					// 	}
-					// } else {
-					// 	this.$message.error("Something went wrong");
-					// 	this.showModalPreference = false;
-					// }
+          this.isLoading = false;
 				})
 				.catch((error) => {
 					console.log(error);
 					console.log(error.response);
 					this.$message.error("Something went wrong");
 					this.searchModalVisible = false;
+          this.isLoading = false;
 				});
 		},
+    onIntersect() {
+      let payload = {
+        page: this.pagination.current_page,
+        per_page: 10
+      }
+      this.handleSearch(this.url, payload);
+    },
 	},
 };
 </script>

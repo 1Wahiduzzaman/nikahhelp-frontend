@@ -29,37 +29,30 @@ export default {
     return {};
   },
   methods: {
-    async handleSearch(_payload) {
-      await ApiService.get(_payload).then(response => {
-        if(response && response.data && response.data.status != 'FAIL') {
-          this.$router
-              .push({
-                name: "UnAuthSearch",
-                params: { result: response.data.result },
-              });
-        } else {
-          this.$error({
-            title: "No candidate found",
-            center: true,
+    handleSearch(_payload) {
+      this.$router
+          .push({
+            name: "UnAuthSearch",
+            params: { url: _payload },
           });
-        }
-      }).catch(e => {
-        this.$error({
-          title: "Something went wrong!",
-          center: true,
-        });
-      });
-      // const response = this.$store.dispatch("search/searchUser", _payload);
-      // response.then((data) => {
-      //   console.log(data);
-      //   this.$router
-      //     .push({
-      //       name: "UnAuthSearch",
-      //       params: { result: data.result },
-      //     })
-      //     .catch((err) => {
-      //       console.log("err", err);
+      // await ApiService.get(_payload).then(response => {
+      //   if(response && response.data && response.data.status != 'FAIL') {
+      //     this.$router
+      //         .push({
+      //           name: "UnAuthSearch",
+      //           params: { url: response.data.data.data },
+      //         });
+      //   } else {
+      //     this.$error({
+      //       title: "No candidate found",
+      //       center: true,
       //     });
+      //   }
+      // }).catch(e => {
+      //   this.$error({
+      //     title: "Something went wrong!",
+      //     center: true,
+      //   });
       // });
     },
   },
