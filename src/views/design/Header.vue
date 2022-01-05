@@ -281,7 +281,7 @@
             </svg>
 
             <a-menu slot="overlay" style="min-width: 320px">
-              <a-menu-item @click="collapsed = !collapsed">
+              <a-menu-item @click="$emit('toggleCollapse')">
                 <img width="22" src="@/assets/Icons/form.svg" alt="icon" />
                 <span class="ml-2"
                   >{{ collapsed ? "Open" : "Close" }} left sidebar</span
@@ -424,6 +424,7 @@ import ApiService from "@/services/api.service";
 import JwtService from "../../services/jwt.service";
 export default {
   name: "Layout",
+  props: ['collapsed'],
   components: {
     NotificationPopup,
   },
@@ -433,7 +434,6 @@ export default {
   },
   data() {
     return {
-      collapsed: false,
       activeTeamId: null,
     };
   },

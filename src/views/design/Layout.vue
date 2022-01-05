@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <MainHeader />
+    <MainHeader :collapsed="collapsed" @toggleCollapse="toggleCollapse" />
 
     <a-layout
       id="layout"
@@ -49,6 +49,7 @@ import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import ModalContainer from "@/plugins/modal/modal-container";
 import ManageTeamRedirect from "@/views/design/ManageTeamRedirect.vue";
 import { createModalMixin, openModalRoute } from "@/plugins/modal/modal.mixin";
+import JwtService from "@/services/jwt.service";
 
 export default {
   name: "Layout",
@@ -74,7 +75,9 @@ export default {
     responsiveToggle() {
       this.collapsed = false;
     },
-
+    toggleCollapse() {
+      this.collapsed = !this.collapsed;
+    },
     checkTurnedOnSwitch() {
       this.activeTeamId = JwtService.getTeamIDAppWide();
     },

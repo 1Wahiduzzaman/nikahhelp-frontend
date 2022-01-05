@@ -1,6 +1,6 @@
 <template>
   <div :class="cardBorder">
-    <div class="advanced-search" :class="{ 'p-3': useFor == 'home' }">
+    <div class="advanced-search font-poppins" :class="{ 'p-3': useFor == 'home' }">
       <div class="title-wrapper">
         <h3 class="title">Find Your Match</h3>
         <p class="sub-title">I am looking for</p>
@@ -11,14 +11,14 @@
           @click="onSelectedGender(1)"
           class="btn btn-outline-primary btn-round focus-design mr-2"
         >
-          <img src="@/assets/icon/male.svg" alt="male" /> Male
+          <img src="@/assets/icon/male.svg" alt="male" class="male-icon" /> Male
         </button>
         <button
           :class="{ selected: searchModel.gender == 2 }"
           @click="onSelectedGender(2)"
           class="btn btn-outline-primary btn-round focus-design ml-2"
         >
-          <img src="@/assets/icon/female.svg" alt="female" /> Female
+          <img src="@/assets/icon/female.svg" alt="female" class="female-icon" /> Female
         </button>
       </div>
       <div class="my-4">
@@ -33,6 +33,7 @@
           :min="[18, 24]"
           :values="[searchModel.min_age, searchModel.max_age]"
         />
+        <h6 v-if="(!searchModel.min_age || !searchModel.max_age) && trying" class="text-danger fs-12 text-left pt-2 pl-2">Minimum and maximum age is required</h6>
       </div>
 
       <div class="my-4" v-if="useFor != 'home'">
@@ -46,6 +47,7 @@
           :width="'120'"
           :suffixIcon="'true'"
         />
+<!--        <h6 v-if="!searchModel.heightMin || !searchModel.heightMax" class="text-danger fs-12 text-left pt-2 pl-2">Minimum and maximum height is required</h6>-->
       </div>
 
       <div class="my-4">
@@ -70,6 +72,7 @@
             <img src="@/assets/select-arrow-big.png" alt="" />
           </template>
         </a-select>
+        <h6 v-if="!searchModel.country && trying" class="text-danger fs-12 text-left pt-2 pl-2">Country is required</h6>
       </div>
 
       <div class="my-4">
@@ -94,13 +97,13 @@
             <img src="@/assets/select-arrow-big.png" alt="" />
           </template>
         </a-select>
+        <h6 v-if="!searchModel.religion && trying" class="text-danger fs-12 text-left pt-2 pl-2">Religion is required</h6>
       </div>
       <div>
         <button
-          :disabled="!filterExists"
           @click="handleSearch"
           size="large"
-          class="btn btn-block btn-round btn-outline-primary"
+          class="btn btn-block btn-round color-outline-primary br-40"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -163,6 +166,7 @@ export default {
       heightUnit: false,
       minHeightFt: null,
       maxHeightFt: null,
+      trying: false
     };
   },
   components: {
@@ -196,19 +200,21 @@ export default {
       this.searchModel.gender = gender;
     },
     handleSearch() {
-      let _payload = `v1/home-searches?page=0&parpage=10&min_age=${this.searchModel.min_age}&max_age=${this.searchModel.max_age}`;
-      if (this.searchModel.gender > 0) {
-        _payload += `&gender=${this.searchModel.gender}`;
-      }
-      if (this.searchModel.country != "") {
-        _payload += `&country=${this.searchModel.country}`;
-      }
-      if (this.searchModel.religion != "") {
-        _payload += `&religion=${this.searchModel.religion}`;
-      }
-      console.log("_payload", _payload);
+      this.trying = true;
+      if(this.filterExists) {
+        let _payload = `/v1/home-searches?page=0&parpage=10&min_age=${this.searchModel.min_age}&max_age=${this.searchModel.max_age}`;
+        if (this.searchModel.gender > 0) {
+          _payload += `&gender=${this.searchModel.gender}`;
+        }
+        if (this.searchModel.country != "") {
+          _payload += `&country=${this.searchModel.country}`;
+        }
+        if (this.searchModel.religion != "") {
+          _payload += `&religion=${this.searchModel.religion}`;
+        }
 
-      this.$emit("handleSearch", _payload);
+        this.$emit("handleSearch", _payload);
+      }
     },
     onAfterChangeSlider(value) {
       this.age = value;
@@ -242,7 +248,7 @@ export default {
   .title-wrapper {
     text-align: center;
     .title {
-      font-family: "Elsie Swash Caps";
+      //font-family: "Elsie Swash Caps";
       font-size: 32px;
       margin-bottom: 5px;
       color: $color-primary;
@@ -272,14 +278,25 @@ export default {
   border-radius: 10px;
   transform: rotate(5deg);
 }
-.btn-outline-primary {
-  color: #411883;
-  border-color: #411883;
+.btn-outline-primary, .color-outline-primary {
+  color: $color-primary;
+  border-color: $border-primary;
   img {
     filter: invert(0.6);
   }
   svg {
     filter: invert(0.6);
+  }
+  &:hover {
+    background: $bg-primary;
+    color: #FFFFFF;
+    img, svg {
+      filter: invert(0);
+    }
+  }
+  &:focus {
+    outline: none;
+    box-shadow: none;
   }
 }
 .btn-outline-primary:hover {
@@ -291,5 +308,14 @@ export default {
   svg {
     filter: initial !important;
   }
+}
+.male-icon {
+  width: 14px;
+}
+.female-icon {
+  width: 10px;
+}
+.br-40 {
+  border-radius: 40px !important;
 }
 </style>

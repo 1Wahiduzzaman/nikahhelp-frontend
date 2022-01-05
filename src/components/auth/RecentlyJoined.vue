@@ -23,7 +23,7 @@
 					</div>
 				</div>
 
-        <img src="@/assets/icon/bg_layer_1.svg" alt="bg" class="position-absolute bg-layer-2" />
+        <img src="@/assets/icon/bg_layer_1.svg" alt="bg" class="position-absolute bg-layer-2 layer-2" />
         <img src="@/assets/icon/bg_layer_1_1.svg" alt="bg" class="position-absolute bg-layer-2-1" />
 			</div>
 		</div>
@@ -126,6 +126,23 @@ export default {
 	.color {
 		background-color: #ccc;
 	}
+}
+.layer-1 {
+  animation-name: layer-1;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+.layer-2 {
+  animation-name: layer-2;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+@keyframes layer-2 {
+  0%   {left: 70px; top: 500px;}
+  25%  {left: 50px; top: 460px;}
+  50%  {left: 40px; top: 480px;}
+  75%  {left: 50px; top: 530px;}
+  100% {left: 70px; top: 500px;}
 }
 .bg-layer-1 {
   top: 30px;

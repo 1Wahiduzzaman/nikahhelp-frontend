@@ -2,16 +2,11 @@
   <div>
     <Header />
     <Banner />
-    <div class="bg-home-page position-relative">
+    <div class="bg-home-page position-relative font-poppins">
       <img
-        src="@/assets/icon/home_full_circle.svg"
+        src="@/assets/icon/top_circle.svg"
         alt="bg"
         class="position-absolute full-circle"
-      />
-      <img
-        src="@/assets/icon/home_outline_circle.svg"
-        alt="bg"
-        class="position-absolute outline-circle"
       />
       <img
         src="@/assets/icon/bg_layer_1.svg"
@@ -28,6 +23,11 @@
       <Conversation />
       <FindPartner />
       <Footer />
+      <img
+          src="@/assets/icon/down_circle.svg"
+          alt="bg"
+          class="position-absolute down-circle"
+      />
     </div>
     <Cookies />
   </div>
@@ -84,10 +84,10 @@ export default {
     left: -25px;
     width: 25%;
   }
-  .outline-circle {
-    top: -145px;
-    left: -35px;
-    width: 27%;
+  .down-circle {
+    bottom: 0;
+    right: -0;
+    width: 20%;
   }
   .bg-layer-1 {
     top: 30px;
