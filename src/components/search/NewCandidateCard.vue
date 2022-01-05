@@ -177,7 +177,7 @@ import {mapMutations, mapActions} from 'vuex'
         this.setComponent('RightSideCandidateDetail')
       },
       async ViewProfileDetail() {
-        let res = await this.getDetails('v1/user-profile?user_id=1');
+        //let res = await this.getDetails('v1/user-profile?user_id=1');
        // console.log(res, '>>>>>>>>>>>>>>')
         this.$emit('switchComponent')
         this.setComponent('RightSidebar')

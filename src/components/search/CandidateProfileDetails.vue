@@ -1,55 +1,105 @@
 <template>
     <div>
-        <div class="top flex justify-space-between align-center px-3">
+        <div style="height: 20px" class="top flex justify-space-between mt-2 align-center px-3">
             <v-btn
-                class="d-none d-md-block mt-1 text-capitalize"
+                class="d-none d-md-block mt-1 text-capitalize "
                 rounded
                 color="deep-purple darken-1"
                 dark
                 @click="loadSearchResultComponent"
             >
-            <div class="flex justify-center align-center">
-                <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/chevron-left-solid.svg" alt="">
-                Back
-            </div>
-        </v-btn>
+                <div class="flex justify-center align-center">
+                    <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-left-solid.svg" alt="">
+                    Back
+                </div>
+            </v-btn>
             <v-btn
-                class="mt-1 d-block d-md-none text-capitalize"
+                class="mt-1 z-9 d-block d-md-none text-capitalize"
                 rounded
                 absolute
-                fab
+                outlined
+                small
                 color="deep-purple darken-1"
                 dark
                 @click="loadSearchResultComponent"
             >
-            <div class="flex justify-center align-center">
-                <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/chevron-left-solid.svg" alt="">
-                Back
-            </div>
-        </v-btn>
+                <div class="flex justify-center align-center">
+                    <img style="height: 13px; margin-right: 4px;" src="/assets/icon/back-secondary.svg" alt="">
+                </div>
+            </v-btn>
 
-        <v-btn-toggle rounded dense>
-            <v-btn
-                class="mt-1 text-capitalize"
-                medium
-                color="deep-purple darken-4"
-                dark
-                @click.stop="ViewProfileDetail"
-            >
-                <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/chevron-left-solid.svg" alt="">
-            </v-btn>
-            <v-btn
-                class="mt-1 text-capitalize"
-                rounded
-                color="deep-purple darken-4"
-                dark
-                @click.stop="ViewProfileDetail"
-            >
-                <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/chevron-right-solid.svg" alt="">
-            </v-btn>
-        </v-btn-toggle>
+            <v-btn-toggle rounded dense class="d-none d-md-block">
+                <v-btn
+                    class="mt-1 text-capitalize"
+                    medium
+                    color="deep-purple darken-4"
+                    dark
+                    @click.stop="ViewProfileDetail"
+                >
+                    <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-left-solid.svg" alt="">
+                </v-btn>
+                <v-btn
+                    class="mt-1 text-capitalize"
+                    rounded
+                    color="deep-purple darken-4"
+                    dark
+                    @click.stop="ViewProfileDetail"
+                >
+                    <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-right-solid.svg" alt="">
+                </v-btn>
+            </v-btn-toggle>
         </div>
-
+        
+        <!-- mobile profile next button -->
+        <div class="d-block d-md-none px-3">
+            <v-btn
+                class="mt-1 text-capitalize z-9"
+                rounded
+                outlined
+                small
+                absolute
+                bottom
+                color="deep-purple darken-1"
+                dark
+            >
+                <div class="flex justify-center align-center">
+                    <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-left-secondary.svg" alt="">
+                    
+                </div>
+            </v-btn>
+            <v-btn
+                class="mt-1 text-capitalize z-9"
+                rounded
+                outlined
+                small
+                absolute
+                bottom
+                color="deep-purple darken-1"
+                dark
+            >
+                <div class="flex justify-center align-center">
+                    <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-left-secondary.svg" alt="">
+                    
+                </div>
+            </v-btn>
+             <v-btn
+                class="mt-1 text-capitalize z-9"
+                rounded
+                outlined
+                small
+                absolute
+                bottom
+                right
+                color="deep-purple darken-1"
+                dark
+            >
+                <div class="flex justify-center align-center">
+                    <img style="height: 13px;" src="/assets/icon/chevron-right-secondary.svg" alt="">
+                    
+                </div>
+            </v-btn>
+        </div>
+        <!-- end mobile profile next button -->
         <ProfileBanner
             class="mt-5"
         />
@@ -108,3 +158,20 @@ export default {
     }
 }
 </script>
+
+<style scoped lang="scss">
+.z-9 {
+    z-index: 9;
+}
+.opacity-effect {
+    opacity: 0.5;
+    transition: .3s;
+    &:hover {
+        opacity: 1;
+    }
+}
+.v-btn--absolute.v-btn--right, .v-btn--fixed.v-btn--right {
+    right: 29px;
+}
+
+</style>

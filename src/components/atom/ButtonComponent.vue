@@ -1,15 +1,13 @@
 <template>
     <div>
         <v-btn
-            class="d-none d-md-block"
+            class="d-none d-md-block v-custom"
             :style="{   
-                textTransform: 'capitalize', 
-                border:'2px solid white', 
-                background: bgColor,
-                color: textColor
+                
             }"
             :loading="loading"
             :block="isBlock"
+            outlined
             rounded
             @click="$emit('onClickButton', {event: customEvent, index: index, id: typeId})"
         >
@@ -23,21 +21,16 @@
             </div>
         </v-btn>
         <v-btn
-            class="d-block d-md-none"
-            :style="{   
-                textTransform: 'capitalize', 
-                border:'2px solid white', 
-                background: bgColor,
-                color: textColor
-            }"
+            class="d-block d-md-none v-custom-m"
             :loading="loading"
             :block="isBlock"
+            outlined
             rounded
             @click="$emit('onClickButton', {event: customEvent, index: index, id: typeId})"
         >
             <div class="flex justify-center align-center">
                 <img 
-                    :style="{height: iconHeight, marginRight: '10px'}" 
+                    :style="{height: iconHeight}" 
                     :src="icon" 
                     alt=""
                 >
@@ -87,3 +80,27 @@ export default {
     }
 }
 </script>
+
+<style scoped lang="scss">
+.v-custom{
+    color: #6158a7;
+    text-transform: capitalize;
+    &:hover {
+        box-shadow: 0px 1px 6px #787474;
+        border: 1px solid white !important;
+        background: #6158a7;
+        color: #fff;
+    }
+}
+.v-custom-m{
+    border:'1px solid #6158a7';
+    &:hover {
+        text-transform: 'capitalize';
+        border:'1px solid #6158a7';
+        box-shadow: 0px 1px 6px #787474;
+        border: 1px solid white !important;
+        background: #6158a7;
+        color: #fff;
+    }
+}
+</style>
