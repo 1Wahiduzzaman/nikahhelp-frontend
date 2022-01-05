@@ -468,7 +468,6 @@
 </style>
 <script>
 import FileUploadOne from "@/components/shared/FileUploadOne.vue";
-import ApiService from "../../services/api.service";
 export default {
   name: "Verification",
   props: {

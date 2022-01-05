@@ -149,7 +149,6 @@ const createData = () => ({
   fixedClass: "vue-fixed-header--isFixed",
   hideScrollUp: false,
 });
-import PersonalInfo from "@/components/representative-registration/PersonalInfo.vue";
 import PersonalInfoTwo from "@/components/representative-registration/personal-info-two.vue";
 import VerificationInfo from "@/components/representative-registration/VerificationInfo.vue";
 import Verification from "@/components/representative-registration/verification.vue";
@@ -165,7 +164,6 @@ export default {
   name: "RepresentativeRegistration",
 
   components: {
-    PersonalInfo,
     PersonalInfoTwo,
     VerificationInfo,
     Verification,

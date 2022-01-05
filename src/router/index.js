@@ -1,10 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-
 import DHome from "@/views/dashboard/DHome.vue";
-import Home from "@/views/auth/Home.vue";
-import About from "@/views/auth/About.vue";
-import MatrimonySystem from "@/components/system/matrimony-system.vue";
 import AboutPage from "@/components/landing-page/about.vue";
 import HelpPage from "@/components/landing-page/help.vue";
 import PrivacyPolicy from "@/components/landing-page/privacy-policy.vue";
@@ -17,12 +13,6 @@ import VerifyEmail from "@/views/auth/VerifyEmail.vue";
 import Success from "@/views/auth/Success.vue";
 import ForgetPassword from "@/views/auth/ForgetPassword.vue";
 import ResetPassword from "@/views/auth/ResetPassword.vue";
-import CandidateRegistration from "@/views/candidate-registration/CandidateRegistration.vue";
-import EditCandidateRegistration from "@/views/candidate-registration/EditCandidateRegistration.vue";
-import RepresentativeRegistration from "@/views/representative-registration/RepresentativeRegistration.vue";
-import EditRepresentativeRegistration from "@/views/representative-registration/EditRepresentativeRegistration.vue";
-import MemberTypeSelection from "@/views/MemberType/MemberTypeSelection.vue";
-import MemberNameInput from "@/views/MemberType/MemberNameInput.vue";
 
 import NotificationPage from "@/views/notification/NotificationPage.vue";
 import BlockList from "@/views/blocklist/BlockList.vue";
@@ -82,60 +72,66 @@ import Header from "../components/header/header.vue";
 import ChatWindow from "@/views/chat/ChatWindow.vue";
 
 
-import { InitRoute } from './guard/guard'
+import { InitRoute, lazyLoadComponent, lazyLoadView } from './guard/guard'
 
 Vue.use(VueRouter);
-import design from './design'
 const AppRouter = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return { x: 0, y: 0 }
+        }
+    },
     routes: [
         {
             path: "/",
             name: "Home",
-            component: Home,
+            component: lazyLoadView('auth', 'Home'),
             beforeEnter: InitRoute,
 
         },
         {
             path: "/candidate-registration",
             name: "CandidateRegistration",
-            component: CandidateRegistration,
-             beforeEnter: InitRoute,
+            component: lazyLoadView('candidate-registration', 'CandidateRegistration'),
+            beforeEnter: InitRoute,
 
         },
 
         {
             path: "/representative-registration",
             name: "RepresentativeRegistration",
-            component: RepresentativeRegistration,
-             beforeEnter: InitRoute,
+            component: lazyLoadView('representative-registration', 'RepresentativeRegistration'),
+            beforeEnter: InitRoute,
 
         },
         {
             path: "/edit_candidate",
             name: "EditCandidateRegistration",
-            component: EditCandidateRegistration,
-             beforeEnter: InitRoute,
+            component: lazyLoadView('candidate-registration', 'EditCandidateRegistration'),
+            beforeEnter: InitRoute,
 
         },
         {
             path: "/edit_representative",
             name: "EditRepresentativeRegistration",
-            component: EditRepresentativeRegistration,
-             beforeEnter: InitRoute,
+            component: lazyLoadView('representative-registration', 'EditRepresentativeRegistration'),
+            beforeEnter: InitRoute,
 
         },
         {
             path: "/search/advance",
             name: "AdvanceSearch",
-            component: AdvanceSearch,
+            component: lazyLoadView('search', 'AdvanceSearch'),
             beforeEnter: InitRoute,
         },
         {
             path: "/admin",
             name: "Admin",
-            component: AdminSystem,
+            component: lazyLoadView('admin', 'admin-system'),
             beforeEnter: InitRoute,
             children: [{
                 path: "",
@@ -192,7 +188,7 @@ const AppRouter = new VueRouter({
         {
             path: "",
             name: 'root',
-            component: MatrimonySystem,
+            component: lazyLoadComponent('system', 'matrimony-system'),
             redirect: '/dashboard',
             beforeEnter: InitRoute,
             children: [
@@ -373,13 +369,13 @@ const AppRouter = new VueRouter({
         {
             path: "/signup",
             name: "Signup",
-            component: Signup,
+            component: lazyLoadView('auth', 'Signup'),
             beforeEnter: InitRoute,
         },
         {
             path: "/login",
             name: "Login",
-            component: Login,
+            component: lazyLoadView('auth', 'Login'),
             beforeEnter: InitRoute,
         },
 

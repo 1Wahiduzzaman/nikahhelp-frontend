@@ -13,17 +13,17 @@
       </div>
       <span class="online-icon" v-if="item.message && item.message.seen == 0"></span>
 
-      <a-dropdown>
+      <a-dropdown v-if="item.is_friend == 0">
         <a class="ant-dropdown-link dropdown-box" @click="e => e.preventDefault()">
           <a-icon type="more" class="fs-28 font-weight-bolder br-50 bg-c9 color-primary icon-30"/>
         </a>
         <a-menu slot="overlay" class="text-center px-2">
           <a-menu-item class="border-bottom" @click="request()">
-            <a class="fs-12 color-primary">Accept</a>
+            <a class="fs-12 color-primary">Request Private Chat</a>
           </a-menu-item>
-          <a-menu-item class="border-bottom" @click="rejectRequest()">
-            <a class="fs-12 text-danger">Reject</a>
-          </a-menu-item>
+<!--          <a-menu-item class="border-bottom" @click="rejectRequest()">-->
+<!--            <a class="fs-12 text-danger">Reject</a>-->
+<!--          </a-menu-item>-->
         </a-menu>
       </a-dropdown>
     </div>

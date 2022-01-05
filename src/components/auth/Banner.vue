@@ -5,7 +5,7 @@
         <UnAuthSearchForm @handleSearch="handleSearch" />
       </div>
     </div>
-    <div class="banner-content">
+    <div class="banner-content font-poppins">
       <div class="container">
         <h2 class="color-white" style="margin-bottom: 12px">
           Someone must be searching for you
@@ -21,6 +21,7 @@
 
 <script>
 import UnAuthSearchForm from "@/components/search/UnAuthSearchForm";
+import ApiService from "@/services/api.service";
 export default {
   name: "Banner",
   components: {UnAuthSearchForm },
@@ -28,19 +29,38 @@ export default {
     return {};
   },
   methods: {
-    handleSearch(_payload) {
-      const response = this.$store.dispatch("searchUser", _payload);
-      response.then((data) => {
-        console.log(data);
-        this.$router
-          .push({
-            name: "UnAuthSearch",
-            params: { result: data.result },
-          })
-          .catch((err) => {
-            console.log("err", err);
+    async handleSearch(_payload) {
+      await ApiService.get(_payload).then(response => {
+        if(response && response.data && response.data.status != 'FAIL') {
+          this.$router
+              .push({
+                name: "UnAuthSearch",
+                params: { result: response.data.result },
+              });
+        } else {
+          this.$error({
+            title: "No candidate found",
+            center: true,
           });
+        }
+      }).catch(e => {
+        this.$error({
+          title: "Something went wrong!",
+          center: true,
+        });
       });
+      // const response = this.$store.dispatch("search/searchUser", _payload);
+      // response.then((data) => {
+      //   console.log(data);
+      //   this.$router
+      //     .push({
+      //       name: "UnAuthSearch",
+      //       params: { result: data.result },
+      //     })
+      //     .catch((err) => {
+      //       console.log("err", err);
+      //     });
+      // });
     },
   },
 };
@@ -54,6 +74,7 @@ export default {
   text-align: center;
   position: relative;
   padding: 150px 0 200px;
+  z-index: 9;
 
   @media (min-height: 720px) {
     height: 800px;

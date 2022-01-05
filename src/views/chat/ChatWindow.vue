@@ -116,9 +116,20 @@
                         class="chat-item"
                         v-for="item in chatHistory"
                         :key="item.team_id"
-                        @click="getIndividualChat(item, item)"
+                        @click="item.label == 'Connected Team' ? getConnectedTeamChatHistory(item) : getIndividualChat(item, item)"
                     >
+                      <ConnectedTeamChat
+                          v-if="item.label == 'Connected Team'"
+                          :item="item"
+                          :status="'connected'"
+                          :online_users="online_users"
+                          :teamMembers="teamMembers"
+                          :activeTeam="activeTeam"
+                          action
+                          class="w-full pr-3 cursor-pointer"
+                      />
                       <ChatListItem
+                          v-else
                           :item="item"
                           :status="'recent'"
                           :online_users="online_users"
@@ -183,7 +194,7 @@
 <!--                      @click="backToTabList()">-->
 <!--                <a-icon type="caret-left"/>-->
 <!--              </button>-->
-              <h4 class="cursor-pointer position-absolute btn-short-back" @click="backToTabList()">&#8592;</h4>
+              <h4 class="cursor-pointer btn-short-back" @click="backToTabList()">&#8592;</h4>
               <div class="header clearfix">
                 <div class="left">
                   <div class="top">
@@ -193,7 +204,11 @@
                     </div>
                     <div class="chat-info">
                       <div class="chat-group bg-primary">{{ chatheadopen.label }}</div>
-                      <div class="chat-name">{{ conversationTitle }}</div>
+                      <div class="chat-name">
+                        <a-tooltip bottom :title="chatheadopen.label">
+                          {{ conversationTitle }}
+                        </a-tooltip>
+                      </div>
                       <div class="last-chat" v-if="chat_type == 'team'">Active now {{ getTeamOnlineUsers() > 0 ? getTeamOnlineUsers() : '' }}</div>
                     </div>
                   </div>
@@ -338,48 +353,6 @@
               <div class="flex justify-content-center align-items-center empty-height">
                 <h4 class="fs-20 flex flex-column align-items-center justify-content-center">Select a conversation & start the chat</h4>
               </div>
-              <div class="d-none flex-column justify-content-center align-items-center text-center">
-                <v-stepper alt-labels>
-                  <v-stepper-header>
-                    <v-stepper-step
-                        step="3"
-                        color="secondary"
-                        complete
-                    >
-                      Complete profile
-                    </v-stepper-step>
-
-                    <v-divider></v-divider>
-
-                    <v-stepper-step
-                        step="4"
-                        color="secondary"
-                        complete
-                    >
-                      Verify account
-                    </v-stepper-step>
-
-                    <v-divider></v-divider>
-
-                    <v-stepper-step
-                        color="secondary"
-                        complete
-                        step="5"
-                    >
-                      Connect teams
-                    </v-stepper-step>
-
-                    <v-divider></v-divider>
-
-                    <v-stepper-step
-                        step="6"
-                        color="secondary"
-                        complete>
-                      Communicate
-                    </v-stepper-step>
-                  </v-stepper-header>
-                </v-stepper>
-              </div>
             </div>
           </div>
         </div>
@@ -485,7 +458,10 @@ export default {
       return this.$store.state.chat.scrolldown_msg;
     },
     privateRequested() {
-      return this.privateRequests.filter(item => item.is_friend == 0);
+      if(this.teamMembers && this.teamMembers.length > 0) {
+        return this.privateRequests.filter(item => item.is_friend == 0 && this.teamMembers.includes(item.receiver.toString()));
+      }
+      return [];
     },
     totalUnreadCount: function () {
       return this.$store.state.chat.unread_records.length;
@@ -750,7 +726,7 @@ export default {
           to_team_id: item.to_team_id,
           from_team_id: item.from_team_id,
           private_receiver_id: item.receiver,
-          private_team_chat_id: item.id,
+          team_private_chat_id: item.id,
           other_mate_id: item.receiver,
           typing_status: 0,
           typing_text: '',
@@ -768,7 +744,16 @@ export default {
         message: pick(data.last_group_msg, messageKeys)
       }]
 
-      return [...lastGroupMsg, ...singleChat, ...privateChat];
+      let connectedMsg = data.connected_team_msgs.map(item => {
+        item.label = 'Connected Team';
+        item.typing_status = 0;
+        item.typing_text = '';
+        item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
+        item.is_friend = item.team_private_chat ? item.team_private_chat.is_friend : 0;
+        return item;
+      });
+
+      return [...lastGroupMsg, ...connectedMsg, ...singleChat, ...privateChat];
     },
     async loadTeamChat() {
       try {
@@ -794,6 +779,7 @@ export default {
           item.typing_status = 0;
           item.typing_text = '';
           item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
+          item.is_friend = item.team_private_chat ? item.team_private_chat.is_friend : 0;
           return item;
         });
         // if (data && data.connected_teams) {
@@ -816,7 +802,7 @@ export default {
     async getPrivateRequests() {
       let {data} = await ApiService.get('/v1/get-all-private-chat-requests').then(res => res.data);
       this.privateRequests = data.map(item => {
-        item.label = 'Private chat';
+        item.label = 'Private chat request';
         item.typing_status = 0;
         item.typing_text = '';
         // item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
@@ -836,6 +822,11 @@ export default {
         let url = 'individual-chat-history';
         if(payload.team_chat_id) {
           url = 'connected-team-chat-history';
+        }
+        if(this.chatheadopen.team_private_chat_id) {
+          url = 'connected-private-chat-history';
+          payload.team_private_chat_id = this.chatheadopen.team_private_chat_id;
+          payload.team_chat_id = this.chatheadopen.team_private_chat_id;
         }
         let {data} = await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
         if (data && data.message_history) {
@@ -1011,7 +1002,7 @@ export default {
         if (this.fromChatItem == 'connected-team') {
           await this.sendConnectedTeamMessage();
         } else {
-          if(this.private_chat && this.private_chat.private_team_chat_id) {
+          if(this.chatheadopen && this.chatheadopen.team_private_chat_id) {
             await this.sendPrivateMessage();
           } else {
             await this.sendTeamMessage();
@@ -1141,7 +1132,8 @@ export default {
         receiver: this.private_chat.receiver.toString(),
         label: 'Private',
         conv_title: this.conversationTitle,
-        logo: this.chatheadopen.logo
+        logo: this.chatheadopen.logo,
+        private_team_chat_id: this.chatheadopen.private_team_chat_id
       }
       payload.sender = loggedUser.id.toString();
       // this.chats.unshift(payload);
@@ -2463,9 +2455,8 @@ export default {
   background: #bcb5de;
 }
 .btn-short-back {
-  top: -20px;
-  left: -10px;
-  padding: 4px;
+  margin-bottom: 0;
+  margin-top: -14px;
   @media (min-width: 576px) {
     display: none;
   }
@@ -2494,12 +2485,12 @@ export default {
 }
 .chat-area {
   //min-height: 600px;
-  min-height: calc(100vh - 260px);
+  min-height: calc(100vh - 210px);
   @media (min-width: 410px) {
-    min-height: calc(100vh - 260px);
+    min-height: calc(100vh - 210px);
   }
   @media (min-width: 576px) {
-    min-height: calc(100vh - 260px);
+    min-height: calc(100vh - 210px);
   }
   @media (min-width: 768px) {
     min-height: calc(100vh - 260px);
@@ -2549,6 +2540,12 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.chat-group {
+  display: none;
+  @media (min-width: 768px) {
+    display: inherit;
+  }
 }
 // end css for chat
 </style>

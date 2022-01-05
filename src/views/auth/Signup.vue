@@ -1,80 +1,6 @@
 <template>
   <div class="signup-container">
     <div class="signup">
-      <div v-if="showSignupForm && !errorMessage" class="signup-inner">
-        <a href="/" class="logo"><img src="@/assets/logo.png" alt="logo" class="mat-logo" /></a>
-        <a-form-model
-          ref="signupFormOne"
-          :model="signupModel"
-          :rules="rules"
-          class="form-signup"
-        >
-          <div>
-            <div class="mb-3">
-              <a-form-model-item ref="email" prop="email">
-                <a-input
-                  type="email"
-                  class="form-control fs-14"
-                  id="email"
-                  v-model="signupModel.email"
-                  aria-describedby="emailHelp"
-                  placeholder="Enter email"
-                />
-              </a-form-model-item>
-            </div>
-            <div class="mb-3">
-              <a-form-model-item ref="password" prop="password">
-                <a-input-password
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  v-model="signupModel.password"
-                  placeholder="Password"
-                />
-              </a-form-model-item>
-            </div>
-            <div class="mb-3">
-              <a-form-model-item ref="confirmPassword" prop="confirmPassword">
-                <a-input-password
-                  type="password"
-                  class="form-control"
-                  id="confirmPassword"
-                  v-model="signupModel.confirmPassword"
-                  placeholder="Confirm password"
-                />
-              </a-form-model-item>
-            </div>
-
-            <button
-              @click="handleSubmitSignUp"
-              class="btn btn-agreeJoin-pink w-100"
-            >
-              Agree & Join
-            </button>
-
-            <span class="fs-12 mt-2"
-              >By clicking Agree & Join, you agree to Matrimony Assist
-              <a class="link" href="">User Agreement, Privacy Policy</a> and
-              <a class="link" href="">Cookie Policy</a>
-            </span>
-          </div>
-        </a-form-model>
-        <p class="flex-center-center mt-3 bottom-text">
-          Already on <span class="logo-text"> Matrimony Assist? </span>
-
-          <router-link
-            to="/login"
-            class="
-              btn btn-sm btn-outline-primary btn-round-sm
-              ms-2
-              text-nowrap
-              join-now-btn
-            "
-          >
-            Sign in
-          </router-link>
-        </p>
-      </div>
       <div class="type-selection" v-if="showMemberTypeForm && !errorMessage">
         <div class="content">
           <h3 class="mt-3">
@@ -126,8 +52,8 @@
             <div cla class="mt-3 footer" v-if="signupModel.account_type > 0">
               <p>
                 <input
+                  v-model="isConfirm"
                   type="checkbox"
-                  @change="onConfirmCheckbox"
                   class="confirm-type"
                 />
                 <span class="confirm-text"
@@ -207,6 +133,14 @@
               real name to appear on search result.
             </a-tooltip>
             <a-button
+              @click="backToMemberType"
+              class="btn btn-secondary w-100"
+              type="primary"
+              :loading="isLoading"
+            >
+              Back
+            </a-button>
+            <a-button
               @click="handleSubmit"
               class="btn btn-secondary w-100"
               type="primary"
@@ -217,13 +151,101 @@
           </div>
         </a-form-model>
       </div>
+      <div v-if="showSignupForm && !errorMessage" class="signup-inner">
+        <a href="/" class="logo"
+          ><img src="@/assets/logo.png" alt="logo" class="mat-logo"
+        /></a>
+        <a-form-model
+          ref="signupFormOne"
+          :model="signupModel"
+          :rules="rules"
+          class="form-signup"
+        >
+          <div>
+            <div class="mb-3">
+              <a-form-model-item ref="email" prop="email">
+                <a-input
+                  type="email"
+                  class="form-control fs-14"
+                  id="email"
+                  v-model="signupModel.email"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter email"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="mb-3">
+              <a-form-model-item ref="password" prop="password">
+                <a-input-password
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  v-model="signupModel.password"
+                  placeholder="Password"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="mb-3">
+              <a-form-model-item ref="confirmPassword" prop="confirmPassword">
+                <a-input-password
+                  type="password"
+                  class="form-control"
+                  id="confirmPassword"
+                  v-model="signupModel.confirmPassword"
+                  placeholder="Confirm password"
+                />
+              </a-form-model-item>
+            </div>
+            <button
+              @click="backToForm"
+              class="btn btn-agreeJoin-pink w-100"
+            >
+              Back
+            </button>
+            <button
+              @click="handleSubmitSignUp"
+              class="btn btn-agreeJoin-pink w-100"
+            >
+              Agree & Join
+            </button>
+
+            <span class="fs-12 mt-2"
+              >By clicking Agree & Join, you agree to Matrimony Assist
+              <a class="link" href="">User Agreement, Privacy Policy</a> and
+              <a class="link" href="">Cookie Policy</a>
+            </span>
+          </div>
+        </a-form-model>
+        <p class="flex-center-center mt-3 bottom-text">
+          Already on <span class="logo-text"> Matrimony Assist? </span>
+
+          <router-link
+            to="/login"
+            class="
+              btn btn-sm btn-outline-primary btn-round-sm
+              ms-2
+              text-nowrap
+              join-now-btn
+            "
+          >
+            Sign in
+          </router-link>
+        </p>
+      </div>
+
+      
       <div v-if="errorMessage" class="signup-inner">
         <p class="error">
           {{ errorMessage }}
           <button @click="resetData">
             <router-link
               to="/login"
-              class="btn btn-sm btn-outline-primary btn-round-sm ms-2 text-nowrap join-now-btn"
+              class="
+                btn btn-sm btn-outline-primary btn-round-sm
+                ms-2
+                text-nowrap
+                join-now-btn
+              "
             >
               Sign in
             </router-link>
@@ -276,8 +298,8 @@ export default {
         account_type: 0,
       },
       showMemberForm: false,
-      showMemberTypeForm: false,
-      showSignupForm: true,
+      showMemberTypeForm: true,
+      showSignupForm: false,
       isLoading: false,
       isConfirm: false,
       rules: {
@@ -336,9 +358,31 @@ export default {
   methods: {
     handleSubmitSignUp() {
       this.$refs.signupFormOne.validate((valid) => {
-        if (valid) {
-          this.showMemberTypeForm = true;
-          this.showSignupForm = false;
+       
+         if (valid) {
+          const {
+            email,
+            password,
+            first_name,
+            last_name,
+            screen_name,
+            account_type,
+          } = this.signupModel;
+
+          try {
+            this.isLoading = true;
+            this.$store.dispatch("signup", {
+              email,
+              password,
+              first_name,
+              last_name,
+              screen_name,
+              account_type,
+            });
+          } catch {
+            this.isLoading = false;
+            this.errorMessage = "The email has already been taken.";
+          }
         } else {
           return false;
         }
@@ -363,16 +407,24 @@ export default {
         first_name: CapitalizeFirstLetter(this.signupModel.first_name),
       };
     },
-
+    backToMemberType() {
+      this.showMemberTypeForm = true;
+      this.showSignupForm = false;
+      this.showMemberForm = false;
+    },
     onHandleContinue() {
       this.showMemberTypeForm = false;
       this.showSignupForm = false;
       this.showMemberForm = true;
     },
-    onConfirmCheckbox() {
-      this.isConfirm = !this.isConfirm;
+    backToForm() {
+      this.showMemberTypeForm = false;
+      this.showSignupForm = false;
+      this.showMemberForm = true;
     },
+
     onSelectAccountType(type) {
+      this.isConfirm = false;
       this.signupModel.account_type = type;
     },
     resetData() {
@@ -382,29 +434,9 @@ export default {
     async handleSubmit() {
       this.$refs.signupFormTwo.validate((valid) => {
         if (valid) {
-          const {
-            email,
-            password,
-            first_name,
-            last_name,
-            screen_name,
-            account_type,
-          } = this.signupModel;
-
-          try {
-            this.isLoading = true;
-            this.$store.dispatch("signup", {
-              email,
-              password,
-              first_name,
-              last_name,
-              screen_name,
-              account_type,
-            });
-          } catch {
-            this.isLoading = false;
-            this.errorMessage = "The email has already been taken.";
-          }
+          this.showMemberTypeForm = false;
+          this.showSignupForm = true;
+          this.showMemberForm = false;
         } else {
           return false;
         }
@@ -435,17 +467,19 @@ export default {
       margin: 0 !important;
     }
     .btn-agreeJoin-pink {
-      color: $color-white;
-      background: #2cd797;
-      border: 1px solid $border-white;
-      box-shadow: 2px 2px 2px #999;
+      color: #2cd797;
+      //background: #2cd797;
+      border: 1px solid #2cd797;
       border-radius: 20px;
+      font-size: 16px;
       &:hover,
       &:not(:disabled):not(.disabled):active {
         background: #2cd797;
-        border: 1px solid $border-primary;
-        opacity: 0.9;
+        color: $color-white;
+        border: 1px solid $border-white;
+        opacity: 1;
         outline: 0;
+        box-shadow: 2px 2px 2px #999;
       }
       &:disabled,
       &.disabled {
@@ -454,6 +488,10 @@ export default {
         border: 1px solid $border-primary;
         opacity: 0.6;
       }
+      &:focus {
+        outline: none;
+        box-shadow: none;
+      }
       img {
         margin-right: 3px;
       }
@@ -461,7 +499,7 @@ export default {
     .signup-inner {
       max-width: 400px;
       margin: 0 auto;
-      padding: 20px 15px;
+      padding: 10px 15px;
       text-align: center;
       @media (min-width: 768px) {
         padding: 80px 15px;
@@ -479,7 +517,7 @@ export default {
         display: inline-block;
         margin-bottom: 20px;
         .mat-logo {
-          width: 180px;
+          width: 138px;
           @media (min-width: 768px) {
             width: 250px;
           }
@@ -489,7 +527,9 @@ export default {
         background: $bg-white;
         padding: 20px;
         border-radius: 5px;
-        margin-top: 48px;
+        @media (min-width: 768px) {
+          margin-top: 48px;
+        }
         .warning {
           color: red;
           font-size: 14px;
@@ -586,11 +626,25 @@ export default {
   }
 }
 .join-now-btn {
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 14px;
-  border: 1px solid #FFFFFF;
+  border: 1px solid #ffffff;
+}
+.join-now-btn:focus {
+  outline: none;
+  box-shadow: none;
 }
 .join-now-btn:hover {
   background: $bg-primary;
+  box-shadow: 0 2px 2px #999;
+  border: none;
+}
+.signup-head {
+  font-size: 16px;
+  color: #FFFFFF;
+  margin-top: -12px;
+  background: -webkit-linear-gradient(white, pink, white, #8debf2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 </style>
