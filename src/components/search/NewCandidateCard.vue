@@ -63,69 +63,59 @@
     <v-divider class="mx-4"></v-divider>
 
     <div class="flex flex-wrap justify-space-between px-4">
-        <v-btn
-          @click.stop="shortList"
-          class="text-capitalize"
-          style="width:47%"
-          rounded
-          small
-          color="deep-purple darken-1"
-          dark
-        >
-          <div class="flex justify-center align-center">
-            <img 
-              style="height: 13px; margin-right: 4px;" 
-              src="@/assets/icon/star-fill-white.svg" 
-              alt=""
-            >
-            ShortList
-          </div>
-        </v-btn>
-        <v-btn
-          class="text-capitalize"
-          style="width:47%"
-          rounded
-          small
-          color="deep-purple darken-1"
-          dark
-          @click="onClickConnect"
-        >
-         <div class="flex justify-center align-center">
-          <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/connect.svg" alt="">
-          Connect
-        </div>
-        </v-btn>
+      <ButtonComponent
+        wrapperWidth="49%"
+        iconHeight="14px"
+        :isSmall="true"
+        :responsive="false"
+        :title="candidate.is_short_listed ? 'Unlist' : 'ShortList'"
+        icon="/assets/icon/star-fill-secondary.svg"
+        :customEvent="candidate.is_short_listed ? 'removeShortList' : 'addShortList'"
+        @onClickButton="onClickButton"
+      />
+      <ButtonComponent
+        wrapperWidth="49%"
+        iconHeight="14px"
+        :isSmall="true"
+        :responsive="false"
+        :title="candidate.is_short_listed ? 'Connect' : 'Disconnect'"
+        icon="/assets/icon/connection-secondary.svg"
+        :customEvent="candidate.is_connected ? 'removeConnection' : 'addConnection'"
+        @onClickButton="onClickButton"
+      />
     </div>
     <div class="mt-3 px-4 flex flex-wrap justify-space-between">
-        <v-btn
-          class="text-capitalize"
-          style="width:47%"
-          rounded
-          small
-          color="deep-purple darken-1"
-          dark
-        >
-        <div class="flex justify-center align-center">
-          <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/teamlist.svg" alt="">
-          Teamlist
-        </div>
-        </v-btn>
-        <v-btn
-          class="text-capitalize"
-          style="width:47%"
-          rounded
-          small
-          color="pink darken-1"
-          dark
-        >
-        <div class="flex justify-center align-center">
-          <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/block.svg" alt="">
-          Block
-        </div>
-        </v-btn>
+      <ButtonComponent
+        wrapperWidth="49%"
+        iconHeight="14px"
+        :isSmall="true"
+        :responsive="false"
+        :title="candidate.is_short_listed ? 'TeamUnlist' : 'TeamList'"
+        icon="/assets/icon/star-fill-secondary.svg"
+        :customEvent="candidate.is_connected ? 'removeTeam' : 'addTeam'"
+        @onClickButton="onClickButton"
+      />
+      <ButtonComponent
+        wrapperWidth="49%"
+        iconHeight="14px"
+        :isSmall="true"
+        :responsive="false"
+        :title="candidate.is_short_listed ? 'Unblock' : 'Block'"
+        :icon="candidate.is_blocked ? '/assets/icon/block-secondary.svg' : '/assets/icon/block.svg'"
+        :customEvent="candidate.is_blocked ? 'removeBlock' : 'block'"
+        :backgroundColor="candidate.is_blocked ? '' : '#d81b60'"
+        :titleColor="candidate.is_blocked ? '' : 'white'"
+        @onClickButton="onClickButton"
+      />
     </div>
     <div class="px-4 pb-4 mt-4">
-      <v-btn
+      <ButtonComponent
+        :responsive="false"
+        title="View Profile"
+        customEvent="viewProfileDetail"
+        @onClickButton="onClickButton"
+      />
+      <!-- <v-btn
         class="mt-1 text-capitalize"
         block
         rounded
@@ -134,15 +124,20 @@
         @click.stop="ViewProfileDetail"
       >
         view profile
-      </v-btn>
+      </v-btn> -->
     </div>
   </v-card>
 </template>
 
 <script>
 import {mapMutations, mapActions} from 'vuex'
+import ButtonComponent from '@/components/atom/ButtonComponent'
   export default {
+    name: 'CandidateListCard',
     props: ["candidate"],
+    components: {
+      ButtonComponent
+    },
     data: () => ({
       loading: false,
       selection: 1,
@@ -158,6 +153,11 @@ import {mapMutations, mapActions} from 'vuex'
         getDetails: 'search/searchUser',
 
       }),
+      onClickButton(eventData) {
+        if(eventData.event == 'viewProfileDetail') {
+          this.ViewProfileDetail()
+        }
+      },
       shortList() {
         console.log('short list')
       },
