@@ -304,8 +304,7 @@ export default {
 }
 .join-now-btn:hover {
   background: $bg-primary;
-  box-shadow: 0 2px 2px #999;
-  border: none;
+  box-shadow: 0 2px 2px rgb(0 0 0 / 25%);
 }
 .join-now-btn:focus {
   outline: none;

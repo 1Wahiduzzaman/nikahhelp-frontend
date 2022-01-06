@@ -41,7 +41,7 @@
 
             <a-row :gutter="16" class="desktop-view">
               <a-col :span="8">
-                <a-card class="br-card shadow">
+                <a-card class="br-card shadow type-card">
                   <button
                     @click="onSelectAccountType(1)"
                     class="btn no-shadow p-2 fs-20 br-30 btn-type"
@@ -55,7 +55,7 @@
                 </a-card>
               </a-col>
               <a-col :span="8">
-                <a-card class="br-card shadow">
+                <a-card class="br-card shadow type-card">
                   <button
                     @click="onSelectAccountType(2)"
                     class="btn no-shadow p-2 fs-20 br-30 btn-type"
@@ -69,7 +69,7 @@
                 </a-card>
               </a-col>
               <a-col :span="8">
-                <a-card class="br-card shadow">
+                <a-card class="br-card shadow type-card">
                   <button class="btn no-shadow disabled p-2 fs-20 br-30 btn-type">
                     Match Maker
                   </button>
@@ -96,25 +96,42 @@
                 >
               </p>
               <button
-                :disabled="isConfirm ? false : true"
                 class="btn btn-continue w-50 fs-20"
-                :class="isConfirm ? 'btn-active' : 'disabled'"
                 @click="onHandleContinue"
               >
                 Continue
               </button>
+<!--              :class="isConfirm ? 'btn-active' : 'disabled'"-->
             </div>
           </div>
+          <p class="flex-center-center mt-3 bottom-text">
+            Already on <span class="logo-text ml-2"> Matrimony Assist? </span>
+
+            <router-link
+                to="/login"
+                class="
+              btn btn-sm btn-outline-primary btn-round-sm
+              ms-2
+              text-nowrap
+              join-now-btn
+            "
+            >
+              Sign in
+            </router-link>
+          </p>
         </div>
       </div>
+      <h3 v-if="!showMemberTypeForm" class="mt-6 text-header-black font-weight-bolder text-center">
+        Welcome To <span class="logo-text">Matrimony Assist</span> Signup
+      </h3>
       <div v-if="showMemberForm && !errorMessage" class="signup-inner">
-        <a href="/" class="logo"><img src="@/assets/logo.png" alt="logo" /></a>
+<!--        <a href="/" class="logo"><img src="@/assets/logo.png" alt="logo" /></a>-->
 
         <a-form-model
           ref="signupFormTwo"
           :model="signupModel"
           :rules="rules"
-          class="form-signup"
+          class="form-signup br-card"
         >
           <div>
             <div class="mb-3">
@@ -159,8 +176,8 @@
                 something suitable. Please make sure you choose a screen name
                 wisely as it communicates somthing about your self.
               </template>
-              * Please choose a sensible screen name, if you don't wish your
-              real name to appear on search result.
+              <span class="text-white">* Please choose a sensible screen name, if you don't wish your
+              real name to appear on search result.</span>
             </a-tooltip>
             <a-button
               @click="backToMemberType"
@@ -170,21 +187,34 @@
             >
               Back
             </a-button>
-            <a-button
+            <button
               @click="handleSubmit"
-              class="btn btn-secondary w-100"
-              type="primary"
-              :loading="isLoading"
+              class="btn btn-continue w-100 mt-2 h-32 pt-1"
             >
               Continue
-            </a-button>
+            </button>
           </div>
         </a-form-model>
+        <p class="flex-center-center mt-3 bottom-text">
+          Already on <span class="logo-text ml-2"> Matrimony Assist? </span>
+
+          <router-link
+              to="/login"
+              class="
+              btn btn-sm-sign btn-outline-primary btn-round-sm
+              ms-2
+              text-nowrap
+              join-now-btn
+            "
+          >
+            Sign in
+          </router-link>
+        </p>
       </div>
       <div v-if="showSignupForm && !errorMessage" class="signup-inner">
-        <a href="/" class="logo"
-          ><img src="@/assets/logo.png" alt="logo" class="mat-logo"
-        /></a>
+<!--        <a href="/" class="logo"-->
+<!--          ><img src="@/assets/logo.png" alt="logo" class="mat-logo"-->
+<!--        /></a>-->
         <a-form-model
           ref="signupFormOne"
           :model="signupModel"
@@ -196,7 +226,7 @@
               <a-form-model-item ref="email" prop="email">
                 <a-input
                   type="email"
-                  class="form-control fs-14"
+                  class="fs-14"
                   id="email"
                   v-model="signupModel.email"
                   aria-describedby="emailHelp"
@@ -208,7 +238,6 @@
               <a-form-model-item ref="password" prop="password">
                 <a-input-password
                   type="password"
-                  class="form-control"
                   id="password"
                   v-model="signupModel.password"
                   placeholder="Password"
@@ -219,7 +248,6 @@
               <a-form-model-item ref="confirmPassword" prop="confirmPassword">
                 <a-input-password
                   type="password"
-                  class="form-control"
                   id="confirmPassword"
                   v-model="signupModel.confirmPassword"
                   placeholder="Confirm password"
@@ -228,18 +256,30 @@
             </div>
             <button
               @click="backToForm"
-              class="btn btn-agreeJoin-pink w-100"
+              class="btn btn-secondary w-100 mt-1 h-32 pt-1"
             >
               Back
             </button>
-            <button
-              @click="handleSubmitSignUp"
-              class="btn btn-agreeJoin-pink w-100"
-            >
-              Agree & Join
-            </button>
+<!--            <button-->
+<!--              @click="handleSubmitSignUp"-->
+<!--              class="btn btn-agreeJoin-pink w-100"-->
+<!--            >-->
+<!--              Agree & Join-->
+<!--            </button>-->
+            <div class="loading-dock position-relative mt-1 h-32 pt-1">
+              <svg id="load-b" x="0px" y="0px" viewBox="0 0 150 150">
+                <circle class="loading-inner" cx="75" cy="75" r="60"/>
+              </svg>
+              <svg id="load" x="0px" y="0px" viewBox="0 0 150 150">
+                <circle class="loading-inner" cx="75" cy="75" r="60"/>
+              </svg>
+              <button class="btn btn-block submit h-32" @click="handleSubmitSignUp">Submit</button>
+              <svg id="check" style="width:24px;height:24px" viewBox="0 0 24 24">
+                <path fill="#FFFFFF" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
+              </svg>
+            </div>
 
-            <span class="fs-12 mt-2"
+            <span class="fs-12 mt-2 text-white"
               >By clicking Agree & Join, you agree to Matrimony Assist
               <a class="link" href="">User Agreement, Privacy Policy</a> and
               <a class="link" href="">Cookie Policy</a>
@@ -252,7 +292,7 @@
           <router-link
             to="/login"
             class="
-              btn btn-sm btn-outline-primary btn-round-sm
+              btn btn-sm-sign btn-outline-primary btn-round-sm
               ms-2
               text-nowrap
               join-now-btn
@@ -271,7 +311,7 @@
             <router-link
               to="/login"
               class="
-                btn btn-sm btn-outline-primary btn-round-sm
+                btn btn-sm-sign btn-outline-primary btn-round-sm
                 ms-2
                 text-nowrap
                 join-now-btn
@@ -433,6 +473,7 @@ export default {
 
           try {
             this.isLoading = true;
+            this.addLoader();
             this.$store.dispatch("signup", {
               email,
               password,
@@ -443,10 +484,12 @@ export default {
             });
           } catch {
             this.isLoading = false;
+            this.removeLoader();
             this.errorMessage = "The email has already been taken.";
           }
         } else {
-          return false;
+           this.removeLoader();
+           return false;
         }
       });
     },
@@ -475,16 +518,22 @@ export default {
       this.showMemberForm = false;
     },
     onHandleContinue() {
-      this.showMemberTypeForm = false;
-      this.showSignupForm = false;
-      this.showMemberForm = true;
+      if(this.isConfirm) {
+        this.showMemberTypeForm = false;
+        this.showSignupForm = false;
+        this.showMemberForm = true;
+      } else {
+        this.$error({
+          title: "Please confirm your account type",
+          center: true,
+        });
+      }
     },
     backToForm() {
       this.showMemberTypeForm = false;
       this.showSignupForm = false;
       this.showMemberForm = true;
     },
-
     onSelectAccountType(type) {
       this.isConfirm = false;
       this.signupModel.account_type = type;
@@ -504,11 +553,39 @@ export default {
         }
       });
     },
+    addLoader() {
+      let submit = document.querySelector('.submit');
+      submit.classList.remove("return");
+      submit.blur();
+      document.querySelector('.loading-dock').classList.add('loaded');
+      document.getElementById('load').style.display= 'initial';
+      document.getElementById('load-b').style.display= 'initial';
+      setTimeout(function(){
+        document.getElementById('load').style.opacity = 1;
+      }, 750);
+      setTimeout(function(){
+        document.getElementById('load-b').style.opacity = 1;
+      }, 1400);
+    },
+    removeLoader() {
+      let submit = document.querySelector('.submit');
+      document.querySelector('.loading-dock').classList.remove('loaded');
+      document.getElementById('load').style.display = 'none';
+      document.getElementById('load-b').style.display = 'none';
+      document.getElementById('load').style.opacity = 0;
+      document.getElementById('load-b').style.opacity = 0;
+      submit.classList.add("return");
+      submit.innerHTML = "Submit";
+      document.getElementById('check').style.display = "none";
+    }
   },
 };
 </script>
 
 <style scoped lang="scss">
+$turquoise: #2cd797;
+$dark-text: hsl(0, 0%, 13%);
+$border-width: 2px;
 @import "@/styles/base/_variables.scss";
 @import "@/styles/components/_inputs.scss";
 .signup-container {
@@ -518,7 +595,7 @@ export default {
   height: calc(100vh);
   overflow-y: auto;
   .signup {
-    //height: 100vh;
+    height: 100vh;
     //background-color: #522e8e;
     //background-image: linear-gradient(
     //  0deg,
@@ -564,8 +641,14 @@ export default {
       margin: 0 auto;
       padding: 10px 15px;
       text-align: center;
+      //background-image: linear-gradient(
+      //        0deg,
+      //        #e02076 0%,
+      //        #932784 50%,
+      //        #522e8e 100%
+      //);
       @media (min-width: 768px) {
-        padding: 80px 15px;
+        padding: 4px 15px;
       }
       .error {
         background: #fff;
@@ -587,11 +670,17 @@ export default {
         }
       }
       .form-signup {
-        background: $bg-white;
+        background-image: linear-gradient(
+                0deg,
+                #e02076 0%,
+                #932784 50%,
+                #522e8e 100%
+        );
+        //background: $bg-white;
         padding: 20px;
         border-radius: 5px;
         @media (min-width: 768px) {
-          margin-top: 48px;
+          margin-top: 8px;
         }
         .warning {
           color: red;
@@ -620,7 +709,7 @@ export default {
         color: #3fcbe7;
       }
       .bottom-text {
-        color: white;
+        //color: white;
         .logo-text {
           font-family: $header-font;
           margin-left: 10px;
@@ -699,13 +788,6 @@ export default {
         //background: $bg-success;
         color: $color-white;
       }
-      .btn-continue {
-        border-radius: 30px;
-        background: $bg-success;
-        &:hover {
-
-        }
-      }
       .confirm-type {
         margin-top: 10px;
         transform: scale(1.8);
@@ -719,9 +801,9 @@ export default {
   }
 }
 .join-now-btn {
-  color: #ffffff;
+  //color: #ffffff;
   font-size: 14px;
-  border: 1px solid #ffffff;
+  //border: 1px solid #ffffff;
 }
 .join-now-btn:focus {
   outline: none;
@@ -753,6 +835,19 @@ export default {
     height: 170px;
   }
 }
+h3 {
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  @media (min-width: 768px) {
+    font-size: 28px;
+  }
+  .logo-text {
+    font-family: $header-font;
+    color: $color-primary;
+    font-weight: 100;
+  }
+}
 .logo-text {
   color: $color-brand !important;
   font-style: italic;
@@ -778,6 +873,186 @@ export default {
 .mobile-view {
   @media (min-width: 768px) {
     display: none;
+  }
+}
+.type-card {
+  height: 300px;
+  @media (min-width: 1240px) {
+    height: auto;
+  }
+}
+.btn-continue {
+  border-radius: 30px;
+  border: 2px solid $color-white;
+  //color: $turquoise;
+  color: #FFFFFF;
+  &:hover {
+    background: $turquoise;
+    color: #FFFFFF;
+  }
+}
+.btn-secondary {
+  &:hover {
+    background: $bg-white !important;
+    color: $color-primary !important;
+    border: none !important;
+    box-shadow: none;
+  }
+}
+.h-32 {
+  height: 32px;
+}
+.btn.btn-sm-sign {
+  font-size: 12px;
+  padding: 1px 8px;
+}
+//agree button css
+.loading-dock{
+  //width: 330px;
+  //height: 54px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button.submit{
+  cursor: pointer;
+  width: 100%;
+  color: white;
+  border-radius: 40px;
+  border: $border-width solid $border-white;
+  transition: all .2s;
+  &:hover{
+    background: $turquoise;
+    color: white;
+  }
+  &:active{
+    transform: scale(0.95);
+  }
+
+  &:focus{
+    outline: none;
+    background: $turquoise;
+    color: white;
+  }
+
+  &.popout{
+    animation: circle-to-button .5s linear forwards;
+  }
+  &.return{
+    animation: fade-to-original .3s linear;
+    &:hover{
+      background: $turquoise;
+      color: white;
+    }
+  }
+}
+
+.loaded{
+  button.submit{
+    background-color: $turquoise;
+    animation: button-to-circle .5s linear forwards;
+    animation-delay: .3s;
+  }
+  #load{
+    animation: loading-circle 3s linear forwards;
+    animation-delay: 1s;
+  }
+}
+
+#load, #load-b {
+  display: none;
+  position: absolute;
+  width: 58px;
+  height: 58px;
+  opacity: 0;
+  .loading-inner {
+    stroke: {
+      dasharray: 900;
+      // Thickness of line
+      width: 8;
+      miterlimit: 10;
+      linecap: round;
+    }
+    stroke: #c3c3c3;
+    fill: transparent;
+  }
+}
+#load-b{
+  opacity: 0;
+  .loading-inner{
+    stroke: $turquoise;
+  }
+}
+
+svg{
+  position: absolute;
+  display: none
+}
+
+@keyframes loading-circle {
+  0% {
+    opacity: 1;
+    stroke-dashoffset: 0
+  }
+  50%{
+    opacity: 1;
+    stroke-dashoffset: -100
+  }
+  100% {
+    opacity: 1;
+    stroke-dashoffset: -600;
+  }
+}
+
+@keyframes button-to-circle{
+  0%{
+    width: 160px;
+    color: $turquoise;
+    border-color: $turquoise;
+    background-color: $turquoise;
+  }
+  50%{
+    color: rgba(255, 255, 255, 0);
+  }
+  90%{
+    width: 50px;
+    color: rgba(255, 255, 255, 0);
+    border-color: #c3c3c3;
+  }
+  100%{
+    width: 50px;
+    border-color: rgba(255, 255, 255, 0);
+    color: rgba(255, 255, 255, 0);
+    background-color:  rgba(255, 255, 255, 0);
+  }
+}
+
+@keyframes circle-to-button{
+  0%{
+    border-color: $turquoise;
+    background-color: $turquoise;
+    height: 50px;
+    width: 50px;
+  }
+  50%{
+    height: 50px;
+    width: 50px;
+  }
+  100%{
+    height: 50px;
+    width: 160px;
+    border-color: $turquoise;
+    background-color: $turquoise;
+  }
+}
+
+@keyframes fade-to-original{
+  0%{
+    background-color: $turquoise;
+  }
+  100%{
+    background-color: white;
   }
 }
 </style>
