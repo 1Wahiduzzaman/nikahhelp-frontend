@@ -1,13 +1,16 @@
 <template>
-    <div>
+    <div :style="{width: wrapperWidth}">
         <v-btn
-            class="d-none d-md-block v-custom"
+            :class="[responsive ? 'd-none d-md-block' : '']"
+            class="v-custom"
             :style="{   
-                
+                background: backgroundColor,
+                color: titleColor
             }"
             :loading="loading"
             :block="isBlock"
             outlined
+            :small="isSmall"
             rounded
             @click="$emit('onClickButton', {event: customEvent, index: index, id: typeId})"
         >
@@ -17,16 +20,18 @@
                     :src="icon" 
                     alt=""
                 >
-                {{title}}
+                <span :style="{}">{{title}}</span>
+                
             </div>
         </v-btn>
         <v-btn
-            class="d-block d-md-none v-custom-m"
+            :class="[responsive ? 'd-block d-md-none' : 'd-none']"
+            class="v-custom-m"
             :loading="loading"
             :block="isBlock"
             outlined
             rounded
-            @click="$emit('onClickButton', {event: customEvent, index: index, id: typeId})"
+            @click.stop="$emit('onClickButton', {event: customEvent, index: index, id: typeId})"
         >
             <div class="flex justify-center align-center">
                 <img 
@@ -76,6 +81,21 @@ export default {
         },
         iconHeight: {
             default: '20px'
+        },
+        responsive: {
+            default: true
+        },
+        isSmall: {
+            default: false
+        },
+        wrapperWidth: {
+            default: ''
+        },
+        backgroundColor: {
+            default: ''
+        },
+        titleColor: {
+            default: '#6158a7'
         }
     }
 }
@@ -83,13 +103,12 @@ export default {
 
 <style scoped lang="scss">
 .v-custom{
-    color: #6158a7;
     text-transform: capitalize;
     &:hover {
         box-shadow: 0px 1px 6px #787474;
         border: 1px solid white !important;
         background: #6158a7;
-        color: #fff;
+        color: #fff !important;
     }
 }
 .v-custom-m{

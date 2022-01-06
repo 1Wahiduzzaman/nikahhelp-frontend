@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="ml-1 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="">
-					<div class="row mb-5 mt-3">
+					<div class="row mb-5">
 						<!-- Age Slider -->
 						<div class="mt-4 px-3">
 							<SelectGroup

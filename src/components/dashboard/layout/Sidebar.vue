@@ -4,7 +4,7 @@
       <template v-if="showMenu && path == 'AdvanceSearch'">
         <div class="mt-1">
           <SidebarHeader @onClickBack="showMenu = false" v-if="!collapsed" />
-          <div v-if="!collapsed" class="mt-5 pl-2 pr-3">
+          <div v-if="!collapsed" class="mt-2 pl-2 pr-3">
             <slot name="search"> </slot>
           </div>
         </div>
