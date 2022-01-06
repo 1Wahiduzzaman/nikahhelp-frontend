@@ -6,5 +6,10 @@ export default {
     setSearchStatus: (state, value) => state.isSearched = value,
     setPaginationData: (state, value) => state.pagination = value,
     pushQuery: (state, value) => state.queryArr.push(value),
-    setSelectedProfileInfo: (state, payload) => state.selectedProfile = payload
+    setSelectedProfileInfo: (state, payload) => state.selectedProfile = payload,
+
+    updateCandidateAfterBlock: (state, data) => {
+        let candidate = state.profiles.find(i => i.usr_id == data.userId);
+        if(candidate) candidate.is_block_listed = data.value
+    }
 }
