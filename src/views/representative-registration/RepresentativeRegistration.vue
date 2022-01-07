@@ -78,6 +78,7 @@
       <div class="steps-content px-2" v-if="current == 0">
         <PersonalInfoTwo
           :representativeDetails="representativeDetails"
+          @valueChange="onDataChange($event)"
           :personalInformation="representativeDetails.personalInformation"
           ref="personInfoRefTwo"
         />
@@ -85,12 +86,14 @@
       <div class="steps-content px-2" v-if="current == 1">
         <Verification
           :representativeDetails="representativeDetails"
+          @valueChange="onDataChange($event)"
           :verification="representativeDetails.verification"
           ref="VerificationRef"
         />
       </div>
       <div class="steps-content px-2" v-if="current == 2">
         <ImageUpload
+          @valueChange="onDataChange($event)"
           :imageModel="representativeDetails.imageModel"
           ref="imageUploadRef"
         />
@@ -100,6 +103,8 @@
       </div>
       <div class="steps-action text-right pb-5 clearfix bottom-padding">
         <a-button
+          :class="{ disabled: !enabledNextBtn }"
+          :disabled="!enabledNextBtn"
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
@@ -110,6 +115,8 @@
           Next
         </a-button>
         <a-button
+          :class="{ disabled: !representativeDetails.imageModel.is_agree }"
+          :disabled="!representativeDetails.imageModel.is_agree"
           v-if="current == steps.length - 1"
           type="primary"
           shape="round"
@@ -156,10 +163,10 @@ import ImageUpload from "@/components/representative-registration/ImageUpload.vu
 import AgreementSubmit from "@/components/representative-registration/AgreementSubmit.vue";
 import ApiService from "../../services/api.service";
 import Header from "../../components/header/header";
-
 import { API_URL } from "../../configs/config";
 import VueFixedHeader from "vue-fixed-header";
 import validator from "validator";
+import jwtService from "../../services/jwt.service";
 export default {
   name: "RepresentativeRegistration",
 
@@ -181,8 +188,9 @@ export default {
       },
       propsData: { ...createData() },
       current: 0,
+      enabledNextBtn: false,
       representativeDetails: {
-        images: {},
+        imageModel: {},
       },
       steps: [
         {
@@ -215,6 +223,27 @@ export default {
     this.getRepresentativeInitialInfo();
   },
   methods: {
+    onDataChange(e) {
+      switch (e.current) {
+        case 0:
+          this.representativeDetails.personalInformation = {
+            ...e.value,
+          };
+          break;
+        case 1:
+          this.representativeDetails.verification = {
+            ...e.value,
+          };
+          break;
+
+        case 2:
+          this.representativeDetails.imageModel = {
+            ...e.value,
+          };
+          break;
+      }
+      this.checkExistData();
+    },
     updateFixedStatus(next) {
       this.fixedStatus.headerIsFixed = next;
     },
@@ -235,6 +264,8 @@ export default {
               response.data.data.image_upload.only_team_can_see == 0
                 ? true
                 : false,
+            is_agree:
+              response.data.data.image_upload.is_agree == 0 ? true : false,
             team_connection_can_see:
               response.data.data.image_upload.team_connection_can_seee == 0
                 ? true
@@ -249,6 +280,7 @@ export default {
             ver_country: response.data.data.verification.ver_country
               ? parseInt(response.data.data.verification.ver_country)
               : response.data.data.verification.ver_country,
+            cities: [],
           },
           personalInformation: {
             essential: {
@@ -312,7 +344,8 @@ export default {
             "verification"
           );
         }
-        // this.current = response.data.data.user.data_input_status;
+        this.current = response.data.data.data_input_status;
+        this.checkExistData();
       } else {
         this.isLoading = false;
       }
@@ -345,7 +378,7 @@ export default {
       this.$router.push("/login");
     },
     doneBtn() {
-      this.$router.push("/dashboard");
+      this.saveDataInputStatus(4);
     },
     async next() {
       switch (this.current) {
@@ -378,7 +411,7 @@ export default {
 
     async saveDataInputStatus(satge) {
       const res = await ApiService.post(
-        "v1/candidate/personal-info-status?_method=PATCH",
+        "v1/representative/personal-info-status?_method=PATCH",
         {
           data_input_status: satge,
         }
@@ -387,8 +420,75 @@ export default {
       user.data_input_status = satge;
       localStorage.removeItem("user");
       localStorage.setItem("user", JSON.stringify(user));
+      if (satge === 4) {
+        this.$router.push("/dashboard");
+      }
     },
+    checkExistData() {
+      let isEnabled = false;
+      switch (this.current) {
+        case 0:
+          let { essential, personal } =
+            this.representativeDetails.personalInformation;
+          let {
+            mobile_country_code,
+            mobile_number,
+            per_current_residence_city,
+            per_current_residence_country,
+          } = personal;
+          Object.values({
+            ...{
+              mobile_country_code,
+              mobile_number,
+              per_current_residence_city,
+              per_current_residence_country,
+            },
+            essential,
+          }).forEach((ob) => {
+            isEnabled = Object.values(ob).every(
+              (x) => x !== undefined && x !== null && x !== ""
+            );
+            if (!isEnabled) return;
+          });
+          break;
 
+        case 1:
+          const {
+            ver_city,
+            ver_country,
+            ver_document_type,
+            ver_recommender_address,
+            ver_recommender_first_name,
+            ver_recommender_last_name,
+            ver_recommender_occupation,
+            ver_recommender_title,
+            ver_recommender_mobile_no,
+          } = this.representativeDetails.verification;
+          isEnabled = Object.values({
+            ver_city,
+            ver_country,
+            ver_document_type,
+            ver_recommender_address,
+            ver_recommender_first_name,
+            ver_recommender_last_name,
+            ver_recommender_occupation,
+            ver_recommender_title,
+            ver_recommender_mobile_no,
+          }).every((x) => x !== undefined && x !== null && x !== "");
+          break;
+
+        case 2:
+          const { per_avatar_url, per_main_image_url } =
+            this.representativeDetails.imageModel;
+          isEnabled = Object.values({
+            per_avatar_url,
+            per_main_image_url,
+          }).every((x) => x !== undefined && x !== null && x !== "");
+          break;
+      }
+
+      this.enabledNextBtn = isEnabled;
+    },
     onDoneClick() {
       this.loading = true;
       console.log(this.agreementChecked);
