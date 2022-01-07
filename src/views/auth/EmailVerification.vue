@@ -19,7 +19,7 @@
               instructions.
             </p>
             <p>
-              Wrong email address didn't get any email? don't worry <a href="" class="text-decoration-underline">contact us</a>
+              Wrong email address or didn’t get any email? don’t worry <a href="" class="text-decoration-underline">contact us</a>
             </p>
             <p class="instruction">
               If you do not verify your email address by sent link within <span class="font-italic font-weight-bold">30 minutes</span> then the sent
