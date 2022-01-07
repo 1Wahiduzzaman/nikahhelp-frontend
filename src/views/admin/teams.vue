@@ -6,9 +6,11 @@
         src="@/assets/icon/person-fill-secondary.svg"
         alt="icon"
       />
+      <router-link to="/admin/active_teams">
       <a-button shape="round" type="primary" style="float: right" class="mt-3">
         Active Teams
       </a-button>
+      </router-link>
     </div>
     <div class="panel-content">
       <img
@@ -16,9 +18,11 @@
         src="@/assets/icon/person-fill-secondary.svg"
         alt="icon"
       />
+      <router-link to="/admin/deleted_teams">
       <a-button shape="round" type="primary" style="float: right" class="mt-3">
         Deleted Teams
       </a-button>
+      </router-link>
     </div>
   </div>
 </template>

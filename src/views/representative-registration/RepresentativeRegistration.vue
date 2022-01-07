@@ -428,21 +428,21 @@ export default {
       let isEnabled = false;
       switch (this.current) {
         case 0:
-          let { essential, personal } =
-            this.representativeDetails.personalInformation;
+          let { essential } = this.representativeDetails.personalInformation;
           let {
             mobile_country_code,
             mobile_number,
             per_current_residence_city,
             per_current_residence_country,
-          } = personal;
+          } = this.representativeDetails.personalInformation.personal;
+          const personal = {
+            mobile_country_code,
+            mobile_number,
+            per_current_residence_city,
+            per_current_residence_country,
+          };
           Object.values({
-            ...{
-              mobile_country_code,
-              mobile_number,
-              per_current_residence_city,
-              per_current_residence_country,
-            },
+            personal,
             essential,
           }).forEach((ob) => {
             isEnabled = Object.values(ob).every(
