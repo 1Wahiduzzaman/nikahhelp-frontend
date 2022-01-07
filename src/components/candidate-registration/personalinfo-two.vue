@@ -29,7 +29,10 @@
           class="form-ma"
         >
           <!-- Gender -->
-          <div v-if="activeRouteName=='CandidateRegistration'" class="row mt-3 pb-2 border-bottom">
+          <div
+            v-if="activeRouteName == 'CandidateRegistration'"
+            class="row mt-3 pb-2 border-bottom"
+          >
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -1952,7 +1955,10 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                  v-if="personalInformation.more_about.per_language_speak"
+                  v-if="
+                    personalInformation.more_about.per_language_speak &&
+                    personalInformation.more_about.per_language_speak.length > 0
+                  "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />What language do you speak?
@@ -1978,7 +1984,7 @@
                   placeholder="Please select the languages you speak"
                   v-model="personalInformation.more_about.per_language_speak"
                   label="name"
-                  :options="[`Don't Mind`, ...candidateDetails.languages]"
+                  :options="[...candidateDetails.languages]"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
                 <!-- <a-select
@@ -2056,7 +2062,11 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                  v-if="personalInformation.more_about.per_hobbies_interests"
+                  v-if="
+                    personalInformation.more_about.per_hobbies_interests &&
+                    personalInformation.more_about.per_hobbies_interests
+                      .length > 0
+                  "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />What are your hobbies and leisure interests?
@@ -2120,7 +2130,11 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                  v-if="personalInformation.more_about.per_food_cuisine_like"
+                  v-if="
+                    personalInformation.more_about.per_food_cuisine_like &&
+                    personalInformation.more_about.per_food_cuisine_like
+                      .length > 0
+                  "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />What are your favorite food and cuisine?
@@ -2226,7 +2240,10 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                  v-if="personalInformation.more_about.per_things_enjoy"
+                  v-if="
+                    personalInformation.more_about.per_things_enjoy &&
+                    personalInformation.more_about.per_things_enjoy.length > 0
+                  "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />What types of things do you enjoy?
@@ -2286,7 +2303,10 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                  v-if="personalInformation.more_about.per_thankfull_for"
+                  v-if="
+                    personalInformation.more_about.per_thankfull_for &&
+                    personalInformation.more_about.per_thankfull_for.length > 0
+                  "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />What kind of things are you thankful for in life?
@@ -2389,7 +2409,10 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                  v-if="personalInformation.more_about.per_thankfull_for"
+                  v-if="
+                    personalInformation.more_about.per_improve_myself &&
+                    personalInformation.more_about.per_improve_myself.length > 0
+                  "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />How I improve myself?
@@ -2575,7 +2598,21 @@
                   @change="getResume"
                 />
                 <div class="img-preview mb-2">
-                  <div class="mt-3 color-primary">{{ personalInformation.more_about.per_additional_info_doc_title }}</div>
+                  <div class="mt-3 color-primary">
+                    {{
+                      personalInformation.more_about
+                        .per_additional_info_doc_title
+                    }}
+                  </div>
+                  <span
+                    @click="clearImg()"
+                    class="close-icon"
+                    v-if="
+                      personalInformation.more_about
+                        .per_additional_info_doc_title
+                    "
+                    ><img src="@/assets/icon/close.svg" alt="img"
+                  /></span>
                 </div>
                 <span class="mb-2"
                   >The format supported are pdf, docx. Maximum file size 15
@@ -2668,7 +2705,7 @@ export default {
       ethnicityList: ethnicities,
       arr: ARR_PersonalInfo,
       heightTV: HEIGHTS,
-      activeRouteName:'CandidateRegistration',
+      activeRouteName: "CandidateRegistration",
       dateOfbirth: {
         day: null,
         month: null,
@@ -2676,7 +2713,7 @@ export default {
       },
     };
   },
-    watch: {
+  watch: {
     $route: {
       immediate: true,
       handler: function (to, from) {
@@ -2713,6 +2750,18 @@ export default {
 
       return () => popper.destroy();
     },
+    clearImg() {
+      this.personalInformation.more_about.per_additional_info_doc = null;
+      this.personalInformation.more_about.per_additional_info_doc_title = null;
+      this.$store
+        .dispatch("savePersonalMoreAboutFile", {
+          per_additional_info_doc:
+            this.personalInformation.more_about.per_additional_info_doc,
+        })
+        .then((data) => {
+          this.saveMoreAboutInfo();
+        });
+    },
     getResume(e) {
       let file = e.target.files[0];
 
@@ -2723,10 +2772,11 @@ export default {
       }
       if (!this.ValidateSingleInput(file)) {
         file = "";
-       this.personalInformation.more_about.per_additional_info_doc_title = "";
+        this.personalInformation.more_about.per_additional_info_doc_title = "";
         return;
       }
-      this.personalInformation.more_about.per_additional_info_doc_title = file.name;
+      this.personalInformation.more_about.per_additional_info_doc_title =
+        file.name;
       this.personalInformation.more_about.per_additional_info_doc =
         e.target.files[0];
       this.$store
@@ -2739,7 +2789,7 @@ export default {
         })
         .catch((error) => {});
     },
-   imageSizeCheck(file) {
+    imageSizeCheck(file) {
       if (file["size"] > 15838312.5) {
         this.$error({
           title: "Validation Error",
@@ -2957,7 +3007,7 @@ export default {
         per_language_speak,
         per_thankfull_for,
         per_things_enjoy,
-        per_additional_info_doc_title
+        per_additional_info_doc_title,
       } = this.personalInformation.more_about;
       await this.$store
         .dispatch("savePersonalMoreAboutInfo", {
@@ -2976,9 +3026,9 @@ export default {
             per_language_speak,
             per_thankfull_for,
             per_things_enjoy,
-            per_additional_info_doc_title
+            per_additional_info_doc_title,
           },
-          per_have_children:false,
+          per_have_children: false,
           per_smoker: this.personalInformation.more_about.per_smoker
             ? this.personalInformation.more_about.per_smoker.toString()
             : "",
@@ -3093,6 +3143,16 @@ input[type="file"]:before {
   padding: 0 10px;
   text-align: center;
   font-family: Helvetica, Arial, sans-serif;
+}
+.img-preview {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  .close-icon {
+    margin-top: 12px;
+    width: 20px;
+  }
 }
 
 #checkIcon {

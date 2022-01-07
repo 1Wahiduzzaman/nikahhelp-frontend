@@ -3,6 +3,8 @@
     <div class="verification-content">
       <a-collapse
         default-active-key="1"
+        @change="changeActivekey"
+        :activeKey="activeKey"
         :bordered="false"
         expand-icon-position="right"
       >
@@ -17,9 +19,7 @@
             :rules="rules"
             class="form-ma"
           >
-            <div
-              class="verification-header my-2 text-black-50"
-            >
+            <div class="verification-header my-2 text-black-50">
               <p>
                 To keep your account safe, we need to verify your identity. This
                 is a legal requirement that help us to keep your account secure.
@@ -64,48 +64,45 @@
               <div class="col-12 col-md-6 none-padding">
                 <div class="mb-2 font-weight-bold">
                   <a-icon
-                      v-if="verification.ver_country"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
+                    v-if="verification.ver_country"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
                   />Country
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
                 <div class="row">
                   <div class="col-12 col-md-6">
-                    <a-form-model-item
-                        ref="ver_country"
-                        prop="ver_country"
-                    >
+                    <a-form-model-item ref="ver_country" prop="ver_country">
                       <v-select
-                          :clearable="false"
-                          class="style-chooser"
-                          @input="onChangeCountry"
-                          id="ver_country"
-                          placeholder="Country"
-                          v-model="verification.ver_country"
-                          label="name"
-                          :reduce="(option) => option.id"
-                          :options="representativeDetails.countries"
-                      ><template #open-indicator>
-                        <a-icon type="down" /> </template
+                        :clearable="false"
+                        class="style-chooser"
+                        @input="onChangeCountry"
+                        id="ver_country"
+                        placeholder="Country"
+                        v-model="verification.ver_country"
+                        label="name"
+                        :reduce="(option) => option.id"
+                        :options="representativeDetails.countries"
+                        ><template #open-indicator>
+                          <a-icon type="down" /> </template
                       ></v-select>
                     </a-form-model-item>
                   </div>
                   <div class="col-12 col-md-6">
                     <a-form-model-item ref="ver_city" prop="ver_city">
                       <v-select
-                          :clearable="false"
-                          class="style-chooser"
-                          @input="onValueChange"
-                          id="ver_city"
-                          placeholder="City"
-                          :reduce="(option) => option.name"
-                          v-model="verification.ver_city"
-                          label="name"
-                          :options="verification.cities"
-                      ><template #open-indicator>
-                        <a-icon type="down" /> </template
+                        :clearable="false"
+                        class="style-chooser"
+                        @input="onValueChange"
+                        id="ver_city"
+                        placeholder="City"
+                        :reduce="(option) => option.name"
+                        v-model="verification.ver_city"
+                        label="name"
+                        :options="verification.cities"
+                        ><template #open-indicator>
+                          <a-icon type="down" /> </template
                       ></v-select>
                     </a-form-model-item>
                   </div>
@@ -114,28 +111,28 @@
               <div class="col-12 none-padding mobile-margin mobile-help">
                 <p>
                   <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#Needver_country"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#Needver_country"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
                   >
-                          <span
-                              v-if="arr[0].first"
-                              @click="arr[0].first = !arr[0].first"
-                          >
-                            Need Help?
-                          </span>
+                    <span
+                      v-if="arr[0].first"
+                      @click="arr[0].first = !arr[0].first"
+                    >
+                      Need Help?
+                    </span>
                     <span v-else @click="arr[0].first = !arr[0].first">
-                            Hide Help?
-                          </span>
+                      Hide Help?
+                    </span>
                   </a>
                 </p>
                 <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="Needver_country"
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="Needver_country"
                 >
                   <div class="card card-body bubble">
                     Please provide tooltip texts so we can place it here
@@ -148,55 +145,54 @@
               <div class="col-12 col-md-6 none-padding">
                 <div class="mb-2 font-weight-bold">
                   <a-icon
-                      v-if="verification.ver_document_type"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
+                    v-if="verification.ver_document_type"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
                   />Document type?
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
                 <v-select
-                    :clearable="false"
-                    class="style-chooser"
-                    @input="onValueChange"
-                    id="ver_document_type"
-                    placeholder="Document type"
-                    :reduce="(option) => option.value"
-                    v-model="verification.ver_document_type"
-                    label="name"
-                    :options="[
-                          { name: 'Passport', value: 'Passport' },
-                          { name: 'Nation ID', value: 'Nation ID' },
-                        ]"
-                ><template #open-indicator>
-                  <a-icon type="down" /> </template
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange"
+                  id="ver_document_type"
+                  placeholder="Document type"
+                  :reduce="(option) => option.value"
+                  v-model="verification.ver_document_type"
+                  label="name"
+                  :options="[
+                    { name: 'Passport', value: 'Passport' },
+                    { name: 'Nation ID', value: 'Nation ID' },
+                  ]"
+                  ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">
                 <p>
                   <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#Needver_document_type"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#Needver_document_type"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
                   >
-                          <span
-                              v-if="arr[1].first"
-                              @click="arr[1].first = !arr[1].first"
-                          >
-                            Need Help?
-                          </span>
+                    <span
+                      v-if="arr[1].first"
+                      @click="arr[1].first = !arr[1].first"
+                    >
+                      Need Help?
+                    </span>
                     <span v-else @click="arr[1].first = !arr[1].first">
-                            Hide Help?
-                          </span>
+                      Hide Help?
+                    </span>
                   </a>
                 </p>
                 <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="Needver_document_type"
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="Needver_document_type"
                 >
                   <div class="card card-body bubble">
                     Please provide tooltip texts so we can place it here
@@ -209,79 +205,79 @@
               <div class="col-12 col-md-6 none-padding">
                 <div class="mb-2 font-weight-bold">
                   <a-icon
-                      v-if="verification.ver_document_frontside"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
+                    v-if="verification.ver_document_frontside"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
                   />Upload front side?
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
                 <div class="image-container text-center">
-                        <span class="mb-2"
-                        >The format supported are JPEG, PNG, PDF. Maximum file
-                          size 2 mb</span
-                        >
+                  <span class="mb-2"
+                    >The format supported are JPEG, PNG, PDF. Maximum file size
+                    2 mb</span
+                  >
                   <span
-                      @click="clearImg('font')"
-                      class="close-icon mt-2"
-                      v-if="verification.ver_document_frontside"
-                  ><img src="@/assets/icon/close.svg" alt="img"
+                    @click="clearImg('font')"
+                    class="close-icon mt-2"
+                    v-if="verification.ver_document_frontside"
+                    ><img src="@/assets/icon/close.svg" alt="img"
                   /></span>
                   <div class="img-preview mb-2">
                     <img
-                        :src="
-                              imageFont
-                                ? imageFont
-                                : verification.ver_document_frontside
-                            "
-                        width="180"
-                        height="200"
-                        v-if="verification.ver_document_frontside"
+                      :src="
+                        imageFont
+                          ? imageFont
+                          : verification.ver_document_frontside
+                      "
+                      width="180"
+                      height="200"
+                      v-if="verification.ver_document_frontside"
                     />
                     <div class="mt-3">Front Page</div>
                     <div
-                        class="mt-4"
-                        v-if="!verification.ver_document_frontside"
+                      class="mt-4"
+                      v-if="!verification.ver_document_frontside"
                     >
                       <a-icon
-                          type="plus-circle"
-                          :style="{ fontSize: '80px', color: '#aaa' }"
+                        type="plus-circle"
+                        :style="{ fontSize: '80px', color: '#aaa' }"
                       />
                     </div>
                   </div>
                   <input
-                      type="file"
-                      class="input-image"
-                      name="avatar"
-                      @change="getFrontPage"
+                    type="file"
+                    class="input-image"
+                    name="avatar"
+                    @change="getFrontPage"
                   />
                 </div>
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">
                 <p>
                   <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#Needver_document_frontside"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#Needver_document_frontside"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
                   >
-                          <span
-                              v-if="arr[2].first"
-                              @click="arr[2].first = !arr[2].first"
-                          >
-                            Need Help?
-                          </span>
+                    <span
+                      v-if="arr[2].first"
+                      @click="arr[2].first = !arr[2].first"
+                    >
+                      Need Help?
+                    </span>
                     <span v-else @click="arr[2].first = !arr[2].first">
-                            Hide Help?
-                          </span>
+                      Hide Help?
+                    </span>
                   </a>
                 </p>
                 <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="Needver_document_frontside"
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="Needver_document_frontside"
                 >
                   <div class="card card-body bubble">
                     Please provide tooltip texts so we can place it here
@@ -294,80 +290,80 @@
               <div class="col-12 col-md-6 none-padding">
                 <div class="mb-2 font-weight-bold">
                   <a-icon
-                      v-if="verification.ver_document_backside"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
+                    v-if="verification.ver_document_backside"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
                   />Upload back side?
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
                 <div class="image-container text-center">
-                        <span class="mb-2"
-                        >The format supported are JPEG, PNG, PDF. Maximum file
-                          size 2 mb</span
-                        >
+                  <span class="mb-2"
+                    >The format supported are JPEG, PNG, PDF. Maximum file size
+                    2 mb</span
+                  >
                   <span
-                      @click="clearImg('back')"
-                      class="close-icon mt-2"
-                      v-if="verification.ver_document_backside"
-                  ><img src="@/assets/icon/close.svg" alt="img"
+                    @click="clearImg('back')"
+                    class="close-icon mt-2"
+                    v-if="verification.ver_document_backside"
+                    ><img src="@/assets/icon/close.svg" alt="img"
                   /></span>
                   <div class="img-preview mb-2">
                     <img
-                        :src="
-                              imageBack
-                                ? imageBack
-                                : verification.ver_document_backside
-                            "
-                        width="180"
-                        height="200"
-                        v-if="verification.ver_document_backside"
+                      :src="
+                        imageBack
+                          ? imageBack
+                          : verification.ver_document_backside
+                      "
+                      width="180"
+                      height="200"
+                      v-if="verification.ver_document_backside"
                     />
 
                     <div class="mt-3">Back Page</div>
                     <div
-                        class="mt-4"
-                        v-if="!verification.ver_document_backside"
+                      class="mt-4"
+                      v-if="!verification.ver_document_backside"
                     >
                       <a-icon
-                          type="plus-circle"
-                          :style="{ fontSize: '80px', color: '#aaa' }"
+                        type="plus-circle"
+                        :style="{ fontSize: '80px', color: '#aaa' }"
                       />
                     </div>
                   </div>
                   <input
-                      type="file"
-                      class="input-image"
-                      name="avatar"
-                      @change="getBackPage"
+                    type="file"
+                    class="input-image"
+                    name="avatar"
+                    @change="getBackPage"
                   />
                 </div>
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">
                 <p>
                   <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#Needver_document_backside"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#Needver_document_backside"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
                   >
-                          <span
-                              v-if="arr[3].first"
-                              @click="arr[3].first = !arr[3].first"
-                          >
-                            Need Help?
-                          </span>
+                    <span
+                      v-if="arr[3].first"
+                      @click="arr[3].first = !arr[3].first"
+                    >
+                      Need Help?
+                    </span>
                     <span v-else @click="arr[3].first = !arr[3].first">
-                            Hide Help?
-                          </span>
+                      Hide Help?
+                    </span>
                   </a>
                 </p>
                 <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="Needver_document_backside"
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="Needver_document_backside"
                 >
                   <div class="card card-body bubble">
                     Please provide tooltip texts so we can place it here
@@ -380,123 +376,126 @@
               <div class="col-12 col-md-6 none-padding">
                 <div class="mb-2 font-weight-bold">
                   <a-icon
-                      v-if="verification.ver_recommender_title"
-                      class="color-success mr-2 fs-18 fw-500"
-                      type="check"
+                    v-if="verification.ver_recommender_title"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
                   />Person of community standing who know you?
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
                 <a-form-model-item
-                    ref="ver_recommender_title"
-                    prop="ver_recommender_title"
+                  ref="ver_recommender_title"
+                  prop="ver_recommender_title"
                 >
                   <a-input
-                      v-model="verification.ver_recommender_title"
-                      class="w-100"
-                      placeholder="Title"
-                      @blur="onValueChange"
+                    v-model="verification.ver_recommender_title"
+                    class="w-100"
+                    placeholder="Title"
+                    @blur="onValueChange"
                   />
                 </a-form-model-item>
 
                 <div class="row">
                   <div class="col-6">
                     <a-form-model-item
-                        ref="ver_recommender_first_name"
-                        prop="ver_recommender_first_name"
+                      ref="ver_recommender_first_name"
+                      prop="ver_recommender_first_name"
                     >
                       <a-input
-                          v-model="verification.ver_recommender_first_name"
-                          class="w-100 rounded-right"
-                          placeholder="First Name"
-                          @blur="onValueChange"
+                        v-model="verification.ver_recommender_first_name"
+                        class="w-100 rounded-right"
+                        placeholder="First Name"
+                        @blur="onValueChange"
                       />
                     </a-form-model-item>
                   </div>
                   <div class="col-6">
                     <a-form-model-item
-                        ref="ver_recommender_last_name"
-                        prop="ver_recommender_last_name"
+                      ref="ver_recommender_last_name"
+                      prop="ver_recommender_last_name"
                     >
                       <a-input
-                          v-model="verification.ver_recommender_last_name"
-                          class="w-100 rounded-left"
-                          placeholder="Last Name"
-                          @blur="onValueChange"
+                        v-model="verification.ver_recommender_last_name"
+                        class="w-100 rounded-left"
+                        placeholder="Last Name"
+                        @blur="onValueChange"
                       />
                     </a-form-model-item>
                   </div>
                 </div>
 
                 <a-form-model-item
-                    ref="ver_recommender_occupation"
-                    prop="ver_recommender_occupation"
+                  ref="ver_recommender_occupation"
+                  prop="ver_recommender_occupation"
                 >
                   <v-select
-                      :clearable="false"
-                      class="style-chooser"
-                      @input="onValueChange"
-                      id="ver_recommender_occupation"
-                      placeholder="Occupation"
-                      v-model="verification.ver_recommender_occupation"
-                      label="name"
-                      :reduce="(option) => option.name"
-                      :options="representativeDetails.occupations"
-                  ><template #open-indicator>
-                    <a-icon type="down" /> </template
+                    :clearable="false"
+                    class="style-chooser"
+                    @input="onValueChange"
+                    id="ver_recommender_occupation"
+                    placeholder="Occupation"
+                    v-model="verification.ver_recommender_occupation"
+                    label="name"
+                    :reduce="(option) => option.name"
+                    :options="representativeDetails.occupations"
+                    ><template #open-indicator>
+                      <a-icon type="down" /> </template
                   ></v-select>
                 </a-form-model-item>
 
-                <a-form-model-item class="mt-2"
-                    ref="ver_recommender_address"
-                    prop="ver_recommender_address"
+                <a-form-model-item
+                  class="mt-2"
+                  ref="ver_recommender_address"
+                  prop="ver_recommender_address"
                 >
                   <a-textarea
-                      placeholder="Address"
-                      :rows="4"
-                      v-model="verification.ver_recommender_address"
-                      @blur="onValueChange"
+                    placeholder="Address"
+                    :rows="4"
+                    v-model="verification.ver_recommender_address"
+                    @blur="onValueChange"
                   />
                 </a-form-model-item>
 
                 <a-form-model-item
-                    ref="ver_recommender_mobile_no"
-                    prop="ver_recommender_mobile_no"
+                  ref="ver_recommender_mobile_no"
+                  prop="ver_recommender_mobile_no"
                 >
                   <a-input
-                      class="w-100"
-                      id="inputNumber"
-                      placeholder="Mobile number"
-                      v-model="verification.ver_recommender_mobile_no"
-                      @blur="onValueChange"
+                    class="w-100"
+                    id="inputNumber"
+                    placeholder="Mobile number"
+                    v-model="verification.ver_recommender_mobile_no"
+                    @blur="onValueChange"
                   />
                 </a-form-model-item>
               </div>
-              <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
+              <div
+                class="col-12 col-md-6 none-padding mobile-margin mobile-help"
+              >
                 <p>
                   <a
-                      class="color-blue fw-700 fs-14"
-                      data-toggle="collapse"
-                      href="#Needver_recommender_title"
-                      role="button"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#Needver_recommender_title"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
                   >
-                          <span
-                              v-if="arr[4].first"
-                              @click="arr[4].first = !arr[4].first"
-                          >
-                            Need Help?
-                          </span>
+                    <span
+                      v-if="arr[4].first"
+                      @click="arr[4].first = !arr[4].first"
+                    >
+                      Need Help?
+                    </span>
                     <span v-else @click="arr[4].first = !arr[4].first">
-                            Hide Help?
-                          </span>
+                      Hide Help?
+                    </span>
                   </a>
                 </p>
                 <div
-                    data-parent="#accordion"
-                    class="collapse"
-                    id="Needver_recommender_title"
+                  data-parent="#accordion"
+                  class="collapse"
+                  id="Needver_recommender_title"
                 >
                   <div class="card card-body bubble">
                     Please provide tooltip texts so we can place it here
@@ -504,7 +503,7 @@
                 </div>
               </div>
             </div>
-             <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-end">
               <a-button
                 shape="round"
                 type="primary"
@@ -529,7 +528,7 @@
 import FileUploadOne from "@/components/shared/FileUploadOne.vue";
 import ApiService from "@/services/api.service";
 import vSelect from "vue-select";
-import { VERIFICATION_RULES} from "./models/representative";
+import { VERIFICATION_RULES } from "./models/representative";
 export default {
   name: "VerificationRef",
   props: {
@@ -580,7 +579,10 @@ export default {
   },
 
   methods: {
-     handleSubmitFormOne() {
+    changeActivekey(key) {
+      this.activeKey = key;
+    },
+    handleSubmitFormOne() {
       this.$refs.verification.validate((valid) => {
         if (valid) {
           this.activeKey = null;
@@ -629,7 +631,7 @@ export default {
         .then((data) => {
           this.$emit("valueChange", {
             value: this.verification,
-            current: 2,
+            current: 1,
           });
         })
         .catch((error) => {});
@@ -644,7 +646,7 @@ export default {
             data.data.data.verification.ver_document_frontside;
           this.$emit("valueChange", {
             value: this.verification,
-            current: 2,
+            current: 1,
           });
         })
         .catch((error) => {});
@@ -699,6 +701,7 @@ export default {
     async onChangeCountry(e) {
       const res = await ApiService.get(`v1/utilities/cities/${e}`);
       if (res.status === 200) {
+        console.log("this.verification", this.verification);
         this.verification.cities = [];
         this.verification.cities.push(...res.data.data);
       }

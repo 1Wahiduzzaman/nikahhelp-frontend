@@ -88,7 +88,7 @@
         <!-- <button class="btn btn-info" @click="saveImages">Save</button> -->
 
         <!-- Previous Image sharing setting starts here -->
-        <div class="share-settings mt-5">
+        <!-- <div class="share-settings mt-5">
           <div class="share-settings">
             <h5 class="text-center share-text">
               <svg
@@ -144,12 +144,8 @@
               </span>
             </div>
           </div>
-          <!-- {{ imageModel }} -->
-
-          <!-- <p>I don't want to share my images with anyone at this moment</p>
-          <p>I would like to share all my images with my team</p>
-          <p>I would like to share all my images with connected team(s)</p> -->
-        </div>
+         
+        </div> -->
         <!-- <a-button
           shape="round"
           type="primary"
@@ -261,36 +257,31 @@ export default {
         team_connection_can_see: this.imageModel.team_connection_can_see,
       });
     },
-    
+
     getBase64(img, callback) {
       const reader = new FileReader();
       reader.addEventListener("load", () => callback(reader.result));
       reader.readAsDataURL(img);
     },
-    
+
     async saveRepresentativeImageCondition(data) {
       await this.$store
         .dispatch("saveRepresentativeImageCondition", data)
-        .then((data) => {
-          
-         
-        })
-        .catch((error) => {
-         
-        });
+        .then((data) => {})
+        .catch((error) => {});
     },
     async saveImages(data) {
       await this.$store
         .dispatch("saveRepresentativeImage", data)
         .then((data) => {
           if (data.data.status && data.data.status !== "FAIL") {
-            // this.$emit("valueChange", {
-            //   value: {
-            //     per_avatar_url: data.data.data.per_avatar_url,
-            //     per_main_image_url: data.data.data.per_main_image_url,
-            //   },
-            //   current: 4,
-            // });
+            this.$emit("valueChange", {
+              value: {
+                per_avatar_url: data.data.data.gallery.per_avatar_url,
+                per_main_image_url: data.data.data.gallery.per_main_image_url,
+              },
+              current: 2,
+            });
           }
           if (data.data.status && data.data.status == "FAIL") {
             const errorMessage = JSON.stringify(data.data.data);
