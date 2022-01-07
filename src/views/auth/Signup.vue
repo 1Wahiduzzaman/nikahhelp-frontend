@@ -257,24 +257,25 @@
             >
               Back
             </button>
-<!--            <button-->
-<!--              @click="handleSubmitSignUp"-->
-<!--              class="btn btn-agreeJoin-pink w-100"-->
-<!--            >-->
-<!--              Agree & Join-->
-<!--            </button>-->
-            <div class="loading-dock position-relative mt-1 h-32 pt-1">
-              <svg id="load-b" x="0px" y="0px" viewBox="0 0 150 150">
-                <circle class="loading-inner" cx="75" cy="75" r="60"/>
-              </svg>
-              <svg id="load" x="0px" y="0px" viewBox="0 0 150 150">
-                <circle class="loading-inner" cx="75" cy="75" r="60"/>
-              </svg>
-              <button class="btn btn-block submit h-32" @click="handleSubmitSignUp">Submit</button>
-              <svg id="check" style="width:24px;height:24px" viewBox="0 0 24 24">
-                <path fill="#FFFFFF" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-              </svg>
-            </div>
+            <button
+              @click="handleSubmitSignUp"
+              class="btn submit w-100 h-32 mt-2"
+            >
+              <a-icon type="loading" class="text-white" v-if="isLoading" />
+              Agree & Join
+            </button>
+<!--            <div class="loading-dock position-relative mt-1 h-32 pt-1">-->
+<!--              <svg id="load-b" x="0px" y="0px" viewBox="0 0 150 150">-->
+<!--                <circle class="loading-inner" cx="75" cy="75" r="60"/>-->
+<!--              </svg>-->
+<!--              <svg id="load" x="0px" y="0px" viewBox="0 0 150 150">-->
+<!--                <circle class="loading-inner" cx="75" cy="75" r="60"/>-->
+<!--              </svg>-->
+<!--              <button class="btn btn-block submit h-32" @click="handleSubmitSignUp">Agree & join</button>-->
+<!--              <svg id="check" style="width:24px; height:24px" viewBox="0 0 24 24">-->
+<!--                <path fill="#FFFFFF" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />-->
+<!--              </svg>-->
+<!--            </div>-->
 
             <span class="fs-12 mt-2 text-white"
               >By clicking Agree & Join, you agree to Matrimony Assist
@@ -470,7 +471,6 @@ export default {
 
           try {
             this.isLoading = true;
-            this.addLoader();
             this.$store.dispatch("signup", {
               email,
               password,
@@ -481,11 +481,9 @@ export default {
             });
           } catch {
             this.isLoading = false;
-            this.removeLoader();
             this.errorMessage = "The email has already been taken.";
           }
         } else {
-           this.removeLoader();
            return false;
         }
       });
@@ -936,7 +934,7 @@ button.submit{
   width: 100%;
   color: white;
   border-radius: 40px;
-  border: $border-width solid $border-white;
+  border: 1px solid $border-white;
   transition: all .2s;
   font-size: 16px;
   padding-top: 3px;
