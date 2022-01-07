@@ -12,7 +12,7 @@
             <p>
               We have sent you a verification email to
               <br />
-              <span class="email-box">{{ user.email }}</span>
+              <span class="email-box my-4">{{ user.email }}</span>
               <br />
               Please check your email inbox or spam folder and follow the verification
               <br />
