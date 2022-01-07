@@ -102,6 +102,8 @@
         <!-- :class="{ disabled: !enabledNextBtn }"
           :disabled="!enabledNextBtn" -->
         <a-button
+          :class="{ disabled: !enabledNextBtn }"
+          :disabled="!enabledNextBtn"
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
@@ -496,7 +498,7 @@ export default {
             ""
           );
         }
-
+        this.current = response.data.data.user.data_input_status;
         this.checkExistData();
       } else {
         this.isLoading = false;
@@ -509,10 +511,13 @@ export default {
           data_input_status: satge,
         }
       );
-      const user = JSON.parse(localStorage.getItem("user"));
-      user.data_input_status = satge;
-      localStorage.removeItem("user");
-      localStorage.setItem("user", JSON.stringify(user));
+      let user = JSON.parse(localStorage.getItem("user"));
+      if (user) {
+        user.data_input_status = satge;
+        localStorage.removeItem("user");
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+
       if (satge === 6) {
         this.$router.push("/dashboard");
       }
@@ -601,8 +606,6 @@ export default {
           }).every((x) => x !== undefined && x !== null && x !== "");
           break;
         case 1:
-          let { essential, general, contact, more_about } =
-            this.candidateDetails.personalInformation;
           let {
             per_about,
             per_currently_living_with,
@@ -615,24 +618,29 @@ export default {
             per_thankfull_for,
             per_things_enjoy,
             per_willing_to_relocate,
-          } = more_about;
+          } = this.candidateDetails.personalInformation.more_about;
+          let more_about = {
+            per_about,
+            per_currently_living_with,
+            per_food_cuisine_like,
+            per_have_children,
+            per_hobbies_interests,
+            per_language_speak,
+            per_marital_status,
+            per_smoker,
+            per_thankfull_for,
+            per_things_enjoy,
+            per_willing_to_relocate,
+          };
+
+          let { essential, general, contact } =
+            this.candidateDetails.personalInformation;
+
           Object.values({
             essential,
             general,
             contact,
-            ...{
-              per_about,
-              per_currently_living_with,
-              per_food_cuisine_like,
-              per_have_children,
-              per_hobbies_interests,
-              per_language_speak,
-              per_marital_status,
-              per_smoker,
-              per_thankfull_for,
-              per_things_enjoy,
-              per_willing_to_relocate,
-            },
+            more_about,
           }).forEach((ob) => {
             isEnabled = Object.values(ob).every(
               (x) => x !== undefined && x !== null && x !== ""

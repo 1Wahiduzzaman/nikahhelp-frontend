@@ -55,9 +55,12 @@ import AdminApproval from "@/views/admin/approval.vue";
 import SystemAdmin from "@/views/admin/system-admin.vue";
 import UsersList from "@/views/admin/user-list.vue";
 import DeletedUsersList from "@/views/admin/deleted-user-list.vue";
+import TeamList from "@/views/admin/team-list.vue";
+import DeletedTeamList from "@/views/admin/deleted-team-list.vue";
 import Test from "../components/development/Test.vue";
 import TestChat from "../components/development/Chat.vue";
-
+import ApproveUsers from "@/views/admin/approve-users.vue";
+import ApproveDocuments from "@/views/admin/approve-documents.vue";
 //Search Section
 import Search from "@/views/search/Search.vue";
 import AdvanceSearch from "@/views/search/AdvanceSearch.vue";
@@ -182,6 +185,26 @@ const AppRouter = new VueRouter({
             {
                 path: "deleted_users",
                 component: DeletedUsersList,
+
+            },
+            {
+                path: "active_teams",
+                component: TeamList,
+
+            },
+            {
+                path: "deleted_Teams",
+                component: DeletedTeamList,
+
+            },
+            {
+                path: "approve_users",
+                component: ApproveUsers,
+
+            },
+            {
+                path: "approve_documents",
+                component: ApproveDocuments,
 
             },
             ],
