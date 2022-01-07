@@ -1,5 +1,6 @@
 export default {
     setProfiles: (state, payload) => state.profiles =[...state.profiles, ...payload],
+    clearProfiles: (state) => state.profiles = [],
     setComponent: (state, name) => state.component = name,
     setTotalResult: (state, value) => state.totalResult = value,
     setLoading: (state, value) => state.isLoading = value,
@@ -9,7 +10,11 @@ export default {
     setSelectedProfileInfo: (state, payload) => state.selectedProfile = payload,
 
     updateCandidateAfterBlock: (state, data) => {
-        let candidate = state.profiles.find(i => i.usr_id == data.userId);
+        let candidate = state.profiles.find(i => i.user_id == data.userId);
         if(candidate) candidate.is_block_listed = data.value
+    },
+    updateCandidateAfterShortlisted: (state, data) => {
+        let candidate = state.profiles.find(i => i.user_id == data.userId);
+        if(candidate) candidate.is_short_listed = data.value
     }
 }
