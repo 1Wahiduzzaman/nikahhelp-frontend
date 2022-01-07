@@ -432,7 +432,7 @@ const AppRouter = new VueRouter({
 
 
         {
-            path: "/privacy-policy",
+            path: "/privacy-cookie-policy",
             name: "PrivacyPolicy",
             component: PrivacyPolicy,
         },

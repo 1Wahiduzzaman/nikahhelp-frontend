@@ -21,7 +21,7 @@
         </li>
         <li>
           <a href="javascript:void()">
-            <router-link to="/privacy-policy" class="color-primary">
+            <router-link to="/privacy-cookie-policy" class="color-primary">
               Privacy & Cookie Policy
             </router-link></a
           >

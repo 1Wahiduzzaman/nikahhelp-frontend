@@ -279,8 +279,8 @@
 
             <span class="fs-12 mt-2 text-white"
               >By clicking Agree & Join, you agree to Matrimony Assist
-              <a class="link" href="">User Agreement, Privacy Policy</a> and
-              <a class="link" href="">Cookie Policy</a>
+              <a class="link" href="/user-agreement">User Agreement, </a>
+              <a class="link" href="/privacy-cookie-policy">Privacy Policy and Cookie Policy</a>
             </span>
           </div>
         </a-form-model>
