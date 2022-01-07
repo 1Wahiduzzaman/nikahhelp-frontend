@@ -1,17 +1,17 @@
 <template>
-  <div class="login-container">
+  <div class="login-container font-poppins">
     <div class="signin">
       <div class="signin-inner desktop-padding">
-        <a class="logo" href="/"><img src="@/assets/logo.png" alt="logo" class="mat-logo" /></a>
+        <a class="logo" href="/"><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo" /></a>
         <h3 id="welcome-back-tag" class="welcome-back-tag"><b>Welcome Back</b></h3>
       </div>
 
-      <div class="signin-inner none-padding">
+      <div class="signin-inner">
         <a-form-model
           ref="signinForm"
           :model="signinModel"
           :rules="rules"
-          class="form-signin pb-1px"
+          class="form-signin pb-1px shadow"
         >
           <!-- <Spinner v-if="isLoading" /> -->
           <p v-if="error">
@@ -54,7 +54,7 @@
             <button
               type="button"
               @click="handleSubmit"
-              class="btn signin-btn w-100"
+              class="btn signin-btn h-32 w-100 pt-1 mt-1"
             >
               <a-icon type="loading" class="mr-2 fs-20" v-if="isLoading" />
               Sign in
@@ -76,17 +76,14 @@
 
         <div class="join-now pb-4">
           <p
-            class="flex-center-center mt-3 text-white"
-            style="
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            "
+            class="flex-center-center mt-3 text-white bottom-link-text"
           >
             New to <span class="logo-text"> Matrimony Assist? </span>
 
             <router-link
               to="/signup"
               class="
-                btn btn-sm btn-round-sm
+                btn
                 ms-2
                 text-nowrap
                 join-now-btn
@@ -194,16 +191,18 @@ export default {
       margin: 0 auto;
       text-align: center;
       @media (min-width: 768px) {
-        padding: 50px 15px;
+        padding: 30px 15px;
       }
       .logo {
         max-width: 250px;
         display: inline-block;
         margin-bottom: 8px;
         .mat-logo {
-          width: 138px;
+          width: 120px;
+          height: 80px;
           @media (min-width: 768px) {
-            width: 250px;
+            width: 170px;
+            height: 110px;
           }
         }
       }
@@ -272,7 +271,6 @@ export default {
     background: -webkit-linear-gradient(white, pink, white, #8debf2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-top: -10px;
   }
 
   .btn-primary {
@@ -299,8 +297,10 @@ export default {
 }
 .join-now-btn {
   color: #FFFFFF;
-  font-size: 14px;
   border: 1px solid #FFFFFF;
+  padding: 0 6px;
+  border-radius: 20px;
+  font-size: 12px;
 }
 .join-now-btn:hover {
   background: $bg-primary;
@@ -310,15 +310,21 @@ export default {
   outline: none;
   box-shadow: none;
 }
+.bottom-link-text {
+  font-size: 14px;
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
+}
 .welcome-back-tag {
   @media (min-width: 768px) {
     margin-top: 12px;
   }
 }
 .desktop-padding {
-  padding: 10px 15px 0 15px !important;
+  padding: 0 15px 0 15px !important;
   @media (min-width: 768px) {
-    padding: 50px 0 0 0 !important;
+    padding: 0 0 0 0 !important;
   }
 }
 .none-padding {
@@ -331,7 +337,10 @@ export default {
   font-family: $header-font;
   margin-left: 10px;
   margin-right: 5px;
-  font-size: 24px;
+  font-size: 18px;
+  @media (min-width: 768px) {
+    font-size: 24px;
+  }
 }
 .signin-btn {
   border: 1px solid #3A3092;
@@ -347,5 +356,8 @@ export default {
 .signin-btn:focus {
   outline: none;
   box-shadow: none;
+}
+.h-32 {
+  height: 32px;
 }
 </style>

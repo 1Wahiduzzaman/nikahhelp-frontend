@@ -1,5 +1,5 @@
 <template>
-  <div class="signup-container">
+  <div class="signup-container font-poppins">
     <div class="signin-inner desktop-padding">
       <a class="logo" href="/"><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo" /></a>
     </div>
@@ -86,9 +86,9 @@
                   type="checkbox"
                   class="confirm-type"
                 />
-                <span class="confirm-text"
+                <span class="confirm-text text-white"
                   >Confirm I'm a
-                  <span class="fw-700">{{
+                  <span class="fw-600">{{
                     signupModel.account_type == 1
                       ? "Candidate"
                       : "Representative"
@@ -101,16 +101,15 @@
               >
                 Continue
               </button>
-<!--              :class="isConfirm ? 'btn-active' : 'disabled'"-->
             </div>
           </div>
-          <p class="flex-center-center mt-3 bottom-text">
+          <p class="flex-center-center mt-3 bottom-text font-poppins">
             Already on <span class="logo-text ml-2"> Matrimony Assist? </span>
 
             <router-link
                 to="/login"
                 class="
-              btn btn-sm btn-outline-primary btn-round-sm
+              btn btn-sm-sign btn-outline-primary btn-round-sm
               ms-2
               text-nowrap
               join-now-btn
@@ -125,8 +124,6 @@
         Welcome To <span class="logo-text">Matrimony Assist</span> Signup
       </h3>
       <div v-if="showMemberForm && !errorMessage" class="signup-inner">
-<!--        <a href="/" class="logo"><img src="@/assets/logo.png" alt="logo" /></a>-->
-
         <a-form-model
           ref="signupFormTwo"
           :model="signupModel"
@@ -260,24 +257,25 @@
             >
               Back
             </button>
-<!--            <button-->
-<!--              @click="handleSubmitSignUp"-->
-<!--              class="btn btn-agreeJoin-pink w-100"-->
-<!--            >-->
-<!--              Agree & Join-->
-<!--            </button>-->
-            <div class="loading-dock position-relative mt-1 h-32 pt-1">
-              <svg id="load-b" x="0px" y="0px" viewBox="0 0 150 150">
-                <circle class="loading-inner" cx="75" cy="75" r="60"/>
-              </svg>
-              <svg id="load" x="0px" y="0px" viewBox="0 0 150 150">
-                <circle class="loading-inner" cx="75" cy="75" r="60"/>
-              </svg>
-              <button class="btn btn-block submit h-32" @click="handleSubmitSignUp">Submit</button>
-              <svg id="check" style="width:24px;height:24px" viewBox="0 0 24 24">
-                <path fill="#FFFFFF" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />
-              </svg>
-            </div>
+            <button
+              @click="handleSubmitSignUp"
+              class="btn submit w-100 h-32 mt-2"
+            >
+              <a-icon type="loading" class="text-white" v-if="isLoading" />
+              Agree & Join
+            </button>
+<!--            <div class="loading-dock position-relative mt-1 h-32 pt-1">-->
+<!--              <svg id="load-b" x="0px" y="0px" viewBox="0 0 150 150">-->
+<!--                <circle class="loading-inner" cx="75" cy="75" r="60"/>-->
+<!--              </svg>-->
+<!--              <svg id="load" x="0px" y="0px" viewBox="0 0 150 150">-->
+<!--                <circle class="loading-inner" cx="75" cy="75" r="60"/>-->
+<!--              </svg>-->
+<!--              <button class="btn btn-block submit h-32" @click="handleSubmitSignUp">Agree & join</button>-->
+<!--              <svg id="check" style="width:24px; height:24px" viewBox="0 0 24 24">-->
+<!--                <path fill="#FFFFFF" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />-->
+<!--              </svg>-->
+<!--            </div>-->
 
             <span class="fs-12 mt-2 text-white"
               >By clicking Agree & Join, you agree to Matrimony Assist
@@ -415,7 +413,7 @@ export default {
           },
         ],
         last_name: [
-          { required: true, message: "Enter last name", trigger: "change" },
+          { required: true, message: "Enter last name", trigger: "change", color: '#FFFFFFF' },
           {
             min: 3,
             message: "Use 3 characters or more for your last name",
@@ -473,7 +471,6 @@ export default {
 
           try {
             this.isLoading = true;
-            this.addLoader();
             this.$store.dispatch("signup", {
               email,
               password,
@@ -484,11 +481,9 @@ export default {
             });
           } catch {
             this.isLoading = false;
-            this.removeLoader();
             this.errorMessage = "The email has already been taken.";
           }
         } else {
-           this.removeLoader();
            return false;
         }
       });
@@ -595,7 +590,9 @@ $border-width: 2px;
   height: calc(100vh);
   overflow-y: auto;
   .signup {
-    height: 100vh;
+    @media (min-width: 768px) {
+      height: 100vh;
+    }
     //background-color: #522e8e;
     //background-image: linear-gradient(
     //  0deg,
@@ -648,7 +645,7 @@ $border-width: 2px;
       //        #522e8e 100%
       //);
       @media (min-width: 768px) {
-        padding: 4px 15px;
+        padding: 16px 15px;
       }
       .error {
         background: #fff;
@@ -665,7 +662,8 @@ $border-width: 2px;
         .mat-logo {
           width: 138px;
           @media (min-width: 768px) {
-            width: 250px;
+            width: 200px;
+            height: 130px;
           }
         }
       }
@@ -710,11 +708,18 @@ $border-width: 2px;
       }
       .bottom-text {
         //color: white;
+        font-size: 12px;
+        @media (min-width: 768px) {
+          font-size: 16px;
+        }
         .logo-text {
           font-family: $header-font;
           margin-left: 10px;
           margin-right: 5px;
-          font-size: 24px;
+          font-size: 16px;
+          @media (min-width: 768px) {
+            font-size: 24px;
+          }
         }
       }
     }
@@ -831,8 +836,8 @@ $border-width: 2px;
   width: 120px;
   height: 80px;
   @media (min-width: 768px) {
-    width: 250px;
-    height: 170px;
+    width: 170px;
+    height: 110px;
   }
 }
 h3 {
@@ -905,6 +910,15 @@ h3 {
 .btn.btn-sm-sign {
   font-size: 12px;
   padding: 1px 8px;
+  border: 1px solid #522e8e;
+  color: $color-primary;
+  font-family: 'Poppins', sans-serif;
+  &:hover {
+    color: #FFFFFF;
+  }
+}
+.ant-form-explain {
+  color: #FFFFFF !important;
 }
 //agree button css
 .loading-dock{
@@ -920,8 +934,10 @@ button.submit{
   width: 100%;
   color: white;
   border-radius: 40px;
-  border: $border-width solid $border-white;
+  border: 1px solid $border-white;
   transition: all .2s;
+  font-size: 16px;
+  padding-top: 3px;
   &:hover{
     background: $turquoise;
     color: white;
@@ -932,8 +948,9 @@ button.submit{
 
   &:focus{
     outline: none;
-    background: $turquoise;
+    //background: $turquoise;
     color: white;
+    box-shadow: none;
   }
 
   &.popout{
