@@ -835,6 +835,15 @@ $border-width: 2px;
   display: flex;
   justify-content: center;
 }
+.logo-text {
+  color: $color-brand !important;
+  font-style: italic;
+  font-family: $header-font;
+  font-size: 20px;
+  @media (min-width: 768px) {
+    font-size: 24px;
+  }
+}
 .mat-logo {
   width: 120px;
   height: 80px;
@@ -855,10 +864,6 @@ h3 {
     color: $color-primary;
     font-weight: 100;
   }
-}
-.logo-text {
-  color: $color-brand !important;
-  font-style: italic;
 }
 .no-shadow {
   box-shadow: none !important;
@@ -884,7 +889,7 @@ h3 {
   }
 }
 .type-card {
-  height: 300px;
+  height: 320px;
   @media (min-width: 1240px) {
     height: auto;
   }
