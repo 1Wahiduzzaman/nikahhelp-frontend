@@ -7,11 +7,17 @@
     font-family: "gabriola";
     src: url("/fonts/gabriola/gabriola.woff");
 }
+.font-poppins {
+    font-family: 'Poppins', sans-serif;
+}
 body {
     font-family: 'Poppins', sans-serif;
 }
 .flex {
     display: flex;
+}
+.text-header-black {
+    color: rgba(0, 0, 0, 0.85) !important;
 }
 .header-container{
     width: 100%;
@@ -621,6 +627,9 @@ div[data-unique="second_one"] >  .ant-select-selection{
 }
 .quick-switch-box > .ant-switch-checked {
     background: #39b54a;
+}
+.signup-container .ant-form-explain {
+    color: #FFFFFF !important;
 }
 .preference .ant-modal-body {
     padding-left: 12px;

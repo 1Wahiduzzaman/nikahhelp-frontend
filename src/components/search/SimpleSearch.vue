@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="ml-1 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="">
-					<div class="row mb-5 mt-3">
+					<div class="row mb-5">
 						<!-- Age Slider -->
 						<div class="mt-4 px-3">
 							<SelectGroup
@@ -262,6 +262,7 @@
 									Search
 								</button>
 								<div>
+									<a class="d-noe" ref="top" href="#top"></a>
 									<button @click="showADvancedSearchModal = true" class="btn-adv-search">Advanced Search</button>
 								</div>
 							</div>
@@ -299,6 +300,7 @@ export default {
 	name: 'SimpleSearch',
 	data() {
 		return {
+			removePrevious: false,
 			showADvancedSearchModal: false,
 			showMoreSearch: false,
 			ageTV: AGES,
@@ -353,12 +355,13 @@ export default {
 	},
 	methods: {
 		...mapActions({
-			searchUser: 'search/searchUser'
+			searchUser: 'search/searchUser',
 		}),
 		closeDialog() {
 			this.showADvancedSearchModal = false;
 		},
 		...mapMutations({
+			clearProfiles: 'search/clearProfiles',
 			setProfiles: 'search/setProfiles',
 			pushQuery: 'search/pushQuery',
 			setLoading: 'search/setLoading',
@@ -471,36 +474,50 @@ export default {
 			return _payload;
 			// this.$emit("handle-search", _payload);
 		},
-		async handleSearch() {
+
+		handleSearch() {
 			if(this.isFetching) return;
-			// if(!this.pagination.last_page) return
-			if(this.pagination.last_page) {
-				if(!this.pagination.last_page>= this.currentPage) return
-			}
+			this.$refs.top.click()
+			this.currentPage = 1
 			let query = this.getQuery();
 			this.setSearchStatus(true)
-			// if(!query) return;
 			console.log(query, '>>>>>>>>>>>>>>>>')
+			this.removePrevious = true
+			this.fetchSearchData(query)
+		},
+
+		handlePaginate() {
+			console.log(this.pagination.last_page, 'this.pagination.last_page')
+			if(this.pagination?.last_page) {
+				if(this.currentPage >= this.pagination.last_page ) return
+			}
+			console.log(this.pagination, 'pagination')
+			this.currentPage = this.pagination.current_page + 1
+			let query = this.getQuery();
+			this.removePrevious = false;
+			this.fetchSearchData(query)
+		},
+
+		async fetchSearchData(query) {
 			// const res = await ApiService.get(`v1/home-searches${query}`);
 			try{
 				this.setLoading(true);
-				const res = await this.searchUser(`v1/home-searches${query}`);
-				this.setLoading(false);
-				if(res == undefined) {
-					this.setProfiles([])
-				}
-				if(res.data && res.data.length ) {
-					this.setProfiles(res.data)
-					console.log(res.pagination, '>>>>>>>>..res.pagination')
-					this.setPagination(res.pagination)
-					this.updateCurrentPage();
-				} 
+				const res = await this.searchUser({url: `v1/home-searches${query}`, removePrevious: this.removePrevious});
+					console.log(res, '>>>>>>.resstatus')
+				// if(res == undefined) {
+				// 	this.clearProfiles()
+				// }
+				// if(res.data && res.data.length ) {
+				// 	this.clearProfiles()
+				// 	this.setProfiles(res.data)
+				// 	console.log(res.pagination, '>>>>>>>>..res.pagination')
+				// 	this.setPagination(res.pagination)
+				// 	this.updateCurrentPage();
+				// } 
 				
 			} catch(err) {
-				this.setLoading(false);
 				console.log(err)
 			}
-			// console.log(res, 'dtata tatat')
 		},
 		updateCurrentPage() {
 			console.log(this.pagination.current_page);

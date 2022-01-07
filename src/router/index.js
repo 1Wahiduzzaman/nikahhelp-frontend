@@ -2,11 +2,11 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import DHome from "@/views/dashboard/DHome.vue";
 import AboutPage from "@/components/landing-page/about.vue";
-import UserAgreement from "@/components/landing-page/user-agreement.vue";
 import HelpPage from "@/components/landing-page/help.vue";
 import PrivacyPolicy from "@/components/landing-page/privacy-policy.vue";
 import TermsAndConditionPage from "@/components/landing-page/terms-condition.vue";
 import SafetyAndGuidancePage from "@/components/landing-page/safety-guidance.vue";
+import UserAgreement from "@/components/landing-page/user-agreement.vue";
 import Signup from "@/views/auth/Signup.vue";
 import Login from "@/views/auth/Login.vue";
 import EmailVerification from "@/views/auth/EmailVerification.vue";
@@ -348,14 +348,6 @@ const AppRouter = new VueRouter({
                     component: Search,
 
                 },
-
-                {
-                    path: "/visitor/search",
-                    name: "UnAuthSearch",
-                    component: UnAuthSearch,
-                    props: true,
-
-                },
                 {
                     path: "/settings",
                     name: "Settings",
@@ -365,8 +357,13 @@ const AppRouter = new VueRouter({
 
             ]
         },
+        {
+            path: "/visitor/search",
+            name: "UnAuthSearch",
+            component: UnAuthSearch,
+            props: true,
 
-
+        },
         {
             path: "/signup",
             name: "Signup",
@@ -422,12 +419,6 @@ const AppRouter = new VueRouter({
 
         },
         {
-            path: "/user-agreement",
-            name: "UserAgreement",
-            component: UserAgreement,
-
-        },
-        {
             path: "/safety_guidance",
             name: "Safety_Guidance",
             component: SafetyAndGuidancePage,
@@ -439,14 +430,16 @@ const AppRouter = new VueRouter({
             component: TermsAndConditionPage,
 
         },
-
-
         {
-            path: "/privacy-policy",
+            path: "/privacy-cookie-policy",
             name: "PrivacyPolicy",
             component: PrivacyPolicy,
         },
-
+        {
+            path: "/user-agreement",
+            name: "UserAgreement",
+            component: UserAgreement,
+        },
     ]
 })
 

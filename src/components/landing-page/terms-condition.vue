@@ -3,9 +3,9 @@
     <LandingPageHeader />
 
     <div class="main-content">
-      <h3>Terms and Conditions of Use</h3>
+      <h3 class="text-header-black">Terms and Conditions of Use</h3>
       <p>Last updated: 23/11/2021</p>
-      <h5>1. Introduction</h5>
+      <h5 class="text-header-black">1. Introduction</h5>
       <p>
         Welcome to matrimonyassist.com! By using or accessing
         matrimonyassist.com site (hence the "<u>Site</u> www.

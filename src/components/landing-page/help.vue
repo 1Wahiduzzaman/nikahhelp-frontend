@@ -3,7 +3,7 @@
     <LandingPageHeader />
 
     <div class="main-content">
-      <h3>About Matrimony Assist</h3>
+      <h3 class="text-header-black">About Matrimony Assist</h3>
       <p>
         Matrimony Assist is an online platform to facilitate conversation
         between families who are seeking marriage partners for their loved ones.

@@ -194,7 +194,7 @@
 <!--                      @click="backToTabList()">-->
 <!--                <a-icon type="caret-left"/>-->
 <!--              </button>-->
-              <h4 class="cursor-pointer position-absolute btn-short-back" @click="backToTabList()">&#8592;</h4>
+              <h4 class="cursor-pointer btn-short-back" @click="backToTabList()">&#8592;</h4>
               <div class="header clearfix">
                 <div class="left">
                   <div class="top">
@@ -204,7 +204,11 @@
                     </div>
                     <div class="chat-info">
                       <div class="chat-group bg-primary">{{ chatheadopen.label }}</div>
-                      <div class="chat-name">{{ conversationTitle }}</div>
+                      <div class="chat-name">
+                        <a-tooltip bottom :title="chatheadopen.label">
+                          {{ conversationTitle }}
+                        </a-tooltip>
+                      </div>
                       <div class="last-chat" v-if="chat_type == 'team'">Active now {{ getTeamOnlineUsers() > 0 ? getTeamOnlineUsers() : '' }}</div>
                     </div>
                   </div>
@@ -348,48 +352,6 @@
             <div class="chat-right" v-else>
               <div class="flex justify-content-center align-items-center empty-height">
                 <h4 class="fs-20 flex flex-column align-items-center justify-content-center">Select a conversation & start the chat</h4>
-              </div>
-              <div class="d-none flex-column justify-content-center align-items-center text-center">
-                <v-stepper alt-labels>
-                  <v-stepper-header>
-                    <v-stepper-step
-                        step="3"
-                        color="secondary"
-                        complete
-                    >
-                      Complete profile
-                    </v-stepper-step>
-
-                    <v-divider></v-divider>
-
-                    <v-stepper-step
-                        step="4"
-                        color="secondary"
-                        complete
-                    >
-                      Verify account
-                    </v-stepper-step>
-
-                    <v-divider></v-divider>
-
-                    <v-stepper-step
-                        color="secondary"
-                        complete
-                        step="5"
-                    >
-                      Connect teams
-                    </v-stepper-step>
-
-                    <v-divider></v-divider>
-
-                    <v-stepper-step
-                        step="6"
-                        color="secondary"
-                        complete>
-                      Communicate
-                    </v-stepper-step>
-                  </v-stepper-header>
-                </v-stepper>
               </div>
             </div>
           </div>
@@ -2493,9 +2455,8 @@ export default {
   background: #bcb5de;
 }
 .btn-short-back {
-  top: -20px;
-  left: -10px;
-  padding: 4px;
+  margin-bottom: 0;
+  margin-top: -14px;
   @media (min-width: 576px) {
     display: none;
   }
@@ -2524,12 +2485,12 @@ export default {
 }
 .chat-area {
   //min-height: 600px;
-  min-height: calc(100vh - 260px);
+  min-height: calc(100vh - 210px);
   @media (min-width: 410px) {
-    min-height: calc(100vh - 260px);
+    min-height: calc(100vh - 210px);
   }
   @media (min-width: 576px) {
-    min-height: calc(100vh - 260px);
+    min-height: calc(100vh - 210px);
   }
   @media (min-width: 768px) {
     min-height: calc(100vh - 260px);
@@ -2579,6 +2540,12 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.chat-group {
+  display: none;
+  @media (min-width: 768px) {
+    display: inherit;
+  }
 }
 // end css for chat
 </style>
