@@ -17,7 +17,6 @@
                 class="mt-1 z-9 d-block d-md-none text-capitalize"
                 rounded
                 absolute
-                outlined
                 small
                 color="deep-purple darken-1"
                 dark
@@ -55,7 +54,6 @@
             <v-btn
                 class="mt-1 text-capitalize z-9"
                 rounded
-                outlined
                 small
                 absolute
                 bottom
@@ -78,14 +76,13 @@
                 dark
             >
                 <div class="flex justify-center align-center">
-                    <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-left-secondary.svg" alt="">
+                    <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-left-solid.svg" alt="">
                     
                 </div>
             </v-btn>
              <v-btn
                 class="mt-1 text-capitalize z-9"
                 rounded
-                outlined
                 small
                 absolute
                 bottom
@@ -94,7 +91,7 @@
                 dark
             >
                 <div class="flex justify-center align-center">
-                    <img style="height: 13px;" src="/assets/icon/chevron-right-secondary.svg" alt="">
+                    <img style="height: 13px;" src="/assets/icon/chevron-right-solid.svg" alt="">
                     
                 </div>
             </v-btn>

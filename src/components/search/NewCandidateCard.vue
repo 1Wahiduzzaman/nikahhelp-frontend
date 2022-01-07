@@ -78,7 +78,7 @@
         iconHeight="14px"
         :isSmall="true"
         :responsive="false"
-        :title="candidate.is_short_listed ? 'Connect' : 'Disconnect'"
+        :title="candidate.is_short_listed ? 'Disconnect' : 'Connect'"
         icon="/assets/icon/connection-secondary.svg"
         :customEvent="candidate.is_connected ? 'removeConnection' : 'addConnection'"
         @onClickButton="onClickButton"
@@ -100,11 +100,11 @@
         iconHeight="14px"
         :isSmall="true"
         :responsive="false"
-        :title="candidate.is_short_listed ? 'Unblock' : 'Block'"
-        :icon="candidate.is_blocked ? '/assets/icon/block-secondary.svg' : '/assets/icon/block.svg'"
-        :customEvent="candidate.is_blocked ? 'removeBlock' : 'block'"
-        :backgroundColor="candidate.is_blocked ? '' : '#d81b60'"
-        :titleColor="candidate.is_blocked ? '' : 'white'"
+        :title="candidate.is_block_listed ? 'Unblock' : 'Block'"
+        :icon="candidate.is_block_listed ? '/assets/icon/block-secondary.svg' : '/assets/icon/block.svg'"
+        :customEvent="candidate.is_block_listed ? 'removeBlock' : 'block'"
+        :backgroundColor="candidate.is_block_listed ? '' : '#d81b60'"
+        :titleColor="candidate.is_block_listed ? '' : 'white'"
         @onClickButton="onClickButton"
       />
     </div>
@@ -131,6 +131,7 @@
 
 <script>
 import {mapMutations, mapActions} from 'vuex'
+import JwtService from "@/services/jwt.service";
 import ButtonComponent from '@/components/atom/ButtonComponent'
   export default {
     name: 'CandidateListCard',
@@ -146,31 +147,79 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
     methods: {
       ...mapMutations({
         setComponent: 'search/setComponent',
-        setSelectedProfileInfo: 'search/setSelectedProfileInfo'
+        setSelectedProfileInfo: 'search/setSelectedProfileInfo',
       }),
       ...mapActions({
-        connectCandidate: 'search/connectCandidate',
         getDetails: 'search/searchUser',
+        connectToCandidate: 'search/connectCandidate',
+        blockACandidate: 'search/blockCandidate',
 
       }),
       onClickButton(eventData) {
         if(eventData.event == 'viewProfileDetail') {
           this.ViewProfileDetail()
         }
+        if(eventData.event == 'addConnection') {
+          this.connectCandidate();
+        }
+        if(eventData.event == 'block') {
+          this.blockCandidate();
+        }
+
       },
       shortList() {
         console.log('short list')
       },
-      async onClickConnect() {
-        console.log('connect candidate');
-        let res = await this.connectCandidate({
+      async connectCandidate() {
+        let myTeamId = JwtService.getTeamIDAppWide();
+        if(!myTeamId) {
+          this.showError("You don't have a team")
+           return;
+        }
+        if(!this.candidate.team_id) {
+          this.showError("This candidate has no team")
+           return;
+        }
+        let data = {
+          userId: this.candidate.team_id,
           url: 'v1/send-connection-request',
-          data: {
-            from_team_id: 1,
-            to_team_id: 2
+          payload: {
+            from_team_id: myTeamId,
+            to_team_id: this.candidate.team_id
           }
+        }
+        try {
+          let res = await this.connectToCandidate(data)
+          console.log(res, '>>>>>>>>>>.')
+        } catch (e) {
+          if(e.response) {
+            this.showError(e.response.data.message)
+          }
+        }
+        
+      },
+      async blockCandidate() {
+        let data = {
+          url: 'v1/store-block-list',
+          payload: {
+            block_by: JwtService.getUserId(),
+            user_id: this.candidate.user_id
+          }
+        }
+        try {
+          await this.blockACandidate(data)
+        } catch (e) {
+          if(e.response) {
+            this.showError(e.response.data.message)
+          }
+        }
+        
+      },
+      showError(message) {
+        this.$error({
+          title: message,
+          center: true,
         });
-        console.log(res)
       },
       showDetailRightSide() {
         this.setSelectedProfileInfo(this.candidate)
