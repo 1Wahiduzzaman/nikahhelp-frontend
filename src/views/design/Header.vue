@@ -128,14 +128,12 @@
                 v-if="loggedUser.per_main_image_url"
                 class="avatar-image"
                 :src="loggedUser.per_main_image_url"
-                width="35"
                 alt=""
               />
               <img
                 v-if="!loggedUser.per_main_image_url"
                 class="avatar-image"
                 src="@/assets/mike.jpg"
-                width="35"
                 alt=""
               />
             </a>
@@ -584,6 +582,8 @@ export default {
   .avatar-image {
     border-radius: 50%;
     outline: 2px solid #ddd;
+    width: 35px;
+    height: 35px;
   }
   .team {
     display: inline-block;
