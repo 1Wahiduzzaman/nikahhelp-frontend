@@ -20,8 +20,6 @@
             </p>
             <p>
               Wrong email address didn't get any email? don't worry <a href="" class="text-decoration-underline">contact us</a>
-              <br />
-              users are on Matrimony Assist.
             </p>
             <p class="instruction">
               If you do not verify your email address by sent link within <span class="font-italic font-weight-bold">30 minutes</span> then the sent
@@ -105,12 +103,23 @@ export default {
     }
   }
   h3 {
-    padding: 40px 0;
+    padding-top: 10px;
     font-family: $body-font;
     font-size: 32px;
+    @media (min-width: 768px) {
+      padding: 10px 0;
+    }
   }
   .footer {
+    @media (min-width: 576px) {
+      bottom: 0;
+      width: 100%;
+      position: fixed;
+    }
     @media (min-width: 768px) {
+      position: relative;
+    }
+    @media (min-width: 1200px) {
       bottom: 0;
       width: 100%;
       position: fixed;
@@ -119,11 +128,14 @@ export default {
 }
 .email-box {
   color: $color-secondary;
-  padding: 4px 70px;
   background: #e9e6e6;
   border-radius: 8px;
   font-size: 20px;
   margin: 8px 0;
+  padding: 4px 20px;
+  @media (min-width: 768px) {
+    padding: 4px 70px;
+  }
 }
 .instruction {
   background: #522e8e;

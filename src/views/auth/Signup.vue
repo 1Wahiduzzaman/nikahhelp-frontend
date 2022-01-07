@@ -280,7 +280,7 @@
             <span class="fs-12 mt-2 text-white"
               >By clicking Agree & Join, you agree to Matrimony Assist
               <a class="link" href="/user-agreement">User Agreement, </a>
-              <a class="link" href="/privacy-cookie-policy">Privacy Policy and Cookie Policy</a>
+              <a class="link" href="/privacy-cookie-policy">Privacy and Cookie Policy</a>
             </span>
           </div>
         </a-form-model>
@@ -428,7 +428,7 @@ export default {
           {
             min: 8,
             message: "Use 8 characters or more for your password",
-            trigger: "blur",
+            trigger: "change",
           },
         ],
         confirmPassword: [
@@ -704,7 +704,10 @@ $border-width: 2px;
         }
       }
       .link {
-        color: #3fcbe7;
+        color: #92e0f1;
+        &:hover {
+          text-decoration: underline;
+        }
       }
       .bottom-text {
         //color: white;

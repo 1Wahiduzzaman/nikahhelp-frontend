@@ -5,18 +5,18 @@
     </header>
     <div class="container-fluid mb-3">
       <div class="row">
-        <div class="col-12 col-md-4 offset-md-4">
+        <div class="col-12 col-md-4 offset-md-4 col-lg-4 offset-lg-4">
           <h3 class="mt-3 fw-700 text-black-50 header-text">Email Verification</h3>
-          <h4 class="mt-3 font-weight-bolder pb-4">CONGRATULATIONS !</h4>
+          <h4 class="mt-3 font-weight-bolder congo-text">CONGRATULATIONS !</h4>
           <img src="@/assets/icon/check-circle-success.svg" alt="icon" class="" />
-          <p class="mt-5 pt-3 fs-20">Your email has been verified successfully.</p>
+          <p class="mt-5 verify-text fs-20">Your email has been verified successfully.</p>
           <p class="mt-4">
             Please now press continue button  to complete the <span class="type-access">{{ getUserType }}</span> registration form.
           </p>
 
           <button
               @click="handleClick"
-              class="btn btn-block ms-2 text-nowrap continue-button"
+              class="btn btn-block ms-2 text-nowrap continue-button mb-4"
           >
             Continue
           </button>
@@ -89,6 +89,15 @@ export default {
     color: white;
   }
   .footer {
+    bottom: 0;
+    width: 100%;
+    position: fixed;
+    @media (min-width: 360px) {
+      position: relative;
+    }
+    @media (min-width: 390px) {
+      position: fixed;
+    }
     @media (min-width: 768px) {
       bottom: 0;
       width: 100%;
@@ -97,9 +106,11 @@ export default {
   }
 }
 .header-text {
-  padding: 40px 0;
   font-family: $body-font;
   font-size: 32px;
+  @media (min-width: 768px) {
+    padding: 40px 0;
+  }
 }
 .type-access {
   color: $color-primary;
@@ -109,5 +120,15 @@ export default {
 .continue-button {
   height: 36px;
   border-radius: 60px;
+}
+.congo-text {
+  @media (min-width: 768px) {
+    padding-bottom: 16px;
+  }
+}
+.verify-text {
+  @media (min-width: 768px) {
+    padding-top: 12px;
+  }
 }
 </style>
