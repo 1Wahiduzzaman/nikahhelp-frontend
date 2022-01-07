@@ -88,7 +88,7 @@
                 text-nowrap
                 join-now-btn
               "
-              style="margin-left: 5px; font-weight: bold"
+              style="margin-left: 5px;"
             >
               Join Now
             </router-link>
@@ -301,6 +301,7 @@ export default {
   padding: 0 6px;
   border-radius: 20px;
   font-size: 12px;
+  font-width: 300;
 }
 .join-now-btn:hover {
   background: $bg-primary;

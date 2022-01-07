@@ -6,6 +6,7 @@ import HelpPage from "@/components/landing-page/help.vue";
 import PrivacyPolicy from "@/components/landing-page/privacy-policy.vue";
 import TermsAndConditionPage from "@/components/landing-page/terms-condition.vue";
 import SafetyAndGuidancePage from "@/components/landing-page/safety-guidance.vue";
+import UserAgreement from "@/components/landing-page/user-agreement.vue";
 import Signup from "@/views/auth/Signup.vue";
 import Login from "@/views/auth/Login.vue";
 import EmailVerification from "@/views/auth/EmailVerification.vue";
@@ -429,14 +430,16 @@ const AppRouter = new VueRouter({
             component: TermsAndConditionPage,
 
         },
-
-
         {
             path: "/privacy-cookie-policy",
             name: "PrivacyPolicy",
             component: PrivacyPolicy,
         },
-
+        {
+            path: "/user-agreement",
+            name: "UserAgreement",
+            component: UserAgreement,
+        },
     ]
 })
 
