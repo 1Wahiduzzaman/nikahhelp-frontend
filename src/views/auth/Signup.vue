@@ -710,11 +710,18 @@ $border-width: 2px;
       }
       .bottom-text {
         //color: white;
+        font-size: 12px;
+        @media (min-width: 768px) {
+          font-size: 16px;
+        }
         .logo-text {
           font-family: $header-font;
           margin-left: 10px;
           margin-right: 5px;
-          font-size: 24px;
+          font-size: 16px;
+          @media (min-width: 768px) {
+            font-size: 24px;
+          }
         }
       }
     }

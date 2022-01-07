@@ -76,14 +76,14 @@
 
         <div class="join-now pb-4">
           <p
-            class="flex-center-center mt-3 text-white"
+            class="flex-center-center mt-3 text-white bottom-link-text"
           >
             New to <span class="logo-text"> Matrimony Assist? </span>
 
             <router-link
               to="/signup"
               class="
-                btn btn-sm btn-round-sm
+                btn
                 ms-2
                 text-nowrap
                 join-now-btn
@@ -297,8 +297,10 @@ export default {
 }
 .join-now-btn {
   color: #FFFFFF;
-  font-size: 14px;
   border: 1px solid #FFFFFF;
+  padding: 0 6px;
+  border-radius: 20px;
+  font-size: 12px;
 }
 .join-now-btn:hover {
   background: $bg-primary;
@@ -307,6 +309,12 @@ export default {
 .join-now-btn:focus {
   outline: none;
   box-shadow: none;
+}
+.bottom-link-text {
+  font-size: 14px;
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
 }
 .welcome-back-tag {
   @media (min-width: 768px) {
@@ -329,7 +337,10 @@ export default {
   font-family: $header-font;
   margin-left: 10px;
   margin-right: 5px;
-  font-size: 24px;
+  font-size: 18px;
+  @media (min-width: 768px) {
+    font-size: 24px;
+  }
 }
 .signin-btn {
   border: 1px solid #3A3092;
