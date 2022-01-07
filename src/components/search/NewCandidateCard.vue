@@ -153,6 +153,7 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         getDetails: 'search/searchUser',
         connectToCandidate: 'search/connectCandidate',
         blockACandidate: 'search/blockCandidate',
+        shortListCandidate: 'search/shortListCandidate',
 
       }),
       onClickButton(eventData) {
@@ -164,6 +165,12 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         }
         if(eventData.event == 'block') {
           this.blockCandidate();
+        }
+        if(eventData.event == 'addShortList') {
+          this.addShortList();
+        }
+        if(eventData.event == 'removeShortList') {
+          this.removeFroShortList();
         }
 
       },
@@ -191,6 +198,45 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         try {
           let res = await this.connectToCandidate(data)
           console.log(res, '>>>>>>>>>>.')
+        } catch (e) {
+          if(e.response) {
+            this.showError(e.response.data.message)
+          }
+        }
+        
+      },
+      async addShortList() {
+        let data = {
+          url: 'v1/short-listed-candidates/store',
+          value: true,
+          actionType: 'post',
+          user_id: this.candidate.user_id,
+          payload: {
+            shortlisted_by: JwtService.getUserId(),
+            user_id: this.candidate.user_id
+          }
+        }
+        try {
+          await this.shortListCandidate(data)
+        } catch (e) {
+          if(e.response) {
+            this.showError(e.response.data.message)
+          }
+        }
+        
+      },
+      async removeFroShortList() {
+        let data = {
+          url: 'v1/delete-short-listed-by-candidates ',
+          value: false,
+          actionType: 'delete',
+          user_id: this.candidate.user_id,
+          payload: {
+            user_id: this.candidate.user_id
+          }
+        }
+        try {
+          await this.shortListCandidate(data)
         } catch (e) {
           if(e.response) {
             this.showError(e.response.data.message)
