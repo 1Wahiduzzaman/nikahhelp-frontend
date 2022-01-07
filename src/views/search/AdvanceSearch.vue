@@ -34,7 +34,7 @@
         </a-layout-sider>
         <a-layout id="bbx">
           <a-layout-content>
-            <div class="main-content-wrapper">
+            <div id="top" class="main-content-wrapper">
               <div class="main-content-1">
                 <component
                   @switchComponent="switchComponent"
@@ -113,8 +113,9 @@ export default {
       searchUser: "search/searchUser",
     }),
     ...mapMutations({
+      clearProfiles: "search/clearProfiles",
       setProfiles: "search/setProfiles",
-      setLoading: "search/setLoading",
+      setLoading: "search/setLoading"
     }),
     socketNotification(payload) {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -131,21 +132,24 @@ export default {
       }
     },
     onIntersect() {
-      this.$refs.simpleSearch.handleSearch();
-      console.log('intersect')
+      this.$refs.simpleSearch.handlePaginate();
     },
     async fetchInitialCandidate() {
       // const res = await this.searchUser('v1/home-searches?page=0&parpage=10&min_age=20&max_age=40&ethnicity=Amara&marital_status=single');
       this.setLoading(true);
       try {
         const res = await this.searchUser(
-          "v1/home-searches?page=0&parpage=10&ethnicity=Aboriginal&min_age=20&max_age=40"
+          {
+            url: "v1/home-searches?page=0&parpage=10&ethnicity=Aboriginal&min_age=20&max_age=40",
+            removePrevious: true
+          }       
         );
         this.setLoading(false);
         if (res == undefined) {
           this.setProfiles([]);
         }
         if (res.data && res.data.length) {
+          this.clearProfiles();
           this.setProfiles(res.data);
         }
       } catch (err) {

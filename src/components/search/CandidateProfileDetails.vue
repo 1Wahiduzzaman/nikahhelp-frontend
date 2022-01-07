@@ -23,7 +23,7 @@
                 @click="loadSearchResultComponent"
             >
                 <div class="flex justify-center align-center">
-                    <img style="height: 13px; margin-right: 4px;" src="/assets/icon/back-secondary.svg" alt="">
+                    <img style="height: 13px; margin-right: 4px;" src="/assets/icon/back.svg" alt="">
                 </div>
             </v-btn>
 
