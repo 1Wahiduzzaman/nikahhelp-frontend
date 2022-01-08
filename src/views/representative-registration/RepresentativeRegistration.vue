@@ -115,8 +115,6 @@
           Next
         </a-button>
         <a-button
-          :class="{ disabled: !representativeDetails.imageModel.is_agree }"
-          :disabled="!representativeDetails.imageModel.is_agree"
           v-if="current == steps.length - 1"
           type="primary"
           shape="round"
@@ -403,10 +401,12 @@ export default {
           this.current = 0;
         }
       }
+      this.checkExistData();
       this.saveDataInputStatus(this.current);
     },
     prev() {
       this.current--;
+      this.checkExistData();
     },
 
     async saveDataInputStatus(satge) {
