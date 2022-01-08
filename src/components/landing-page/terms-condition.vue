@@ -52,7 +52,7 @@
         within these Terms, or unless otherwise applicable law requires us to
         allow you to do so, you may not use our site:
       </p>
-
+<p>
       <ul>
         <li>in any way that breaches any applicable law or regulation;</li>
         <li>
@@ -73,7 +73,7 @@
         </li>
         <li>in contravention of any of these Terms of Use.</li>
       </ul>
-
+</p>
       <h5>5. Intellectual property rights</h5>
       <p>
         We are the owner or the licensee of all intellectual property rights in

@@ -29,7 +29,7 @@
         <li>
           <a href="javascript:void()"
             ><router-link to="/terms_condition" class="color-primary">
-              Terms & Condition
+              Terms & Conditions
             </router-link></a
           >
         </li>
