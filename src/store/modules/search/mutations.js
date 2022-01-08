@@ -1,5 +1,8 @@
+import { getUserId } from "../../../services/jwt.service";
+
 export default {
     setProfiles: (state, payload) => state.profiles =[...state.profiles, ...payload],
+    setProfileDetails: (state, payload) => state.profileDetails = payload,
     clearProfiles: (state) => state.profiles = [],
     setComponent: (state, name) => state.component = name,
     setTotalResult: (state, value) => state.totalResult = value,

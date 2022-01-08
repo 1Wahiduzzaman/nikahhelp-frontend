@@ -14,7 +14,7 @@
     </template>
     <v-img
       height="250"
-      :src="candidate.image"
+      :src="candidate.images"
     ></v-img>
 
     <v-card-title>{{ candidate.first_name }} {{ candidate.last_name }}</v-card-title>
@@ -154,6 +154,7 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         connectToCandidate: 'search/connectCandidate',
         blockACandidate: 'search/blockCandidate',
         shortListCandidate: 'search/shortListCandidate',
+        fetchProfileDetail: 'search/fetchProfileDetail',
 
       }),
       onClickButton(eventData) {
@@ -244,6 +245,16 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         }
         
       },
+      async fetchCandidate() {
+        let url = `v1/candidate/info/${this.candidate.user_id}`
+        try {
+          await this.fetchProfileDetail(url)
+        } catch (e) {
+          if(e.response) {
+            this.showError(e.response.data.message)
+          }
+        }
+      },
       async blockCandidate() {
         let data = {
           url: 'v1/store-block-list',
@@ -270,13 +281,15 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
       showDetailRightSide() {
         this.setSelectedProfileInfo(this.candidate)
         this.setComponent('RightSideCandidateDetail')
+        console.log('show right side detail')
       },
-      async ViewProfileDetail() {
-        //let res = await this.getDetails('v1/user-profile?user_id=1');
-       // console.log(res, '>>>>>>>>>>>>>>')
+      ViewProfileDetail() {
+        this.fetchCandidate()
         this.$emit('switchComponent')
-        this.setComponent('RightSidebar')
-        console.log('show profile Detail')
+        document.getElementById('topper').click()
+        setTimeout(() => {
+          this.setComponent('RightSidebar')
+        }, 10)
       },
       reserve () {
         this.loading = true

@@ -28,7 +28,10 @@
             @collapseSideBar="collapsed = !collapsed"
           >
             <template v-slot:search>
-              <SimpleSearch ref="simpleSearch"/>
+              <SimpleSearch 
+                ref="simpleSearch"
+                @switchComponent="switchComponent"
+              />
             </template>
           </Sidebar>
         </a-layout-sider>
@@ -38,6 +41,7 @@
               <div class="main-content-1">
                 <component
                   @switchComponent="switchComponent"
+                  @navigateProfile="navigateProfile"
                   v-bind:is="currentTabComponent"
                 >
                 </component>
@@ -111,11 +115,14 @@ export default {
   methods: {
     ...mapActions({
       searchUser: "search/searchUser",
+      getNextUserId: "search/getNextUserId",
+      getPreviousUserId: "search/getPreviousUserId",
+      fetchProfileDetail: 'search/fetchProfileDetail',
     }),
     ...mapMutations({
       clearProfiles: "search/clearProfiles",
       setProfiles: "search/setProfiles",
-      setLoading: "search/setLoading"
+      setLoading: "search/setLoading",
     }),
     socketNotification(payload) {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -133,6 +140,12 @@ export default {
     },
     onIntersect() {
       this.$refs.simpleSearch.handlePaginate();
+    },
+    showError(message) {
+      this.$error({
+        title: message,
+        center: true,
+      });
     },
     async fetchInitialCandidate() {
       // const res = await this.searchUser('v1/home-searches?page=0&parpage=10&min_age=20&max_age=40&ethnicity=Amara&marital_status=single');
@@ -163,6 +176,32 @@ export default {
     switchComponent(name) {
       this.componentName = name;
     },
+    async fetchCandidate(userId) {
+      let url = `v1/candidate/info/${userId}`
+      try {
+        await this.fetchProfileDetail(url)
+      } catch (e) {
+        if(e.response) {
+          this.showError(e.response.data.message)
+        }
+      }
+    },
+    async navigateProfile(data) {
+      if(data.type == 'previous') {
+        let previousId = await this.getPreviousUserId(data.userId)
+        if(previousId) this.fetchCandidate(previousId)
+        if(!previousId) this.showError("It's the first candidate")
+        console.log(previousId, 'previous userid')
+      }
+
+      if(data.type == 'next') {
+        let nextUserId = await this.getNextUserId(data.userId)
+        if(nextUserId) this.fetchCandidate(nextUserId)
+        if(!nextUserId) this.showError("It's the last candidate")
+        console.log(nextUserId, 'next userid')
+      }
+      
+    }
   },
   created() {
     this.fetchInitialCandidate();
