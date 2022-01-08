@@ -97,8 +97,8 @@
 
         <div class="welcome-back">
           <p class="welcome-back-text">
-            Don't miss your next opportunity. Sign in to stay updatd on
-            your<strong id="name">Matrimony Assist</strong> world.
+            <strong id="name">Matrimony Assist</strong>
+            is team based, the candidate is never alone
           </p>
         </div>
       </div>

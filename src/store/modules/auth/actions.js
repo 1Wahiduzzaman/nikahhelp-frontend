@@ -55,7 +55,7 @@ export default {
     console.log(response);
   },
   async resetPassword(_, payload) {
-    const response = await axios.post("v1/forgot/password-update", payload);
+    const response = await axios.post("v1/forgot/password/update", payload);
     console.log(response);
   },
   async logout(context) {

@@ -7,12 +7,19 @@
     </div>
     <div class="banner-content font-poppins">
       <div class="container">
-        <h2 class="color-white" style="margin-bottom: 12px">
-          Someone must be searching for you
-        </h2>
-        <p id="p-tag">
-          The first friends and family based matromonial introduction service
-        </p>
+        <div class="flex flex-direction justify-content-center align-items-center">
+          <div>
+            <h2 class="color-white" style="margin-bottom: 12px">
+              Someone must be searching for you
+            </h2>
+            <p id="p-tag font-poppins">
+              The first friends and family based matromonial introduction service
+            </p>
+          </div>
+          <div class="ml-5">
+            <button class="btn btn-round btn-parter-search" id="startBtn" onclick="location.href = '/signup';"><span>Start here</span></button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -21,12 +28,14 @@
 
 <script>
 import UnAuthSearchForm from "@/components/search/UnAuthSearchForm";
-import ApiService from "@/services/api.service";
 export default {
   name: "Banner",
   components: {UnAuthSearchForm },
   data() {
-    return {};
+    return {
+      countries: [],
+      religions: []
+    };
   },
   methods: {
     handleSearch(_payload) {
@@ -306,5 +315,58 @@ export default {
   font-size: 20px;
   letter-spacing: 1px;
   font-weight: normal;
+}
+#startBtn {
+  font-family: "Rochester", cursive;
+  font-size: 25px ;
+  padding: 0px 30px 0px 30px;
+  text-align: center;
+  font-weight: bold;
+  box-sizing: border-box;
+  letter-spacing: 2px;
+  border-color: #FFFFFF;
+  color:  #FFFFFF;
+  background: transparent;
+  border-width: 2px;
+  border-radius: 20px;
+}
+.btn-parter-search {
+  border: none;
+  text-align: center;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.btn-parter-search span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.btn-parter-search span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+.btn-parter-search:hover {
+  border-radius: 40px;
+}
+.btn-parter-search:hover span {
+  padding-right: 20px;
+}
+
+.btn-parter-search:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+.flex-direction {
+  flex-direction: column;
+  @media (min-width: 992px) {
+    flex-direction: row;
+  }
 }
 </style>

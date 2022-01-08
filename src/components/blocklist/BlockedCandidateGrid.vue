@@ -1,7 +1,6 @@
 <template>
   <v-card
-      class="mx-auto shadow-default"
-      max-width="374"
+      class="mx-auto shadow-default blocked-card"
   >
     <template slot="progress">
       <v-progress-linear
@@ -102,6 +101,12 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+@import "@/styles/base/_variables.scss";
+.blocked-card {
+  max-width: 300px;
+  @media (min-width: 1200px) {
+    max-width: 374px;
+  }
+}
 </style>

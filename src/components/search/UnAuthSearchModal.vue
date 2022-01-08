@@ -40,6 +40,9 @@ export default {
 		handleCancel(e) {
 			this.$emit("handle-cancel");
 		},
+    handleOk() {
+      //
+    }
 	},
 };
 </script>

@@ -3,18 +3,18 @@
     <Loader v-if="isLoading" :isLoading="isLoading" />
 		<header>
 			<div class="container">
-				<a href="/"><img src="@/assets/logo.png" alt="" /></a>
+				<a href="/"><img src="@/assets/logo.png" alt="logo" class="" /></a>
 				<div class="float-right auth-btn" id="logRegisterBtn">
 					<a
 						href="/login"
-						class="btn btn-sm btn-secondary mr-2"
+						class="btn btn-sm btn-secondary mr-2 signin-btn"
 						id="signInButton"
 					>
 						Sign In
 					</a>
 					<a
 						href="/register"
-						class="btn btn-sm btn-secondary btn-brand ml-2"
+						class="btn btn-sm btn-secondary btn-brand ml-2 signup-btn"
 						id="joinNowButton"
 					>
 						Join Now
@@ -151,7 +151,7 @@ export default {
       let fromModal = false;
       if(this.searchModalVisible) {
         fromModal = true;
-        this.searchModalVisible = false;
+        // this.searchModalVisible = false;
       }
       if(!pagination) {
         pagination = {
@@ -165,8 +165,10 @@ export default {
 				.then((data) => {
           if(fromModal) {
             this.updatedResult = data.data.data.data;
+            this.searchModalVisible = false;
           } else {
-            this.updatedResult = [...this.updatedResult, ...data.data.data.data]
+            this.updatedResult = [...this.updatedResult, ...data.data.data.data];
+            this.searchModalVisible = false;
           }
 					this.pagination = data.data.data.pagination;
 					this.searchResult = true;
@@ -176,14 +178,15 @@ export default {
 				.catch((error) => {
 					console.log(error);
 					console.log(error.response);
-					this.$message.error("Something went wrong");
+					// this.$message.error("Something went wrong");
 					this.searchModalVisible = false;
           this.isLoading = false;
+          this.updatedResult = [];
 				});
 		},
     onIntersect() {
       let payload = {
-        page: this.pagination.current_page,
+        page: this.pagination ? this.pagination.current_page : 0,
         per_page: 10
       }
       this.handleSearch(this.url, payload);
@@ -199,7 +202,6 @@ export default {
 		height: 100px;
 		background-color: $bg-secondary;
 		img {
-			margin-top: 10px;
 			height: 80px;
 		}
 
@@ -207,7 +209,7 @@ export default {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			margin-top: 40px;
+			margin-top: 30px;
 			.btn-brand {
 				background-color: $bg-brand;
 			}
@@ -305,5 +307,19 @@ export default {
 		margin-top: 80px;
 		margin-bottom: 20px;
 	}
+}
+.signin-btn {
+  &:hover {
+    color: #3A3092 !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+  }
+}
+.signup-btn {
+  &:hover {
+    color: $bg-brand !important;
+    background: #FFFFFF !important;
+    box-shadow: none !important;
+  }
 }
 </style>

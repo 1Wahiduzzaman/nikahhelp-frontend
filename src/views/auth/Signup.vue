@@ -139,7 +139,7 @@
                   id="first_name"
                   @change="generateScreenName"
                   v-model="signupModel.first_name"
-                  placeholder="FIrst Name"
+                  placeholder="First Name"
                 />
               </a-form-model-item>
             </div>
@@ -163,6 +163,8 @@
                   id="screen_name"
                   v-model="signupModel.screen_name"
                   placeholder="* Screen Name"
+                  :maxLength="15"
+                  @change="trimTheScreenName"
                 />
               </a-form-model-item>
             </div>
@@ -171,7 +173,7 @@
               <template v-slot:title>
                 We have made a screen name for you, you can keep it or change to
                 something suitable. Please make sure you choose a screen name
-                wisely as it communicates somthing about your self.
+                wisely as it communicates something about yourself.
               </template>
               <span class="text-white">* Please choose a sensible screen name, if you don't wish your
               real name to appear on search result.</span>
@@ -474,6 +476,9 @@ export default {
     }
   },
   methods: {
+    trimTheScreenName() {
+      this.signupModel.screen_name = this.signupModel.screen_name.replace(/[^A-Z0-9]/ig, "");
+    },
     handleSubmitSignUp() {
       this.$refs.signupFormOne.validate((valid) => {
        

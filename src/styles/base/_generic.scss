@@ -679,6 +679,9 @@ div[data-unique="second_one"] >  .ant-select-selection{
 .none-radius > .ant-select-selection {
     border-radius: 4px;
 }
+.support-tab .v-slide-group__prev {
+    display: none !important;
+}
 @media (min-width: 576px) {
     .ant-layout-sider {
         z-index: 9;

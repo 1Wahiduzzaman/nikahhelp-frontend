@@ -1,40 +1,61 @@
 <template>
   <div>
-    <div class="forget-password">
+    <div class="forget-password font-poppins">
       <div class="inner">
-        <a href="/" class="logo"><img src="@/assets/logo.png" alt="logo" class="mat-logo" /></a>
-        <template v-if="!message">
-          <h3 class="fs-22">Forget your password?</h3>
-          <h5 class="fs-18">Retrieve your password here</h5>
-          <p class="fs-14 text-white">Please enter your email address below. You will receive a link to reset your password.</p>
-        </template>
-        <template v-if="message">
-          <h3>Reset password link sent</h3>
-        </template>
+        <div class="signin-inner desktop-padding">
+          <a class="logo" href="/"><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo" /></a>
+          <h3 id="welcome-back-tag" class="welcome-back-tag"><b>{{ message ? 'Reset password link sent' : 'Forget your password?' }}</b></h3>
+        </div>
         <form class="form" @submit.prevent="handleSubmit">
           <Spinner v-if="isLoading" />
-          <p v-else-if="error">
-            {{ error }}
-            <router-link
-              to="/login"
-              class="
-                btn btn-sm btn-outline-primary btn-round-sm
+          <div v-else-if="error" class="text-black-50">
+            <p>{{ error }}</p>
+            <div class="flex justify-content-center align-items-center">
+              <button class="">
+                Back to
+                <router-link
+                    to="/login"
+                    class="
+                btn btn-sm btn-outline-primary btn-round-sm btn-signinup
                 ms-2
                 text-nowrap
+                join-now-btn
               "
-            >
-              Sign in
-            </router-link>
-          </p>
+                >
+                  Sign in
+                </router-link>
+              </button>
+              <h4 class="fs-16 pt-1 pl-2 pr-1 text-white text-black-50">or</h4>
+              <button class="">
+                <router-link
+                    to="/signup"
+                    class="
+                btn btn-sm btn-outline-primary btn-round-sm btn-signinup
+                ms-2
+                text-nowrap
+                join-now-btn
+              "
+                >
+                  Join now
+                </router-link>
+              </button>
+            </div>
+          </div>
           <div v-else>
             <div class="mb-3" v-if="!message">
-              <input
+              <h5 class="fs-18 text-black-50">Retrieve your password here</h5>
+              <p class="fs-14 text-black-50">Please enter your email address below. You will receive a link to reset your password.</p>
+
+              <a-input
                 type="email"
-                class="form-control"
+                class="form-control rounded-input"
                 id="email"
                 v-model="email"
                 placeholder="Enter email"
               />
+              <p v-if="!formIsValid" class="text-danger fs-14">
+                Please enter a valid email address
+              </p>
             </div>
             <p v-if="message" class="message">
               {{ message }}
@@ -48,15 +69,10 @@
                 Get Verification Link
               </button>
 
-              <button type="button" class="btn btn-primary w-100">
-                <router-link style="color: #fff" to="/login"
-                  >Back to Sign in
-                </router-link>
-              </button>
+              <router-link role="button" class="btn btn-primary w-50 text-white" to="/login" :class="{'flex justify-content-center': message}">
+                &#xab; Sign in
+              </router-link>
             </div>
-            <p v-if="!formIsValid" class="warning">
-              Please enter a valid email or password
-            </p>
           </div>
         </form>
       </div>
@@ -114,7 +130,7 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .forget-password {
-  min-height:  calc(100vh - 100px);;
+  min-height:  calc(100vh - 118px);;
   background-color: #522e8e;
   background-image: linear-gradient(
     0deg,
@@ -125,23 +141,21 @@ export default {
   .inner {
     max-width: 500px;
     margin: 0 auto;
-    padding: 20px 15px;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    @media (min-width: 768px) {
-      padding: 50px 15px;
-    }
+    padding: 0 8px;
     .logo {
       max-width: 250px;
       display: inline-block;
-      margin-bottom: 8px;
       .mat-logo {
-        width: 180px;
+        width: 120px;
+        height: 80px;
         @media (min-width: 768px) {
-          width: 250px;
+          width: 170px;
+          height: 110px;
         }
       }
     }
@@ -152,20 +166,18 @@ export default {
     }
     .form {
       background: $bg-white;
-      padding: 50px 30px;
-      border-radius: 5px;
+      padding: 20px 10px;
+      border-radius: 12px;
       max-width: 400px;
       display: flex;
       align-items: center;
       flex-direction: column;
       justify-content: center;
+      margin-top: 36px;
 
       .button-container {
-        width: 325px;
+        width: 100%;
         display: flex;
-        @media (min-width: 320px) and (max-width: 480px) {
-          width: 100%;
-        }
       }
       .warning {
         color: red;
@@ -173,19 +185,8 @@ export default {
         margin-top: 5px;
       }
       .message {
-        font-size: 24px;
-        margin-top: 5px;
-        margin-left: -15px;
-        margin-right: -15px;
-        font-weight: bold;
-        background: -webkit-linear-gradient(
-          rgb(186, 95, 247),
-          rgb(132, 111, 228),
-          #6d189e,
-          rgb(51, 28, 153)
-        );
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        font-size: 14px;
+        padding: 10px 15px;
       }
     }
   }
@@ -194,5 +195,36 @@ export default {
   margin-top: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
+}
+#welcome-back-tag {
+  background: -webkit-linear-gradient(white, pink, white, #8debf2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.welcome-back-tag {
+  @media (min-width: 768px) {
+    margin-top: 20px;
+  }
+}
+.rounded-input {
+  border-radius: 30px;
+}
+.join-now-btn {
+  color: $color-primary;
+  border: 1px solid $border-primary;
+  font-size: 10px;
+  @media (min-width: 576px) {
+    font-size: 12px;
+  }
+}
+.join-now-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+.join-now-btn:hover {
+  background: $bg-primary;
+  box-shadow: 0 2px 2px #999;
+  color: #FFFFFF;
+  border: none;
 }
 </style>
