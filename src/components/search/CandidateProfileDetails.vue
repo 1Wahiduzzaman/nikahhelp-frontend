@@ -33,7 +33,7 @@
                     medium
                     color="deep-purple darken-4"
                     dark
-                    @click.stop="ViewProfileDetail"
+                    @click="$emit('navigateProfile', {userId: profileDetails.user_id, type: 'previous'})"
                 >
                     <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-left-solid.svg" alt="">
                 </v-btn>
@@ -42,7 +42,7 @@
                     rounded
                     color="deep-purple darken-4"
                     dark
-                    @click.stop="ViewProfileDetail"
+                    @click="$emit('navigateProfile', {userId: profileDetails.user_id, type: 'next'})"
                 >
                     <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-right-solid.svg" alt="">
                 </v-btn>
@@ -99,6 +99,12 @@
         <!-- end mobile profile next button -->
         <ProfileBanner
             class="mt-5"
+            :name="profileDetails.first_name + ' ' + profileDetails.last_name"
+            :image="
+            profileDetails.personal.per_main_image_url
+                ? profileDetails.personal.per_main_image_url
+                : avatarSrc
+            "
         />
 
         <!-- button section -->
@@ -130,7 +136,7 @@ import PersonalInformation from '@/components/search/personal-information/Person
 import {btnData} from '@/data/candidate.button'
 import ButtonComponent from '@/components/atom/ButtonComponent'
 import ProfileBanner from '@/components/atom/ProfileBanner'
-import {mapMutations} from 'vuex'
+import {mapMutations, mapGetters} from 'vuex'
 export default {
     name: 'CandidateProfileDetails',
     data: () => ({
@@ -140,6 +146,11 @@ export default {
         ProfileBanner,
         ButtonComponent,
         PersonalInformation
+    },
+    computed: {
+        ...mapGetters({
+            profileDetails:'search/getProfileDetails'
+        }) 
     },
     methods: {
         ...mapMutations({

@@ -30,6 +30,31 @@ export default {
         });
     });
   },
+  async fetchProfileDetail(context, url) {
+    return new Promise((resolve, reject) => {
+      context.commit('setLoading', true)
+      ApiService.get(url)
+        .then((res) => {
+          context.commit('setLoading', false)
+          console.log(res,"then")
+          if(res.data) {
+            if(res.data.status == 'SUCCESS') {
+              console.log(res.data.data, 'success')
+              context.commit('setProfileDetails', res.data.data);
+            }
+
+            if(res.data.status == 'FAIL') {
+              console.log('fail')
+            }
+          }
+          resolve(res.data);
+        })
+        .catch((err) => {
+          context.commit('setLoading', false)
+          reject(err);
+        });
+    });
+  },
   async shortListCandidate(context, payload) {
     return new Promise((resolve, reject) => {
       context.commit('setLoading', true)
@@ -74,5 +99,25 @@ export default {
           reject(err);
         });
     });
+  },
+  getNextUserId({state}, currentUserId) {
+    let candidate = state.profiles.find(i => i.user_id == currentUserId);
+    let ind = state.profiles.indexOf(candidate)
+    console.log(ind, 'ind')
+    let isAvailable = state.profiles[ind+1];
+    if(isAvailable) {
+      return state.profiles[ind+1].user_id
+    }
+    return null;
+  },
+  getPreviousUserId({state}, currentUserId) {
+    let candidate = state.profiles.find(i => i.user_id == currentUserId);
+    let ind = state.profiles.indexOf(candidate)
+    console.log(ind, 'ind')
+    let isAvailable = state.profiles[ind-1];
+    if(isAvailable) {
+      return state.profiles[ind-1].user_id
+    }
+    return null;
   },
 };

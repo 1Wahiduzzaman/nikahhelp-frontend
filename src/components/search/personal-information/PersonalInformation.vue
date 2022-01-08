@@ -64,6 +64,7 @@ import FamilyInfoTable from './FamilyInfoTable.vue'
 import MyPrefTable from './MyPrefTable.vue'
 import CardInfo from '@/components/atom/CardInfo'
 import MoreAbout from './MoreAbout.vue'
+import {mapGetters} from 'vuex'
 import Scroller from  '@/components/atom/Scroller'
 export default {
     name: 'PersonalInformation',
@@ -74,6 +75,11 @@ export default {
         MoreAbout,
         CardInfo,
         Scroller
+    },
+    computed: {
+        ...mapGetters({
+            profileDetails:'search/getProfileDetails'
+        }),
     },
     methods: {
         scrollMeTo(refName) {

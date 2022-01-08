@@ -7,6 +7,7 @@ export default {
   state() {
     return {
       profiles: [],
+      profileDetails: {},
       profile: [],
       pagination: {},
       isSearched: false,
