@@ -262,7 +262,7 @@
 									Search
 								</button>
 								<div>
-									<a class="d-noe" ref="top" href="#top"></a>
+									<a id="topper" class="d-noe" ref="top" href="#top"></a>
 									<button @click="showADvancedSearchModal = true" class="btn-adv-search">Advanced Search</button>
 								</div>
 							</div>
@@ -361,6 +361,7 @@ export default {
 			this.showADvancedSearchModal = false;
 		},
 		...mapMutations({
+      		setComponent: 'search/setComponent',
 			clearProfiles: 'search/clearProfiles',
 			setProfiles: 'search/setProfiles',
 			pushQuery: 'search/pushQuery',
@@ -477,6 +478,8 @@ export default {
 
 		handleSearch() {
 			if(this.isFetching) return;
+			this.setComponent('AddComponent')
+            this.$emit('switchComponent', 'CandidateProfiles')
 			this.$refs.top.click()
 			this.currentPage = 1
 			let query = this.getQuery();
