@@ -2,7 +2,7 @@
   <div>
     <LandingPageHeader />
     <div class="main-content">
-      <h3 class="text-header-black">User Agreement </h3>
+      <h3>User Agreement </h3>
       <p>Last updated: 05/01/2022</p>
       <p>
         In reference to MatrimonyAssist.com (the Service) this User Agreement is about candidate and/or their representative registration or making enquiry about a candidate. Here a user refers to both the person submitting candidate profile for publication or the person making profile searches and enquires. 
