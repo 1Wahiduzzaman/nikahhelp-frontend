@@ -116,7 +116,7 @@ export default {
 
 #firstStepImageLine
 {
-     height: 30px;
+     height: 45px;
      
 }
 .panel {
@@ -125,7 +125,7 @@ export default {
 .alignImageLine
 {
   position: absolute;
-  margin-top: -15px;
+  margin-top: -22px;
   margin-left: -2px;
   margin-right: -10px;
   box-sizing: border-box;
@@ -156,7 +156,7 @@ export default {
 
 .imageTick {
    padding-right: 220px;
-   padding-left: 245px;
+   padding-left: 200px;
    z-index: 1;
 }
 

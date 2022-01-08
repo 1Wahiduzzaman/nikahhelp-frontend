@@ -19,6 +19,9 @@ body {
 .text-header-black {
     color: rgba(0, 0, 0, 0.85) !important;
 }
+.ant-tooltip-arrow:before {
+    background-color: #8983c1 !important;
+}
 .header-container{
     width: 100%;
     //height: 100px;

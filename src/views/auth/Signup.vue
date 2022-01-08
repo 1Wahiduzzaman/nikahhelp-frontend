@@ -302,26 +302,44 @@
       </div>
 
       
-      <div v-if="errorMessage" class="signup-inner">
-        <p class="error">
-          {{ errorMessage }}
-          <button @click="resetData">
-            <router-link
-              to="/login"
-              class="
-                btn btn-sm-sign btn-outline-primary btn-round-sm
+      <div v-if="errorMessage" class="signup-inner mt-5">
+        <div class="error pt-2">
+          <p class="mb-0">
+            {{ errorMessage }}
+          </p>
+          <div class="flex justify-content-center align-items-center">
+            <button @click="resetData" class="mt-2">
+              <router-link
+                  to="/login"
+                  class="
+                btn btn-sm btn-outline-primary btn-round-sm btn-signinup
                 ms-2
                 text-nowrap
                 join-now-btn
               "
-            >
-              Sign in
-            </router-link>
-          </button>
-        </p>
+              >
+                Sign in
+              </router-link>
+            </button>
+            <h4 class="fs-16 pt-3 pl-2 pr-1 text-white">or</h4>
+            <button @click="resetData" class="mt-2">
+              <router-link
+                  to="/signup"
+                  class="
+                btn btn-sm btn-outline-primary btn-round-sm btn-signinup
+                ms-2
+                text-nowrap
+                join-now-btn
+              "
+              >
+                Join now with another email
+              </router-link>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-    <Footer />
+    <Footer :class="{'footer-pos': errorMessage}" />
   </div>
 </template>
 
@@ -648,12 +666,13 @@ $border-width: 2px;
         padding: 16px 15px;
       }
       .error {
-        background: #fff;
-        height: 80px;
+        color: #FFFFFF;
+        height: 90px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        border-radius: 8px;
       }
       .logo {
         max-width: 250px;
@@ -972,7 +991,19 @@ button.submit{
     }
   }
 }
-
+.btn-signinup {
+  color: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  font-size: 10px;
+  @media (min-width: 576px) {
+    font-size: 12px;
+  }
+}
+.footer-pos {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
 .loaded{
   button.submit{
     background-color: $turquoise;
