@@ -2,7 +2,7 @@
   <div :class="cardBorder">
     <div class="advanced-search font-poppins" :class="{ 'p-3': useFor == 'home' }">
       <div class="title-wrapper">
-        <h3 class="title">Find Your Match</h3>
+        <h3 class="heading-title font-elsie">Find Your Match</h3>
         <p class="sub-title">I am looking for</p>
       </div>
       <div class="gender-wrapper flex justify-content-between align-items-center">
@@ -351,5 +351,13 @@ export default {
 }
 .search-icon {
   width: 24px;
+}
+.heading-title {
+  margin-bottom: 5px;
+  color: #6159a7;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: .0125em;
+  line-height: 2rem;
 }
 </style>
