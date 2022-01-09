@@ -41,9 +41,176 @@
                 </div>
               </div>
 
+              <v-tabs color="indigo accent-4" class="w-full d-flex justify-content-between support-tab ml-2">
+                <v-tab href="#tab-1" @click="tab = 'tab-1', connection_type_choosed = 'all'" class="font-weight-bold">All</v-tab>
+                <v-tab href="#tab-2" @click="tab = 'tab-2', connection_type_choosed = 'connected'" class="font-weight-bold">Connected </v-tab>
+                <v-tab href="#tab-3" @click="tab = 'tab-3', connection_type_choosed = 'Request received'" class="font-weight-bold">Received </v-tab>
+                <v-tab href="#tab-4" @click="tab = 'tab-4', connection_type_choosed = 'Request send'" class="font-weight-bold">Sent </v-tab>
+                <v-tab href="#tab-5" @click="tab = 'tab-5', connection_type_choosed = 'We declined'" class="font-weight-bold">We declined </v-tab>
+                <v-tab href="#tab-6" @click="tab = 'tab-6', connection_type_choosed = 'They declined'" class="font-weight-bold">They declined </v-tab>
+              </v-tabs>
+
+              <v-tabs-items v-model="tab">
+                <v-tab-item value="tab-1">
+                  <div class="row px-3">
+                    <div
+                        class="col-12 col-md-4 col-xl-3 mobile-margin"
+                        v-for="(connection, connecIndex) in getFilteredConnections"
+                        :key="connecIndex"
+                    >
+                      <candidate-grid-view
+                          v-if="
+                        displayMode === 'grid' &&
+                        connectionReports.result &&
+                        connectionReports.result.length > 0
+                      "
+                          :connection="connection"
+                          @selected-connection="selectedConnection"
+                          @accept-request="acceptRequest"
+                          @disconnect-team="disconnectTeam"
+                          @decline-request="declineRequest"
+                          @connect-request="connectRequest"
+                          @block-candidate="blockCandidate"
+                          @decline-connection="declineConnection"
+                      />
+                    </div>
+                  </div>
+                </v-tab-item>
+
+                <v-tab-item value="tab-2">
+                  <div class="row px-3">
+                    <div
+                        class="col-12 col-md-4 col-xl-3 mobile-margin"
+                        v-for="(connection, connecIndex) in getFilteredConnections"
+                        :key="connecIndex"
+                    >
+                      <candidate-grid-view
+                          v-if="
+                        displayMode === 'grid' &&
+                        connectionReports.result &&
+                        connectionReports.result.length > 0
+                      "
+                          :connection="connection"
+                          @selected-connection="selectedConnection"
+                          @accept-request="acceptRequest"
+                          @disconnect-team="disconnectTeam"
+                          @decline-request="declineRequest"
+                          @connect-request="connectRequest"
+                          @block-candidate="blockCandidate"
+                          @decline-connection="declineConnection"
+                      />
+                    </div>
+                  </div>
+                </v-tab-item>
+
+                <v-tab-item value="tab-3">
+                  <div class="row px-3">
+                    <div
+                        class="col-12 col-md-4 col-xl-3 mobile-margin"
+                        v-for="(connection, connecIndex) in getFilteredConnections"
+                        :key="connecIndex"
+                    >
+                      <candidate-grid-view
+                          v-if="
+                        displayMode === 'grid' &&
+                        connectionReports.result &&
+                        connectionReports.result.length > 0
+                      "
+                          :connection="connection"
+                          @selected-connection="selectedConnection"
+                          @accept-request="acceptRequest"
+                          @disconnect-team="disconnectTeam"
+                          @decline-request="declineRequest"
+                          @connect-request="connectRequest"
+                          @block-candidate="blockCandidate"
+                          @decline-connection="declineConnection"
+                      />
+                    </div>
+                  </div>
+                </v-tab-item>
+
+                <v-tab-item value="tab-4">
+                  <div class="row px-3">
+                    <div
+                        class="col-12 col-md-4 col-xl-3 mobile-margin"
+                        v-for="(connection, connecIndex) in getFilteredConnections"
+                        :key="connecIndex"
+                    >
+                      <candidate-grid-view
+                          v-if="
+                        displayMode === 'grid' &&
+                        connectionReports.result &&
+                        connectionReports.result.length > 0
+                      "
+                          :connection="connection"
+                          @selected-connection="selectedConnection"
+                          @accept-request="acceptRequest"
+                          @disconnect-team="disconnectTeam"
+                          @decline-request="declineRequest"
+                          @connect-request="connectRequest"
+                          @block-candidate="blockCandidate"
+                          @decline-connection="declineConnection"
+                      />
+                    </div>
+                  </div>
+                </v-tab-item>
+
+                <v-tab-item value="tab-5">
+                  <div class="row px-3">
+                    <div
+                        class="col-12 col-md-4 col-xl-3 mobile-margin"
+                        v-for="(connection, connecIndex) in getFilteredConnections"
+                        :key="connecIndex"
+                    >
+                      <candidate-grid-view
+                          v-if="
+                        displayMode === 'grid' &&
+                        connectionReports.result &&
+                        connectionReports.result.length > 0
+                      "
+                          :connection="connection"
+                          @selected-connection="selectedConnection"
+                          @accept-request="acceptRequest"
+                          @disconnect-team="disconnectTeam"
+                          @decline-request="declineRequest"
+                          @connect-request="connectRequest"
+                          @block-candidate="blockCandidate"
+                          @decline-connection="declineConnection"
+                      />
+                    </div>
+                  </div>
+                </v-tab-item>
+
+                <v-tab-item value="tab-6">
+                  <div class="row px-3">
+                    <div
+                        class="col-12 col-md-4 col-xl-3 mobile-margin"
+                        v-for="(connection, connecIndex) in getFilteredConnections"
+                        :key="connecIndex"
+                    >
+                      <candidate-grid-view
+                          v-if="
+                        displayMode === 'grid' &&
+                        connectionReports.result &&
+                        connectionReports.result.length > 0
+                      "
+                          :connection="connection"
+                          @selected-connection="selectedConnection"
+                          @accept-request="acceptRequest"
+                          @disconnect-team="disconnectTeam"
+                          @decline-request="declineRequest"
+                          @connect-request="connectRequest"
+                          @block-candidate="blockCandidate"
+                          @decline-connection="declineConnection"
+                      />
+                    </div>
+                  </div>
+                </v-tab-item>
+              </v-tabs-items>
+
               <div
                 v-if="connectionReports"
-                class="d-flex w-full flex-wrap ml-2"
+                class="d-none w-full flex-wrap ml-2"
               >
                 <v-chip
                   class="ma-2 connected"
@@ -101,31 +268,33 @@
                 </v-chip>
               </div>
 
-              <div v-if="connectionReports" class="shortlist-wrapper">
-                <div class="row px-3">
-                  <div
-                    class="col-12 col-md-4 col-xl-3 mobile-margin"
-                    v-for="(connection, connecIndex) in getFilteredConnections"
-                    :key="connecIndex"
-                  >
-                    <candidate-grid-view
-                      v-if="
-                        displayMode === 'grid' &&
-                        connectionReports.result &&
-                        connectionReports.result.length > 0
-                      "
-                      :connection="connection"
-                      @selected-connection="selectedConnection"
-                      @accept-request="acceptRequest"
-                      @disconnect-team="disconnectTeam"
-                      @decline-request="declineRequest"
-                      @connect-request="connectRequest"
-                      @block-candidate="blockCandidate"
-                      @decline-connection="declineConnection"
-                    />
-                  </div>
-                </div>
-              </div>
+<!--              <div v-if="connectionReports" class="shortlist-wrapper">-->
+<!--                <div class="row px-3">-->
+<!--                  <div-->
+<!--                    class="col-12 col-md-4 col-xl-3 mobile-margin"-->
+<!--                    v-for="(connection, connecIndex) in getFilteredConnections"-->
+<!--                    :key="connecIndex"-->
+<!--                  >-->
+<!--                    <candidate-grid-view-->
+<!--                      v-if="-->
+<!--                        displayMode === 'grid' &&-->
+<!--                        connectionReports.result &&-->
+<!--                        connectionReports.result.length > 0-->
+<!--                      "-->
+<!--                      :connection="connection"-->
+<!--                      @selected-connection="selectedConnection"-->
+<!--                      @accept-request="acceptRequest"-->
+<!--                      @disconnect-team="disconnectTeam"-->
+<!--                      @decline-request="declineRequest"-->
+<!--                      @connect-request="connectRequest"-->
+<!--                      @block-candidate="blockCandidate"-->
+<!--                      @decline-connection="declineConnection"-->
+<!--                    />-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+
+
               <ng-container
                 v-if="
                   displayMode === 'list' &&
@@ -325,9 +494,6 @@
 </template>
 
 <script>
-import Header from "@/components/dashboard/layout/Header.vue";
-import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
-import Footer from "@/components/auth/Footer.vue";
 import Candidate from "@/components/connections/Candidate.vue";
 import JwtService from "@/services/jwt.service";
 import { dateFromDateTime, dateFromTimeStamp } from "@/common/helpers.js";
@@ -338,9 +504,6 @@ export default {
   name: "Connections",
   components: {
     CandidateGridView,
-    Header,
-    Sidebar,
-    Footer,
     Candidate,
   },
   sockets: {
@@ -355,6 +518,7 @@ export default {
   },
   data() {
     return {
+      tab: 'tab-1',
       isLoading: false,
       user: {},
       is_verified: 1,
@@ -386,6 +550,16 @@ export default {
       }
       return [];
     },
+    getConnections() {
+      if (
+          this.connectionReports &&
+          this.connectionReports.result &&
+          this.connectionReports.result.length > 0
+      ) {
+        return this.connectionReports.result;
+      }
+      return [];
+    }
     // connectionStatus() {
     // 	return this.connectionOverview.connection_overview.connection_status;
     // },

@@ -1,9 +1,9 @@
 <template>
-  <div class="signup-container font-poppins">
-    <div class="signin-inner desktop-padding">
+  <div class="signup-container font-poppins main-container">
+    <div class="signin-inner desktop-padding header-container text-center">
       <a class="logo" href="/"><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo" /></a>
     </div>
-    <div class="signup">
+    <div class="signup body-container">
       <div class="type-selection" v-if="showMemberTypeForm && !errorMessage">
         <div class="content mb-5">
           <h3 class="mt-3 text-header-black font-weight-bolder">
@@ -341,7 +341,7 @@
         </div>
       </div>
     </div>
-    <Footer :class="{'footer-pos': errorMessage}" />
+    <Footer class="footer-container" :class="{'footer-pos': errorMessage}" />
   </div>
 </template>
 
@@ -614,7 +614,7 @@ $border-width: 2px;
   overflow-y: auto;
   .signup {
     @media (min-width: 768px) {
-      height: 100vh;
+      //height: 100vh;
     }
     //background-color: #522e8e;
     //background-image: linear-gradient(
@@ -1115,5 +1115,23 @@ svg{
   100%{
     background-color: white;
   }
+}
+.main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.header-container {
+  flex-shrink: 0;
+}
+.body-container{
+  flex-grow: 1;
+  overflow: auto;
+  min-height: 2em;
+}
+.footer-container{
+  flex-shrink: 0;
 }
 </style>

@@ -17,7 +17,7 @@
             </p>
           </div>
           <div class="ml-5">
-            <button class="btn btn-round btn-parter-search" id="startBtn" onclick="location.href = '/signup';"><span>Start here</span></button>
+            <button class="btn btn-round banner-btn-parter-search" id="bannerstartBtn" onclick="location.href = '/signup';"><span>Start here</span></button>
           </div>
         </div>
       </div>
@@ -316,7 +316,7 @@ export default {
   letter-spacing: 1px;
   font-weight: normal;
 }
-#startBtn {
+#bannerstartBtn {
   font-family: "Rochester", cursive;
   font-size: 25px ;
   padding: 0px 30px 0px 30px;
@@ -324,27 +324,26 @@ export default {
   font-weight: bold;
   box-sizing: border-box;
   letter-spacing: 2px;
-  border-color: #FFFFFF;
   color:  #FFFFFF;
   background: transparent;
-  border-width: 2px;
+  border: 2px solid #FFFFFF;
   border-radius: 20px;
 }
-.btn-parter-search {
+.banner-btn-parter-search {
   border: none;
   text-align: center;
   transition: all 0.5s;
   cursor: pointer;
 }
 
-.btn-parter-search span {
+.banner-btn-parter-search span {
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.5s;
 }
 
-.btn-parter-search span:after {
+.banner-btn-parter-search span:after {
   content: '\00bb';
   position: absolute;
   opacity: 0;
@@ -352,14 +351,14 @@ export default {
   right: -20px;
   transition: 0.5s;
 }
-.btn-parter-search:hover {
+.banner-btn-parter-search:hover {
   border-radius: 40px;
 }
-.btn-parter-search:hover span {
+.banner-btn-parter-search:hover span {
   padding-right: 20px;
 }
 
-.btn-parter-search:hover span:after {
+.banner-btn-parter-search:hover span:after {
   opacity: 1;
   right: 0;
 }
