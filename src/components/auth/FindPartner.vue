@@ -65,7 +65,7 @@ export default {
                top: -22px;
                bottom: -25px;
                right: -20px;
-               border: 1px solid $border-primary;
+               border: 3px solid $border-primary;
                border-radius: 10px;
                transform: rotate(5deg);
                @media(max-width: 991px){

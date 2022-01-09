@@ -29,6 +29,7 @@
           </p>
           <div v-else>
             <div class="">
+              <h4 class="fs-16 text-black-50">Type your email & password </h4>
               <a-form-model-item ref="email" prop="email">
                 <a-input
                   type="email"

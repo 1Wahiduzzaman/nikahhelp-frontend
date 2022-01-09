@@ -1,7 +1,7 @@
 <template>
-	<div class="search-page">
+	<div class="search-page main-container">
     <Loader v-if="isLoading" :isLoading="isLoading" />
-		<header>
+		<header class="header-container">
 			<div class="container">
 				<a href="/"><img src="@/assets/logo.png" alt="logo" class="" /></a>
 				<div class="float-right auth-btn" id="logRegisterBtn">
@@ -23,7 +23,7 @@
 			</div>
 		</header>
 
-		<div class="container">
+		<div class="container body-container">
 			<div class="d-flex justify-content-between my-4">
 				<h4>Search Results</h4>
 				<button
@@ -59,15 +59,22 @@
 						>
 					</div>
 
-          <div class="row mt-2">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-              <div class="row">
-                <div v-for="(candidate, n) in  updatedResult" :key="n" class="col-sm-12 col-md-6 col-lg-4">
-                  <candidate-grid
-                      :candidate="candidate"
-                  ></candidate-grid>
-                </div>
-              </div>
+          <div class="row mt-2" v-else>
+            <div class="col-sm-12 col-md-6 col-lg-4" v-if="landingLoading">
+              <v-sheet
+                  color="lighten-4"
+                  class="pa-3"
+              >
+                <v-skeleton-loader
+                    class="mx-auto skeleton-width"
+                    type="card"
+                ></v-skeleton-loader>
+              </v-sheet>
+            </div>
+            <div v-for="(candidate, n) in  updatedResult" :key="n" class="col-sm-12 col-md-6 col-lg-4" v-else>
+              <candidate-grid
+                  :candidate="candidate"
+              ></candidate-grid>
             </div>
           </div>
 				</div>
@@ -105,7 +112,7 @@
 			v-model="searchModalVisible"
 			@handleSearch="handleSearch"
 		></un-auth-search-modal>
-		<div class="footer">
+		<div class="footer-container">
 			<Footer style="margin-top: 50px" />
 		</div>
 	</div>
@@ -116,8 +123,8 @@
 import UnAuthSearchModal from "@/components/search/UnAuthSearchModal.vue";
 import ApiService from "../../services/api.service";
 import Footer from "@/components/auth/Footer.vue";
-import CandidateGrid from '@/components/search/NewCandidateCard.vue';
-import Observer from "@/components/atom/Observer"
+import CandidateGrid from '@/components/search/UnauthCard.vue';
+import Observer from "@/components/atom/Observer";
 
 export default {
 	props: ["url"],
@@ -125,22 +132,25 @@ export default {
 		return {
 			searchModalVisible: false,
 			updatedResult: [],
+      landingLoading: false,
 			searchResult: false,
-      isLoading: false
+      isLoading: false,
+      pagination: {}
 		};
 	},
   created() {
     let pagination = {
-      page: 0,
+      page: 1,
       per_page: 10
     };
+    this.landingLoading = true;
     this.handleSearch(this.url, pagination);
   },
   components: {
 		Footer,
     CandidateGrid,
 		UnAuthSearchModal,
-    Observer
+    Observer,
 	},
 	methods: {
 		setSearchModalVisible() {
@@ -155,7 +165,7 @@ export default {
       }
       if(!pagination) {
         pagination = {
-          page: 0,
+          page: 1,
           per_page: 10
         };
       }
@@ -163,6 +173,7 @@ export default {
 			let _payload = `v1/home-searches${payload}`;
 			await ApiService.get(_payload)
 				.then((data) => {
+          this.landingLoading = false;
           if(fromModal) {
             this.updatedResult = data.data.data.data;
             this.searchModalVisible = false;
@@ -181,15 +192,17 @@ export default {
 					// this.$message.error("Something went wrong");
 					this.searchModalVisible = false;
           this.isLoading = false;
-          this.updatedResult = [];
+          // this.updatedResult = [];
 				});
 		},
     onIntersect() {
       let payload = {
-        page: this.pagination ? this.pagination.current_page : 0,
+        page: this.pagination && this.pagination.current_page ? this.pagination.current_page + 1 : 1,
         per_page: 10
       }
-      this.handleSearch(this.url, payload);
+      if(!this.isLoading) {
+        this.handleSearch(this.url, payload);
+      }
     },
 	},
 };
@@ -225,21 +238,21 @@ export default {
 			margin: 0px;
 		}
 		.search-result {
-			display: grid;
-			grid-template-columns: auto auto;
-			margin: 0 auto;
-			grid-gap: 20px;
-			@media (max-width: 1020px) {
-				grid-template-columns: none;
-			}
-
-			@media (max-width: 1243px) {
-				grid-template-columns: none;
-			}
-
-			@media (max-width: 767px) {
-				grid-template-columns: none;
-			}
+			//display: grid;
+			//grid-template-columns: auto auto;
+			//margin: 0 auto;
+			//grid-gap: 20px;
+			//@media (max-width: 1020px) {
+			//	grid-template-columns: none;
+			//}
+      //
+			//@media (max-width: 1243px) {
+			//	grid-template-columns: none;
+			//}
+      //
+			//@media (max-width: 767px) {
+			//	grid-template-columns: none;
+			//}
 		}
 	}
 
@@ -321,5 +334,26 @@ export default {
     background: #FFFFFF !important;
     box-shadow: none !important;
   }
+}
+.main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.header-container {
+  flex-shrink: 0;
+}
+.body-container{
+  flex-grow: 1;
+  overflow: auto;
+  min-height: 2em;
+}
+.footer-container{
+  flex-shrink: 0;
+}
+.skeleton-width {
+  width: 300px;
 }
 </style>
