@@ -115,7 +115,8 @@ export default {
         let data = {
           receivers: [payload.to_owner.toString()],
           title: `requested for a private chat`,
-          team_id: this.to_team_id
+          team_id: this.to_team_id,
+          event: 'private_chat_request'
         };
         this.$emit("socketNotification", data);
       }).catch(e => {

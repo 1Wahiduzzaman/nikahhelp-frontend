@@ -85,7 +85,8 @@ export default {
             let data = {
               receivers: [this.item.sender.toString()],
               title: `accepted your team request for private chat`,
-              team_id: this.item.from_team_id
+              team_id: this.item.from_team_id,
+              event: 'accept_or_reject_chat_request'
             };
             this.$emit("socketNotification", data);
           }).catch(e => {
@@ -103,7 +104,8 @@ export default {
             let data = {
               receivers: [this.item.sender.toString()],
               title: `rejected your team request for private chat`,
-              team_id: this.item.from_team_id
+              team_id: this.item.from_team_id,
+              event: 'accept_or_reject_chat_request'
             };
             this.$emit("socketNotification", data);
           }).catch(e => {
