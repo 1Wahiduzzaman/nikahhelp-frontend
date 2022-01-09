@@ -355,7 +355,7 @@ export default {
 .heading-title {
   margin-bottom: 5px;
   color: #6159a7;
-  font-size: 1.25rem;
+  font-size: 2rem;
   font-weight: 500;
   letter-spacing: .0125em;
   line-height: 2rem;

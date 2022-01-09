@@ -108,10 +108,10 @@
                   <div class="footer">
                     <!--                <div class="footer-top"><strong>{{ chatheadopen.typer_name }}</strong> {{ chatheadopen.typing_text }}</div>-->
                     <div class="footer-bottom px-4">
-                      <form action="#">
+                      <form action="#" @submit.prevent="sendMsg">
                         <div class="left flex justify-content-end align-items-end">
                           <div class="message-box">
-                            <textarea name="message" id="" cols="30" rows="4" placeholder="Enter message..."></textarea>
+                            <textarea name="message" id="" cols="30" rows="4" v-model="message" placeholder="Enter message..."></textarea>
                             <div class="position-absolute msgbox-right">
                               <div class="flex flex-column justify-content-center align-items-center h-full">
                                 <a-tooltip>
@@ -136,7 +136,7 @@
                             </div>
                           </div>
                           <!-- <button :disabled="returnMsgSendBtnDeactiveStatus" class="btn btn-primary btn-submit js-msg-send">  -->
-                          <button class="btn btn-primary btn-submit js-msg-send">
+                          <button class="btn btn-primary btn-submit js-msg-send" @keydown.enter.exact.prevent="sendMsg($event)">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.68 18.77">
                               <g id="Layer_2" data-name="Layer 2">
                                 <g id="middle" fill="white">
@@ -168,6 +168,7 @@
 </template>
 
 <script>
+import ApiService from '@/services/api.service';
 export default {
   name: "Index",
   data() {
@@ -175,8 +176,24 @@ export default {
       tab: 'tab-1',
       text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
-      customStyle:
-          'border: none; background: #ffffff',
+      customStyle: 'border: none; background: #ffffff',
+      message: '',
+      chats: []
+    }
+  },
+  methods: {
+    async sendMsg(e) {
+      console.log(e);
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let payload = {
+        sender: loggedUser.id,
+        receiver: 79,
+        message: this.message,
+        created_at: new Date()
+      };
+      await ApiService.post('/v1/support-send-message', payload).then(response => {
+        console.log(response);
+      });
     }
   }
 }
