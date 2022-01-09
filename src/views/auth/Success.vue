@@ -103,6 +103,14 @@ export default {
       width: 100%;
       position: fixed;
     }
+    @media (min-width: 1024px) {
+      position: relative;
+    }
+    @media (min-width: 1200px) {
+      bottom: 0;
+      width: 100%;
+      position: fixed;
+    }
   }
 }
 .header-text {

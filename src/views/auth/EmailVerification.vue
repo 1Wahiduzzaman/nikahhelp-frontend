@@ -119,6 +119,9 @@ export default {
     @media (min-width: 768px) {
       position: relative;
     }
+    @media (min-width: 1024px) {
+      position: relative;
+    }
     @media (min-width: 1200px) {
       bottom: 0;
       width: 100%;
@@ -132,7 +135,7 @@ export default {
   border-radius: 8px;
   font-size: 20px;
   margin: 8px 0;
-  padding: 4px 20px;
+  padding: 4px 10px;
   @media (min-width: 768px) {
     padding: 4px 70px;
   }
