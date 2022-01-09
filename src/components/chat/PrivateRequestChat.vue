@@ -82,6 +82,12 @@ export default {
       await ApiService.post(`/v1/private-chat-request-accept-reject`, payload)
           .then(response => {
             console.log(response);
+            let data = {
+              receivers: [this.item.sender.toString()],
+              title: `accepted your team request for private chat`,
+              team_id: this.item.from_team_id
+            };
+            this.$emit("socketNotification", data);
           }).catch(e => {
             console.log(e);
           });
@@ -94,6 +100,12 @@ export default {
       await ApiService.post(`/v1/private-chat-request-accept-reject`, payload)
           .then(response => {
             console.log(response);
+            let data = {
+              receivers: [this.item.sender.toString()],
+              title: `rejected your team request for private chat`,
+              team_id: this.item.from_team_id
+            };
+            this.$emit("socketNotification", data);
           }).catch(e => {
             console.log(e);
           });

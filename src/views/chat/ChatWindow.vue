@@ -126,6 +126,7 @@
                           :teamMembers="teamMembers"
                           :activeTeam="activeTeam"
                           action
+                          @socketNotification="socketNotification"
                           class="w-full pr-3 cursor-pointer"
                       />
                       <ChatListItem
@@ -169,6 +170,7 @@
                           :teamMembers="teamMembers"
                           :activeTeam="activeTeam"
                           action
+                          @socketNotification="socketNotification"
                           class="w-full pr-3 cursor-pointer"
                       />
                     </div>
@@ -183,6 +185,7 @@
                                             :teamMembers="teamMembers"
                                             :activeTeam="activeTeam"
                                             action
+                                            @socketNotification="socketNotification"
                                             class="w-full pr-3 cursor-pointer" />
                     </div>
                   </div>
@@ -368,11 +371,11 @@ import {pick, map} from 'lodash';
 
 const messageKeys = ['id', 'user_id', 'chat_id', 'team_id', 'from_team_id', 'to_team_id', 'private_receiver_id', 'private_team_chat_id', 'body', 'seen', 'created_at'];
 import {format} from 'timeago.js'
-import Conversation from "../../components/auth/Conversation";
 import JwtService from "@/services/jwt.service";
 import { openModalRoute } from "@/plugins/modal/modal.mixin";
 import ConnectedTeamChat from "../../components/chat/ConnectedTeamChat";
 import PrivateRequestChat from "../../components/chat/PrivateRequestChat";
+import Notification from "@/common/notification.js";
 
 export default {
   name: 'ChatWindow',
@@ -627,6 +630,20 @@ export default {
     }
   },
   methods: {
+    socketNotification(payload) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.sender = loggedUser.id;
+      Notification.storeNotification(payload);
+      payload.created_at = new Date();
+      payload.seen = 0;
+      payload.sender = loggedUser;
+      if(payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map(item => {
+          return item.toString();
+        });
+        this.$socket.emit('notification', payload);
+      }
+    },
     getActiveTeamId() {
       if (!JwtService.getTeamIDAppWide()) {
         this.isLoading = true;
