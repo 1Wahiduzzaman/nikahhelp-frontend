@@ -117,6 +117,15 @@
                 />Subscription
               </router-link>
             </li>
+            <!-- <li class="list-item">
+              <router-link to="/settings">
+                <img
+                  class="mr-3"
+                  src="@/assets/icon/gear-fill-secondary.svg"
+                  alt="icon"
+                />Setting
+              </router-link>
+            </li> -->
             <!--				<li class="list-item">-->
             <!--					<a href="#"-->
             <!--						><img-->
