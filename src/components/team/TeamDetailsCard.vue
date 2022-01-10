@@ -74,7 +74,6 @@
 					<a-modal
 						v-model="edit_button_flag"
 						title="Change Team Info"
-						@ok="handleTeamInfoChange"
 					>
 						<div class="row">
 							<!-- Change Team Logo -->
@@ -132,6 +131,15 @@
 								/>
 							</div>
 						</div>
+
+            <template slot="footer">
+              <a-button key="back" @click="edit_button_flag = false">
+                Cancel
+              </a-button>
+              <a-button key="submit" type="primary" :loading="teamUpdating" @click="handleTeamInfoChange">
+                Update
+              </a-button>
+            </template>
 					</a-modal>
 
 					<!-- <button class="close" v-if="edit_button_flag">
@@ -398,7 +406,7 @@
                   placement="top"
                   :title="member.relationship"
               >
-                <div class="d-mb-none d-dk-block relation-p ellipse">{{ member.relationship }}</div>
+                <div class="d-mb-none d-dk-block relation-p ellipse">{{ member.user_type == 'Candidate' ? 'Candidate' : member.relationship }}</div>
               </a-tooltip>
             </div>
 
@@ -559,7 +567,7 @@
               placement="top"
               :title="teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription'"
           >
-            <a :href="'subscription/' + teamData.team_id"
+            <a :href="'subscription/' + teamData.team_id" class="text-center"
             ><img src="../../assets/icon/renew.svg" alt="Renew Subscription"/>
               <span class="display-subs-text">{{ teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription' }}</span></a
             >
@@ -664,7 +672,8 @@ export default {
       profileCard: false,
       profileActive: null,
       clickedInviteNow: false,
-      tempActive: false
+      tempActive: false,
+      teamUpdating: false
 		};
 	},
 	created() {
@@ -845,6 +854,7 @@ export default {
 			if (this.avatar) {
 				formData.append("logo", this.avatar);
 			}
+      this.teamUpdating = true;
 			await ApiService.post(`v1/team-update/${this.teamData.id}`, formData)
 				.then((data) => {
 					console.log(data);
@@ -860,6 +870,7 @@ export default {
 							center: true,
 						});
 						this.edit_button_flag = false;
+            this.teamUpdating = false;
 
             if(this.teamData && this.teamData.team_members && this.teamData.team_members.length > 1) {
               let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -873,7 +884,8 @@ export default {
               this.socketNotification(payload);
             }
 
-						setTimeout(() => this.$router.go(), 1200);
+						// setTimeout(() => this.$router.go(), 1200);
+            this.$emit("teamListUpdated");
 					}
 				})
 				.catch((error) => {
@@ -2079,7 +2091,7 @@ export default {
 		.add-remove {
 			display: flex;
 			justify-content: space-between;
-			padding: 0;
+			padding: 0 8px;
 			margin-bottom: 10px;
 			.add-member,
 			.remove-member {
@@ -2127,17 +2139,23 @@ export default {
 				margin-right: 10px;
 			}
 			.name-short {
-        padding: 7px 5px;
+        //padding: 7px 5px;
         font-size: 10px;
         font-weight: bold;
         color: #ffffff;
         width: 28px;
-        height: 28px;
+        height: 25px;
         background: #3a3092;
         border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 			}
       .name-short-single {
-        padding: 7px 9px;
+        //padding: 7px 9px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       .name-full {
         font-size: 14px;
@@ -2215,6 +2233,7 @@ export default {
 		margin-top: 20px;
 		display: flex;
 		justify-content: space-between;
+    padding: 0 8px;
 		.left {
 			margin-bottom: 0px;
 			p {
@@ -2232,7 +2251,7 @@ export default {
       }
 		}
 		.right {
-			margin-left: 20px;
+			margin-left: 10px;
 			a {
 				font-size: 12px;
 				color: #e51f76;
@@ -2306,7 +2325,7 @@ export default {
 .d-subs-dk {
   display: none;
   @media (min-width: 992px) {
-    display: block;
+    display: flex;
   }
 }
 .d-subs-mb {

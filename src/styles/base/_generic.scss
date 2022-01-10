@@ -10,6 +10,10 @@
 .font-poppins {
     font-family: 'Poppins', sans-serif;
 }
+.font-elsie {
+    font-family: "Elsie Swash Caps";
+    src: url("/fonts/webfontkit/elsieswashcaps-regular-webfont.woff");
+}
 body {
     font-family: 'Poppins', sans-serif;
 }
@@ -678,6 +682,9 @@ div[data-unique="second_one"] >  .ant-select-selection{
 }
 .none-radius > .ant-select-selection {
     border-radius: 4px;
+}
+.support-tab .v-slide-group__prev {
+    display: none !important;
 }
 @media (min-width: 576px) {
     .ant-layout-sider {

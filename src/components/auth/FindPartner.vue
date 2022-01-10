@@ -11,16 +11,14 @@
                <div class="card-facility-border"></div>
                <div class="card-facility rounded">
                   <ul class="facility-list">
-                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"> <span>Verified Candidate IDs</span></li>
-                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Benefit from their collective
-                        wisdom & experience</span></li>
-                     <li class="item"><img src= "@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Make the right decision with
-                        the wide-ranging information</span></li>
-                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>By registering let them know
-                        the conversation can begin</span></li>
-                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Facility to involve family and
-                        friend</span></li>
-                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Avoid romance scams</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"> <span>Avoid romance scams</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Verified Candidate IDs to ensure all profiles are genuine</span></li>
+                     <li class="item"><img src= "@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Facility to involve family and friend</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Benefit from their collective wisdom & experience</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Shortlist candidates using over 100 information points</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Get to know the other candidate and their family well before any face to face meeting</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>If you are looking for someone to date, not here I am afraid</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>By registering let them know the conversation can begin</span></li>
                   </ul>
                </div>
             </div>
@@ -67,7 +65,7 @@ export default {
                top: -22px;
                bottom: -25px;
                right: -20px;
-               border: 1px solid $border-primary;
+               border: 3px solid $border-primary;
                border-radius: 10px;
                transform: rotate(5deg);
                @media(max-width: 991px){

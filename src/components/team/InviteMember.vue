@@ -2,13 +2,68 @@
   <div class="position-absolute add-member-box" :class="{'from-data-card': from === 'details-card'}">
     <div class="member-box position-relative">
       <div class="cross-button-box mr-2 mt-2 d-flex justify-content-center align-items-center cursor-pointer" @click="$emit('toggleMemberbox')">&#10006;</div>
+
       <div class="d-flex px-4">
         <h4 class="fs-14 text-white invite-txt">Send team invitation</h4>
       </div>
       <div class="px-4 mt-2 position-relative">
-        <a-input ref="userNameInput" placeholder="Search email or user ID" v-model="user_email" @keyup="searchMember()">
-          <a-icon slot="suffix" type="info-circle" style="color: rgba(0,0,0,.45)" />
-        </a-input>
+        <div class="position-relative d-none flex-column">
+          <a-tooltip
+              placement="top"
+              title="Member role will"
+          >
+            <a-select
+                placeholder="Role"
+                class="fs-14"
+                v-model="invitationObject.role"
+            >
+<!--              <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>-->
+              <a-select-option value="Admin"> Admin </a-select-option>
+              <a-select-option value="Member"> Member </a-select-option>
+            </a-select>
+          </a-tooltip>
+
+          <a-tooltip
+              placement="top"
+              title="Add as a"
+          >
+            <a-select
+                placeholder="Add as a"
+                class="fs-14 mt-2"
+                v-model="invitationObject.add_as_a"
+            >
+              <a-select-option value="Candidate" :disabled="ifHasCandidate()"> Candidate </a-select-option>
+              <a-select-option value="Representative"> Representative </a-select-option>
+            </a-select>
+          </a-tooltip>
+
+          <a-tooltip
+              placement="top"
+              title="Relationship with candidate is"
+          >
+            <a-select
+                placeholder="Relationship"
+                class="mt-2 fs-14"
+                v-model="invitationObject.relationship"
+                :disabled="invitationObject.add_as_a == 'Candidate'"
+            >
+              <a-select-option value="Candidate" v-if="invitationObject.add_as_a == 'Candidate'"> Candidate </a-select-option>
+              <a-select-option v-for="(relation, index) in relationships" v-else :key="index" :value="relation"> {{ relation }} </a-select-option>
+            </a-select>
+          </a-tooltip>
+
+          <div class="flex justify-content-between mt-2">
+            <button class="btn invitation-link-btn py-2">Generate Invitation Link</button>
+            <button class="btn invitation-link-btn py-2 ml-1" @click="showUserBox = true">Attach a user</button>
+          </div>
+        </div>
+
+        <div class="mt-4">
+<!--          <h6 class="text-white fs-14">Attach a user to this invitation</h6>-->
+          <a-input ref="userNameInput" class="mt-1" placeholder="Search email or user ID" v-model="user_email" @keyup="searchMember()">
+            <a-icon slot="suffix" type="info-circle" style="color: rgba(0,0,0,.45)" />
+          </a-input>
+        </div>
 <!--        <span class="text-white fs-12 fw-500 ml-2">Invited/Suggested/Searched user</span>-->
       </div>
       <div class="suggestion-box mt-4 mx-4 px-2" :class="{'details-suggestion-card': from === 'details-card'}">
@@ -43,10 +98,20 @@ export default {
   props: ['team', 'invitationObject', 'from'],
   data() {
     return {
+      relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-paw'],
       user_email: '',
       profileType: ['N/A', 'Candidate', 'Match Maker', 'Admin'],
       userObj: {},
-      copyBtnText: 'Copy'
+      copyBtnText: 'Copy',
+      showUserBox: false,
+      // invitationObject: {
+      //   role: "Admin",
+      //   add_as_a: "Representative",
+      //   relationship: "Father",
+      //   invitation_link: "",
+      //   visible: false,
+      //   memberBox: false
+      // },
     }
   },
   methods: {
@@ -82,7 +147,19 @@ export default {
       setTimeout(() => {
         self.copyBtnText = 'Copy'
       }, 2000);
-    }
+    },
+    ifHasCandidate() {
+      let hasCandidate = this.team.team_members.find(item => item.user_type.toString() == 'Candidate');
+      if(hasCandidate) {
+        return true;
+      }
+
+      hasCandidate = this.team.team_invited_members.find(item => item.user_type.toString() == 'Candidate');
+      if(hasCandidate) {
+        return true;
+      }
+      return false;
+    },
   }
 }
 </script>
@@ -193,5 +270,21 @@ export default {
 }
 .suggestion-box {
   height: 338px;
+  //height: 135px;
+}
+.invitation-link-btn {
+  background: $bg-white;
+  color: $color-primary;
+  border-radius: 30px;
+  font-size: 14px;
+  &:hover {
+    background: $bg-primary;
+    color: #FFFFFF;
+    border: 1px solid $border-white;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
 }
 </style>

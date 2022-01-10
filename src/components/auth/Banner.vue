@@ -7,12 +7,19 @@
     </div>
     <div class="banner-content font-poppins">
       <div class="container">
-        <h2 class="color-white" style="margin-bottom: 12px">
-          Someone must be searching for you
-        </h2>
-        <p id="p-tag">
-          The first friends and family based matromonial introduction service
-        </p>
+        <div class="flex flex-direction justify-content-center align-items-center">
+          <div>
+            <h2 class="color-white" style="margin-bottom: 12px">
+              Someone must be searching for you
+            </h2>
+            <p id="p-tag font-poppins">
+              The first friends and family based matromonial introduction service
+            </p>
+          </div>
+          <div class="ml-5">
+            <button class="btn btn-round banner-btn-parter-search" id="bannerstartBtn" onclick="location.href = '/signup';"><span>Start here</span></button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -21,12 +28,14 @@
 
 <script>
 import UnAuthSearchForm from "@/components/search/UnAuthSearchForm";
-import ApiService from "@/services/api.service";
 export default {
   name: "Banner",
   components: {UnAuthSearchForm },
   data() {
-    return {};
+    return {
+      countries: [],
+      religions: []
+    };
   },
   methods: {
     handleSearch(_payload) {
@@ -66,14 +75,19 @@ export default {
   color: $color-white;
   text-align: center;
   position: relative;
-  padding: 150px 0 200px;
+  padding: 115px 0 280px;
   z-index: 9;
+
+  @media (min-width: 768px) {
+    padding: 150px 0 200px;
+  }
 
   @media (min-height: 720px) {
     height: 800px;
   }
   @media (min-height: 800px) {
-    height: 1000px;
+    //height: 1000px;
+    height: 100vh;
   }
 
   @media (min-height: 1000px) {
@@ -89,10 +103,6 @@ export default {
 
   @media (min-height: 1366px) {
     height: 1400px;
-  }
-
-  @media (max-width: 575px) {
-    padding: 120px 0 200px;
   }
   &::before {
     content: "";
@@ -113,12 +123,15 @@ export default {
   }
   .signup-wrapper {
     position: relative;
-    width: 300px;
+    width: 275px;
     margin-left: auto;
     margin-right: 30px;
     @media (max-width: 991px) {
       margin: auto;
     }
+    //@media (min-width: 400px) {
+    //  width: 300px;
+    //}
     .card-signup-border {
       position: absolute;
       content: "";
@@ -155,6 +168,9 @@ export default {
     bottom: 0;
     background: rgba(0, 0, 0, 0.3);
     padding: 15px 0;
+    //@media (min-width: 768px) {
+    //  bottom: 40px !important;
+    //}
   }
   .slider-handle {
     width: 15px !important;
@@ -183,9 +199,9 @@ export default {
     height: 13px !important;
   }
 
-  @media (max-width: 575px) {
-    padding: 120px 0 200px;
-  }
+  //@media (max-width: 575px) {
+  //  padding: 120px 0 200px;
+  //}
   &::before {
     content: "";
     background-color: rgba(0, 0, 0, 0.7);
@@ -205,11 +221,15 @@ export default {
   }
   .signup-wrapper {
     position: relative;
-    width: 300px;
+    width: 275px;
     margin-left: auto;
     margin-right: 40px;
+    //margin-bottom: 30px !important;
     @media (max-width: 991px) {
       margin: auto;
+    }
+    @media (min-width: 400px) {
+      width: 300px;
     }
     // .card-signup-border {
     // 	position: absolute;
@@ -306,5 +326,57 @@ export default {
   font-size: 20px;
   letter-spacing: 1px;
   font-weight: normal;
+}
+#bannerstartBtn {
+  font-family: "Rochester", cursive;
+  font-size: 25px ;
+  padding: 0px 30px 0px 30px;
+  text-align: center;
+  font-weight: bold;
+  box-sizing: border-box;
+  letter-spacing: 2px;
+  color:  #FFFFFF;
+  background: transparent;
+  border: 2px solid #FFFFFF;
+  border-radius: 20px;
+}
+.banner-btn-parter-search {
+  border: none;
+  text-align: center;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.banner-btn-parter-search span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.banner-btn-parter-search span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+.banner-btn-parter-search:hover {
+  border-radius: 40px;
+}
+.banner-btn-parter-search:hover span {
+  padding-right: 20px;
+}
+
+.banner-btn-parter-search:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+.flex-direction {
+  flex-direction: column;
+  @media (min-width: 992px) {
+    flex-direction: row;
+  }
 }
 </style>

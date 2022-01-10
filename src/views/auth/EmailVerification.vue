@@ -23,19 +23,19 @@
             </p>
             <p class="instruction">
               If you do not verify your email address by sent link within <span class="font-italic font-weight-bold">30 minutes</span> then the sent
-              verification link & your signup informations will automatically unenrolled from Matrimony Assist platform, you can rejoin Matrimony Assist at any time by once again
+              verification link & your signup information will automatically unenrolled from Matrimony Assist platform, you can rejoin Matrimony Assist at any time by once again
               completing the Matrimony Assist signup process
+            </p>
+            <p>
+              For user safety we need to ensure that only genuine and identifiable
+              <br />
+              users are on Matrimony Assist.
             </p>
             <p>
               To help us do that all users of the Matrimony Assist Platform will need
               to
               <br />
               verify their registration email.
-            </p>
-            <p>
-              For user safety we need to ensure that only genuine and identifiable
-              <br />
-              users are on Matrimony Assist.
             </p>
           </div>
         </div>
@@ -119,6 +119,9 @@ export default {
     @media (min-width: 768px) {
       position: relative;
     }
+    @media (min-width: 1024px) {
+      position: relative;
+    }
     @media (min-width: 1200px) {
       bottom: 0;
       width: 100%;
@@ -132,7 +135,7 @@ export default {
   border-radius: 8px;
   font-size: 20px;
   margin: 8px 0;
-  padding: 4px 20px;
+  padding: 4px 10px;
   @media (min-width: 768px) {
     padding: 4px 70px;
   }

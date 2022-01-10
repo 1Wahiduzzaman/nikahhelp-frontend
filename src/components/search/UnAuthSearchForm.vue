@@ -2,7 +2,7 @@
   <div :class="cardBorder">
     <div class="advanced-search font-poppins" :class="{ 'p-3': useFor == 'home' }">
       <div class="title-wrapper">
-        <h3 class="title">Find Your Match</h3>
+        <h3 class="heading-title font-elsie">Find Your Match</h3>
         <p class="sub-title">I am looking for</p>
       </div>
       <div class="gender-wrapper flex justify-content-between align-items-center">
@@ -32,26 +32,26 @@
           :options="ageTV"
           :placeholder="'Age'"
           :width="'120'"
-          :suffixIcon="'true'"
+          :suffixIcon="true"
           :min="[18, 24]"
           :values="[searchModel.min_age, searchModel.max_age]"
         />
         <h6 v-if="(!searchModel.min_age || !searchModel.max_age) && trying" class="text-danger fs-12 text-left pt-2 pl-2">Minimum and maximum age is required</h6>
       </div>
 
-<!--      <div class="my-4" v-if="useFor != 'home'">-->
-<!--        <SelectGroup-->
-<!--          @selected="onDropdownChange"-->
-<!--          :values="[searchModel.heightMin, searchModel.heightMax]"-->
-<!--          :uniqueNames="['heightMin', 'heightMax']"-->
-<!--          :options="heightTV"-->
-<!--          :placeholder="'Height'"-->
-<!--          :size="'large'"-->
-<!--          :width="'120'"-->
-<!--          :suffixIcon="'true'"-->
-<!--        />-->
-<!--&lt;!&ndash;        <h6 v-if="!searchModel.heightMin || !searchModel.heightMax" class="text-danger fs-12 text-left pt-2 pl-2">Minimum and maximum height is required</h6>&ndash;&gt;-->
-<!--      </div>-->
+      <div class="my-4" v-if="useFor != 'home'">
+        <SelectGroup
+          @selected="onDropdownChange"
+          :values="[searchModel.heightMin, searchModel.heightMax]"
+          :uniqueNames="['heightMin', 'heightMax']"
+          :options="getHeights"
+          :placeholder="'Height'"
+          :size="'large'"
+          :width="'120'"
+          :suffixIcon="true"
+        />
+        <h6 v-if="(!searchModel.heightMin || !searchModel.heightMax) && trying" class="text-danger fs-12 text-left pt-2 pl-2">Minimum and maximum height is required</h6>
+      </div>
 
       <div class="my-4">
         <a-select
@@ -66,13 +66,13 @@
         >
           <a-select-option
             v-for="c in countriesTV"
-            :value="c.value"
-            :key="c.text"
+            :value="c.id"
+            :key="c.id"
           >
-            {{ c.text }}
+            {{ c.name }}
           </a-select-option>
           <template #suffixIcon>
-            <img src="@/assets/select-arrow-big.png" alt="" />
+            <img src="@/assets/select-arrow-big.png" alt="icon" />
           </template>
         </a-select>
         <h6 v-if="!searchModel.country && trying" class="text-danger fs-12 text-left pt-2 pl-2">Country is required</h6>
@@ -91,13 +91,13 @@
         >
           <a-select-option
             v-for="r in religionTV"
-            :value="r.value"
-            :key="r.text"
+            :value="r.id"
+            :key="r.id"
           >
-            {{ r.text }}
+            {{ r.name }}
           </a-select-option>
           <template #suffixIcon>
-            <img src="@/assets/select-arrow-big.png" alt="" />
+            <img src="@/assets/select-arrow-big.png" alt="icon" />
           </template>
         </a-select>
         <h6 v-if="!searchModel.religion && trying" class="text-danger fs-12 text-left pt-2 pl-2">Religion is required</h6>
@@ -143,9 +143,10 @@
 
 <script>
 import SelectGroup from "@/components/ui/selects/SelectGroup";
-import { ReligionTV } from "../../models/religion";
-import { CountriesTV } from "../../models/country";
-import { AGES, HEIGHTS } from "../../models/data";
+// import { ReligionTV } from "../../models/religion";
+// import { CountriesTV } from "../../models/country";
+import { AGES, HEIGHTS } from "@/models/data";
+import ApiService from "@/services/api.service";
 export default {
   name: "UnAuthSearchForm",
   data() {
@@ -159,8 +160,8 @@ export default {
         heightMin: undefined,
         heightMax: undefined,
       },
-      religionTV: ReligionTV,
-      countriesTV: CountriesTV,
+      religionTV: [],
+      countriesTV: [],
       ageTV: AGES,
       heightTv: HEIGHTS,
 
@@ -187,6 +188,9 @@ export default {
     cardBorder() {
       return this.useFor == "home" ? "homeCardBorder" : "searchCardBorder";
     },
+    getHeights() {
+      return HEIGHTS;
+    },
     filterExists() {
       return (
         this.searchModel.gender &&
@@ -195,9 +199,29 @@ export default {
       );
     },
   },
+  created() {
+    this.getCandidateInitialInfo();
+    if(this.$route.params && this.$route.params.url) {
+      let splitedString = this.$route.params.url.split('&');
+      if(splitedString.length > 0) {
+        splitedString.forEach(item => {
+          let itemArray = item.split('=');
+          if(itemArray.length > 0) {
+            this.searchModel[itemArray[0]] = parseInt(itemArray[1]);
+          }
+        });
+      }
+    }
+  },
   methods: {
+    async getCandidateInitialInfo() {
+      const response = await ApiService.get("v1/initial-dropdowns");
+      if (response.status === 200) {
+        this.countriesTV = response.data.data.countries;
+        this.religionTV = response.data.data.religions;
+      }
+    },
     onDropdownChange({ name, value }) {
-      console.log({ name, value });
       this.searchModel[name] = value;
     },
     onSelectedGender(gender) {
@@ -205,7 +229,7 @@ export default {
     },
     handleSearch() {
       this.trying = true;
-      // if(this.filterExists) {
+      if(this.filterExists) {
         let _payload = `min_age=${this.searchModel.min_age}&max_age=${this.searchModel.max_age}`;
         if (this.searchModel.gender > 0) {
           _payload += `&gender=${this.searchModel.gender}`;
@@ -223,7 +247,7 @@ export default {
           _payload += `&max_height=${this.searchModel.heightMax}`
         }
         this.$emit("handleSearch", _payload);
-      // }
+      }
     },
     onAfterChangeSlider(value) {
       this.age = value;
@@ -338,5 +362,13 @@ export default {
 }
 .search-icon {
   width: 24px;
+}
+.heading-title {
+  margin-bottom: 5px;
+  color: #6159a7;
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: .0125em;
+  line-height: 2rem;
 }
 </style>

@@ -22,7 +22,7 @@ export default {
 		UnAuthSearchForm,
 	},
 	props: ["value"],
-	computed: {
+  computed: {
 		localModel: {
             get() {
                 return this.value
@@ -40,6 +40,9 @@ export default {
 		handleCancel(e) {
 			this.$emit("handle-cancel");
 		},
+    handleOk() {
+      //
+    }
 	},
 };
 </script>

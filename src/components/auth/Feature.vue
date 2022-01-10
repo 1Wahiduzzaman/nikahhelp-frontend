@@ -4,7 +4,7 @@
 <!--    <img src="@/assets/icon/bg_layer_2_1.svg" alt="bg" class="position-absolute bg-layer-1-1" />-->
 		<div class="container">
 			<div class="feature-inner">
-				<h2 class="mb-0 text-center color-brand mb-4">User friendly feature</h2>
+				<h2 class="mb-0 text-center color-brand mb-4">User friendly features</h2>
 				<div class="row">
 					<div class="col-6 col-md-4">
 						<a-tooltip placement="top">

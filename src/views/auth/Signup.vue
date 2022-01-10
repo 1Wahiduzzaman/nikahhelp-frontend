@@ -1,9 +1,9 @@
 <template>
-  <div class="signup-container font-poppins">
-    <div class="signin-inner desktop-padding">
+  <div class="signup-container font-poppins main-container">
+    <div class="signin-inner desktop-padding header-container text-center">
       <a class="logo" href="/"><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo" /></a>
     </div>
-    <div class="signup">
+    <div class="signup body-container">
       <div class="type-selection" v-if="showMemberTypeForm && !errorMessage">
         <div class="content mb-5">
           <h3 class="mt-3 text-header-black font-weight-bolder">
@@ -131,6 +131,7 @@
           class="form-signup br-card"
         >
           <div>
+            <h4 class="fs-16 text-white fw-400">Type your name</h4>
             <div class="mb-3">
               <a-form-model-item ref="first_name" prop="first_name">
                 <a-input
@@ -139,7 +140,7 @@
                   id="first_name"
                   @change="generateScreenName"
                   v-model="signupModel.first_name"
-                  placeholder="FIrst Name"
+                  placeholder="First Name"
                 />
               </a-form-model-item>
             </div>
@@ -163,6 +164,8 @@
                   id="screen_name"
                   v-model="signupModel.screen_name"
                   placeholder="* Screen Name"
+                  :maxLength="15"
+                  @change="trimTheScreenName"
                 />
               </a-form-model-item>
             </div>
@@ -171,7 +174,7 @@
               <template v-slot:title>
                 We have made a screen name for you, you can keep it or change to
                 something suitable. Please make sure you choose a screen name
-                wisely as it communicates somthing about your self.
+                wisely as it communicates something about yourself.
               </template>
               <span class="text-white">* Please choose a sensible screen name, if you don't wish your
               real name to appear on search result.</span>
@@ -219,6 +222,7 @@
           class="form-signup"
         >
           <div>
+            <h4 class="fs-16 text-white fw-400">Type your email & password</h4>
             <div class="mb-3">
               <a-form-model-item ref="email" prop="email">
                 <a-input
@@ -339,7 +343,7 @@
         </div>
       </div>
     </div>
-    <Footer :class="{'footer-pos': errorMessage}" />
+    <Footer class="footer-container" :class="{'footer-pos': errorMessage}" />
   </div>
 </template>
 
@@ -474,6 +478,9 @@ export default {
     }
   },
   methods: {
+    trimTheScreenName() {
+      this.signupModel.screen_name = this.signupModel.screen_name.replace(/[^A-Z0-9]/ig, "");
+    },
     handleSubmitSignUp() {
       this.$refs.signupFormOne.validate((valid) => {
        
@@ -554,6 +561,7 @@ export default {
     resetData() {
       this.$store.commit("setErrorMessage", "");
       localStorage.removeItem("token");
+      this.isLoading = false;
     },
     async handleSubmit() {
       this.$refs.signupFormTwo.validate((valid) => {
@@ -609,7 +617,7 @@ $border-width: 2px;
   overflow-y: auto;
   .signup {
     @media (min-width: 768px) {
-      height: 100vh;
+      //height: 100vh;
     }
     //background-color: #522e8e;
     //background-image: linear-gradient(
@@ -1110,5 +1118,23 @@ svg{
   100%{
     background-color: white;
   }
+}
+.main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.header-container {
+  flex-shrink: 0;
+}
+.body-container{
+  flex-grow: 1;
+  overflow: auto;
+  min-height: 2em;
+}
+.footer-container{
+  flex-shrink: 0;
 }
 </style>

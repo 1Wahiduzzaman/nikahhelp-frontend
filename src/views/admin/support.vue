@@ -144,23 +144,47 @@
 
 <script>
 import ChatListItem from "../../components/support/ChatListItem";
+import ApiService from '@/services/api.service';
 export default {
   data() {
     return {
       conv_search_key: '',
-      msg_text: ''
+      msg_text: '',
+      histories: [],
+      chats: [],
+      chatheadopen: null,
+      message: ''
     };
   },
   components: {
     ChatListItem
-    
   },
   created() {
- 
+    this.loadLists();
   },
   methods: {
-    sendMsg(e) {
-
+    async loadLists() {
+      let {data} = await ApiService.get('/v1/support-chat-list').then(res => res.data);
+      this.histories = data;
+    },
+    async loadIndividualChatHistory(item) {
+      let {data} = await ApiService.post('/v1/individual-support-user-chat-history', {
+        chat_id: item.chat_id
+      }).then(res => res.data);
+      this.chats = data;
+    },
+    async sendMsg(e) {
+      console.log(e);
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let payload = {
+        sender: loggedUser.id,
+        receiver: 79,
+        message: this.message,
+        created_at: new Date()
+      };
+      await ApiService.post('/v1/support-send-message', payload).then(response => {
+        console.log(response);
+      });
     }
   },
 };
