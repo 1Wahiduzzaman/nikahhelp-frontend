@@ -226,6 +226,16 @@ export default {
           ...this.candidateDetails,
           ...details,
         };
+        if (
+          this.candidateDetails.verification &&
+          this.candidateDetails.verification.ver_country_id > 0
+        ) {
+          this.onChangeCountry(
+            { id: this.candidateDetails.verification.ver_country_id },
+            "verification-candidate",
+            ""
+          );
+        }
       } else {
         this.isLoading = false;
       }
@@ -253,8 +263,33 @@ export default {
         this.representativeDetails = {
           ...details,
         };
+        if (
+          this.representativeDetails.verification &&
+          this.representativeDetails.verification.ver_country > 0
+        ) {
+          this.onChangeCountry(
+            { id: this.representativeDetails.verification.ver_country },
+            "verification"
+          );
+        }
       } else {
         this.isLoading = false;
+      }
+    },
+    async onChangeCountry(e, name) {
+      const res = await ApiService.get(`v1/utilities/cities/${e.id}`);
+
+      if (res.status === 200) {
+        switch (name) {
+          case "verification-candidate":
+            this.candidateDetails.verification.cities.push(...res.data.data);
+            break;
+          case "verification":
+            this.representativeDetails.verification.cities.push(
+              ...res.data.data
+            );
+            break;
+        }
       }
     },
     openVerifyForm() {
