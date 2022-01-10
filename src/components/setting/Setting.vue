@@ -1,19 +1,57 @@
 <template>
   <div v-if="userData" class="panel-container">
+    <a-modal
+      title="Change Password"
+      :visible="visible"
+      :confirm-loading="confirmLoading"
+      @ok="handleOk"
+      @cancel="handleCancel"
+    >
+      <a-input-password
+        placeholder="Input Old Password"
+        @change="onOldPassChange"
+        style="margin-top: 5px; margin-bottom: 5px"
+      />
+      <a-input-password
+        placeholder="Input New Password"
+        @change="onNewPassChange"
+        style="margin-top: 5px; margin-bottom: 5px"
+      />
+      <a-input-password
+        placeholder="Retype New Password"
+        @change="onRetypePassChange"
+      />
+    </a-modal>
     <div class="panel-content border-content">
       <div class="content">
         <div class="header-content">
           <h4>Contact Details</h4>
-          <v-btn
-            style="background-color: #0aa3e1; color: #fff; border-radius: 25px"
-            small
-          >
-            <img
-              style="width: 20px"
-              src="@/assets/icon/pencil.svg"
-              alt="img"
-            />Edit
-          </v-btn>
+          <v-tooltip bottom color="warning">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-bind="attrs"
+                v-on="on"
+                style="
+                  background-color: #0aa3e1;
+                  color: #fff;
+                  border-radius: 25px;
+                "
+                small
+              >
+                <img
+                  style="width: 20px"
+                  src="@/assets/icon/pencil.svg"
+                  alt="img"
+                />Edit
+              </v-btn>
+            </template>
+            <span>For security reason, contact details cannot be changed.</span
+            >&nbsp;
+            <span
+              >If any of this data is incorrect plaese contact
+              <router-link to="/help">Support Team</router-link></span
+            >
+          </v-tooltip>
         </div>
         <div class="contact-details">
           <span style="font-weight: 600">
@@ -55,6 +93,7 @@
         <div class="password-details">
           <span>*****</span>
           <v-btn
+            @click="handleClickPassword"
             style="background-color: #0aa3e1; color: #fff; border-radius: 25px"
             small
           >
@@ -67,6 +106,7 @@
         <div class="password-details">
           <span>Change member category to</span>
           <v-btn
+            :disabled="userData.account_type === 1"
             style="background-color: #0aa3e1; color: #fff; border-radius: 25px"
             small
           >
@@ -86,6 +126,7 @@
         <div style="border-bottom: none" class="password-details">
           <span>Do you want to delete Account?</span>
           <v-btn
+            @click="handleDeleteAccount"
             style="background-color: red; color: #fff; border-radius: 25px"
             small
           >
@@ -161,6 +202,7 @@
 import ApiService from "@/services/api.service";
 import VerificationRepresentative from "@/components/setting/Verification-Representative.vue";
 import VerificationCandidate from "@/components/setting/Verification-Candidate.vue";
+import jwtService from "@/services/jwt.service";
 export default {
   components: {
     VerificationRepresentative,
@@ -386,10 +428,23 @@ export default {
       }
     },
     handleDeleteAccount() {
-      console.log("Handle Delete Account");
-      ApiService.get("v1/delete-account").then((data) => {
-        console.log("Account deleted Succesfully");
-        this.$router.push("/logout");
+      const vm = this;
+      this.$confirm({
+        title: "Are you sure?",
+        content: "You want to delete account?",
+        okText: "Yes",
+        okType: "danger",
+        cancelText: "No",
+        async onOk() {
+          ApiService.get("v1/delete-account").then((data) => {
+            console.log("Account deleted Succesfully");
+            jwtService.destroyTokenAndUser();
+            vm.$router.push("/login");
+          });
+        },
+        onCancel() {
+          console.log("Cancel");
+        },
       });
     },
 
@@ -408,13 +463,13 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  height: calc(100vh - 150px);
+  height: calc(100vh - 90px);
   overflow: hidden;
   border: 2px solid #ddd;
   border-radius: 15px;
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 10px 30px #fff;
-  margin: 20px;
+  margin: 10px;
   opacity: 1;
   @media (min-width: 320px) and (max-width: 600px) {
     flex-direction: column;
@@ -430,7 +485,7 @@ export default {
     padding: 20px;
     overflow: auto;
     margin: 5px;
-    border-left: 1px solid #b7b5b5;
+    //border-left: 1px solid #b7b5b5;
   }
   .panel-content {
     display: flex;
@@ -438,9 +493,17 @@ export default {
     justify-content: flex-start;
     align-items: flex-start;
     &.border-content {
-      //border-right: 2px solid #ddd;
+      border-right: 1px solid #ddd;
+      padding-right: 5px;
     }
     flex-direction: column;
+    overflow: auto;
+    height: 100%;
+    margin: 8px;
+    @media (min-width: 320px) and (max-width: 600px) {
+      overflow: hidden;
+      margin: 8px;
+    }
     .content-identity {
       margin: 5px;
       width: 100%;
@@ -465,7 +528,7 @@ export default {
     .content {
       margin: 5px;
       width: 100%;
-      padding: 10px;
+      padding: 5px;
       .header-content {
         display: flex;
         flex-direction: row;
