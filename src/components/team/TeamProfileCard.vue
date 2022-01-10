@@ -20,7 +20,7 @@
             <h4 class="fs-12 py-1 cursor-pointer text-left px-2" @click="changeRole('Member')">Member</h4>
           </div>
         </div>
-        <button class="btn btn-sm text-white cancel-button ml-3 bright-20"
+        <button class="btn btn-sm text-white remove-btn ml-3 bright-20"
                 :disabled="checkDeleteAbility"
                 @click="removeInvitation()">Remove</button>
       </div>
@@ -49,7 +49,14 @@
           <tr>
             <td class="fs-12 text-white opacity-60">Invitation Link</td>
             <td class="fs-12 text-white opacity-60">:</td>
-            <td class="fs-12 text-white ml-3">{{ profileActive.link }}</td>
+            <td class="fs-12 text-white ml-3 cursor-pointer" @click="copyToken" id="copyInput">
+              <a-tooltip
+                  placement="top"
+                  :title="copyBtnText"
+              >
+                {{ profileActive.link }}
+              </a-tooltip>
+            </td>
           </tr>
 <!--          <tr>-->
 <!--            <td class="fs-12 text-white opacity-60">Permission</td>-->
@@ -72,7 +79,8 @@ export default {
   props: ['teamData', 'profileActive'],
   data() {
     return {
-      roleChangeBox: false
+      roleChangeBox: false,
+      copyBtnText: 'Click to copy the link'
     }
   },
   computed: {
@@ -137,7 +145,15 @@ export default {
     getInvitationLink() {
       let link = window.location.host + '/manageteam?invitation=' + this.profileActive.link;
       return link;
-    }
+    },
+    copyToken() {
+      this.copyBtnText = 'Link copied to clipboard';
+      let copyText = document.getElementById("copyInput");
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+
+      navigator.clipboard.writeText(copyText.value);
+    },
   }
 }
 </script>
@@ -181,7 +197,8 @@ export default {
     .d-flex {
       .role-section {
         .role-btn {
-          border-radius: 20px 0 0 20px;
+          //border-radius: 20px 0 0 20px;
+          border-radius: 20px;
           background: $bg-primary;
           border: 1px solid $color-white;
         }
@@ -193,9 +210,15 @@ export default {
         }
       }
       .remove-btn {
-        border-radius: 0 20px 20px 0;
+        //border-radius: 0 20px 20px 0;
+        border-radius: 20px;
         background: $bg-brand;
         border: 1px solid $color-white;
+        &:hover {
+          background: transparent;
+          border: 1px solid $color-brand;
+          color: $color-white !important;
+        }
       }
     }
     .prof-detail {

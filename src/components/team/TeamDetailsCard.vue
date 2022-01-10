@@ -580,7 +580,7 @@
 			</div>
 		</div>
 		<!-- end box card s -->
-    <InviteMember v-if="invitationObject.visible && invitationObject.invitation_link && invitationObject.memberBox"
+    <InviteMember v-if="invitationObject.memberBox"
                   :team="teamData"
                   :invitationObject="invitationObject"
                   :from="'details-card'"
@@ -1552,7 +1552,8 @@ export default {
       let members = this.teamData.team_members.length;
       members += this.teamData.team_invited_members.length;
       if(members < 5) {
-        this.invitationObject.visible = true;
+        this.invitationObject.memberBox = true;
+        // this.invitationObject.visible = true;
         // this.createInvitaionLink();
       } else {
         this.$warning({
@@ -1572,14 +1573,15 @@ export default {
     toggleMemberbox() {
       this.clickedInviteNow = false;
       this.tempActive = false;
-      this.invitationObject = {
-        role: "Admin",
-        add_as_a: "Representative",
-        relationship: "Father",
-        invitation_link: "",
-        visible: false,
-        memberBox: false
-      }
+      this.invitationObject.memberBox = false;
+      // this.invitationObject = {
+      //   role: "Admin",
+      //   add_as_a: "Representative",
+      //   relationship: "Father",
+      //   invitation_link: "",
+      //   visible: false,
+      //   memberBox: false
+      // }
       this.$emit("teamListUpdated");
     },
     async executeInviteMember(user) {
