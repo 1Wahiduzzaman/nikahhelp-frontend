@@ -1,7 +1,19 @@
 <template>
     <!-- <div> -->
         <v-card :style="{height: height}" class="p-3">
-            <p class="text--secondary text-subtitle-1">{{ title }}</p>
+            <div class="flex justify-space-between">
+                <p class="text--secondary text-subtitle-1">{{ title }}</p>
+                <ButtonComponent
+                    v-if="showDownloadBtn"
+                  iconHeight="14px"
+                  :isSmall="true"
+                  title="Download PDF"
+                  icon="/assets/icon/download-secondary.svg"
+                  customEvent="editProfile"
+                  :isBlock="false"
+                  @onClickButton="onClickButton"
+                />
+            </div>
             <p class="text--primary text-subtitle-2">
                 {{ detail }}
             </p>
@@ -10,8 +22,12 @@
 </template>
 
 <script>
+import ButtonComponent from '@/components/atom/ButtonComponent'
 export default {
     name: 'CardInfo',
+    components: {
+        ButtonComponent
+    },
     props: {
         title: {
             default : 'A little bit about me'
@@ -21,6 +37,9 @@ export default {
         },
         height: {
             default: '100%'
+        },
+        showDownloadBtn: {
+            default: false
         }
     }
 }

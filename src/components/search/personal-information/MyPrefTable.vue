@@ -58,10 +58,15 @@
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Education</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
+                <td class="text--secondary text-subtitle-1"></td>
+            </tr>
+            <tr>
+                <td class="text--disabled text-subtitle-1" style="width: 50px">Employment Status</td>
+                <td class="text-subtitle-1" style="width: 20px ">:</td>
                 <td class="text--secondary text-subtitle-1">Education</td>
             </tr>
             <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Profession</td>
+                <td class="text--disabled text-subtitle-1" style="width: 50px">Occupation</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
                 <td class="text--secondary text-subtitle-1">
                     <span class="ml-3 flex">
@@ -102,3 +107,9 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+td {
+    vertical-align: top;
+}
+</style>

@@ -2,14 +2,24 @@
     <v-card class="p-3">
         <table>
             <tr>
+                <td class="text--disabled text-subtitle-1" style="width: 160px">Name</td>
+                <td class="text-subtitle-1" style="width: 20px ">:</td>
+                <td class="text--secondary text-subtitle-1"></td>
+            </tr>
+            <tr>
+                <td class="text--disabled text-subtitle-1" style="width: 160px">Screen Name</td>
+                <td class="text-subtitle-1" style="width: 20px ">:</td>
+                <td class="text--secondary text-subtitle-1"></td>
+            </tr>
+            <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 160px">Gender</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
                 <td class="text--secondary text-subtitle-1">{{  personal.per_gender == 0 ? 'Female' : 'Male'}}</td>
             </tr>
             <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Age</td>
+                <td class="text--disabled text-subtitle-1" style="width: 160px">Date of Birth</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">{{personal.per_age}}</td>
+                <td class="text--secondary text-subtitle-1"></td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Height</td>
@@ -22,7 +32,7 @@
                 <td class="text--secondary text-subtitle-1">{{ personal.per_employment_status }}</td>
             </tr>
             <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Profession</td>
+                <td class="text--disabled text-subtitle-1" style="width: 50px">Occupation</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
                 <td class="text--secondary text-subtitle-1">{{ personal.per_profession }}</td>
             </tr>
@@ -47,7 +57,7 @@
                 <td class="text--secondary text-subtitle-1">{{personal.per_mother_tongue}}</td>
             </tr>
             <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Nationality</td>
+            <td class="text--disabled text-subtitle-1" style="width: 50px">Nationality</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
                 <td class="text--secondary text-subtitle-1">
                     {{
@@ -91,6 +101,27 @@
                         }}
                 </td>
             </tr>
+            <tr>
+                <td class="text--disabled text-subtitle-1" style="width: 160px">Address</td>
+                <td class="text-subtitle-1" style="width: 20px ">:</td>
+                <td class="text--secondary text-subtitle-1"></td>
+            </tr>
+            <tr>
+                <td class="text--disabled text-subtitle-1" style="width: 160px">Mobile No</td>
+                <td class="text-subtitle-1" style="width: 20px ">:</td>
+                <td class="text--secondary text-subtitle-1"></td>
+            </tr>
+            <tr>
+                <td class="text--disabled text-subtitle-1" style="width: 160px">Email</td>
+                <td class="text-subtitle-1" style="width: 20px ">:</td>
+                <td class="text--secondary text-subtitle-1"></td>
+            </tr>
+            
+            <!-- <tr>
+                <td class="text--disabled text-subtitle-1" style="width: 50px">Age</td>
+                <td class="text-subtitle-1" style="width: 20px ">:</td>
+                <td class="text--secondary text-subtitle-1">{{personal.per_age}}</td>
+            </tr> -->
         </table>
     </v-card>
 </template>
@@ -110,3 +141,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+td {
+    vertical-align: top;
+}
+</style>
