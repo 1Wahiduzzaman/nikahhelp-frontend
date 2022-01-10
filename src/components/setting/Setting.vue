@@ -130,7 +130,7 @@
         <div class="identity-footer">
           <span>For security reason, contact details cannot be changed.</span>
           <span
-            >In any of this data is incorrect plaese contact
+            >If any of this data is incorrect plaese contact
             <router-link to="/help">Support Team</router-link></span
           >
         </div>
