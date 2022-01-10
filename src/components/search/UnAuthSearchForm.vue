@@ -201,6 +201,17 @@ export default {
   },
   created() {
     this.getCandidateInitialInfo();
+    if(this.$route.params && this.$route.params.url) {
+      let splitedString = this.$route.params.url.split('&');
+      if(splitedString.length > 0) {
+        splitedString.forEach(item => {
+          let itemArray = item.split('=');
+          if(itemArray.length > 0) {
+            this.searchModel[itemArray[0]] = parseInt(itemArray[1]);
+          }
+        });
+      }
+    }
   },
   methods: {
     async getCandidateInitialInfo() {

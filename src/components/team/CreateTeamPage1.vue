@@ -88,11 +88,10 @@
                       class="ml-1 fs-14 member-add mr-2"
                       v-model="addAs"
                       style="width: 99%"
-                      disabled
                   >
-                    <a-select-option value="Candidate"> Candidate </a-select-option>
-                    <a-select-option value="Representative"> Representative </a-select-option>
-                    <a-select-option value="Match Maker"> Match Maker </a-select-option>
+                    <a-select-option value="Candidate" v-if="addAs == 'Candidate'"> Candidate </a-select-option>
+                    <a-select-option value="Representative" v-if="addAs == 'Representative'"> Representative </a-select-option>
+<!--                    <a-select-option value="Match Maker"> Match Maker </a-select-option>-->
                   </a-select>
                 </a-tooltip>
               </a-col>
@@ -100,17 +99,18 @@
               <a-col :span="11">
                 <a-tooltip>
                   <template slot="title">
-                    Relationship with candidate as
+                    Relationship with candidate
                   </template>
                   <a-select
                       size="large"
-                      placeholder="Relationship"
+                      placeholder="Relationship with candidate"
                       class="fs-14 member-add"
                       v-model="selfRole.relationship"
                       :disabled="addAs == 'Candidate'"
                       style="width: 100%"
                   >
-                    <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
+                    <a-select-option value="Candidate" v-if="addAs == 'Candidate'"> Candidate </a-select-option>
+                    <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation" v-else> {{ relation }} </a-select-option>
                   </a-select>
                 </a-tooltip>
               </a-col>
@@ -174,7 +174,7 @@ export default {
   props: ['addAs'],
 	data() {
 		return {
-      relationships: ['Candidate', 'Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-law'],
+      relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-law'],
 			isLoading: false,
 			user: {},
 			is_verified: 1,
@@ -220,6 +220,9 @@ export default {
     //     this.selfRole.relationship = 'Father';
     //   }
     // }
+    if(this.addAs == 'Candidate') {
+      this.selfRole.relationship = 'Candidate';
+    }
   },
 	methods: {
     getCardTitle() {

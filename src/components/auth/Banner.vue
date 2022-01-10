@@ -75,7 +75,7 @@ export default {
   color: $color-white;
   text-align: center;
   position: relative;
-  padding: 95px 0 290px;
+  padding: 115px 0 280px;
   z-index: 9;
 
   @media (min-width: 768px) {
@@ -86,8 +86,8 @@ export default {
     height: 800px;
   }
   @media (min-height: 800px) {
-    height: 1000px;
-    //height: 1000vh;
+    //height: 1000px;
+    height: 100vh;
   }
 
   @media (min-height: 1000px) {
@@ -123,12 +123,15 @@ export default {
   }
   .signup-wrapper {
     position: relative;
-    width: 300px;
+    width: 275px;
     margin-left: auto;
     margin-right: 30px;
     @media (max-width: 991px) {
       margin: auto;
     }
+    //@media (min-width: 400px) {
+    //  width: 300px;
+    //}
     .card-signup-border {
       position: absolute;
       content: "";
@@ -165,9 +168,9 @@ export default {
     bottom: 0;
     background: rgba(0, 0, 0, 0.3);
     padding: 15px 0;
-    @media (min-width: 768px) {
-      bottom: 40px !important;
-    }
+    //@media (min-width: 768px) {
+    //  bottom: 40px !important;
+    //}
   }
   .slider-handle {
     width: 15px !important;
@@ -218,12 +221,15 @@ export default {
   }
   .signup-wrapper {
     position: relative;
-    width: 300px;
+    width: 275px;
     margin-left: auto;
     margin-right: 40px;
     //margin-bottom: 30px !important;
     @media (max-width: 991px) {
       margin: auto;
+    }
+    @media (min-width: 400px) {
+      width: 300px;
     }
     // .card-signup-border {
     // 	position: absolute;

@@ -2,7 +2,7 @@
 	<div class="search-page main-container">
     <Loader v-if="isLoading" :isLoading="isLoading" />
 		<header class="header-container">
-			<div class="container">
+			<div class="container desktop-view">
 				<a href="/"><img src="@/assets/logo.png" alt="logo" class="" /></a>
 				<div class="float-right auth-btn" id="logRegisterBtn">
 					<a
@@ -13,7 +13,7 @@
 						Sign In
 					</a>
 					<a
-						href="/register"
+						href="/signup"
 						class="btn btn-sm btn-secondary btn-brand ml-2 signup-btn"
 						id="joinNowButton"
 					>
@@ -21,25 +21,49 @@
 					</a>
 				</div>
 			</div>
+      <div class="container mobile-view">
+        <div class="header text-center">
+          <a href="/"><img src="@/assets/logo.png" alt="logo" class="text-center mat-logo" /></a>
+        </div>
+        <div class="flex justify-content-center mt-2">
+          <router-link to="/login" role="button" class="btn btn-sm signinbtn">Sign In</router-link>
+          <router-link to="/signup" role="button" class="ml-3 btn btn-sm signupbtn">Join Now</router-link>
+        </div>
+      </div>
 		</header>
 
 		<div class="container body-container">
-			<div class="d-flex justify-content-between my-4">
-				<h4>Search Results</h4>
-				<button
-					@click="setSearchModalVisible"
-					class="btn btn-sm btn-primary advanced-search-button"
-				>
-					<img
-						src="@/assets/icon/Search Your Match.svg"
-						alt="Icon"
-						height="20px"
-						class="advanceIcon"
-						style="margin-bottom: 3px; margin-right: 3px"
-					/>
-					Advanced Search
-				</button>
-			</div>
+<!--			<div class="d-flex justify-content-between my-4">-->
+<!--				<h4>Search Results</h4>-->
+<!--				<button-->
+<!--					@click="setSearchModalVisible"-->
+<!--					class="btn btn-sm btn-primary advanced-search-button"-->
+<!--				>-->
+<!--					<img-->
+<!--						src="@/assets/icon/Search Your Match.svg"-->
+<!--						alt="Icon"-->
+<!--						height="20px"-->
+<!--						class="advanceIcon"-->
+<!--						style="margin-bottom: 3px; margin-right: 3px"-->
+<!--					/>-->
+<!--					Advanced Search-->
+<!--				</button>-->
+<!--			</div>-->
+      <div class="flex justify-content-between align-items-center my-4">
+        <h5 class="search-text">Search Results</h5>
+        <button
+            @click="setSearchModalVisible"
+            class="btn btn-primary py-2 px-4 advance-btn"
+        >
+          <img
+              src="@/assets/icon/Search Your Match.svg"
+              alt="Icon"
+              height="20px"
+              class="advanceIcon"
+          />
+          Advanced Search
+        </button>
+      </div>
 			
 			<!-- TODO Advanced Search Button -->
 			<div>
@@ -212,10 +236,13 @@ export default {
 @import "@/styles/base/_variables.scss";
 .search-page {
 	header {
-		height: 100px;
+		//height: 100px;
 		background-color: $bg-secondary;
 		img {
-			height: 80px;
+			height: 60px;
+      @media (min-width: 768px) {
+        height: 80px;
+      }
 		}
 
 		.auth-btn {
@@ -355,5 +382,49 @@ export default {
 }
 .skeleton-width {
   width: 300px;
+}
+.search-header-div {
+  align-items: center;
+  justify-content: space-between;
+}
+.desktop-view {
+  display: none;
+  @media (min-width: 768px) {
+    display: block;
+  }
+}
+.mobile-view {
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+.signinbtn {
+  border: 1px solid #FFFFFF;
+  color: #FFFFFF;
+  border-radius: 20px;
+  &:hover {
+    color: $color-primary;
+    background: $bg-primary;
+  }
+}
+.signupbtn {
+  border: 1px solid #FFFFFF;
+  color: #FFFFFF;
+  background: $bg-brand;
+  border-radius: 20px;
+  &:hover {
+    color: $color-brand;
+    background: #FFFFFF;
+    border: 1px solid $color-brand;
+  }
+}
+.search-text {
+  font-size: 14px;
+  @media (min-width: 768px) {
+    font-size: 24px;
+  }
+}
+.advance-btn {
+  font-size: 14px;
 }
 </style>

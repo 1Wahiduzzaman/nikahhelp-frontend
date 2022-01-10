@@ -22,7 +22,7 @@ export default {
 		UnAuthSearchForm,
 	},
 	props: ["value"],
-	computed: {
+  computed: {
 		localModel: {
             get() {
                 return this.value
