@@ -47,6 +47,11 @@
                 title="I'm Thankfull for"
                 :info="personal.per_thankfull_for"
             />
+            <FieldsetCard
+                class="mt-3"
+                title="I improve myself"
+                info=""
+            />
         </div>
     </v-card>
 </template>
