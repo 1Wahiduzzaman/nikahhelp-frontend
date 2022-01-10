@@ -80,14 +80,14 @@
               <a-col :span="11">
                 <a-tooltip>
                   <template slot="title">
-                    You are joining as a
+                    Joining as
                   </template>
                   <a-select
                       size="large"
                       placeholder="Add as a"
                       class="ml-1 fs-14 member-add mr-2"
                       v-model="addAs"
-                      style="width: 96%"
+                      style="width: 99%"
                       disabled
                   >
                     <a-select-option value="Candidate"> Candidate </a-select-option>
@@ -100,7 +100,7 @@
               <a-col :span="11">
                 <a-tooltip>
                   <template slot="title">
-                    Your relationship with candidate as
+                    Relationship with candidate as
                   </template>
                   <a-select
                       size="large"
@@ -174,7 +174,7 @@ export default {
   props: ['addAs'],
 	data() {
 		return {
-      relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-law'],
+      relationships: ['Candidate', 'Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-law'],
 			isLoading: false,
 			user: {},
 			is_verified: 1,

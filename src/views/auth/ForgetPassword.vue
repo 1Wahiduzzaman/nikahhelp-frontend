@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="forget-password font-poppins">
+    <div class="forget-password pb-4 font-poppins">
       <div class="inner">
         <div class="signin-inner desktop-padding">
           <a class="logo" href="/"><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo" /></a>

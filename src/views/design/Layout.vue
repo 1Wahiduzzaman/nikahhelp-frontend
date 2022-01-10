@@ -5,11 +5,11 @@
     <a-layout
       id="layout"
       style="background-color: #fff"
-      :style="{ overflow: 'auto', height: 'calc(100vh - 80px)' }"
+      :style="{ overflow: 'auto' }"
     >
       <a-layout-sider
-        :style="{ overflow: 'hidden auto', height: 'calc(100vh - 80px)' }"
-        class="bg-white shadow-default"
+        :style="{ overflow: 'hidden auto' }"
+        class="bg-white shadow-default sidebar-height"
         v-model="collapsed"
         :trigger="null"
         collapsible
@@ -202,6 +202,12 @@ export default {
   @media (min-width: 768px) {
     padding-top: 0;
     padding-bottom: 0;
+  }
+}
+.sidebar-height {
+  height: calc(100vh - 60px);
+  @media (min-width: 768px) {
+    height: calc(100vh - 70px);
   }
 }
 </style>

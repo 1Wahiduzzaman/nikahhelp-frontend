@@ -131,7 +131,7 @@
           class="form-signup br-card"
         >
           <div>
-            <h4 class="fs-16 text-white">Type your name</h4>
+            <h4 class="fs-16 text-white fw-400">Type your name</h4>
             <div class="mb-3">
               <a-form-model-item ref="first_name" prop="first_name">
                 <a-input
@@ -222,7 +222,7 @@
           class="form-signup"
         >
           <div>
-            <h4 class="fs-16 text-white">Type your email & password</h4>
+            <h4 class="fs-16 text-white fw-400">Type your email & password</h4>
             <div class="mb-3">
               <a-form-model-item ref="email" prop="email">
                 <a-input

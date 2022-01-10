@@ -75,14 +75,19 @@ export default {
   color: $color-white;
   text-align: center;
   position: relative;
-  padding: 150px 0 200px;
+  padding: 95px 0 290px;
   z-index: 9;
+
+  @media (min-width: 768px) {
+    padding: 150px 0 200px;
+  }
 
   @media (min-height: 720px) {
     height: 800px;
   }
   @media (min-height: 800px) {
     height: 1000px;
+    //height: 1000vh;
   }
 
   @media (min-height: 1000px) {
@@ -98,10 +103,6 @@ export default {
 
   @media (min-height: 1366px) {
     height: 1400px;
-  }
-
-  @media (max-width: 575px) {
-    padding: 120px 0 200px;
   }
   &::before {
     content: "";
@@ -164,6 +165,9 @@ export default {
     bottom: 0;
     background: rgba(0, 0, 0, 0.3);
     padding: 15px 0;
+    @media (min-width: 768px) {
+      bottom: 40px !important;
+    }
   }
   .slider-handle {
     width: 15px !important;
@@ -192,9 +196,9 @@ export default {
     height: 13px !important;
   }
 
-  @media (max-width: 575px) {
-    padding: 120px 0 200px;
-  }
+  //@media (max-width: 575px) {
+  //  padding: 120px 0 200px;
+  //}
   &::before {
     content: "";
     background-color: rgba(0, 0, 0, 0.7);
@@ -217,6 +221,7 @@ export default {
     width: 300px;
     margin-left: auto;
     margin-right: 40px;
+    //margin-bottom: 30px !important;
     @media (max-width: 991px) {
       margin: auto;
     }
