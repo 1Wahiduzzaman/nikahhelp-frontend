@@ -1,5 +1,5 @@
 <template>
-  <div class="verificationInfo rounded">
+  <div id="accordion" class="verificationInfo rounded">
     <div class="verification-content">
       <a-form-model
         v-if="verification"
