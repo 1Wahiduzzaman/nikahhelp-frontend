@@ -35,14 +35,18 @@
               style="width: 20px"
               src="@/assets/icon/home-outline.svg"
               alt="img"
-            />&nbsp;{{ userData.address }}</span
+            />&nbsp;{{
+              userData.address ? userData.address : "Ex:UK,London"
+            }}</span
           >
           <span
             ><img
               style="width: 20px"
               src="@/assets/icon/phone.svg"
               alt="img"
-            />&nbsp;{{ userData.mobile }}</span
+            />&nbsp;{{
+              userData.mobile ? userData.mobile : `Ex:000-000-0000`
+            }}</span
           >
         </div>
       </div>
@@ -187,6 +191,11 @@ export default {
       this.userData.mobile = this.userData.get_representative.mobile_number;
       this.userData.address =
         this.userData.get_representative.per_current_residence_city;
+    }
+    if (this.userData && this.userData.account_type === 1) {
+      this.userData.mobile = this.userData.get_candidate.mobile_number;
+      this.userData.address =
+        this.userData.get_candidate.per_current_residence_city;
     }
   },
   methods: {
