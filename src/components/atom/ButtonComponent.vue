@@ -9,6 +9,7 @@
             }"
             :loading="loading"
             :block="isBlock"
+            :disabled="isDisabled"
             outlined
             :small="isSmall"
             rounded
@@ -29,6 +30,7 @@
             class="v-custom-m"
             :loading="loading"
             :block="isBlock"
+            :disabled="isDisabled"
             outlined
             rounded
             @click.stop="$emit('onClickButton', {event: customEvent, index: index, id: typeId})"
@@ -96,6 +98,9 @@ export default {
         },
         titleColor: {
             default: '#6158a7'
+        },
+        isDisabled: {
+            default: false
         }
     }
 }
@@ -109,6 +114,9 @@ export default {
         border: 1px solid white !important;
         background: #6158a7;
         color: #fff !important;
+        img {
+          filter: brightness(0) invert(1);
+        }
     }
 }
 .v-custom-m{
