@@ -29,63 +29,69 @@
 				</a-col>
 			</a-row>
       <div class="text-center pt-2">
-        <button class="btn check-invite" @click="getTheTeamInvitationInfo" :disabled="!invitationLink">Check Link</button>
+        <button class="btn check-invite" @click="getTheTeamInvitationInfo" :disabled="!invitationLink || isLoading">Check Link</button>
       </div>
-      <div v-if="team" class="mt-4 px-4 invite-info-box">
-        <div v-if="!isJoined">
-          <h4 class="invited-respresent color-primary fs-20">Congratulations you're joining as a <b class="font-weight-bold text-uppercase">{{ team.user_type }}</b></h4>
+      <div v-if="!isLoading">
+        <div v-if="team" class="mt-4 px-4 invite-info-box">
+          <div v-if="!isJoined">
+            <h4 class="invited-respresent color-primary fs-20">Congratulations you're joining as a <b class="font-weight-bold text-uppercase">{{ team.user_type }}</b></h4>
 
-          <div class="invite-info py-4">
-            <div class="d-flex">
-              <div class="d-flex justify-content-between align-items-center col-50">
-                <h6 class="fs-14">Invited by</h6>
-                <span style="margin-top: -6px">:</span>
+            <div class="invite-info py-4">
+              <div class="d-flex">
+                <div class="d-flex justify-content-between align-items-center col-50">
+                  <h6 class="fs-14">Invited by</h6>
+                  <span style="margin-top: -6px">:</span>
+                </div>
+                <h6 class="ml-2 fs-14">{{ team && team.team && team.team.created_by ? team.team.created_by.full_name : '' }}</h6>
               </div>
-              <h6 class="ml-2 fs-14">{{ team && team.team && team.team.created_by ? team.team.created_by.full_name : '' }}</h6>
-            </div>
-            <div class="d-flex">
-              <div class="d-flex justify-content-between align-items-center col-50">
-                <h6 class="fs-14">Team name</h6>
-                <span style="margin-top: -6px">:</span>
+              <div class="d-flex">
+                <div class="d-flex justify-content-between align-items-center col-50">
+                  <h6 class="fs-14">Team name</h6>
+                  <span style="margin-top: -6px">:</span>
+                </div>
+                <h6 class="ml-2 fs-14">{{ team && team.team ? team.team.name : '' }}</h6>
               </div>
-              <h6 class="ml-2 fs-14">{{ team && team.team ? team.team.name : '' }}</h6>
-            </div>
-            <div class="d-flex">
-              <div class="d-flex justify-content-between align-items-center col-50">
-                <h6 class="fs-14">Total team member</h6>
-                <span style="margin-top: -9px">:</span>
+              <div class="d-flex">
+                <div class="d-flex justify-content-between align-items-center col-50">
+                  <h6 class="fs-14">Total team member</h6>
+                  <span style="margin-top: -9px">:</span>
+                </div>
+                <h6 class="ml-2 fs-14">{{ team && team.team ? team.team.member_count : '' }}</h6>
               </div>
-              <h6 class="ml-2 fs-14">{{ team && team.team ? team.team.member_count : '' }}</h6>
-            </div>
-            <div class="d-flex">
-              <div class="d-flex justify-content-between align-items-center col-50">
-                <h6 class="fs-14">Role</h6>
-                <span style="margin-top: -6px">:</span>
+              <div class="d-flex">
+                <div class="d-flex justify-content-between align-items-center col-50">
+                  <h6 class="fs-14">Role</h6>
+                  <span style="margin-top: -6px">:</span>
+                </div>
+                <h6 class="ml-2 fs-14">{{ team.role }}</h6>
               </div>
-              <h6 class="ml-2 fs-14">{{ team.role }}</h6>
-            </div>
-            <div class="d-flex">
-              <div class="d-flex justify-content-between align-items-center col-50">
-                <h6 class="fs-14">Relationship</h6>
-                <span style="margin-top: -6px">:</span>
+              <div class="d-flex">
+                <div class="d-flex justify-content-between align-items-center col-50">
+                  <h6 class="fs-14">Relationship</h6>
+                  <span style="margin-top: -6px">:</span>
+                </div>
+                <h6 class="ml-2 fs-14">{{ team.relationship }}</h6>
               </div>
-              <h6 class="ml-2 fs-14">{{ team.relationship }}</h6>
-            </div>
-            <div class="d-flex">
-              <div class="d-flex justify-content-between align-items-center col-50">
-                <h6 class="fs-14">Team create date</h6>
-                <span style="margin-top: -6px">:</span>
+              <div class="d-flex">
+                <div class="d-flex justify-content-between align-items-center col-50">
+                  <h6 class="fs-14">Team create date</h6>
+                  <span style="margin-top: -6px">:</span>
+                </div>
+                <h6 class="ml-2 fs-14">{{ team && team.team ? formateDate(team.team.created_at) : '' }}</h6>
               </div>
-              <h6 class="ml-2 fs-14">{{ team && team.team ? formateDate(team.team.created_at) : '' }}</h6>
             </div>
           </div>
+          <div v-else class="flex justify-content-center align-items-center">
+            <h4 class="invited-respresent fs-18 color-primary">You are already a member of this team</h4>
+          </div>
         </div>
-        <div v-else class="flex justify-content-center align-items-center">
-          <h4 class="invited-respresent fs-18 color-primary">You are already a member of this team</h4>
+        <div v-else class="px-4 flex justify-content-center align-items-center mt-4">
+          <h6 class="text-danger" v-if="invalidCode">Code is not valid. Please try again</h6>
         </div>
       </div>
-      <div v-else class="px-4 flex justify-content-center align-items-center">
-        <h6 class="text-danger" v-if="invalidCode">Code is not valid. Please try again</h6>
+      <div v-else class="flex justify-content-center align-items-center">
+<!--        <a-icon type="loading" v-if="isLoading" />-->
+        <loading-spinner />
       </div>
       <div class="position-absolute footer-cancel-btn">
         <a-button class="back-button cancel-button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
@@ -99,9 +105,10 @@
 
 <script>
 import ApiService from "../../services/api.service";
+import LoadingSpinner from "../ui/LoadingSpinner";
 export default {
 	name: "ManageTeam",
-	components: {},
+	components: {LoadingSpinner},
 	data() {
 		return {
 			isLoading: false,
@@ -175,10 +182,11 @@ export default {
       if (originalLink.length > 1) {
         link = originalLink[1];
       }
-      this.loading = true;
+      this.isLoading = true;
       await ApiService.get(`/v1/team-invitation-information/${link}`).then(res => {
         this.loading = false;
         if (res && res.data) {
+          this.isLoading = false;
           this.team = res.data.data;
           this.invalidCode = false;
           let teamMembers = this.team && this.team.team ? this.team.team.team_members : [];
@@ -204,6 +212,7 @@ export default {
         console.log(e);
         this.invalidCode = true;
         this.isJoined = false;
+        this.isLoading = false;
       });
     }
 	},
