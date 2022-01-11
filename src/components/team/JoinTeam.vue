@@ -21,60 +21,71 @@
             @keydown.enter="getTheTeamInvitationInfo"
 					>
             <a-icon slot="prefix" type="snippets" class="input-prefix" />
-            <a-icon slot="suffix" type="caret-right" class="input-suffix"
-                    @click="getTheTeamInvitationInfo"
-                    :disabled="!invitationLink"
-                    :class="{'bg-primary': invitationLink}" />
+<!--            <a-icon slot="suffix" type="caret-right" class="input-suffix"-->
+<!--                    @click="getTheTeamInvitationInfo"-->
+<!--                    :disabled="!invitationLink"-->
+<!--                    :class="{'bg-primary': invitationLink}" />-->
 					</a-input>
 				</a-col>
 			</a-row>
+      <div class="text-center pt-2">
+        <button class="btn check-invite" @click="getTheTeamInvitationInfo" :disabled="!invitationLink">Check Link</button>
+      </div>
       <div v-if="team" class="mt-4 px-4 invite-info-box">
-        <h4 class="invited-respresent color-primary fs-20">Congratulations you're joining as a <b class="font-weight-bold text-uppercase">{{ team.user_type }}</b></h4>
+        <div v-if="!isJoined">
+          <h4 class="invited-respresent color-primary fs-20">Congratulations you're joining as a <b class="font-weight-bold text-uppercase">{{ team.user_type }}</b></h4>
 
-        <div class="invite-info py-4">
-          <div class="d-flex">
-            <div class="d-flex justify-content-between align-items-center col-50">
-              <h6 class="fs-14">Invited by</h6>
-              <span style="margin-top: -6px">:</span>
+          <div class="invite-info py-4">
+            <div class="d-flex">
+              <div class="d-flex justify-content-between align-items-center col-50">
+                <h6 class="fs-14">Invited by</h6>
+                <span style="margin-top: -6px">:</span>
+              </div>
+              <h6 class="ml-2 fs-14">{{ team && team.team && team.team.created_by ? team.team.created_by.full_name : '' }}</h6>
             </div>
-            <h6 class="ml-2 fs-14">{{ team && team.team && team.team.created_by ? team.team.created_by.full_name : '' }}</h6>
-          </div>
-          <div class="d-flex">
-            <div class="d-flex justify-content-between align-items-center col-50">
-              <h6 class="fs-14">Team name</h6>
-              <span style="margin-top: -6px">:</span>
+            <div class="d-flex">
+              <div class="d-flex justify-content-between align-items-center col-50">
+                <h6 class="fs-14">Team name</h6>
+                <span style="margin-top: -6px">:</span>
+              </div>
+              <h6 class="ml-2 fs-14">{{ team && team.team ? team.team.name : '' }}</h6>
             </div>
-            <h6 class="ml-2 fs-14">{{ team && team.team ? team.team.name : '' }}</h6>
-          </div>
-          <div class="d-flex">
-            <div class="d-flex justify-content-between align-items-center col-50">
-              <h6 class="fs-14">Total team member</h6>
-              <span style="margin-top: -9px">:</span>
+            <div class="d-flex">
+              <div class="d-flex justify-content-between align-items-center col-50">
+                <h6 class="fs-14">Total team member</h6>
+                <span style="margin-top: -9px">:</span>
+              </div>
+              <h6 class="ml-2 fs-14">{{ team && team.team ? team.team.member_count : '' }}</h6>
             </div>
-            <h6 class="ml-2 fs-14">{{ team && team.team ? team.team.member_count : '' }}</h6>
-          </div>
-          <div class="d-flex">
-            <div class="d-flex justify-content-between align-items-center col-50">
-              <h6 class="fs-14">Role</h6>
-              <span style="margin-top: -6px">:</span>
+            <div class="d-flex">
+              <div class="d-flex justify-content-between align-items-center col-50">
+                <h6 class="fs-14">Role</h6>
+                <span style="margin-top: -6px">:</span>
+              </div>
+              <h6 class="ml-2 fs-14">{{ team.role }}</h6>
             </div>
-            <h6 class="ml-2 fs-14">{{ team.role }}</h6>
-          </div>
-          <div class="d-flex">
-            <div class="d-flex justify-content-between align-items-center col-50">
-              <h6 class="fs-14">Relationship</h6>
-              <span style="margin-top: -6px">:</span>
+            <div class="d-flex">
+              <div class="d-flex justify-content-between align-items-center col-50">
+                <h6 class="fs-14">Relationship</h6>
+                <span style="margin-top: -6px">:</span>
+              </div>
+              <h6 class="ml-2 fs-14">{{ team.relationship }}</h6>
             </div>
-            <h6 class="ml-2 fs-14">{{ team.relationship }}</h6>
-          </div>
-          <div class="d-flex">
-            <div class="d-flex justify-content-between align-items-center col-50">
-              <h6 class="fs-14">Team create date</h6>
-              <span style="margin-top: -6px">:</span>
+            <div class="d-flex">
+              <div class="d-flex justify-content-between align-items-center col-50">
+                <h6 class="fs-14">Team create date</h6>
+                <span style="margin-top: -6px">:</span>
+              </div>
+              <h6 class="ml-2 fs-14">{{ team && team.team ? formateDate(team.team.created_at) : '' }}</h6>
             </div>
-            <h6 class="ml-2 fs-14">{{ formateDate(team.team.created_at) }}</h6>
           </div>
         </div>
+        <div v-else class="flex justify-content-center align-items-center">
+          <h4 class="invited-respresent fs-18 color-primary">You are already a member of this team</h4>
+        </div>
+      </div>
+      <div v-else class="px-4 flex justify-content-center align-items-center">
+        <h6 class="text-danger" v-if="invalidCode">Code is not valid. Please try again</h6>
       </div>
       <div class="position-absolute footer-cancel-btn">
         <a-button class="back-button cancel-button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
@@ -98,7 +109,9 @@ export default {
 			is_verified: 1,
 			invitationLink: "",
       team: null,
-      loading: false
+      loading: false,
+      invalidCode: false,
+      isJoined: false
 		};
 	},
 	created() {
@@ -167,15 +180,30 @@ export default {
         this.loading = false;
         if (res && res.data) {
           this.team = res.data.data;
+          this.invalidCode = false;
+          let teamMembers = this.team && this.team.team ? this.team.team.team_members : [];
+          let loggedUser = JSON.parse(localStorage.getItem('user'));
+          let existence = teamMembers.findIndex(item => item.user_id == loggedUser.id);
+          if(existence >= 0) {
+            this.isJoined = true;
+          } else {
+            this.isJoined = false;
+          }
         }
         if(!this.team) {
-          this.$confirm({
-            icon: "check-circle",
-            title: "Code is not valid!",
-            center: true,
-            confirmLoading: true,
-          });
+          this.invalidCode = true;
+          this.isJoined = false;
+          // this.$confirm({
+          //   icon: "check-circle",
+          //   title: "Code is not valid!",
+          //   center: true,
+          //   confirmLoading: true,
+          // });
         }
+      }).catch(e => {
+        console.log(e);
+        this.invalidCode = true;
+        this.isJoined = false;
       });
     }
 	},
@@ -705,6 +733,20 @@ export default {
     }
   }
 }
-
+.check-invite {
+  background: #522e8e;
+  color: #FFFFFF;
+  border: 1px solid #FFFFFF;
+  border-radius: 30px;
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  &:hover {
+    background: #FFFFFF;
+    color: #522e8e;
+    border: 1px solid #522e8e;
+  }
+}
 // end css for team-card
 </style>
