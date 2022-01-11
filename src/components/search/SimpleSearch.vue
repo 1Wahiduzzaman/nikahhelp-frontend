@@ -238,7 +238,15 @@
 					<div class="row">
 						<div class=" mt-12 pt-10">
 							<div class="btn-adv-search-wrapper">
-								<button class="btn btn-primary" @click="handleSearch">
+								<ButtonComponent
+									iconHeight="30px"
+									:responsive="false"
+									title="Search"
+									icon="/assets/icon/search-secondary.svg"
+									customEvent="handleSearch"
+									@onClickButton="onClickButton"
+								/>
+								<!-- <button class="btn btn-primary" @click="handleSearch">
 									<img src="@/assets/icon/search.svg" alt="Icon" height="25px" />
 									<g data-v-ac485448="" id="Layer_2" data-name="Layer 2">
 										<g data-v-ac485448="" id="draw_boxes" data-name="draw boxes">
@@ -258,9 +266,8 @@
 											></path>
 										</g>
 									</g>
-									<!-- </svg> -->
 									Search
-								</button>
+								</button> -->
 								<div>
 									<a id="topper" class="d-noe" ref="top" href="#top"></a>
 									<button @click="showADvancedSearchModal = true" class="btn-adv-search">Advanced Search</button>
@@ -286,6 +293,7 @@
 </template>
 
 <script>
+import ButtonComponent from '@/components/atom/ButtonComponent'
 import SelectTeamModal from "@/components/team/Modals/SelectTeamModal.vue";
 import ComingSoonModal from "@/components/search/ComingSoonModal"
 import ApiService from "@/services/api.service";
@@ -298,6 +306,12 @@ import {mapGetters, mapMutations, mapActions} from 'vuex'
 
 export default {
 	name: 'SimpleSearch',
+	components: {
+		SelectTeamModal,
+		SelectGroup,
+		ComingSoonModal,
+		ButtonComponent
+	},
 	data() {
 		return {
 			removePrevious: false,
@@ -348,15 +362,13 @@ export default {
 	created() {
 		this.getOccupations();
 	},
-	components: {
-		SelectTeamModal,
-		SelectGroup,
-		ComingSoonModal
-	},
 	methods: {
 		...mapActions({
 			searchUser: 'search/searchUser',
 		}),
+		onClickButton(data) {
+			if(data.event == 'handleSearch') this.handleSearch()
+		},
 		closeDialog() {
 			this.showADvancedSearchModal = false;
 		},
@@ -541,8 +553,8 @@ export default {
 // start css for advanced-search
 .btn-adv-search-wrapper {
 	position: fixed;
-	left: 12px;
-	bottom: 25px;
+	left: 54px;
+	bottom: 15px;
 	.btn:first-child {
 		text-align: center;
 		width: 220px;
