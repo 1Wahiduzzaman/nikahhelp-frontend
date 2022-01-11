@@ -61,7 +61,7 @@
             </a-select>
           </a-tooltip>
 
-          <button class="btn attach-link-btn btn-sm py-2 mt-2" @click="showUserBox = true" v-if="!showUserBox">Attach a user</button>
+          <button class="btn attach-link-btn btn-sm py-2 mt-2" @click="showUserBox = true" v-if="!showUserBox">Attach an user</button>
           <button class="btn attach-link-btn btn-sm py-2 mt-2" @click="removeAttachedUser()" v-if="showUserBox">Remove attached user</button>
           <button class="btn invitation-link-btn btn-block btn-sm py-2 mt-2" @click="generateLink" v-if="!showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
         </div>
