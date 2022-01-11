@@ -2016,7 +2016,7 @@ export default {
 		}
 		.img-logo {
 			border-radius: 50%;
-			width: 55px;
+			width: 50px;
 			height: 50px;
 			margin-left: 5px;
 			margin-top: 5px;
