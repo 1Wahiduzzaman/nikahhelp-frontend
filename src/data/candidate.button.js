@@ -17,14 +17,14 @@ export const btnData = [
         title: 'Teamlist',
         eventName: 'onClickTeamList',
         bgColor: '#6158a7',
-        icon: '/assets/icon/star-fill-secondary.svg',
+        icon: '/assets/icon/team.svg',
         hoverIcon: ''
     },
     {
         title: 'Connect',
         eventName: 'onClickConnect',
         bgColor: '#6158a7',
-        icon: '/assets/icon/connected.svg',
+        icon: '/assets/icon/connect-s.svg',
         hoverIcon: ''
     },
     {

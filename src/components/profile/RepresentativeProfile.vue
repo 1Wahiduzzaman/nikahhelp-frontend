@@ -1,8 +1,12 @@
 <template>
-	<div class="rep-profile"  style="margin-top: 15px;">
-		<div class="profile-heading">
+		<Loader v-if="isLoading" :isLoading="isLoading" />
+	<div v-else class="rep-profile">
+		<div class="profile-heading" >
+			<ProfileBanner
+				class="px-2 mt-2"
+			/>
 			<!-- Avatar and cover images -->
-			<div class="text-center">
+			<!-- <div class="text-center">
 				<img
 					src="@/assets/Icons/profile cover.jpg"
 					alt=""
@@ -14,7 +18,7 @@
 					{{ representativeData.first_name }}
 					{{ representativeData.last_name }}
 				</h3>
-			</div>
+			</div> -->
 			<!-- Buttons -->
 			<div class="row mt-3 mb-3 text-center">
 				<div class="col">
@@ -105,7 +109,7 @@
 									</li>
 									<!-- DOB -->
 									<li class="flex-between-start">
-										<span class="flex-50 px-2 label-text">Date of Birth</span
+										<span class="flex-50 px-2 label-text">Age</span
 										><span class="flex-50 px-2"
 											>:<span class="ml-3">
 												{{ representativeData.dob }}
@@ -133,35 +137,11 @@
 										</span>
 									</li>
 									<!-- Permanent Residence -->
-									<li class="flex-between-start">
-										<span class="flex-50 px-2 label-text"
-											>Permanent Residence</span
-										><span class="flex-50 px-2"
-											>:<span class="ml-3">
-												{{ representativeData.per_permanent_city }},
-												{{ representativeData.per_permanent_country }}
-											</span>
-										</span>
-									</li>
+									
 									<!-- Permanent Residence -->
-									<li class="flex-between-start">
-										<span class="flex-50 px-2 label-text">Address</span
-										><span class="flex-50 px-2"
-											>:<span class="ml-3">
-												{{ representativeData.per_permanent_address }}
-											</span>
-										</span>
-									</li>
+									
 									<!-- Mobile Number -->
-									<li class="flex-between-start">
-										<span class="flex-50 px-2 label-text">Mobile Numbeer</span
-										><span class="flex-50 px-2"
-											>:<span class="ml-3">
-												{{ representativeData.mobile_country_code
-												}}{{ representativeData.mobile_number }}
-											</span>
-										</span>
-									</li>
+									
 								</ul>
 							</div>
 						</div>
@@ -174,19 +154,51 @@
 
 <script>
 import firebase from "../../configs/firebase";
+import ApiService from "@/services/api.service";
+import ProfileBanner from "@/components/atom/ProfileBanner";
 export default {
 	name: "RepresentativeProfile",
 	props: ["representativeData"],
+	components: {
+		ProfileBanner
+	},
 	data() {
 		return {
 			avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
 			conversations: [],
+			candidateData: null,
+			isLoading: false,
 		};
 	},
 	created() {
-		
+		this.getCandidateData();
 	},
 	methods: {
+		async getCandidateData() {
+			console.log(JSON.parse(localStorage.getItem("user")), '>>>>>>>>>>>>')
+			try {
+				this.isLoading = true;
+				const user = JSON.parse(localStorage.getItem("user"));
+				console.log(ApiService, 'before call')
+				const response = await ApiService.get(`v1/candidate/info/${user.id}`);
+				console.log('after api call')
+				if (response.status === 200) {
+				this.isLoading = false;
+				this.candidateData = {
+					...response.data.data,
+					preference: {
+					...response.data.data.preference,
+					pre_occupation: JSON.parse(
+						response.data.data.preference.pre_occupation
+					),
+					},
+				};
+				}
+			} catch (error) {
+				this.isLoading = false;
+				console.log(error, '>>>>>>>>>')
+			}
+		},
 		startConversation() {
 			var res_userid = this.representativeData.user_id;
 			var my_user_id = this.$store.state.user.user.id;
@@ -287,9 +299,7 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .rep-profile {
-	margin: 25px;
-	width: 120%;
-	margin-left: 50px;
+	padding: 10px;
 	.profile-heading {
 		margin-bottom: 20px;
 		.cover-img {

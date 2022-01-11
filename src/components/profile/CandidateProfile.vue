@@ -44,7 +44,7 @@
                   @onClickButton="onClickButton"
                 />
               </v-col>
-              <v-col>
+              <!-- <v-col>
                 <ButtonComponent
                   iconHeight="14px"
                   :isSmall="true"
@@ -54,12 +54,7 @@
                   :isBlock="false"
                   @onClickButton="onClickButton"
                 />
-                <!-- <button class="btn btn-primary px-4" @click="startConversation">
-                  <img src="@/assets/email.svg" alt="">
-                  <img src="@/assets/icon/chat-dots-fill-white.svg" alt="" />
-                  Message
-                </button> -->
-              </v-col>
+              </v-col> -->
             </v-row>
           </v-container>
           <!-- Team name and profile link -->

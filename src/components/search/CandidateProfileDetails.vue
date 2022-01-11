@@ -2,9 +2,9 @@
     <div>
         <div style="height: 20px" class="top flex justify-space-between mt-2 align-center px-3">
             <v-btn
-                class="d-none d-md-block mt-1 text-capitalize "
+                class="d-none d-md-block mt-1 text-capitalize"
                 rounded
-                color="deep-purple darken-1"
+                color="#6158a7"
                 dark
                 @click="loadSearchResultComponent"
             >
@@ -18,7 +18,7 @@
                 rounded
                 absolute
                 small
-                color="deep-purple darken-1"
+                color="#6158a7"
                 dark
                 @click="loadSearchResultComponent"
             >
@@ -30,9 +30,7 @@
             <v-btn-toggle rounded dense class="d-none d-md-block">
                 <v-btn
                     class="mt-1 text-capitalize"
-                    medium
-                    color="deep-purple darken-4"
-                    dark
+                    color="deep-purple darken-3"
                     @click="$emit('navigateProfile', {userId: profileDetails.user_id, type: 'previous'})"
                 >
                     <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-left-solid.svg" alt="">
@@ -40,8 +38,7 @@
                 <v-btn
                     class="mt-1 text-capitalize"
                     rounded
-                    color="deep-purple darken-4"
-                    dark
+                    color="deep-purple darken-3"
                     @click="$emit('navigateProfile', {userId: profileDetails.user_id, type: 'next'})"
                 >
                     <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-right-solid.svg" alt="">
@@ -57,8 +54,7 @@
                 small
                 absolute
                 bottom
-                color="deep-purple darken-1"
-                dark
+                color="#6158a7"
             >
                 <div class="flex justify-center align-center">
                     <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-left-secondary.svg" alt="">
@@ -72,8 +68,7 @@
                 small
                 absolute
                 bottom
-                color="deep-purple darken-1"
-                dark
+                color="#6158a7"
             >
                 <div class="flex justify-center align-center">
                     <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-left-solid.svg" alt="">
@@ -87,8 +82,7 @@
                 absolute
                 bottom
                 right
-                color="deep-purple darken-1"
-                dark
+                color="#6158a7"
             >
                 <div class="flex justify-center align-center">
                     <img style="height: 13px;" src="/assets/icon/chevron-right-solid.svg" alt="">
