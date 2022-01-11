@@ -1937,7 +1937,7 @@ export default {
 			.logo {
 				.img-logo {
 					border-radius: 50%;
-					width: 55px !important;
+					width: 50px !important;
 					height: 50px !important;
 					margin-left: 5px;
 					margin-top: 5px;

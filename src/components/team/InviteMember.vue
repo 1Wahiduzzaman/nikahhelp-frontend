@@ -132,7 +132,7 @@ export default {
   },
   methods: {
     async searchMember() {
-      await ApiService.post(`/v1/user-info/`, {
+      await ApiService.post(`/v1/user-info`, {
         email: this.user_email,
         team_id: this.team.id
       }).then(response => {
@@ -156,6 +156,9 @@ export default {
     },
     removeAttachedUser() {
       this.invitationObject.email = null;
+      this.showUserBox = false;
+      this.user_email = '';
+      this.userObj = {};
     },
     copyToken() {
       this.copyBtnText = 'Copied';
