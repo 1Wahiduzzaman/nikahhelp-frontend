@@ -85,9 +85,9 @@
                   <a-select
                       size="large"
                       placeholder="Add as a"
-                      class="ml-1 fs-14 member-add mr-2"
+                      class="fs-14 member-add mr-2"
                       v-model="addAs"
-                      style="width: 99%"
+                      style="width: 100%"
                   >
                     <a-select-option value="Candidate" v-if="addAs == 'Candidate'"> Candidate </a-select-option>
                     <a-select-option value="Representative" v-if="addAs == 'Representative'"> Representative </a-select-option>
@@ -325,6 +325,13 @@ export default {
           this.loading = false;
           if(res && res.data && res.data.status != 'FAIL') {
             res.data.data.add_as_a = this.addAs;
+            let team_members = {
+              user_type: this.addAs,
+              relationship: this.selfRole.relationship,
+              role: 'Owner+Admin'
+            };
+            res.data.data.team_members = [team_members];
+            res.data.data.team_invited_members = [];
             this.updateTeamData(res.data.data);
             this.goNextStep(2);
           } else {

@@ -1570,7 +1570,7 @@ export default {
     againInviteWindow() {
       this.invitationObject.memberBox = true;
     },
-    toggleMemberbox() {
+    toggleMemberbox(success = false) {
       this.clickedInviteNow = false;
       this.tempActive = false;
       this.invitationObject.memberBox = false;

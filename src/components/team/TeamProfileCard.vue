@@ -49,7 +49,7 @@
           <tr>
             <td class="fs-12 text-white opacity-60">Invitation Link</td>
             <td class="fs-12 text-white opacity-60">:</td>
-            <td class="fs-12 text-white ml-3 cursor-pointer" @click="copyToken" id="copyInput">
+            <td class="fs-12 text-white ml-3 cursor-pointer" @click="copyToken">
               <a-tooltip
                   placement="top"
                   :title="copyBtnText"
@@ -147,12 +147,8 @@ export default {
       return link;
     },
     copyToken() {
+      navigator.clipboard.writeText(this.getInvitationLink());
       this.copyBtnText = 'Link copied to clipboard';
-      let copyText = document.getElementById("copyInput");
-      copyText.select();
-      copyText.setSelectionRange(0, 99999);
-
-      navigator.clipboard.writeText(copyText.value);
     },
   }
 }

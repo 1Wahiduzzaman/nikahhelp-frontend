@@ -1,7 +1,7 @@
 <template>
   <div class="position-absolute add-member-box" :class="{'from-data-card': from === 'details-card'}">
     <div class="member-box position-relative">
-      <div class="cross-button-box mr-2 mt-2 d-flex justify-content-center align-items-center cursor-pointer" @click="$emit('toggleMemberbox')">&#10006;</div>
+      <div class="cross-button-box mr-2 mt-2 d-flex justify-content-center align-items-center cursor-pointer" @click="toggleToParent()">&#10006;</div>
 
       <div class="d-flex px-4">
         <h4 class="fs-14 text-white invite-txt">Send team invitation</h4>
@@ -46,14 +46,23 @@
                 class="mt-2 fs-14"
                 v-model="invitationObject.relationship"
                 :disabled="invitationObject.add_as_a == 'Candidate'"
+                v-if="from === 'details-card'"
             >
               <a-select-option value="Candidate" v-if="invitationObject.add_as_a == 'Candidate'"> Candidate </a-select-option>
               <a-select-option v-for="(relation, index) in relationships" v-else :key="index" :value="relation"> {{ relation }} </a-select-option>
             </a-select>
+            <a-select
+                placeholder="Relationship"
+                class="mt-2 fs-14"
+                v-model="invitationObject.relationship"
+                v-else
+            >
+              <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
+            </a-select>
           </a-tooltip>
 
-          <button class="btn invitation-link-btn btn-sm py-2 mt-2" @click="showUserBox = true" v-if="!showUserBox">Attach a user</button>
-          <button class="btn invitation-link-btn btn-sm py-2 mt-2" @click="removeAttachedUser()" v-if="showUserBox">Remove attached user</button>
+          <button class="btn attach-link-btn btn-sm py-2 mt-2" @click="showUserBox = true" v-if="!showUserBox">Attach a user</button>
+          <button class="btn attach-link-btn btn-sm py-2 mt-2" @click="removeAttachedUser()" v-if="showUserBox">Remove attached user</button>
           <button class="btn invitation-link-btn btn-block btn-sm py-2 mt-2" @click="generateLink" v-if="!showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
         </div>
 
@@ -75,7 +84,10 @@
             </div>
             <button class="btn btn-sent position-absolute text-white cursor-default" v-if="userObj.invitation_status == 2">Joined</button>
             <button class="btn btn-sent btn-outline-secondary position-absolute text-white cursor-default" v-if="userObj.invitation_status == 1">Sent</button>
-            <button class="btn btn-success position-absolute" v-if="userObj.invitation_status == 0" @click="attachUser()">{{ userObj && userObj.user && userObj.user.email == invitationObject.email ? 'Invited' : 'Invite' }}</button>
+            <button class="btn btn-success position-absolute" :disabled="isSuccess"
+                    v-if="userObj.invitation_status == 0" @click="attachUser()">
+              {{ userObj && userObj.user && userObj.user.email == invitationObject.email ? 'Invited' : 'Invite' }}
+            </button>
           </div>
         </div>
         <button class="btn invitation-link-btn btn-block btn-sm py-2 mt-2" @click="generateLink" v-if="showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
@@ -172,7 +184,14 @@ export default {
     },
     generateLink() {
       if(!this.invitationObject.link) {
-        this.createInvitaionLink();
+        if(this.invitationObject.role && this.invitationObject.add_as_a && this.invitationObject.relationship) {
+          this.createInvitaionLink();
+        } else {
+          this.$warning({
+            title: "Please fill out all the fields",
+            center: true,
+          });
+        }
       }
     },
     createInvitaionLink() {
@@ -240,6 +259,22 @@ export default {
         })();
       }
     },
+    toggleToParent() {
+      if(!this.isSuccess && (this.invitationObject.role || this.invitationObject.add_as_a || this.invitationObject.relationship)) {
+        const self = this;
+        this.$confirm({
+          icon: "info-circle",
+          title: "Are you sure want to discard the changes?",
+          center: true,
+          confirmLoading: true,
+          onOk() {
+            self.$emit('toggleMemberbox', self.isSuccess);
+          },
+        });
+      } else {
+        this.$emit('toggleMemberbox', this.isSuccess);
+      }
+    }
   }
 }
 </script>
@@ -316,7 +351,7 @@ export default {
       }
     }
     .link-box {
-      bottom: -80px;
+      bottom: -86px;
       background: #3A3092;
       border-radius: 14px;
       .w-full {
@@ -353,14 +388,39 @@ export default {
   height: 135px;
 }
 .invitation-link-btn {
-  background: $bg-white;
-  color: $color-primary;
+  background: $bg-success;
+  color: $color-white;
   border-radius: 30px;
   font-size: 14px !important;
+  border: 1px solid $border-white;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover {
     background: $bg-primary;
-    color: #FFFFFF;
-    border: 1px solid $border-white;
+    //color: $color-success;
+    border: 1px solid $border-success;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+.attach-link-btn {
+  background: $bg-brand;
+  color: $color-white;
+  border-radius: 30px;
+  font-size: 14px !important;
+  border: 1px solid $border-white;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    background: $bg-primary;
+    //color: $color-success;
+    border: 1px solid $border-brand;
   }
   &:focus {
     outline: none;
@@ -368,6 +428,6 @@ export default {
   }
 }
 .link-box-empty {
-  bottom: -80px !important;
+  bottom: -86px !important;
 }
 </style>
