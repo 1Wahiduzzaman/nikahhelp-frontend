@@ -1,13 +1,13 @@
 <template>
   <div class="position-absolute add-member-box" :class="{'from-data-card': from === 'details-card'}">
     <div class="member-box position-relative">
-      <div class="cross-button-box mr-2 mt-2 d-flex justify-content-center align-items-center cursor-pointer" @click="$emit('toggleMemberbox')">&#10006;</div>
+      <div class="cross-button-box mr-2 mt-2 d-flex justify-content-center align-items-center cursor-pointer" @click="toggleToParent()">&#10006;</div>
 
       <div class="d-flex px-4">
         <h4 class="fs-14 text-white invite-txt">Send team invitation</h4>
       </div>
       <div class="px-4 mt-2 position-relative">
-        <div class="position-relative d-none flex-column">
+        <div class="position-relative flex flex-column">
           <a-tooltip
               placement="top"
               title="Member role will"
@@ -46,21 +46,29 @@
                 class="mt-2 fs-14"
                 v-model="invitationObject.relationship"
                 :disabled="invitationObject.add_as_a == 'Candidate'"
+                v-if="from === 'details-card'"
             >
               <a-select-option value="Candidate" v-if="invitationObject.add_as_a == 'Candidate'"> Candidate </a-select-option>
               <a-select-option v-for="(relation, index) in relationships" v-else :key="index" :value="relation"> {{ relation }} </a-select-option>
             </a-select>
+            <a-select
+                placeholder="Relationship"
+                class="mt-2 fs-14"
+                v-model="invitationObject.relationship"
+                v-else
+            >
+              <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
+            </a-select>
           </a-tooltip>
 
-          <div class="flex justify-content-between mt-2">
-            <button class="btn invitation-link-btn py-2">Generate Invitation Link</button>
-            <button class="btn invitation-link-btn py-2 ml-1" @click="showUserBox = true">Attach a user</button>
-          </div>
+          <button class="btn attach-link-btn btn-sm py-2 mt-2" @click="showUserBox = true" v-if="!showUserBox">Attach an user</button>
+          <button class="btn attach-link-btn btn-sm py-2 mt-2" @click="removeAttachedUser()" v-if="showUserBox">Remove attached user</button>
+          <button class="btn invitation-link-btn btn-block btn-sm py-2 mt-2" @click="generateLink" v-if="!showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
         </div>
 
-        <div class="mt-4">
+        <div class="mt-2" v-if="showUserBox">
 <!--          <h6 class="text-white fs-14">Attach a user to this invitation</h6>-->
-          <a-input ref="userNameInput" class="mt-1" placeholder="Search email or user ID" v-model="user_email" @keyup="searchMember()">
+          <a-input ref="userNameInput" class="mt-1" placeholder="Search email or user ID" v-model="user_email" @keyup="searchMember()" medium>
             <a-icon slot="suffix" type="info-circle" style="color: rgba(0,0,0,.45)" />
           </a-input>
         </div>
@@ -76,11 +84,15 @@
             </div>
             <button class="btn btn-sent position-absolute text-white cursor-default" v-if="userObj.invitation_status == 2">Joined</button>
             <button class="btn btn-sent btn-outline-secondary position-absolute text-white cursor-default" v-if="userObj.invitation_status == 1">Sent</button>
-            <button class="btn btn-success position-absolute" v-if="userObj.invitation_status == 0" @click="inviteMember()">Invite</button>
+            <button class="btn btn-success position-absolute" :disabled="isSuccess"
+                    v-if="userObj.invitation_status == 0" @click="attachUser()">
+              {{ userObj && userObj.user && userObj.user.email == invitationObject.email ? 'Invited' : 'Invite' }}
+            </button>
           </div>
         </div>
+        <button class="btn invitation-link-btn btn-block btn-sm py-2 mt-2" @click="generateLink" v-if="showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
       </div>
-      <div class="link-box px-4 position-absolute w-full">
+      <div class="link-box px-4 position-absolute w-full" v-if="invitationObject.invitation_link" :class="{'link-box-empty': !showUserBox}">
         <div class="w-full mt-2">
           <input type="text" class="form-control invite-link text-white fs-12 py-5" id="copyInput" :value="invitationObject.visible_invitation_link" disabled />
           <button class="copy-button position-absolute px-2" @click="copyToken">{{ copyBtnText }}</button>
@@ -95,7 +107,7 @@
 import ApiService from '@/services/api.service';
 export default {
   name: "InviteMember",
-  props: ['team', 'invitationObject', 'from'],
+  props: ['team', 'from'],
   data() {
     return {
       relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-paw'],
@@ -104,19 +116,23 @@ export default {
       userObj: {},
       copyBtnText: 'Copy',
       showUserBox: false,
-      // invitationObject: {
-      //   role: "Admin",
-      //   add_as_a: "Representative",
-      //   relationship: "Father",
-      //   invitation_link: "",
-      //   visible: false,
-      //   memberBox: false
-      // },
+      isLoading: false,
+      isSuccess: false,
+      invitationObject: {
+        role: undefined,
+        add_as_a: undefined,
+        relationship: undefined,
+        invitation_link: null,
+        visible_invitation_link: "",
+        visible: false,
+        memberBox: false,
+        email: null
+      },
     }
   },
   methods: {
     async searchMember() {
-      await ApiService.post(`/v1/user-info/`, {
+      await ApiService.post(`/v1/user-info`, {
         email: this.user_email,
         team_id: this.team.id
       }).then(response => {
@@ -134,6 +150,15 @@ export default {
           this.$emit('toggleMemberbox');
         }
       }
+    },
+    attachUser() {
+      this.invitationObject.email = this.userObj.user.email;
+    },
+    removeAttachedUser() {
+      this.invitationObject.email = null;
+      this.showUserBox = false;
+      this.user_email = '';
+      this.userObj = {};
     },
     copyToken() {
       this.copyBtnText = 'Copied';
@@ -160,6 +185,99 @@ export default {
       }
       return false;
     },
+    generateLink() {
+      if(!this.invitationObject.link) {
+        if(this.invitationObject.role && this.invitationObject.add_as_a && this.invitationObject.relationship) {
+          this.createInvitaionLink();
+        } else {
+          this.$warning({
+            title: "Please fill out all the fields",
+            center: true,
+          });
+        }
+      }
+    },
+    createInvitaionLink() {
+      if(!this.isLoading) {
+        // amaizingly, for some reason i need to refer this to
+        // a other variable so my iffe function can access this
+        var self = this;
+        (function createShotLink() {
+          // this is the method i am using to create a short link
+          function makeid(length) {
+            var result = [];
+            var characters =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var charactersLength = characters.length;
+            for (var i = 0; i < length; i++) {
+              result.push(
+                  characters.charAt(Math.floor(Math.random() * charactersLength))
+              );
+            }
+            return result.join("");
+          }
+          self.invitationObject.invitation_link = makeid(10);
+          self.invitationObject.visible_invitation_link = window.location.host + '/manageteam?invitation=' + self.invitationObject.invitation_link;
+
+          let data = {
+            role: self.invitationObject.role,
+            add_as_a: self.invitationObject.add_as_a,
+            relationship: self.invitationObject.relationship,
+            invitation_link: self.invitationObject.invitation_link,
+            email: self.invitationObject.email
+          };
+          let invitation = [data];
+
+          let payload = {
+            team_id: self.team.team_id,
+            members: invitation
+          };
+          self.isLoading = true;
+          ApiService.post('/v1/invite-team-members', payload).then(res => {
+            // self.invitedObj = res.data.data[0];
+            console.log(res);
+            self.isLoading = false;
+            if(res.data.status != "FAIL") {
+              self.isSuccess = true;
+              self.$success({
+                title: "Invited successfully",
+                center: true,
+              });
+            } else {
+              self.$error({
+                title: "Something went wrong",
+                center: true,
+              });
+              self.isSuccess = false;
+            }
+          }).catch(e => {
+            self.isLoading = false;
+            self.isSuccess = false;
+            console.log(e);
+            self.$error({
+              title: "Something went wrong",
+              center: true,
+            });
+          });
+        })();
+      }
+    },
+    toggleToParent() {
+      if(!this.isSuccess && (this.invitationObject.role || this.invitationObject.add_as_a || this.invitationObject.relationship)) {
+        const self = this;
+        this.$confirm({
+          icon: "info-circle",
+          title: "Are you sure want to discard the changes?",
+          center: true,
+          confirmLoading: true,
+          onOk() {
+            self.$emit('toggleMemberbox', self.isSuccess);
+          },
+        });
+      } else {
+        this.$emit('toggleMemberbox', this.isSuccess);
+      }
+    }
   }
 }
 </script>
@@ -215,7 +333,7 @@ export default {
     }
     .suggestion-box, .details-suggestion-card {
       overflow-y: auto;
-      padding-bottom: 80px;
+      //padding-bottom: 80px;
       .user {
         .user-avatar {
           width: 30px;
@@ -236,7 +354,7 @@ export default {
       }
     }
     .link-box {
-      bottom: -44px;
+      bottom: -86px;
       background: #3A3092;
       border-radius: 14px;
       .w-full {
@@ -269,22 +387,50 @@ export default {
   height: 350px;
 }
 .suggestion-box {
-  height: 338px;
-  //height: 135px;
+  //height: 338px;
+  height: 135px;
 }
 .invitation-link-btn {
-  background: $bg-white;
-  color: $color-primary;
+  background: $bg-success;
+  color: $color-white;
   border-radius: 30px;
-  font-size: 14px;
+  font-size: 14px !important;
+  border: 1px solid $border-white;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover {
     background: $bg-primary;
-    color: #FFFFFF;
-    border: 1px solid $border-white;
+    //color: $color-success;
+    border: 1px solid $border-success;
   }
   &:focus {
     outline: none;
     box-shadow: none;
   }
+}
+.attach-link-btn {
+  background: $bg-brand;
+  color: $color-white;
+  border-radius: 30px;
+  font-size: 14px !important;
+  border: 1px solid $border-white;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    background: $bg-primary;
+    //color: $color-success;
+    border: 1px solid $border-brand;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+.link-box-empty {
+  bottom: -86px !important;
 }
 </style>
