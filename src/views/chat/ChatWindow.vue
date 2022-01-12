@@ -413,7 +413,8 @@ export default {
       },
       chatheadopen: null,
       isLoading: false,
-      fromChatItem: null
+      fromChatItem: null,
+      active_team_id: null
     }
   },
   components: {
@@ -654,6 +655,7 @@ export default {
           openModalRoute(this, "manage_team_redirect");
         }, 2000);
       } else {
+        this.active_team_id = JwtService.getTeamIDAppWide();
         this.loadTeamChat();
         this.loadChatHistory();
         this.loadConnectedGroup();
@@ -753,7 +755,7 @@ export default {
         }
       });
 
-      let lastGroupMsg = [{
+      let lastGroupMsg = data.last_group_msg ? [{
         label: 'Group chat',
         state: 'Typing...',
         name: data.last_group_msg.team.name,
@@ -761,7 +763,7 @@ export default {
         typing_status: 0,
         typing_text: '',
         message: pick(data.last_group_msg, messageKeys)
-      }]
+      }] : []
 
       let connectedMsg = data.connected_team_msgs.map(item => {
         item.label = 'Connected Team';
@@ -776,7 +778,7 @@ export default {
     },
     async loadTeamChat() {
       try {
-        let {data} = await ApiService.get('/v1/team-chat').then(res => res.data);
+        let {data} = await ApiService.get(`/v1/team-chat?team_id=${this.active_team_id}`).then(res => res.data);
         if (data && data.team_members) {
           this.teamMembers = map(data.team_members, item => {
             return item.user_id.toString();

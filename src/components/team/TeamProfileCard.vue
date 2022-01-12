@@ -2,7 +2,7 @@
   <div class="team-profile-box position-absolute">
     <div class="d-flex justify-content-between px-2 position-relative align-items-center">
       <h4 class="fs-20 text-white font-weight-bold py-2 cursor-pointer p-2" @click="$emit('toggleProfileCard')">&#8592;</h4>
-      <div class="cross-button-box mr-2 mt-2 d-flex justify-content-center align-items-center cursor-pointer py-1" @click="$emit('toggleProfileCard')">
+      <div class="cross-button-box mr-2 d-flex justify-content-center align-items-center cursor-pointer py-1" @click="$emit('toggleProfileCard')">
         &#10006;
       </div>
     </div>
@@ -172,6 +172,7 @@ export default {
   margin-left: -8px;
   border-radius: 10px;
   z-index: 9;
+  bottom: 0;
 
   .position-relative {
     .cross-button-box {
