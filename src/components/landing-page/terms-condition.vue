@@ -53,7 +53,7 @@
         allow you to do so, you may not use our site:
       </p>
 <p>
-      <ul>
+  <ul style="list-style-type: disc"> 
         <li>in any way that breaches any applicable law or regulation;</li>
         <li>
           in any way that is unlawful or fraudulent, or has any unlawful or
@@ -142,7 +142,8 @@
         advice on which any reliance should be placed), including without
         limitation any liability for:
       </p>
-      <ul>
+
+     <p><ul style="list-style-type: disc"> 
         <li>loss of income or revenue;</li>
         <li>loss of business;</li>
         <li>loss of profits or contracts;</li>
@@ -158,7 +159,7 @@
           financial loss that are not excluded by any of the categories set out
           above.
         </li>
-      </ul>
+      </ul></p>
       <p>
         This does not affect our liability for death or personal injury arising
         from our negligence, or our liability for fraudulent misrepresentation
