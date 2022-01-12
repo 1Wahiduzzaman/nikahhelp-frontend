@@ -337,6 +337,7 @@ import JwtService from "@/services/jwt.service";
 import { openModalRoute } from "@/plugins/modal/modal.mixin";
 import Candidate from "@/components/shortlist/Candidate.vue";
 import CandidateGrid from "../../components/shortlist/CandidateGrid";
+import ApiService from '@/services/api.service';
 export default {
   name: "Shortlist",
   components: {
@@ -463,7 +464,9 @@ export default {
     async loadShortListedCandidates() {
       this.isLoading = true;
       try {
-        await this.$store.dispatch("loadShortListedCandidates");
+        let {data} = await ApiService.get(`/v1/short-listed-candidates`).then(res => res.data);
+        console.log(data);
+        // await this.$store.dispatch("loadShortListedCandidates");
       } catch (error) {
         this.error = error.message || "Something went wrong";
         console.log(this.error);
