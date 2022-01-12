@@ -7,8 +7,8 @@
 <!--        <span :class="{'online-icon-avatar': ifOnline}"></span>-->
       </div>
       <div class="content">
-        <h4 class="mt-1 fs-14">User name</h4>
-        <p class="mb-0 text-margin">Message</p>
+        <h4 class="mt-1 fs-14">{{ item && item.user ? item.user.full_name : '' }}</h4>
+        <p class="mb-0 text-margin">{{ item && item.last_message ? item.last_message.body : '' }}</p>
       </div>
 <!--      <span class="online-icon" v-if="item.message && item.message.seen == 0"></span>-->
 <!--      <a-dropdown>-->
@@ -27,14 +27,25 @@
     </div>
     <div class="flex chat-bottom-place justify-content-end pr-4">
 <!--      <div class="date">{{ item.typing_text }}</div>-->
-      <div class="date">Just now</div>
+      <div class="date">{{ item && item.last_message ? messageCreatedAt(item.last_message.created_at) : '' }}</div>
     </div>
   </div>
 </template>
 
 <script>
+import {format} from "timeago.js";
+
 export default {
-  name: "ChatListItem"
+  name: "ChatListItem",
+  props: ['item'],
+  methods: {
+    messageCreatedAt(time) {
+      if (time) {
+        return format(time);
+      }
+      return '';
+    },
+  }
 }
 </script>
 

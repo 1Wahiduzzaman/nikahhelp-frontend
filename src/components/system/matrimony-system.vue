@@ -39,7 +39,7 @@ export default {
       });
 
       this.sockets.subscribe('receive_message', function (res) {
-        if(res) {
+        if(res && !res.support) {
           this.$store.state.chat.chats.unshift(res);
         }
       });
