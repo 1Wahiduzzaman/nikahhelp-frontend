@@ -91,6 +91,14 @@
 
         <!-- button section -->
         <div class="flex justify-space-between flex-wrap mt-10">
+            <ButtonComponent
+                class="mb-3"
+                title="Gallery"
+                customEvent="openGallery"
+                icon="item.icon"
+                bgColor="/assets/icon/gallery.svg"
+                @onClickButton="handleClick"
+            />
             <template
                 v-for="(item, i) in btnData"
             >
@@ -122,7 +130,8 @@ import {mapMutations, mapGetters} from 'vuex'
 export default {
     name: 'CandidateProfileDetails',
     data: () => ({
-        btnData
+        btnData,
+        images: []
     }),
     components: {
         ProfileBanner,
@@ -139,12 +148,30 @@ export default {
             setComponent: 'search/setComponent'
         }),
         handleClick(data) {
-            console.log(data,'>>>>>>>>>>>>>>>>>')
+            if(data.event == 'openGallery') this.openGallery()
         },
         loadSearchResultComponent() {
             this.setComponent('AddComponent')
             this.$emit('switchComponent', 'CandidateProfiles')
-        }
+        },
+        openGallery() {
+            this.images= [];
+            let images = this.profileDetails.other_images
+            if(images.length > 0) {
+                images.map(i => this.images.push(i.image_path));
+                this.show();
+            } else {
+                this.$error({
+                title: 'No image found',
+                center: true,
+                });
+            }
+        },
+        show() {
+            this.$viewerApi({
+                images: this.images,
+            })
+        },
     }
 }
 </script>
