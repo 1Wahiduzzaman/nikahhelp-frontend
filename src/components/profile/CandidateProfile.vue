@@ -27,8 +27,7 @@
                   :isSmall="true"
                   title="Gallery"
                   icon="/assets/icon/gallery.svg"
-                  customEvent="goToGallery"
-                  :isDisabled="true"
+                  customEvent="openGallery"
                   :isBlock="false"
                   @onClickButton="onClickButton"
                 />
@@ -288,6 +287,7 @@ import ProfileBanner from "@/components/atom/ProfileBanner";
 import firebase from "../../configs/firebase";
 import Footer from "@/components/auth/Footer.vue";
 import ApiService from "@/services/api.service";
+
 export default {
   name: "CandidateProfile",
   components: { 
@@ -304,6 +304,7 @@ export default {
   },
   data() {
     return {
+      images: [],
       copyIcon: '/assets/icon/copy-secondary.svg',
       checkIcon: '/assets/icon/check-circle-secondary.svg',
       copied: false,
@@ -339,7 +340,26 @@ export default {
   methods: {
     onClickButton(data) {
       if(data.event == 'editProfile') this.$router.push('/edit_candidate')
+      if(data.event == 'openGallery') this.openGallery()
       console.log(data, '>>>>>>>>>>>')
+    },
+    openGallery() {
+      this.images= [];
+      let images = this.candidateData.other_images
+      if(images.length > 0) {
+        images.map(i => this.images.push(i.image_path));
+        this.show();
+      } else {
+        this.$error({
+          title: 'No image found',
+          center: true,
+        });
+      }
+    },
+    show() {
+      this.$viewerApi({
+        images: this.images,
+      })
     },
     copyProfileLink() {
       // console.log(this.$refs.profileLink.innerHTML)

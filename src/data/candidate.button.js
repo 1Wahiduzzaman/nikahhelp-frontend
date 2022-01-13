@@ -1,12 +1,5 @@
 export const btnData = [
     {
-        title: 'Gallery',
-        eventName: 'onClickGallery',
-        bgColor: '#6158a7',
-        icon: '/assets/icon/star-fill-secondary.svg',
-        hoverIcon: ''
-    },
-    {
         title: 'Shortlist',
         eventName: 'onClickShortlist',
         bgColor: '#6158a7',

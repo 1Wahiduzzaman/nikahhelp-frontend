@@ -1,16 +1,31 @@
 <template>
-    <div class="flex justify-end">
-        <a
-            class="navigate"
-            v-for="item in items"
-            :key="item.link"
-            :href="item.link"
-        >
-            <div class="navigate-name">
-                {{item.name}}
-                <img :src="item.icon" alt="">
-            </div>
-        </a>
+    <div>
+        <div class="d-none d-md-flex justify-end">
+            <a
+                class="navigate"
+                v-for="item in items"
+                :key="item.link"
+                :href="item.link"
+            >
+                <div class="navigate-name">
+                    {{item.name}}
+                    <img :src="item.icon" alt="">
+                </div>
+            </a>
+        </div>
+        <div class="d-flex d-md-none flex justify-space-between">
+            <a
+                class="navigate"
+                v-for="item in items"
+                :key="item.link"
+                :href="item.link"
+            >
+                <div class="navigate-name">
+                    {{item.name}}
+                    <img :src="item.icon" alt="">
+                </div>
+            </a>
+        </div>
     </div>
 </template>
 
