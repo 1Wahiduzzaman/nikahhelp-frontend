@@ -141,7 +141,7 @@ export default {
 
         try {
           await ApiService.post("v1/team-turn-on", {
-            team_id: this.item.team_id,
+            team_id: this.item.id,
           })
               .then((data) => {
                 if (data.data.status == "FAIL") {
