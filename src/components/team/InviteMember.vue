@@ -107,8 +107,17 @@
 
 <script>
 import ApiService from '@/services/api.service';
+import Notification from "@/common/notification.js";
 export default {
   name: "InviteMember",
+  sockets: {
+    connect: function () {
+      console.log('socket connected')
+    },
+    ping: function (data) {
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
   props: ['team', 'from'],
   data() {
     return {
@@ -135,6 +144,20 @@ export default {
     }
   },
   methods: {
+    socketNotification(payload) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.sender = loggedUser.id;
+      Notification.storeNotification(payload);
+      payload.created_at = new Date();
+      payload.seen = 0;
+      payload.sender = loggedUser;
+      if(payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map(item => {
+          return item.toString();
+        });
+        this.$socket.emit('notification', payload);
+      }
+    },
     async searchMember() {
       this.searchLoading = true;
       await ApiService.post(`/v1/user-info`, {
@@ -258,6 +281,13 @@ export default {
                 title: "Invited successfully",
                 center: true,
               });
+              let notifyObj = {
+                receivers: data.receivers,
+                title: `invited you to join ${self.team.name} team as ${self.invitationObject.role}`,
+                team_id: self.team.id,
+                team_temp_name: self.team.name
+              };
+              self.socketNotification(notifyObj);
             } else {
               self.$error({
                 title: "Something went wrong",
