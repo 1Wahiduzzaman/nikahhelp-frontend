@@ -78,9 +78,9 @@
         iconHeight="14px"
         :isSmall="true"
         :responsive="false"
-        :title="candidate.is_short_listed ? 'Disconnect' : 'Connect'"
-        icon="/assets/icon/connection-secondary.svg"
-        :customEvent="candidate.is_connected ? 'removeConnection' : 'addConnection'"
+        :title="candidate.is_connect ? 'Disconnect' : 'Connect'"
+        icon="/assets/icon/connect-s.svg"
+        :customEvent="candidate.is_connect ? 'removeConnection' : 'addConnection'"
         @onClickButton="onClickButton"
       />
     </div>
@@ -90,9 +90,9 @@
         iconHeight="14px"
         :isSmall="true"
         :responsive="false"
-        :title="candidate.is_short_listed ? 'TeamUnlist' : 'TeamList'"
-        icon="/assets/icon/star-fill-secondary.svg"
-        :customEvent="candidate.is_connected ? 'removeTeam' : 'addTeam'"
+        :title="candidate.is_teamListed ? 'TeamUnlist' : 'TeamList'"
+        icon="/assets/icon/team.svg"
+        :customEvent="candidate.is_teamListed ? 'removeTeam' : 'addTeam'"
         @onClickButton="onClickButton"
       />
       <ButtonComponent
@@ -180,6 +180,7 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
       },
       async connectCandidate() {
         let myTeamId = JwtService.getTeamIDAppWide();
+        console.log(myTeamId, '>>>>>>>')
         if(!myTeamId) {
           this.showError("You don't have a team")
            return;
@@ -189,7 +190,7 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
            return;
         }
         let data = {
-          userId: this.candidate.team_id,
+          userId: this.candidate.user_id,
           url: 'v1/send-connection-request',
           payload: {
             from_team_id: myTeamId,

@@ -56,20 +56,7 @@
                 absolute
                 bottom
                 color="#6158a7"
-            >
-                <div class="flex justify-center align-center">
-                    <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-left-secondary.svg" alt="">
-                    
-                </div>
-            </v-btn>
-            <v-btn
-                class="mt-1 text-capitalize z-9"
-                rounded
-                outlined
-                small
-                absolute
-                bottom
-                color="#6158a7"
+                @click="$emit('navigateProfile', {userId: profileDetails.user_id, type: 'previous'})"
             >
                 <div class="flex justify-center align-center">
                     <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-left-solid.svg" alt="">
@@ -84,10 +71,10 @@
                 bottom
                 right
                 color="#6158a7"
+                @click="$emit('navigateProfile', {userId: profileDetails.user_id, type: 'next'})"
             >
                 <div class="flex justify-center align-center">
                     <img style="height: 13px;" src="/assets/icon/chevron-right-solid.svg" alt="">
-                    
                 </div>
             </v-btn>
         </div>
