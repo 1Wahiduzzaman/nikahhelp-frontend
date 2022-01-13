@@ -3,7 +3,7 @@ export const btnData = [
         title: 'Gallery',
         eventName: 'onClickGallery',
         bgColor: '#6158a7',
-        icon: '/assets/icon/star-fill-secondary.svg',
+        icon: '/assets/icon/gallery.svg',
         hoverIcon: ''
     },
     {
