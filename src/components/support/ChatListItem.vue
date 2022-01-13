@@ -10,7 +10,7 @@
         <h4 class="mt-1 fs-14">{{ item && item.user ? item.user.full_name : '' }}</h4>
         <p class="mb-0 text-margin">{{ item && item.last_message ? item.last_message.body : '' }}</p>
       </div>
-<!--      <span class="online-icon" v-if="item.message && item.message.seen == 0"></span>-->
+      <span class="online-icon" v-if="item && item.last_message && item.last_message.seen == 0"></span>
 <!--      <a-dropdown>-->
 <!--        <a class="ant-dropdown-link dropdown-box" @click="e => e.preventDefault()">-->
 <!--          <a-icon type="more" class="fs-28 font-weight-bolder br-50 bg-c9 color-primary icon-30"/>-->
