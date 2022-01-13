@@ -88,12 +88,18 @@
 					<div class="mt-4">
 						<div class="select-box">
 							<select class="custom-select" v-model="employmentStatus">
-								<option value="">Select Employment Status</option>
-
 								<option value="" disabled>Select Employment Status</option>
-								<option value="Employed">Employed</option>
-								<option value="Unemployed">Unemployed</option>
 								<option value="Don't Mind">Don't Mind</option>
+								<option value="Unemployed">Employed full-time</option>
+								<option value="Unemployed">Employed part-time</option>
+								<option value="Employed">Self-employed</option>
+								<option value="Employed">Homemaker</option>
+								<option value="Employed">Student</option>
+								<option value="Employed">Retired</option>
+								<option value="Employed">On professional training</option>
+								<option value="Employed">On apprenticeship training</option>
+								<option value="Employed">Own a business</option>
+								<option value="Employed">Other</option>
 							</select>
 						</div>
 					</div>
@@ -240,6 +246,7 @@
 							<div class="btn-adv-search-wrapper">
 								<ButtonComponent
 									iconHeight="30px"
+									:block="true"
 									:responsive="false"
 									title="Search"
 									icon="/assets/icon/search-secondary.svg"
@@ -270,7 +277,7 @@
 								</button> -->
 								<div>
 									<a id="topper" class="d-noe" ref="top" href="#top"></a>
-									<button @click="showADvancedSearchModal = true" class="btn-adv-search">Advanced Search</button>
+									<button @click="$refs.advDiag.openDiag()" class="btn-adv-search">Advanced Search</button>
 								</div>
 							</div>
 							<select-team-modal
@@ -280,7 +287,7 @@
 							></select-team-modal>
 							<ComingSoonModal
 								@closeDialog="closeDialog"
-								:dialog="showADvancedSearchModal"
+								ref="advDiag"
 							/>
 							
 						</div>
@@ -360,7 +367,10 @@ export default {
 		})
 	},
 	created() {
-		this.getOccupations();
+		this.$store.dispatch("getCountries");
+		this.$store.dispatch("getStudyLevelOptions");
+		this.$store.dispatch("getReligionOptions");
+		this.$store.dispatch("getOccupations");
 	},
 	methods: {
 		...mapActions({
@@ -553,7 +563,8 @@ export default {
 // start css for advanced-search
 .btn-adv-search-wrapper {
 	position: fixed;
-	left: 54px;
+	left: 12px;
+	width: 230px;
 	bottom: 15px;
 	.btn:first-child {
 		text-align: center;

@@ -4,12 +4,12 @@
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 160px">Name</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1"></td>
+                <td class="text--secondary text-subtitle-1">{{ data.first_name }}  {{ data.last_name }}</td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 160px">Screen Name</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1"></td>
+                <td class="text--secondary text-subtitle-1">{{ data.screen_name }}</td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 160px">Gender</td>
