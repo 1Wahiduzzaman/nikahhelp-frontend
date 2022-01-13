@@ -1297,6 +1297,7 @@ export default {
 		},
 		checkTurnedOnSwitch() {
 			let _team_id = JwtService.getTeamIDAppWide();
+      console.log(_team_id)
 			// console.log("did not got")
 
 			if (_team_id == this.teamData.team_id) {
@@ -1460,7 +1461,7 @@ export default {
 									title: "Success",
 									content: "Selected Team Activated",
 									onOk() {
-										vm.$emit("teamListUpdated");
+										vm.$emit("customLoad");
 										setTimeout(() => vm.$router.go(), 100);
 									},
 								});

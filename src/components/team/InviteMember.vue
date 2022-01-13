@@ -43,7 +43,7 @@
           >
             <a-select
                 placeholder="Relationship"
-                class="mt-2 fs-14"
+                class="mt-2 fs-14 mb-2"
                 v-model="invitationObject.relationship"
                 :disabled="invitationObject.add_as_a == 'Candidate'"
                 v-if="from === 'details-card'"
@@ -61,12 +61,12 @@
             </a-select>
           </a-tooltip>
 
-          <button class="btn attach-link-btn btn-sm py-2 mt-2" @click="showUserBox = true" v-if="!showUserBox">Attach an user</button>
-          <button class="btn attach-link-btn btn-sm py-2 mt-2" @click="removeAttachedUser()" v-if="showUserBox">Remove attached user</button>
-          <button class="btn invitation-link-btn btn-block btn-sm py-2 mt-2" @click="generateLink" v-if="!showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
+          <button class="btn attach-link-btn btn-sm py-2 mb-2" @click="showUserBox = true" v-if="!showUserBox">Attach an user</button>
+<!--          <button class="btn attach-link-btn btn-sm py-2 mt-2" @click="removeAttachedUser()" v-if="showUserBox">Remove attached user</button>-->
+          <button class="btn invitation-link-btn btn-block btn-sm py-2 mb-2" @click="generateLink" v-if="!showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
         </div>
 
-        <div class="mt-2" v-if="showUserBox">
+        <div class="" v-if="showUserBox">
 <!--          <h6 class="text-white fs-14">Attach a user to this invitation</h6>-->
           <a-input ref="userNameInput" class="mt-1" placeholder="Search email or user ID" v-model="user_email" @input="searchMember()" medium>
             <a-icon slot="suffix" type="loading" style="color: rgba(0,0,0,.45)" v-if="searchLoading" />
@@ -75,8 +75,8 @@
         </div>
 <!--        <span class="text-white fs-12 fw-500 ml-2">Invited/Suggested/Searched user</span>-->
       </div>
-      <div class="suggestion-box mt-4 mx-4 px-2" :class="{'details-suggestion-card': from === 'details-card'}">
-        <div class="user d-flex position-relative" v-if="userObj && userObj.user">
+      <div class="suggestion-box mt-4 px-4" :class="{'details-suggestion-card': from === 'details-card'}">
+        <div class="user d-flex position-relative mb-2" v-if="userObj && userObj.user">
           <img src="https://picsum.photos/200" alt="avatar" class="user-avatar" />
           <div class="d-flex justify-content-between align-items-center ml-2">
             <div class="short-info">
@@ -92,7 +92,7 @@
             <a-checkbox class="position-absolute btn-sent" @change="attachUser" v-model="attached" v-if="userObj.invitation_status == 0"></a-checkbox>
           </div>
         </div>
-        <button class="btn invitation-link-btn btn-block btn-sm py-2 mt-2" @click="generateLink" v-if="showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
+        <button class="btn invitation-link-btn btn-block btn-sm py-2" @click="generateLink" v-if="showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
       </div>
       <div class="link-box px-4 position-absolute w-full" :class="{'link-box-empty': !showUserBox}">
         <div class="w-full mt-2">
@@ -303,7 +303,8 @@ export default {
   cursor: default !important;
 }
 .add-member-box {
-  height: 500px;
+  //height: 550px;
+  height: 100%;
   width: 100%;
   top: 0;
   left: 0;
@@ -334,6 +335,7 @@ export default {
   //  width: 414px;
   //}
   .member-box {
+    height: 100%;
     .cross-button-box {
       width: 30px;
       height: 30px;
@@ -369,7 +371,8 @@ export default {
       }
     }
     .link-box {
-      bottom: -136px;
+      //bottom: -136px;
+      bottom: 0;
       background: #3A3092;
       border-radius: 14px;
       .w-full {
@@ -446,6 +449,7 @@ export default {
   }
 }
 .link-box-empty {
-  bottom: -136px !important;
+  //bottom: -136px !important;
+  bottom: 0;
 }
 </style>

@@ -211,6 +211,6 @@ export default {
   }
 }
 .shadow-sidebar {
-  box-shadow: 0 0 10px 6px rgb(0 0 0 / 25%);
+  box-shadow: 0 0 10px 6px rgb(0 0 0 / 12%);
 }
 </style>

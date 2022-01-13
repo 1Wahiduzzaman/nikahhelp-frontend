@@ -43,6 +43,7 @@
               :teamData="team"
               :index="teamIndex"
               @teamListUpdated="loadTeams"
+              @customLoad="customLoad"
             />
             <JoinCreateTeam
               v-if="joinCreateTeamShow && teams.length < 5"
@@ -217,26 +218,43 @@ export default {
     async loadTeams() {
       try {
         this.isLoading = true;
-        await this.$store
-          .dispatch("getTeams")
-          .then((data) => {
-            this.teams = data.data.data;
-			      this.isLoading = false;
-            if(this.teams.length <= 0) {
-              this.welcomeModal = true;
-            }
-          })
-          .catch((error) => {
-            console.log(error.response);
-            this.isLoading = false;
-          });
+        let {data} = await ApiService.get("v1/team-list").then(res => res.data);
+        this.teams = data;
+        if (this.teams.length <= 0) {
+          this.welcomeModal = true;
+        }
+        this.isLoading = false;
+        // await this.$store
+        //   .dispatch("getTeams")
+        //   .then((data) => {
+        //     this.teams = data.data.data;
+			  //     this.isLoading = false;
+        //     if(this.teams.length <= 0) {
+        //       this.welcomeModal = true;
+        //     }
+        //   })
+        //   .catch((error) => {
+        //     console.log(error.response);
+        //     this.isLoading = false;
+        //   });
       } catch (error) {
         this.error = error.message || "Something went wrong";
         console.log(this.error);
         this.isLoading = false;
       }
     },
-
+    async customLoad() {
+      try {
+        let {data} = await ApiService.get("v1/team-list").then(res => res.data);
+        this.teams = data;
+        if (this.teams.length <= 0) {
+          this.welcomeModal = true;
+        }
+      } catch (error) {
+        this.error = error.message || "Something went wrong";
+        console.log(this.error);
+      }
+    },
     hideWelcomeModal() {
       this.welcomeModal = false;
     },
@@ -254,6 +272,7 @@ export default {
     cancelJoinButton() {
       this.joinTeamShow = false;
       this.joinTeamPassword = false;
+      this.joinCreateTeamShow = true;
       this.loadTeams();
     },
   },

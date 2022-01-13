@@ -1,9 +1,9 @@
 <template>
 	<div
-		class="col-lg-6 col-xl-3 cards"
+		class="col-lg-6 col-xl-3 position-relative"
 	>
 		<div
-			class="team-card card"
+			class="team-card"
 			style="min-height: 550px; margin-bottom: 20px;"
 		>
       <div style="width: 100%" class="d-flex align-items-center justify-content-center joining-header position-relative">
@@ -588,24 +588,6 @@ export default {
 			}
 		}
 	}
-
-  .footer-cancel-btn {
-    bottom: 20px;
-    left: 32px;
-    .button {
-      border-radius: 16px;
-      background: $bg-brand;
-      color: $color-white;
-    }
-  }
-  .footer-conf-btn {
-    bottom: 20px;
-    right: 32px;
-    .button {
-      border-radius: 16px;
-    }
-  }
-
   .d-flex {
     .success-box {
       width: 50px;
@@ -613,6 +595,22 @@ export default {
       border-radius: 50%;
       background: $bg-success;
     }
+  }
+}
+.footer-cancel-btn {
+  bottom: 50px;
+  left: 32px;
+  .button {
+    border-radius: 16px;
+    background: $bg-brand;
+    color: $color-white;
+  }
+}
+.footer-conf-btn {
+  bottom: 50px;
+  right: 32px;
+  .button {
+    border-radius: 16px;
   }
 }
 // end css for team-card

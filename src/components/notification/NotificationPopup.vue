@@ -116,7 +116,7 @@ export default {
 .notification-wrapper {
   padding: 10px;
   background-color: #fff;
-  box-shadow: 0 3px 8px 1px #d3d3d3;
+  box-shadow: 0 3px 8px 1px rgb(0 0 0 / 12%);
   border-radius: 5px;
   margin-top: -150px;
   @media (min-width: 768px) {
