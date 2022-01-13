@@ -2,7 +2,7 @@
   <div>
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else>
-      <MainHeader />
+      <MainHeader @toggleCollapse="toggleCollapse" />
       <a-layout
         id="layout"
         style="background-color: #fff"
@@ -14,7 +14,7 @@
             overflowY: 'auto',
             overflowX: 'hidden',
           }"
-          class="bg-white shadow-default"
+          class="bg-white shadow-sidebar"
           v-model="collapsed"
           :trigger="null"
           collapsible
@@ -201,6 +201,9 @@ export default {
         console.log(nextUserId, 'next userid')
       }
       
+    },
+    toggleCollapse() {
+      this.collapsed = !this.collapsed;
     }
   },
   created() {
@@ -281,5 +284,8 @@ export default {
       height: 100%;
     }
   }
+}
+.shadow-sidebar {
+  box-shadow: 0 0 10px 6px rgb(0 0 0 / 25%);
 }
 </style>

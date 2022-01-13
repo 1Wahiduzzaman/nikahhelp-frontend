@@ -9,7 +9,7 @@
     >
       <a-layout-sider
         :style="{ overflow: 'hidden auto' }"
-        class="bg-white shadow-default sidebar-height"
+        class="bg-white shadow-sidebar sidebar-height"
         v-model="collapsed"
         :trigger="null"
         collapsible
@@ -209,5 +209,8 @@ export default {
   @media (min-width: 768px) {
     height: calc(100vh - 70px);
   }
+}
+.shadow-sidebar {
+  box-shadow: 0 0 10px 6px rgb(0 0 0 / 25%);
 }
 </style>

@@ -1881,12 +1881,12 @@ export default {
 // start css for team-card
 .team-card {
 	position: relative;
-	min-height: 500px;
+	min-height: 550px;
 	width: 100%;
 	padding: 10px 8px;
 	border-radius: 10px;
 	background-color: #ffffff;
-	margin-top: 20px;
+	margin-bottom: 20px;
 	box-shadow: 0px 0px 10px 1px rgba(63, 6, 17, 0.3);
 
 	.team-card-header {
@@ -2015,11 +2015,11 @@ export default {
 			}
 		}
 		.img-logo {
-			border-radius: 50%;
-			width: 50px;
-			height: 50px;
+			border-radius: 12px;
+			width: 60px;
+			height: 60px;
 			margin-left: 5px;
-			margin-top: 5px;
+			margin-top: -4px;
 		}
 		.info-content {
 			.member-name,

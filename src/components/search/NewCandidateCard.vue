@@ -208,10 +208,14 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
       },
       async addShortList() {
         let data = {
-          url: 'v1/short-listed-candidates/store',
+          url: `v1/short-listed-candidates/store?shortlisted_by=${JwtService.getUserId()}&user_id=${this.candidate.user_id}`,
           value: true,
           actionType: 'post',
           user_id: this.candidate.user_id,
+          params: {
+            shortlisted_by: JwtService.getUserId(),
+            user_id: this.candidate.user_id
+          },
           payload: {
             shortlisted_by: JwtService.getUserId(),
             user_id: this.candidate.user_id

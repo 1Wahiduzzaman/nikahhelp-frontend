@@ -4,7 +4,7 @@
 	>
 		<div
 			class="team-card card"
-			style="min-height: 500px; margin-top: 20px;"
+			style="min-height: 550px; margin-bottom: 20px;"
 		>
       <div style="width: 100%" class="d-flex align-items-center justify-content-center joining-header position-relative">
         <div class="logo-position position-absolute">

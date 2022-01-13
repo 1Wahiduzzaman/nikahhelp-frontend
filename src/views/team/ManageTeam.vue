@@ -3,7 +3,7 @@
     <div>
       <Loader v-if="isLoading" :isLoading="isLoading" />
       <div v-else>
-        <div class="mt-2">
+        <div class="mt-3">
           <!--teams.length == 0 && !joinTeamShow && !createTeamShow-->
           <a-modal v-model="welcomeModal" @ok="hideWelcomeModal">
             <div
@@ -36,7 +36,7 @@
             </template>
           </a-modal>
           <Banner v-if="1 !== 1" />
-          <div class="row justify-content-md-center mx-2" id="team-container">
+          <div class="row mx-0" id="team-container">
             <TeamDetailsCard
               v-for="(team, teamIndex) in teams"
               :key="team.id"
@@ -46,8 +46,7 @@
             />
             <JoinCreateTeam
               v-if="joinCreateTeamShow && teams.length < 5"
-              class="d-flex"
-              style="margin-top: 20px"
+              style="margin-bottom: 20px"
               @joinATeam="
                 joinCreateTeamShow = false;
                 joinTeamShow = true;
@@ -96,6 +95,7 @@ import JoinTeamPassword from "@/components/team/JoinTeamPassword.vue";
 import Layout from "@/views/design/Layout";
 import Banner from "@/components/team/Banner.vue";
 import Notification from "@/common/notification.js";
+import ApiService from '@/services/api.service';
 export default {
   name: "ManageTeam",
   components: {

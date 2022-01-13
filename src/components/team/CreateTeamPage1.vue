@@ -1,6 +1,6 @@
 <template>
   <div class="col-lg-6 col-xl-3 cards position-relative">
-    <div class="team-card card position-relative" style="min-height: 500px;">
+    <div class="team-card card position-relative" style="min-height: 550px;">
       <div class="d-flex align-items-center justify-content-center joining-header" style="width: 100%">
         <div class="logo-position position-absolute">
           <img
@@ -191,7 +191,7 @@ export default {
       logoBobUrl: null,
       loading: false,
       selfRole: {
-        relationship: "Father",
+        relationship: undefined,
       },
 		};
 	},
@@ -352,7 +352,7 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .team-card {
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .ant-card-body {
   padding: 0 !important;

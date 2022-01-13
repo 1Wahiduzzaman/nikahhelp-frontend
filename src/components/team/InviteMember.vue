@@ -68,7 +68,7 @@
 
         <div class="mt-2" v-if="showUserBox">
 <!--          <h6 class="text-white fs-14">Attach a user to this invitation</h6>-->
-          <a-input ref="userNameInput" class="mt-1" placeholder="Search email or user ID" v-model="user_email" @keyup="searchMember()" medium>
+          <a-input ref="userNameInput" class="mt-1" placeholder="Search email or user ID" v-model="user_email" @input="searchMember()" medium>
             <a-icon slot="suffix" type="info-circle" style="color: rgba(0,0,0,.45)" />
           </a-input>
         </div>
@@ -92,7 +92,7 @@
         </div>
         <button class="btn invitation-link-btn btn-block btn-sm py-2 mt-2" @click="generateLink" v-if="showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
       </div>
-      <div class="link-box px-4 position-absolute w-full" v-if="invitationObject.invitation_link" :class="{'link-box-empty': !showUserBox}">
+      <div class="link-box px-4 position-absolute w-full" :class="{'link-box-empty': !showUserBox}">
         <div class="w-full mt-2">
           <input type="text" class="form-control invite-link text-white fs-12 py-5" id="copyInput" :value="invitationObject.visible_invitation_link" disabled />
           <button class="copy-button position-absolute px-2" @click="copyToken">{{ copyBtnText }}</button>
@@ -354,7 +354,7 @@ export default {
       }
     }
     .link-box {
-      bottom: -86px;
+      bottom: -136px;
       background: #3A3092;
       border-radius: 14px;
       .w-full {
@@ -376,9 +376,9 @@ export default {
 }
 .from-data-card {
   width: 93%;
-  top: 32px;
+  top: 12px;
   left: -1px;
-  height: 500px;
+  height: 550px;
   border-radius: 10px;
   margin-left: 16px;
   background: $bg-primary;
@@ -431,6 +431,6 @@ export default {
   }
 }
 .link-box-empty {
-  bottom: -86px !important;
+  bottom: -136px !important;
 }
 </style>
