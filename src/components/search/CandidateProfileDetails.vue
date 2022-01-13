@@ -29,6 +29,7 @@
 
             <v-btn-toggle rounded dense class="d-none d-md-block">
                 <v-btn
+                    style="border-right: 2px solid white !important;"
                     class="mt-1 text-capitalize"
                     color="deep-purple darken-3"
                     @click="$emit('navigateProfile', {userId: profileDetails.user_id, type: 'previous'})"

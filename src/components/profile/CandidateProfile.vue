@@ -21,18 +21,18 @@
           <!-- Buttons -->
           <v-container fluid>
             <v-row>
-              <v-col>
+              <v-col cols="3">
                 <ButtonComponent
                   iconHeight="14px"
                   :isSmall="true"
                   title="Gallery"
-                  icon="/assets/icon/grid_icon.svg"
+                  icon="/assets/icon/gallery.svg"
                   customEvent="goToGallery"
                   :isDisabled="true"
                   :isBlock="false"
                   @onClickButton="onClickButton"
                 />
-              </v-col>
+              </v-col cols="3">
               <v-col>
                 <ButtonComponent
                   iconHeight="14px"
