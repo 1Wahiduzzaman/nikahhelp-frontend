@@ -21,8 +21,10 @@
           <!-- Buttons -->
           <v-container fluid>
             <v-row>
-              <v-col cols="3">
+              <v-col cols="12">
+                <div class="flex justify-center">
                 <ButtonComponent
+                  class="mr-2"
                   iconHeight="14px"
                   :isSmall="true"
                   title="Gallery"
@@ -31,8 +33,6 @@
                   :isBlock="false"
                   @onClickButton="onClickButton"
                 />
-              </v-col cols="3">
-              <v-col>
                 <ButtonComponent
                   iconHeight="14px"
                   :isSmall="true"
@@ -42,6 +42,7 @@
                   :isBlock="false"
                   @onClickButton="onClickButton"
                 />
+                </div>
               </v-col>
               <!-- <v-col>
                 <ButtonComponent
@@ -59,17 +60,20 @@
           <!-- Team name and profile link -->
           <v-container fluid>
             <v-row>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="6" lg="4">
                 <div class="team-name-div">
                   <span class="team-name-title">Represented by</span>
                   <span class="team-name ml-3">Team name</span>
                 </div>
               </v-col>
-              <v-col cols="12" md="6">
+              <v-col cols="12" md="6" lg="4">
                 <div class="team-name-div">
                   <span class="team-name-title">Profile Link</span>
-                  <span ref="profileLink" class="team-name ml-1"
+                  <span ref="profileLink" class="d-inline d-sm-none d-md-none d-lg-inline team-name ml-1"
                     >{{domain}}/profile/{{ candidateData.user_id }}</span
+                  >
+                  <span class="d-none d-md-inline d-sm-inline d-lg-none  team-name ml-1"
+                    >..profile/{{ candidateData.user_id }}</span
                   >
                   <div @click="copyProfileLink" class="copy-btn">
                     <transition title="Copy Profile URL" name="fade">
@@ -79,6 +83,9 @@
                   </div>
                 </div>
               </v-col>
+              <v-col cols="12" md="12" lg="4">
+                <Scroller />
+              </v-col>
             </v-row>
           </v-container>
         </div>
@@ -86,24 +93,36 @@
         <v-container fluid>
           <v-row>
             <v-col class="pr-7">
-              <Scroller />
               <fieldset class="">
                   <legend class="ml-8 px-1"><span>Personal Information</span></legend>
                   <v-container fluid class="pt-0 px-5">
                       <v-row dense>
                           <v-col class="pt-1" cols="12" md="8">
                             <PersonalInformationTable :data="candidateData"/>
-                            <CardInfo :detail="candidateData.personal.per_about" height="193px" class="mt-2"/>
+                            <CardInfo :detail="candidateData.personal.per_about" height="149px" class="mt-2"/>
                           </v-col>
                           <v-col ref="family-information" class="pt-1" cols="12" md="4">
                               <MoreAbout 
                                 :data="candidateData"
                               />
                           </v-col>
-                          <v-col class="pt-1 mb-5" cols="12">
+                          <v-col class="pt-1" cols="12">
                             <CardInfo
                               :showDownloadBtn="true"
                               title="Additional Information"
+                              class="mt-2"
+                            />
+                          </v-col>
+                          <v-col class="pt-1 mb-5" cols="12" md="6">
+                            <CardInfo
+                              title="I'm thankful for"
+                              class="mt-2"
+                              :detail="candidateData.personal.per_thankfull_for"
+                            />
+                          </v-col>
+                          <v-col class="pt-1 mb-5" cols="12" md="6">
+                            <CardInfo
+                              title="I improve myself"
                               class="mt-2"
                             />
                           </v-col>

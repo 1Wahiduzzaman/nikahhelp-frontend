@@ -97,21 +97,46 @@
                 customEvent="openGallery"
                 icon="item.icon"
                 bgColor="/assets/icon/gallery.svg"
-                @onClickButton="handleClick"
+                @onClickButton="onClickButton"
             />
-            <template
-                v-for="(item, i) in btnData"
-            >
-                <ButtonComponent
-                    class="mb-3"
-                    :key="i"
-                    :title="item.title"
-                    :customEvent="item.eventName"
-                    :icon="item.icon"
-                    :bgColor="item.bgColor"
-                    @onClickButton="handleClick"
-                />
-            </template>
+            <ButtonComponent
+                iconHeight="14px"
+                :isSmall="true"
+                :responsive="false"
+                :title="profile.is_short_listed ? 'Unlist' : 'ShortList'"
+                icon="/assets/icon/star-fill-secondary.svg"
+                :customEvent="profile.is_short_listed ? 'removeShortList' : 'addShortList'"
+                @onClickButton="onClickButton"
+            />
+            <ButtonComponent
+                iconHeight="14px"
+                :isSmall="true"
+                :responsive="false"
+                :title="profile.is_connect ? 'Disconnect' : 'Connect'"
+                icon="/assets/icon/connect-s.svg"
+                :customEvent="profile.is_connect ? 'removeConnection' : 'addConnection'"
+                @onClickButton="onClickButton"
+            />
+            <ButtonComponent
+                iconHeight="14px"
+                :isSmall="true"
+                :responsive="false"
+                :title="profile.is_teamListed ? 'TeamUnlist' : 'TeamList'"
+                icon="/assets/icon/team.svg"
+                :customEvent="profile.is_teamListed ? 'removeTeam' : 'addTeam'"
+                @onClickButton="onClickButton"
+            />
+            <ButtonComponent
+                iconHeight="14px"
+                :isSmall="true"
+                :responsive="false"
+                :title="profile.is_block_listed ? 'Unblock' : 'Block'"
+                :icon="profile.is_block_listed ? '/assets/icon/block-secondary.svg' : '/assets/icon/block.svg'"
+                :customEvent="profile.is_block_listed ? 'removeBlock' : 'block'"
+                :backgroundColor="profile.is_block_listed ? '' : '#d81b60'"
+                :titleColor="profile.is_block_listed ? '' : 'white'"
+                @onClickButton="onClickButton"
+            />
         </div>
         <!-- button section -->
 
@@ -126,7 +151,9 @@ import PersonalInformation from '@/components/search/personal-information/Person
 import {btnData} from '@/data/candidate.button'
 import ButtonComponent from '@/components/atom/ButtonComponent'
 import ProfileBanner from '@/components/atom/ProfileBanner'
-import {mapMutations, mapGetters} from 'vuex'
+import {mapMutations, mapActions, mapGetters} from 'vuex'
+import JwtService from "@/services/jwt.service";
+
 export default {
     name: 'CandidateProfileDetails',
     data: () => ({
@@ -140,15 +167,141 @@ export default {
     },
     computed: {
         ...mapGetters({
-            profileDetails:'search/getProfileDetails'
+            profileDetails:'search/getProfileDetails',
+            profile: 'search/getSelectedProfileInfo'
         }) 
     },
     methods: {
         ...mapMutations({
             setComponent: 'search/setComponent'
         }),
-        handleClick(data) {
-            if(data.event == 'openGallery') this.openGallery()
+        ...mapActions({
+            connectToCandidate: 'search/connectCandidate',
+            blockACandidate: 'search/blockCandidate',
+            shortListCandidate: 'search/shortListCandidate',
+        }),
+        onClickButton(eventData) {
+            if(eventData.event == 'openGallery') this.openGallery();
+            if(eventData.event == 'addConnection') {
+                this.connectCandidate();
+            }
+            if(eventData.event == 'block') {
+                this.blockCandidate();
+            }
+            if(eventData.event == 'addShortList') {
+                this.addShortList();
+            }
+            if(eventData.event == 'removeShortList') {
+                this.removeFroShortList();
+            }
+        },
+
+        async connectCandidate() {
+            let myTeamId = JwtService.getTeamIDAppWide();
+            console.log(myTeamId, '>>>>>>>')
+            if(!myTeamId) {
+                this.showError("You don't have a team")
+                return;
+            }
+            if(!this.profile.team_id) {
+                this.showError("This candidate has no team")
+                return;
+            }
+            let data = {
+                userId: this.profile.user_id,
+                url: 'v1/send-connection-request',
+                payload: {
+                    from_team_id: myTeamId,
+                    to_team_id: this.profile.team_id
+                }
+            }
+            try {
+            let res = await this.connectToCandidate(data)
+                console.log(res, '>>>>>>>>>>.')
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }
+            
+        },
+
+        async addShortList() {
+            let data = {
+            url: `v1/short-listed-candidates/store?shortlisted_by=${JwtService.getUserId()}&user_id=${this.profile.user_id}`,
+                value: true,
+                actionType: 'post',
+                user_id: this.profile.user_id,
+                params: {
+                    shortlisted_by: JwtService.getUserId(),
+                    user_id: this.profile.user_id
+                },
+                payload: {
+                    shortlisted_by: JwtService.getUserId(),
+                    user_id: this.profile.user_id
+                }
+            }
+            try {
+                await this.shortListCandidate(data)
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }
+            
+        },
+
+        async removeFroShortList() {
+            let data = {
+                url: 'v1/delete-short-listed-by-candidates ',
+                value: false,
+                actionType: 'delete',
+                user_id: this.profile.user_id,
+                payload: {
+                    user_id: this.profile.user_id
+                }
+            }
+            try {
+                await this.shortListCandidate(data)
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }
+        },
+
+        async fetchCandidate() {
+            let url = `v1/candidate/info/${this.profile.user_id}`
+            try {
+                await this.fetchProfileDetail(url)
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }
+        },
+        async blockCandidate() {
+            let data = {
+                url: 'v1/store-block-list',
+                payload: {
+                    block_by: JwtService.getUserId(),
+                    user_id: this.profile.user_id
+                }
+            }
+            try {
+                await this.blockACandidate(data)
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }
+            
+        },
+        showError(message) {
+            this.$error({
+            title: message,
+            center: true,
+            });
         },
         loadSearchResultComponent() {
             this.setComponent('AddComponent')
