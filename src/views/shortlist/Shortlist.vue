@@ -15,15 +15,15 @@
           <v-tabs-items v-model="tab">
             <v-tab-item value="tab-1">
               <div class="row mt-2 mb-4">
-                <div class="col-12 col-md-6 col-lg-3">
-                  <candidate-grid />
+                <div class="col-12 col-md-6 col-lg-3" v-for="(shortlist, findex) in fullData" :key="findex">
+                  <candidate-grid :item="shortlist" />
                 </div>
               </div>
             </v-tab-item>
             <v-tab-item value="tab-2">
               <div class="row mt-2 mb-4">
-                <div class="col-12 col-md-6 col-lg-3">
-                  <candidate-grid />
+                <div class="col-12 col-md-6 col-lg-3" v-for="(shortlist, sindex) in shortlistedData" :key="sindex">
+                  <candidate-grid :item="shortlist" />
                 </div>
               </div>
             </v-tab-item>
@@ -378,6 +378,9 @@ export default {
       selectTeamForConnect: false,
       candidateId: null,
       candidateTeamId: null,
+      fullData: [],
+      shortlistedData: [],
+      teamlistedData: []
     };
   },
   created() {
@@ -464,9 +467,20 @@ export default {
     async loadShortListedCandidates() {
       this.isLoading = true;
       try {
-        let {data} = await ApiService.get(`/v1/short-listed-candidates`).then(res => res.data);
-        console.log(data);
-        // await this.$store.dispatch("loadShortListedCandidates");
+        await ApiService.get(`/v1/short-listed-candidates`).then(res =>{
+          this.isLoading = false;
+          this.shortlistedData = res.data.data.map(item => {
+            item.from_short_list = true;
+            return item;
+          })
+          let data = [...this.fullData, ...this.shortlistedData];
+          this.fullData = data;
+        }).catch(e => {
+          console.log(e);
+          this.isLoading = false;
+        });;
+        // this.shortlistedData = data;
+        // let {data} = await this.$store.dispatch("loadShortListedCandidates");
       } catch (error) {
         this.error = error.message || "Something went wrong";
         console.log(this.error);
@@ -476,7 +490,20 @@ export default {
     async loadTeamShortListedCandidates() {
       this.isLoading = true;
       try {
-        await this.$store.dispatch("loadTeamShortListedCandidates");
+        await ApiService.get(`/v1/team-short-listed-candidates`).then(res =>{
+          this.isLoading = false;
+          this.teamlistedData = res.data.data.map(item => {
+            item.from_team_list = true;
+            item.is_team_listed = true;
+            return item;
+          })
+          let data = [...this.fullData, ...this.teamlistedData];
+          this.fullData = data;
+        }).catch(e => {
+          console.log(e);
+          this.isLoading = false;
+        });
+        // await this.$store.dispatch("loadTeamShortListedCandidates");
       } catch (error) {
         this.error = error.message || "Something went wrong";
         console.log(this.error);

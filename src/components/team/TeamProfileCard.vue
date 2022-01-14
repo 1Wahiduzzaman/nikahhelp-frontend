@@ -65,9 +65,12 @@
 <!--          </tr>-->
         </table>
       </div>
-      <router-link :to="{name: 'Profile', query: { user_id: profileActive.user_id }}" v-if="profileActive.profile_from_type === 'member'">
-        <button class="btn btn-sm fs-14 text-white bg-primary mt-1 py-1 prof-detail">Profile Details</button>
-      </router-link>
+<!--      <router-link :to="{name: 'Profile', query: { user_id: profileActive.user_id }}" v-if="profileActive.profile_from_type === 'member'">-->
+<!--        <button class="btn btn-sm fs-14 text-white bg-primary mt-1 py-1 prof-detail">Profile Details</button>-->
+<!--      </router-link>-->
+      <button class="btn btn-sm fs-14 text-white bg-primary mt-1 py-1 prof-detail"
+              @click="viewProfile"
+              v-if="profileActive.profile_from_type === 'member'">Profile Details</button>
     </div>
   </div>
 </template>
@@ -150,6 +153,11 @@ export default {
       navigator.clipboard.writeText(this.getInvitationLink());
       this.copyBtnText = 'Link copied to clipboard';
     },
+    viewProfile() {
+      this.$router.push(
+          `/user/profile/${this.profileActive.user_id}`
+      );
+    }
   }
 }
 </script>

@@ -70,6 +70,21 @@ export default {
       });
     });
   },
+  async teamListedCandidate(context, payload) {
+    return new Promise((resolve, reject) => {
+      context.commit('setLoading', true)
+      ApiService[payload.actionType](payload.url, payload.payload)
+          .then((data) => {
+            context.commit('setLoading', false)
+            resolve(data.data);
+            context.commit('updateCandidateAfterTeamlisted',{userId: payload.user_id, value: payload.value})
+          })
+          .catch((err) => {
+            context.commit('setLoading', false)
+            reject(err);
+          });
+    });
+  },
   async blockCandidate(context, payload) {
     // context.commit('updateCandidateAfterBlock',{userId: payload.payload.user_id, value: true})
     return new Promise((resolve, reject) => {

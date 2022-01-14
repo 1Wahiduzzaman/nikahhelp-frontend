@@ -19,5 +19,9 @@ export default {
     updateCandidateAfterShortlisted: (state, data) => {
         let candidate = state.profiles.find(i => i.user_id == data.userId);
         if(candidate) candidate.is_short_listed = data.value
+    },
+    updateCandidateAfterTeamlisted: (state, data) => {
+        let candidate = state.profiles.find(i => i.user_id == data.userId);
+        if(candidate) candidate.is_team_listed = data.value
     }
 }
