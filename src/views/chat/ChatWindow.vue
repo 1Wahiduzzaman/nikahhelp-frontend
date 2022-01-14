@@ -527,7 +527,7 @@ export default {
     }
   },
   created() {
-    this.$store.state.chat.chats = [];
+    // this.$store.state.chat.chats = [];
     this.getActiveTeamId();
   },
   mounted() {
