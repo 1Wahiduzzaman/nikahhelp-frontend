@@ -89,7 +89,7 @@
                 </a>
                 <template v-slot:overlay>
                   <NotificationPopup
-                    :items="unreadNotification"
+                    :items="reducedNotifications"
                     :use-for="'notification'"
                   />
                 </template>
@@ -102,7 +102,7 @@
                   aria-current="page"
                   @click.self="(e) => e.preventDefault()"
                 >
-                  <a-badge :count="chats.length">
+                  <a-badge :count="unseenChat">
                     <img
                       width="25"
                       src="@/assets/icon/chat-dots-fill-white.svg"
@@ -353,7 +353,7 @@
                   <template v-slot:overlay>
                     <NotificationPopup
                         count="29"
-                        :items="unreadNotification"
+                        :items="reducedNotifications"
                         :use-for="'notification'"
                     />
                   </template>
@@ -372,7 +372,7 @@
                         alt="icon"
                     />
                     <span class="ml-2 mr-2">Chat </span>
-                    <a-badge :count="chats.length" />
+                    <a-badge :count="unseenChat" />
                   </a>
                   <template v-slot:overlay>
                     <NotificationPopup
@@ -463,11 +463,19 @@ export default {
       }
       return "N/A";
     },
-    notifications() {
+    reducedNotifications() {
       return this.$store.state.notification.notifications;
+      // if(this.$store.state.notification.notifications.length > 5) {
+      //   let reduceSize = this.$store.state.notification.notifications - 5;
+      //   this.$store.state.notification.notifications -= reduceSize;
+      //   return this.$store.state.notification.notifications;
+      // } else {
+      //   return this.$store.state.notification.notifications;
+      // }
     },
     unreadNotification() {
-      return this.$store.state.notification.instantNotifications;
+      // return this.$store.state.notification.instantNotifications;
+      return this.$store.state.notification.notifications.filter(item => item.seen == 0);
     },
     teams() {
       let teams = this.$store.state.team.team_list;
@@ -482,7 +490,23 @@ export default {
     },
     chats() {
       return this.$store.state.chat.chats;
+      // if(this.$store.state.chat.chats > 5) {
+      //   let reduceSize = this.$store.state.chat.chats.length - 5;
+      //   this.$store.state.chat.chats -= reduceSize;
+      //   return this.$store.state.chat.chats;
+      // } else {
+      //   return this.$store.state.chat.chats;
+      // }
     },
+    unseenChat() {
+      let count = 0;
+      this.$store.state.chat.chats.forEach(item => {
+        count = count + item && item.message && item.message.seen == 0 ? 1 : 0;
+        count = count + item && item.last_message && item.last_message.seen == 0 ? 1 : 0;
+        count = count + item && item.last_group_message && item.last_message.seen == 0 ? 1 : 0;
+      });
+      return count;
+    }
   },
   methods: {
     responsiveToggle() {

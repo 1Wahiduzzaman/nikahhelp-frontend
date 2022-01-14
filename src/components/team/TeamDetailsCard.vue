@@ -1034,7 +1034,7 @@ export default {
 				};
 				console.log(_payload);
 				await ApiService.post("v1/leave-team", {
-					team_id: this.teamData.id,
+					team_id: this.teamData.team_id,
 					user_id: this.$store.getters.userInfo.id,
 					new_owner: payload.member_id,
 				})

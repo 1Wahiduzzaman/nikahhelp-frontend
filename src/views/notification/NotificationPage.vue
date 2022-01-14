@@ -175,12 +175,12 @@ export default {
       this.teamId = data;
     },
     markAllAsRead() {
+      this.$store.state.notification.instantNotifications.forEach(item => {
+        item.seen = 1;
+      });
       ApiService.get("v1/seen-notification").then(response => {
         console.log(response);
-        this.loadNotifications();
-        // this.$store.state.notification.instantNotifications.forEach(item => {
-        //   item.seen = 1;
-        // });
+        // this.loadNotifications();
       }).catch(e => {
         console.log(e);
         self.$message.error("Something went wrong");
