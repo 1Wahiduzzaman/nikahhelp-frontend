@@ -50,7 +50,7 @@
 
  <li><strong>Essential cookies: </strong> Essential cookies are technical cookies that are required for the operation of our websites. Without these our sites can’t operate properly. Examples include, cookies that enable you to log into secure areas, allow images to load, and orders to be processed.</li>
       <li><strong>Experience cookies:</strong> Experience cookies allow our websites to:</li>
-      <ul style="list-style-type: disc"> <li>Recognise and count the number of visitors, and to see how they move through the website. This helps us to better understand and improve the way our sites work.</li>
+      <ul><li>Recognise and count the number of visitors, and to see how they move through the website. This helps us to better understand and improve the way our sites work.</li>
       <li>Remember the choices you make, providing you with better and more personalised features. For example, to compare the choices you make to those of our other visitors so that we can learn from those choices and provide enhanced, more personalised features to you, such as product recommendations</li>
       </ul>
      </ol></p>
@@ -61,7 +61,7 @@
 
  <li><strong>Advertising cookies:  </strong> Advertising cookies record your visits to our websites, the pages you have visited and the links you have followed. We use this information to:</li>
      
-      <ul style="list-style-type: disc"> <li>Help make the advertising displayed on our websites and certain third-party websites more relevant to your interests.</li>
+      <ul><li>Help make the advertising displayed on our websites and certain third-party websites more relevant to your interests.</li>
       <li>Limit the number of times that you see an ad.</li>
       <li>Help measure the effectiveness of an advertising campaign.</li>
       </ul>
@@ -73,9 +73,10 @@
     <p>This banner gives you a settings option for our websites. If you click on this, you can turn certain cookies on and off.</p>
     <p>You can access these settings and change your choices at any time in the future by clicking on the Cookies Settings link at the bottom of our website pages.</p>
     <p>You can also control cookies by activating relevant settings on your browser. Please see below for more information on browser controls.</p>
-    <p>Please be aware that if you turn cookies off you may not be able to access all or parts of our sites.</p>
     
+    <p>Please be aware that if you turn cookies off you may not be able to access all or parts of our sites.</p>
     <h5>Browser controls</h5>
+
 <p>You can use your web browser to:</p>
 
 <p><ul style="list-style-type: disc"> 
@@ -88,10 +89,11 @@
 <li>install add-ons and plugins that extend browser functionality.</li>
 </ul></p>
 
+
 <p>Your choice to refuse cookies is specific to both the browser and the device that you are using. So, if you make a choice to opt out from one device and you want your opt-out to apply to a different device as well, you will have to opt out from that device too.</p>
 <p>You can use the links below to find out how to use your browser to control cookies:</p>
 
-<p><ul style="list-style-type: disc"> 
+<p><ul>
             <li> <a href="https://support.microsoft.com/en-us/help/4468242/microsoft-edge-browsing-data-and-privacy" target="_blank">Microsoft Edge Cookies Information </a></li>
             <li> <a href="https://support.microsoft.com/en-gb/help/17442/windows-internet-explorer-delete-manage-cookies" target="_blank">Internet Explorer Cookies Information</a></li>
             <li> <a href="https://support.google.com/chrome/answer/95647?hl=en-GB" target="_blank">Chrome Cookies Information</a></li>
@@ -102,27 +104,27 @@
 
           <h5>Other controls</h5>
 <p>In relation to third party advertising cookies, third parties can participate in one of the following self-regulatory programs for online behavioural advertising, which gives users opt-outs:</p>
-
-<p><ul style="list-style-type: disc"> 
+ <p><ul> 
             <li><a href="https://optout.networkadvertising.org/?c=1" target="_blank">Network Advertising Initiative (NAI)</a></li>
             <li><a href="https://tools.google.com/dlpage/gaoptout" target="_blank">Google Analytics</a></li>
           </ul></p>
-
+          
           <p>If you don’t want your personal information to be used to allow third parties (e.g. Google, Facebook) to display ads or to personalise ads displayed to you, you can change your settings by using the tools provided by their sites or through one of the above self-regulatory programmes, if they participate in them.</p>
 <p>
           You can also find more detailed about how you can manage cookies at the <a href="https://www.allaboutcookies.org/" target="_blank"> All About Cookies</a> and
           <a href="https://www.youronlinechoices.com/uk/" target="_blank">Your Online Choices</a> websites.
         </p>
-
+        
         <h5>Information Collection and Use</h5>
         <p>We may collect information from you at several stages during your use of the matrimonyassist.com services. We may collect and process the following information about you:</p>
-   
    <h5>IP Details</h5>
    <p>Where you are accessing the matrimonyassist.com services via a computer, we may collect information about that computer, including where available your IP address, operating system, browser type, referring URLs, page views and access times ("IP Details"). We use such information for system administration, to analyse trends, track users' movements and to report aggregate information to our advertisers and partners. This statistical data about our users' browsing actions and patterns do not identify any individual.</p>
-  
    <h5>Cookies and Advertisements</h5>
+
    <p>For the same reason, we may obtain information about your general internet usage by using a "cookie" file which is stored on the hard drive of your computer. A cookie consists of information sent by a web server to a web browser and stored by the browser. The information is then sent back to the server each time the browser requests a page from the server. This enables the web server to identify and track the web browser.</p>
+   
    <p>We may use both "session" cookies and "persistent" cookies on our websites. We will use the session cookies to keep track of you whilst you navigate the websites. We will use the persistent cookies to enable our websites to recognise you when you visit.</p>
+   
    <p>We use cookies to make your use of our websites easier. Usage of a cookie is in no way linked to any personally identifiable information while on our website. For instance, by allowing a cookie from our websites, you would not have to set your currency or language preferences each time you used our website, thereby saving time while on our website. As such, cookies allow you to get the most out of our websites. In addition, as the cookie is stored on your computer, the data gathered by the cookie remains under your control. Please note that disabling cookies may prevent you from accessing some features of these and other websites. We therefore recommend you permit the use of cookies when using our websites.</p>
    <p>Session cookies will be deleted from your computer when you close your browser. Persistent cookies will remain stored on your computer until deleted, or until they reach a specified expiry date.</p>
    <p>Most browsers allow you to reject all cookies, whilst some browsers allow you to reject just third-party cookies. For example, in Internet Explorer you can refuse all cookies by clicking "Tools", "Internet Options", "Privacy", and selecting "Block all cookies" using the sliding selector. Blocking all cookies will, however, have a negative impact upon the usability of many websites, including our websites.</p>
@@ -135,76 +137,6 @@
    
    <h5>Personal Information</h5>
    <p>We may collect and process the following data ("Personal Information") about you:</p>
-<p>
-  <ul style="list-style-type: disc"> 
-
-    <li>where you choose to register to use our websites or certain other services of matrimonyassist.com, either through a web browser or mobile application (our "Join Us” service), we will collect certain personal information provided by you which may include your name, phone number and email address including your personal preferences (for full list please see our Join Us form). Additional information may be requested in future to improve the level of service we can provide you, and to allow access to additional matrimonyassist.com services. </li>
- <li>
-
-   any information that you provide by filling in forms on or through our websites or any other of the matrimonyassist.com Services; this includes information provided by you if subscribing to our newsletter, posting material, searching for or saving package options or requesting further services. We may also ask you for information when you enter a promotion sponsored by us and when you report a problem with our website our other matrimonyassist.com services.
- </li>
-
- <li>
-  if you seek support from us or contact us for any reason, we may keep a record of that correspondence. Where you contact us through the 'Support' section of our websites, your query will be routed to our customer service team through a third party service desk.
- </li>
-
- <li>information you provide to us when you complete surveys that we use for research purposes.</li>
- <li>information that you provide to us as a result of your connecting to our websites or other matrimonyassist.com services from a third-party application, social networking or other site.</li>
- 
-  </ul>
-</p>
-  <h5>Location Data</h5>
-<p>We may obtain information relating to your geographical location ("Location Data") where you use any matrimonyassist.com services. We will use such Location Data only to understand the area from which our most traffic comes and will not retain this information or share it with third parties.</p>
-  
-  <h5>
-
-    Use of Information
-  </h5>
-  <p>We will use Cookies and the IP Details and Personal Information that we hold about you in the following ways:</p>
-  <p>
-
-  <ul style="list-style-type: disc"> 
-
-<li>
-to ensure that content from our websites and other matrimonyassist.com services is presented in the most effective manner for you and for your computer, mobile phone or other electronic device.
-
-</li>
-<li>
-  <li>
-    to provide you with information, products or services that you request from us or which we feel may interest you.
-  </li>
-<li>to carry out our obligations arising from any contracts entered into between you and us.</li>
-
-<li>
-  to allow you to participate in interactive features of our service, when you choose to do so.
-</li>
-
-<li>to notify you about changes to our service.</li>
-<li>to respond to client support queries where you have supplied personal information.</li>
-
-  </ul>
-  </p>
-  <p>We will not sell, share, or provide your IP Details, Cookies, Personal Information and Location Data (together, your "Information") to others other than in accordance with this Privacy Policy or where we are required to do so by law.</p>
-    <h5>
-      Disclosure of Your Information
-    </h5>
-    
-
-    <p>We may disclose your Information to any member of our group, which means our subsidiaries, our ultimate holding company and its subsidiaries, as defined in section 1159 of the UK Companies Act 2006.</p>
-    <p>In addition, we may disclose your Information to third parties:</p>
-
-    <p>
-      <ul style="list-style-type: disc"> 
-
-      <li>
-if we are under a duty to disclose or share your personal data in order to comply with any legal obligation, or in order to enforce or apply our Terms of Service and other agreements; or to protect the rights, property, or safety of matrimonyassist.com, our clients, or others. This includes exchanging information with other companies and organisations for the purposes of fraud protection and credit risk reduction.
-      </li>
-
-
-    </ul>
-    </p>
-<p>Sometimes we use third parties to process your information on our behalf. We require these third parties (some of which may be based outside of the EEA) to comply strictly with our instructions and we require that they do not use your Information for their own business purposes, unless you have explicitly consented to the use of your Information in this way. Any third parties who access your data in the course of providing services on our behalf are subject to strict contractual restrictions to ensure that your data is protected, and in compliance with applicable data protection/privacy legislation. We may also independently audit these service providers to ensure that they meet our standards.</p>
-<h5>Data Storage</h5>
 
 <p>All Information you provide to us is stored on our secure servers. Unfortunately, the transmission of information via the internet is not completely secure. Although we will do our best to protect your Information, we cannot guarantee the security of your data transmitted to our websites or other matrimonyassist.com services; any transmission is at your own risk. Once we have received your Information, we will use strict procedures and security features to try to prevent unauthorised access.</p>
     <p>We use security measures, including physical, administrative, and technical safeguards to protect the confidentiality of your Personal Information. These measures include encryption, security certificates, access controls, information security technologies, policies, procedures and other information security measures to help protect your Information.</p>
