@@ -55,6 +55,23 @@ export default {
         });
     });
   },
+  async teamListCandidate(context, payload) {
+    return new Promise((resolve, reject) => {
+      context.commit('setLoading', true)
+      ApiService[payload.actionType](payload.url, payload.payload)
+      .then((data) => {
+        context.commit('setLoading', false)
+        resolve(data.data);
+        if(data.data?.status_code == 200) {
+          context.commit('updateCandidateAfterTeamtlisted',{userId: payload.user_id, value: payload.value})
+        }
+      })
+      .catch((err) => {
+        context.commit('setLoading', false)
+        reject(err);
+      });
+    });
+  },
   async shortListCandidate(context, payload) {
     return new Promise((resolve, reject) => {
       context.commit('setLoading', true)
@@ -106,10 +123,9 @@ export default {
       ApiService.post(data.url, data.payload)
         .then((data) => {
           context.commit('setLoading', false)
-          resolve(data.data.data);
+          resolve(data.data);
         })
         .catch((err) => {
-          console.log(err)
           context.commit('setLoading', false)
           reject(err);
         });

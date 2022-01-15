@@ -49,16 +49,27 @@
                 <v-row dense>
                     <v-col class="pt-1" cols="12" md="8">
                         <PersonalInformationTable :data="profileDetails"/>
-                        <CardInfo :detail="profileDetails.personal.per_about" height="278px" class="mt-2"/>
+                        <CardInfo :detail="profileDetails.personal.per_about" height="149px" class="mt-2"/>
                     </v-col>
                     <v-col ref="family-information" class="pt-1" cols="12" md="4">
                         <MoreAbout :data="profileDetails"/>
                     </v-col>
-                    <v-col class="pt-1 mb-5" cols="12">
+                    <v-col class="pt-1 mb-2" cols="12">
                         <CardInfo
                             :showDownloadBtn="true"
                             title="Additional Information"
                             class="mt-2"
+                        />
+                    </v-col>
+                    <v-col class="pt-1 mb-5" cols="12" md="6">
+                        <CardInfo
+                            title="I'm thankful for"
+                            :detail="profileDetails.personal.per_thankfull_for"
+                        />
+                    </v-col>
+                    <v-col class="pt-1 mb-5" cols="12" md="6">
+                        <CardInfo
+                            title="I improve myself"
                         />
                     </v-col>
                 </v-row>
@@ -249,7 +260,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            profileDetails:'search/getProfileDetails'
+            profileDetails:'search/getProfileDetails',
         }),
         domain() {
             return window.location.origin

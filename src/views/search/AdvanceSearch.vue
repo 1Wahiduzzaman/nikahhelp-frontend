@@ -148,12 +148,21 @@ export default {
       });
     },
     async fetchInitialCandidate() {
+      let url = 'v1/home-searches?page=0&parpage=10'
+      let user = JSON.parse(localStorage.getItem("user"));
+      if(user.get_candidate?.pre_partner_age_min){
+        url += `&min_age=${user.get_candidate.pre_partner_age_min}`
+      }
+      if(user.get_candidate?.pre_partner_age_max){
+        url += `&max_age=${user.get_candidate.pre_partner_age_max}`
+      }
       // const res = await this.searchUser('v1/home-searches?page=0&parpage=10&min_age=20&max_age=40&ethnicity=Amara&marital_status=single');
       this.setLoading(true);
       try {
         const res = await this.searchUser(
           {
-            url: "v1/home-searches?page=0&parpage=10&ethnicity=Aboriginal&min_age=20&max_age=40",
+            // url: "v1/home-searches?page=0&parpage=10&min_age=20&max_age=40",
+            url: url,
             removePrevious: true
           }       
         );

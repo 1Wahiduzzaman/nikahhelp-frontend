@@ -156,6 +156,8 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         shortListCandidate: 'search/shortListCandidate',
         teamListedCandidate: 'search/teamListedCandidate',
         fetchProfileDetail: 'search/fetchProfileDetail',
+        teamListCandidate: 'search/teamListCandidate',
+
       }),
       onClickButton(eventData) {
         if(eventData.event == 'viewProfileDetail') {
@@ -175,6 +177,9 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         }
         if(eventData.event == 'addTeam') {
           this.addTeamList();
+        }
+        if(eventData.event == 'removeTeam') {
+          this.removeFromTeamList();
         }
 
       },
@@ -202,7 +207,11 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         }
         try {
           let res = await this.connectToCandidate(data)
-          console.log(res, '>>>>>>>>>>.')
+          this.$success({
+            title: "Connection Request Sent Successfully!",
+            content: res.message,
+            centered: true,
+          });
         } catch (e) {
           if(e.response) {
             this.showError(e.response.data.message)
@@ -266,6 +275,48 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         }
         try {
           await this.shortListCandidate(data)
+        } catch (e) {
+          if(e.response) {
+            this.showError(e.response.data.message)
+          }
+        }
+        
+      },
+      async addTeamList() {
+        let data = {
+          url: `v1/team-short-listed-candidates/store`,
+          value: true,
+          actionType: 'post',
+          user_id: this.candidate.user_id,
+          payload: {
+            team_listed_by: JwtService.getUserId(),
+            user_id: this.candidate.user_id
+          }
+        }
+        try {
+          let res = await this.teamListCandidate(data)
+          if(res.status_code == 422) {
+            this.showError('Something went wrong!')
+          }
+        } catch (e) {
+          if(e.response) {
+            this.showError(e.response.data.message)
+          }
+        }
+        
+      },
+      async removeFromTeamList() {
+        let data = {
+          url: 'v1/delete-team-short-listed-by-candidates ',
+          value: false,
+          actionType: 'delete',
+          user_id: this.candidate.user_id,
+          payload: {
+            user_id: this.candidate.user_id
+          }
+        }
+        try {
+          await this.teamListCandidate(data)
         } catch (e) {
           if(e.response) {
             this.showError(e.response.data.message)
