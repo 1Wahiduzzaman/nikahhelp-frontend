@@ -1,5 +1,9 @@
 <template>
   <div id="accordion" class="verificationInfo rounded">
+    <div class="section-heading heading-text">
+      <h3>Verification Information</h3>
+      <!-- <p>Your Verification Information</p> -->
+    </div>
     <div class="verification-content">
       <a-form-model
         v-if="verification"
@@ -9,14 +13,14 @@
         class="form-ma"
       >
         <div class="verification-header my-2 text-black-50">
-          <p>
+          <!-- <p>
             To keep your account safe, we need to verify your identity. This is
             a legal requirement that help us to keep your account secure.
           </p>
           <p>
             We accept photo/scans of a driving lecense, passport, national ID
             card or residense permit issued in European Economic Are (EEA)
-          </p>
+          </p> -->
 
           <p>Follow these tips to make sure your document is accepted:</p>
           <ul>
@@ -524,9 +528,25 @@ export default {
     changeActivekey(key) {
       this.activeKey = key;
     },
+    async updateUserVerifyOrReject() {
+      let user = JSON.parse(localStorage.getItem("user"));
+      const data = {
+        id: user.id,
+        status: "completed",
+      };
+      await this.$store
+        .dispatch("updateUserVerifyOrReject", data)
+        .then((data) => {
+          user.status = "2";
+          localStorage.setItem("user", JSON.stringify(user));
+          this.$emit("valueChange", true);
+        })
+        .catch((error) => {});
+    },
     handleSubmitFormOne() {
       this.$refs.verification.validate((valid) => {
         if (valid) {
+          this.updateUserVerifyOrReject();
           this.activeKey = null;
         } else {
           setTimeout(() => {
@@ -570,12 +590,7 @@ export default {
           ver_recommender_title,
           ver_recommender_mobile_no,
         })
-        .then((data) => {
-          this.$emit("valueChange", {
-            value: this.verification,
-            current: 1,
-          });
-        })
+        .then((data) => {})
         .catch((error) => {});
     },
     saveImageVerificationInfo(image) {
@@ -586,10 +601,6 @@ export default {
             data.data.data.verification.ver_document_backside;
           this.verification.ver_document_frontside =
             data.data.data.verification.ver_document_frontside;
-          this.$emit("valueChange", {
-            value: this.verification,
-            current: 1,
-          });
         })
         .catch((error) => {});
     },
@@ -666,6 +677,17 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+.section-heading {
+  text-align: center;
+  color: $color-brand;
+
+  h3 {
+    color: $color-brand;
+  }
+  p {
+    font-size: 16px;
+  }
+}
 .image-container {
   display: flex;
   flex-direction: column;
@@ -721,7 +743,7 @@ input[type="file"]::-webkit-file-upload-button {
   display: grid;
   place-content: center;
   position: absolute;
-  right: 4.5rem;
+  right: 2.5rem;
   top: 2rem;
   width: 2rem;
   height: 2rem;
@@ -729,7 +751,7 @@ input[type="file"]::-webkit-file-upload-button {
   background: white;
   z-index: 1;
   @media (min-width: 768px) {
-    right: 5.5rem;
+    right: 2.5rem;
   }
 }
 .mobile-margin {

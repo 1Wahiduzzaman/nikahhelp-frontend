@@ -138,15 +138,15 @@
     <div v-if="showIdentity" class="panel-content">
       <div class="content-identity">
         <h4>Identity Verification</h4>
-        <!-- <div class="identity">
+        <div v-if="userData.status == '3'" class="identity">
           <img
             src="@/assets/icon/varified.svg"
             alt="icon"
             style="width: 200px; height: 230px"
           />
           <span>Verified</span>
-        </div> -->
-        <div class="identity">
+        </div>
+        <div v-if="userData.status == '1'" class="identity">
           <img
             src="@/assets/icon/account-circle.svg"
             alt="icon"
@@ -160,19 +160,23 @@
             Verify
           </v-btn>
         </div>
-        <!-- <div class="identity">
+        <div v-if="userData.status == '2'" class="identity">
           <img
             src="@/assets/icon/dots-horizontal-circle.svg"
             alt="icon"
             style="width: 200px; height: 230px"
           />
           <span>In Review</span>
-		  </div> -->
+        </div>
         <div class="identity-footer">
-          <span>For security reason, contact details cannot be changed.</span>
           <span
-            >If any of this data is incorrect plaese contact
-            <router-link to="/help">Support Team</router-link></span
+            >To keep your account safe, we need to verify your identity. This is
+            a legal requirement that help us to keep your account secure.
+          </span>
+          <span
+            >We accept photo/scans of a driving license, passport, national ID
+            card or residence permit issued in European Economic Are
+            (EEA).</span
           >
         </div>
       </div>
@@ -186,11 +190,13 @@
           "
           :representativeDetails="representativeDetails"
           :verification="representativeDetails.verification"
+          @valueChange="onDataChange"
         />
         <VerificationCandidate
           v-if="userData && userData.account_type === 1 && candidateDetails"
           :candidateDetails="candidateDetails"
           :verification="candidateDetails.verification"
+          @valueChange="onDataChange"
         />
       </div>
     </div>
@@ -241,6 +247,10 @@ export default {
     }
   },
   methods: {
+    onDataChange(value) {
+      this.showIdentity = true;
+      this.userData = JSON.parse(localStorage.getItem("user"));
+    },
     getVerifyInfo() {
       const userData = JSON.parse(localStorage.getItem("user"));
       if (userData && userData.account_type === 1) {
@@ -522,7 +532,11 @@ export default {
     .identity-footer {
       display: flex;
       flex-direction: column;
-      color: #b7b5b5;
+      align-items: center;
+      justify-content: center;
+      //color: #b7b5b5;
+	  font-weight: 600;
+	  font-size:14px ;
       padding-top: 100px;
     }
     .content {

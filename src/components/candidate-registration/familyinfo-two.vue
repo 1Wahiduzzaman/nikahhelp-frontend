@@ -462,7 +462,7 @@ export default {
         .then((data) => {
           this.$emit("valueChange", {
             value: this.familyInformation,
-            current: 3,
+            current: 2,
           });
         })
         .catch((error) => {});
