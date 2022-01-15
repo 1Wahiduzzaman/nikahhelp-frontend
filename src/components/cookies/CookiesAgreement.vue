@@ -506,7 +506,7 @@
 
           <p>
             You have the right to ask us not to process your personal data for marketing purposes. You can exercise your right to prevent such processing by checking certain boxes on the forms we use to collect your data. 
-            You can also exercise the right at any time by contacting us by clicking <a href="http://www.skyscanner.net/contactus.asp">here</a>.
+            You can also exercise the right at any time by contacting us by clicking <a href="#">here</a>.
           </p>
         </div> 
       </div>
