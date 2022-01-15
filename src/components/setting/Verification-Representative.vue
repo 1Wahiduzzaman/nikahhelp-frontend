@@ -1,8 +1,8 @@
 <template>
   <div id="accordion" class="verificationInfo rounded">
     <div class="section-heading heading-text">
-      <h5>Verification Information</h5>
-      <p>Your Verification Information</p>
+      <h3>Verification Information</h3>
+      <!-- <p>Your Verification Information</p> -->
     </div>
     <div class="verification-content">
       <a-form-model
@@ -13,14 +13,14 @@
         class="form-ma"
       >
         <div class="verification-header my-2 text-black-50">
-          <p>
+          <!-- <p>
             To keep your account safe, we need to verify your identity. This is
             a legal requirement that help us to keep your account secure.
           </p>
           <p>
             We accept photo/scans of a driving lecense, passport, national ID
             card or residense permit issued in European Economic Are (EEA)
-          </p>
+          </p> -->
 
           <p>Follow these tips to make sure your document is accepted:</p>
           <ul>
@@ -590,9 +590,7 @@ export default {
           ver_recommender_title,
           ver_recommender_mobile_no,
         })
-        .then((data) => {
-          
-        })
+        .then((data) => {})
         .catch((error) => {});
     },
     saveImageVerificationInfo(image) {
@@ -603,7 +601,6 @@ export default {
             data.data.data.verification.ver_document_backside;
           this.verification.ver_document_frontside =
             data.data.data.verification.ver_document_frontside;
-         
         })
         .catch((error) => {});
     },
@@ -680,6 +677,17 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+.section-heading {
+  text-align: center;
+  color: $color-brand;
+
+  h3 {
+    color: $color-brand;
+  }
+  p {
+    font-size: 16px;
+  }
+}
 .image-container {
   display: flex;
   flex-direction: column;
