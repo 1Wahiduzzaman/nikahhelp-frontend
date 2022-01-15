@@ -16,21 +16,33 @@
             <v-tab-item value="tab-1">
               <div class="row mt-2 mb-4">
                 <div class="col-12 col-md-6 col-lg-3" v-for="(shortlist, findex) in fullData" :key="findex">
-                  <candidate-grid :item="shortlist" />
+                  <candidate-grid :item="shortlist"
+                                  :shortListedIds="shortListedIds"
+                                  :teamListedIds="teamListedIds"
+                                  @loadList="loadList"
+                                  @socketNotification />
                 </div>
               </div>
             </v-tab-item>
             <v-tab-item value="tab-2">
               <div class="row mt-2 mb-4">
                 <div class="col-12 col-md-6 col-lg-3" v-for="(shortlist, sindex) in shortlistedData" :key="sindex">
-                  <candidate-grid :item="shortlist" />
+                  <candidate-grid :item="shortlist"
+                                  :shortListedIds="shortListedIds"
+                                  :teamListedIds="teamListedIds"
+                                  @loadList="loadList"
+                                  @socketNotification="socketNotification" />
                 </div>
               </div>
             </v-tab-item>
             <v-tab-item value="tab-3">
               <div class="row mt-2 mb-4">
-                <div class="col-12 col-md-6 col-lg-3">
-                  <candidate-grid />
+                <div class="col-12 col-md-6 col-lg-3" v-for="(shortlist, tindex) in teamlistedData" :key="tindex">
+                  <candidate-grid :item="shortlist"
+                                  :shortListedIds="shortListedIds"
+                                  :teamListedIds="teamListedIds"
+                                  @loadList="loadList"
+                                  @socketNotification="socketNotification" />
                 </div>
               </div>
             </v-tab-item>
@@ -380,7 +392,9 @@ export default {
       candidateTeamId: null,
       fullData: [],
       shortlistedData: [],
-      teamlistedData: []
+      teamlistedData: [],
+      shortListedIds: [],
+      teamListedIds: []
     };
   },
   created() {
@@ -447,6 +461,10 @@ export default {
         });
         this.$socket.emit('notification', payload);
       }
+      this.loadList();
+    },
+    loadList() {
+      this.getActiveTeamId();
     },
     getActiveTeamId() {
       if (!JwtService.getTeamIDAppWide()) {
@@ -456,6 +474,9 @@ export default {
           openModalRoute(this, "manage_team_redirect");
         }, 2000);
       } else {
+        this.fullData = [];
+        this.shortlistedData = [];
+        this.teamlistedData = [];
         this.loadShortListedCandidates();
         this.loadTeamShortListedCandidates();
         this.$store.dispatch("getCountries");
@@ -472,9 +493,13 @@ export default {
           this.shortlistedData = res.data.data.map(item => {
             item.from_short_list = true;
             return item;
-          })
+          });
           let data = [...this.fullData, ...this.shortlistedData];
           this.fullData = data;
+
+          this.shortListedIds = res.data.data.map(item => {
+            return parseInt(item.user_id);
+          });
         }).catch(e => {
           console.log(e);
           this.isLoading = false;
@@ -496,9 +521,13 @@ export default {
             item.from_team_list = true;
             item.is_team_listed = true;
             return item;
-          })
+          });
           let data = [...this.fullData, ...this.teamlistedData];
           this.fullData = data;
+
+          this.teamListedIds = res.data.data.map(item => {
+            return parseInt(item.user_id);
+          });
         }).catch(e => {
           console.log(e);
           this.isLoading = false;

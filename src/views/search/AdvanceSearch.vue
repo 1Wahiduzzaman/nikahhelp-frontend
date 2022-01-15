@@ -42,6 +42,7 @@
                 <component
                   @switchComponent="switchComponent"
                   @navigateProfile="navigateProfile"
+                  @socketNotification="socketNotification"
                   v-bind:is="currentTabComponent"
                 >
                 </component>

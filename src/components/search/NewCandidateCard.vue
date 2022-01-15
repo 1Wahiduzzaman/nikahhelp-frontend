@@ -212,12 +212,18 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
             content: res.message,
             centered: true,
           });
+          let payload = {
+            receivers: [this.candidate.user_id],
+            title: `sent you a new team connection request`,
+            team_temp_name: null,
+            team_id: this.candidate.team_id
+          };
+          this.$emit("socketNotification", payload);
         } catch (e) {
           if(e.response) {
             this.showError(e.response.data.message)
           }
         }
-        
       },
       async addShortList() {
         let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -275,29 +281,6 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         }
         try {
           await this.shortListCandidate(data)
-        } catch (e) {
-          if(e.response) {
-            this.showError(e.response.data.message)
-          }
-        }
-        
-      },
-      async addTeamList() {
-        let data = {
-          url: `v1/team-short-listed-candidates/store`,
-          value: true,
-          actionType: 'post',
-          user_id: this.candidate.user_id,
-          payload: {
-            team_listed_by: JwtService.getUserId(),
-            user_id: this.candidate.user_id
-          }
-        }
-        try {
-          let res = await this.teamListCandidate(data)
-          if(res.status_code == 422) {
-            this.showError('Something went wrong!')
-          }
         } catch (e) {
           if(e.response) {
             this.showError(e.response.data.message)
