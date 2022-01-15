@@ -16,7 +16,7 @@
             ><v-badge color="red" content="6">Representative</v-badge></v-tab
           >
 
-          <v-tab><v-badge color="red" content="6">Matchmaker</v-badge></v-tab>
+          <!-- <v-tab><v-badge color="red" content="6">Matchmaker</v-badge></v-tab> -->
         </v-tabs>
         <v-text-field
           v-model="search"
@@ -34,7 +34,7 @@
       <v-data-table
         v-model="selectedTasks"
         show-select
-        :items="desserts"
+        :items="items"
         :headers="headers"
         :search="search"
         :single-select="false"
@@ -65,10 +65,17 @@
                 hide-details
               />
             </td>
-            <td class="booking_artist_trackname">{{ item["name"] }}</td>
-            <td class="reference">{{ item["calories"] }}</td>
-            <td class="composer">{{ item["fat"] }}</td>
-            <td class="composer">{{ item["carbs"] }}</td>
+            <td class="id">{{ item["id"] }}</td>
+            <td class="email_verified_at">
+              {{ item["email_verified_at"] | formatDate }}
+            </td>
+            <td class="full_name">{{ item["full_name"] }}</td>
+            <td class="account_type_meaning">
+              {{ item["account_type_meaning"] }}
+            </td>
+            <td class="email">
+              {{ item["email"] }}
+            </td>
             <td class="publisher">
               {{ item["carbs"] }}
             </td>
@@ -86,6 +93,7 @@
                   Note
                 </v-btn>
                 <v-btn
+                  @click="updateUserVerifyOrReject(item)"
                   style="background-color: rgb(42 205 100); color: #fff"
                   small
                 >
@@ -113,7 +121,7 @@ export default {
   components: {},
   data() {
     return {
-         search: '',
+      search: "",
       selectedTasks: [],
       headers: [
         {
@@ -125,96 +133,44 @@ export default {
         { text: "Deleted", value: "calories" },
         { text: "Name", value: "fat" },
         { text: "Type", value: "carbs" },
+        { text: "Email", value: "email" },
         { text: "Deleted By", value: "protein" },
         { text: "actions", value: "actions", sortable: false, align: "start" },
       ],
-      desserts: [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: "1%",
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: "1%",
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: "7%",
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: "8%",
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: "16%",
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: "0%",
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: "2%",
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: "45%",
-        },
-        {
-          name: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: "22%",
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: "6%",
-        },
-      ],
+      items: [],
     };
   },
 
+  mounted() {
+    this.getRejectedUsers();
+  },
   methods: {
     onItemClick(e) {},
+    async updateUserVerifyOrReject(user) {
+      const data = {
+        id: user.id,
+        status: "completed",
+      };
+      await this.$store
+        .dispatch("updateUserVerifyOrReject", data)
+        .then((data) => {
+          this.items = this.items.filter((item) => item.id !== user.id);
+          let loggedUser = JSON.parse(localStorage.getItem("user"));
+            if (loggedUser.id == user.id) {
+            loggedUser.status = "2";
+            localStorage.setItem("user", JSON.stringify(loggedUser));
+          }
+        })
+        .catch((error) => {});
+    },
+    async getRejectedUsers() {
+      await this.$store
+        .dispatch("getRejectedUsers")
+        .then((data) => {
+          this.items = data;
+        })
+        .catch((error) => {});
+    },
   },
 };
 </script>

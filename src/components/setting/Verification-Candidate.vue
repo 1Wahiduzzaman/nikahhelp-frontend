@@ -1,5 +1,9 @@
 <template>
   <div id="accordion" class="verificationInfo p-3 rounded">
+       <div class="section-heading heading-text">
+        <h5>Verification Information</h5>
+        <p>Your Verification Information</p>
+      </div>
     <a-form-model
       v-if="verification"
       ref="verification"
@@ -534,7 +538,7 @@
           class="mt-5"
           @click="handleSubmitFormOne"
         >
-          Submit 
+          Submit
         </a-button>
       </div>
     </a-form-model>
@@ -601,6 +605,21 @@ export default {
   },
 
   methods: {
+    async updateUserVerifyOrReject() {
+      let user = JSON.parse(localStorage.getItem("user"));
+      const data = {
+        id: user.id,
+        status: "completed",
+      };
+      await this.$store
+        .dispatch("updateUserVerifyOrReject", data)
+        .then((data) => {
+          user.status = "2";
+          localStorage.setItem("user", JSON.stringify(user));
+          this.$emit("valueChange", true);
+        })
+        .catch((error) => {});
+    },
     changeActivekey(key) {
       this.activeKey = key;
     },
@@ -608,6 +627,7 @@ export default {
       this.$refs.verification.validate((valid) => {
         if (valid) {
           this.activeKey = null;
+          this.updateUserVerifyOrReject();
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
@@ -655,10 +675,7 @@ export default {
           ver_recommences_mobile_no,
         })
         .then((data) => {
-          this.$emit("valueChange", {
-            value: this.verification,
-            current: 2,
-          });
+         
         })
         .catch((error) => {});
     },
@@ -670,10 +687,7 @@ export default {
             data.data.data.verification.ver_image_back;
           this.verification.ver_image_front =
             data.data.data.verification.ver_image_front;
-          this.$emit("valueChange", {
-            value: this.verification,
-            current: 2,
-          });
+         
         })
         .catch((error) => {});
     },
@@ -816,7 +830,7 @@ input[type="file"]::-webkit-file-upload-button {
   display: grid;
   place-content: center;
   position: absolute;
-  right: 5rem;
+  right: 2.5rem;
   top: 2.5rem;
   width: 2rem;
   height: 2rem;

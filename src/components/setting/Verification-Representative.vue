@@ -1,5 +1,9 @@
 <template>
   <div id="accordion" class="verificationInfo rounded">
+    <div class="section-heading heading-text">
+      <h5>Verification Information</h5>
+      <p>Your Verification Information</p>
+    </div>
     <div class="verification-content">
       <a-form-model
         v-if="verification"
@@ -524,9 +528,25 @@ export default {
     changeActivekey(key) {
       this.activeKey = key;
     },
+    async updateUserVerifyOrReject() {
+      let user = JSON.parse(localStorage.getItem("user"));
+      const data = {
+        id: user.id,
+        status: "completed",
+      };
+      await this.$store
+        .dispatch("updateUserVerifyOrReject", data)
+        .then((data) => {
+          user.status = "2";
+          localStorage.setItem("user", JSON.stringify(user));
+          this.$emit("valueChange", true);
+        })
+        .catch((error) => {});
+    },
     handleSubmitFormOne() {
       this.$refs.verification.validate((valid) => {
         if (valid) {
+          this.updateUserVerifyOrReject();
           this.activeKey = null;
         } else {
           setTimeout(() => {
@@ -571,10 +591,7 @@ export default {
           ver_recommender_mobile_no,
         })
         .then((data) => {
-          this.$emit("valueChange", {
-            value: this.verification,
-            current: 1,
-          });
+          
         })
         .catch((error) => {});
     },
@@ -586,10 +603,7 @@ export default {
             data.data.data.verification.ver_document_backside;
           this.verification.ver_document_frontside =
             data.data.data.verification.ver_document_frontside;
-          this.$emit("valueChange", {
-            value: this.verification,
-            current: 1,
-          });
+         
         })
         .catch((error) => {});
     },
@@ -721,7 +735,7 @@ input[type="file"]::-webkit-file-upload-button {
   display: grid;
   place-content: center;
   position: absolute;
-  right: 4.5rem;
+  right: 2.5rem;
   top: 2rem;
   width: 2rem;
   height: 2rem;
@@ -729,7 +743,7 @@ input[type="file"]::-webkit-file-upload-button {
   background: white;
   z-index: 1;
   @media (min-width: 768px) {
-    right: 5.5rem;
+    right: 2.5rem;
   }
 }
 .mobile-margin {

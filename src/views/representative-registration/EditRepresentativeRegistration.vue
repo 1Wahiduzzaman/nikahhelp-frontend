@@ -42,10 +42,10 @@
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 1 }"
               ></div>
-              <div
+              <!-- <div
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 2 }"
-              ></div>
+              ></div> -->
             </div>
           </div>
         </div>
@@ -56,12 +56,12 @@
         <p class="color-brand fs-18">Details about you</p>
       </div>
 
-      <div class="text-center mt-5" v-if="current == 1">
+      <!-- <div class="text-center mt-5" v-if="current == 1">
         <h5 class="color-brand fs-20">Verification Information</h5>
         <p class="color-brand fs-18">Details about you</p>
-      </div>
+      </div> -->
 
-      <div class="text-center mt-5" v-if="current == 2">
+      <div class="text-center mt-5" v-if="current == 1">
         <h5 class="color-brand fs-20">Image Upload</h5>
         <p class="color-brand fs-18">Details about you</p>
       </div>
@@ -73,14 +73,14 @@
           ref="personInfoRefTwo"
         />
       </div>
-      <div class="steps-content px-2" v-if="current == 1">
+      <!-- <div class="steps-content px-2" v-if="current == 1">
         <Verification
           :representativeDetails="representativeDetails"
           :verification="representativeDetails.verification"
           ref="VerificationRef"
         />
-      </div>
-      <div class="steps-content px-2" v-if="current == 2">
+      </div> -->
+      <div class="steps-content px-2" v-if="current == 1">
         <ImageUpload
           :imageModel="representativeDetails.imageModel"
           ref="imageUploadRef"
@@ -110,7 +110,7 @@
         </a-button>
 
         <a-button
-          v-if="current < steps.length - 1"
+       
           shape="round"
           type="primary"
           style="float: left; margin-left: -15px"
@@ -169,9 +169,9 @@ export default {
         {
           title: "Personal Info",
         },
-        {
-          title: "Verification",
-        },
+        // {
+        //   title: "Verification",
+        // },
         {
           title: "Image Upload",
         },
@@ -276,15 +276,15 @@ export default {
             "permanat"
           );
         }
-        if (
-          this.representativeDetails.verification &&
-          this.representativeDetails.verification.ver_country > 0
-        ) {
-          this.onChangeCountry(
-            { id: this.representativeDetails.verification.ver_country },
-            "verification"
-          );
-        }
+        // if (
+        //   this.representativeDetails.verification &&
+        //   this.representativeDetails.verification.ver_country > 0
+        // ) {
+        //   this.onChangeCountry(
+        //     { id: this.representativeDetails.verification.ver_country },
+        //     "verification"
+        //   );
+        // }
         // this.current = response.data.data.user.data_input_status;
       } else {
         this.isLoading = false;
@@ -333,10 +333,10 @@ export default {
           this.current++;
           break;
         }
-        case 3: {
-          this.current++;
-          break;
-        }
+        // case 3: {
+        //   this.current++;
+        //   break;
+        // }
 
         default: {
           this.current = 0;

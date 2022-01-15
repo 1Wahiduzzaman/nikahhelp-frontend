@@ -138,15 +138,15 @@
     <div v-if="showIdentity" class="panel-content">
       <div class="content-identity">
         <h4>Identity Verification</h4>
-        <!-- <div class="identity">
+        <div v-if="userData.status == '3'" class="identity">
           <img
             src="@/assets/icon/varified.svg"
             alt="icon"
             style="width: 200px; height: 230px"
           />
           <span>Verified</span>
-        </div> -->
-        <div class="identity">
+        </div>
+        <div v-if="userData.status == '1'" class="identity">
           <img
             src="@/assets/icon/account-circle.svg"
             alt="icon"
@@ -160,14 +160,14 @@
             Verify
           </v-btn>
         </div>
-        <!-- <div class="identity">
+        <div v-if="userData.status == '2'" class="identity">
           <img
             src="@/assets/icon/dots-horizontal-circle.svg"
             alt="icon"
             style="width: 200px; height: 230px"
           />
           <span>In Review</span>
-		  </div> -->
+        </div>
         <div class="identity-footer">
           <span>For security reason, contact details cannot be changed.</span>
           <span
@@ -186,11 +186,13 @@
           "
           :representativeDetails="representativeDetails"
           :verification="representativeDetails.verification"
+          @valueChange="onDataChange"
         />
         <VerificationCandidate
           v-if="userData && userData.account_type === 1 && candidateDetails"
           :candidateDetails="candidateDetails"
           :verification="candidateDetails.verification"
+          @valueChange="onDataChange"
         />
       </div>
     </div>
@@ -241,6 +243,10 @@ export default {
     }
   },
   methods: {
+    onDataChange(value) {
+      this.showIdentity = true;
+      this.userData = JSON.parse(localStorage.getItem("user"));
+    },
     getVerifyInfo() {
       const userData = JSON.parse(localStorage.getItem("user"));
       if (userData && userData.account_type === 1) {
