@@ -169,10 +169,14 @@
           <span>In Review</span>
         </div>
         <div class="identity-footer">
-          <span>For security reason, contact details cannot be changed.</span>
           <span
-            >If any of this data is incorrect plaese contact
-            <router-link to="/help">Support Team</router-link></span
+            >To keep your account safe, we need to verify your identity. This is
+            a legal requirement that help us to keep your account secure.
+          </span>
+          <span
+            >We accept photo/scans of a driving license, passport, national ID
+            card or residence permit issued in European Economic Are
+            (EEA).</span
           >
         </div>
       </div>
@@ -528,7 +532,11 @@ export default {
     .identity-footer {
       display: flex;
       flex-direction: column;
-      color: #b7b5b5;
+      align-items: center;
+      justify-content: center;
+      //color: #b7b5b5;
+	  font-weight: 600;
+	  font-size:14px ;
       padding-top: 100px;
     }
     .content {

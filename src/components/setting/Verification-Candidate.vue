@@ -1,8 +1,8 @@
 <template>
   <div id="accordion" class="verificationInfo p-3 rounded">
        <div class="section-heading heading-text">
-        <h5>Verification Information</h5>
-        <p>Your Verification Information</p>
+        <h3>Verification Information</h3>
+        <!-- <p>Your Verification Information</p> -->
       </div>
     <a-form-model
       v-if="verification"
@@ -14,18 +14,18 @@
       <div class="row">
         <div class="col-12 border-bottom pb-3">
           <div class="verification-header mt-2">
-            <p class="instruction-title">
+            <!-- <p class="instruction-title">
               To keep your account safe, we need to verify your identity. This
               is a legal requirement that help us to keep your account secure.
             </p>
             <p class="instruction-title">
               We accept photo/scans of a driving license, passport, national ID
               card or residence permit issued in European Economic Are (EEA)
-            </p>
+            </p>-->
 
             <p class="instruction-title">
               Follow these tips to make sure your document is accepted:
-            </p>
+            </p> 
             <ul>
               <li class="flex-start-center">
                 <img
@@ -768,11 +768,13 @@ export default {
 .section-heading {
   text-align: center;
   color: $color-brand;
-  h5 {
+  
+  h3 {
     color: $color-brand;
+
   }
   p {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 .image-container {
