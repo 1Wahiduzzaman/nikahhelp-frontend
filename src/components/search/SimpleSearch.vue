@@ -498,6 +498,10 @@ export default {
 			// this.$emit("handle-search", _payload);
 		},
 
+		setAttr(attr, value) {
+			this[attr] = value
+		},
+
 		handleSearch() {
 			if(this.isFetching) return;
 			this.setComponent('AddComponent')
