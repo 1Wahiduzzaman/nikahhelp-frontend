@@ -13,6 +13,7 @@
                 />
                 <TableRow 
                     title="Age"
+                    :value="profile.per_age + ' Years'"
                 />
                 <TableRow 
                     title="Height"
