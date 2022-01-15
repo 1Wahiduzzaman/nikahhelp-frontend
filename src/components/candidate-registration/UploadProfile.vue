@@ -449,7 +449,7 @@ export default {
                   ? data.data.data.other_images[0].image_path
                   : this.additionalImageSrc,
             },
-            current: 4,
+            current: 3,
           });
         }
       });

@@ -44,10 +44,10 @@
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 2 }"
               ></div>
-              <div
+              <!-- <div
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 3 }"
-              ></div>
+              ></div> -->
             </div>
           </div>
         </div>
@@ -68,15 +68,15 @@
           ref="personalInfoTwo"
         />
       </div>
-      <div class="steps-content" v-if="current == 2">
+      <!-- <div class="steps-content" v-if="current == 2">
         <Verification
           @valueChange="onDataChange($event)"
           :verification="candidateDetails.verification"
           :candidateDetails="candidateDetails"
           ref="Verification"
         />
-      </div>
-      <div class="steps-content" v-if="current == 3">
+      </div> -->
+      <div class="steps-content" v-if="current == 2">
         <FamilyInfoTwo
           @valueChange="onDataChange($event)"
           :familyInformation="candidateDetails.familyInformation"
@@ -84,7 +84,7 @@
           ref="familyInfoTwo"
         />
       </div>
-      <div class="steps-content" v-if="current == 4">
+      <div class="steps-content" v-if="current == 3">
         <UploadProfile
           @valueChange="onDataChange($event)"
           :imageModel="candidateDetails.imageModel"
@@ -117,7 +117,6 @@
         </a-button>
 
         <a-button
-          v-if="current < steps.length - 1"
           shape="round"
           type="primary"
           style="float: left; margin-left: -15px"
@@ -188,10 +187,10 @@ export default {
           title: "Personal Information",
           content: "Second-content",
         },
-        {
-          title: "Verification",
-          content: "Last-content",
-        },
+        // {
+        //   title: "Verification",
+        //   content: "Last-content",
+        // },
         {
           title: "Family Information",
           content: "Last-content",
@@ -204,7 +203,7 @@ export default {
       mobileSteps: [
         "Preference",
         "Personal Information",
-        "Verification",
+        //"Verification",
         "Family Information",
         "Image Upload",
       ],
@@ -226,11 +225,11 @@ export default {
             ...e.value,
           };
           break;
-        case 3:
+        case 2:
           this.candidateDetails.familyInformation = {
             ...e.value,
           };
-        case 4:
+        case 3:
           this.candidateDetails.imageModel = {
             ...e.value,
           };
@@ -466,16 +465,16 @@ export default {
             ""
           );
         }
-        if (
-          this.candidateDetails.verification &&
-          this.candidateDetails.verification.ver_country_id > 0
-        ) {
-          this.onChangeCountry(
-            { id: this.candidateDetails.verification.ver_country_id },
-            "verification",
-            ""
-          );
-        }
+        // if (
+        //   this.candidateDetails.verification &&
+        //   this.candidateDetails.verification.ver_country_id > 0
+        // ) {
+        //   this.onChangeCountry(
+        //     { id: this.candidateDetails.verification.ver_country_id },
+        //     "verification",
+        //     ""
+        //   );
+        // }
 
         this.checkExistData();
       } else {
@@ -618,34 +617,34 @@ export default {
           });
 
           break;
+        // case 2:
+        //   const {
+        //     ver_country_id,
+        //     ver_document_type,
+        //     ver_image_back,
+        //     ver_image_front,
+        //     ver_recommences_address,
+        //     ver_recommences_first_name,
+        //     ver_recommences_last_name,
+        //     ver_recommences_mobile_no,
+        //     ver_recommences_occupation,
+        //     ver_recommences_title,
+        //   } = this.candidateDetails.verification;
+        //   isEnabled = Object.values({
+        //     ver_country_id,
+        //     ver_document_type,
+        //     ver_image_back,
+        //     ver_image_front,
+        //     ver_recommences_address,
+        //     ver_recommences_first_name,
+        //     ver_recommences_last_name,
+        //     ver_recommences_mobile_no,
+        //     ver_recommences_occupation,
+        //     ver_recommences_title,
+        //   }).every((x) => x !== undefined && x !== null && x !== "");
+        //   break;
+        //   break;
         case 2:
-          const {
-            ver_country_id,
-            ver_document_type,
-            ver_image_back,
-            ver_image_front,
-            ver_recommences_address,
-            ver_recommences_first_name,
-            ver_recommences_last_name,
-            ver_recommences_mobile_no,
-            ver_recommences_occupation,
-            ver_recommences_title,
-          } = this.candidateDetails.verification;
-          isEnabled = Object.values({
-            ver_country_id,
-            ver_document_type,
-            ver_image_back,
-            ver_image_front,
-            ver_recommences_address,
-            ver_recommences_first_name,
-            ver_recommences_last_name,
-            ver_recommences_mobile_no,
-            ver_recommences_occupation,
-            ver_recommences_title,
-          }).every((x) => x !== undefined && x !== null && x !== "");
-          break;
-          break;
-        case 3:
           const {
             country_of_origin,
             family_info,
@@ -661,7 +660,7 @@ export default {
             siblings_desc,
           }).every((x) => x !== undefined && x !== null && x !== "");
           break;
-        case 4:
+        case 3:
           const { avatar_image_url, main_image_url } =
             this.candidateDetails.imageModel;
           isEnabled = Object.values({ avatar_image_url, main_image_url }).every(

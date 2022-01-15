@@ -12,6 +12,7 @@ import Antd from "ant-design-vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store/index.js";
+import moment from 'moment'
 // import axios from "axios";
 // * This is the vue-web-storage package
 import Storage from "vue-web-storage";
@@ -28,6 +29,13 @@ Vue.use(Storage, {
   drivers: ["local"],
 });
 ApiService.init();
+
+
+Vue.filter('formatDate', function (value) {
+  if (value) {
+    return moment(String(value)).format('MM/DD/YYYY hh:mm')
+  }
+});
 
 Vue.use(VueCompositionAPI);
 Vue.use(Antd);

@@ -38,6 +38,10 @@
                 class="mobile-step"
                 :class="{ 'bg-primary': current >= 0 }"
               ></div>
+              <!-- <div
+                class="mobile-step ml-2"
+                :class="{ 'bg-primary': current >= 1 }"
+              ></div> -->
               <div
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 1 }"
@@ -45,10 +49,6 @@
               <div
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 2 }"
-              ></div>
-              <div
-                class="mobile-step ml-2"
-                :class="{ 'bg-primary': current >= 3 }"
               ></div>
             </div>
           </div>
@@ -60,17 +60,17 @@
         <p class="color-brand fs-18">Details about you</p>
       </div>
 
-      <div class="text-center mt-5" v-if="current == 1">
+      <!-- <div class="text-center mt-5" v-if="current == 1">
         <h5 class="color-brand fs-20">Verification Information</h5>
         <p class="color-brand fs-18">Details about you</p>
-      </div>
+      </div> -->
 
-      <div class="text-center mt-5" v-if="current == 2">
+      <div class="text-center mt-5" v-if="current == 1">
         <h5 class="color-brand fs-20">Image Upload</h5>
         <p class="color-brand fs-18">Details about you</p>
       </div>
 
-      <div class="text-center mt-5" v-if="current == 3">
+      <div class="text-center mt-5" v-if="current == 2">
         <h5 class="color-brand fs-20">Agree & Submit</h5>
         <p class="color-brand fs-18">Details about you</p>
       </div>
@@ -83,22 +83,22 @@
           ref="personInfoRefTwo"
         />
       </div>
-      <div class="steps-content px-2" v-if="current == 1">
+      <!-- <div class="steps-content px-2" v-if="current == 1">
         <Verification
           :representativeDetails="representativeDetails"
           @valueChange="onDataChange($event)"
           :verification="representativeDetails.verification"
           ref="VerificationRef"
         />
-      </div>
-      <div class="steps-content px-2" v-if="current == 2">
+      </div> -->
+      <div class="steps-content px-2" v-if="current == 1">
         <ImageUpload
           @valueChange="onDataChange($event)"
           :imageModel="representativeDetails.imageModel"
           ref="imageUploadRef"
         />
       </div>
-      <div class="steps-content" v-if="current == 3">
+      <div class="steps-content" v-if="current == 2">
         <AgreementSubmit />
       </div>
       <div class="steps-action text-right pb-5 clearfix bottom-padding">
@@ -194,9 +194,9 @@ export default {
         {
           title: "Personal Info",
         },
-        {
-          title: "Verification",
-        },
+        // {
+        //   title: "Verification",
+        // },
         {
           title: "Image Upload",
         },
@@ -206,7 +206,7 @@ export default {
       ],
       mobileSteps: [
         "Personal Info",
-        "Verification",
+        // "Verification",
         "Image Upload",
         "Agree & Submit",
       ],
@@ -228,13 +228,13 @@ export default {
             ...e.value,
           };
           break;
-        case 1:
-          this.representativeDetails.verification = {
-            ...e.value,
-          };
+          // case 1:
+          //   this.representativeDetails.verification = {
+          //     ...e.value,
+          //   };
           break;
 
-        case 2:
+        case 1:
           this.representativeDetails.imageModel = {
             ...e.value,
           };
@@ -333,15 +333,15 @@ export default {
             "permanat"
           );
         }
-        if (
-          this.representativeDetails.verification &&
-          this.representativeDetails.verification.ver_country > 0
-        ) {
-          this.onChangeCountry(
-            { id: this.representativeDetails.verification.ver_country },
-            "verification"
-          );
-        }
+        // if (
+        //   this.representativeDetails.verification &&
+        //   this.representativeDetails.verification.ver_country > 0
+        // ) {
+        //   this.onChangeCountry(
+        //     { id: this.representativeDetails.verification.ver_country },
+        //     "verification"
+        //   );
+        // }
         this.current = response.data.data.data_input_status;
         this.checkExistData();
       } else {
@@ -376,7 +376,7 @@ export default {
       this.$router.push("/login");
     },
     doneBtn() {
-      this.saveDataInputStatus(4);
+      this.saveDataInputStatus(3);
     },
     async next() {
       switch (this.current) {
@@ -392,10 +392,10 @@ export default {
           this.current++;
           break;
         }
-        case 3: {
-          this.current++;
-          break;
-        }
+        // case 3: {
+        //   this.current++;
+        //   break;
+        // }
 
         default: {
           this.current = 0;
@@ -420,7 +420,7 @@ export default {
       user.data_input_status = satge;
       localStorage.removeItem("user");
       localStorage.setItem("user", JSON.stringify(user));
-      if (satge === 4) {
+      if (satge === 3) {
         this.$router.push("/dashboard");
       }
     },
@@ -452,32 +452,32 @@ export default {
           });
           break;
 
-        case 1:
-          const {
-            ver_city,
-            ver_country,
-            ver_document_type,
-            ver_recommender_address,
-            ver_recommender_first_name,
-            ver_recommender_last_name,
-            ver_recommender_occupation,
-            ver_recommender_title,
-            ver_recommender_mobile_no,
-          } = this.representativeDetails.verification;
-          isEnabled = Object.values({
-            ver_city,
-            ver_country,
-            ver_document_type,
-            ver_recommender_address,
-            ver_recommender_first_name,
-            ver_recommender_last_name,
-            ver_recommender_occupation,
-            ver_recommender_title,
-            ver_recommender_mobile_no,
-          }).every((x) => x !== undefined && x !== null && x !== "");
-          break;
+        // case 1:
+        //   const {
+        //     ver_city,
+        //     ver_country,
+        //     ver_document_type,
+        //     ver_recommender_address,
+        //     ver_recommender_first_name,
+        //     ver_recommender_last_name,
+        //     ver_recommender_occupation,
+        //     ver_recommender_title,
+        //     ver_recommender_mobile_no,
+        //   } = this.representativeDetails.verification;
+        //   isEnabled = Object.values({
+        //     ver_city,
+        //     ver_country,
+        //     ver_document_type,
+        //     ver_recommender_address,
+        //     ver_recommender_first_name,
+        //     ver_recommender_last_name,
+        //     ver_recommender_occupation,
+        //     ver_recommender_title,
+        //     ver_recommender_mobile_no,
+        //   }).every((x) => x !== undefined && x !== null && x !== "");
+        //   break;
 
-        case 2:
+        case 1:
           const { per_avatar_url, per_main_image_url } =
             this.representativeDetails.imageModel;
           isEnabled = Object.values({
