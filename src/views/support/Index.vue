@@ -41,7 +41,7 @@
                 <a-select-option value=""> Select help category </a-select-option>
               </a-select>
               <a-input
-                  size="medium"
+                  medium
                   type="text"
                   class="w-25 search-ml"
                   placeholder="Search FAQs"
@@ -79,27 +79,27 @@
                 <div class="chat-area px-4">
                   <div class="position-relative">
                     <div class="chat-messages py-4 pr-1" id="chat-messages">
-                      <div class="position-relative">
-                        <div
-                            class="chat-message-right pb-4 position-relative">
+                      <div class="position-relative" v-for="(item, cIndex) in chats"
+                           :key="item.id"
+                           :id="chats.length === cIndex + 1 ? 'messagesid' : ''">
+                        <div class="chat-message-right pb-4 position-relative"
+                             v-if="(parseInt(item.senderId) == parseInt(getAuthUserId))"
+                             :class="{'conv-mb': chats.length !== cIndex + 1}">
                           <div class="text-right">
                             <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
                           </div>
-                          <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 white-space-pre">
-                            hello
-                          </div>
-                          <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">2021-12-31</div>
+                          <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 white-space-pre" v-html="item.body"></div>
+<!--                          <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">{{ messageCreatedAt(item.created_at) }}</div>-->
                         </div>
 
-                        <div
-                            class="chat-message-left pb-4 position-relative">
+                        <div class="chat-message-left pb-4 position-relative"
+                             :class="{'conv-mb': chats.length !== cIndex + 1}"
+                             v-else>
                           <div class="text-left">
                             <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
                           </div>
-                          <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 white-space-pre">
-                            Hello
-                          </div>
-                          <div class="text-muted small text-nowrap mt-2 position-absolute msg-left-created-at">2021-12-31</div>
+                          <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 white-space-pre" v-html="item.body"></div>
+<!--                          <div class="text-muted small text-nowrap mt-2 position-absolute msg-left-created-at">2021-12-31</div>-->
                         </div>
                       </div>
 
@@ -169,8 +169,17 @@
 
 <script>
 import ApiService from '@/services/api.service';
+import {format} from "timeago.js";
 export default {
   name: "Index",
+  sockets: {
+    connect: function () {
+      console.log('socket connected')
+    },
+    ping: function (data) {
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
   data() {
     return {
       tab: 'tab-1',
@@ -178,21 +187,76 @@ export default {
       Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
       customStyle: 'border: none; background: #ffffff',
       message: '',
-      chats: []
+      chats: [],
+      supportAdmin: null
     }
+  },
+  computed: {
+    getAuthUserId() {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      if (loggedUser) {
+        return loggedUser.id;
+      }
+      return null;
+    },
+  },
+  created() {
+    this.getSupportAdmin();
   },
   methods: {
     async sendMsg(e) {
       console.log(e);
       let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let receiver = this.supportAdmin ? this.supportAdmin.id : null;
       let payload = {
         sender: loggedUser.id,
-        receiver: 79,
+        receiver: receiver.toString(),
+        to: receiver.toString(),
         message: this.message,
-        created_at: new Date()
+        user: loggedUser,
+        support: true,
+        last_message: {
+          body: this.message,
+          created_at: new Date(),
+          sender: loggedUser,
+          senderId: loggedUser.id,
+          receiver: this.supportAdmin ? this.supportAdmin : null,
+          receiverId: this.supportAdmin ? this.supportAdmin.id : null,
+          seen: 0
+        }
       };
+      this.$socket.emit('send_message', payload);
+      this.chats.push(payload.last_message);
+      this.message = '';
       await ApiService.post('/v1/support-send-message', payload).then(response => {
         console.log(response);
+      });
+    },
+    async getSupportAdmin() {
+      let {data} = await ApiService.get('/v1/support-admin').then(res => res.data);
+      this.supportAdmin = data;
+    },
+    messageCreatedAt(time) {
+      return format(time);
+    },
+  },
+  mounted() {
+    let loggedUser = JSON.parse(localStorage.getItem('user'));
+    this.$socket.emit('ping', {user_id: loggedUser.id});
+
+    this.sockets.subscribe('receive_message', function (res) {
+      if(res.support) {
+        this.chats.push(res.last_message);
+      }
+    });
+  },
+  watch: {
+    chats: function(val) {
+      // console.log(val);
+      setTimeout(() => {
+        const messages = document.getElementById('chat-messages');
+        const messagesid = document.getElementById('messagesid');
+        messages.scrollTop = messagesid.offsetTop - 10;
       });
     }
   }
@@ -468,5 +532,8 @@ export default {
   @media (min-width: 768px) {
     display: none;
   }
+}
+.conv-mb {
+  margin-bottom: 30px;
 }
 </style>

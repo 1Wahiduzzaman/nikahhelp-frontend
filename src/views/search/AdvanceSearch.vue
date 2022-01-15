@@ -2,7 +2,7 @@
   <div>
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else>
-      <MainHeader />
+      <MainHeader @toggleCollapse="toggleCollapse" />
       <a-layout
         id="layout"
         style="background-color: #fff"
@@ -14,7 +14,7 @@
             overflowY: 'auto',
             overflowX: 'hidden',
           }"
-          class="bg-white shadow-default"
+          class="bg-white shadow-sidebar"
           v-model="collapsed"
           :trigger="null"
           collapsible
@@ -148,12 +148,21 @@ export default {
       });
     },
     async fetchInitialCandidate() {
+      let url = 'v1/home-searches?page=0&parpage=10'
+      let user = JSON.parse(localStorage.getItem("user"));
+      if(user.get_candidate?.pre_partner_age_min){
+        url += `&min_age=${user.get_candidate.pre_partner_age_min}`
+      }
+      if(user.get_candidate?.pre_partner_age_max){
+        url += `&max_age=${user.get_candidate.pre_partner_age_max}`
+      }
       // const res = await this.searchUser('v1/home-searches?page=0&parpage=10&min_age=20&max_age=40&ethnicity=Amara&marital_status=single');
       this.setLoading(true);
       try {
         const res = await this.searchUser(
           {
-            url: "v1/home-searches?page=0&parpage=10&ethnicity=Aboriginal&min_age=20&max_age=40",
+            // url: "v1/home-searches?page=0&parpage=10&min_age=20&max_age=40",
+            url: url,
             removePrevious: true
           }       
         );
@@ -201,6 +210,9 @@ export default {
         console.log(nextUserId, 'next userid')
       }
       
+    },
+    toggleCollapse() {
+      this.collapsed = !this.collapsed;
     }
   },
   created() {
@@ -281,5 +293,8 @@ export default {
       height: 100%;
     }
   }
+}
+.shadow-sidebar {
+  box-shadow: 0 0 10px 6px rgb(0 0 0 / 12%);
 }
 </style>

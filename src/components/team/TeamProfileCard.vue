@@ -2,7 +2,7 @@
   <div class="team-profile-box position-absolute">
     <div class="d-flex justify-content-between px-2 position-relative align-items-center">
       <h4 class="fs-20 text-white font-weight-bold py-2 cursor-pointer p-2" @click="$emit('toggleProfileCard')">&#8592;</h4>
-      <div class="cross-button-box mr-2 mt-2 d-flex justify-content-center align-items-center cursor-pointer py-1" @click="$emit('toggleProfileCard')">
+      <div class="cross-button-box mr-2 d-flex justify-content-center align-items-center cursor-pointer py-1" @click="$emit('toggleProfileCard')">
         &#10006;
       </div>
     </div>
@@ -65,9 +65,12 @@
 <!--          </tr>-->
         </table>
       </div>
-      <router-link :to="{name: 'Profile', query: { user_id: profileActive.user_id }}" v-if="profileActive.profile_from_type === 'member'">
-        <button class="btn btn-sm fs-14 text-white bg-primary mt-1 py-1 prof-detail">Profile Details</button>
-      </router-link>
+<!--      <router-link :to="{name: 'Profile', query: { user_id: profileActive.user_id }}" v-if="profileActive.profile_from_type === 'member'">-->
+<!--        <button class="btn btn-sm fs-14 text-white bg-primary mt-1 py-1 prof-detail">Profile Details</button>-->
+<!--      </router-link>-->
+      <button class="btn btn-sm fs-14 text-white bg-primary mt-1 py-1 prof-detail"
+              @click="viewProfile"
+              v-if="profileActive.profile_from_type === 'member'">Profile Details</button>
     </div>
   </div>
 </template>
@@ -150,6 +153,11 @@ export default {
       navigator.clipboard.writeText(this.getInvitationLink());
       this.copyBtnText = 'Link copied to clipboard';
     },
+    viewProfile() {
+      this.$router.push(
+          `/user/profile/${this.profileActive.user_id}`
+      );
+    }
   }
 }
 </script>
@@ -172,6 +180,7 @@ export default {
   margin-left: -8px;
   border-radius: 10px;
   z-index: 9;
+  bottom: 0;
 
   .position-relative {
     .cross-button-box {

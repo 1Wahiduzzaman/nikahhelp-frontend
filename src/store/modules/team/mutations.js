@@ -6,6 +6,7 @@ export default {
     state.create_team_step = step;
   },
   setUserTeamList(state, teamList) {
+    state.team_list = [];
     state.team_list = teamList;
   },
   setTeamInfo(state, payload) {

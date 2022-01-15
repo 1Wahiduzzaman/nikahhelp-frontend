@@ -12,7 +12,10 @@ export default {
       conwise_info:JSON.parse(localStorage.getItem("chat_coninfo")) || [],
       user_info:JSON.parse(localStorage.getItem("chat_uinfo")) || [],
       scrolldown_msg: false,
-      chats: []
+      chats: [],
+      activeTeam: null,
+      teamMembers: [],
+      online_users: []
     };
   },
   mutations,

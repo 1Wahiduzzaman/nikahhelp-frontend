@@ -11,7 +11,7 @@
               Advanced search coming soon
             </p>
             <ButtonComponent
-              @onClickButton="closeDialog"
+              @onClickButton="dialog = false"
               title="close"
               :isBlock="false"
             />
@@ -29,14 +29,12 @@ export default {
     ButtonComponent,
   },
   methods: {
-    closeDialog() {
-      this.$emit("closeDialog");
-    },
+    openDiag()  {
+      this.dialog = true
+    }
   },
-  props: {
-    dialog: {
-      default: false,
-    },
-  },
+  data: () => ({
+    dialog: false
+  }),
 };
 </script>

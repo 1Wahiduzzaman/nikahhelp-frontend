@@ -413,7 +413,8 @@ export default {
       },
       chatheadopen: null,
       isLoading: false,
-      fromChatItem: null
+      fromChatItem: null,
+      active_team_id: null
     }
   },
   components: {
@@ -526,7 +527,7 @@ export default {
     }
   },
   created() {
-    this.$store.state.chat.chats = [];
+    // this.$store.state.chat.chats = [];
     this.getActiveTeamId();
   },
   mounted() {
@@ -542,54 +543,56 @@ export default {
       });
 
       this.sockets.subscribe('receive_message', function (res) {
-        res.sender = res.senderInfo;
-        // console.log(res)
-        if(this.chat_type && (this.activeTeam == res.target_opened_chat || this.one_to_one_user == res.target_opened_chat || this.inConnectedChat || this.private_chat)) {
-          console.log('I am')
-          this.chats.push(res);
-          // if(this.chats.length <= 0) {
-          //   this.chats.push(res);
-          // } else {
-          //   this.chats.unshift(res);
-          // }
-        }
+        if(!res.support || res.support == null || res.support == undefined) {
+          res.sender = res.senderInfo;
+          // console.log(res)
+          if(this.chat_type && (this.activeTeam == res.target_opened_chat || this.one_to_one_user == res.target_opened_chat || this.inConnectedChat || this.private_chat)) {
+            console.log('I am')
+            this.chats.push(res);
+            // if(this.chats.length <= 0) {
+            //   this.chats.push(res);
+            // } else {
+            //   this.chats.unshift(res);
+            // }
+          }
 
-        let teamPersonalChat = this.teamChat.find(item => item.user_id == res.senderId);
-        if(teamPersonalChat) {
-          teamPersonalChat.message.body = res.body;
-          teamPersonalChat.message.created_at = res.created_at;
-          teamPersonalChat.message.seen = 0;
-        }
-        let teamChat = this.teamChat.find(item => item.team_id == res.target_opened_chat);
-        if(teamChat) {
-          teamChat.last_group_message.body = res.body;
-          teamChat.last_group_message.created_at = res.created_at;
-          teamChat.last_group_message.seen = 0;
+          let teamPersonalChat = this.teamChat.find(item => item.user_id == res.senderId);
+          if(teamPersonalChat) {
+            teamPersonalChat.message.body = res.body;
+            teamPersonalChat.message.created_at = res.created_at;
+            teamPersonalChat.message.seen = 0;
+          }
+          let teamChat = this.teamChat.find(item => item.team_id == res.target_opened_chat);
+          if(teamChat) {
+            teamChat.last_group_message.body = res.body;
+            teamChat.last_group_message.created_at = res.created_at;
+            teamChat.last_group_message.seen = 0;
 
-          teamChat.message.body = res.body;
-          teamChat.message.created_at = res.created_at;
-          teamChat.message.seen = 0;
-        }
+            teamChat.message.body = res.body;
+            teamChat.message.created_at = res.created_at;
+            teamChat.message.seen = 0;
+          }
 
-        let recentTeamMemberChat = this.chatHistory.find(item => item.user_id == res.target_opened_chat);
-        if(recentTeamMemberChat) {
-          recentTeamMemberChat.message.body = res.body;
-          recentTeamMemberChat.message.created_at = res.created_at;
-          recentTeamMemberChat.message.seen = 0;
-        }
+          let recentTeamMemberChat = this.chatHistory.find(item => item.user_id == res.target_opened_chat);
+          if(recentTeamMemberChat) {
+            recentTeamMemberChat.message.body = res.body;
+            recentTeamMemberChat.message.created_at = res.created_at;
+            recentTeamMemberChat.message.seen = 0;
+          }
 
-        let recentPrivateChat = this.chatHistory.find(item => res.target_opened_chat && item.private_team_chat_id == res.target_opened_chat.private_team_chat_id);
-        if(recentPrivateChat) {
-          recentPrivateChat.message.body = res.body;
-          recentPrivateChat.message.created_at = res.created_at;
-          recentPrivateChat.message.seen = 0;
-        }
+          let recentPrivateChat = this.chatHistory.find(item => res.target_opened_chat && item.private_team_chat_id == res.target_opened_chat.private_team_chat_id);
+          if(recentPrivateChat) {
+            recentPrivateChat.message.body = res.body;
+            recentPrivateChat.message.created_at = res.created_at;
+            recentPrivateChat.message.seen = 0;
+          }
 
-        let connectedTeamChat = this.connectedTeam.find(item => item.id == res.team_connection_id);
-        if(connectedTeamChat) {
-          connectedTeamChat.message.body = res.body;
-          connectedTeamChat.message.created_at = res.created_at;
-          connectedTeamChat.message.seen = 0;
+          let connectedTeamChat = this.connectedTeam.find(item => item.id == res.team_connection_id);
+          if(connectedTeamChat) {
+            connectedTeamChat.message.body = res.body;
+            connectedTeamChat.message.created_at = res.created_at;
+            connectedTeamChat.message.seen = 0;
+          }
         }
       });
 
@@ -652,6 +655,7 @@ export default {
           openModalRoute(this, "manage_team_redirect");
         }, 2000);
       } else {
+        this.active_team_id = JwtService.getTeamIDAppWide();
         this.loadTeamChat();
         this.loadChatHistory();
         this.loadConnectedGroup();
@@ -751,7 +755,7 @@ export default {
         }
       });
 
-      let lastGroupMsg = [{
+      let lastGroupMsg = data.last_group_msg ? [{
         label: 'Group chat',
         state: 'Typing...',
         name: data.last_group_msg.team.name,
@@ -759,7 +763,7 @@ export default {
         typing_status: 0,
         typing_text: '',
         message: pick(data.last_group_msg, messageKeys)
-      }]
+      }] : []
 
       let connectedMsg = data.connected_team_msgs.map(item => {
         item.label = 'Connected Team';
@@ -774,7 +778,7 @@ export default {
     },
     async loadTeamChat() {
       try {
-        let {data} = await ApiService.get('/v1/team-chat').then(res => res.data);
+        let {data} = await ApiService.get(`/v1/team-chat?team_id=${this.active_team_id}`).then(res => res.data);
         if (data && data.team_members) {
           this.teamMembers = map(data.team_members, item => {
             return item.user_id.toString();
@@ -1031,6 +1035,7 @@ export default {
       let url = '';
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       let payload = {
+        support: false,
         team_id: this.activeTeam.toString(),
         body: this.msg_text,
         message: this.msg_text,
@@ -1106,6 +1111,7 @@ export default {
       }
 
       let payload = {
+        support: false,
         to_team_id: to_team_id,
         from_team_id: this.activeTeam,
         sender: loggedUser.id,
@@ -1139,6 +1145,7 @@ export default {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       let url = "connected-send-private-message";
       let payload = {
+        support: false,
         body: this.msg_text,
         message: this.msg_text,
         created_at: new Date(),

@@ -78,9 +78,9 @@
         iconHeight="14px"
         :isSmall="true"
         :responsive="false"
-        :title="candidate.is_short_listed ? 'Disconnect' : 'Connect'"
-        icon="/assets/icon/connection-secondary.svg"
-        :customEvent="candidate.is_connected ? 'removeConnection' : 'addConnection'"
+        :title="candidate.is_connect ? 'Disconnect' : 'Connect'"
+        icon="/assets/icon/connect-s.svg"
+        :customEvent="candidate.is_connect ? 'removeConnection' : 'addConnection'"
         @onClickButton="onClickButton"
       />
     </div>
@@ -90,9 +90,9 @@
         iconHeight="14px"
         :isSmall="true"
         :responsive="false"
-        :title="candidate.is_short_listed ? 'TeamUnlist' : 'TeamList'"
-        icon="/assets/icon/star-fill-secondary.svg"
-        :customEvent="candidate.is_connected ? 'removeTeam' : 'addTeam'"
+        :title="candidate.is_team_listed ? 'TeamUnlist' : 'TeamList'"
+        icon="/assets/icon/team.svg"
+        :customEvent="candidate.is_team_listed ? 'removeTeam' : 'addTeam'"
         @onClickButton="onClickButton"
       />
       <ButtonComponent
@@ -154,7 +154,9 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         connectToCandidate: 'search/connectCandidate',
         blockACandidate: 'search/blockCandidate',
         shortListCandidate: 'search/shortListCandidate',
+        teamListedCandidate: 'search/teamListedCandidate',
         fetchProfileDetail: 'search/fetchProfileDetail',
+        teamListCandidate: 'search/teamListCandidate',
 
       }),
       onClickButton(eventData) {
@@ -173,6 +175,12 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         if(eventData.event == 'removeShortList') {
           this.removeFroShortList();
         }
+        if(eventData.event == 'addTeam') {
+          this.addTeamList();
+        }
+        if(eventData.event == 'removeTeam') {
+          this.removeFromTeamList();
+        }
 
       },
       shortList() {
@@ -180,6 +188,7 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
       },
       async connectCandidate() {
         let myTeamId = JwtService.getTeamIDAppWide();
+        console.log(myTeamId, '>>>>>>>')
         if(!myTeamId) {
           this.showError("You don't have a team")
            return;
@@ -189,7 +198,7 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
            return;
         }
         let data = {
-          userId: this.candidate.team_id,
+          userId: this.candidate.user_id,
           url: 'v1/send-connection-request',
           payload: {
             from_team_id: myTeamId,
@@ -198,7 +207,11 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         }
         try {
           let res = await this.connectToCandidate(data)
-          console.log(res, '>>>>>>>>>>.')
+          this.$success({
+            title: "Connection Request Sent Successfully!",
+            content: res.message,
+            centered: true,
+          });
         } catch (e) {
           if(e.response) {
             this.showError(e.response.data.message)
@@ -207,13 +220,18 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         
       },
       async addShortList() {
+        let loggedUser = JSON.parse(localStorage.getItem('user'));
         let data = {
-          url: 'v1/short-listed-candidates/store',
+          url: `v1/short-listed-candidates/store?shortlisted_by=${loggedUser.id}&user_id=${this.candidate.user_id}`,
           value: true,
           actionType: 'post',
           user_id: this.candidate.user_id,
+          params: {
+            shortlisted_by: loggedUser.id,
+            user_id: this.candidate.user_id
+          },
           payload: {
-            shortlisted_by: JwtService.getUserId(),
+            shortlisted_by: loggedUser.id,
             user_id: this.candidate.user_id
           }
         }
@@ -224,7 +242,26 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
             this.showError(e.response.data.message)
           }
         }
-        
+      },
+      async addTeamList() {
+        let loggedUser = JSON.parse(localStorage.getItem('user'));
+        let data = {
+          url: `v1/team-short-listed-candidates/store`,
+          value: true,
+          actionType: 'post',
+          user_id: this.candidate.user_id,
+          payload: {
+            team_listed_by: loggedUser.id,
+            user_id: this.candidate.user_id
+          }
+        }
+        try {
+          await this.teamListedCandidate(data)
+        } catch (e) {
+          if(e.response) {
+            this.showError(e.response.data.message)
+          }
+        }
       },
       async removeFroShortList() {
         let data = {
@@ -238,6 +275,48 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         }
         try {
           await this.shortListCandidate(data)
+        } catch (e) {
+          if(e.response) {
+            this.showError(e.response.data.message)
+          }
+        }
+        
+      },
+      async addTeamList() {
+        let data = {
+          url: `v1/team-short-listed-candidates/store`,
+          value: true,
+          actionType: 'post',
+          user_id: this.candidate.user_id,
+          payload: {
+            team_listed_by: JwtService.getUserId(),
+            user_id: this.candidate.user_id
+          }
+        }
+        try {
+          let res = await this.teamListCandidate(data)
+          if(res.status_code == 422) {
+            this.showError('Something went wrong!')
+          }
+        } catch (e) {
+          if(e.response) {
+            this.showError(e.response.data.message)
+          }
+        }
+        
+      },
+      async removeFromTeamList() {
+        let data = {
+          url: 'v1/delete-team-short-listed-by-candidates ',
+          value: false,
+          actionType: 'delete',
+          user_id: this.candidate.user_id,
+          payload: {
+            user_id: this.candidate.user_id
+          }
+        }
+        try {
+          await this.teamListCandidate(data)
         } catch (e) {
           if(e.response) {
             this.showError(e.response.data.message)

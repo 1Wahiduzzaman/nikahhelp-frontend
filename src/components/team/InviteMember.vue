@@ -43,7 +43,7 @@
           >
             <a-select
                 placeholder="Relationship"
-                class="mt-2 fs-14"
+                class="mt-2 fs-14 mb-2"
                 v-model="invitationObject.relationship"
                 :disabled="invitationObject.add_as_a == 'Candidate'"
                 v-if="from === 'details-card'"
@@ -61,38 +61,40 @@
             </a-select>
           </a-tooltip>
 
-          <button class="btn attach-link-btn btn-sm py-2 mt-2" @click="showUserBox = true" v-if="!showUserBox">Attach an user</button>
-          <button class="btn attach-link-btn btn-sm py-2 mt-2" @click="removeAttachedUser()" v-if="showUserBox">Remove attached user</button>
-          <button class="btn invitation-link-btn btn-block btn-sm py-2 mt-2" @click="generateLink" v-if="!showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
+          <button class="btn attach-link-btn btn-sm py-2 mb-2" @click="showUserBox = true" v-if="!showUserBox">Attach an user</button>
+<!--          <button class="btn attach-link-btn btn-sm py-2 mt-2" @click="removeAttachedUser()" v-if="showUserBox">Remove attached user</button>-->
+          <button class="btn invitation-link-btn btn-block btn-sm py-2 mb-2" @click="generateLink" v-if="!showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
         </div>
 
-        <div class="mt-2" v-if="showUserBox">
+        <div class="" v-if="showUserBox">
 <!--          <h6 class="text-white fs-14">Attach a user to this invitation</h6>-->
-          <a-input ref="userNameInput" class="mt-1" placeholder="Search email or user ID" v-model="user_email" @keyup="searchMember()" medium>
-            <a-icon slot="suffix" type="info-circle" style="color: rgba(0,0,0,.45)" />
+          <a-input ref="userNameInput" class="mt-1" placeholder="Search email or user ID" v-model="user_email" @input="searchMember()" medium>
+            <a-icon slot="suffix" type="loading" style="color: rgba(0,0,0,.45)" v-if="searchLoading" />
+            <a-icon slot="suffix" type="info-circle" style="color: rgba(0,0,0,.45)" v-if="!searchLoading" />
           </a-input>
         </div>
 <!--        <span class="text-white fs-12 fw-500 ml-2">Invited/Suggested/Searched user</span>-->
       </div>
-      <div class="suggestion-box mt-4 mx-4 px-2" :class="{'details-suggestion-card': from === 'details-card'}">
-        <div class="user d-flex position-relative" v-if="userObj && userObj.user">
-          <img src="https://picsum.photos/200" alt="avatar" class="user-avatar">
-          <div class="d-flex justify-content-between ml-2">
+      <div class="suggestion-box mt-4 px-4" :class="{'details-suggestion-card': from === 'details-card'}">
+        <div class="user d-flex position-relative mb-2" v-if="userObj && userObj.user">
+          <img src="https://picsum.photos/200" alt="avatar" class="user-avatar" />
+          <div class="d-flex justify-content-between align-items-center ml-2">
             <div class="short-info">
               <h4 class="fs-14 text-white fw-700">{{ userObj.user && userObj.user.full_name ? userObj.user.full_name : 'N/A' }}</h4>
               <h4 class="fs-12 text-white fw-500 candidate-type">Profile type: {{ userObj.user ? profileType[userObj.user.account_type] : 'N/A' }}</h4>
             </div>
             <button class="btn btn-sent position-absolute text-white cursor-default" v-if="userObj.invitation_status == 2">Joined</button>
             <button class="btn btn-sent btn-outline-secondary position-absolute text-white cursor-default" v-if="userObj.invitation_status == 1">Sent</button>
-            <button class="btn btn-success position-absolute" :disabled="isSuccess"
-                    v-if="userObj.invitation_status == 0" @click="attachUser()">
-              {{ userObj && userObj.user && userObj.user.email == invitationObject.email ? 'Invited' : 'Invite' }}
-            </button>
+<!--            <button class="btn btn-success position-absolute" :disabled="isSuccess"-->
+<!--                    v-if="userObj.invitation_status == 0" @click="attachUser()">-->
+<!--              {{ userObj && userObj.user && userObj.user.email == invitationObject.email ? 'Invited' : 'Invite' }}-->
+<!--            </button>-->
+            <a-checkbox class="position-absolute btn-sent" @change="attachUser" v-model="attached" v-if="userObj.invitation_status == 0"></a-checkbox>
           </div>
         </div>
-        <button class="btn invitation-link-btn btn-block btn-sm py-2 mt-2" @click="generateLink" v-if="showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
+        <button class="btn invitation-link-btn btn-block btn-sm py-2" @click="generateLink" v-if="showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
       </div>
-      <div class="link-box px-4 position-absolute w-full" v-if="invitationObject.invitation_link" :class="{'link-box-empty': !showUserBox}">
+      <div class="link-box px-4 position-absolute w-full" :class="{'link-box-empty': !showUserBox}">
         <div class="w-full mt-2">
           <input type="text" class="form-control invite-link text-white fs-12 py-5" id="copyInput" :value="invitationObject.visible_invitation_link" disabled />
           <button class="copy-button position-absolute px-2" @click="copyToken">{{ copyBtnText }}</button>
@@ -105,8 +107,17 @@
 
 <script>
 import ApiService from '@/services/api.service';
+import Notification from "@/common/notification.js";
 export default {
   name: "InviteMember",
+  sockets: {
+    connect: function () {
+      console.log('socket connected')
+    },
+    ping: function (data) {
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
   props: ['team', 'from'],
   data() {
     return {
@@ -118,6 +129,8 @@ export default {
       showUserBox: false,
       isLoading: false,
       isSuccess: false,
+      searchLoading: false,
+      attached: false,
       invitationObject: {
         role: undefined,
         add_as_a: undefined,
@@ -131,14 +144,35 @@ export default {
     }
   },
   methods: {
+    socketNotification(payload) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.sender = loggedUser.id;
+      Notification.storeNotification(payload);
+      payload.created_at = new Date();
+      payload.seen = 0;
+      payload.sender = loggedUser;
+      if(payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map(item => {
+          return item.toString();
+        });
+        this.$socket.emit('notification', payload);
+      }
+    },
     async searchMember() {
+      this.searchLoading = true;
       await ApiService.post(`/v1/user-info`, {
         email: this.user_email,
         team_id: this.team.id
       }).then(response => {
+        this.invitationObject.email = null;
+        this.attached = false;
         this.userObj = response.data.data;
+        this.searchLoading = false;
       }).catch(e => {
         this.userObj = {};
+        this.searchLoading = false;
+        this.invitationObject.email = null;
+        this.attached = false;
       });
     },
     inviteMember() {
@@ -152,7 +186,11 @@ export default {
       }
     },
     attachUser() {
-      this.invitationObject.email = this.userObj.user.email;
+      if(this.attached) {
+        this.invitationObject.email = this.userObj.user.email;
+      } else {
+        this.invitationObject.email = null;
+      }
     },
     removeAttachedUser() {
       this.invitationObject.email = null;
@@ -243,6 +281,13 @@ export default {
                 title: "Invited successfully",
                 center: true,
               });
+              let notifyObj = {
+                receivers: data.receivers,
+                title: `invited you to join ${self.team.name} team as ${self.invitationObject.role}`,
+                team_id: self.team.id,
+                team_temp_name: self.team.name
+              };
+              self.socketNotification(notifyObj);
             } else {
               self.$error({
                 title: "Something went wrong",
@@ -288,7 +333,8 @@ export default {
   cursor: default !important;
 }
 .add-member-box {
-  height: 500px;
+  //height: 550px;
+  height: 100%;
   width: 100%;
   top: 0;
   left: 0;
@@ -319,6 +365,7 @@ export default {
   //  width: 414px;
   //}
   .member-box {
+    height: 100%;
     .cross-button-box {
       width: 30px;
       height: 30px;
@@ -354,7 +401,8 @@ export default {
       }
     }
     .link-box {
-      bottom: -86px;
+      //bottom: -136px;
+      bottom: 0;
       background: #3A3092;
       border-radius: 14px;
       .w-full {
@@ -376,9 +424,9 @@ export default {
 }
 .from-data-card {
   width: 93%;
-  top: 32px;
+  top: 12px;
   left: -1px;
-  height: 500px;
+  height: 550px;
   border-radius: 10px;
   margin-left: 16px;
   background: $bg-primary;
@@ -431,6 +479,7 @@ export default {
   }
 }
 .link-box-empty {
-  bottom: -86px !important;
+  //bottom: -136px !important;
+  bottom: 0;
 }
 </style>

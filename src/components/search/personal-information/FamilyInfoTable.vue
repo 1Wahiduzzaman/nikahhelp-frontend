@@ -12,7 +12,7 @@
                 <td class="text--secondary text-subtitle-1">{{family.mother_name}}</td>
             </tr> -->
             <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 150px">Father's Profession</td>
+                <td class="text--disabled text-subtitle-1" style="width: 170px">Father's Profession</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
                 <td class="text--secondary text-subtitle-1">{{ family.father_profession }}</td>
             </tr>
@@ -27,7 +27,7 @@
                 <td class="text--secondary text-subtitle-1">{{ family.siblings_desc }}</td>
             </tr>
             <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Ancestral home same as country of birth</td>
+                <td class="text--disabled text-subtitle-1" style="width: 50px">Ancestral home same as country of birth?</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
                 <td class="text--secondary text-subtitle-1">{{ family.country_of_origin }}</td>
             </tr>

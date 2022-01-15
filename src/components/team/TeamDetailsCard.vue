@@ -1034,7 +1034,7 @@ export default {
 				};
 				console.log(_payload);
 				await ApiService.post("v1/leave-team", {
-					team_id: this.teamData.id,
+					team_id: this.teamData.team_id,
 					user_id: this.$store.getters.userInfo.id,
 					new_owner: payload.member_id,
 				})
@@ -1297,6 +1297,7 @@ export default {
 		},
 		checkTurnedOnSwitch() {
 			let _team_id = JwtService.getTeamIDAppWide();
+      console.log(_team_id)
 			// console.log("did not got")
 
 			if (_team_id == this.teamData.team_id) {
@@ -1445,7 +1446,7 @@ export default {
 
         try {
 					await ApiService.post("v1/team-turn-on", {
-						team_id: this.teamData.team_id,
+						team_id: this.teamData.id,
 					})
 						.then((data) => {
 							if (data.data.status == "FAIL") {
@@ -1460,7 +1461,7 @@ export default {
 									title: "Success",
 									content: "Selected Team Activated",
 									onOk() {
-										vm.$emit("teamListUpdated");
+										vm.$emit("customLoad");
 										setTimeout(() => vm.$router.go(), 100);
 									},
 								});
@@ -1881,12 +1882,12 @@ export default {
 // start css for team-card
 .team-card {
 	position: relative;
-	min-height: 500px;
+	min-height: 550px;
 	width: 100%;
 	padding: 10px 8px;
 	border-radius: 10px;
 	background-color: #ffffff;
-	margin-top: 20px;
+	margin-bottom: 20px;
 	box-shadow: 0px 0px 10px 1px rgba(63, 6, 17, 0.3);
 
 	.team-card-header {
@@ -2015,11 +2016,11 @@ export default {
 			}
 		}
 		.img-logo {
-			border-radius: 50%;
-			width: 50px;
-			height: 50px;
+			border-radius: 12px;
+			width: 60px;
+			height: 60px;
 			margin-left: 5px;
-			margin-top: 5px;
+			margin-top: -4px;
 		}
 		.info-content {
 			.member-name,

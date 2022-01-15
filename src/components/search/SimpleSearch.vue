@@ -88,12 +88,18 @@
 					<div class="mt-4">
 						<div class="select-box">
 							<select class="custom-select" v-model="employmentStatus">
-								<option value="">Select Employment Status</option>
-
 								<option value="" disabled>Select Employment Status</option>
-								<option value="Employed">Employed</option>
-								<option value="Unemployed">Unemployed</option>
 								<option value="Don't Mind">Don't Mind</option>
+								<option value="Unemployed">Employed full-time</option>
+								<option value="Unemployed">Employed part-time</option>
+								<option value="Employed">Self-employed</option>
+								<option value="Employed">Homemaker</option>
+								<option value="Employed">Student</option>
+								<option value="Employed">Retired</option>
+								<option value="Employed">On professional training</option>
+								<option value="Employed">On apprenticeship training</option>
+								<option value="Employed">Own a business</option>
+								<option value="Employed">Other</option>
 							</select>
 						</div>
 					</div>
@@ -238,7 +244,16 @@
 					<div class="row">
 						<div class=" mt-12 pt-10">
 							<div class="btn-adv-search-wrapper">
-								<button class="btn btn-primary" @click="handleSearch">
+								<ButtonComponent
+									iconHeight="30px"
+									:block="true"
+									:responsive="false"
+									title="Search"
+									icon="/assets/icon/search-secondary.svg"
+									customEvent="handleSearch"
+									@onClickButton="onClickButton"
+								/>
+								<!-- <button class="btn btn-primary" @click="handleSearch">
 									<img src="@/assets/icon/search.svg" alt="Icon" height="25px" />
 									<g data-v-ac485448="" id="Layer_2" data-name="Layer 2">
 										<g data-v-ac485448="" id="draw_boxes" data-name="draw boxes">
@@ -258,12 +273,11 @@
 											></path>
 										</g>
 									</g>
-									<!-- </svg> -->
 									Search
-								</button>
+								</button> -->
 								<div>
 									<a id="topper" class="d-noe" ref="top" href="#top"></a>
-									<button @click="showADvancedSearchModal = true" class="btn-adv-search">Advanced Search</button>
+									<button @click="$refs.advDiag.openDiag()" class="btn-adv-search">Advanced Search</button>
 								</div>
 							</div>
 							<select-team-modal
@@ -273,7 +287,7 @@
 							></select-team-modal>
 							<ComingSoonModal
 								@closeDialog="closeDialog"
-								:dialog="showADvancedSearchModal"
+								ref="advDiag"
 							/>
 							
 						</div>
@@ -286,6 +300,7 @@
 </template>
 
 <script>
+import ButtonComponent from '@/components/atom/ButtonComponent'
 import SelectTeamModal from "@/components/team/Modals/SelectTeamModal.vue";
 import ComingSoonModal from "@/components/search/ComingSoonModal"
 import ApiService from "@/services/api.service";
@@ -298,6 +313,12 @@ import {mapGetters, mapMutations, mapActions} from 'vuex'
 
 export default {
 	name: 'SimpleSearch',
+	components: {
+		SelectTeamModal,
+		SelectGroup,
+		ComingSoonModal,
+		ButtonComponent
+	},
 	data() {
 		return {
 			removePrevious: false,
@@ -346,17 +367,18 @@ export default {
 		})
 	},
 	created() {
-		this.getOccupations();
-	},
-	components: {
-		SelectTeamModal,
-		SelectGroup,
-		ComingSoonModal
+		this.$store.dispatch("getCountries");
+		this.$store.dispatch("getStudyLevelOptions");
+		this.$store.dispatch("getReligionOptions");
+		this.$store.dispatch("getOccupations");
 	},
 	methods: {
 		...mapActions({
 			searchUser: 'search/searchUser',
 		}),
+		onClickButton(data) {
+			if(data.event == 'handleSearch') this.handleSearch()
+		},
 		closeDialog() {
 			this.showADvancedSearchModal = false;
 		},
@@ -542,7 +564,8 @@ export default {
 .btn-adv-search-wrapper {
 	position: fixed;
 	left: 12px;
-	bottom: 25px;
+	width: 230px;
+	bottom: 15px;
 	.btn:first-child {
 		text-align: center;
 		width: 220px;

@@ -1,21 +1,75 @@
 <template>
     <div class="mt-10 pb-5">
-        <Scroller />
+        <v-row class="mb-5">
+            <v-col cols="12" md="6">
+                <div class="d-flex justify-space-between d-md-none">
+                    <OutlinedButton
+                        :name="copyProfileText"
+                        customEvent="onClickCopyText"
+                        @onClickCopyText="onClickCopyText"
+                    />
+                    <OutlinedButton 
+                        name="Represented By:"
+                        customEvent="onClickCopyText"
+                    />
+                </div>
+                <div class="d-none d-md-flex">
+                    <OutlinedButton
+                        :name="copyProfileText"
+                        customEvent="onClickCopyText"
+                        @onClickCopyText="onClickCopyText"
+                    />
+                    <OutlinedButton 
+                        name="Represented By:"
+                        customEvent="onClickCopyText"
+                    />
+                </div>
+            </v-col>
+            <v-col cols="12" md="6">
+                <Scroller />
+            </v-col>
+        </v-row>
+        <!-- <div class="flex flex-wrap ">
+            <div class="flex justify-end">
+                <OutlinedButton
+                    :name="copyProfileText"
+                    customEvent="onClickCopyText"
+                    @onClickCopyText="onClickCopyText"
+                />
+                <OutlinedButton 
+                    name="Represented By:"
+                    customEvent="onClickCopyText"
+                />
+            </div>
+            <Scroller />
+        </div> -->
         <fieldset class="">
             <legend class="ml-8 px-1"><span>Personal Information</span></legend>
             <v-container fluid class="pt-0 px-5">
                 <v-row dense>
                     <v-col class="pt-1" cols="12" md="8">
-                        <PersonalInformationTable />
-                        <CardInfo height="269px" class="mt-2"/>
+                        <PersonalInformationTable :data="profileDetails"/>
+                        <CardInfo :detail="profileDetails.personal.per_about" height="149px" class="mt-2"/>
                     </v-col>
                     <v-col ref="family-information" class="pt-1" cols="12" md="4">
-                        <MoreAbout />
+                        <MoreAbout :data="profileDetails"/>
                     </v-col>
-                    <v-col class="pt-1 mb-5" cols="12">
+                    <v-col class="pt-1 mb-2" cols="12">
                         <CardInfo
+                            :showDownloadBtn="true"
                             title="Additional Information"
                             class="mt-2"
+                        />
+                    </v-col>
+                    <v-col class="pt-1 mb-5" cols="12" md="6">
+                        <CardInfo
+                            title="I'm thankful for"
+                            :detail="profileDetails.personal.per_thankfull_for"
+                        />
+                    </v-col>
+                    <v-col class="pt-1 mb-5" cols="12" md="6">
+                        <CardInfo
+                            title="I improve myself"
                         />
                     </v-col>
                 </v-row>
@@ -26,7 +80,7 @@
         <v-container fluid class="pt-0 px-5">
             <v-row dense>
                 <v-col class="pt-1 mb-5" cols="12" md="7">
-                    <FamilyInfoTable />
+                    <FamilyInfoTable :data="profileDetails"/>
                 </v-col>
                 <v-col class="pt-1 mb-5" cols="12" md="5">
                     <CardInfo />
@@ -34,31 +88,153 @@
             </v-row>
         </v-container>
         </fieldset>
-         <fieldset class="-mt-15">
-           <legend id="my-partner-pref" class="ml-8 bg-white px-1"><span>My partner preference</span></legend>
-           <v-container fluid class="pt-0 px-5">
-                <v-row dense>
-                    <v-col class="pt-1" cols="12" md="7">
-                        <MyPrefTable />
+        <fieldset class="-mt-15">
+        <legend id="my-partner-pref" class="ml-8 bg-white px-1"><span>My partner preference</span></legend>
+        <v-container fluid class="pt-0 px-5">
+            <v-row dense>
+                <v-col class="pt-1" cols="12" md="7">
+                    <MyPrefTable
+                        :preference="profileDetails.preference"
+                        :countries="profileDetails.preference.preferred_countries"
+                    />
+                </v-col>
+                <v-col class="pt-1" cols="12" md="5">
+                    <CardInfo
+                        title="What I'm Looking for"
+                        :detail="profileDetails.preference.pre_description"
+                    />
+                </v-col>
+                <v-col class="pt-1" cols="12">
+                    <CardInfo
+                        title="Other requirements"
+                        :detail="profileDetails.preference.pre_other_preference"
+                    />
+                </v-col>
+                <v-col class="pt-1" cols="12">
+                    <v-card class="px-3 py-5">
+                        <h5>More about preferred partner</h5>
+                        <p>How Important following characters are to me</p>
+                        <hr />
+                        <!-- Character -->
+                        <rating-component
+                        title="Strength of character from a moral point of view"
+                        :value="
+                            profileDetails.preference.pre_strength_of_character_rate
+                        "
+                        :valueString="
+                            profileDetails.preference
+                            .pre_strength_of_character_rate_string
+                        "
+                        ></rating-component>
+                        <!-- Looks and Apperance -->
+                        <rating-component
+                        title="Looks and apperance"
+                        :value="
+                            profileDetails.preference.pre_look_and_appearance_rate
+                        "
+                        :valueString="
+                            profileDetails.preference
+                            .pre_look_and_appearance_rate_string
+                        "
+                        ></rating-component>
+                        <!-- Religiosity/Faith -->
+                        <rating-component
+                        title="Religiosity/ Faith"
+                        :value="
+                            profileDetails.preference.pre_religiosity_or_faith_rate
+                        "
+                        :valueString="
+                            profileDetails.preference
+                            .pre_religiosity_or_faith_rate_string
+                        "
+                        ></rating-component>
+                        <!-- Manners, Social skills and ethics -->
+                        <!-- <rating-component
+                        title="Manners, Social skills and ethics"
+                        :value="
+                            candidateData.preference
+                            .pre_manners_socialskill_ethics_rate
+                        "
+                        :valueString="
+                            candidateData.preference
+                            .pre_manners_socialskill_ethics_rate_string
+                        "
+                        ></rating-component> -->
+                        <!-- Emotional Maturity and compatibility -->
+                        <!-- <rating-component
+                        title="Emotional Maturity and compatibility"
+                        :value="
+                            candidateData.preference.pre_emotional_maturity_rate
+                        "
+                        :valueString="
+                            candidateData.preference
+                            .pre_emotional_maturity_rate_string
+                        "
+                        ></rating-component> -->
+                        <!-- Good Listener -->
+                        <!-- <rating-component
+                        title="Good Listener"
+                        :value="candidateData.preference.pre_good_listener_rate"
+                        :valueString="
+                            candidateData.preference.pre_good_listener_rate_string
+                        "
+                        ></rating-component> -->
+                        <!-- Good talker -->
+                        <!-- <rating-component
+                        title="Good talker"
+                        :value="candidateData.preference.pre_good_talker_rate"
+                        :valueString="
+                            candidateData.preference.pre_good_talker_rate_string
+                        "
+                        ></rating-component> -->
+                        <!-- Willing to learn -->
+                        <!-- <rating-component
+                        title="Willing to learn"
+                        :value="candidateData.preference.pre_wiling_to_learn_rate"
+                        :valueString="
+                            candidateData.preference.pre_wiling_to_learn_rate_string
+                        "
+                        ></rating-component> -->
+                        <!-- Family or Social Status-->
+                        <!-- <rating-component
+                        title="Family or Social Status"
+                        :value="
+                            candidateData.preference.pre_family_social_status_rate
+                        "
+                        :valueString="
+                            candidateData.preference
+                            .pre_family_social_status_rate_string
+                        "
+                        ></rating-component> -->
+                        <!-- Employment or Wealth-->
+                        <!-- <rating-component
+                        title="Employment or Wealth"
+                        :value="
+                            candidateData.preference.pre_employment_wealth_rate
+                        "
+                        :valueString="
+                            candidateData.preference
+                            .pre_employment_wealth_rate_string
+                        "
+                        ></rating-component> -->
+                        <!-- Education -->
+                        <!-- <rating-component
+                        title="Education"
+                        :value="candidateData.preference.pre_education_rate"
+                        :valueString="
+                            candidateData.preference.pre_education_rate_string
+                        "
+                        ></rating-component> -->
+                    </v-card>
                     </v-col>
-                    <v-col class="pt-1" cols="12" md="5">
-                        <CardInfo
-                            title="What I'm Looking for"
-                        />
-                    </v-col>
-                    <v-col class="pt-1" cols="12">
-                        <CardInfo
-                            title="Other requirements"
-                            detail="British only | No visa seekers | No students"
-                        />
-                    </v-col>
-                </v-row>
-            </v-container>
-         </fieldset>
+            </v-row>
+        </v-container>
+        </fieldset>
     </div>
 </template>
 
 <script>
+import OutlinedButton from '@/components/atom/OutlinedButton'
 import PersonalInformationTable from './PersonalInformationTable.vue'
 import FamilyInfoTable from './FamilyInfoTable.vue'
 import MyPrefTable from './MyPrefTable.vue'
@@ -66,22 +242,39 @@ import CardInfo from '@/components/atom/CardInfo'
 import MoreAbout from './MoreAbout.vue'
 import {mapGetters} from 'vuex'
 import Scroller from  '@/components/atom/Scroller'
+import RatingComponent from "@/components/profile/RatingComponent.vue";
 export default {
     name: 'PersonalInformation',
+    data: () => ({
+        copyProfileText: 'Copy Profile URL'
+    }),
     components: {
         PersonalInformationTable,
         FamilyInfoTable,
         MyPrefTable,
         MoreAbout,
         CardInfo,
-        Scroller
+        Scroller,
+        RatingComponent,
+        OutlinedButton
     },
     computed: {
         ...mapGetters({
-            profileDetails:'search/getProfileDetails'
+            profileDetails:'search/getProfileDetails',
         }),
+        domain() {
+            return window.location.origin
+        },
     },
     methods: {
+        onClickCopyText() {
+            this.copyProfileText = 'Copy successful'
+            navigator.clipboard.writeText(this.domain+'/profile/'+this.profileDetails.user_id);
+            this.copied = true;
+            setTimeout(() => {
+                this.copyProfileText = 'Copy Profile URL';
+            }, 3000);
+        },
         scrollMeTo(refName) {
             console.log('>>>>>>>>>>>')
             var element = this.$refs[refName];

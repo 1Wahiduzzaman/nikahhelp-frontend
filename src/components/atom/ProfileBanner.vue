@@ -12,9 +12,10 @@
             </v-img>
         </v-card>
         <v-img
-            style="border: 2px solid white; margin-top: -74px"
-            class="white--text align-end rounded mx-auto block"
-            width="150px"
+            style="border: 2px solid white; margin-top: -74px; background-size: cover;"
+            class="white--text align-end rounded mx-auto"
+            max-width="150px"
+            max-height="150px"
             :src="image"
         >
             <!-- <v-card-title>Top 10 Australian beaches</v-card-title> -->
@@ -40,3 +41,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.v-image__image {
+    background-size: cover ;
+}
+</style>

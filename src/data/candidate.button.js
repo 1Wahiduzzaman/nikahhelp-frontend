@@ -1,12 +1,5 @@
 export const btnData = [
     {
-        title: 'Gallery',
-        eventName: 'onClickGallery',
-        bgColor: '#6158a7',
-        icon: '/assets/icon/star-fill-secondary.svg',
-        hoverIcon: ''
-    },
-    {
         title: 'Shortlist',
         eventName: 'onClickShortlist',
         bgColor: '#6158a7',
@@ -17,14 +10,14 @@ export const btnData = [
         title: 'Teamlist',
         eventName: 'onClickTeamList',
         bgColor: '#6158a7',
-        icon: '/assets/icon/star-fill-secondary.svg',
+        icon: '/assets/icon/team.svg',
         hoverIcon: ''
     },
     {
         title: 'Connect',
         eventName: 'onClickConnect',
         bgColor: '#6158a7',
-        icon: '/assets/icon/connected.svg',
+        icon: '/assets/icon/connect-s.svg',
         hoverIcon: ''
     },
     {

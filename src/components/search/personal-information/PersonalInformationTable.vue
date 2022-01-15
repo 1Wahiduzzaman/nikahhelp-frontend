@@ -4,12 +4,12 @@
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 160px">Name</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1"></td>
+                <td class="text--secondary text-subtitle-1">{{ data.first_name }}  {{ data.last_name }}</td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 160px">Screen Name</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1"></td>
+                <td class="text--secondary text-subtitle-1">{{ data.screen_name }}</td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 160px">Gender</td>
@@ -17,9 +17,9 @@
                 <td class="text--secondary text-subtitle-1">{{  personal.per_gender == 0 ? 'Female' : 'Male'}}</td>
             </tr>
             <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 160px">Date of Birth</td>
+                <td class="text--disabled text-subtitle-1" style="width: 160px">Age</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1"></td>
+                <td class="text--secondary text-subtitle-1">{{ getAge(personal.dob) }}</td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Height</td>
@@ -101,7 +101,7 @@
                         }}
                 </td>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 160px">Address</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
                 <td class="text--secondary text-subtitle-1"></td>
@@ -115,7 +115,7 @@
                 <td class="text--disabled text-subtitle-1" style="width: 160px">Email</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
                 <td class="text--secondary text-subtitle-1"></td>
-            </tr>
+            </tr> -->
             
             <!-- <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Age</td>
@@ -137,6 +137,81 @@ export default {
     computed: {
         personal() {
             return this.data?.personal ? this.data.personal : {}
+        }
+    },
+    methods: {
+        getAge(dateString) {
+            var now = new Date();
+            // var today = new Date(now.getYear(),now.getMonth(),now.getDate());
+
+            var yearNow = now.getYear();
+            var monthNow = now.getMonth();
+            var dateNow = now.getDate();
+
+            var dob = new Date(dateString);
+
+            var yearDob = dob.getYear();
+            var monthDob = dob.getMonth();
+            var dateDob = dob.getDate();
+            var age = {};
+            var ageString = "";
+            var yearString = "";
+            var monthString = "";
+            var dayString = "";
+
+
+            let yearAge = yearNow - yearDob;
+
+            if (monthNow >= monthDob)
+                var monthAge = monthNow - monthDob;
+            else {
+                yearAge--;
+                var monthAge = 12 + monthNow -monthDob;
+            }
+
+            if (dateNow >= dateDob)
+                var dateAge = dateNow - dateDob;
+            else {
+                monthAge--;
+                var dateAge = 31 + dateNow - dateDob;
+
+                if (monthAge < 0) {
+                monthAge = 11;
+                yearAge--;
+                }
+            }
+
+            age = {
+                years: yearAge,
+                months: monthAge,
+                days: dateAge
+            };
+
+            if ( age.years > 1 ) yearString = " years";
+            else yearString = " year";
+            if ( age.months> 1 ) monthString = " months";
+            else monthString = " month";
+            if ( age.days > 1 ) dayString = " days";
+            else dayString = " day";
+
+
+            if ( (age.years > 0) && (age.months > 0) && (age.days > 0) )
+                ageString = age.years + yearString + ", " + age.months + monthString;
+            else if ( (age.years == 0) && (age.months == 0) && (age.days > 0) )
+                ageString = "Only " + age.days + dayString + " old!";
+            else if ( (age.years > 0) && (age.months == 0) && (age.days == 0) )
+                ageString = age.years + yearString;
+            else if ( (age.years > 0) && (age.months > 0) && (age.days == 0) )
+                ageString = age.years + yearString + " and " + age.months + monthString;
+            else if ( (age.years == 0) && (age.months > 0) && (age.days > 0) )
+                ageString = age.months + monthString;
+            else if ( (age.years > 0) && (age.months == 0) && (age.days > 0) )
+                ageString = age.years + yearString;
+            else if ( (age.years == 0) && (age.months > 0) && (age.days == 0) )
+                ageString = age.months + monthString;
+            else ageString = "--";
+
+            return ageString;
         }
     }
 }

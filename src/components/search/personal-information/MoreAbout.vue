@@ -42,7 +42,7 @@
                 title="Things I Enjoy"
                 :info="personal.per_things_enjoy"
             />
-            <FieldsetCard
+            <!-- <FieldsetCard
                 class="mt-3"
                 title="I'm Thankfull for"
                 :info="personal.per_thankfull_for"
@@ -51,7 +51,7 @@
                 class="mt-3"
                 title="I improve myself"
                 info=""
-            />
+            /> -->
         </div>
     </v-card>
 </template>
