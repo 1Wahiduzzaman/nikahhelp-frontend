@@ -90,9 +90,9 @@
         iconHeight="14px"
         :isSmall="true"
         :responsive="false"
-        :title="candidate.is_teamListed ? 'TeamUnlist' : 'TeamList'"
+        :title="candidate.is_team_listed ? 'TeamUnlist' : 'TeamList'"
         icon="/assets/icon/team.svg"
-        :customEvent="candidate.is_teamListed ? 'removeTeam' : 'addTeam'"
+        :customEvent="candidate.is_team_listed ? 'removeTeam' : 'addTeam'"
         @onClickButton="onClickButton"
       />
       <ButtonComponent
@@ -154,6 +154,7 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         connectToCandidate: 'search/connectCandidate',
         blockACandidate: 'search/blockCandidate',
         shortListCandidate: 'search/shortListCandidate',
+        teamListedCandidate: 'search/teamListedCandidate',
         fetchProfileDetail: 'search/fetchProfileDetail',
         teamListCandidate: 'search/teamListCandidate',
 
@@ -219,17 +220,18 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         
       },
       async addShortList() {
+        let loggedUser = JSON.parse(localStorage.getItem('user'));
         let data = {
-          url: `v1/short-listed-candidates/store?shortlisted_by=${JwtService.getUserId()}&user_id=${this.candidate.user_id}`,
+          url: `v1/short-listed-candidates/store?shortlisted_by=${loggedUser.id}&user_id=${this.candidate.user_id}`,
           value: true,
           actionType: 'post',
           user_id: this.candidate.user_id,
           params: {
-            shortlisted_by: JwtService.getUserId(),
+            shortlisted_by: loggedUser.id,
             user_id: this.candidate.user_id
           },
           payload: {
-            shortlisted_by: JwtService.getUserId(),
+            shortlisted_by: loggedUser.id,
             user_id: this.candidate.user_id
           }
         }
@@ -240,7 +242,26 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
             this.showError(e.response.data.message)
           }
         }
-        
+      },
+      async addTeamList() {
+        let loggedUser = JSON.parse(localStorage.getItem('user'));
+        let data = {
+          url: `v1/team-short-listed-candidates/store`,
+          value: true,
+          actionType: 'post',
+          user_id: this.candidate.user_id,
+          payload: {
+            team_listed_by: loggedUser.id,
+            user_id: this.candidate.user_id
+          }
+        }
+        try {
+          await this.teamListedCandidate(data)
+        } catch (e) {
+          if(e.response) {
+            this.showError(e.response.data.message)
+          }
+        }
       },
       async removeFroShortList() {
         let data = {
