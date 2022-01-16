@@ -42,6 +42,7 @@
                 <component
                   @switchComponent="switchComponent"
                   @navigateProfile="navigateProfile"
+                  @socketNotification="socketNotification"
                   v-bind:is="currentTabComponent"
                 >
                 </component>
@@ -151,9 +152,12 @@ export default {
       let url = 'v1/home-searches?page=0&parpage=10'
       let user = JSON.parse(localStorage.getItem("user"));
       if(user.get_candidate?.pre_partner_age_min){
+        setTimeout(() =>{this.$refs.simpleSearch.setAttr('min_age', user.get_candidate.pre_partner_age_min)},1000)
         url += `&min_age=${user.get_candidate.pre_partner_age_min}`
       }
       if(user.get_candidate?.pre_partner_age_max){
+        //this.$refs.simpleSearch.setAttr('max_age', user.get_candidate.pre_partner_age_max)
+        setTimeout(() =>{this.$refs.simpleSearch.setAttr('max_age', user.get_candidate.pre_partner_age_max)},1000)
         url += `&max_age=${user.get_candidate.pre_partner_age_max}`
       }
       // const res = await this.searchUser('v1/home-searches?page=0&parpage=10&min_age=20&max_age=40&ethnicity=Amara&marital_status=single');

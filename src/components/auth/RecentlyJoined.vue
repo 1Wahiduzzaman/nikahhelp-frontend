@@ -17,13 +17,13 @@
       >
         <slide v-for="(user, recIndex) in recJoin" :key="user.id">
           <div class="item flex-between-center" :class="{'ml-5': recIndex > 0}">
-            <div class="item-img">
+            <div class="item-img custom-size">
               <img class="item-img" @error="imgLoad(index, user)" :ref="`avatar-${index}`" :src="user.image" alt="img" style="border: 1px solid white;"/>
             </div>
             <div class="item-content">
               <div>{{ user.age ? getAge(user.age) : 'N/A' }}</div>
               <!--							<div>{{ user.name }}</div>-->
-              <div>{{  user.ethinicity ? user.ethinicity : 'N/A' }}, {{ user.religion ? user.religion : 'N/A' }}</div>
+              <div>{{  user.ethnicity ? user.ethnicity : 'N/A' }}, {{ user.religion ? user.religion : 'N/A' }}</div>
               <div>{{ user.study_level ? user.study_level : 'N/A' }}</div>
               <!--							<div>{{ user.location_name }}</div>-->
               <!-- <div>{{ getAge(user.age) }}</div>
@@ -197,5 +197,9 @@ export default {
   top: 500px;
   left: 70px;
   width: 7%;
+}
+.custom-size {
+  width: 70px !important;
+  height: 55px !important;
 }
 </style>

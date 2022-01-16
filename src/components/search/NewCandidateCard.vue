@@ -90,9 +90,9 @@
         iconHeight="14px"
         :isSmall="true"
         :responsive="false"
-        :title="candidate.is_team_listed ? 'TeamUnlist' : 'TeamList'"
+        :title="candidate.is_teamListed ? 'TeamUnlist' : 'TeamList'"
         icon="/assets/icon/team.svg"
-        :customEvent="candidate.is_team_listed ? 'removeTeam' : 'addTeam'"
+        :customEvent="candidate.is_teamListed ? 'removeTeam' : 'addTeam'"
         @onClickButton="onClickButton"
       />
       <ButtonComponent
@@ -167,13 +167,28 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
           this.connectCandidate();
         }
         if(eventData.event == 'block') {
-          this.blockCandidate();
+          this.handleBlockCandidate('post', true, 'v1/store-block-list');
+        }
+        if(eventData.event == 'removeBlock') {
+          this.handleBlockCandidate('delete', false, 'v1/unblock-by-candidate');
         }
         if(eventData.event == 'addShortList') {
           this.addShortList();
         }
         if(eventData.event == 'removeShortList') {
           this.removeFroShortList();
+        }
+        if(eventData.event == 'removeConnection') {
+          if(this.candidate.teamConnectType == 1) {
+            this.disConnectCandidate();
+            return;
+          }
+          if(this.candidate.teamConnectType == 0) {
+            this.showError('Your connection request is pending');
+          }
+          if(this.candidate.teamConnectType == 2) {
+            this.showError('Your request is rejected');
+          }
         }
         if(eventData.event == 'addTeam') {
           this.addTeamList();
@@ -212,12 +227,18 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
             content: res.message,
             centered: true,
           });
+          let payload = {
+            receivers: [this.candidate.user_id],
+            title: `sent you a new team connection request`,
+            team_temp_name: null,
+            team_id: this.candidate.team_id
+          };
+          this.$emit("socketNotification", payload);
         } catch (e) {
           if(e.response) {
             this.showError(e.response.data.message)
           }
         }
-        
       },
       async addShortList() {
         let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -282,29 +303,6 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         }
         
       },
-      async addTeamList() {
-        let data = {
-          url: `v1/team-short-listed-candidates/store`,
-          value: true,
-          actionType: 'post',
-          user_id: this.candidate.user_id,
-          payload: {
-            team_listed_by: JwtService.getUserId(),
-            user_id: this.candidate.user_id
-          }
-        }
-        try {
-          let res = await this.teamListCandidate(data)
-          if(res.status_code == 422) {
-            this.showError('Something went wrong!')
-          }
-        } catch (e) {
-          if(e.response) {
-            this.showError(e.response.data.message)
-          }
-        }
-        
-      },
       async removeFromTeamList() {
         let data = {
           url: 'v1/delete-team-short-listed-by-candidates ',
@@ -334,11 +332,16 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
           }
         }
       },
-      async blockCandidate() {
+      disConnectCandidate() {
+        console.log('>>>>>>>>')
+      },
+      async handleBlockCandidate(actionType, value, url) {
         let data = {
-          url: 'v1/store-block-list',
+          url: url,
+          actionType: actionType,
+          value: value,
           payload: {
-            block_by: JwtService.getUserId(),
+            //block_by: JwtService.getUserId(),
             user_id: this.candidate.user_id
           }
         }

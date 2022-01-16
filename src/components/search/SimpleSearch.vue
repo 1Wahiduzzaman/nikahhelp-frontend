@@ -245,11 +245,11 @@
 						<div class=" mt-12 pt-10">
 							<div class="btn-adv-search-wrapper">
 								<ButtonComponent
-									iconHeight="30px"
+									iconHeight="20px"
 									:block="true"
 									:responsive="false"
 									title="Search"
-									icon="/assets/icon/search-secondary.svg"
+									icon="/assets/icon/search-love-secondary.svg"
 									customEvent="handleSearch"
 									@onClickButton="onClickButton"
 								/>
@@ -391,7 +391,7 @@ export default {
 			setSearchStatus: 'search/setSearchStatus',
 			setPagination: 'search/setPaginationData'
 		}),
-		onDropdownChange({ name, value }) {
+			onDropdownChange({ name, value }) {
 			console.log({ name, value });
 			this[name] = value;
 		},
@@ -496,6 +496,10 @@ export default {
 			console.log(_payload);
 			return _payload;
 			// this.$emit("handle-search", _payload);
+		},
+
+		setAttr(attr, value) {
+			this[attr] = value
 		},
 
 		handleSearch() {

@@ -116,6 +116,7 @@
                         class="chat-item"
                         v-for="item in chatHistory"
                         :key="item.team_id"
+                        :class="{'selected-chat': chatheadopen == item}"
                         @click="item.label == 'Connected Team' ? getConnectedTeamChatHistory(item) : getIndividualChat(item, item)"
                     >
                       <ConnectedTeamChat
@@ -145,6 +146,7 @@
                          v-for="item in teamChat"
                          v-if="item.user_id != getAuthUserId"
                          :key="item.team_id"
+                         :class="{'selected-chat': chatheadopen == item}"
                          @click="getIndividualChat(item, item)"
                     >
                       <ChatListItem
@@ -161,6 +163,7 @@
                     <div class="chat-item"
                          v-for="item in connectedTeam"
                          :key="item.team_id"
+                         :class="{'selected-chat': chatheadopen == item}"
                          @click="getConnectedTeamChatHistory(item)"
                     >
                       <ConnectedTeamChat
@@ -545,9 +548,7 @@ export default {
       this.sockets.subscribe('receive_message', function (res) {
         if(!res.support || res.support == null || res.support == undefined) {
           res.sender = res.senderInfo;
-          // console.log(res)
           if(this.chat_type && (this.activeTeam == res.target_opened_chat || this.one_to_one_user == res.target_opened_chat || this.inConnectedChat || this.private_chat)) {
-            console.log('I am')
             this.chats.push(res);
             // if(this.chats.length <= 0) {
             //   this.chats.push(res);
@@ -1020,7 +1021,7 @@ export default {
     async sendMsg(e) {
       console.log(e);
       if (this.msg_text && this.msg_text.length > 0) {
-        if (this.fromChatItem == 'connected-team') {
+        if (this.chatheadopen.label == 'Connected Team') {
           await this.sendConnectedTeamMessage();
         } else {
           if(this.chatheadopen && this.chatheadopen.team_private_chat_id) {
@@ -1096,7 +1097,10 @@ export default {
     },
     async sendConnectedTeamMessage() {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
-      let teamMembers = this.teamMembers;
+      let teamone = this.chatheadopen.from_team.team_members.map(member => member.user_id.toString());
+      let teamTwo = this.chatheadopen.to_team.team_members.map(member => member.user_id.toString());
+      let teamMembers = [...teamone, ...teamTwo];
+      // let teamMembers = this.teamMembers;
       let selfIndex = this.teamMembers.findIndex(user => parseInt(user) == parseInt(loggedUser.id));
       if(selfIndex >= 0) {
         teamMembers.splice(selfIndex, 1);
@@ -2570,6 +2574,11 @@ export default {
   @media (min-width: 768px) {
     display: inherit;
   }
+}
+.selected-chat {
+  background-color: #efefef;
+  border-radius: 20px;
+  padding-left: 4px;
 }
 // end css for chat
 </style>
