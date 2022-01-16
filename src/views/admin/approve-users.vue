@@ -166,7 +166,7 @@ export default {
   },
 
   mounted() {
-    this.getPendingUsers();
+    //this.getPendingUsers();
   },
   methods: {
     onItemClick(e) {},
@@ -179,6 +179,7 @@ export default {
         })
         .catch((error) => {});
     },
+
     async updateUserVerifyOrReject(user, status) {
       const data = {
         id: user.id,
