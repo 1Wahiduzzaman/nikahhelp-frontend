@@ -10,6 +10,16 @@
             pressing Back button
           </p>
         </div>
+
+        <router-link
+       
+          :to="'/admin/document_details/' + candidateData.user_id"
+        >
+          <v-btn style="background-color: #522e8e; color: #fff" small>
+            Verify Document Info
+          </v-btn>
+        </router-link>
+        &nbsp; &nbsp;
         <router-link to="/admin/active_users">
           <v-btn style="background-color: rgb(42 205 100); color: #fff" small>
             Back
@@ -729,6 +739,7 @@
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
                 <img
+                  v-viewer
                   :src="candidateData.personal.per_avatar_url"
                   class="user-image"
                   alt="img"
@@ -741,6 +752,7 @@
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
                 <img
+                  v-viewer
                   :src="candidateData.personal.per_main_image_url"
                   class="user-image"
                   alt="img"
@@ -754,6 +766,7 @@
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
                 <img
+                  v-viewer
                   :src="candidateData.personal.per_main_image_url"
                   class="user-image"
                   alt="img"

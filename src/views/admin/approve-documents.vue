@@ -126,11 +126,12 @@
               {{ item["email"] }}
             </td>
             <td class="publisher">
-              <a
-                :href="'https://www.ncbi.nlm.nih.gov/pubmed/' + item.pmid"
-                target="_blank"
-                >Yes</a
-              >
+              <router-link
+                v-if="item['status'] > 1"
+                :to="'/admin/document_details/' + item.id"
+                >{{ item["status"] > 1 ? "Yes" : "No" }}
+              </router-link>
+              <span v-else>{{ item["status"] > 1 ? "Yes" : "No" }}</span>
             </td>
             <td class="publisher">
               <a

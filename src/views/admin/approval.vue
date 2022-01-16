@@ -23,7 +23,7 @@
         <a-button
           shape="round"
           type="primary"
-          style="float: right"
+          style="float: right;width: 160px"
           class="mt-3"
         >
           Approve Documents

@@ -92,6 +92,17 @@ export default {
         });
     });
   },
+  async getUserReportsByPage(context, payload) {
+    return new Promise((resolve, reject) => {
+      ApiService.get(`v1/admin/users-report?page=${payload}`)
+        .then((data) => {
+          resolve(data.data.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
 
 
 };

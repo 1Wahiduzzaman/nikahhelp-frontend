@@ -1,11 +1,18 @@
 <template>
-  <div class="admin-user-container">
-    <div class="panel-header">
+  <div class="active-user-container">
+    <div class="admin-header">
       <div class="top-header">
-        <div>
+        <div class="top-left">
           <v-btn style="background-color: #522e8e; color: #fff" large>
             Active Users
           </v-btn>
+          <v-tabs style="height: 46px">
+            <v-tab><v-badge color="red" content="6">All</v-badge></v-tab>
+            <v-tab><v-badge color="red" content="6">Candidate</v-badge></v-tab>
+            <v-tab
+              ><v-badge color="red" content="6">Representative</v-badge></v-tab
+            >
+          </v-tabs>
         </div>
         <div class="top-right">
           <v-btn style="background-color: #522e8e; color: #fff" small>
@@ -15,29 +22,19 @@
             <v-icon dark> md-minus </v-icon>
             Suspended Users
           </v-btn>
+          <v-text-field
+            v-model="search"
+            filled
+            rounded
+            dense
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
         </div>
       </div>
-      <div class="bottom-header">
-        <v-tabs>
-          <v-tab><v-badge color="red" content="6">All</v-badge></v-tab>
-          <v-tab><v-badge color="red" content="6">Candidate</v-badge></v-tab>
-          <v-tab
-            ><v-badge color="red" content="6">Representative</v-badge></v-tab
-          >
-          <!-- <v-tab><v-badge color="red" content="6">Rep.to Cand.</v-badge></v-tab>
-          <v-tab><v-badge color="red" content="6">Matchmaker</v-badge></v-tab> -->
-        </v-tabs>
-        <v-text-field
-          v-model="search"
-          filled
-          rounded
-          dense
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-        ></v-text-field>
-      </div>
+      <!-- <div class="bottom-header"></div> -->
     </div>
     <div class="panel-content">
       <v-data-table
@@ -103,11 +100,12 @@
               {{ item["email"] }}
             </td>
             <td class="publisher">
-              <a
-                :href="'https://www.ncbi.nlm.nih.gov/pubmed/' + item.pmid"
-                target="_blank"
-                >Yes</a
-              >
+              <router-link
+                v-if="item['status'] > 1"
+                :to="'/admin/user_candidate_details/' + item.id"
+                >{{ item["status"] > 1 ? "Yes" : "No" }}
+              </router-link>
+              <span v-else>{{ item["status"] > 1 ? "Yes" : "No" }}</span>
             </td>
             <td class="publisher">
               <a
@@ -199,8 +197,17 @@ export default {
   },
   methods: {
     onItemClick(e) {},
-    paginate(e) {
-      console.log("a");
+    async paginate(e) {
+      if (!e || e.page == 1) {
+        return;
+      }
+      await this.$store
+        .dispatch("getUserReportsByPage", e.page)
+        .then((data) => {
+          this.items = data.result;
+          this.totalNumberOfItems = data.pagination.total_items;
+        })
+        .catch((error) => {});
     },
     async updateUserVerifyOrReject(user) {
       const data = {
@@ -232,8 +239,8 @@ export default {
 };
 </script>
 
-<style lang="scss" >
-.admin-user-container {
+<style  lang="scss" >
+.active-user-container {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -242,10 +249,10 @@ export default {
   border-radius: 15px;
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 10px 30px #fff;
-  margin: 20px;
+  margin: 5px;
   opacity: 1;
-  .panel-header {
-    height: 103px;
+  .admin-header {
+    height: 52px;
     border-bottom: 1px solid #ccc;
     display: flex;
     align-items: flex-start;
@@ -258,9 +265,18 @@ export default {
       width: 100%;
       padding: 5px;
 
-      .top-right .v-btn {
-        margin-right: 5px;
-        border-radius: 20px;
+      .top-right {
+        display: flex;
+        .v-btn {
+          margin-right: 5px;
+          border-radius: 20px;
+        }
+      }
+      .top-left {
+        display: flex;
+        .v-item-group {
+          height: 46px;
+        }
       }
     }
     .bottom-header {
