@@ -85,7 +85,7 @@
               src="@/assets/icon/star-fill-white.svg"
               alt=""
           >
-          {{ item.is_short_listed ? 'Unlist' : 'Shortlist' }}
+          {{ shortlisted ? 'Unlist' : 'Shortlist' }}
         </div>
       </v-btn>
       <v-btn
@@ -99,7 +99,7 @@
       >
         <div class="flex justify-center align-center">
           <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/connect.svg" alt="">
-          Connect
+          {{ item.is_connect ? 'Connected' : 'Connect' }}
         </div>
       </v-btn>
     </div>
@@ -115,7 +115,7 @@
       >
         <div class="flex justify-center align-center">
           <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/teamlist.svg" alt="">
-          {{ item.is_team_listed ? 'Unlist team' : 'Teamlist' }}
+          {{ teamlisted ? 'Unlist team' : 'Teamlist' }}
         </div>
       </v-btn>
       <v-btn
@@ -149,15 +149,27 @@
 </template>
 
 <script>
+import ApiService from '@/services/api.service';
+import JwtService from "@/services/jwt.service";
+
 export default {
   name: "CandidateGrid",
-  props: ['item'],
+  props: ['item', 'shortListedIds', 'teamListedIds'],
   data() {
     return {
       avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
     }
   },
   computed: {
+    loggedUser() {
+      return JSON.parse(localStorage.getItem('user'));
+    },
+    shortlisted() {
+      return this.shortListedIds.includes(parseInt(this.item.user_id));
+    },
+    teamlisted() {
+      return this.teamListedIds.includes(parseInt(this.item.user_id));
+    },
     getName() {
       return this.item.first_name + ' ' + this.item.last_name;
     }
@@ -169,17 +181,85 @@ export default {
       );
     },
     actionShortlist() {
-      //
+      if(this.shortListedIds.includes(parseInt(this.item.user_id))) {
+        ApiService.delete(`/v1/delete-short-listed-by-candidates?user_id=${this.item.user_id}`).then(res => {
+          this.$emit("loadList");
+        }).catch(e => {
+          console.log(e);
+        });
+      } else {
+        ApiService.post(`/v1/short-listed-candidates/store`, { user_id: this.item.user_id, shortlisted_by: this.loggedUser.id }).then(res => {
+          this.$emit("loadList");
+        }).catch(e => {
+          console.log(e);
+        });
+      }
     },
     actionTeamlist() {
-      //
+      if(this.teamListedIds.includes(this.item.user_id)) {
+        ApiService.delete(`/v1/delete-team-short-listed-by-candidates?user_id=${this.item.user_id}`).then(res => {
+          this.$emit("loadList");
+        }).catch(e => {
+          console.log(e);
+        })
+      } else {
+        ApiService.post(`/v1/team-short-listed-candidates/store`, { user_id: this.item.user_id, team_listed_by: this.loggedUser.id }).then(res => {
+          this.$emit("loadList");
+        }).catch(e => {
+          console.log(e);
+        });
+      }
     },
     actionBlock() {
-      //
+      ApiService.post(`/v1/store-block-list`, { user_id: this.item.user_id })
+          .then(res => {
+            this.$emit("loadList");
+          }).catch(e => {
+        console.log(e);
+      });
     },
     actionConnection() {
-      //
-    }
+      let myTeamId = JwtService.getTeamIDAppWide();
+      if(!this.item.is_connect) {
+        if(!myTeamId) {
+          this.showError("You don't have a team")
+          return;
+        }
+        if(!this.item.team_id) {
+          this.showError("This candidate has no team")
+          return;
+        }
+
+        let payload = {
+          from_team_id: myTeamId,
+          to_team_id: this.item.team_id
+        }
+        ApiService.post(`/v1/send-connection-request`, payload)
+            .then(res => {
+              this.$success({
+                title: "Connection Request Sent Successfully!",
+                centered: true,
+              });
+              let payload = {
+                receivers: [this.item.user_id],
+                title: `sent you a new team connection request`,
+                team_temp_name: null,
+                team_id: this.item.team_id
+              };
+              this.$emit("socketNotification", payload);
+            }).catch(e => {
+          console.log(e);
+        });
+      } else {
+        //
+      }
+    },
+    showError(message) {
+      this.$error({
+        title: message,
+        center: true,
+      });
+    },
   }
 }
 </script>

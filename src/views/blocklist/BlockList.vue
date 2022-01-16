@@ -4,35 +4,53 @@
     <div v-else>
       <div class="main-content-wrapper">
         <div class="block-main-content">
-          <v-tabs color="indigo accent-4" class="w-full d-flex justify-content-between support-tab">
-            <v-tab href="#tab-1" @click="tab = 'tab-1'" class="font-weight-bold">All</v-tab>
-            <v-tab href="#tab-2" @click="tab = 'tab-2'" class="font-weight-bold">My block list</v-tab>
-            <v-tab href="#tab-3" @click="tab = 'tab-3'" class="font-weight-bold">Blocked by team members</v-tab>
-          </v-tabs>
+          <div class="row mb-4">
+            <div class="col-12 col-md-6 col-lg-3 mt-4" v-for="(block, cindex) in candidateBlock" :key="cindex">
+              <blocked-candidate-grid :item="block"
+                                      :candidateBlockIds="candidateBlockIds"
+                                      :teamBlockedIds="teamBlockedIds"
+                                      @loadList="loadList" />
+            </div>
+          </div>
 
-          <v-tabs-items v-model="tab">
-            <v-tab-item value="tab-1">
-              <div class="row mb-4">
-                <div class="col-12 col-md-6 col-lg-3 mt-4">
-                  <blocked-candidate-grid />
-                </div>
-              </div>
-            </v-tab-item>
-            <v-tab-item value="tab-2">
-              <div class="row mb-4">
-                <div class="col-12 col-md-6 col-lg-3 mt-4">
-                  <blocked-candidate-grid />
-                </div>
-              </div>
-            </v-tab-item>
-            <v-tab-item value="tab-3">
-              <div class="row mb-4">
-                <div class="col-12 col-md-6 col-lg-3 mt-4">
-                  <blocked-candidate-grid />
-                </div>
-              </div>
-            </v-tab-item>
-          </v-tabs-items>
+<!--          <v-tabs color="indigo accent-4" class="w-full d-flex justify-content-between support-tab">-->
+<!--            <v-tab href="#tab-1" @click="tab = 'tab-1'" class="font-weight-bold">All</v-tab>-->
+<!--            <v-tab href="#tab-2" @click="tab = 'tab-2'" class="font-weight-bold">My block list</v-tab>-->
+<!--            <v-tab href="#tab-3" @click="tab = 'tab-3'" class="font-weight-bold">Blocked by team members</v-tab>-->
+<!--          </v-tabs>-->
+
+<!--          <v-tabs-items v-model="tab">-->
+<!--            <v-tab-item value="tab-1">-->
+<!--              <div class="row mb-4">-->
+<!--                <div class="col-12 col-md-6 col-lg-3 mt-4" v-for="(block, findex) in fullData" :key="findex">-->
+<!--                  <blocked-candidate-grid :item="block"-->
+<!--                                          :candidateBlockIds="candidateBlockIds"-->
+<!--                                          :teamBlockedIds="teamBlockedIds"-->
+<!--                                          @loadList="loadList" />-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </v-tab-item>-->
+<!--            <v-tab-item value="tab-2">-->
+<!--              <div class="row mb-4">-->
+<!--                <div class="col-12 col-md-6 col-lg-3 mt-4" v-for="(block, cindex) in candidateBlock" :key="cindex">-->
+<!--                  <blocked-candidate-grid :item="block"-->
+<!--                                          :candidateBlockIds="candidateBlockIds"-->
+<!--                                          :teamBlockedIds="teamBlockedIds"-->
+<!--                                          @loadList="loadList" />-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </v-tab-item>-->
+<!--            <v-tab-item value="tab-3">-->
+<!--              <div class="row mb-4">-->
+<!--                <div class="col-12 col-md-6 col-lg-3 mt-4" v-for="(block, tindex) in teamListedBlock" :key="tindex">-->
+<!--                  <blocked-candidate-grid :item="block"-->
+<!--                                          :candidateBlockIds="candidateBlockIds"-->
+<!--                                          :teamBlockedIds="teamBlockedIds"-->
+<!--                                          @loadList="loadList" />-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </v-tab-item>-->
+<!--          </v-tabs-items>-->
 
           <BlockedCandidate
             :blockedCandidates="blockedCandidates"
@@ -59,6 +77,7 @@ import BlockedTeam from "@/components/blocklist/BlockedTeam.vue";
 import JwtService from "@/services/jwt.service";
 import { openModalRoute } from "@/plugins/modal/modal.mixin";
 import BlockedCandidateGrid from "../../components/blocklist/BlockedCandidateGrid";
+import ApiService from '@/services/api.service';
 
 export default {
   name: "BlockList",
@@ -86,6 +105,11 @@ export default {
       user: {},
       is_verified: 1,
       tab: 'tab-1',
+      candidateBlock: [],
+      teamListedBlock: [],
+      fullData: [],
+      candidateBlockIds: [],
+      teamBlockedIds: []
     };
   },
   created() {
@@ -126,6 +150,9 @@ export default {
         this.$socket.emit('notification', payload);
       }
     },
+    loadList() {
+      this.getActiveTeamId();
+    },
     getActiveTeamId() {
       if (!JwtService.getTeamIDAppWide()) {
         this.isLoading = true;
@@ -134,13 +161,55 @@ export default {
           openModalRoute(this, "manage_team_redirect");
         }, 2000);
       } else {
+        this.candidateBlock = [];
+        this.teamListedBlock = [];
+        this.fullData = [];
         this.loadBlockedCandidates();
+        this.loadBlockByTeamList()
       }
     },
     async loadBlockedCandidates() {
       this.isLoading = true;
       try {
-        await this.$store.dispatch("loadBlockedCandidates");
+        await ApiService.get(`/v1/block-list`).then(res => {
+          this.isLoading = false;
+          this.candidateBlock = res.data.data.map(item => {
+            item.candidate_list = true;
+            return item;
+          });
+          let data = [...this.fullData, ...this.candidateBlock];
+          this.fullData = data;
+
+          this.candidateBlockIds = res.data.data.map(item => {
+            return parseInt(item.user_id);
+          });
+        }).catch(e => {
+          this.isLoading = false;
+        });
+      } catch (error) {
+        this.error = error.message || "Something went wrong";
+        console.log(this.error);
+      }
+      this.isLoading = false;
+    },
+    async loadBlockByTeamList() {
+      this.isLoading = true;
+      try {
+        await ApiService.get(`/v1/block-by-team-list`).then(res => {
+          this.isLoading = false;
+          this.teamListedBlock = res.data.data.map(item => {
+            item.team_list = true;
+            return item;
+          });
+          let data = [...this.fullData, ...this.teamListedBlock];
+          this.fullData = data;
+
+          this.teamBlockedIds = res.data.data.map(item => {
+            return parseInt(item.user_id);
+          });
+        }).catch(e => {
+          this.isLoading = false;
+        });
       } catch (error) {
         this.error = error.message || "Something went wrong";
         console.log(this.error);

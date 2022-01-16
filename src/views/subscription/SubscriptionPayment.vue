@@ -173,20 +173,28 @@ export default {
         plane: this.subscriptionId,
       };
       console.log(_payload);
-      this.isLoading = true;
-      try {
-        await this.$store.dispatch("createSubscription", _payload); // Action in the User module in store
-        this.isLoading = false;
-        this.$router.push(
-            `/subscription/complete/success/${this.subscriptionName}/${this.teamName}`
-        );
-      } catch (error) {
+
+      if(!this.$route.query.cupon || (this.$route.query.cupon && this.$route.query.cupon === '123456')) {
+        this.isLoading = true;
+        try {
+          await this.$store.dispatch("createSubscription", _payload); // Action in the User module in store
+          this.isLoading = false;
+          this.$router.push(
+              `/subscription/complete/success/${this.subscriptionName}/${this.teamName}`
+          );
+        } catch (error) {
+          this.$error({
+            title: "Subscription Payment Error!",
+            content: error.response.data.message,
+            centered: true,
+          });
+          this.isLoading = false;
+        }
+      } else {
         this.$error({
-          title: "Subscription Payment Error!",
-          content: error.response.data.message,
+          title: "You are trying to do something illegal!",
           centered: true,
         });
-        this.isLoading = false;
       }
     },
     getPaymentMethod(data) {
