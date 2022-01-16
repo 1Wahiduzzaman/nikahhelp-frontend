@@ -61,12 +61,12 @@
             </a-select>
           </a-tooltip>
 
-          <button class="btn attach-link-btn btn-sm py-2 mb-2" @click="showUserBox = true" v-if="!showUserBox">Attach an user</button>
+          <button class="btn attach-link-btn btn-sm py-2 mb-2" @click="showUserBox = true" v-if="!showUserBox" :class="{'mt-2': from !== 'details-card'}">Attach an user</button>
 <!--          <button class="btn attach-link-btn btn-sm py-2 mt-2" @click="removeAttachedUser()" v-if="showUserBox">Remove attached user</button>-->
           <button class="btn invitation-link-btn btn-block btn-sm py-2 mb-2" @click="generateLink" v-if="!showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
         </div>
 
-        <div class="" v-if="showUserBox">
+        <div class="" v-if="showUserBox" :class="{'mt-1': from !== 'details-card'}">
 <!--          <h6 class="text-white fs-14">Attach a user to this invitation</h6>-->
           <a-input ref="userNameInput" class="mt-1" placeholder="Search email or user ID" v-model="user_email" @input="searchMember()" medium>
             <a-icon slot="suffix" type="loading" style="color: rgba(0,0,0,.45)" v-if="searchLoading" />
