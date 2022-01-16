@@ -70,6 +70,28 @@ export default {
         });
     });
   },
+  async getDocumentInfo(context, payload) {
+    return new Promise((resolve, reject) => {
+      ApiService.get(`v1/admin/user-info/${payload}`)
+        .then((data) => {
+          resolve(data.data.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
+  async getUserReports() {
+    return new Promise((resolve, reject) => {
+      ApiService.get(`v1/admin/users-report`)
+        .then((data) => {
+          resolve(data.data.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
 
 
 };

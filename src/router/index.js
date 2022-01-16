@@ -49,6 +49,7 @@ import AdminDashboard from "@/views/admin/AdminDashboard.vue";
 import AdminFlag from "@/views/admin/flag.vue";
 import AdminSystem from "@/views/admin/admin-system.vue";
 import AdminUsers from "@/views/admin/users.vue";
+import DocumentDetails from "@/views/admin/document-details.vue";
 import AdminTeams from "@/views/admin/teams.vue";
 import AdminSupport from "@/views/admin/support.vue";
 import AdminApproval from "@/views/admin/approval.vue";
@@ -61,6 +62,8 @@ import Test from "../components/development/Test.vue";
 import TestChat from "../components/development/Chat.vue";
 import ApproveUsers from "@/views/admin/approve-users.vue";
 import ApproveDocuments from "@/views/admin/approve-documents.vue";
+import UserCandidateDetails from "@/views/admin/user-candidate-profile.vue";
+
 //Search Section
 import Search from "@/views/search/Search.vue";
 import AdvanceSearch from "@/views/search/AdvanceSearch.vue";
@@ -205,6 +208,16 @@ const AppRouter = new VueRouter({
             {
                 path: "approve_documents",
                 component: ApproveDocuments,
+
+            },
+            {
+                path: "document_details/:user_id",
+                component: DocumentDetails,
+
+            },
+            {
+                path: "user_candidate_details/:user_id",
+                component: UserCandidateDetails,
 
             },
             ],
