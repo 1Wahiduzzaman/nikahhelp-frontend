@@ -94,7 +94,7 @@ export default {
           .then((data) => {
             context.commit('setLoading', false)
             resolve(data.data);
-            context.commit('updateCandidateAfterTeamlisted',{userId: payload.user_id, value: payload.value})
+            context.commit('updateCandidateAfterTeamtlisted',{userId: payload.user_id, value: payload.value})
           })
           .catch((err) => {
             context.commit('setLoading', false)
@@ -106,8 +106,11 @@ export default {
     // context.commit('updateCandidateAfterBlock',{userId: payload.payload.user_id, value: true})
     return new Promise((resolve, reject) => {
       context.commit('setLoading', true)
-      ApiService.post(payload.url, payload.payload)
+      ApiService[payload.actionType](payload.url, payload.payload)
         .then((data) => {
+          if(data.data?.status_code == 200) {
+            context.commit('updateCandidateAfterBlock',{userId: payload.payload.user_id, value: payload.value})
+          }
           context.commit('setLoading', false)
           resolve(data.data);
         })

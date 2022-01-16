@@ -202,8 +202,8 @@
                                     .pre_religiosity_or_faith_rate_string
                                 "
                               ></rating-component>
-                              <!-- Manners, Social skills and ethics -->
-                              <!-- <rating-component
+                              Manners, Social skills and ethics
+                              <rating-component
                                 title="Manners, Social skills and ethics"
                                 :value="
                                   candidateData.preference
@@ -213,9 +213,9 @@
                                   candidateData.preference
                                     .pre_manners_socialskill_ethics_rate_string
                                 "
-                              ></rating-component> -->
+                              ></rating-component>
                               <!-- Emotional Maturity and compatibility -->
-                              <!-- <rating-component
+                              <rating-component
                                 title="Emotional Maturity and compatibility"
                                 :value="
                                   candidateData.preference.pre_emotional_maturity_rate
@@ -224,33 +224,33 @@
                                   candidateData.preference
                                     .pre_emotional_maturity_rate_string
                                 "
-                              ></rating-component> -->
+                              ></rating-component>
                               <!-- Good Listener -->
-                              <!-- <rating-component
+                              <rating-component
                                 title="Good Listener"
                                 :value="candidateData.preference.pre_good_listener_rate"
                                 :valueString="
                                   candidateData.preference.pre_good_listener_rate_string
                                 "
-                              ></rating-component> -->
+                              ></rating-component>
                               <!-- Good talker -->
-                              <!-- <rating-component
+                              <rating-component
                                 title="Good talker"
                                 :value="candidateData.preference.pre_good_talker_rate"
                                 :valueString="
                                   candidateData.preference.pre_good_talker_rate_string
                                 "
-                              ></rating-component> -->
+                              ></rating-component>
                               <!-- Willing to learn -->
-                              <!-- <rating-component
+                              <rating-component
                                 title="Willing to learn"
                                 :value="candidateData.preference.pre_wiling_to_learn_rate"
                                 :valueString="
                                   candidateData.preference.pre_wiling_to_learn_rate_string
                                 "
-                              ></rating-component> -->
+                              ></rating-component>
                               <!-- Family or Social Status-->
-                              <!-- <rating-component
+                              <rating-component
                                 title="Family or Social Status"
                                 :value="
                                   candidateData.preference.pre_family_social_status_rate
@@ -259,9 +259,9 @@
                                   candidateData.preference
                                     .pre_family_social_status_rate_string
                                 "
-                              ></rating-component> -->
+                              ></rating-component>
                               <!-- Employment or Wealth-->
-                              <!-- <rating-component
+                              <rating-component
                                 title="Employment or Wealth"
                                 :value="
                                   candidateData.preference.pre_employment_wealth_rate
@@ -270,15 +270,15 @@
                                   candidateData.preference
                                     .pre_employment_wealth_rate_string
                                 "
-                              ></rating-component> -->
+                              ></rating-component>
                               <!-- Education -->
-                              <!-- <rating-component
+                              <rating-component
                                 title="Education"
                                 :value="candidateData.preference.pre_education_rate"
                                 :valueString="
                                   candidateData.preference.pre_education_rate_string
                                 "
-                              ></rating-component> -->
+                              ></rating-component>
                             </v-card>
                           </v-col>
                       </v-row>
