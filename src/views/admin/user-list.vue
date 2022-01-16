@@ -49,6 +49,9 @@
         :search="search"
         item-key="name"
         class="dt-table"
+        :server-items-length="totalNumberOfItems"
+        :options="options"
+        @update:options="paginate"
         :footer-props="{
           'items-per-page-text': 'Show',
         }"
@@ -115,16 +118,29 @@
             </td>
             <td class="Actions">
               <div>
-                <v-btn style="background-color: #522e8e; color: #fff" small>
-                  view
-                </v-btn>
+                <router-link
+                  v-if="item.account_type === 1"
+                  :to="'/admin/user_candidate_details/' + item.id"
+                >
+                  <v-btn style="background-color: #522e8e; color: #fff" small>
+                    view
+                  </v-btn>
+                </router-link>
+                <router-link
+                  v-else
+                  :to="'/admin/user_candidate_details/' + item.id"
+                >
+                  <v-btn style="background-color: #522e8e; color: #fff" small>
+                    view
+                  </v-btn>
+                </router-link>
                 <v-btn
                   style="background-color: rgb(42 205 100); color: #fff"
                   small
                 >
                   Edit
                 </v-btn>
-                <v-btn
+                <!-- <v-btn
                   @click="updateUserVerifyOrReject(item)"
                   style="background-color: rgb(61 185 156); color: #fff"
                   small
@@ -136,7 +152,7 @@
                   small
                 >
                   Note
-                </v-btn>
+                </v-btn> -->
               </div>
             </td>
           </tr>
@@ -170,13 +186,22 @@ export default {
         { text: "actions", value: "actions", sortable: false, align: "start" },
       ],
       items: [],
+      totalNumberOfItems: 0,
+      options: {
+        rowsPerPage: 8,
+        page: 1,
+        totalItems: 0,
+      },
     };
   },
   mounted() {
-    this.getVerifiedUsers();
+    this.getUserReports();
   },
   methods: {
     onItemClick(e) {},
+    paginate(e) {
+      console.log("a");
+    },
     async updateUserVerifyOrReject(user) {
       const data = {
         id: user.id,
@@ -194,11 +219,12 @@ export default {
         })
         .catch((error) => {});
     },
-    async getVerifiedUsers() {
+    async getUserReports() {
       await this.$store
-        .dispatch("getVerifiedUsers")
+        .dispatch("getUserReports")
         .then((data) => {
-          this.items = data;
+          this.items = data.result;
+          this.totalNumberOfItems = data.pagination.total_items;
         })
         .catch((error) => {});
     },
