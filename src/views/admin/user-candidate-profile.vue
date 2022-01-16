@@ -13,7 +13,7 @@
 
         <router-link
        
-          :to="'/admin/document_details/' + candidateData.id"
+          :to="'/admin/document_details/' + candidateData.user_id"
         >
           <v-btn style="background-color: #522e8e; color: #fff" small>
             Verify Document Info
