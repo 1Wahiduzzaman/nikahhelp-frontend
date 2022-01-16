@@ -736,6 +736,8 @@ export default {
       })];
     },
     processChatHistoryResponse(data) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+
       let singleChat = map(data.single_chat, item => {
         return {
           label: 'Team member',
@@ -754,7 +756,7 @@ export default {
         return {
           label: 'Private chat',
           state: 'seen',
-          name: item.private_receiver_data?.full_name || 'user name',
+          name: this.getPrivateChatUserName(item),
           logo: item.private_receiver_data?.avatar,
           to_team_id: item.to_team_id,
           from_team_id: item.from_team_id,
@@ -764,6 +766,7 @@ export default {
           typing_status: 0,
           typing_text: '',
           is_friend: 1,
+          private_receiver_data: loggedUser.id == item.sender ? item.private_receiver_data : item.private_sender_data,
           message: pick(item.last_private_message, messageKeys)
         }
       });
@@ -788,6 +791,11 @@ export default {
       });
 
       return [...lastGroupMsg, ...connectedMsg, ...singleChat, ...privateChat];
+    },
+    getPrivateChatUserName(item) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let user = loggedUser.id == item.sender ? item.private_receiver_data : item.private_sender_data;
+      return user?.full_name || 'user name';
     },
     async loadTeamChat() {
       try {
@@ -1169,7 +1177,7 @@ export default {
         senderInfo: loggedUser,
         target_opened_chat_type: 'private-chat',
         target_opened_chat: this.private_chat,
-        receiver: this.private_chat.receiver.toString(),
+        receiver: this.chatheadopen.private_receiver_data.id.toString(),
         label: 'Private',
         conv_title: this.conversationTitle,
         logo: this.chatheadopen.logo,
@@ -1183,8 +1191,14 @@ export default {
       this.chatheadopen.message.senderId = loggedUser.id.toString();
       this.chatheadopen.message.senderInfo = loggedUser;
       this.$socket.emit('send_message', payload);
+
       payload.from_team_id = this.activeTeam;
-      payload.to_team_id = this.private_chat.to_team_id;
+      if(parseInt(this.activeTeam) == parseInt(this.chatheadopen.from_team_id)) {
+        payload.to_team_id = this.chatheadopen.to_team_id;
+      } else {
+        payload.to_team_id = this.chatheadopen.from_team_id;
+      }
+
       await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
       this.msg_text = '';
     },
