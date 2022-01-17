@@ -41,21 +41,20 @@
               placement="top"
               title="Relationship with candidate is"
           >
-            <a-select
-                placeholder="Relationship"
-                class="mt-2 fs-14 mb-2"
-                v-model="invitationObject.relationship"
-                :disabled="invitationObject.add_as_a == 'Candidate'"
-                v-if="from === 'details-card'"
-            >
-              <a-select-option value="Candidate" v-if="invitationObject.add_as_a == 'Candidate'"> Candidate </a-select-option>
-              <a-select-option v-for="(relation, index) in relationships" v-else :key="index" :value="relation"> {{ relation }} </a-select-option>
-            </a-select>
+<!--            <a-select-->
+<!--                placeholder="Relationship"-->
+<!--                class="mt-2 fs-14 mb-2"-->
+<!--                v-model="invitationObject.relationship"-->
+<!--                :disabled="invitationObject.add_as_a == 'Candidate'"-->
+<!--                v-if="from === 'details-card'"-->
+<!--            >-->
+<!--              <a-select-option value="Candidate" v-if="invitationObject.add_as_a == 'Candidate'"> Candidate </a-select-option>-->
+<!--              <a-select-option v-for="(relation, index) in relationships" v-else :key="index" :value="relation"> {{ relation }} </a-select-option>-->
+<!--            </a-select>-->
             <a-select
                 placeholder="Relationship"
                 class="mt-2 fs-14"
                 v-model="invitationObject.relationship"
-                v-else
             >
               <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
             </a-select>
