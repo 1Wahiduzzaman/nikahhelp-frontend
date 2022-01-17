@@ -9,12 +9,93 @@
 				: avatarSrc
 			"
 		/>
+
+		<div class="flex justify-space-between flex-wrap mt-10">
+            <ButtonComponent
+                class="mb-3"
+                iconHeight="14px"
+                :isSmall="true"
+                title="Gallery"
+                customEvent="openGallery"
+                icon="/assets/icon/gallery.svg"
+                @onClickButton="onClickButton"
+            />
+            <ButtonComponent
+                iconHeight="14px"
+                :isSmall="true"
+                :title="profile.is_short_listed ? 'Unlist' : 'ShortList'"
+                icon="/assets/icon/star-fill-secondary.svg"
+                :customEvent="profile.is_short_listed ? 'removeShortList' : 'addShortList'"
+                @onClickButton="onClickButton"
+            />
+            <ButtonComponent
+                iconHeight="14px"
+                :isSmall="true"
+                :title="profile.is_connect ? 'Disconnect' : 'Connect'"
+                icon="/assets/icon/connect-s.svg"
+                :customEvent="profile.is_connect ? 'removeConnection' : 'addConnection'"
+                @onClickButton="onClickButton"
+            />
+            <ButtonComponent
+                iconHeight="14px"
+                :isSmall="true"
+                :title="profile.is_teamListed ? 'TeamUnlist' : 'TeamList'"
+                icon="/assets/icon/team.svg"
+                :customEvent="profile.is_teamListed ? 'removeTeam' : 'addTeam'"
+                @onClickButton="onClickButton"
+            />
+            <ButtonComponent
+                iconHeight="14px"
+                :isSmall="true"
+                :responsive="true"
+                :title="profile.is_block_listed ? 'Unblock' : 'Block'"
+                :icon="profile.is_block_listed ? '/assets/icon/block-secondary.svg' : '/assets/icon/block.svg'"
+                :customEvent="profile.is_block_listed ? 'removeBlock' : 'block'"
+                :backgroundColor="profile.is_block_listed ? '' : '#d81b60'"
+                :titleColor="profile.is_block_listed ? '' : 'white'"
+                @onClickButton="onClickButton"
+            />
+        </div>
+
+		<div>
+			<v-row class="mt-5">
+				<v-col class="pt-0" cols="12" md="6">
+					<div class="d-flex justify-space-between d-md-none">
+						<OutlinedButton
+							:name="copyProfileText"
+							customEvent="onClickCopyText"
+							@onClickCopyText="onClickCopyText"
+						/>
+						<OutlinedButton 
+							name="Team Information"
+							customEvent="onClickTeamDetail"
+							@onClickTeamDetail="onClickTeamDetail"
+						/>
+					</div>
+					<div class="d-none d-md-flex">
+						<OutlinedButton
+							:name="copyProfileText"
+							customEvent="onClickCopyText"
+							@onClickCopyText="onClickCopyText"
+						/>
+						<OutlinedButton 
+							name="Team Information"
+							customEvent="onClickTeamDetail"
+							@onClickTeamDetail="onClickTeamDetail"
+						/>
+					</div>
+				</v-col>
+				<v-col class="pt-0" cols="12" md="6">
+					<Scroller />
+				</v-col>
+			</v-row>
+		</div>
+
 		<div>
 			<div class="opposite-candidate-profile"  style="margin-top: 15px;">
 				<div class="profile-heading">
 					<v-container fluid>
 						<v-row>
-							<v-col class="pr-7">
 							<fieldset class="">
 								<legend class="ml-8 px-1"><span>Personal Information</span></legend>
 								<v-container fluid class="pt-0 px-5">
@@ -51,7 +132,7 @@
 									</v-row>
 								</v-container>
 							</fieldset>
-							<fieldset id="family-information" class="-mt-15">
+							<fieldset style="width:100%" id="family-information" class="-mt-15">
 							<legend class="ml-8 bg-white px-1"><span>Family Information</span></legend>
 							<v-container fluid class="pt-0 px-5">
 								<v-row dense>
@@ -206,64 +287,19 @@
 									</v-row>
 								</v-container>
 							</fieldset>
-							</v-col>
 						</v-row>
 					</v-container>
-
-					<!-- Avatar and cover images -->
-					
-					<!-- Buttons -->
-					<div class="row mt-3 mb-3 text-center">
-						<div class="col">
-							<button disabled class="btn btn-primary px-4">Gallery</button>
-						</div>
-						<div class="col">
-							<a href="#" class="btn btn-primary px-4">
-								<img src="@/assets/icon/star.svg" alt="" height="16" style="margin-bottom: 3px"> 
-								Shortlist</a>
-						</div>
-						<div class="col">
-							<button class="btn btn-primary px-4">
-								<img src="@/assets/icon/teamlist.svg" alt="" width="20" height="20">
-								Teamlist
-							</button>
-						</div>
-						<div class="col">
-							<button class="btn btn-primary px-4">
-								<img src="@/assets/icon/connect.svg" alt="" height="18" width="20">
-								Connect
-							</button>
-						</div>
-						<div class="col">
-							<button class="btn btn-block-pink px-4">
-								<img src="@/assets/icon/block.svg" alt="" width="17" height="20">
-								Block
-							</button>
-						</div>
-					</div>
-					<!-- Team name and profile link -->
-					<div class="row mt-3 mb-3">
-						<div class="col">
-							<div class="team-name-div">
-								<span class="team-name-title">Representated by</span>
-								<span class="team-name ml-3">Team name</span>
-							</div>
-						</div>
-						<div class="col">
-							<div class="team-name-div">
-								<span class="team-name-title">Profile Link</span>
-								<span class="team-name ml-1"
-									>54.254.41.18/user/profile/{{ candidateData.user_id }}</span
-								>
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
 		<div class="profile-footer">
 			<Footer></Footer>
 		</div>
+		<ComingSoonModal
+            title="Team details quick view"
+            @closeDialog="closeDialog"
+            ref="advDiag"
+        />
 	</div>
 </template>
 
@@ -280,6 +316,11 @@ import CardInfo from '@/components/atom/CardInfo'
 import MoreAbout from '@/components/search/personal-information/MoreAbout.vue'
 import Scroller from  '@/components/atom/Scroller'
 import ButtonComponent from '@/components/atom/ButtonComponent'
+
+import OutlinedButton from '@/components/atom/OutlinedButton'
+import ComingSoonModal from "@/components/search/ComingSoonModal"
+import {mapActions} from 'vuex'
+
 export default {
 	name: "CandidateProfile",
 	props: ["candidateData", "userId"],
@@ -293,12 +334,16 @@ export default {
 		CardInfo,
 		MoreAbout,
 		Scroller,
-		ButtonComponent
+		ButtonComponent,
+		OutlinedButton,
+		ComingSoonModal
 	},
 	data() {
 		return {
+			copyProfileText: 'Copy Profile URL',
 			avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
-			conversations: []
+			conversations: [],
+			profile: ''
 		};
 	},
 	created() {
@@ -335,6 +380,23 @@ export default {
 		},
 	},
 	methods: {
+		...mapActions({
+            connectToCandidate: 'search/connectCandidate',
+            blockACandidate: 'search/blockCandidate',
+            shortListCandidate: 'search/shortListCandidate',
+            teamListCandidate: 'search/teamListCandidate',
+        }),
+		onClickTeamDetail() {
+            this.$refs.advDiag.openDiag()
+        },
+		 onClickCopyText() {
+            this.copyProfileText = 'Copy successful'
+            navigator.clipboard.writeText(this.domain+'/user/profile/'+this.candidateData.user_id);
+            this.copied = true;
+            setTimeout(() => {
+                this.copyProfileText = 'Copy Profile URL';
+            }, 3000);
+        },
 		startConversation() {
 			var res_userid = this.candidateData.user_id;
 			var my_user_id = this.$store.state.user.user.id;
@@ -420,6 +482,209 @@ export default {
 			}
 			return false;
 		},
+
+		
+        onClickButton(eventData) {
+            if(eventData.event == 'openGallery') this.openGallery();
+            if(eventData.event == 'addConnection') {
+                this.connectCandidate();
+            }
+            if(eventData.event == 'block') {
+                this.handleBlockCandidate('post', true, 'v1/store-block-list');
+            }
+            if(eventData.event == 'removeBlock') {
+                this.handleBlockCandidate('delete', false, 'v1/unblock-by-candidate');
+            }
+            if(eventData.event == 'addShortList') {
+                this.addShortList();
+            }
+            if(eventData.event == 'removeShortList') {
+                this.removeFroShortList();
+            }
+            if(eventData.event == 'addTeam') {
+                this.addTeamList();
+            }
+            if(eventData.event == 'removeTeam') {
+                this.removeFromTeamList();
+            }
+        },
+
+        async connectCandidate() {
+            let myTeamId = JwtService.getTeamIDAppWide();
+            console.log(myTeamId, '>>>>>>>')
+            if(!myTeamId) {
+                this.showError("You don't have a team")
+                return;
+            }
+            if(!this.profile.team_id) {
+                this.showError("This candidate has no team")
+                return;
+            }
+            let data = {
+                userId: this.profile.user_id,
+                url: 'v1/send-connection-request',
+                payload: {
+                    from_team_id: myTeamId,
+                    to_team_id: this.profile.team_id
+                }
+            }
+            try {
+            let res = await this.connectToCandidate(data)
+                this.$success({
+                title: "Connection Request Sent Successfully!",
+                content: res.message,
+                centered: true,
+            });
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }
+            
+        },
+
+        async addShortList() {
+            let data = {
+            url: `v1/short-listed-candidates/store?shortlisted_by=${JwtService.getUserId()}&user_id=${this.profile.user_id}`,
+                value: true,
+                actionType: 'post',
+                user_id: this.profile.user_id,
+                params: {
+                    shortlisted_by: JwtService.getUserId(),
+                    user_id: this.profile.user_id
+                },
+                payload: {
+                    shortlisted_by: JwtService.getUserId(),
+                    user_id: this.profile.user_id
+                }
+            }
+            try {
+                await this.shortListCandidate(data)
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }
+            
+        },
+
+        async removeFroShortList() {
+            let data = {
+                url: 'v1/delete-short-listed-by-candidates ',
+                value: false,
+                actionType: 'delete',
+                user_id: this.profile.user_id,
+                payload: {
+                    user_id: this.profile.user_id
+                }
+            }
+            try {
+                await this.shortListCandidate(data)
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }
+        },
+        async addTeamList() {
+            let data = {
+                url: `v1/team-short-listed-candidates/store`,
+                value: true,
+                actionType: 'post',
+                user_id: this.profile.user_id,
+                payload: {
+                    team_listed_by: JwtService.getUserId(),
+                    user_id: this.profile.user_id
+                }
+            }
+            try {
+                let res = await this.teamListCandidate(data)
+                if(res.status_code == 422) {
+                    this.showError('Something went wrong!')
+                }
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }
+            
+        },
+        async removeFromTeamList() {
+            let data = {
+                url: 'v1/delete-team-short-listed-by-candidates ',
+                value: false,
+                actionType: 'delete',
+                user_id: this.profile.user_id,
+                payload: {
+                    user_id: this.profile.user_id
+                }
+            }
+            try {
+                await this.teamListCandidate(data)
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }
+            
+        },
+
+        async fetchCandidate() {
+            let url = `v1/candidate/info/${this.profile.user_id}`
+            try {
+                await this.fetchProfileDetail(url)
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }
+        },
+        async handleBlockCandidate(actionType, value, url) {
+            let data = {
+                url: url,
+                actionType: actionType,
+                value: value,
+                payload: {
+                    //block_by: JwtService.getUserId(),
+                    user_id: this.profile.user_id
+                }
+            }
+            try {
+                await this.blockACandidate(data)
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }  
+        },
+        showError(message) {
+            this.$error({
+            title: message,
+            center: true,
+            });
+        },
+        loadSearchResultComponent() {
+            this.setComponent('AddComponent')
+            this.$emit('switchComponent', 'CandidateProfiles')
+        },
+        openGallery() {
+            this.images= [];
+            let images = this.profileDetails.other_images
+            if(images.length > 0) {
+                images.map(i => this.images.push(i.image_path));
+                this.show();
+            } else {
+                this.$error({
+                title: 'No image found',
+                center: true,
+                });
+            }
+        },
+        show() {
+            this.$viewerApi({
+                images: this.images,
+            })
+        },
 	},
 };
 </script>
@@ -592,5 +857,23 @@ export default {
 	@media (max-width: 767px){
 		display: none;
 	}
+}
+
+fieldset {
+    border: 1px solid #d3d0e4;
+    border-radius: 10px;
+}
+legend {
+    display: inline;
+    width: inherit;
+    color: #6259a8;
+    font-size: 18px;
+    font-weight: 600;
+}
+.-mt-15 {
+    margin-top: -13px;
+}
+.bg-white {
+    background: white;
 }
 </style>

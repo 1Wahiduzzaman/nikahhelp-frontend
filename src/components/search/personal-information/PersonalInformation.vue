@@ -1,7 +1,7 @@
 <template>
     <div class="mt-10 pb-5">
         <v-row class="mb-5">
-            <v-col cols="12" md="6">
+            <v-col class="pt-0" cols="12" md="6">
                 <div class="d-flex justify-space-between d-md-none">
                     <OutlinedButton
                         :name="copyProfileText"
@@ -9,8 +9,9 @@
                         @onClickCopyText="onClickCopyText"
                     />
                     <OutlinedButton 
-                        name="Represented By:"
-                        customEvent="onClickCopyText"
+                        name="Team Information"
+                        customEvent="onClickTeamDetail"
+                        @onClickTeamDetail="onClickTeamDetail"
                     />
                 </div>
                 <div class="d-none d-md-flex">
@@ -20,12 +21,13 @@
                         @onClickCopyText="onClickCopyText"
                     />
                     <OutlinedButton 
-                        name="Represented By:"
-                        customEvent="onClickCopyText"
+                        name="Team Information"
+                        customEvent="onClickTeamDetail"
+                        @onClickTeamDetail="onClickTeamDetail"
                     />
                 </div>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col class="pt-0" cols="12" md="6">
                 <Scroller />
             </v-col>
         </v-row>
@@ -149,87 +151,92 @@
                         "
                         ></rating-component>
                         <!-- Manners, Social skills and ethics -->
-                        <!-- <rating-component
+                        <rating-component
                         title="Manners, Social skills and ethics"
                         :value="
-                            candidateData.preference
+                            profileDetails.preference
                             .pre_manners_socialskill_ethics_rate
                         "
                         :valueString="
-                            candidateData.preference
+                            profileDetails.preference
                             .pre_manners_socialskill_ethics_rate_string
                         "
-                        ></rating-component> -->
+                        ></rating-component>
                         <!-- Emotional Maturity and compatibility -->
-                        <!-- <rating-component
+                        <rating-component
                         title="Emotional Maturity and compatibility"
                         :value="
-                            candidateData.preference.pre_emotional_maturity_rate
+                            profileDetails.preference.pre_emotional_maturity_rate
                         "
                         :valueString="
-                            candidateData.preference
+                            profileDetails.preference
                             .pre_emotional_maturity_rate_string
                         "
-                        ></rating-component> -->
+                        ></rating-component>
                         <!-- Good Listener -->
-                        <!-- <rating-component
+                        <rating-component
                         title="Good Listener"
-                        :value="candidateData.preference.pre_good_listener_rate"
+                        :value="profileDetails.preference.pre_good_listener_rate"
                         :valueString="
-                            candidateData.preference.pre_good_listener_rate_string
+                            profileDetails.preference.pre_good_listener_rate_string
                         "
-                        ></rating-component> -->
+                        ></rating-component>
                         <!-- Good talker -->
-                        <!-- <rating-component
+                        <rating-component
                         title="Good talker"
-                        :value="candidateData.preference.pre_good_talker_rate"
+                        :value="profileDetails.preference.pre_good_talker_rate"
                         :valueString="
-                            candidateData.preference.pre_good_talker_rate_string
+                            profileDetails.preference.pre_good_talker_rate_string
                         "
-                        ></rating-component> -->
+                        ></rating-component>
                         <!-- Willing to learn -->
-                        <!-- <rating-component
+                        <rating-component
                         title="Willing to learn"
-                        :value="candidateData.preference.pre_wiling_to_learn_rate"
+                        :value="profileDetails.preference.pre_wiling_to_learn_rate"
                         :valueString="
-                            candidateData.preference.pre_wiling_to_learn_rate_string
+                            profileDetails.preference.pre_wiling_to_learn_rate_string
                         "
-                        ></rating-component> -->
+                        ></rating-component>
                         <!-- Family or Social Status-->
-                        <!-- <rating-component
+                        <rating-component
                         title="Family or Social Status"
                         :value="
-                            candidateData.preference.pre_family_social_status_rate
+                            profileDetails.preference.pre_family_social_status_rate
                         "
                         :valueString="
-                            candidateData.preference
+                            profileDetails.preference
                             .pre_family_social_status_rate_string
                         "
-                        ></rating-component> -->
+                        ></rating-component>
                         <!-- Employment or Wealth-->
-                        <!-- <rating-component
+                        <rating-component
                         title="Employment or Wealth"
                         :value="
-                            candidateData.preference.pre_employment_wealth_rate
+                            profileDetails.preference.pre_employment_wealth_rate
                         "
                         :valueString="
-                            candidateData.preference
+                            profileDetails.preference
                             .pre_employment_wealth_rate_string
                         "
-                        ></rating-component> -->
+                        ></rating-component>
                         <!-- Education -->
-                        <!-- <rating-component
+                        <rating-component
                         title="Education"
-                        :value="candidateData.preference.pre_education_rate"
+                        :value="profileDetails.preference.pre_education_rate"
                         :valueString="
-                            candidateData.preference.pre_education_rate_string
+                            profileDetails.preference.pre_education_rate_string
                         "
-                        ></rating-component> -->
+                        ></rating-component>
                     </v-card>
                     </v-col>
             </v-row>
         </v-container>
         </fieldset>
+        <ComingSoonModal
+            title="Team details quick view"
+            @closeDialog="closeDialog"
+            ref="advDiag"
+        />
     </div>
 </template>
 
@@ -243,6 +250,7 @@ import MoreAbout from './MoreAbout.vue'
 import {mapGetters} from 'vuex'
 import Scroller from  '@/components/atom/Scroller'
 import RatingComponent from "@/components/profile/RatingComponent.vue";
+import ComingSoonModal from "@/components/search/ComingSoonModal"
 export default {
     name: 'PersonalInformation',
     data: () => ({
@@ -256,7 +264,8 @@ export default {
         CardInfo,
         Scroller,
         RatingComponent,
-        OutlinedButton
+        OutlinedButton,
+        ComingSoonModal
     },
     computed: {
         ...mapGetters({
@@ -267,9 +276,12 @@ export default {
         },
     },
     methods: {
+        onClickTeamDetail() {
+            this.$refs.advDiag.openDiag()
+        },
         onClickCopyText() {
             this.copyProfileText = 'Copy successful'
-            navigator.clipboard.writeText(this.domain+'/profile/'+this.profileDetails.user_id);
+            navigator.clipboard.writeText(this.domain+'/user/profile/'+this.profileDetails.user_id);
             this.copied = true;
             setTimeout(() => {
                 this.copyProfileText = 'Copy Profile URL';
