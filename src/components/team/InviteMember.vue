@@ -60,12 +60,12 @@
             </a-select>
           </a-tooltip>
 
-          <button class="btn attach-link-btn btn-sm py-2 mb-2" @click="showUserBox = true" v-if="!showUserBox" :class="{'mt-2': from !== 'details-card'}">Attach an user</button>
+          <button class="btn attach-link-btn btn-sm py-2 mb-2 mt-2" @click="showUserBox = true" v-if="!showUserBox">Attach an user</button>
 <!--          <button class="btn attach-link-btn btn-sm py-2 mt-2" @click="removeAttachedUser()" v-if="showUserBox">Remove attached user</button>-->
           <button class="btn invitation-link-btn btn-block btn-sm py-2 mb-2" @click="generateLink" v-if="!showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
         </div>
 
-        <div class="" v-if="showUserBox" :class="{'mt-1': from !== 'details-card'}">
+        <div class="mt-1" v-if="showUserBox">
 <!--          <h6 class="text-white fs-14">Attach a user to this invitation</h6>-->
           <a-input ref="userNameInput" class="mt-1" placeholder="Search email or user ID" v-model="user_email" @input="searchMember()" medium>
             <a-icon slot="suffix" type="loading" style="color: rgba(0,0,0,.45)" v-if="searchLoading" />
@@ -272,7 +272,6 @@ export default {
           self.isLoading = true;
           ApiService.post('/v1/invite-team-members', payload).then(res => {
             // self.invitedObj = res.data.data[0];
-            console.log(res);
             self.isLoading = false;
             if(res.data.status != "FAIL") {
               self.isSuccess = true;
@@ -280,13 +279,16 @@ export default {
                 title: "Invited successfully",
                 center: true,
               });
-              let notifyObj = {
-                receivers: data.receivers,
-                title: `invited you to join ${self.team.name} team as ${self.invitationObject.role}`,
-                team_id: self.team.id,
-                team_temp_name: self.team.name
-              };
-              self.socketNotification(notifyObj);
+
+              if(self.userObj && self.userObj.id && self.userObj.email) {
+                let notifyObj = {
+                  receivers: [self.userObj.id.toString()],
+                  title: `invited you to join ${self.team.name} team as ${self.invitationObject.role}`,
+                  team_id: self.team.id,
+                  team_temp_name: self.team.name
+                };
+                self.socketNotification(notifyObj);
+              }
             } else {
               self.$error({
                 title: "Something went wrong",
@@ -319,7 +321,24 @@ export default {
           },
         });
       } else {
-        this.$emit('toggleMemberbox', this.isSuccess);
+        if(this.isSuccess) {
+          const self = this;
+          self.modal = this.$confirm({
+            content: `Copy the link before you close this invitation screen. You can also copy the link later from team member list, opening the pending (not joined) text`,
+            okText: "Ok",
+            okType: "danger",
+            cancelText: "Cancel",
+            confirmLoading: true,
+            async onOk() {
+              self.$emit("toggleMemberbox", self.isSuccess);
+            },
+            onCancel() {
+              //
+            },
+          });
+        } else {
+          this.$emit('toggleMemberbox', this.isSuccess);
+        }
       }
     }
   }
