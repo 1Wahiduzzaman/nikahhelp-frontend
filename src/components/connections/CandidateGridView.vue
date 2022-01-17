@@ -1,128 +1,196 @@
 <template>
-  <div class="m-2 shadow-default gridCardDesign position-relative flip-card" :class="{'flip-card-toggle': rotated}">
+  <div class="m-2 position-relative flip-card" :class="{'flip-card-toggle': rotated}">
     <div class="flip-card-inner">
-      <div class="row no-gutters p-1 flip-card-front">
-        <div class="col-12" id="flex-container">
-          <img
+      <div class="flip-card-front">
+<!--        <div class="col-12" id="flex-container">-->
+<!--          <img-->
+<!--              :src="connection.candidateInfo && connection.candidateInfo.candidate_image ? connection.candidateInfo.candidate_image : avatarSrc"-->
+<!--              alt=""-->
+<!--              id="card-image"-->
+<!--          />-->
+<!--        </div>-->
+<!--        <div class="col-12" id="flex-container-list">-->
+<!--          <div class="card-body py-2 d-flex flex-column h-full justify-content-between">-->
+<!--            <div>-->
+<!--              <h5 class="card-title">{{ connection.candidateInfo ? connection.candidateInfo.candidate_fname : 'Not found' }} {{ connection.candidateInfo ? connection.candidateInfo.candidate_lname : '' }}</h5>-->
+
+<!--              <ul class="desc-list">-->
+<!--                &lt;!&ndash; Team &ndash;&gt;-->
+<!--                <li class="flex-between-start">-->
+<!--                  <span class="flex-30 label-text">Team</span>-->
+<!--                  <span class="flex-70">:-->
+<!--									<span class="ml-1"><router-link class="team-link" :to="{name: 'ManageTeam', query: {team_id: connection.to_team_id}}">{{ connection.to_team_name }}</router-link></span>-->
+<!--								</span>-->
+<!--                </li>-->
+<!--                &lt;!&ndash; Location &ndash;&gt;-->
+<!--                <li class="flex-between-start">-->
+<!--                  <span class="flex-30 label-text">Location</span>-->
+<!--                  <span class="flex-70">:-->
+<!--									<span class="ml-1">{{ connection.candidateInfo ? connection.candidateInfo.candidate_location : 'N/A' }}</span>-->
+<!--								</span>-->
+<!--                </li>-->
+<!--                &lt;!&ndash; Age &ndash;&gt;-->
+<!--                <li class="flex-between-start">-->
+<!--								<span class="flex-30 label-text">Age</span-->
+<!--                ><span class="flex-70"-->
+<!--                >:-->
+<!--									<span class="ml-1">{{ connection.candidateInfo ? getAge(connection.candidateInfo.candidate_age) : 'Not found' }} Yrs </span></span-->
+<!--                >-->
+<!--                </li>-->
+<!--                &lt;!&ndash; Religion &ndash;&gt;-->
+<!--                <li class="flex-between-start">-->
+<!--								<span class="flex-30 label-text">Religion</span-->
+<!--                ><span class="flex-70"-->
+<!--                >:-->
+<!--									<span class="ml-1"-->
+<!--                  >{{ connection.candidateInfo ? connection.candidateInfo.candidate_religion : 'Not found' }}-->
+<!--									</span></span-->
+<!--                >-->
+<!--                </li>-->
+
+<!--                <li class="flex-between-start">-->
+<!--                  <span class="flex-30 label-text">Ethnicity</span>-->
+<!--                  <span class="flex-70">:-->
+<!--									<span class="ml-1">{{ connection.candidateInfo ? connection.candidateInfo.candidate_ethnicity : 'Not found' }} </span>-->
+<!--								</span>-->
+<!--                </li>-->
+<!--              </ul>-->
+
+<!--            </div>-->
+<!--            <div class="mt-2">-->
+<!--              <grid-buttons :type="type" @block="block"-->
+<!--                            @disconnectTeam="disconnectTeam"-->
+<!--                            @startConversation="startConversation"-->
+<!--                            @viewProfile="viewProfile"-->
+<!--                            @acceptRequest="acceptRequest"-->
+<!--                            @declineRequest="declineRequest"/>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+
+        <v-card
+            class="mx-auto shadow-default shortlist-card"
+        >
+          <template slot="progress">
+            <v-progress-linear
+                color="deep-purple"
+                height="10"
+                indeterminate
+            ></v-progress-linear>
+          </template>
+          <v-img
+              height="250"
               :src="connection.candidateInfo && connection.candidateInfo.candidate_image ? connection.candidateInfo.candidate_image : avatarSrc"
-              alt=""
-              id="card-image"
-          />
-        </div>
-        <div class="col-12" id="flex-container-list">
-          <div class="card-body py-2 d-flex flex-column h-full justify-content-between">
-            <div>
-              <h5 class="card-title">{{ connection.candidateInfo ? connection.candidateInfo.candidate_fname : 'Not found' }} {{ connection.candidateInfo ? connection.candidateInfo.candidate_lname : '' }}</h5>
+          ></v-img>
 
-              <ul class="desc-list">
-                <!-- Team -->
-                <li class="flex-between-start">
-                  <span class="flex-30 label-text">Team</span>
-                  <span class="flex-70">:
-									<span class="ml-1"><router-link class="team-link" :to="{name: 'ManageTeam', query: {team_id: connection.to_team_id}}">{{ connection.to_team_name }}</router-link></span>
-								</span>
-                </li>
-                <!-- Location -->
-                <li class="flex-between-start">
-                  <span class="flex-30 label-text">Location</span>
-                  <span class="flex-70">:
-									<span class="ml-1">{{ connection.candidateInfo ? connection.candidateInfo.candidate_location : 'N/A' }}</span>
-								</span>
-                </li>
-                <!-- Age -->
-                <li class="flex-between-start">
-								<span class="flex-30 label-text">Age</span
-                ><span class="flex-70"
-                >:
-									<span class="ml-1">{{ connection.candidateInfo ? getAge(connection.candidateInfo.candidate_age) : 'Not found' }} Yrs </span></span
-                >
-                </li>
-                <!-- Religion -->
-                <li class="flex-between-start">
-								<span class="flex-30 label-text">Religion</span
-                ><span class="flex-70"
-                >:
-									<span class="ml-1"
-                  >{{ connection.candidateInfo ? connection.candidateInfo.candidate_religion : 'Not found' }}
-									</span></span
-                >
-                </li>
+          <v-card-title>
+            {{ connection.candidateInfo ? connection.candidateInfo.candidate_fname : 'Not found' }} {{ connection.candidateInfo ? connection.candidateInfo.candidate_lname : '' }}
+          </v-card-title>
 
-                <li class="flex-between-start">
-                  <span class="flex-30 label-text">Ethnicity</span>
-                  <span class="flex-70">:
-									<span class="ml-1">{{ connection.candidateInfo ? connection.candidateInfo.candidate_ethnicity : 'Not found' }} </span>
-								</span>
-                </li>
-              </ul>
+          <div class="px-4">
+            <ul class="desc-list">
+              <!-- Team -->
+              <li class="flex-between-start">
+                <span class="flex-30 label-text">Team</span>
+                <span class="flex-70">:
+                    <span class="ml-1"><router-link class="team-link" :to="{name: 'ManageTeam', query: {team_id: connection.to_team_id}}">{{ connection.to_team_name }}</router-link>
+                    </span>
+                </span>
+              </li>
+              <!-- Location -->
+              <li class="flex-between-start">
+                <span class="flex-30 label-text">Location</span>
+                <span class="flex-70">:
+                    <span class="ml-1">{{ connection.candidateInfo ? connection.candidateInfo.candidate_location : 'N/A' }}
+                    </span>
+                </span>
+              </li>
+              <!-- Age -->
+              <li class="flex-between-start">
+                <span class="flex-30 label-text">Age</span>
+                <span class="flex-70">:
+                    <span class="ml-1">{{ connection.candidateInfo ? getAge(connection.candidateInfo.candidate_age) : 'Not found' }} Yrs </span>
+                </span>
+              </li>
 
-            </div>
-            <div class="mt-2">
-              <grid-buttons :type="type" @block="block"
-                            @disconnectTeam="disconnectTeam"
-                            @startConversation="startConversation"
-                            @viewProfile="viewProfile"
-                            @acceptRequest="acceptRequest"
-                            @declineRequest="declineRequest"/>
-            </div>
+              <!-- Religion -->
+              <li class="flex-between-start">
+                <span class="flex-30 label-text">Religion</span>
+                <span class="flex-70">:
+                    <span class="ml-1">{{ connection.candidateInfo ? connection.candidateInfo.candidate_religion : 'Not found' }}</span>
+                </span>
+              </li>
+            </ul>
           </div>
-        </div>
-      </div>
-      <div class="flip-card-back py-4 px-2 mt-4">
-        <h6 class="pb-2">This Profile Connection Overview</h6>
-        <table class="table table-borderless overview-table">
-          <tr>
-            <td class="td-60">Connection Status</td>
-            <td class="text-end">:</td>
-            <td class="text-capitalize">{{ connection.connection }}</td>
-          </tr>
-          <tr>
-            <td class="td-60">Connected date</td>
-            <td class="text-end">:</td>
-            <td>{{ dateFromDateTime(connection.responded_at) }}</td>
-          </tr>
-          <tr>
-            <td class="td-60">Connection requested by</td>
-            <td class="text-end">:</td>
-            <td>{{ connection.requested_by.full_name }}</td>
-          </tr>
-          <tr>
-            <td class="td-60">Request Date</td>
-            <td class="text-end">:</td>
-            <td>{{ dateFromDateTime(connection.requested_at) }}</td>
-          </tr>
-        </table>
+          <v-divider class="mx-4"></v-divider>
 
-        <h6 class="pb-2">This Profile Team Overview</h6>
-        <table class="table table-borderless overview-table">
-          <tr>
-            <td class="td-60">Team name</td>
-            <td class="text-end">:</td>
-            <td>{{ connection.to_team_name }}</td>
-          </tr>
-          <tr>
-            <td class="td-60">Team members</td>
-            <td class="text-end">:</td>
-            <td>{{ connection.total_teamMember }}</td>
-          </tr>
-          <tr>
-            <td class="td-60">Team creation date</td>
-            <td class="text-end">:</td>
-            <td>{{ dateFromTimeStamp(connection.team_created_date) }}</td>
-          </tr>
-          <tr>
-            <td class="td-60">Team created by</td>
-            <td class="text-end">:</td>
-            <td>{{ connection.team_created_by }}</td>
-          </tr>
-        </table>
+          <grid-buttons class="px-4 pb-3" :type="type" @block="block"
+                        @disconnectTeam="disconnectTeam"
+                        @startConversation="startConversation"
+                        @viewProfile="viewProfile"
+                        @acceptRequest="acceptRequest"
+                        @declineRequest="declineRequest"/>
+        </v-card>
+
+      </div>
+      <div class="flip-card-back">
+        <v-card class="mx-auto shadow-default shortlist-card flipped">
+          <h6 class="pb-2 pt-3">This Profile Connection Overview</h6>
+          <table class="table table-borderless overview-table">
+            <tr>
+              <td class="td-60">Connection Status</td>
+              <td class="text-end">:</td>
+              <td class="text-capitalize">{{ connection.connection }}</td>
+            </tr>
+            <tr>
+              <td class="td-60">Connected date</td>
+              <td class="text-end">:</td>
+              <td>{{ dateFromDateTime(connection.responded_at) }}</td>
+            </tr>
+            <tr>
+              <td class="td-60">Connection requested by</td>
+              <td class="text-end">:</td>
+              <td>{{ connection.requested_by.full_name }}</td>
+            </tr>
+            <tr>
+              <td class="td-60">Request Date</td>
+              <td class="text-end">:</td>
+              <td>{{ dateFromDateTime(connection.requested_at) }}</td>
+            </tr>
+          </table>
+
+          <h6 class="pb-2 pt-8">This Profile Team Overview</h6>
+          <table class="table table-borderless overview-table">
+            <tr>
+              <td class="td-60">Team name</td>
+              <td class="text-end">:</td>
+              <td>{{ connection.to_team_name }}</td>
+            </tr>
+            <tr>
+              <td class="td-60">Team members</td>
+              <td class="text-end">:</td>
+              <td>{{ connection.total_teamMember }}</td>
+            </tr>
+            <tr>
+              <td class="td-60">Team creation date</td>
+              <td class="text-end">:</td>
+              <td>{{ dateFromTimeStamp(connection.team_created_date) }}</td>
+            </tr>
+            <tr>
+              <td class="td-60">Team created by</td>
+              <td class="text-end">:</td>
+              <td>{{ connection.team_created_by }}</td>
+            </tr>
+          </table>
+        </v-card>
       </div>
     </div>
-    <div class="position-absolute candidate-top-right-corner"
-         :class="{
-             'connected-bg': type == 'connected',
-             'request-received-bg': type == 'Request received',
-             'request-sent-bg': type == 'Request send',}"></div>
+
+<!--    <div class="position-absolute candidate-top-right-corner"-->
+<!--         :class="{-->
+<!--             'connected-bg': type == 'connected',-->
+<!--             'request-received-bg': type == 'Request received',-->
+<!--             'request-sent-bg': type == 'Request send',}"></div>-->
     <div class="position-absolute icon-rotate-box cursor-pointer" @click="rotated = !rotated">
       <a-icon type="rollback" class="rotate-icon" size="large" />
     </div>
@@ -558,7 +626,7 @@ export default {
   border-radius: 5px;
   overflow: hidden;
   top: 0;
-  right: 0;
+  right: 6px;
 }
 
 .candidate-top-right-corner:after {
@@ -646,7 +714,7 @@ export default {
 .flip-card {
   background-color: #FFFFFF;
   width: 100%;
-  min-height: 430px;
+  height: 520px;
   perspective: 1000px;
 }
 .flip-card-inner {
@@ -669,7 +737,7 @@ export default {
   transform: rotateY(180deg);
 }
 .icon-rotate-box {
-  left: 10px;
+  left: 15px;
   top: 5px;
 }
 .rotate-icon:hover {
@@ -679,12 +747,21 @@ export default {
   width: 60%;
 }
 .overview-table td, .overview-table th {
-  padding: 0.25rem 0.75rem;
+  padding: 0.37rem 0.75rem;
 }
 .mobile-margin {
   margin-left: -10px;
   @media (min-width: 768px) {
     margin-left: 0;
   }
+}
+.shortlist-card {
+  max-width: 300px;
+  @media (min-width: 1200px) {
+    max-width: 374px;
+  }
+}
+.flipped {
+  padding: 50px 10px;
 }
 </style>
