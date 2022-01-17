@@ -304,7 +304,7 @@ export default {
         this.loading = true;
         this.in_progress = true;
         this.team.add_as_a = this.addAs;
-        this.team.relationship = this.selfRole.relationship;
+        this.team.relationship = this.addAs == 'Candidate' ? 'Candidate' : this.selfRole.relationship;
         let formData = new FormData();
         formData.append('logo', this.file);
         Object.keys(this.team).map(data =>{
