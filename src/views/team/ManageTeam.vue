@@ -76,6 +76,7 @@
                 id="create-container"
                 v-if="createTeamShow"
                 :addAs="addAs"
+                :teamCount="teams.length"
                 @cancel_button="cancelCreateTeamPage()"
                 @loadTeams="loadTeams"
                 @socketNotification="socketNotification"

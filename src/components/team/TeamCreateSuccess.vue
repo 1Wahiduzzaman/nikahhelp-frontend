@@ -96,9 +96,11 @@ export default {
   border-top-right-radius: 20px;
   padding: 20px;
   margin-left: -8px;
-  margin-right: -8px;
-  height: 286px;
-  margin-bottom: -8px;
+  /*margin-right: -8px;*/
+  /*height: 286px;*/
+  /*margin-bottom: -8px;*/
+  position: absolute;
+  bottom: 0;
 }
 
 .sub-msg {

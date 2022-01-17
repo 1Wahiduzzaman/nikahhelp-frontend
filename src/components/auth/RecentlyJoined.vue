@@ -11,12 +11,12 @@
               [768, 2],
               [1280, 3],
             ]"
+          :autoplay="true"
           :paginationEnabled="false"
-          navigationEnabled
-          navigationClickTargetSize="0"
+          :navigationEnabled="false"
       >
         <slide v-for="(user, recIndex) in recJoin" :key="user.id">
-          <div class="item flex-between-center" :class="{'ml-5': recIndex > 0}">
+          <div class="item flex-between-center ml-2 mr-2">
             <div class="item-img custom-size">
               <img class="item-img" @error="imgLoad(index, user)" :ref="`avatar-${index}`" :src="user.image" alt="img" style="border: 1px solid white;"/>
             </div>

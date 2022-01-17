@@ -26,7 +26,18 @@
       <div class="content">
         <div class="header-content">
           <h4>Contact Details</h4>
-          <v-tooltip bottom color="warning">
+          <v-btn
+            @click="openDialog"
+            style="background-color: #0aa3e1; color: #fff; border-radius: 25px"
+            small
+          >
+            <img
+              style="width: 20px"
+              src="@/assets/icon/pencil.svg"
+              alt="img"
+            />Edit
+          </v-btn>
+          <!-- <v-tooltip bottom color="warning">
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 v-bind="attrs"
@@ -51,7 +62,7 @@
               >If any of this data is incorrect plaese contact
               <router-link to="/help">Support Team</router-link></span
             >
-          </v-tooltip>
+          </v-tooltip> -->
         </div>
         <div class="contact-details">
           <span style="font-weight: 600">
@@ -200,6 +211,7 @@
         />
       </div>
     </div>
+    <EditContactModal :dialog="dialog" />
   </div>
 </template>
 
@@ -208,11 +220,13 @@
 import ApiService from "@/services/api.service";
 import VerificationRepresentative from "@/components/setting/Verification-Representative.vue";
 import VerificationCandidate from "@/components/setting/Verification-Candidate.vue";
+import EditContactModal from "@/components/setting/EditContactModal.vue";
 import jwtService from "@/services/jwt.service";
 export default {
   components: {
     VerificationRepresentative,
     VerificationCandidate,
+    EditContactModal,
   },
   data() {
     return {
@@ -223,7 +237,7 @@ export default {
       confirmLoading: false,
       isLoading: false,
       loadingSwitch: false,
-
+      dialog: false,
       oldPass: "",
       newPass: "",
       retypePass: "",
@@ -247,6 +261,12 @@ export default {
     }
   },
   methods: {
+    openDialog(e) {
+      this.dialog = null;
+      setTimeout(() => {
+        this.dialog = true;
+      }, 10);
+    },
     onDataChange(value) {
       this.showIdentity = true;
       this.userData = JSON.parse(localStorage.getItem("user"));
@@ -535,8 +555,8 @@ export default {
       align-items: center;
       justify-content: center;
       //color: #b7b5b5;
-	  font-weight: 600;
-	  font-size:14px ;
+      font-weight: 600;
+      font-size: 14px;
       padding-top: 100px;
     }
     .content {

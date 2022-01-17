@@ -89,8 +89,8 @@
                       v-model="addAs"
                       style="width: 100%"
                   >
-                    <a-select-option value="Candidate" v-if="addAs == 'Candidate'"> Candidate </a-select-option>
-                    <a-select-option value="Representative" v-if="addAs == 'Representative'"> Representative </a-select-option>
+                    <a-select-option value="Candidate" v-if="addAs == 'Candidate' || teamCount <= 0"> Candidate </a-select-option>
+                    <a-select-option value="Representative" v-if="addAs == 'Representative' || teamCount <= 0"> Representative </a-select-option>
 <!--                    <a-select-option value="Match Maker"> Match Maker </a-select-option>-->
                   </a-select>
                 </a-tooltip>
@@ -171,7 +171,7 @@ import TeamCreateSuccess from "./TeamCreateSuccess";
 export default {
 	name: "CreateTeam1",
 	components: {TeamCreateSuccess, CreateAddMember},
-  props: ['addAs'],
+  props: ['addAs', 'teamCount'],
 	data() {
 		return {
       relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-law'],

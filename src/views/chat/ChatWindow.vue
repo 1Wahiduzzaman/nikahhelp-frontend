@@ -279,7 +279,8 @@
 <!--                          {{ item.body || '' }}-->
                         </div>
                         <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">
-                          {{ messageCreatedAt(item.created_at) }}<span v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))">, {{ item.sender ? item.sender.full_name : '' }}</span>
+                          {{ messageCreatedAt(item.created_at) }}<span>, Me</span>
+<!--                          {{ messageCreatedAt(item.created_at) }}<span v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))">, {{ item.sender ? item.sender.full_name : '' }}</span>-->
                         </div>
                       </div>
 
@@ -294,7 +295,7 @@
 <!--                          {{ item.body || '' }}-->
                         </div>
                         <div class="text-muted small text-nowrap mt-2 position-absolute msg-left-created-at">
-                          {{ messageCreatedAt(item.created_at) }}<span v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))">, {{ item.sender ? item.sender.full_name : '' }}</span>
+                          {{ messageCreatedAt(item.created_at) }}<span>, {{ item.sender ? item.sender.full_name : '' }}</span>
                         </div>
                       </div>
 
@@ -545,6 +546,12 @@ export default {
         }
       });
 
+      this.sockets.subscribe('receive_notification', function (res) {
+        if (res && res.type) {
+          this.loadPageData();
+        }
+      });
+
       this.sockets.subscribe('receive_message', function (res) {
         if(!res.support || res.support == null || res.support == undefined) {
           res.sender = res.senderInfo;
@@ -647,6 +654,13 @@ export default {
         });
         this.$socket.emit('notification', payload);
       }
+      this.loadPageData();
+    },
+    loadPageData() {
+      this.loadTeamChat();
+      this.loadChatHistory();
+      this.loadConnectedGroup();
+      this.getPrivateRequests();
     },
     getActiveTeamId() {
       if (!JwtService.getTeamIDAppWide()) {
@@ -657,10 +671,7 @@ export default {
         }, 2000);
       } else {
         this.active_team_id = JwtService.getTeamIDAppWide();
-        this.loadTeamChat();
-        this.loadChatHistory();
-        this.loadConnectedGroup();
-        this.getPrivateRequests();
+        this.loadPageData();
       }
     },
     setChatTab(type) {
@@ -725,6 +736,8 @@ export default {
       })];
     },
     processChatHistoryResponse(data) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+
       let singleChat = map(data.single_chat, item => {
         return {
           label: 'Team member',
@@ -743,7 +756,7 @@ export default {
         return {
           label: 'Private chat',
           state: 'seen',
-          name: item.private_receiver_data?.full_name || 'user name',
+          name: this.getPrivateChatUserName(item),
           logo: item.private_receiver_data?.avatar,
           to_team_id: item.to_team_id,
           from_team_id: item.from_team_id,
@@ -752,6 +765,8 @@ export default {
           other_mate_id: item.receiver,
           typing_status: 0,
           typing_text: '',
+          is_friend: 1,
+          private_receiver_data: loggedUser.id == item.sender ? item.private_receiver_data : item.private_sender_data,
           message: pick(item.last_private_message, messageKeys)
         }
       });
@@ -770,12 +785,17 @@ export default {
         item.label = 'Connected Team';
         item.typing_status = 0;
         item.typing_text = '';
-        item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
-        item.is_friend = item.team_private_chat ? item.team_private_chat.is_friend : 0;
+        item.message = item.id && item.last_message ? item.last_message : {};
+        item.is_friend = 1;
         return item;
       });
 
       return [...lastGroupMsg, ...connectedMsg, ...singleChat, ...privateChat];
+    },
+    getPrivateChatUserName(item) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let user = loggedUser.id == item.sender ? item.private_receiver_data : item.private_sender_data;
+      return user?.full_name || 'user name';
     },
     async loadTeamChat() {
       try {
@@ -1101,7 +1121,7 @@ export default {
       let teamTwo = this.chatheadopen.to_team.team_members.map(member => member.user_id.toString());
       let teamMembers = [...teamone, ...teamTwo];
       // let teamMembers = this.teamMembers;
-      let selfIndex = this.teamMembers.findIndex(user => parseInt(user) == parseInt(loggedUser.id));
+      let selfIndex = teamMembers.findIndex(user => parseInt(user) == parseInt(loggedUser.id));
       if(selfIndex >= 0) {
         teamMembers.splice(selfIndex, 1);
       }
@@ -1157,7 +1177,7 @@ export default {
         senderInfo: loggedUser,
         target_opened_chat_type: 'private-chat',
         target_opened_chat: this.private_chat,
-        receiver: this.private_chat.receiver.toString(),
+        receiver: this.chatheadopen.private_receiver_data.id.toString(),
         label: 'Private',
         conv_title: this.conversationTitle,
         logo: this.chatheadopen.logo,
@@ -1171,8 +1191,14 @@ export default {
       this.chatheadopen.message.senderId = loggedUser.id.toString();
       this.chatheadopen.message.senderInfo = loggedUser;
       this.$socket.emit('send_message', payload);
+
       payload.from_team_id = this.activeTeam;
-      payload.to_team_id = this.private_chat.to_team_id;
+      if(parseInt(this.activeTeam) == parseInt(this.chatheadopen.from_team_id)) {
+        payload.to_team_id = this.chatheadopen.to_team_id;
+      } else {
+        payload.to_team_id = this.chatheadopen.from_team_id;
+      }
+
       await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
       this.msg_text = '';
     },
