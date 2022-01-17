@@ -77,6 +77,7 @@
                 v-if="createTeamShow"
                 :addAs="addAs"
                 :teamCount="teams.length"
+                :joinedAsCandidate="joinedAsCandidate"
                 @cancel_button="cancelCreateTeamPage()"
                 @loadTeams="loadTeams"
                 @socketNotification="socketNotification"
@@ -144,6 +145,45 @@ export default {
   },
   computed: {
     addAs() {
+      // let loggedUser = JSON.parse(localStorage.getItem('user'));
+      // if(loggedUser && loggedUser.id && this.teams && this.teams.length > 0) {
+      //   if(loggedUser.account_type == 1) {
+      //     let candidate = false;
+      //     this.teams.forEach(team => {
+      //       if(!candidate) {
+      //         team.team_members.filter(self => self.user_id == loggedUser.id).forEach(member => {
+      //           if(member.user_type == 'Candidate') {
+      //             candidate = true;
+      //           }
+      //         });
+      //       }
+      //     });
+      //     // this.setRelationship(candidate ? 'Representative' : 'Candidate');
+      //     return candidate ? 'Representative' : 'Candidate';
+      //   } else if(loggedUser.account_type == 2) {
+      //     // this.setRelationship('Representative');
+      //     return 'Representative';
+      //   } else if(loggedUser.account_type == 3) {
+      //     // this.setRelationship('Match Maker');
+      //     return 'Match Maker';
+      //   }
+      // } else {
+      //   if(loggedUser.account_type == 1) {
+      //     return 'Candidate'
+      //   } else if(loggedUser.account_type == 2) {
+      //     return 'Representative';
+      //   } else if(loggedUser.account_type == 3) {
+      //     return 'Match Maker';
+      //   }
+      // }
+      // return 'Representative';
+      if(this.joinedAsCandidate) {
+        return 'Representative';
+      } else {
+        return 'Candidate';
+      }
+    },
+    joinedAsCandidate() {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       if(loggedUser && loggedUser.id && this.teams && this.teams.length > 0) {
         if(loggedUser.account_type == 1) {
@@ -157,25 +197,11 @@ export default {
               });
             }
           });
-          // this.setRelationship(candidate ? 'Representative' : 'Candidate');
-          return candidate ? 'Representative' : 'Candidate';
-        } else if(loggedUser.account_type == 2) {
-          // this.setRelationship('Representative');
-          return 'Representative';
-        } else if(loggedUser.account_type == 3) {
-          // this.setRelationship('Match Maker');
-          return 'Match Maker';
-        }
-      } else {
-        if(loggedUser.account_type == 1) {
-          return 'Candidate'
-        } else if(loggedUser.account_type == 2) {
-          return 'Representative';
-        } else if(loggedUser.account_type == 3) {
-          return 'Match Maker';
+
+          return candidate;
         }
       }
-      return 'Representative';
+      return true;
     }
   },
   methods: {

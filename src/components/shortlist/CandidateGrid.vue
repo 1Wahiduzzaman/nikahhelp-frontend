@@ -222,11 +222,11 @@ export default {
       let myTeamId = JwtService.getTeamIDAppWide();
       if(!this.item.is_connect) {
         if(!myTeamId) {
-          this.showError("You don't have a team")
+          this.showError("You don't have an active team")
           return;
         }
         if(!this.item.team_id) {
-          this.showError("This candidate has no team")
+          this.showError("This candidate has no active team")
           return;
         }
 

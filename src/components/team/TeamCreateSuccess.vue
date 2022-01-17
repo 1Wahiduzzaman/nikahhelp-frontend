@@ -113,7 +113,7 @@ export default {
   width: 200px;
   height: 40px;
   color: #e22077;
-  border: 3px solid #e22077;
+  border: 3px solid #FFFFFF;
   border-radius: 25px;
   text-align: center;
 }

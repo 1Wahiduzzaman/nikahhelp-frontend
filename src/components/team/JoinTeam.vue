@@ -1,6 +1,6 @@
 <template>
 	<div class="col-lg-6 col-xl-3 position-relative">
-		<div class="team-card" style="min-height: 550px;">
+		<div class="team-card" style="min-height: 650px;">
       <div class="d-flex align-items-center justify-content-center joining-header position-relative" style="width: 100%">
          <div class="logo-position position-absolute">
            <img

@@ -55,6 +55,7 @@
                 placeholder="Relationship"
                 class="mt-2 fs-14"
                 v-model="invitationObject.relationship"
+                v-if="invitationObject.add_as_a != 'Candidate'"
             >
               <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
             </a-select>
@@ -224,6 +225,7 @@ export default {
     },
     generateLink() {
       if(!this.invitationObject.link) {
+        this.invitationObject.relationship = this.invitationObject.add_as_a == 'Candidate' ? 'Candidate' : this.invitationObject.relationship;
         if(this.invitationObject.role && this.invitationObject.add_as_a && this.invitationObject.relationship) {
           this.createInvitaionLink();
         } else {
@@ -444,7 +446,7 @@ export default {
   width: 93%;
   top: 12px;
   left: -1px;
-  height: 550px;
+  height: 650px;
   border-radius: 10px;
   margin-left: 16px;
   background: $bg-primary;
