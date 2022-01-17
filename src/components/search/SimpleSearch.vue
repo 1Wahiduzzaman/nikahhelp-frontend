@@ -286,6 +286,7 @@
 								@handle-team="handleSearch"
 							></select-team-modal>
 							<ComingSoonModal
+								title="Advanced search"
 								@closeDialog="closeDialog"
 								ref="advDiag"
 							/>

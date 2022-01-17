@@ -93,16 +93,16 @@
         <div class="flex justify-space-between flex-wrap mt-10">
             <ButtonComponent
                 class="mb-3"
+                iconHeight="14px"
+                :isSmall="true"
                 title="Gallery"
                 customEvent="openGallery"
-                icon="item.icon"
-                bgColor="/assets/icon/gallery.svg"
+                icon="/assets/icon/gallery.svg"
                 @onClickButton="onClickButton"
             />
             <ButtonComponent
                 iconHeight="14px"
                 :isSmall="true"
-                :responsive="false"
                 :title="profile.is_short_listed ? 'Unlist' : 'ShortList'"
                 icon="/assets/icon/star-fill-secondary.svg"
                 :customEvent="profile.is_short_listed ? 'removeShortList' : 'addShortList'"
@@ -111,7 +111,6 @@
             <ButtonComponent
                 iconHeight="14px"
                 :isSmall="true"
-                :responsive="false"
                 :title="profile.is_connect ? 'Disconnect' : 'Connect'"
                 icon="/assets/icon/connect-s.svg"
                 :customEvent="profile.is_connect ? 'removeConnection' : 'addConnection'"
@@ -120,7 +119,6 @@
             <ButtonComponent
                 iconHeight="14px"
                 :isSmall="true"
-                :responsive="false"
                 :title="profile.is_teamListed ? 'TeamUnlist' : 'TeamList'"
                 icon="/assets/icon/team.svg"
                 :customEvent="profile.is_teamListed ? 'removeTeam' : 'addTeam'"
@@ -129,7 +127,7 @@
             <ButtonComponent
                 iconHeight="14px"
                 :isSmall="true"
-                :responsive="false"
+                :responsive="true"
                 :title="profile.is_block_listed ? 'Unblock' : 'Block'"
                 :icon="profile.is_block_listed ? '/assets/icon/block-secondary.svg' : '/assets/icon/block.svg'"
                 :customEvent="profile.is_block_listed ? 'removeBlock' : 'block'"
@@ -187,7 +185,10 @@ export default {
                 this.connectCandidate();
             }
             if(eventData.event == 'block') {
-                this.blockCandidate();
+                this.handleBlockCandidate('post', true, 'v1/store-block-list');
+            }
+            if(eventData.event == 'removeBlock') {
+                this.handleBlockCandidate('delete', false, 'v1/unblock-by-candidate');
             }
             if(eventData.event == 'addShortList') {
                 this.addShortList();
@@ -333,11 +334,13 @@ export default {
                 }
             }
         },
-        async blockCandidate() {
+        async handleBlockCandidate(actionType, value, url) {
             let data = {
-                url: 'v1/store-block-list',
+                url: url,
+                actionType: actionType,
+                value: value,
                 payload: {
-                    block_by: JwtService.getUserId(),
+                    //block_by: JwtService.getUserId(),
                     user_id: this.profile.user_id
                 }
             }
@@ -347,8 +350,7 @@ export default {
                 if(e.response) {
                     this.showError(e.response.data.message)
                 }
-            }
-            
+            }  
         },
         showError(message) {
             this.$error({

@@ -78,7 +78,7 @@
         iconHeight="14px"
         :isSmall="true"
         :responsive="false"
-        :title="candidate.is_connect ? 'Disconnect' : 'Connect'"
+        :title="connectionTitle"
         icon="/assets/icon/connect-s.svg"
         :customEvent="candidate.is_connect ? 'removeConnection' : 'addConnection'"
         @onClickButton="onClickButton"
@@ -144,6 +144,27 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
       selection: 1,
       onceMore: true
     }),
+    computed: {
+      connectionEvent() {
+
+      },
+      connectionTitle() {
+        /*
+        teamConnectType = 1 mean we sent request
+        teamConnectType = 2 mean They sent request
+        teamConnectStatus 
+          0 = pending
+          1= accepted
+          2= rejected
+        */
+        if(this.candidate.teamConnectStatus == 0) return 'Cancel'
+        if(this.candidate.teamConnectStatus == 1) return 'Disconnect'
+        if(this.candidate.teamConnectStatus == 2) return 'Connect'
+        if(this.candidate.teamConnectType == 1) return 'Cancel'
+        if(this.candidate.teamConnectType == 2) return 'Accept'
+        return 'Connect'
+      }
+    },
     methods: {
       ...mapMutations({
         setComponent: 'search/setComponent',
@@ -333,7 +354,7 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         }
       },
       disConnectCandidate() {
-        console.log('>>>>>>>>')
+        this.showError('Disconnection is ongoing')
       },
       async handleBlockCandidate(actionType, value, url) {
         let data = {
