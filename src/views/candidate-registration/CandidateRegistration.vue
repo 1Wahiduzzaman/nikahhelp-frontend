@@ -370,11 +370,11 @@ export default {
           },
           preferenceData: {
             ...this.nullToUndefined(response.data.data.user.preference),
-            pre_occupation:
-              typeof response.data.data.user.preference.pre_occupation ==
-              "string"
-                ? JSON.parse(response.data.data.user.preference.pre_occupation)
-                : "",
+            // pre_occupation:
+            //   typeof response.data.data.user.preference.pre_occupation ==
+            //   "string"
+            //     ? JSON.parse(response.data.data.user.preference.pre_occupation)
+            //     : "",
             pre_height_min:
               response.data.data.user.preference.pre_height_min == 0
                 ? undefined

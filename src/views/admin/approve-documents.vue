@@ -44,11 +44,15 @@
         </div>
       </div>
       <div class="bottom-header">
-        <v-tabs>
-          <v-tab><v-badge color="red" content="6">All</v-badge></v-tab>
-          <v-tab><v-badge color="red" content="6">Candidate</v-badge></v-tab>
+        <v-tabs @change="onSelectedTab" v-model="selectedTab">
           <v-tab
-            ><v-badge color="red" content="6">Representative</v-badge></v-tab
+            ><v-badge color="red" :content="totalNumberOfItems"
+              >All</v-badge
+            ></v-tab
+          >
+          <v-tab><v-badge color="red" content="0">Candidate</v-badge></v-tab>
+          <v-tab
+            ><v-badge color="red" content="0">Representative</v-badge></v-tab
           >
           <!-- <v-tab><v-badge color="red" content="6">Rep.to Cand.</v-badge></v-tab>
           <v-tab><v-badge color="red" content="6">Matchmaker</v-badge></v-tab> -->
@@ -73,8 +77,12 @@
         :headers="headers"
         :single-select="false"
         :search="search"
+        :server-items-length="totalNumberOfItems"
+        @update:options="paginate"
         item-key="name"
         class="dt-table"
+        :loading="loading"
+        loading-text="Loading... Please wait"
         :footer-props="{
           'items-per-page-text': 'Show',
         }"
@@ -188,12 +196,16 @@ export default {
   data() {
     return {
       search: "",
+      selectedTasks: [],
+      selectedTab: 0,
+      current_page: 1,
       showPendingDocuments: true,
       showVerifiedDocuments: true,
       showRejectedDocuments: true,
-      selectedTasks: [],
+      totalNumberOfItems: 0,
       dialog: false,
       selectedItem: null,
+      loading: false,
       headers: [
         {
           text: "ID",
@@ -248,37 +260,61 @@ export default {
     },
     onItemClick(e) {},
     async getVerifiedUsers() {
+      this.search = "";
+      this.selectedTab = 0;
+      this.items = [];
+      this.loading = true;
       await this.$store
         .dispatch("getVerifiedUsers")
         .then((data) => {
-          this.items = data;
+          this.items = data.data;
+          this.totalNumberOfItems = data.total;
           this.showPendingDocuments = false;
           this.showVerifiedDocuments = true;
           this.showRejectedDocuments = false;
+          this.loading = false;
         })
-        .catch((error) => {});
+        .catch((error) => {
+          this.loading = false;
+        });
     },
     async getRejectedUsers() {
+      this.search = "";
+      this.selectedTab = 0;
+      this.items = [];
+      this.loading = true;
       await this.$store
         .dispatch("getRejectedUsers")
         .then((data) => {
-          this.items = data;
+          this.items = data.data;
+          this.totalNumberOfItems = data.total;
           this.showPendingDocuments = false;
           this.showVerifiedDocuments = false;
           this.showRejectedDocuments = true;
+          this.loading = false;
         })
-        .catch((error) => {});
+        .catch((error) => {
+          this.loading = false;
+        });
     },
     async getPendingUsers() {
+      this.search = "";
+      this.selectedTab = 0;
+      this.items = [];
+      this.loading = true;
       await this.$store
         .dispatch("getPendingUsers")
         .then((data) => {
-          this.items = data;
+          this.items = data.data;
+          this.totalNumberOfItems = data.total;
           this.showPendingDocuments = true;
           this.showVerifiedDocuments = false;
           this.showRejectedDocuments = false;
+          this.loading = false;
         })
-        .catch((error) => {});
+        .catch((error) => {
+          this.loading = false;
+        });
     },
     async updateUserVerifyOrReject(user, status) {
       const data = {
@@ -296,6 +332,85 @@ export default {
           }
         })
         .catch((error) => {});
+    },
+    onSearch() {
+      const _payload = {
+        page: 1,
+        keyword: this.search,
+        account_type: this.selectedTab,
+      };
+      this.getData(_payload);
+    },
+    onSelectedTab(tab) {
+      const _payload = {
+        page: 1,
+        keyword: this.search,
+        account_type: this.selectedTab,
+      };
+      this.getData(_payload);
+    },
+    paginate(e) {
+      if (!e || e.page == 1) {
+        return;
+      }
+
+      const _payload = {
+        page: e.page,
+        keyword: this.search,
+        account_type: this.selectedTab,
+      };
+      this.getData(_payload);
+    },
+    getData(_payload) {
+      if (this.showPendingDocuments) {
+        this.getPageiniationPendingUsers(_payload);
+      } else if (this.showVerifiedDocuments) {
+        this.getPageiniationVerifiedUsers(_payload);
+      } else if (this.showRejectedDocuments) {
+        this.getPageiniationRejectedUsers(_payload);
+      }
+    },
+    async getPageiniationPendingUsers(_payload) {
+      this.items = [];
+      this.loading = true;
+      await this.$store
+        .dispatch("getPendingUsersByPage", _payload)
+        .then((data) => {
+          this.items = data.data;
+          this.totalNumberOfItems = data.total;
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.loading = false;
+        });
+    },
+    async getPageiniationRejectedUsers(_payload) {
+      this.items = [];
+      this.loading = true;
+      await this.$store
+        .dispatch("getRejectedUsersByPage", _payload)
+        .then((data) => {
+          this.items = data.data;
+          this.totalNumberOfItems = data.total;
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.loading = false;
+        });
+    },
+    async getPageiniationVerifiedUsers(_payload) {
+      this.items = [];
+      this.loading = true;
+      await this.$store
+        .dispatch("getVerifiedUsersByPage", _payload)
+        .then((data) => {
+          this.items = data.data;
+          this.totalNumberOfItems = data.total;
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.loading = false;
+        });
     },
   },
 };

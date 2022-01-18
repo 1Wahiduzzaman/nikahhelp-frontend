@@ -13,6 +13,17 @@ export default {
         });
     });
   },
+  async getPendingUsersByPage(context, payload) {
+    return new Promise((resolve, reject) => {
+      ApiService.get(`v1/admin/pending-user?page=${payload.page}&account_type=${payload.account_type}&keyword=${payload.keyword}`)
+        .then((data) => {
+          resolve(data.data.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
   async getVerifiedUsers() {
     return new Promise((resolve, reject) => {
       ApiService.get(`v1/admin/verified-user-list`)
@@ -24,9 +35,31 @@ export default {
         });
     });
   },
+  async getVerifiedUsersByPage(context, payload) {
+    return new Promise((resolve, reject) => {
+      ApiService.get(`v1/admin/verified-user-list?page=${payload.page}&account_type=${payload.account_type}&keyword=${payload.keyword}`)
+        .then((data) => {
+          resolve(data.data.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
   async getRejectedUsers() {
     return new Promise((resolve, reject) => {
       ApiService.get(`v1/admin/rejected-user-list`)
+        .then((data) => {
+          resolve(data.data.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
+  async getRejectedUsersByPage(context, payload) {
+    return new Promise((resolve, reject) => {
+      ApiService.get(`v1/admin/rejected-user-list?page=${payload.page}&account_type=${payload.account_type}&keyword=${payload.keyword}`)
         .then((data) => {
           resolve(data.data.data);
         })
@@ -94,7 +127,7 @@ export default {
   },
   async getUserReportsByPage(context, payload) {
     return new Promise((resolve, reject) => {
-      ApiService.get(`v1/admin/users-report?page=${payload}`)
+      ApiService.get(`v1/admin/users-report?page=${payload.page}&account_type=${payload.account_type}&keyword=${payload.keyword}`)
         .then((data) => {
           resolve(data.data.data);
         })
