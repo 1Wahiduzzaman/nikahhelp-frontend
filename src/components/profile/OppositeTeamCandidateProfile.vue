@@ -1,678 +1,305 @@
 <template>
 	<div>
+		<ProfileBanner
+			class="px-2 mt-2"
+			:name="candidateData.first_name + ' ' + candidateData.last_name"
+			:image="
+			candidateData.personal.per_avatar_url
+				? candidateData.personal.per_avatar_url
+				: avatarSrc
+			"
+		/>
+
+		<div class="flex justify-space-between flex-wrap mt-10">
+            <ButtonComponent
+                class="mb-3"
+                iconHeight="14px"
+                :isSmall="true"
+                title="Gallery"
+                customEvent="openGallery"
+                icon="/assets/icon/gallery.svg"
+                @onClickButton="onClickButton"
+            />
+            <ButtonComponent
+                iconHeight="14px"
+                :isSmall="true"
+                :title="profile.is_short_listed ? 'Unlist' : 'ShortList'"
+                icon="/assets/icon/star-fill-secondary.svg"
+                :customEvent="profile.is_short_listed ? 'removeShortList' : 'addShortList'"
+                @onClickButton="onClickButton"
+            />
+            <ButtonComponent
+                iconHeight="14px"
+                :isSmall="true"
+                :title="profile.is_connect ? 'Disconnect' : 'Connect'"
+                icon="/assets/icon/connect-s.svg"
+                :customEvent="profile.is_connect ? 'removeConnection' : 'addConnection'"
+                @onClickButton="onClickButton"
+            />
+            <ButtonComponent
+                iconHeight="14px"
+                :isSmall="true"
+                :title="profile.is_teamListed ? 'TeamUnlist' : 'TeamList'"
+                icon="/assets/icon/team.svg"
+                :customEvent="profile.is_teamListed ? 'removeTeam' : 'addTeam'"
+                @onClickButton="onClickButton"
+            />
+            <ButtonComponent
+                iconHeight="14px"
+                :isSmall="true"
+                :responsive="true"
+                :title="profile.is_block_listed ? 'Unblock' : 'Block'"
+                :icon="profile.is_block_listed ? '/assets/icon/block-secondary.svg' : '/assets/icon/block.svg'"
+                :customEvent="profile.is_block_listed ? 'removeBlock' : 'block'"
+                :backgroundColor="profile.is_block_listed ? '' : '#d81b60'"
+                :titleColor="profile.is_block_listed ? '' : 'white'"
+                @onClickButton="onClickButton"
+            />
+        </div>
+
+		<div>
+			<v-row class="mt-5">
+				<v-col class="pt-0" cols="12" md="6">
+					<div class="d-flex justify-space-between d-md-none">
+						<OutlinedButton
+							:name="copyProfileText"
+							customEvent="onClickCopyText"
+							@onClickCopyText="onClickCopyText"
+						/>
+						<OutlinedButton 
+							name="Team Information"
+							customEvent="onClickTeamDetail"
+							@onClickTeamDetail="onClickTeamDetail"
+						/>
+					</div>
+					<div class="d-none d-md-flex">
+						<OutlinedButton
+							:name="copyProfileText"
+							customEvent="onClickCopyText"
+							@onClickCopyText="onClickCopyText"
+						/>
+						<OutlinedButton 
+							name="Team Information"
+							customEvent="onClickTeamDetail"
+							@onClickTeamDetail="onClickTeamDetail"
+						/>
+					</div>
+				</v-col>
+				<v-col class="pt-0" cols="12" md="6">
+					<Scroller />
+				</v-col>
+			</v-row>
+		</div>
+
 		<div>
 			<div class="opposite-candidate-profile"  style="margin-top: 15px;">
 				<div class="profile-heading">
-					<!-- Avatar and cover images -->
-					<div class="text-center">
-						<img
-							src="@/assets/Icons/profile cover.jpg"
-							alt=""
-							class="cover-img"
-						/>
-						<img
-							:src="
-								candidateData.personal.per_avatar_url
-									? candidateData.personal.per_avatar_url
-									: avatarSrc
-							"
-							alt=""
-							class="avatar-img"
-						/>
-
-						<h3 class="mt-5">
-							{{ candidateData.first_name }} {{ candidateData.last_name }}
-						</h3>
-					</div>
-					<!-- Buttons -->
-					<div class="row mt-3 mb-3 text-center">
-						<div class="col">
-							<button disabled class="btn btn-primary px-4">Gallery</button>
-						</div>
-						<div class="col">
-							<a href="#" class="btn btn-primary px-4">
-								<img src="@/assets/icon/star.svg" alt="" height="16" style="margin-bottom: 3px"> 
-								Shortlist</a>
-						</div>
-						<div class="col">
-							<button class="btn btn-primary px-4">
-								<img src="@/assets/icon/teamlist.svg" alt="" width="20" height="20">
-								Teamlist
-							</button>
-						</div>
-						<div class="col">
-							<button class="btn btn-primary px-4">
-								<img src="@/assets/icon/connect.svg" alt="" height="18" width="20">
-								Connect
-							</button>
-						</div>
-						<div class="col">
-							<button class="btn btn-block-pink px-4">
-								<img src="@/assets/icon/block.svg" alt="" width="17" height="20">
-								Block
-							</button>
-						</div>
-					</div>
-					<!-- Team name and profile link -->
-					<div class="row mt-3 mb-3">
-						<div class="col">
-							<div class="team-name-div">
-								<span class="team-name-title">Representated by</span>
-								<span class="team-name ml-3">Team name</span>
-							</div>
-						</div>
-						<div class="col">
-							<div class="team-name-div">
-								<span class="team-name-title">Profile Link</span>
-								<span class="team-name ml-1"
-									>54.254.41.18/user/profile/{{ candidateData.user_id }}</span
-								>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- Candidate Info -->
-				<fieldset class="review">
-					<div class="text-start">
-						<!-- Personal Information -->
-						<div class="review-edit">
-							<div class="review-edit-label">
-								Personal Information
-								<!-- <img
-									class="ms-2"
-									src="@/assets/icon/pencil-square.svg"
-									alt="icon"
-								/> -->
-							</div>
-
-							<div class="row h-100">
-								<div class="col-md-8 mb-3">
-									<div class="card-custom h-67 shadow-default">
-										<ul>
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text">Name</span
-												><span class="flex-70 px-2"
-													>:<span class="ml-3">
-														{{ candidateData.first_name }}
-													</span>
-												</span>
-											</li>
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text">Screen Name</span
-												><span class="flex-70 px-2"
-													>:<span class="ml-3">{{
-														candidateData.screen_name
-													}}</span></span
-												>
-											</li>
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text">Gender</span
-												><span class="flex-70 px-2 d-inherit"
-													>:<span
-														class="ml-3"
-														v-if="candidateData.personal.per_gender == 1"
-													>
-														Male
-													</span>
-													<span
-														class="ml-3"
-														v-if="candidateData.personal.per_gender == 2"
-													>
-														Female
-													</span>
-												</span>
-											</li>
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text">Date of Birth</span
-												><span class="flex-70 px-2 d-inherit"
-													>:<span class="ml-3">
-														{{ candidateData.personal.dob }}
-													</span>
-												</span>
-											</li>
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text"
-													>Employment Status</span
-												><span class="flex-70 px-2 d-inherit"
-													>:<span class="ml-3">
-														{{ candidateData.personal.per_employment_status }}</span
-													></span
-												>
-											</li>
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text">Religion</span
-												><span class="flex-70 px-2 d-inherit"
-													>:<span class="ml-3"
-														>{{
-															$store.state.candidateInfo.religion_options[
-																candidateData.personal.per_religion_id
-															].name
-														}}
-													</span></span
-												>
-											</li>
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text">Ethnicity</span
-												><span class="flex-70 px-2 d-inherit"
-													>:<span class="ml-3">{{
-														candidateData.personal.per_ethnicity
-													}}</span></span
-												>
-											</li>
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text">Mother Tongue</span
-												><span class="flex-70 px-2 d-inherit"
-													>:<span class="ml-3">{{
-														candidateData.personal.per_mother_tongue
-													}}</span></span
-												>
-											</li>
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text">Nationality</span
-												><span class="flex-70 px-2 d-inherit"
-													>:<span class="ml-3">{{
-														$store.state.candidateInfo.countries[
-															candidateData.personal.per_nationality
-														].name
-													}}</span></span
-												>
-											</li>
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text">Country of Birth</span
-												><span class="flex-70 px-2 d-inherit"
-													>:<span class="ml-3">{{
-														$store.state.candidateInfo.countries[
-															candidateData.personal.per_country_of_birth
-														].name
-													}}</span></span
-												>
-											</li>
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text"
-													>Current Residance</span
-												><span class="flex-70 px-2 d-inherit"
-													>:<span class="ml-3">{{
-														$store.state.candidateInfo.countries[
-															candidateData.personal.per_current_residence
-														].name
-													}}</span></span
-												>
-											</li>
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text">Address</span
-												><span class="flex-70 px-2 d-inherit"
-													>:<span class="ml-3">{{
-														candidateData.personal.per_address
-													}}</span></span
-												>
-											</li>
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text">Telephone NO</span
-												><span class="flex-70 px-2 d-inherit"
-													>:<span class="ml-3">{{
-														candidateData.personal.per_telephone_no
-													}}</span></span
-												>
-											</li>
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text">Mobile No</span
-												><span class="flex-70 px-2 d-inherit"
-													>:<span class="ml-3">{{
-														candidateData.personal.mobile_number
-													}}</span></span
-												>
-											</li>
-										</ul>
-									</div>
-									<div class="card-custom h-33 shadow-default">
-										<h4>A little bit about me</h4>
-										<p class="mb-0">
-											{{ candidateData.personal.per_about }}
-										</p>
-									</div>
-								</div>
-								<div class="col-md-4 mb-3">
-									<div class="card-custom h-100 shadow-default">
-										<div class="badge-info">
-											<span class="badge-info-label"
-												><span class="inner">Marital Status</span></span
-											>
-											<span class="fw-600">{{ candidateData.personal.per_marital_status }}</span>
-										</div>
-										<div class="badge-info">
-											<span class="badge-info-label"
-												><span class="inner">Currently living with</span></span
-											>
-											<span class="fw-600">{{
-												candidateData.personal.per_currently_living_with
-											}}</span>
-										</div>
-										<div class="badge-info">
-											<span class="badge-info-label"
-												><span class="inner">Willing to relocate</span></span
-											>
-											<span 
-												class="fw-600"
-												v-if="candidateData.personal.per_willing_to_relocate == 1"
-											>
-												Yes
-											</span>
-											<span
-												class="fw-600"
-												v-else-if="
-													candidateData.personal.per_willing_to_relocate == 2
-												"
-											>
-												No
-											</span>
-											<span
-												class="fw-600"
-												v-if="candidateData.personal.per_willing_to_relocate == 3"
-											>
-												Let's Discuss
-											</span>
-										</div>
-										<div class="badge-info">
-											<span class="badge-info-label"
-												><span class="inner">Smoker</span></span
-											>
-											<span v-if="candidateData.personal.per_smoker == true" class="fw-600">
-												Yes
-											</span>
-											<span v-if="candidateData.personal.per_smoker == false" class="fw-600">
-												No
-											</span>
-										</div>
-										<div class="badge-info">
-											<span class="badge-info-label"
-												><span class="inner">Language</span></span
-											>
-											<span class="fw-600">{{ candidateData.personal.per_language_speak }}</span>
-										</div>
-										<div class="badge-info">
-											<span class="badge-info-label"
-												><span class="inner">My Hobbies & Interests</span></span
-											>
-											<span class="fw-600">{{
-												candidateData.personal.per_hobbies_interests
-											}}</span>
-										</div>
-										<div class="badge-info">
-											<span class="badge-info-label"
-												><span class="inner">Food & Cuisine I like</span></span
-											>
-											<span class="fw-600">{{
-												candidateData.personal.per_food_cuisine_like
-											}}</span>
-										</div>
-										<div class="badge-info">
-											<span class="badge-info-label"
-												><span class="inner">Things I Enjoy</span>
-											</span>
-											<span class="fw-600">{{ candidateData.personal.per_things_enjoy }}</span>
-										</div>
-										<div class="badge-info">
-											<span class="badge-info-label">
-												<span class="inner">I am Thankfull for</span>
-											</span>
-											<span class="fw-600">{{ candidateData.personal.per_thankfull_for }}</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-12 mb-3">
-									<div class="card-custom shadow-default">
-										<h4>Additional Information</h4>
-										<p class="mb-0">
-											{{ candidateData.personal.per_about }}
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- Family Information -->
-						<div class="review-edit">
-							<div class="review-edit-label">
-								Family Information
-								<!-- <img
-									class="ms-2"
-									src="@/assets/icon/pencil-square.svg"
-									alt="icon"
-								/> -->
-							</div>
-							<div class="row">
-								<div class="col-md-8 mb-3">
-									<div class="card-custom h-100 shadow-default">
-										<ul>
-											<!-- <li class="flex-between-start">
-												<span class="flex-50 px-2 label-text">Father's Name</span
-												><span class="flex-50 px-2"
-													>:<span class="ml-3">
-														{{ candidateData.family.father_name }}</span
-													></span
-												>
-											</li> -->
-											<!-- <li class="flex-between-start">
-												<span class="flex-50 px-2 label-text">Mother's Name</span
-												><span class="flex-50 px-2"
-													>:<span class="ml-3">{{
-														candidateData.family.mother_name
-													}}</span></span
-												>
-											</li> -->
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text"
-													>Father's Profession</span
-												><span class="flex-70 px-2 d-inherit"
-													>:<span class="ml-3">{{
-														candidateData.family.father_profession
-													}}</span></span
-												>
-											</li>
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text"
-													>Mother's Profession</span
-												><span class="flex-70 px-2 d-inherit"
-													>:<span class="ml-3">{{
-														candidateData.family.mother_profession
-													}}</span></span
-												>
-											</li>
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text">Siblings</span
-												><span class="flex-70 px-2 d-inherit"
-													>:<span class="ml-3">{{
-														candidateData.family.siblings_desc
-													}}</span></span
-												>
-											</li>
-											<li class="flex-between-start">
-												<span class="flex-30 px-2 label-text"
-													>Country Of origin</span
-												><span class="flex-70 px-2 d-inherit"
-													>:<span class="ml-3">{{
-														candidateData.family.country_of_origin
-													}}</span></span
-												>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<div class="col-md-4 mb-3">
-									<div class="card-custom h-100 shadow-default">
-										<h4>About My Family</h4>
-										<p class="mb-0">
-											{{ candidateData.family.family_info }}
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<!-- Preference -->
-						<div class="review-edit">
-							<div class="review-edit-label">
-								My partner preference
-								<!-- <img
-									class="ms-2"
-									src="@/assets/icon/pencil-square.svg"
-									alt="icon"
-								/> -->
-							</div>
-							<div class="row">
-								<div class="col-md-7 mb-3">
-									<div class="card-custom h-100 shadow-default">
-										<ul>
-											<!-- Age -->
-											<li class="flex-between-start">
-												<span class="flex-40 px-2 label-text">Age</span
-												><span class="flex-60 px-2"
-													>:
-													<span class="ml-3">
-														{{ candidateData.preference.pre_partner_age_min }} to
-														{{ candidateData.preference.pre_partner_age_max }}
-														years</span
-													></span
-												>
-											</li>
-											<!-- Height -->
-											<li class="flex-between-start">
-												<span class="flex-40 px-2 label-text">Height</span
-												><span class="flex-60 px-2"
-													>:
-													<span class="ml-3"
-														>{{ candidateData.preference.pre_height_min }} inch to
-														{{ candidateData.preference.pre_height_max }} inch</span
-													></span
-												>
-											</li>
-
-											<!-- Preferred countries and cities -->
-											<li class="flex-between-start">
-												<span class="flex-40 px-2 label-text">
-													Country and cities preferred
-												</span>
-												<span class="flex-60 px-2 d-inherit">
-													:
-													<span class="ml-3">
-														<div
-															v-for="(country, index) in candidateData.preference
-																.preferred_countries"
-															:key="country.id"
-														>
-															{{ country.name }},
-															{{
-																candidateData.preference.preferred_cities[index]
-																	.name
-															}}
-														</div>
-													</span>
-												</span>
-											</li>
-
-											<!-- Religion -->
-											<li class="flex-between-start">
-												<span class="flex-40 px-2 label-text">Religion</span
-												><span class="flex-60 px-2 d-inherit"
-													>:<span class="ml-3">Islam, Judaism, Christan</span></span
-												>
-											</li>
-
-											<!-- Ethnicities -->
-											<li class="flex-between-start">
-												<span class="flex-40 px-2 label-text">Ethnicities</span
-												><span class="flex-60 px-2 d-inherit"
-													>:<span class="ml-3">{{
-														candidateData.preference.pre_ethnicities
-													}}</span></span
-												>
-											</li>
-
-											<!-- Nationality -->
-											<li class="flex-between-start">
-												<span class="flex-40 px-2 label-text">Nationality</span
-												><span class="flex-60 px-2 d-inherit"
-													>:<span class="ml-3">
-														<div
-															v-for="nationality in candidateData.preference
-																.preferred_nationality"
-															:key="nationality.id"
-														>
-															{{ nationality.name }}
-														</div>
-													</span></span
-												>
-											</li>
-
-											<!-- Education -->
-											<li
-												class="flex-between-start"
-												v-if="candidateData.preference.pre_study_level_id"
-											>
-												<span class="flex-40 px-2 label-text">Education</span
-												><span class="flex-60 px-2 d-inherit"
-													>:<span class="ml-3">
-														{{ studyLevel }}
-													</span></span
-												>
-											</li>
-
-											<!-- Employment Status -->
-											<li class="flex-between-start">
-												<span class="flex-40 px-2 label-text"
-													>Employment Status</span
-												><span class="flex-60 px-2 d-inherit"
-													>:<span class="ml-3">{{
-														candidateData.preference.pre_employment_status
-													}}</span></span
-												>
-											</li>
-
-											<!-- Occupation -->
-											<li class="flex-between-start">
-												<span class="flex-40 px-2 label-text">Ocupation</span
-												><span class="flex-60 px-2 d-inherit"
-													>:<span class="ml-3">{{
-														candidateData.preference.pre_occupation
-													}}</span></span
-												>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<!-- Other Requirments -->
-								<div class="col-md-5 mb-3">
-									<div class="card-custom h-100 shadow-default">
-										<h4>What I'm looking for</h4>
-										<p class="mb-0">
-											{{ candidateData.preference.pre_description }}
-										</p>
-									</div>
-								</div>
-								<div class="col-md-12 mb-3">
-									<div class="card-custom text-start shadow-default">
-										<h4>Other requirements</h4>
-										<p class="text-start mb-0">
-											{{ candidateData.preference.pre_other_preference }}
-										</p>
-									</div>
-								</div>
-								<div class="col-md-12 mb-3">
-									<div class="card-custom h-100 shadow-default">
-										<h5>More about preferred partner</h5>
-										<p>How Important following characters are to me</p>
-										<hr />
-										<!-- Character -->
-										<rating-component
-											title="Strength of character from a moral point of view"
-											:value="
+					<v-container fluid>
+						<v-row>
+							<fieldset class="">
+								<legend class="ml-8 px-1"><span>Personal Information</span></legend>
+								<v-container fluid class="pt-0 px-5">
+									<v-row dense>
+										<v-col class="pt-1" cols="12" md="8">
+											<PersonalInformationTable :data="candidateData"/>
+											<CardInfo :detail="candidateData.personal.per_about" height="149px" class="mt-2"/>
+										</v-col>
+										<v-col ref="family-information" class="pt-1" cols="12" md="4">
+											<MoreAbout 
+												:data="candidateData"
+											/>
+										</v-col>
+										<v-col class="pt-1" cols="12">
+											<CardInfo
+											:showDownloadBtn="true"
+											title="Additional Information"
+											class="mt-2"
+											/>
+										</v-col>
+										<v-col class="pt-1 mb-5" cols="12" md="6">
+											<CardInfo
+											title="I'm thankful for"
+											class="mt-2"
+											:detail="candidateData.personal.per_thankfull_for"
+											/>
+										</v-col>
+										<v-col class="pt-1 mb-5" cols="12" md="6">
+											<CardInfo
+											title="I improve myself"
+											class="mt-2"
+											/>
+										</v-col>
+									</v-row>
+								</v-container>
+							</fieldset>
+							<fieldset style="width:100%" id="family-information" class="-mt-15">
+							<legend class="ml-8 bg-white px-1"><span>Family Information</span></legend>
+							<v-container fluid class="pt-0 px-5">
+								<v-row dense>
+									<v-col class="pt-1 mb-5" cols="12" md="7">
+										<FamilyInfoTable :data="candidateData"/>
+									</v-col>
+									<v-col class="pt-1 mb-5" cols="12" md="5">
+										<CardInfo />
+									</v-col>
+								</v-row>
+							</v-container>
+							</fieldset>
+							<fieldset class="-mt-15">
+								<legend id="my-partner-pref" class="ml-8 bg-white px-1"><span>My partner preference</span></legend>
+								<v-container fluid class="pt-0 px-5">
+									<v-row dense>
+										<v-col class="pt-1" cols="12" md="7">
+											<MyPrefTable
+												:preference="candidateData.preference"
+												:countries="candidateData.preference.preferred_countries"
+											/>
+										</v-col>
+										<v-col class="pt-1" cols="12" md="5">
+											<CardInfo
+												title="What I'm Looking for"
+												:detail="candidateData.preference.pre_description"
+											/>
+										</v-col>
+										<v-col class="pt-1" cols="12">
+											<CardInfo
+												title="Other requirements"
+												:detail="candidateData.preference.pre_other_preference"
+											/>
+										</v-col>
+										<v-col class="pt-1" cols="12">
+											<v-card class="px-3 py-5">
+											<h5>More about preferred partner</h5>
+											<p>How Important following characters are to me</p>
+											<hr />
+											<!-- Character -->
+											<rating-component
+												title="Strength of character from a moral point of view"
+												:value="
 												candidateData.preference.pre_strength_of_character_rate
-											"
-											:valueString="
+												"
+												:valueString="
 												candidateData.preference
 													.pre_strength_of_character_rate_string
-											"
-										></rating-component>
-										<!-- Looks and Apperance -->
-										<rating-component
-											title="Looks and apperance"
-											:value="candidateData.preference.pre_look_and_appearance_rate"
-											:valueString="
-												candidateData.preference.pre_look_and_appearance_rate_string
-											"
-										></rating-component>
-										<!-- Religiosity/Faith -->
-										<rating-component
-											title="Religiosity/ Faith"
-											:value="
+												"
+											></rating-component>
+											<!-- Looks and Apperance -->
+											<rating-component
+												title="Looks and apperance"
+												:value="
+												candidateData.preference.pre_look_and_appearance_rate
+												"
+												:valueString="
+												candidateData.preference
+													.pre_look_and_appearance_rate_string
+												"
+											></rating-component>
+											<!-- Religiosity/Faith -->
+											<rating-component
+												title="Religiosity/ Faith"
+												:value="
 												candidateData.preference.pre_religiosity_or_faith_rate
-											"
-											:valueString="
+												"
+												:valueString="
 												candidateData.preference
 													.pre_religiosity_or_faith_rate_string
-											"
-										></rating-component>
-										<!-- Manners, Social skills and ethics -->
-										<rating-component
-											title="Manners, Social skills and ethics"
-											:value="
-												candidateData.preference.pre_manners_socialskill_ethics_rate
-											"
-											:valueString="
+												"
+											></rating-component>
+											Manners, Social skills and ethics
+											<rating-component
+												title="Manners, Social skills and ethics"
+												:value="
+												candidateData.preference
+													.pre_manners_socialskill_ethics_rate
+												"
+												:valueString="
 												candidateData.preference
 													.pre_manners_socialskill_ethics_rate_string
-											"
-										></rating-component>
-										<!-- Emotional Maturity and compatibility -->
-										<rating-component
-											title="Emotional Maturity and compatibility"
-											:value="candidateData.preference.pre_emotional_maturity_rate"
-											:valueString="
-												candidateData.preference.pre_emotional_maturity_rate_string
-											"
-										></rating-component>
-										<!-- Good Listener -->
-										<rating-component
-											title="Good Listener"
-											:value="candidateData.preference.pre_good_listener_rate"
-											:valueString="
+												"
+											></rating-component>
+											<!-- Emotional Maturity and compatibility -->
+											<rating-component
+												title="Emotional Maturity and compatibility"
+												:value="
+												candidateData.preference.pre_emotional_maturity_rate
+												"
+												:valueString="
+												candidateData.preference
+													.pre_emotional_maturity_rate_string
+												"
+											></rating-component>
+											<!-- Good Listener -->
+											<rating-component
+												title="Good Listener"
+												:value="candidateData.preference.pre_good_listener_rate"
+												:valueString="
 												candidateData.preference.pre_good_listener_rate_string
-											"
-										></rating-component>
-										<!-- Good talker -->
-										<rating-component
-											title="Good talker"
-											:value="candidateData.preference.pre_good_talker_rate"
-											:valueString="
+												"
+											></rating-component>
+											<!-- Good talker -->
+											<rating-component
+												title="Good talker"
+												:value="candidateData.preference.pre_good_talker_rate"
+												:valueString="
 												candidateData.preference.pre_good_talker_rate_string
-											"
-										></rating-component>
-										<!-- Willing to learn -->
-										<rating-component
-											title="Willing to learn"
-											:value="candidateData.preference.pre_wiling_to_learn_rate"
-											:valueString="
+												"
+											></rating-component>
+											<!-- Willing to learn -->
+											<rating-component
+												title="Willing to learn"
+												:value="candidateData.preference.pre_wiling_to_learn_rate"
+												:valueString="
 												candidateData.preference.pre_wiling_to_learn_rate_string
-											"
-										></rating-component>
-										<!-- Family or Social Status-->
-										<rating-component
-											title="Family or Social Status"
-											:value="
+												"
+											></rating-component>
+											<!-- Family or Social Status-->
+											<rating-component
+												title="Family or Social Status"
+												:value="
 												candidateData.preference.pre_family_social_status_rate
-											"
-											:valueString="
+												"
+												:valueString="
 												candidateData.preference
 													.pre_family_social_status_rate_string
-											"
-										></rating-component>
-										<!-- Employment or Wealth-->
-										<rating-component
-											title="Employment or Wealth"
-											:value="candidateData.preference.pre_employment_wealth_rate"
-											:valueString="
-												candidateData.preference.pre_employment_wealth_rate_string
-											"
-										></rating-component>
-										<!-- Education -->
-										<rating-component
-											title="Education"
-											:value="candidateData.preference.pre_education_rate"
-											:valueString="
+												"
+											></rating-component>
+											<!-- Employment or Wealth-->
+											<rating-component
+												title="Employment or Wealth"
+												:value="
+												candidateData.preference.pre_employment_wealth_rate
+												"
+												:valueString="
+												candidateData.preference
+													.pre_employment_wealth_rate_string
+												"
+											></rating-component>
+											<!-- Education -->
+											<rating-component
+												title="Education"
+												:value="candidateData.preference.pre_education_rate"
+												:valueString="
 												candidateData.preference.pre_education_rate_string
-											"
-										></rating-component>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</fieldset>
+												"
+											></rating-component>
+											</v-card>
+										</v-col>
+									</v-row>
+								</v-container>
+							</fieldset>
+						</v-row>
+					</v-container>
+				</div>
 			</div>
 		</div>
 		<div class="profile-footer">
 			<Footer></Footer>
 		</div>
+		<ComingSoonModal
+            title="Team details quick view"
+            @closeDialog="closeDialog"
+            ref="advDiag"
+        />
 	</div>
 </template>
 
@@ -681,14 +308,42 @@ import RatingComponent from "./RatingComponent.vue";
 import firebase from "../../configs/firebase";
 import Footer from "@/components/auth/Footer.vue";
 
+import ProfileBanner from "@/components/atom/ProfileBanner";
+import PersonalInformationTable from '@/components/search/personal-information/PersonalInformationTable.vue'
+import FamilyInfoTable from '@/components/search/personal-information/FamilyInfoTable.vue'
+import MyPrefTable from '@/components/search/personal-information/MyPrefTable.vue'
+import CardInfo from '@/components/atom/CardInfo'
+import MoreAbout from '@/components/search/personal-information/MoreAbout.vue'
+import Scroller from  '@/components/atom/Scroller'
+import ButtonComponent from '@/components/atom/ButtonComponent'
+
+import OutlinedButton from '@/components/atom/OutlinedButton'
+import ComingSoonModal from "@/components/search/ComingSoonModal"
+import {mapActions} from 'vuex'
+
 export default {
 	name: "CandidateProfile",
 	props: ["candidateData", "userId"],
-	components: { RatingComponent, Footer },
+	components: { 
+		RatingComponent, 
+		Footer,
+		ProfileBanner,
+		PersonalInformationTable,
+		FamilyInfoTable,
+		MyPrefTable,
+		CardInfo,
+		MoreAbout,
+		Scroller,
+		ButtonComponent,
+		OutlinedButton,
+		ComingSoonModal
+	},
 	data() {
 		return {
+			copyProfileText: 'Copy Profile URL',
 			avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
-			conversations: []
+			conversations: [],
+			profile: ''
 		};
 	},
 	created() {
@@ -725,6 +380,23 @@ export default {
 		},
 	},
 	methods: {
+		...mapActions({
+            connectToCandidate: 'search/connectCandidate',
+            blockACandidate: 'search/blockCandidate',
+            shortListCandidate: 'search/shortListCandidate',
+            teamListCandidate: 'search/teamListCandidate',
+        }),
+		onClickTeamDetail() {
+            this.$refs.advDiag.openDiag()
+        },
+		 onClickCopyText() {
+            this.copyProfileText = 'Copy successful'
+            navigator.clipboard.writeText(this.domain+'/user/profile/'+this.candidateData.user_id);
+            this.copied = true;
+            setTimeout(() => {
+                this.copyProfileText = 'Copy Profile URL';
+            }, 3000);
+        },
 		startConversation() {
 			var res_userid = this.candidateData.user_id;
 			var my_user_id = this.$store.state.user.user.id;
@@ -810,6 +482,209 @@ export default {
 			}
 			return false;
 		},
+
+		
+        onClickButton(eventData) {
+            if(eventData.event == 'openGallery') this.openGallery();
+            if(eventData.event == 'addConnection') {
+                this.connectCandidate();
+            }
+            if(eventData.event == 'block') {
+                this.handleBlockCandidate('post', true, 'v1/store-block-list');
+            }
+            if(eventData.event == 'removeBlock') {
+                this.handleBlockCandidate('delete', false, 'v1/unblock-by-candidate');
+            }
+            if(eventData.event == 'addShortList') {
+                this.addShortList();
+            }
+            if(eventData.event == 'removeShortList') {
+                this.removeFroShortList();
+            }
+            if(eventData.event == 'addTeam') {
+                this.addTeamList();
+            }
+            if(eventData.event == 'removeTeam') {
+                this.removeFromTeamList();
+            }
+        },
+
+        async connectCandidate() {
+            let myTeamId = JwtService.getTeamIDAppWide();
+            console.log(myTeamId, '>>>>>>>')
+            if(!myTeamId) {
+                this.showError("You don't have a team")
+                return;
+            }
+            if(!this.profile.team_id) {
+                this.showError("This candidate has no team")
+                return;
+            }
+            let data = {
+                userId: this.profile.user_id,
+                url: 'v1/send-connection-request',
+                payload: {
+                    from_team_id: myTeamId,
+                    to_team_id: this.profile.team_id
+                }
+            }
+            try {
+            let res = await this.connectToCandidate(data)
+                this.$success({
+                title: "Connection Request Sent Successfully!",
+                content: res.message,
+                centered: true,
+            });
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }
+            
+        },
+
+        async addShortList() {
+            let data = {
+            url: `v1/short-listed-candidates/store?shortlisted_by=${JwtService.getUserId()}&user_id=${this.profile.user_id}`,
+                value: true,
+                actionType: 'post',
+                user_id: this.profile.user_id,
+                params: {
+                    shortlisted_by: JwtService.getUserId(),
+                    user_id: this.profile.user_id
+                },
+                payload: {
+                    shortlisted_by: JwtService.getUserId(),
+                    user_id: this.profile.user_id
+                }
+            }
+            try {
+                await this.shortListCandidate(data)
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }
+            
+        },
+
+        async removeFroShortList() {
+            let data = {
+                url: 'v1/delete-short-listed-by-candidates ',
+                value: false,
+                actionType: 'delete',
+                user_id: this.profile.user_id,
+                payload: {
+                    user_id: this.profile.user_id
+                }
+            }
+            try {
+                await this.shortListCandidate(data)
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }
+        },
+        async addTeamList() {
+            let data = {
+                url: `v1/team-short-listed-candidates/store`,
+                value: true,
+                actionType: 'post',
+                user_id: this.profile.user_id,
+                payload: {
+                    team_listed_by: JwtService.getUserId(),
+                    user_id: this.profile.user_id
+                }
+            }
+            try {
+                let res = await this.teamListCandidate(data)
+                if(res.status_code == 422) {
+                    this.showError('Something went wrong!')
+                }
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }
+            
+        },
+        async removeFromTeamList() {
+            let data = {
+                url: 'v1/delete-team-short-listed-by-candidates ',
+                value: false,
+                actionType: 'delete',
+                user_id: this.profile.user_id,
+                payload: {
+                    user_id: this.profile.user_id
+                }
+            }
+            try {
+                await this.teamListCandidate(data)
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }
+            
+        },
+
+        async fetchCandidate() {
+            let url = `v1/candidate/info/${this.profile.user_id}`
+            try {
+                await this.fetchProfileDetail(url)
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }
+        },
+        async handleBlockCandidate(actionType, value, url) {
+            let data = {
+                url: url,
+                actionType: actionType,
+                value: value,
+                payload: {
+                    //block_by: JwtService.getUserId(),
+                    user_id: this.profile.user_id
+                }
+            }
+            try {
+                await this.blockACandidate(data)
+            } catch (e) {
+                if(e.response) {
+                    this.showError(e.response.data.message)
+                }
+            }  
+        },
+        showError(message) {
+            this.$error({
+            title: message,
+            center: true,
+            });
+        },
+        loadSearchResultComponent() {
+            this.setComponent('AddComponent')
+            this.$emit('switchComponent', 'CandidateProfiles')
+        },
+        openGallery() {
+            this.images= [];
+            let images = this.profileDetails.other_images
+            if(images.length > 0) {
+                images.map(i => this.images.push(i.image_path));
+                this.show();
+            } else {
+                this.$error({
+                title: 'No image found',
+                center: true,
+                });
+            }
+        },
+        show() {
+            this.$viewerApi({
+                images: this.images,
+            })
+        },
 	},
 };
 </script>
@@ -982,5 +857,23 @@ export default {
 	@media (max-width: 767px){
 		display: none;
 	}
+}
+
+fieldset {
+    border: 1px solid #d3d0e4;
+    border-radius: 10px;
+}
+legend {
+    display: inline;
+    width: inherit;
+    color: #6259a8;
+    font-size: 18px;
+    font-weight: 600;
+}
+.-mt-15 {
+    margin-top: -13px;
+}
+.bg-white {
+    background: white;
 }
 </style>

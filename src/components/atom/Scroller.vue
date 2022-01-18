@@ -60,6 +60,7 @@ export default {
     margin-left: 8px;
 }
 .navigate {
+    width: 150px;
     border: 1px solid #6158a7;
     font-size: 12px;
     height: 27px;

@@ -176,7 +176,7 @@ export default {
 .team-profile-box {
   background: $bg-primary;
   width: 100%;
-  height: 354px;
+  height: 455px;
   margin-left: -8px;
   border-radius: 10px;
   z-index: 9;

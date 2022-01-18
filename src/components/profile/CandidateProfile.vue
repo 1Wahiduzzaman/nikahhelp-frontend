@@ -14,7 +14,6 @@
       <div
         v-if="candidateData"
         class="candidate-profile"
-        style="margin-top: 15px"
       >
         <div class="profile-heading">
           <!-- Avatar and cover images -->
@@ -59,32 +58,35 @@
           </v-container>
           <!-- Team name and profile link -->
           <v-container fluid>
-            <v-row>
-              <v-col cols="12" md="6" lg="4">
-                <div class="team-name-div">
-                  <span class="team-name-title">Represented by</span>
-                  <span class="team-name ml-3">Team name</span>
-                </div>
-              </v-col>
-              <v-col cols="12" md="6" lg="4">
-                <div class="team-name-div">
-                  <span class="team-name-title">Profile Link</span>
-                  <span ref="profileLink" class="d-inline d-sm-none d-md-none d-lg-inline team-name ml-1"
-                    >{{domain}}/profile/{{ candidateData.user_id }}</span
-                  >
-                  <span class="d-none d-md-inline d-sm-inline d-lg-none  team-name ml-1"
-                    >..profile/{{ candidateData.user_id }}</span
-                  >
-                  <div @click="copyProfileLink" class="copy-btn">
-                    <transition title="Copy Profile URL" name="fade">
-                      <img title="Copy Profile URL" v-if="copied" :src="checkIcon" alt="">
-                      <img title="Copy Profile URL" v-else :src="copyIcon" alt="">
-                    </transition>
+            <v-row class="pt-5">
+              <v-col cols="12" md="6" class="pt-0">
+                  <div class="d-flex justify-space-between d-md-none">
+                      <OutlinedButton
+                          :name="copyProfileText"
+                          customEvent="onClickCopyText"
+                          @onClickCopyText="onClickCopyText"
+                      />
+                      <OutlinedButton 
+                          name="Team Information"
+                          customEvent="onClickTeamDetail"
+                          @onClickTeamDetail="onClickTeamDetail"
+                      />
                   </div>
-                </div>
+                  <div class="d-none d-md-flex">
+                      <OutlinedButton
+                          :name="copyProfileText"
+                          customEvent="onClickCopyText"
+                          @onClickCopyText="onClickCopyText"
+                      />
+                      <OutlinedButton 
+                          name="Team Information"
+                          customEvent="onClickTeamDetail"
+                          @onClickTeamDetail="onClickTeamDetail"
+                      />
+                  </div>
               </v-col>
-              <v-col cols="12" md="12" lg="4">
-                <Scroller />
+              <v-col class="pt-0" cols="12" md="6">
+                  <Scroller />
               </v-col>
             </v-row>
           </v-container>
@@ -288,6 +290,11 @@
           </v-row>
         </v-container>
       </div>
+      <ComingSoonModal
+        title="Team details quick view"
+        @closeDialog="closeDialog"
+        ref="advDiag"
+      />
     </div>
   </div>
 </template>
@@ -306,6 +313,8 @@ import ProfileBanner from "@/components/atom/ProfileBanner";
 import firebase from "../../configs/firebase";
 import Footer from "@/components/auth/Footer.vue";
 import ApiService from "@/services/api.service";
+import OutlinedButton from '@/components/atom/OutlinedButton'
+import ComingSoonModal from "@/components/search/ComingSoonModal"
 
 export default {
   name: "CandidateProfile",
@@ -320,9 +329,12 @@ export default {
     RatingComponent, 
     Footer,
     ProfileBanner,
+    OutlinedButton,
+    ComingSoonModal
   },
   data() {
     return {
+      copyProfileText: 'Copy Profile URL',
       images: [],
       copyIcon: '/assets/icon/copy-secondary.svg',
       checkIcon: '/assets/icon/check-circle-secondary.svg',
@@ -357,6 +369,10 @@ export default {
     },
   },
   methods: {
+    onClickTeamDetail() {
+      this.$refs.advDiag.openDiag()
+      // alert('coming soon')
+    },
     onClickButton(data) {
       if(data.event == 'editProfile') this.$router.push('/edit_candidate')
       if(data.event == 'openGallery') this.openGallery()
@@ -379,6 +395,14 @@ export default {
       this.$viewerApi({
         images: this.images,
       })
+    },
+    onClickCopyText() {
+      this.copyProfileText = 'Copy successful'
+      navigator.clipboard.writeText(this.domain+'/user/profile/'+this.candidateData.user_id);
+      this.copied = true;
+      setTimeout(() => {
+        this.copyProfileText = 'Copy Profile URL';
+      }, 3000);
     },
     copyProfileLink() {
       // console.log(this.$refs.profileLink.innerHTML)
@@ -535,7 +559,7 @@ legend {
   margin-left: 10px;
   .profile-heading {
     // margin-left: 10px;
-    margin-bottom: 20px;
+    //margin-bottom: 20px;
     .cover-img {
       width: 100%;
       height: 300px;

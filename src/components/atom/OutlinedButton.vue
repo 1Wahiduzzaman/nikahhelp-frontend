@@ -32,7 +32,7 @@ export default {
             type: String
         },
         width: {
-            default: '120px'
+            default: '150px'
         }
     }
 }

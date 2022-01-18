@@ -167,7 +167,7 @@
 						</div>
 					</div>
 					<!-- Default dropleft button -->
-					<div class="btn-group dropleft" :class="{'disabled-team': !turnOn}">
+					<div class="btn-group dropleft">
 						<a-tooltip
 							placement="top"
 							title="Change Roles, Preferences, Delete and Leave Team"
@@ -185,9 +185,9 @@
 							<!-- <a class="dropdown-item" href="#">Edit</a> -->
 							<!-- <a class="dropdown-item" href="#">Close</a> -->
 <!--							<a class="dropdown-item" @click="changeRole">Change Roles</a>-->
-							<a class="dropdown-item" @click="preferencesModal">Preferences</a>
+							<a class="dropdown-item" @click="preferencesModal" :class="{'disabled-team': !turnOn}">Preferences</a>
 							<a class="dropdown-item" @click="deleteTeam">Delete</a>
-							<a class="dropdown-item red-hover" @click="leaveTeam"
+							<a class="dropdown-item red-hover" @click="leaveTeam" :class="{'disabled-team': !turnOn}"
 								>Leave Team</a
 							>
 						</div>
@@ -293,8 +293,8 @@
 			</div>
 
 			<!-- Add or Remove Member Button -->
-			<div class="member-action" :class="{'disabled-team': !turnOn && !tempActive}">
-				<div class="add-remove">
+			<div class="member-action">
+				<div class="add-remove" :class="{'disabled-team': !turnOn && !tempActive}">
 					<button class="add-member" @click="handleAddMemberclick">
 						<img src="../../assets/icon/add.svg" alt="add" /> Add member
 					</button>
@@ -381,7 +381,7 @@
 				<!-- Member Table -->
 				<div class="member-info-table">
           <div class="admin-member" :class="{'mb-4': invitationObject.visible}">
-            <div class="flex align-items-center pb-2" v-for="(member, mIndex) in sortCandidateFirst(teamData.team_members)" :key="mIndex" >
+            <div class="flex align-items-center pb-2" :class="{'disabled-team': !turnOn && !tempActive}" v-for="(member, mIndex) in sortCandidateFirst(teamData.team_members)" :key="mIndex" >
               <a-tooltip
                   placement="top"
                   :title="member.role.replace('+', ' & ')"
@@ -396,7 +396,7 @@
                   :title="accountTypeReducer(member.user_type)"
               >
                 <div class="member-type">
-                  <span class="badge badge-secondary fs-10">{{ accountTypeReducer(member.user_type).substr(0, 3) }} {{ member.user_type ? '.' : '' }}</span>
+                  <span class="badge badge-secondary fs-10">{{ member.user_type ? accountTypeReducer(member.user_type).substr(0, 3) : '' }} {{ member.user_type ? '.' : '' }}</span>
                 </div>
               </a-tooltip>
               <div class="check-tick">
@@ -425,7 +425,7 @@
                   :title="accountTypeReducer(item.user_type)"
               >
                 <div class="member-type">
-                  <span class="badge badge-secondary fs-10">{{ accountTypeReducer(item.user_type).substr(0, 3) }} {{ item.user_type ? '.' : '' }}</span>
+                  <span class="badge badge-secondary fs-10">{{ item.user_type ? accountTypeReducer(item.user_type).substr(0, 3) : '' }} {{ item.user_type ? '.' : '' }}</span>
                 </div>
               </a-tooltip>
               <div class="check-tick">
@@ -1269,6 +1269,7 @@ export default {
 
 						this.showModalDeletion = false;
 						this.$emit("teamListUpdated");
+            location.reload();
 					} else {
 						this.$message.error("Something went wrong");
 
@@ -1882,7 +1883,7 @@ export default {
 // start css for team-card
 .team-card {
 	position: relative;
-	min-height: 550px;
+	min-height: 650px;
 	width: 100%;
 	padding: 10px 8px;
 	border-radius: 10px;

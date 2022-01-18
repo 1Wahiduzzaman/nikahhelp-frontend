@@ -116,7 +116,8 @@ export default {
           receivers: [payload.to_owner.toString()],
           title: `requested for a private chat`,
           team_id: this.to_team_id,
-          event: 'private_chat_request'
+          event: 'private_chat_request',
+          type: 'private-chat'
         };
         this.$emit("socketNotification", data);
       }).catch(e => {
@@ -155,7 +156,7 @@ export default {
       return null;
     },
     getOwner(members) {
-      let owner = members.find(item => item.user_type == 'Owner+Admin');
+      let owner = members.find(item => item.role == 'Owner+Admin');
       if(owner) {
         return owner.user_id;
       }
