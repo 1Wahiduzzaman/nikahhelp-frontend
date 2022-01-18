@@ -1,6 +1,6 @@
 <template>
 	<div class="col-lg-6 col-xl-3">
-		<a-card class="team-card text-center" style="min-height: 500px">
+		<a-card class="team-card text-center" style="min-height: 650px">
 			<a-row>
 				<a-col :span="24">
 					<a-col :span="24"

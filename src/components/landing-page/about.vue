@@ -3,7 +3,7 @@
     <LandingPageHeader class="header" />
 
     <div class="main-content">
-      <h3>About Matrimony Assist</h3>
+      <h3 class="text-header-black">About Matrimony Assist</h3>
       <p>
         Matrimony Assist is an online platform to facilitate conversation
         between families who are seeking marriage partners for their loved ones.
@@ -79,7 +79,7 @@ export default {
   align-items: flex-start;
   overflow: hidden;
   max-width: 1100px;
-  margin:10px auto;
+  margin: 10px auto;
   padding: 0 10px;
   @media (min-width: 320px) and (max-width: 480px) {
     padding: 0 20px;

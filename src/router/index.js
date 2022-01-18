@@ -2,11 +2,11 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import DHome from "@/views/dashboard/DHome.vue";
 import AboutPage from "@/components/landing-page/about.vue";
-import UserAgreement from "@/components/landing-page/user-agreement.vue";
 import HelpPage from "@/components/landing-page/help.vue";
 import PrivacyPolicy from "@/components/landing-page/privacy-policy.vue";
 import TermsAndConditionPage from "@/components/landing-page/terms-condition.vue";
 import SafetyAndGuidancePage from "@/components/landing-page/safety-guidance.vue";
+import UserAgreement from "@/components/landing-page/user-agreement.vue";
 import Signup from "@/views/auth/Signup.vue";
 import Login from "@/views/auth/Login.vue";
 import EmailVerification from "@/views/auth/EmailVerification.vue";
@@ -49,14 +49,20 @@ import AdminDashboard from "@/views/admin/AdminDashboard.vue";
 import AdminFlag from "@/views/admin/flag.vue";
 import AdminSystem from "@/views/admin/admin-system.vue";
 import AdminUsers from "@/views/admin/users.vue";
+import DocumentDetails from "@/views/admin/document-details.vue";
 import AdminTeams from "@/views/admin/teams.vue";
 import AdminSupport from "@/views/admin/support.vue";
 import AdminApproval from "@/views/admin/approval.vue";
 import SystemAdmin from "@/views/admin/system-admin.vue";
 import UsersList from "@/views/admin/user-list.vue";
 import DeletedUsersList from "@/views/admin/deleted-user-list.vue";
+import TeamList from "@/views/admin/team-list.vue";
+import DeletedTeamList from "@/views/admin/deleted-team-list.vue";
 import Test from "../components/development/Test.vue";
 import TestChat from "../components/development/Chat.vue";
+import ApproveUsers from "@/views/admin/approve-users.vue";
+import ApproveDocuments from "@/views/admin/approve-documents.vue";
+import UserCandidateDetails from "@/views/admin/user-candidate-profile.vue";
 
 //Search Section
 import Search from "@/views/search/Search.vue";
@@ -182,6 +188,36 @@ const AppRouter = new VueRouter({
             {
                 path: "deleted_users",
                 component: DeletedUsersList,
+
+            },
+            {
+                path: "active_teams",
+                component: TeamList,
+
+            },
+            {
+                path: "deleted_Teams",
+                component: DeletedTeamList,
+
+            },
+            {
+                path: "approve_users",
+                component: ApproveUsers,
+
+            },
+            {
+                path: "approve_documents",
+                component: ApproveDocuments,
+
+            },
+            {
+                path: "document_details/:user_id",
+                component: DocumentDetails,
+
+            },
+            {
+                path: "user_candidate_details/:user_id",
+                component: UserCandidateDetails,
 
             },
             ],
@@ -348,14 +384,6 @@ const AppRouter = new VueRouter({
                     component: Search,
 
                 },
-
-                {
-                    path: "/visitor/search",
-                    name: "UnAuthSearch",
-                    component: UnAuthSearch,
-                    props: true,
-
-                },
                 {
                     path: "/settings",
                     name: "Settings",
@@ -365,8 +393,13 @@ const AppRouter = new VueRouter({
 
             ]
         },
+        {
+            path: "/visitor/search",
+            name: "UnAuthSearch",
+            component: UnAuthSearch,
+            props: true,
 
-
+        },
         {
             path: "/signup",
             name: "Signup",
@@ -422,12 +455,6 @@ const AppRouter = new VueRouter({
 
         },
         {
-            path: "/user-agreement",
-            name: "UserAgreement",
-            component: UserAgreement,
-
-        },
-        {
             path: "/safety_guidance",
             name: "Safety_Guidance",
             component: SafetyAndGuidancePage,
@@ -439,14 +466,16 @@ const AppRouter = new VueRouter({
             component: TermsAndConditionPage,
 
         },
-
-
         {
-            path: "/privacy-policy",
+            path: "/privacy-cookie-policy",
             name: "PrivacyPolicy",
             component: PrivacyPolicy,
         },
-
+        {
+            path: "/user-agreement",
+            name: "UserAgreement",
+            component: UserAgreement,
+        },
     ]
 })
 

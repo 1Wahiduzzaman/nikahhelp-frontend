@@ -89,7 +89,7 @@
                 </a>
                 <template v-slot:overlay>
                   <NotificationPopup
-                    :items="unreadNotification"
+                    :items="reducedNotifications"
                     :use-for="'notification'"
                   />
                 </template>
@@ -102,7 +102,7 @@
                   aria-current="page"
                   @click.self="(e) => e.preventDefault()"
                 >
-                  <a-badge :count="chats.length">
+                  <a-badge :count="unseenChat">
                     <img
                       width="25"
                       src="@/assets/icon/chat-dots-fill-white.svg"
@@ -128,14 +128,12 @@
                 v-if="loggedUser.per_main_image_url"
                 class="avatar-image"
                 :src="loggedUser.per_main_image_url"
-                width="35"
                 alt=""
               />
               <img
                 v-if="!loggedUser.per_main_image_url"
                 class="avatar-image"
                 src="@/assets/mike.jpg"
-                width="35"
                 alt=""
               />
             </a>
@@ -281,7 +279,7 @@
             </svg>
 
             <a-menu slot="overlay" style="min-width: 320px">
-              <a-menu-item @click="collapsed = !collapsed">
+              <a-menu-item @click="$emit('toggleCollapse')">
                 <img width="22" src="@/assets/Icons/form.svg" alt="icon" />
                 <span class="ml-2"
                   >{{ collapsed ? "Open" : "Close" }} left sidebar</span
@@ -355,7 +353,7 @@
                   <template v-slot:overlay>
                     <NotificationPopup
                         count="29"
-                        :items="unreadNotification"
+                        :items="reducedNotifications"
                         :use-for="'notification'"
                     />
                   </template>
@@ -374,7 +372,7 @@
                         alt="icon"
                     />
                     <span class="ml-2 mr-2">Chat </span>
-                    <a-badge :count="chats.length" />
+                    <a-badge :count="unseenChat" />
                   </a>
                   <template v-slot:overlay>
                     <NotificationPopup
@@ -424,6 +422,7 @@ import ApiService from "@/services/api.service";
 import JwtService from "../../services/jwt.service";
 export default {
   name: "Layout",
+  props: ['collapsed'],
   components: {
     NotificationPopup,
   },
@@ -433,7 +432,6 @@ export default {
   },
   data() {
     return {
-      collapsed: false,
       activeTeamId: null,
     };
   },
@@ -465,11 +463,19 @@ export default {
       }
       return "N/A";
     },
-    notifications() {
+    reducedNotifications() {
       return this.$store.state.notification.notifications;
+      // if(this.$store.state.notification.notifications.length > 5) {
+      //   let reduceSize = this.$store.state.notification.notifications - 5;
+      //   this.$store.state.notification.notifications -= reduceSize;
+      //   return this.$store.state.notification.notifications;
+      // } else {
+      //   return this.$store.state.notification.notifications;
+      // }
     },
     unreadNotification() {
-      return this.$store.state.notification.instantNotifications;
+      // return this.$store.state.notification.instantNotifications;
+      return this.$store.state.notification.notifications.filter(item => item.seen == 0);
     },
     teams() {
       let teams = this.$store.state.team.team_list;
@@ -484,7 +490,23 @@ export default {
     },
     chats() {
       return this.$store.state.chat.chats;
+      // if(this.$store.state.chat.chats > 5) {
+      //   let reduceSize = this.$store.state.chat.chats.length - 5;
+      //   this.$store.state.chat.chats -= reduceSize;
+      //   return this.$store.state.chat.chats;
+      // } else {
+      //   return this.$store.state.chat.chats;
+      // }
     },
+    unseenChat() {
+      let count = 0;
+      this.$store.state.chat.chats.forEach(item => {
+        count = count + item && item.message && item.message.seen == 0 ? 1 : 0;
+        count = count + item && item.last_message && item.last_message.seen == 0 ? 1 : 0;
+        count = count + item && item.last_group_message && item.last_message.seen == 0 ? 1 : 0;
+      });
+      return count;
+    }
   },
   methods: {
     responsiveToggle() {
@@ -584,6 +606,8 @@ export default {
   .avatar-image {
     border-radius: 50%;
     outline: 2px solid #ddd;
+    width: 35px;
+    height: 35px;
   }
   .team {
     display: inline-block;

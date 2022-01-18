@@ -1,7 +1,6 @@
 <template>
   <v-card
-      class="mx-auto shadow-default"
-      max-width="374"
+      class="mx-auto shadow-default blocked-card"
   >
     <template slot="progress">
       <v-progress-linear
@@ -12,10 +11,20 @@
     </template>
     <v-img
         height="250"
-        :src="avatarSrc"
+        :src="item.image ? item.image : avatarSrc"
     ></v-img>
 
-    <v-card-title>Candidate name</v-card-title>
+    <v-card-title>
+      {{ getName }}
+<!--      <v-chip-->
+<!--          class="ma-2"-->
+<!--          :color="item.candidate_list ? 'green' : 'orange'"-->
+<!--          text-color="white"-->
+<!--          small-->
+<!--      >-->
+<!--        {{ item.candidate_list ? 'Self' : 'Teamlisted' }}-->
+<!--      </v-chip>-->
+    </v-card-title>
 
     <div class="px-4">
       <ul class="desc-list">
@@ -23,7 +32,7 @@
         <li class="flex-between-start">
           <span class="flex-30 label-text">Location</span>
           <span class="flex-70">:
-                    <span class="ml-1">Location
+                    <span class="ml-1">{{ item.per_ethnicity }}
                     </span>
                 </span>
         </li>
@@ -31,7 +40,7 @@
         <li class="flex-between-start">
           <span class="flex-30 label-text">Age</span>
           <span class="flex-70">:
-                    <span class="ml-1">Age </span>
+                    <span class="ml-1">{{ item.per_age }} </span>
                 </span>
         </li>
 
@@ -39,23 +48,23 @@
         <li class="flex-between-start">
           <span class="flex-30 label-text">Religion</span>
           <span class="flex-70">:
-                    <span class="ml-1">Religion</span>
+                    <span class="ml-1">{{ item.per_religion }}</span>
                 </span>
         </li>
-        <template v-if="onceMore">
-          <li class="flex-between-start">
-            <span class="flex-30 label-text">Ethnicity</span>
-            <span class="flex-70">:
-                        <span class="ml-1">Ethnicity </span>
-                    </span>
-          </li>
-          <li class="flex-between-start">
-            <span class="flex-30 label-text">Hobby</span>
-            <span class="flex-70">:
-                        <span class="ml-1">  </span>
-                    </span>
-          </li>
-        </template>
+<!--        <template v-if="onceMore">-->
+<!--          <li class="flex-between-start">-->
+<!--            <span class="flex-30 label-text">Ethnicity</span>-->
+<!--            <span class="flex-70">:-->
+<!--                        <span class="ml-1">Ethnicity </span>-->
+<!--                    </span>-->
+<!--          </li>-->
+<!--          <li class="flex-between-start">-->
+<!--            <span class="flex-30 label-text">Hobby</span>-->
+<!--            <span class="flex-70">:-->
+<!--                        <span class="ml-1">  </span>-->
+<!--                    </span>-->
+<!--          </li>-->
+<!--        </template>-->
       </ul>
     </div>
     <v-divider class="mx-4"></v-divider>
@@ -68,6 +77,7 @@
           small
           color="deep-purple darken-1"
           dark
+          @click="unblockAction"
       >
         <div class="flex justify-center align-center">
           <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/teamlist.svg" alt="">
@@ -88,20 +98,65 @@
         </div>
       </v-btn>
     </div>
+    <div class="px-4 pb-4">
+      <v-btn
+          class="mt-1 text-capitalize"
+          block
+          rounded
+          color="deep-purple darken-1"
+          dark
+          @click="viewProfile"
+      >
+        view profile
+      </v-btn>
+    </div>
   </v-card>
 </template>
 
 <script>
+import ApiService from '@/services/api.service';
+import JwtService from "@/services/jwt.service";
 export default {
   name: "BlockedCandidateGrid",
+  props: ['item', 'candidateBlockIds', 'teamBlockedIds'],
   data() {
     return {
       avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
+    }
+  },
+  computed: {
+    loggedUser() {
+      return JSON.parse(localStorage.getItem('user'));
+    },
+    getName() {
+      return this.item.first_name + ' ' + this.item.last_name;
+    }
+  },
+  methods: {
+    viewProfile() {
+      this.$router.push(
+          `/user/profile/${this.item.user_id}`
+      );
+    },
+    unblockAction() {
+      if(this.item.candidate_list) {
+        ApiService.delete(`/v1/unblock-by-candidate?user_id=${this.item.user_id}`).then(res => {
+          this.$emit("loadList");
+        }).catch(e => {
+          console.log(e);
+        });
+      }
     }
   }
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+@import "@/styles/base/_variables.scss";
+.blocked-card {
+  max-width: 300px;
+  @media (min-width: 1200px) {
+    max-width: 374px;
+  }
+}
 </style>

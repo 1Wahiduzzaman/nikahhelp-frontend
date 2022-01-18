@@ -5,6 +5,12 @@
     </div>
     <div class="col-6 text-right review none-r-padding">
       <a-rate disabled :value="value" />
+      <v-chip
+        class="ml-5"
+        style="background: #6159a7"
+        text-color="white" 
+        small
+      >Very Important</v-chip>
     </div>
 <!--    <div class="col-2 mt-2 text-center value-string">{{ valueString }}</div>-->
   </div>

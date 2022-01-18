@@ -11,30 +11,28 @@
                <div class="card-facility-border"></div>
                <div class="card-facility rounded">
                   <ul class="facility-list">
-                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"> <span>Verified Candidate IDs</span></li>
-                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Benefit from their collective
-                        wisdom & experience</span></li>
-                     <li class="item"><img src= "@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Make the right decision with
-                        the wide-ranging information</span></li>
-                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>By registering let them know
-                        the conversation can begin</span></li>
-                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Facility to involve family and
-                        friend</span></li>
-                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Avoid romance scams</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"> <span>Avoid romance scams</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Verified Candidate IDs to ensure all profiles are genuine</span></li>
+                     <li class="item"><img src= "@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Facility to involve family and friend</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Benefit from their collective wisdom & experience</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Shortlist candidates using over 100 information points</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Get to know the other candidate and their family well before any face to face meeting</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>If you are looking for someone to date, not here I am afraid</span></li>
+                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>By registering let them know the conversation can begin</span></li>
                   </ul>
                </div>
             </div>
          </div>
          <div class="panel brt-0 d-flex flex-column justify-content-between flex-md-row align-items-center">
             <h3 class="text-center color-white mb-md-1" id="search-begin" >Let your companion search begin</h3>
-            <button class="btn btn-round btn-parter-search" id="startBtn" onclick="location.href = '/signup';">Start here</button>
+            <button class="btn btn-round btn-parter-search" id="startBtn" onclick="location.href = '/signup';"><span>Start here</span></button>
          </div>
       </div>
 
-    <img src="@/assets/icon/bg_layer_1.svg" alt="bg" class="position-absolute bg-layer-1" />
+    <img src="@/assets/icon/bg_layer_1.svg" alt="bg" class="position-absolute bg-layer-1 layer-1" />
     <img src="@/assets/icon/bg_layer_1_1.svg" alt="bg" class="position-absolute bg-layer-1-1" />
     <img src="@/assets/icon/bg_layer_2.svg" alt="bg" class="position-absolute bg-layer-2" />
-    <img src="@/assets/icon/bg_layer_2_1.svg" alt="bg" class="position-absolute bg-layer-2-1" />
+    <img src="@/assets/icon/bg_layer_2_1.svg" alt="bg" class="position-absolute bg-layer-2-1 layer-2" />
    </div>
 </template>
 
@@ -67,7 +65,7 @@ export default {
                top: -22px;
                bottom: -25px;
                right: -20px;
-               border: 1px solid $border-primary;
+               border: 3px solid $border-primary;
                border-radius: 10px;
                transform: rotate(5deg);
                @media(max-width: 991px){
@@ -145,5 +143,62 @@ export default {
   top: 80px;
   left: 70px;
   width: 7%;
+}
+.layer-1 {
+  animation-name: layer-1;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+@keyframes layer-1 {
+  0%   {right: 30px; bottom: 400px;}
+  25%  {right: 50px; bottom: 380px;}
+  50%  {right: 20px; bottom: 360px;}
+  75%  {right: 0; bottom: 380px;}
+  100% {right: 30px; bottom: 400px;}
+}
+.layer-2 {
+  animation-name: layer-2;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+@keyframes layer-2 {
+  0%   {left: 70px; top: 80px;}
+  25%  {left: 40px; top: 60px;}
+  50%  {left: 30px; top: 100px;}
+  75%  {left: 70px; top: 60px;}
+  100% {left: 70px; top: 80px;}
+}
+.btn-parter-search {
+  border: none;
+  text-align: center;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.btn-parter-search span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.btn-parter-search span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+.btn-parter-search:hover {
+  border-radius: 40px;
+}
+.btn-parter-search:hover span {
+  padding-right: 20px;
+}
+
+.btn-parter-search:hover span:after {
+  opacity: 1;
+  right: 0;
 }
 </style>

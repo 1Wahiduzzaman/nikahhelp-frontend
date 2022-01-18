@@ -20,11 +20,11 @@
         </div>
         <div class="chat-item-wrapper border-top">
           <div class="tab-content">
-            <chat-list-item class="cursor-pointer border-bottom py-2" />
+            <chat-list-item class="cursor-pointer border-bottom py-2" v-for="(item, index) in histories" :item="item" @click.native="loadIndividualChatHistory(item)" :key="index" />
           </div>
         </div>
       </div>
-      <div class="chat-right position-relative">
+      <div class="chat-right position-relative" v-if="chatheadopen">
 <!--        <h4 class="cursor-pointer position-absolute btn-short-back">&#8592;</h4>-->
         <div class="header clearfix">
           <div class="left">
@@ -33,7 +33,7 @@
                 <img src="../../assets/info-img.png" alt="info image">
               </div>
               <div class="chat-info">
-                <div class="chat-name">User</div>
+                <div class="chat-name">{{ chatheadopen && chatheadopen.user ? chatheadopen.user.full_name : '' }}</div>
               </div>
             </div>
           </div>
@@ -65,21 +65,25 @@
         <div class="chat-area">
           <div class="position-relative">
             <div class="chat-messages py-4 pr-1" id="chat-messages">
-              <div class="position-relative">
-                <div class="chat-message-right pb-4 position-relative">
+              <div class="position-relative" v-for="(item, cIndex) in chats" :key="item.id" :id="chats.length === cIndex + 1 ? 'messagesid' : ''">
+                <div class="chat-message-right pb-4 position-relative"
+                     v-if="(parseInt(item.senderId) == parseInt(getAuthUserId))"
+                     :class="{'conv-mb': chats.length !== cIndex + 1}" >
                   <div class="text-right">
                     <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
                   </div>
-                  <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 white-space-pre">Message</div>
-                  <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">Just now</div>
+                  <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 white-space-pre" v-html="item.body"></div>
+                  <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">{{ messageCreatedAt(item.created_at) }}</div>
                 </div>
 
-                <div class="chat-message-left pb-4 position-relative">
+                <div class="chat-message-left pb-4 position-relative"
+                     v-else
+                     :class="{'conv-mb': chats.length !== cIndex + 1}">
                   <div class="text-left">
                     <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
                   </div>
-                  <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 white-space-pre">Message</div>
-                  <div class="text-muted small text-nowrap mt-2 position-absolute msg-left-created-at">Just now</div>
+                  <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 white-space-pre" v-html="item.body"></div>
+                  <div class="text-muted small text-nowrap mt-2 position-absolute msg-left-created-at">{{ messageCreatedAt(item.created_at) }}</div>
                 </div>
               </div>
 
@@ -97,7 +101,7 @@
                       <button class="btn-emoji px-2" title="Coming soon">&#128528;</button>
                     </a-tooltip>
                     <textarea name="message" id="" cols="30" rows="4" placeholder="Enter message..."
-                              v-model="msg_text" @keydown.enter.exact.prevent="sendMsg($event)"></textarea>
+                              v-model="message" @keydown.enter.exact.prevent="sendMsg($event)"></textarea>
                     <div class="position-absolute msgbox-right">
                       <div class="flex">
                         <a-tooltip>
@@ -144,25 +148,134 @@
 
 <script>
 import ChatListItem from "../../components/support/ChatListItem";
+import ApiService from '@/services/api.service';
+import {format} from "timeago.js";
 export default {
+  name: 'Support',
+  sockets: {
+    connect: function () {
+      console.log('socket connected')
+    },
+    ping: function (data) {
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
   data() {
     return {
       conv_search_key: '',
-      msg_text: ''
+      msg_text: '',
+      histories: [],
+      chats: [],
+      chatheadopen: null,
+      message: '',
+      online_users: []
     };
+  },
+  computed: {
+    getAuthUserId() {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      if (loggedUser) {
+        return loggedUser.id;
+      }
+      return null;
+    },
   },
   components: {
     ChatListItem
-    
   },
   created() {
- 
+    this.loadLists();
   },
   methods: {
-    sendMsg(e) {
-
+    messageCreatedAt(time) {
+      return format(time);
+    },
+    async loadLists() {
+      let {data} = await ApiService.get('/v1/support-chat-list').then(res => res.data);
+      if(data && data.chat_list) {
+        this.histories = data.chat_list;
+      }
+    },
+    async loadIndividualChatHistory(item) {
+      this.chatheadopen = item;
+      this.chatheadopen.last_message.seen = 1;
+      let {data} = await ApiService.post('/v1/individual-support-user-chat-history', {
+        chat_id: item.last_message.chat_id
+      }).then(res => res.data);
+      this.chats = data.map(msg => {
+        msg.senderId = msg.sender ? msg.sender.id : '';
+        msg.receiverId = msg.receiver ? msg.receiver.id : '';
+        return msg;
+      });
+    },
+    async sendMsg(e) {
+      console.log(e);
+      if(this.chatheadopen) {
+        let loggedUser = JSON.parse(localStorage.getItem('user'));
+        let payload = {
+          sender: loggedUser.id,
+          receiver: this.chatheadopen.user.id.toString(),
+          to: this.chatheadopen.user.id.toString(),
+          message: this.message,
+          user: loggedUser,
+          chat_id: this.chatheadopen.chat_id,
+          support: true,
+          last_message: {
+            body: this.message,
+            created_at: new Date(),
+            sender: loggedUser,
+            senderId: loggedUser.id,
+            receiver: this.chatheadopen.user,
+            receiverId: this.chatheadopen.user.id,
+            seen: 0,
+            chat_id: this.chatheadopen.chat_id,
+          }
+        };
+        this.$socket.emit('send_message', payload);
+        this.chats.push(payload.last_message);
+        this.message = '';
+        await ApiService.post('/v1/support-send-message', payload).then(response => {
+          console.log(response);
+        });
+      }
     }
   },
+  mounted() {
+    let loggedUser = JSON.parse(localStorage.getItem('user'));
+    this.$socket.emit('ping', {user_id: loggedUser.id});
+
+    this.sockets.subscribe('ping_success', function (res) {
+      if (res && res.online_users) {
+        this.online_users = res.online_users;
+      }
+    });
+
+    this.sockets.subscribe('receive_message', function (res) {
+      if(res.support) {
+        // let hasChat = this.histories.find(history => history && history.last_message && history.last_message.chat_id);
+        // if(hasChat) {
+        //   let chatId = hasChat.last_message.chat_id;
+        //   hasChat.last_message = res.last_message;
+        //   hasChat.last_message.chat_id = chatId;
+        //   if(this.chatheadopen && this.chatheadopen.user.id == res.sender) {
+        //     this.chats.push(res.last_message);
+        //   }
+        // } else {
+          this.loadLists();
+        // }
+      }
+    });
+  },
+  watch: {
+    chats: function(val) {
+      // console.log(val);
+      setTimeout(() => {
+        const messages = document.getElementById('chat-messages');
+        const messagesid = document.getElementById('messagesid');
+        messages.scrollTop = messagesid.offsetTop - 10;
+      });
+    }
+  }
 };
 </script>
 
@@ -1440,13 +1553,13 @@ export default {
     max-height: calc(100vh - 350px);
   }
   @media (min-width: 992px) {
-    max-height: calc(100vh - 340px);
+    max-height: calc(100vh - 365px);
   }
   @media (min-width: 1200px) {
-    max-height: calc(100vh - 340px);
+    max-height: calc(100vh - 365px);
   }
   @media (min-width: 1920px) {
-    max-height: calc(100vh - 340px);
+    max-height: calc(100vh - 365px);
   }
 }
 // end css for chat

@@ -23,6 +23,7 @@
     "socket.io-client": "^4.4.0",
     "timeago.js": "^4.0.2",
     "v-datatable-light": "^0.8.2",
+    "v-viewer": "^1.6.4",
     "validator": "^13.6.0",
     "vue": "^2.6.11",
     "vue-apexcharts": "^1.6.1",

@@ -7,66 +7,75 @@
         <a-icon type="info-circle" class="ml-2 fs-12" />
       </div>
     </div>
-    <div class="dropdowns d-flex mt-4 justify-content-center">
-      <a-tooltip
-          placement="top"
-          title="Member role will"
-      >
-        <a-select
-            placeholder="Role"
-            class="fs-10 w-20 brleft-20"
-            v-model="invitationObject.role"
-            :disabled="invitationObject.invitation_link"
-        >
-          <!--         <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>-->
-          <a-select-option value="Admin"> Admin </a-select-option>
-          <a-select-option value="Member"> Member </a-select-option>
-        </a-select>
-      </a-tooltip>
 
-      <a-tooltip
-          placement="top"
-          title="Member role will"
-      >
-        <a-select
-            placeholder="Add as a"
-            class="ml-1 fs-10 w-20 none-radius"
-            v-model="invitationObject.add_as_a"
-            :disabled="invitationObject.invitation_link"
-        >
-          <a-select-option value="Candidate" v-if="team.add_as_a != 'Candidate'"> Candidate </a-select-option>
-          <a-select-option value="Representative" v-if="team.add_as_a != 'Representative'"> Representative </a-select-option>
-          <!--        <a-select-option value="Match Maker"> Match Maker </a-select-option>-->
-        </a-select>
-      </a-tooltip>
+<!--    <div class="dropdowns d-flex mt-4 justify-content-center">-->
+<!--      <a-tooltip-->
+<!--          placement="top"-->
+<!--          title="Member role will"-->
+<!--      >-->
+<!--        <a-select-->
+<!--            placeholder="Role"-->
+<!--            class="fs-10 w-20 brleft-20"-->
+<!--            v-model="invitationObject.role"-->
+<!--            :disabled="invitationObject.invitation_link"-->
+<!--        >-->
+<!--          &lt;!&ndash;         <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>&ndash;&gt;-->
+<!--          <a-select-option value="Admin"> Admin </a-select-option>-->
+<!--          <a-select-option value="Member"> Member </a-select-option>-->
+<!--        </a-select>-->
+<!--      </a-tooltip>-->
 
-      <a-tooltip
-          placement="top"
-          title="Member role will"
-      >
-        <a-select
-            placeholder="Relationship"
-            class="ml-1 fs-10 w-20 none-radius"
-            v-model="invitationObject.relationship"
-            :disabled="invitationObject.invitation_link"
-        >
-          <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
-        </a-select>
-      </a-tooltip>
+<!--      <a-tooltip-->
+<!--          placement="top"-->
+<!--          title="Member role will"-->
+<!--      >-->
+<!--        <a-select-->
+<!--            placeholder="Add as a"-->
+<!--            class="ml-1 fs-10 w-20 none-radius"-->
+<!--            v-model="invitationObject.add_as_a"-->
+<!--            :disabled="invitationObject.invitation_link"-->
+<!--        >-->
+<!--          <a-select-option value="Candidate" v-if="team.add_as_a != 'Candidate'"> Candidate </a-select-option>-->
+<!--          <a-select-option value="Representative" v-if="team.add_as_a != 'Representative'"> Representative </a-select-option>-->
+<!--          &lt;!&ndash;        <a-select-option value="Match Maker"> Match Maker </a-select-option>&ndash;&gt;-->
+<!--        </a-select>-->
+<!--      </a-tooltip>-->
 
-      <a-button v-if="!clickedInviteNow"
-                class="ml-1 confirm-button fs-10 br-20 bright-20"
-                @click="goNextStep()"
-                :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship">Invite now</a-button>
+<!--      <a-tooltip-->
+<!--          placement="top"-->
+<!--          title="Member role will"-->
+<!--      >-->
+<!--        <a-select-->
+<!--            placeholder="Relationship"-->
+<!--            class="ml-1 fs-10 w-20 none-radius"-->
+<!--            v-model="invitationObject.relationship"-->
+<!--            :disabled="invitationObject.invitation_link"-->
+<!--        >-->
+<!--          <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>-->
+<!--        </a-select>-->
+<!--      </a-tooltip>-->
 
-      <a-dropdown class="confirm-button right-br-20 w-20 fs-10 dropdown-button" v-if="clickedInviteNow">
-        <a-menu slot="overlay">
-          <a-menu-item key="1" @click="toggleMemberbox()">Invite Now </a-menu-item>
-          <a-menu-item key="2" @click="deleteInvitation()">Remove </a-menu-item>
-        </a-menu>
-        <a-button class="ml-1 fs-10"> Invite Now</a-button>
-      </a-dropdown>
+<!--      <a-button v-if="!clickedInviteNow"-->
+<!--                class="ml-1 confirm-button fs-10 br-20 bright-20"-->
+<!--                @click="goNextStep()"-->
+<!--                :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship">Invite now</a-button>-->
+
+<!--      <a-dropdown class="confirm-button right-br-20 w-20 fs-10 dropdown-button" v-if="clickedInviteNow">-->
+<!--        <a-menu slot="overlay">-->
+<!--          <a-menu-item key="1" @click="toggleMemberbox()">Invite Now </a-menu-item>-->
+<!--          <a-menu-item key="2" @click="deleteInvitation()">Remove </a-menu-item>-->
+<!--        </a-menu>-->
+<!--        <a-button class="ml-1 fs-10"> Invite Now</a-button>-->
+<!--      </a-dropdown>-->
+<!--    </div>-->
+
+    <div class="mt-4 px-4">
+      <h6 class="text-header-black">Now you can add member to your team</h6>
+      <button class="btn add-member" @click="toggleAddMemberbox()" :disabled="isSuccess">
+        Add member
+      </button>
     </div>
+
     <div class="position">
       <div class="position-absolute footer-cancel-btn">
         <a-button class="cancel-button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
@@ -104,7 +113,8 @@ export default {
       invitedObj: null,
       clickedInviteNow: false,
       memberInfo: null,
-      loading: false
+      loading: false,
+      isSuccess: false
     }
   },
   methods: {
@@ -112,8 +122,9 @@ export default {
       // this.$emit("goNext", 4);
       this.createInvitaionLink();
     },
-    toggleMemberbox() {
+    toggleMemberbox(success = false) {
       this.showMemberBox = !this.showMemberBox;
+      this.isSuccess = success;
     },
     addMemberInfo(user) {
       this.memberInfo = user;
@@ -175,6 +186,9 @@ export default {
               });
         },
       });
+    },
+    toggleAddMemberbox() {
+      this.showMemberBox = !this.showMemberBox;
     },
     createInvitaionLink() {
       // amaizingly, for some reason i need to refer this to
@@ -295,5 +309,27 @@ export default {
 }
 .w-23 {
   width: 23%;
+}
+.add-member {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background: #522e8e;
+  color: #FFFFFF;
+  border-radius: 30px;
+  border: 1px solid #FFFFFF;
+  &:hover {
+    background: #FFFFFF;
+    color: #522e8e;
+    border: 1px solid #522e8e;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  img {
+    width: 20px;
+    margin-right: 10px;
+  }
 }
 </style>

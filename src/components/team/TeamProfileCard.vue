@@ -2,7 +2,7 @@
   <div class="team-profile-box position-absolute">
     <div class="d-flex justify-content-between px-2 position-relative align-items-center">
       <h4 class="fs-20 text-white font-weight-bold py-2 cursor-pointer p-2" @click="$emit('toggleProfileCard')">&#8592;</h4>
-      <div class="cross-button-box mr-2 mt-2 d-flex justify-content-center align-items-center cursor-pointer py-1" @click="$emit('toggleProfileCard')">
+      <div class="cross-button-box mr-2 d-flex justify-content-center align-items-center cursor-pointer py-1" @click="$emit('toggleProfileCard')">
         &#10006;
       </div>
     </div>
@@ -20,7 +20,7 @@
             <h4 class="fs-12 py-1 cursor-pointer text-left px-2" @click="changeRole('Member')">Member</h4>
           </div>
         </div>
-        <button class="btn btn-sm text-white cancel-button ml-3 bright-20"
+        <button class="btn btn-sm text-white remove-btn ml-3 bright-20"
                 :disabled="checkDeleteAbility"
                 @click="removeInvitation()">Remove</button>
       </div>
@@ -49,7 +49,14 @@
           <tr>
             <td class="fs-12 text-white opacity-60">Invitation Link</td>
             <td class="fs-12 text-white opacity-60">:</td>
-            <td class="fs-12 text-white ml-3">{{ profileActive.link }}</td>
+            <td class="fs-12 text-white ml-3 cursor-pointer" @click="copyToken">
+              <a-tooltip
+                  placement="top"
+                  :title="copyBtnText"
+              >
+                {{ profileActive.link }}
+              </a-tooltip>
+            </td>
           </tr>
 <!--          <tr>-->
 <!--            <td class="fs-12 text-white opacity-60">Permission</td>-->
@@ -58,9 +65,12 @@
 <!--          </tr>-->
         </table>
       </div>
-      <router-link :to="{name: 'Profile', query: { user_id: profileActive.user_id }}" v-if="profileActive.profile_from_type === 'member'">
-        <button class="btn btn-sm fs-14 text-white bg-primary mt-1 py-1 prof-detail">Profile Details</button>
-      </router-link>
+<!--      <router-link :to="{name: 'Profile', query: { user_id: profileActive.user_id }}" v-if="profileActive.profile_from_type === 'member'">-->
+<!--        <button class="btn btn-sm fs-14 text-white bg-primary mt-1 py-1 prof-detail">Profile Details</button>-->
+<!--      </router-link>-->
+      <button class="btn btn-sm fs-14 text-white bg-primary mt-1 py-1 prof-detail"
+              @click="viewProfile"
+              v-if="profileActive.profile_from_type === 'member'">Profile Details</button>
     </div>
   </div>
 </template>
@@ -72,7 +82,8 @@ export default {
   props: ['teamData', 'profileActive'],
   data() {
     return {
-      roleChangeBox: false
+      roleChangeBox: false,
+      copyBtnText: 'Click to copy the link'
     }
   },
   computed: {
@@ -137,6 +148,15 @@ export default {
     getInvitationLink() {
       let link = window.location.host + '/manageteam?invitation=' + this.profileActive.link;
       return link;
+    },
+    copyToken() {
+      navigator.clipboard.writeText(this.getInvitationLink());
+      this.copyBtnText = 'Link copied to clipboard';
+    },
+    viewProfile() {
+      this.$router.push(
+          `/user/profile/${this.profileActive.user_id}`
+      );
     }
   }
 }
@@ -156,10 +176,11 @@ export default {
 .team-profile-box {
   background: $bg-primary;
   width: 100%;
-  height: 354px;
+  height: 455px;
   margin-left: -8px;
   border-radius: 10px;
   z-index: 9;
+  bottom: 0;
 
   .position-relative {
     .cross-button-box {
@@ -181,7 +202,8 @@ export default {
     .d-flex {
       .role-section {
         .role-btn {
-          border-radius: 20px 0 0 20px;
+          //border-radius: 20px 0 0 20px;
+          border-radius: 20px;
           background: $bg-primary;
           border: 1px solid $color-white;
         }
@@ -193,9 +215,15 @@ export default {
         }
       }
       .remove-btn {
-        border-radius: 0 20px 20px 0;
+        //border-radius: 0 20px 20px 0;
+        border-radius: 20px;
         background: $bg-brand;
         border: 1px solid $color-white;
+        &:hover {
+          background: transparent;
+          border: 1px solid $color-brand;
+          color: $color-white !important;
+        }
       }
     }
     .prof-detail {

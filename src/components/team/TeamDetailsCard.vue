@@ -74,7 +74,6 @@
 					<a-modal
 						v-model="edit_button_flag"
 						title="Change Team Info"
-						@ok="handleTeamInfoChange"
 					>
 						<div class="row">
 							<!-- Change Team Logo -->
@@ -132,6 +131,15 @@
 								/>
 							</div>
 						</div>
+
+            <template slot="footer">
+              <a-button key="back" @click="edit_button_flag = false">
+                Cancel
+              </a-button>
+              <a-button key="submit" type="primary" :loading="teamUpdating" @click="handleTeamInfoChange">
+                Update
+              </a-button>
+            </template>
 					</a-modal>
 
 					<!-- <button class="close" v-if="edit_button_flag">
@@ -159,7 +167,7 @@
 						</div>
 					</div>
 					<!-- Default dropleft button -->
-					<div class="btn-group dropleft" :class="{'disabled-team': !turnOn}">
+					<div class="btn-group dropleft">
 						<a-tooltip
 							placement="top"
 							title="Change Roles, Preferences, Delete and Leave Team"
@@ -177,9 +185,9 @@
 							<!-- <a class="dropdown-item" href="#">Edit</a> -->
 							<!-- <a class="dropdown-item" href="#">Close</a> -->
 <!--							<a class="dropdown-item" @click="changeRole">Change Roles</a>-->
-							<a class="dropdown-item" @click="preferencesModal">Preferences</a>
+							<a class="dropdown-item" @click="preferencesModal" :class="{'disabled-team': !turnOn}">Preferences</a>
 							<a class="dropdown-item" @click="deleteTeam">Delete</a>
-							<a class="dropdown-item red-hover" @click="leaveTeam"
+							<a class="dropdown-item red-hover" @click="leaveTeam" :class="{'disabled-team': !turnOn}"
 								>Leave Team</a
 							>
 						</div>
@@ -285,8 +293,8 @@
 			</div>
 
 			<!-- Add or Remove Member Button -->
-			<div class="member-action" :class="{'disabled-team': !turnOn && !tempActive}">
-				<div class="add-remove">
+			<div class="member-action">
+				<div class="add-remove" :class="{'disabled-team': !turnOn && !tempActive}">
 					<button class="add-member" @click="handleAddMemberclick">
 						<img src="../../assets/icon/add.svg" alt="add" /> Add member
 					</button>
@@ -373,7 +381,7 @@
 				<!-- Member Table -->
 				<div class="member-info-table">
           <div class="admin-member" :class="{'mb-4': invitationObject.visible}">
-            <div class="flex align-items-center pb-2" v-for="(member, mIndex) in sortCandidateFirst(teamData.team_members)" :key="mIndex" >
+            <div class="flex align-items-center pb-2" :class="{'disabled-team': !turnOn && !tempActive}" v-for="(member, mIndex) in sortCandidateFirst(teamData.team_members)" :key="mIndex" >
               <a-tooltip
                   placement="top"
                   :title="member.role.replace('+', ' & ')"
@@ -388,7 +396,7 @@
                   :title="accountTypeReducer(member.user_type)"
               >
                 <div class="member-type">
-                  <span class="badge badge-secondary fs-10">{{ accountTypeReducer(member.user_type).substr(0, 3) }} {{ member.user_type ? '.' : '' }}</span>
+                  <span class="badge badge-secondary fs-10">{{ member.user_type ? accountTypeReducer(member.user_type).substr(0, 3) : '' }} {{ member.user_type ? '.' : '' }}</span>
                 </div>
               </a-tooltip>
               <div class="check-tick">
@@ -398,7 +406,7 @@
                   placement="top"
                   :title="member.relationship"
               >
-                <div class="d-mb-none d-dk-block relation-p ellipse">{{ member.relationship }}</div>
+                <div class="d-mb-none d-dk-block relation-p ellipse">{{ member.user_type == 'Candidate' ? 'Candidate' : member.relationship }}</div>
               </a-tooltip>
             </div>
 
@@ -417,7 +425,7 @@
                   :title="accountTypeReducer(item.user_type)"
               >
                 <div class="member-type">
-                  <span class="badge badge-secondary fs-10">{{ accountTypeReducer(item.user_type).substr(0, 3) }} {{ item.user_type ? '.' : '' }}</span>
+                  <span class="badge badge-secondary fs-10">{{ item.user_type ? accountTypeReducer(item.user_type).substr(0, 3) : '' }} {{ item.user_type ? '.' : '' }}</span>
                 </div>
               </a-tooltip>
               <div class="check-tick">
@@ -559,7 +567,7 @@
               placement="top"
               :title="teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription'"
           >
-            <a :href="'subscription/' + teamData.team_id"
+            <a :href="'subscription/' + teamData.team_id" class="text-center"
             ><img src="../../assets/icon/renew.svg" alt="Renew Subscription"/>
               <span class="display-subs-text">{{ teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription' }}</span></a
             >
@@ -572,7 +580,7 @@
 			</div>
 		</div>
 		<!-- end box card s -->
-    <InviteMember v-if="invitationObject.visible && invitationObject.invitation_link && invitationObject.memberBox"
+    <InviteMember v-if="invitationObject.memberBox"
                   :team="teamData"
                   :invitationObject="invitationObject"
                   :from="'details-card'"
@@ -664,7 +672,8 @@ export default {
       profileCard: false,
       profileActive: null,
       clickedInviteNow: false,
-      tempActive: false
+      tempActive: false,
+      teamUpdating: false
 		};
 	},
 	created() {
@@ -845,6 +854,7 @@ export default {
 			if (this.avatar) {
 				formData.append("logo", this.avatar);
 			}
+      this.teamUpdating = true;
 			await ApiService.post(`v1/team-update/${this.teamData.id}`, formData)
 				.then((data) => {
 					console.log(data);
@@ -860,6 +870,7 @@ export default {
 							center: true,
 						});
 						this.edit_button_flag = false;
+            this.teamUpdating = false;
 
             if(this.teamData && this.teamData.team_members && this.teamData.team_members.length > 1) {
               let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -873,7 +884,8 @@ export default {
               this.socketNotification(payload);
             }
 
-						setTimeout(() => this.$router.go(), 1200);
+						// setTimeout(() => this.$router.go(), 1200);
+            this.$emit("teamListUpdated");
 					}
 				})
 				.catch((error) => {
@@ -1022,7 +1034,7 @@ export default {
 				};
 				console.log(_payload);
 				await ApiService.post("v1/leave-team", {
-					team_id: this.teamData.id,
+					team_id: this.teamData.team_id,
 					user_id: this.$store.getters.userInfo.id,
 					new_owner: payload.member_id,
 				})
@@ -1257,6 +1269,7 @@ export default {
 
 						this.showModalDeletion = false;
 						this.$emit("teamListUpdated");
+            location.reload();
 					} else {
 						this.$message.error("Something went wrong");
 
@@ -1285,6 +1298,7 @@ export default {
 		},
 		checkTurnedOnSwitch() {
 			let _team_id = JwtService.getTeamIDAppWide();
+      console.log(_team_id)
 			// console.log("did not got")
 
 			if (_team_id == this.teamData.team_id) {
@@ -1433,7 +1447,7 @@ export default {
 
         try {
 					await ApiService.post("v1/team-turn-on", {
-						team_id: this.teamData.team_id,
+						team_id: this.teamData.id,
 					})
 						.then((data) => {
 							if (data.data.status == "FAIL") {
@@ -1448,7 +1462,7 @@ export default {
 									title: "Success",
 									content: "Selected Team Activated",
 									onOk() {
-										vm.$emit("teamListUpdated");
+										vm.$emit("customLoad");
 										setTimeout(() => vm.$router.go(), 100);
 									},
 								});
@@ -1540,7 +1554,8 @@ export default {
       let members = this.teamData.team_members.length;
       members += this.teamData.team_invited_members.length;
       if(members < 5) {
-        this.invitationObject.visible = true;
+        this.invitationObject.memberBox = true;
+        // this.invitationObject.visible = true;
         // this.createInvitaionLink();
       } else {
         this.$warning({
@@ -1557,17 +1572,18 @@ export default {
     againInviteWindow() {
       this.invitationObject.memberBox = true;
     },
-    toggleMemberbox() {
+    toggleMemberbox(success = false) {
       this.clickedInviteNow = false;
       this.tempActive = false;
-      this.invitationObject = {
-        role: "Admin",
-        add_as_a: "Representative",
-        relationship: "Father",
-        invitation_link: "",
-        visible: false,
-        memberBox: false
-      }
+      this.invitationObject.memberBox = false;
+      // this.invitationObject = {
+      //   role: "Admin",
+      //   add_as_a: "Representative",
+      //   relationship: "Father",
+      //   invitation_link: "",
+      //   visible: false,
+      //   memberBox: false
+      // }
       this.$emit("teamListUpdated");
     },
     async executeInviteMember(user) {
@@ -1867,12 +1883,12 @@ export default {
 // start css for team-card
 .team-card {
 	position: relative;
-	min-height: 500px;
+	min-height: 650px;
 	width: 100%;
 	padding: 10px 8px;
 	border-radius: 10px;
 	background-color: #ffffff;
-	margin-top: 20px;
+	margin-bottom: 20px;
 	box-shadow: 0px 0px 10px 1px rgba(63, 6, 17, 0.3);
 
 	.team-card-header {
@@ -1923,7 +1939,7 @@ export default {
 			.logo {
 				.img-logo {
 					border-radius: 50%;
-					width: 55px !important;
+					width: 50px !important;
 					height: 50px !important;
 					margin-left: 5px;
 					margin-top: 5px;
@@ -2001,11 +2017,11 @@ export default {
 			}
 		}
 		.img-logo {
-			border-radius: 50%;
-			width: 55px;
-			height: 50px;
+			border-radius: 12px;
+			width: 60px;
+			height: 60px;
 			margin-left: 5px;
-			margin-top: 5px;
+			margin-top: -4px;
 		}
 		.info-content {
 			.member-name,
@@ -2079,7 +2095,7 @@ export default {
 		.add-remove {
 			display: flex;
 			justify-content: space-between;
-			padding: 0;
+			padding: 0 8px;
 			margin-bottom: 10px;
 			.add-member,
 			.remove-member {
@@ -2127,17 +2143,23 @@ export default {
 				margin-right: 10px;
 			}
 			.name-short {
-        padding: 7px 5px;
+        //padding: 7px 5px;
         font-size: 10px;
         font-weight: bold;
         color: #ffffff;
         width: 28px;
-        height: 28px;
+        height: 25px;
         background: #3a3092;
         border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 			}
       .name-short-single {
-        padding: 7px 9px;
+        //padding: 7px 9px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       .name-full {
         font-size: 14px;
@@ -2215,6 +2237,7 @@ export default {
 		margin-top: 20px;
 		display: flex;
 		justify-content: space-between;
+    padding: 0 8px;
 		.left {
 			margin-bottom: 0px;
 			p {
@@ -2232,7 +2255,7 @@ export default {
       }
 		}
 		.right {
-			margin-left: 20px;
+			margin-left: 10px;
 			a {
 				font-size: 12px;
 				color: #e51f76;
@@ -2306,7 +2329,7 @@ export default {
 .d-subs-dk {
   display: none;
   @media (min-width: 992px) {
-    display: block;
+    display: flex;
   }
 }
 .d-subs-mb {

@@ -38,6 +38,10 @@
                 class="mobile-step"
                 :class="{ 'bg-primary': current >= 0 }"
               ></div>
+              <!-- <div
+                class="mobile-step ml-2"
+                :class="{ 'bg-primary': current >= 1 }"
+              ></div> -->
               <div
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 1 }"
@@ -45,10 +49,6 @@
               <div
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 2 }"
-              ></div>
-              <div
-                class="mobile-step ml-2"
-                :class="{ 'bg-primary': current >= 3 }"
               ></div>
             </div>
           </div>
@@ -60,17 +60,17 @@
         <p class="color-brand fs-18">Details about you</p>
       </div>
 
-      <div class="text-center mt-5" v-if="current == 1">
+      <!-- <div class="text-center mt-5" v-if="current == 1">
         <h5 class="color-brand fs-20">Verification Information</h5>
         <p class="color-brand fs-18">Details about you</p>
-      </div>
+      </div> -->
 
-      <div class="text-center mt-5" v-if="current == 2">
+      <div class="text-center mt-5" v-if="current == 1">
         <h5 class="color-brand fs-20">Image Upload</h5>
         <p class="color-brand fs-18">Details about you</p>
       </div>
 
-      <div class="text-center mt-5" v-if="current == 3">
+      <div class="text-center mt-5" v-if="current == 2">
         <h5 class="color-brand fs-20">Agree & Submit</h5>
         <p class="color-brand fs-18">Details about you</p>
       </div>
@@ -78,28 +78,33 @@
       <div class="steps-content px-2" v-if="current == 0">
         <PersonalInfoTwo
           :representativeDetails="representativeDetails"
+          @valueChange="onDataChange($event)"
           :personalInformation="representativeDetails.personalInformation"
           ref="personInfoRefTwo"
         />
       </div>
-      <div class="steps-content px-2" v-if="current == 1">
+      <!-- <div class="steps-content px-2" v-if="current == 1">
         <Verification
           :representativeDetails="representativeDetails"
+          @valueChange="onDataChange($event)"
           :verification="representativeDetails.verification"
           ref="VerificationRef"
         />
-      </div>
-      <div class="steps-content px-2" v-if="current == 2">
+      </div> -->
+      <div class="steps-content px-2" v-if="current == 1">
         <ImageUpload
+          @valueChange="onDataChange($event)"
           :imageModel="representativeDetails.imageModel"
           ref="imageUploadRef"
         />
       </div>
-      <div class="steps-content" v-if="current == 3">
+      <div class="steps-content" v-if="current == 2">
         <AgreementSubmit />
       </div>
       <div class="steps-action text-right pb-5 clearfix bottom-padding">
         <a-button
+          :class="{ disabled: !enabledNextBtn }"
+          :disabled="!enabledNextBtn"
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
@@ -156,10 +161,10 @@ import ImageUpload from "@/components/representative-registration/ImageUpload.vu
 import AgreementSubmit from "@/components/representative-registration/AgreementSubmit.vue";
 import ApiService from "../../services/api.service";
 import Header from "../../components/header/header";
-
 import { API_URL } from "../../configs/config";
 import VueFixedHeader from "vue-fixed-header";
 import validator from "validator";
+import jwtService from "../../services/jwt.service";
 export default {
   name: "RepresentativeRegistration",
 
@@ -181,16 +186,17 @@ export default {
       },
       propsData: { ...createData() },
       current: 0,
+      enabledNextBtn: false,
       representativeDetails: {
-        images: {},
+        imageModel: {},
       },
       steps: [
         {
           title: "Personal Info",
         },
-        {
-          title: "Verification",
-        },
+        // {
+        //   title: "Verification",
+        // },
         {
           title: "Image Upload",
         },
@@ -200,7 +206,7 @@ export default {
       ],
       mobileSteps: [
         "Personal Info",
-        "Verification",
+        // "Verification",
         "Image Upload",
         "Agree & Submit",
       ],
@@ -215,6 +221,27 @@ export default {
     this.getRepresentativeInitialInfo();
   },
   methods: {
+    onDataChange(e) {
+      switch (e.current) {
+        case 0:
+          this.representativeDetails.personalInformation = {
+            ...e.value,
+          };
+          break;
+          // case 1:
+          //   this.representativeDetails.verification = {
+          //     ...e.value,
+          //   };
+          break;
+
+        case 1:
+          this.representativeDetails.imageModel = {
+            ...e.value,
+          };
+          break;
+      }
+      this.checkExistData();
+    },
     updateFixedStatus(next) {
       this.fixedStatus.headerIsFixed = next;
     },
@@ -235,6 +262,8 @@ export default {
               response.data.data.image_upload.only_team_can_see == 0
                 ? true
                 : false,
+            is_agree:
+              response.data.data.image_upload.is_agree == 0 ? true : false,
             team_connection_can_see:
               response.data.data.image_upload.team_connection_can_seee == 0
                 ? true
@@ -249,6 +278,7 @@ export default {
             ver_country: response.data.data.verification.ver_country
               ? parseInt(response.data.data.verification.ver_country)
               : response.data.data.verification.ver_country,
+            cities: [],
           },
           personalInformation: {
             essential: {
@@ -303,16 +333,17 @@ export default {
             "permanat"
           );
         }
-        if (
-          this.representativeDetails.verification &&
-          this.representativeDetails.verification.ver_country > 0
-        ) {
-          this.onChangeCountry(
-            { id: this.representativeDetails.verification.ver_country },
-            "verification"
-          );
-        }
-        // this.current = response.data.data.user.data_input_status;
+        // if (
+        //   this.representativeDetails.verification &&
+        //   this.representativeDetails.verification.ver_country > 0
+        // ) {
+        //   this.onChangeCountry(
+        //     { id: this.representativeDetails.verification.ver_country },
+        //     "verification"
+        //   );
+        // }
+        this.current = response.data.data.data_input_status;
+        this.checkExistData();
       } else {
         this.isLoading = false;
       }
@@ -345,7 +376,7 @@ export default {
       this.$router.push("/login");
     },
     doneBtn() {
-      this.$router.push("/dashboard");
+      this.saveDataInputStatus(3);
     },
     async next() {
       switch (this.current) {
@@ -361,24 +392,26 @@ export default {
           this.current++;
           break;
         }
-        case 3: {
-          this.current++;
-          break;
-        }
+        // case 3: {
+        //   this.current++;
+        //   break;
+        // }
 
         default: {
           this.current = 0;
         }
       }
+      this.checkExistData();
       this.saveDataInputStatus(this.current);
     },
     prev() {
       this.current--;
+      this.checkExistData();
     },
 
     async saveDataInputStatus(satge) {
       const res = await ApiService.post(
-        "v1/candidate/personal-info-status?_method=PATCH",
+        "v1/representative/personal-info-status?_method=PATCH",
         {
           data_input_status: satge,
         }
@@ -387,8 +420,75 @@ export default {
       user.data_input_status = satge;
       localStorage.removeItem("user");
       localStorage.setItem("user", JSON.stringify(user));
+      if (satge === 3) {
+        this.$router.push("/dashboard");
+      }
     },
+    checkExistData() {
+      let isEnabled = false;
+      switch (this.current) {
+        case 0:
+          let { essential } = this.representativeDetails.personalInformation;
+          let {
+            mobile_country_code,
+            mobile_number,
+            per_current_residence_city,
+            per_current_residence_country,
+          } = this.representativeDetails.personalInformation.personal;
+          const personal = {
+            mobile_country_code,
+            mobile_number,
+            per_current_residence_city,
+            per_current_residence_country,
+          };
+          Object.values({
+            personal,
+            essential,
+          }).forEach((ob) => {
+            isEnabled = Object.values(ob).every(
+              (x) => x !== undefined && x !== null && x !== ""
+            );
+            if (!isEnabled) return;
+          });
+          break;
 
+        // case 1:
+        //   const {
+        //     ver_city,
+        //     ver_country,
+        //     ver_document_type,
+        //     ver_recommender_address,
+        //     ver_recommender_first_name,
+        //     ver_recommender_last_name,
+        //     ver_recommender_occupation,
+        //     ver_recommender_title,
+        //     ver_recommender_mobile_no,
+        //   } = this.representativeDetails.verification;
+        //   isEnabled = Object.values({
+        //     ver_city,
+        //     ver_country,
+        //     ver_document_type,
+        //     ver_recommender_address,
+        //     ver_recommender_first_name,
+        //     ver_recommender_last_name,
+        //     ver_recommender_occupation,
+        //     ver_recommender_title,
+        //     ver_recommender_mobile_no,
+        //   }).every((x) => x !== undefined && x !== null && x !== "");
+        //   break;
+
+        case 1:
+          const { per_avatar_url, per_main_image_url } =
+            this.representativeDetails.imageModel;
+          isEnabled = Object.values({
+            per_avatar_url,
+            per_main_image_url,
+          }).every((x) => x !== undefined && x !== null && x !== "");
+          break;
+      }
+
+      this.enabledNextBtn = isEnabled;
+    },
     onDoneClick() {
       this.loading = true;
       console.log(this.agreementChecked);

@@ -4,37 +4,71 @@
 			<h2 class="color-brand text-center" id="recentlyJoinedDesign">
 				<span style="padding-right: 50px">Recently Joined</span>
 			</h2>
-			<div class="row position-relative" style="margin-top: 10px">
-				<div class="col-md-4" v-for="user in recJoin" :key="user.name">
-					<div class="item flex-between-center">
-						<div class="item-img">
-							<img class="item-img" @error="imgLoad(index, user)" :ref="`avatar-${index}`" :src="user.image" alt="img" style="border: 1px solid white;"/>
-						</div>
-						<div class="item-content">
-							<div>{{ user.age ? getAge(user.age) : 'N/A' }}</div>
-<!--							<div>{{ user.name }}</div>-->
-							<div>{{  user.ethinicity ? user.ethinicity : 'N/A' }}, {{ user.religion ? user.religion : 'N/A' }}</div>
-							<div>{{ user.study_level ? user.study_level : 'N/A' }}</div>
-<!--							<div>{{ user.location_name }}</div>-->
-							<!-- <div>{{ getAge(user.age) }}</div>
+
+      <carousel
+          :perPageCustom="[
+              [320, 1],
+              [768, 2],
+              [1280, 3],
+            ]"
+          :autoplay="true"
+          :paginationEnabled="false"
+          :navigationEnabled="false"
+      >
+        <slide v-for="(user, recIndex) in recJoin" :key="user.id">
+          <div class="item flex-between-center ml-2 mr-2">
+            <div class="item-img custom-size">
+              <img class="item-img" @error="imgLoad(index, user)" :ref="`avatar-${index}`" :src="user.image" alt="img" style="border: 1px solid white;"/>
+            </div>
+            <div class="item-content">
+              <div>{{ user.age ? getAge(user.age) : 'N/A' }}</div>
+              <!--							<div>{{ user.name }}</div>-->
+              <div>{{  user.ethnicity ? user.ethnicity : 'N/A' }}, {{ user.religion ? user.religion : 'N/A' }}</div>
+              <div>{{ user.study_level ? user.study_level : 'N/A' }}</div>
+              <!--							<div>{{ user.location_name }}</div>-->
+              <!-- <div>{{ getAge(user.age) }}</div>
               <div>{{ user.religion }}</div>
               <div>{{ user.ethinicity }}</div> -->
-						</div>
-					</div>
-				</div>
+            </div>
+          </div>
+        </slide>
+      </carousel>
 
-        <img src="@/assets/icon/bg_layer_1.svg" alt="bg" class="position-absolute bg-layer-2" />
-        <img src="@/assets/icon/bg_layer_1_1.svg" alt="bg" class="position-absolute bg-layer-2-1" />
-			</div>
+<!--			<div class="row position-relative" style="margin-top: 10px">-->
+<!--				<div class="col-md-4" v-for="user in recJoin" :key="user.name">-->
+<!--					<div class="item flex-between-center">-->
+<!--						<div class="item-img">-->
+<!--							<img class="item-img" @error="imgLoad(index, user)" :ref="`avatar-${index}`" :src="user.image" alt="img" style="border: 1px solid white;"/>-->
+<!--						</div>-->
+<!--						<div class="item-content">-->
+<!--							<div>{{ user.age ? getAge(user.age) : 'N/A' }}</div>-->
+<!--&lt;!&ndash;							<div>{{ user.name }}</div>&ndash;&gt;-->
+<!--							<div>{{  user.ethinicity ? user.ethinicity : 'N/A' }}, {{ user.religion ? user.religion : 'N/A' }}</div>-->
+<!--							<div>{{ user.study_level ? user.study_level : 'N/A' }}</div>-->
+<!--&lt;!&ndash;							<div>{{ user.location_name }}</div>&ndash;&gt;-->
+<!--							&lt;!&ndash; <div>{{ getAge(user.age) }}</div>-->
+<!--              <div>{{ user.religion }}</div>-->
+<!--              <div>{{ user.ethinicity }}</div> &ndash;&gt;-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
+
+<!--        <img src="@/assets/icon/bg_layer_1.svg" alt="bg" class="position-absolute bg-layer-2 layer-2" />-->
+<!--        <img src="@/assets/icon/bg_layer_1_1.svg" alt="bg" class="position-absolute bg-layer-2-1" />-->
+<!--			</div>-->
 		</div>
 	</div>
 </template>
 
 <script>
 import ApiService from "../../services/api.service";
+import { Carousel, Slide } from "vue-carousel";
 export default {
 	name: "RecentlyJoined",
-	components: {},
+	components: {
+    Carousel,
+    Slide,
+  },
 	data() {
 		return {
 			recJoin: [],
@@ -127,6 +161,23 @@ export default {
 		background-color: #ccc;
 	}
 }
+.layer-1 {
+  animation-name: layer-1;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+.layer-2 {
+  animation-name: layer-2;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+@keyframes layer-2 {
+  0%   {left: 70px; top: 500px;}
+  25%  {left: 50px; top: 460px;}
+  50%  {left: 40px; top: 480px;}
+  75%  {left: 50px; top: 530px;}
+  100% {left: 70px; top: 500px;}
+}
 .bg-layer-1 {
   top: 30px;
   right: 30px;
@@ -146,5 +197,9 @@ export default {
   top: 500px;
   left: 70px;
   width: 7%;
+}
+.custom-size {
+  width: 70px !important;
+  height: 55px !important;
 }
 </style>

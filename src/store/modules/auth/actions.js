@@ -4,15 +4,23 @@ import JwtService from "../../../services/jwt.service";
 import router from '../../../router';
 export default {
   async login(context, payload) {
-    const response = await axios.post("v1/login", payload);
-    const token = response.data.data.token.access_token;
-    let data = { token: token };
-    JwtService.saveTokenAndUser(data);
-    JwtService.setUser(response.data.data.user);
-    context.commit("setUser", {
-      token: response.data.data.access_token,
+    await axios.post("v1/login", payload).then(response => {
+      const token = response.data.data.token.access_token;
+      let data = { token: token };
+      JwtService.saveTokenAndUser(data);
+      JwtService.setUser(response.data.data.user);
+      context.commit("setErrorMessage", {
+        errorMessage: null,
+      });
+      context.commit("setUser", {
+        token: response.data.data.access_token,
+      });
+      router.push({ name: 'root' });
+    }).catch(e => {
+      context.commit("setErrorMessage", {
+        errorMessage: "Invalid email or password",
+      });
     });
-    router.push({ name: 'root' });
   },
   async signup(context, payload) {
     const response = await axios.post("v1/register", payload);
@@ -55,7 +63,7 @@ export default {
     console.log(response);
   },
   async resetPassword(_, payload) {
-    const response = await axios.post("v1/forgot/password-update", payload);
+    const response = await axios.post("v1/forgot/password/update", payload);
     console.log(response);
   },
   async logout(context) {

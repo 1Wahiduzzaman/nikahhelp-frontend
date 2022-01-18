@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="dropdown-divider"></div>
-    <div class="notification__items">
+    <div class="notification__items" v-if="useFor != 'chat'">
       <a-list
           size="small"
           v-for="(itemObj, index) in items"
@@ -22,6 +22,42 @@
         <a-list-item slot="renderItem" slot-scope="item">
           <slot name="item" :item="item">
             <component :is="componentName" :item="itemObj" :index="index"></component>
+          </slot>
+        </a-list-item>
+
+      </a-list>
+    </div>
+    <div class="notification__items" v-else>
+      <a-list
+          size="small"
+          v-for="(itemObj, index) in items"
+          :key="index"
+          item-layout="horizontal"
+          :data-source="[{title: 'user one'}]"
+          style="border-bottom: 1px solid rgb(235, 235, 235);"
+      >
+        <a-list-item slot="renderItem" slot-scope="item">
+          <slot name="item" :item="item">
+<!--            <component :is="componentName" :item="itemObj" :index="index"></component>-->
+            <ConnectedTeamChat
+                v-if="itemObj.label == 'Connected Team'"
+                :item="itemObj"
+                :status="'connected'"
+                :online_users="getOnlineUsers"
+                :teamMembers="getTeamMembers"
+                :activeTeam="getActiveTeam"
+                action
+                class="w-full pr-3 cursor-pointer"
+            />
+            <ChatListItem
+                v-else
+                :item="itemObj"
+                :status="'recent'"
+                :online_users="getOnlineUsers"
+                :teamMembers="getTeamMembers"
+                action
+                class="w-full pr-3 cursor-pointer"
+            />
           </slot>
         </a-list-item>
 
@@ -39,6 +75,8 @@ import NotificationChatItem from "./NotificationChatItem";
 import NotificationListItem from "./NotificationListItem";
 import ShortListItem from "./ShortListItem";
 import TeamListItem from "./TeamListItem";
+import ChatListItem from "./ChatListItem";
+import ConnectedTeamChat from "../chat/ConnectedTeamChat";
 
 const selectComponent = {
   chat: {
@@ -87,7 +125,9 @@ export default {
     NotificationListItem,
     ShortListItem,
     TeamListItem,
-    NotificationChatItem
+    NotificationChatItem,
+    ChatListItem,
+    ConnectedTeamChat
   },
   computed: {
     componentName() {
@@ -104,6 +144,15 @@ export default {
     },
     getItems() {
       return this.items;
+    },
+    getTeamMembers() {
+      return this.$store.state.chat.teamMembers
+    },
+    getActiveTeam() {
+      return this.$store.state.chat.activeTeam;
+    },
+    getOnlineUsers() {
+      return this.$store.state.chat.online_users;
     }
   },
   created() {
@@ -116,7 +165,7 @@ export default {
 .notification-wrapper {
   padding: 10px;
   background-color: #fff;
-  box-shadow: 0 3px 8px 1px #d3d3d3;
+  box-shadow: 0 3px 8px 1px rgb(0 0 0 / 12%);
   border-radius: 5px;
   margin-top: -150px;
   @media (min-width: 768px) {

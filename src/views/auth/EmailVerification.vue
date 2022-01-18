@@ -1,31 +1,45 @@
 <template>
-  <div class="email-verification">
+  <div class="email-verification font-poppins">
     <header>
       <a href="/"><img src="@/assets/logo.png" alt="" /></a>
     </header>
 
-    <div class="message">
-      <h3 class="mt-3 fw-700">Email Verification</h3>
-      <p>
-        We have sent verification email to
-        <br />
-        <span>{{ user.email }}</span>
-        <br />
-        Please check your email or your spam folder and follow the verification
-        <br />
-        instructions.
-      </p>
-      <p>
-        For user safety we need to ensure that only genuine and identifiable
-        <br />
-        users are on Matrimony Assist.
-      </p>
-      <p>
-        To help us do that all users of the Matrimony Assist Platform will need
-        to
-        <br />
-        verify their registratation and mobile (cell phone) number.
-      </p>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+          <div class="message">
+            <h3 class="mt-3 fw-700 text-black-50 header-text">Email Verification</h3>
+            <p>
+              We have sent you a verification email to
+              <br />
+              <span class="email-box my-4">{{ user.email }}</span>
+              <br />
+              Please check your email inbox or spam folder and follow the verification
+              <br />
+              instructions.
+            </p>
+            <p>
+              Wrong email address or didn’t get any email? don’t worry <a href="" class="text-decoration-underline">contact us</a>
+            </p>
+            <p class="instruction">
+              If you do not verify your email address by sent link within <span class="font-italic font-weight-bold">30 minutes</span> then the sent
+              verification link & your signup information will automatically unenrolled from Matrimony Assist platform, you can rejoin Matrimony Assist at any time by once again
+              completing the Matrimony Assist signup process
+            </p>
+            <p>
+              For user safety we need to ensure that only genuine and identifiable
+              <br />
+              users are on Matrimony Assist.
+            </p>
+            <p>
+              To help us do that all users of the Matrimony Assist Platform will need
+              to
+              <br />
+              verify their registration email.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="footer">
       <Footer />
@@ -89,15 +103,47 @@ export default {
     }
   }
   h3 {
+    padding-top: 10px;
     font-family: $body-font;
-  }
-  span {
-    color: $color-secondary;
+    font-size: 32px;
+    @media (min-width: 768px) {
+      padding: 10px 0;
+    }
   }
   .footer {
-    bottom: 0;
-    width: 100%;
-    position: fixed;
+    @media (min-width: 576px) {
+      bottom: 0;
+      width: 100%;
+      position: fixed;
+    }
+    @media (min-width: 768px) {
+      position: relative;
+    }
+    @media (min-width: 1024px) {
+      position: relative;
+    }
+    @media (min-width: 1200px) {
+      bottom: 0;
+      width: 100%;
+      position: fixed;
+    }
   }
+}
+.email-box {
+  color: $color-secondary;
+  background: #e9e6e6;
+  border-radius: 8px;
+  font-size: 20px;
+  margin: 8px 0;
+  padding: 4px 10px;
+  @media (min-width: 768px) {
+    padding: 4px 70px;
+  }
+}
+.instruction {
+  background: #522e8e;
+  color: $color-white;
+  padding: 12px;
+  border-radius: 8px;
 }
 </style>

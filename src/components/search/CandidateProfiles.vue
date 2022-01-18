@@ -23,6 +23,7 @@
 					<div v-for="(profile, n) in  profiles" :key="n" class="col-sm-12 col-md-6 col-lg-4">
 						<CandidateGrid
 							:candidate="profile"
+              @socketNotification="socketNotification"
 							@switchComponent="()=>$emit('switchComponent', 'ProfileDetail')"
 						/>
 					</div>
@@ -72,7 +73,9 @@ export default {
 		}
 	},
 	methods: {
-		
+    socketNotification(data) {
+      this.$emit('socketNotification', data);
+    }
 	}
 };
 </script>

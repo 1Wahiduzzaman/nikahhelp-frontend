@@ -116,6 +116,7 @@
                         class="chat-item"
                         v-for="item in chatHistory"
                         :key="item.team_id"
+                        :class="{'selected-chat': chatheadopen == item}"
                         @click="item.label == 'Connected Team' ? getConnectedTeamChatHistory(item) : getIndividualChat(item, item)"
                     >
                       <ConnectedTeamChat
@@ -126,6 +127,7 @@
                           :teamMembers="teamMembers"
                           :activeTeam="activeTeam"
                           action
+                          @socketNotification="socketNotification"
                           class="w-full pr-3 cursor-pointer"
                       />
                       <ChatListItem
@@ -144,6 +146,7 @@
                          v-for="item in teamChat"
                          v-if="item.user_id != getAuthUserId"
                          :key="item.team_id"
+                         :class="{'selected-chat': chatheadopen == item}"
                          @click="getIndividualChat(item, item)"
                     >
                       <ChatListItem
@@ -160,6 +163,7 @@
                     <div class="chat-item"
                          v-for="item in connectedTeam"
                          :key="item.team_id"
+                         :class="{'selected-chat': chatheadopen == item}"
                          @click="getConnectedTeamChatHistory(item)"
                     >
                       <ConnectedTeamChat
@@ -169,6 +173,7 @@
                           :teamMembers="teamMembers"
                           :activeTeam="activeTeam"
                           action
+                          @socketNotification="socketNotification"
                           class="w-full pr-3 cursor-pointer"
                       />
                     </div>
@@ -183,6 +188,7 @@
                                             :teamMembers="teamMembers"
                                             :activeTeam="activeTeam"
                                             action
+                                            @socketNotification="socketNotification"
                                             class="w-full pr-3 cursor-pointer" />
                     </div>
                   </div>
@@ -194,7 +200,7 @@
 <!--                      @click="backToTabList()">-->
 <!--                <a-icon type="caret-left"/>-->
 <!--              </button>-->
-              <h4 class="cursor-pointer position-absolute btn-short-back" @click="backToTabList()">&#8592;</h4>
+              <h4 class="cursor-pointer btn-short-back" @click="backToTabList()">&#8592;</h4>
               <div class="header clearfix">
                 <div class="left">
                   <div class="top">
@@ -204,7 +210,11 @@
                     </div>
                     <div class="chat-info">
                       <div class="chat-group bg-primary">{{ chatheadopen.label }}</div>
-                      <div class="chat-name">{{ conversationTitle }}</div>
+                      <div class="chat-name">
+                        <a-tooltip bottom :title="chatheadopen.label">
+                          {{ conversationTitle }}
+                        </a-tooltip>
+                      </div>
                       <div class="last-chat" v-if="chat_type == 'team'">Active now {{ getTeamOnlineUsers() > 0 ? getTeamOnlineUsers() : '' }}</div>
                     </div>
                   </div>
@@ -269,7 +279,8 @@
 <!--                          {{ item.body || '' }}-->
                         </div>
                         <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">
-                          {{ messageCreatedAt(item.created_at) }}<span v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))">, {{ item.sender ? item.sender.full_name : '' }}</span>
+                          {{ messageCreatedAt(item.created_at) }}<span>, Me</span>
+<!--                          {{ messageCreatedAt(item.created_at) }}<span v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))">, {{ item.sender ? item.sender.full_name : '' }}</span>-->
                         </div>
                       </div>
 
@@ -284,7 +295,7 @@
 <!--                          {{ item.body || '' }}-->
                         </div>
                         <div class="text-muted small text-nowrap mt-2 position-absolute msg-left-created-at">
-                          {{ messageCreatedAt(item.created_at) }}<span v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))">, {{ item.sender ? item.sender.full_name : '' }}</span>
+                          {{ messageCreatedAt(item.created_at) }}<span>, {{ item.sender ? item.sender.full_name : '' }}</span>
                         </div>
                       </div>
 
@@ -349,48 +360,6 @@
               <div class="flex justify-content-center align-items-center empty-height">
                 <h4 class="fs-20 flex flex-column align-items-center justify-content-center">Select a conversation & start the chat</h4>
               </div>
-              <div class="d-none flex-column justify-content-center align-items-center text-center">
-                <v-stepper alt-labels>
-                  <v-stepper-header>
-                    <v-stepper-step
-                        step="3"
-                        color="secondary"
-                        complete
-                    >
-                      Complete profile
-                    </v-stepper-step>
-
-                    <v-divider></v-divider>
-
-                    <v-stepper-step
-                        step="4"
-                        color="secondary"
-                        complete
-                    >
-                      Verify account
-                    </v-stepper-step>
-
-                    <v-divider></v-divider>
-
-                    <v-stepper-step
-                        color="secondary"
-                        complete
-                        step="5"
-                    >
-                      Connect teams
-                    </v-stepper-step>
-
-                    <v-divider></v-divider>
-
-                    <v-stepper-step
-                        step="6"
-                        color="secondary"
-                        complete>
-                      Communicate
-                    </v-stepper-step>
-                  </v-stepper-header>
-                </v-stepper>
-              </div>
             </div>
           </div>
         </div>
@@ -406,11 +375,11 @@ import {pick, map} from 'lodash';
 
 const messageKeys = ['id', 'user_id', 'chat_id', 'team_id', 'from_team_id', 'to_team_id', 'private_receiver_id', 'private_team_chat_id', 'body', 'seen', 'created_at'];
 import {format} from 'timeago.js'
-import Conversation from "../../components/auth/Conversation";
 import JwtService from "@/services/jwt.service";
 import { openModalRoute } from "@/plugins/modal/modal.mixin";
 import ConnectedTeamChat from "../../components/chat/ConnectedTeamChat";
 import PrivateRequestChat from "../../components/chat/PrivateRequestChat";
+import Notification from "@/common/notification.js";
 
 export default {
   name: 'ChatWindow',
@@ -448,7 +417,8 @@ export default {
       },
       chatheadopen: null,
       isLoading: false,
-      fromChatItem: null
+      fromChatItem: null,
+      active_team_id: null
     }
   },
   components: {
@@ -561,7 +531,7 @@ export default {
     }
   },
   created() {
-    this.$store.state.chat.chats = [];
+    // this.$store.state.chat.chats = [];
     this.getActiveTeamId();
   },
   mounted() {
@@ -576,55 +546,111 @@ export default {
         }
       });
 
+      this.sockets.subscribe('receive_notification', function (res) {
+        if (res && res.type) {
+          this.loadPageData();
+        }
+      });
+
       this.sockets.subscribe('receive_message', function (res) {
-        res.sender = res.senderInfo;
-        // console.log(res)
-        if(this.chat_type && (this.activeTeam == res.target_opened_chat || this.one_to_one_user == res.target_opened_chat || this.inConnectedChat || this.private_chat)) {
-          console.log('I am')
-          this.chats.push(res);
-          // if(this.chats.length <= 0) {
-          //   this.chats.push(res);
-          // } else {
-          //   this.chats.unshift(res);
-          // }
-        }
+        if(!res.support || res.support == null || res.support == undefined) {
+          res.sender = res.senderInfo;
+          if(this.chat_type && (this.activeTeam == res.target_opened_chat || this.one_to_one_user == res.target_opened_chat || this.inConnectedChat || this.private_chat)) {
+            this.chats.push(res);
+            // if(this.chats.length <= 0) {
+            //   this.chats.push(res);
+            // } else {
+            //   this.chats.unshift(res);
+            // }
+          }
 
-        let teamPersonalChat = this.teamChat.find(item => item.user_id == res.senderId);
-        if(teamPersonalChat) {
-          teamPersonalChat.message.body = res.body;
-          teamPersonalChat.message.created_at = res.created_at;
-          teamPersonalChat.message.seen = 0;
-        }
-        let teamChat = this.teamChat.find(item => item.team_id == res.target_opened_chat);
-        if(teamChat) {
-          teamChat.last_group_message.body = res.body;
-          teamChat.last_group_message.created_at = res.created_at;
-          teamChat.last_group_message.seen = 0;
+          let teamPersonalChat = this.teamChat.find(item => item.user_id == res.senderId);
+          if(teamPersonalChat) {
+            teamPersonalChat.message.body = res.body;
+            teamPersonalChat.message.created_at = res.created_at;
+            teamPersonalChat.message.seen = 0;
 
-          teamChat.message.body = res.body;
-          teamChat.message.created_at = res.created_at;
-          teamChat.message.seen = 0;
-        }
+            this.teamChat.unshift(
+                this.teamChat.splice(
+                    this.teamChat.findIndex(
+                        elt => elt.user_id == res.senderId),
+                    1)[0]
+            );
+          }
 
-        let recentTeamMemberChat = this.chatHistory.find(item => item.user_id == res.target_opened_chat);
-        if(recentTeamMemberChat) {
-          recentTeamMemberChat.message.body = res.body;
-          recentTeamMemberChat.message.created_at = res.created_at;
-          recentTeamMemberChat.message.seen = 0;
-        }
+          let teamChat = this.teamChat.find(item => item.team_id == res.target_opened_chat);
+          if(teamChat) {
+            teamChat.last_group_message.body = res.body;
+            teamChat.last_group_message.created_at = res.created_at;
+            teamChat.last_group_message.seen = 0;
 
-        let recentPrivateChat = this.chatHistory.find(item => res.target_opened_chat && item.private_team_chat_id == res.target_opened_chat.private_team_chat_id);
-        if(recentPrivateChat) {
-          recentPrivateChat.message.body = res.body;
-          recentPrivateChat.message.created_at = res.created_at;
-          recentPrivateChat.message.seen = 0;
-        }
+            teamChat.message.body = res.body;
+            teamChat.message.created_at = res.created_at;
+            teamChat.message.seen = 0;
 
-        let connectedTeamChat = this.connectedTeam.find(item => item.id == res.team_connection_id);
-        if(connectedTeamChat) {
-          connectedTeamChat.message.body = res.body;
-          connectedTeamChat.message.created_at = res.created_at;
-          connectedTeamChat.message.seen = 0;
+            this.teamChat.unshift(
+                this.teamChat.splice(
+                    this.teamChat.findIndex(
+                        elt => elt.team_id == res.target_opened_chat),
+                    1)[0]
+            );
+          }
+
+          let recentTeamMemberChat = this.chatHistory.find(item => item.user_id == res.target_opened_chat);
+          if(recentTeamMemberChat) {
+            recentTeamMemberChat.message.body = res.body;
+            recentTeamMemberChat.message.created_at = res.created_at;
+            recentTeamMemberChat.message.seen = 0;
+
+            this.chatHistory.unshift(
+                this.chatHistory.splice(
+                    this.chatHistory.findIndex(
+                        elt => elt.user_id == res.target_opened_chat),
+                    1)[0]
+            );
+          }
+
+          let recentPrivateChat = this.chatHistory.find(item => res.target_opened_chat && item.private_team_chat_id == res.target_opened_chat.private_team_chat_id);
+          if(recentPrivateChat) {
+            recentPrivateChat.message.body = res.body;
+            recentPrivateChat.message.created_at = res.created_at;
+            recentPrivateChat.message.seen = 0;
+
+            this.chatHistory.unshift(
+                this.chatHistory.splice(
+                    this.chatHistory.findIndex(
+                        elt => res.target_opened_chat && elt.private_team_chat_id == res.target_opened_chat.private_team_chat_id),
+                    1)[0]
+            );
+          }
+
+          let connectedTeamChat = this.connectedTeam.find(item => item && item.team_private_chat && item.team_private_chat.team_connection_id == res.team_connection_id);
+          if(connectedTeamChat) {
+            connectedTeamChat.message.body = res.body;
+            connectedTeamChat.message.created_at = res.created_at;
+            connectedTeamChat.message.seen = 0;
+
+            this.connectedTeam.unshift(
+                this.connectedTeam.splice(
+                    this.connectedTeam.findIndex(
+                        elt => elt && elt.team_private_chat && elt.team_private_chat.team_connection_id == res.team_connection_id),
+                    1)[0]
+            );
+          }
+
+          let connectHistory = this.chatHistory.find(item => item && item.team_connection_id == res.team_connection_id);
+          if(connectHistory) {
+            connectHistory.message.body = res.body;
+            connectHistory.message.created_at = res.created_at;
+            connectHistory.message.seen = 0;
+
+            this.chatHistory.unshift(
+                this.chatHistory.splice(
+                    this.chatHistory.findIndex(
+                        elt => elt && elt.team_connection_id == res.team_connection_id),
+                    1)[0]
+            );
+          }
         }
       });
 
@@ -665,6 +691,27 @@ export default {
     }
   },
   methods: {
+    socketNotification(payload) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.sender = loggedUser.id;
+      Notification.storeNotification(payload);
+      payload.created_at = new Date();
+      payload.seen = 0;
+      payload.sender = loggedUser;
+      if(payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map(item => {
+          return item.toString();
+        });
+        this.$socket.emit('notification', payload);
+      }
+      this.loadPageData();
+    },
+    loadPageData() {
+      this.loadTeamChat();
+      this.loadChatHistory();
+      this.loadConnectedGroup();
+      this.getPrivateRequests();
+    },
     getActiveTeamId() {
       if (!JwtService.getTeamIDAppWide()) {
         this.isLoading = true;
@@ -673,10 +720,8 @@ export default {
           openModalRoute(this, "manage_team_redirect");
         }, 2000);
       } else {
-        this.loadTeamChat();
-        this.loadChatHistory();
-        this.loadConnectedGroup();
-        this.getPrivateRequests();
+        this.active_team_id = JwtService.getTeamIDAppWide();
+        this.loadPageData();
       }
     },
     setChatTab(type) {
@@ -741,6 +786,8 @@ export default {
       })];
     },
     processChatHistoryResponse(data) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+
       let singleChat = map(data.single_chat, item => {
         return {
           label: 'Team member',
@@ -759,7 +806,7 @@ export default {
         return {
           label: 'Private chat',
           state: 'seen',
-          name: item.private_receiver_data?.full_name || 'user name',
+          name: this.getPrivateChatUserName(item),
           logo: item.private_receiver_data?.avatar,
           to_team_id: item.to_team_id,
           from_team_id: item.from_team_id,
@@ -768,11 +815,13 @@ export default {
           other_mate_id: item.receiver,
           typing_status: 0,
           typing_text: '',
+          is_friend: 1,
+          private_receiver_data: loggedUser.id == item.sender ? item.private_receiver_data : item.private_sender_data,
           message: pick(item.last_private_message, messageKeys)
         }
       });
 
-      let lastGroupMsg = [{
+      let lastGroupMsg = data.last_group_msg ? [{
         label: 'Group chat',
         state: 'Typing...',
         name: data.last_group_msg.team.name,
@@ -780,22 +829,27 @@ export default {
         typing_status: 0,
         typing_text: '',
         message: pick(data.last_group_msg, messageKeys)
-      }]
+      }] : []
 
       let connectedMsg = data.connected_team_msgs.map(item => {
         item.label = 'Connected Team';
         item.typing_status = 0;
         item.typing_text = '';
-        item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
-        item.is_friend = item.team_private_chat ? item.team_private_chat.is_friend : 0;
+        item.message = item.id && item.last_message ? item.last_message : {};
+        item.is_friend = 1;
         return item;
       });
 
       return [...lastGroupMsg, ...connectedMsg, ...singleChat, ...privateChat];
     },
+    getPrivateChatUserName(item) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let user = loggedUser.id == item.sender ? item.private_receiver_data : item.private_sender_data;
+      return user?.full_name || 'user name';
+    },
     async loadTeamChat() {
       try {
-        let {data} = await ApiService.get('/v1/team-chat').then(res => res.data);
+        let {data} = await ApiService.get(`/v1/team-chat?team_id=${this.active_team_id}`).then(res => res.data);
         if (data && data.team_members) {
           this.teamMembers = map(data.team_members, item => {
             return item.user_id.toString();
@@ -1037,7 +1091,7 @@ export default {
     async sendMsg(e) {
       console.log(e);
       if (this.msg_text && this.msg_text.length > 0) {
-        if (this.fromChatItem == 'connected-team') {
+        if (this.chatheadopen.label == 'Connected Team') {
           await this.sendConnectedTeamMessage();
         } else {
           if(this.chatheadopen && this.chatheadopen.team_private_chat_id) {
@@ -1052,6 +1106,7 @@ export default {
       let url = '';
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       let payload = {
+        support: false,
         team_id: this.activeTeam.toString(),
         body: this.msg_text,
         message: this.msg_text,
@@ -1104,6 +1159,9 @@ export default {
         this.chatheadopen.message.sender = loggedUser;
         this.$socket.emit('send_message_in_group', payload);
       }
+
+      this.findOneAndPushToFirst();
+
       // this.chats.unshift(payload);
       this.chats.push(payload);
       payload.sender = loggedUser.id.toString();
@@ -1112,8 +1170,11 @@ export default {
     },
     async sendConnectedTeamMessage() {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
-      let teamMembers = this.teamMembers;
-      let selfIndex = this.teamMembers.findIndex(user => parseInt(user) == parseInt(loggedUser.id));
+      let teamone = this.chatheadopen.from_team.team_members.map(member => member.user_id.toString());
+      let teamTwo = this.chatheadopen.to_team.team_members.map(member => member.user_id.toString());
+      let teamMembers = [...teamone, ...teamTwo];
+      // let teamMembers = this.teamMembers;
+      let selfIndex = teamMembers.findIndex(user => parseInt(user) == parseInt(loggedUser.id));
       if(selfIndex >= 0) {
         teamMembers.splice(selfIndex, 1);
       }
@@ -1126,7 +1187,17 @@ export default {
         to_team_id = this.chatheadopen.from_team_id;
       }
 
+      let teamConnectionId = null;
+      if(this.chatheadopen.team_connection_id) {
+        teamConnectionId = this.chatheadopen.team_connection_id;
+      } else if(this.chatheadopen.team_private_chat && this.chatheadopen.team_private_chat.team_connection_id) {
+        teamConnectionId = this.chatheadopen.team_private_chat.team_connection_id;
+      } else {
+        teamConnectionId = this.chatheadopen.id;
+      }
+
       let payload = {
+        support: false,
         to_team_id: to_team_id,
         from_team_id: this.activeTeam,
         sender: loggedUser.id,
@@ -1140,10 +1211,14 @@ export default {
         label: 'Connected',
         conv_title: this.conversationTitle,
         logo: this.chatheadopen.logo,
-        team_connection_id: this.chatheadopen.id,
+        // team_connection_id: this.chatheadopen.id,
+        team_connection_id: teamConnectionId,
       };
       payload.target_opened_chat = payload.to_team_id;
       this.$socket.emit('send_message_in_group', payload);
+
+      this.findOneAndPushToFirst();
+
       this.chats.push(payload);
       teamMembers.splice(selfIndex, 1);
       this.msg_text = null;
@@ -1160,6 +1235,7 @@ export default {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       let url = "connected-send-private-message";
       let payload = {
+        support: false,
         body: this.msg_text,
         message: this.msg_text,
         created_at: new Date(),
@@ -1167,7 +1243,7 @@ export default {
         senderInfo: loggedUser,
         target_opened_chat_type: 'private-chat',
         target_opened_chat: this.private_chat,
-        receiver: this.private_chat.receiver.toString(),
+        receiver: this.chatheadopen.private_receiver_data.id.toString(),
         label: 'Private',
         conv_title: this.conversationTitle,
         logo: this.chatheadopen.logo,
@@ -1181,8 +1257,16 @@ export default {
       this.chatheadopen.message.senderId = loggedUser.id.toString();
       this.chatheadopen.message.senderInfo = loggedUser;
       this.$socket.emit('send_message', payload);
+
+      this.findOneAndPushToFirst();
+
       payload.from_team_id = this.activeTeam;
-      payload.to_team_id = this.private_chat.to_team_id;
+      if(parseInt(this.activeTeam) == parseInt(this.chatheadopen.from_team_id)) {
+        payload.to_team_id = this.chatheadopen.to_team_id;
+      } else {
+        payload.to_team_id = this.chatheadopen.from_team_id;
+      }
+
       await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
       this.msg_text = '';
     },
@@ -1285,6 +1369,28 @@ export default {
       }
 
       return date;
+    },
+    findOneAndPushToFirst() {
+      let recentIndex = this.chatHistory.findIndex(item => item == this.chatheadopen);
+      if(recentIndex >= 0) {
+        let data = this.chatHistory[recentIndex];
+        this.chatHistory.splice(recentIndex, 1);
+        this.chatHistory.unshift(data);
+      }
+
+      let teamIndex = this.teamChat.findIndex(item => item == this.chatheadopen);
+      if(teamIndex >= 0) {
+        let data = this.teamChat[teamIndex];
+        this.teamChat.splice(teamIndex, 1);
+        this.teamChat.unshift(data);
+      }
+
+      let connectIndex = this.connectedTeam.findIndex(item => item == this.chatheadopen);
+      if(connectIndex >= 0) {
+        let data = this.connectedTeam[connectIndex];
+        this.connectedTeam.splice(connectIndex, 1);
+        this.connectedTeam.unshift(data);
+      }
     }
   }
 };
@@ -2493,9 +2599,8 @@ export default {
   background: #bcb5de;
 }
 .btn-short-back {
-  top: -20px;
-  left: -10px;
-  padding: 4px;
+  margin-bottom: 0;
+  margin-top: -14px;
   @media (min-width: 576px) {
     display: none;
   }
@@ -2524,12 +2629,12 @@ export default {
 }
 .chat-area {
   //min-height: 600px;
-  min-height: calc(100vh - 260px);
+  min-height: calc(100vh - 210px);
   @media (min-width: 410px) {
-    min-height: calc(100vh - 260px);
+    min-height: calc(100vh - 210px);
   }
   @media (min-width: 576px) {
-    min-height: calc(100vh - 260px);
+    min-height: calc(100vh - 210px);
   }
   @media (min-width: 768px) {
     min-height: calc(100vh - 260px);
@@ -2579,6 +2684,17 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.chat-group {
+  display: none;
+  @media (min-width: 768px) {
+    display: inherit;
+  }
+}
+.selected-chat {
+  background-color: #efefef;
+  border-radius: 20px;
+  padding-left: 4px;
 }
 // end css for chat
 </style>

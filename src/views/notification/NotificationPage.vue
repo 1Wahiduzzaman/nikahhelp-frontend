@@ -150,6 +150,7 @@ export default {
           openModalRoute(this, "manage_team_redirect");
         }, 2000);
       } else {
+        this.markAllAsRead();
         this.$store.state.notification.instantNotifications = [];
       }
     },
@@ -174,13 +175,13 @@ export default {
     changeTeam(data) {
       this.teamId = data;
     },
-    markAllAsRead() {
-      ApiService.get("v1/seen-notification").then(response => {
+    async markAllAsRead() {
+      this.$store.state.notification.notifications.forEach(item => {
+        item.seen = 1;
+      });
+      await ApiService.get("v1/seen-notification").then(response => {
         console.log(response);
-        this.loadNotifications();
-        // this.$store.state.notification.instantNotifications.forEach(item => {
-        //   item.seen = 1;
-        // });
+        // this.loadNotifications();
       }).catch(e => {
         console.log(e);
         self.$message.error("Something went wrong");

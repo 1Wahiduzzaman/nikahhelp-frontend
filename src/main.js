@@ -12,6 +12,7 @@ import Antd from "ant-design-vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store/index.js";
+import moment from 'moment'
 // import axios from "axios";
 // * This is the vue-web-storage package
 import Storage from "vue-web-storage";
@@ -19,12 +20,22 @@ import TextareaAutosize from 'vue-textarea-autosize';
 // * ApiService for the application
 import ApiService from "./services/api.service";
 import Vuetify from 'vuetify';
+import 'viewerjs/dist/viewer.css';
+import VueViewer from 'v-viewer';
+Vue.use(VueViewer);
 Vue.use(Vuetify);
 Vue.use(Storage, {
   prefix: "",
   drivers: ["local"],
 });
 ApiService.init();
+
+
+Vue.filter('formatDate', function (value) {
+  if (value) {
+    return moment(String(value)).format('MM/DD/YYYY hh:mm')
+  }
+});
 
 Vue.use(VueCompositionAPI);
 Vue.use(Antd);

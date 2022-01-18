@@ -2,7 +2,7 @@
   <div>
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else>
-      <MainHeader />
+      <MainHeader @toggleCollapse="toggleCollapse" />
       <a-layout
         id="layout"
         style="background-color: #fff"
@@ -14,7 +14,7 @@
             overflowY: 'auto',
             overflowX: 'hidden',
           }"
-          class="bg-white shadow-default"
+          class="bg-white shadow-sidebar"
           v-model="collapsed"
           :trigger="null"
           collapsible
@@ -28,16 +28,21 @@
             @collapseSideBar="collapsed = !collapsed"
           >
             <template v-slot:search>
-              <SimpleSearch ref="simpleSearch"/>
+              <SimpleSearch 
+                ref="simpleSearch"
+                @switchComponent="switchComponent"
+              />
             </template>
           </Sidebar>
         </a-layout-sider>
         <a-layout id="bbx">
           <a-layout-content>
-            <div class="main-content-wrapper">
+            <div id="top" class="main-content-wrapper">
               <div class="main-content-1">
                 <component
                   @switchComponent="switchComponent"
+                  @navigateProfile="navigateProfile"
+                  @socketNotification="socketNotification"
                   v-bind:is="currentTabComponent"
                 >
                 </component>
@@ -111,8 +116,12 @@ export default {
   methods: {
     ...mapActions({
       searchUser: "search/searchUser",
+      getNextUserId: "search/getNextUserId",
+      getPreviousUserId: "search/getPreviousUserId",
+      fetchProfileDetail: 'search/fetchProfileDetail',
     }),
     ...mapMutations({
+      clearProfiles: "search/clearProfiles",
       setProfiles: "search/setProfiles",
       setLoading: "search/setLoading",
     }),
@@ -131,21 +140,42 @@ export default {
       }
     },
     onIntersect() {
-      this.$refs.simpleSearch.handleSearch();
-      console.log('intersect')
+      this.$refs.simpleSearch.handlePaginate();
+    },
+    showError(message) {
+      this.$error({
+        title: message,
+        center: true,
+      });
     },
     async fetchInitialCandidate() {
+      let url = 'v1/home-searches?page=0&parpage=10'
+      let user = JSON.parse(localStorage.getItem("user"));
+      if(user.get_candidate?.pre_partner_age_min){
+        setTimeout(() =>{this.$refs.simpleSearch.setAttr('min_age', user.get_candidate.pre_partner_age_min)},1000)
+        url += `&min_age=${user.get_candidate.pre_partner_age_min}`
+      }
+      if(user.get_candidate?.pre_partner_age_max){
+        //this.$refs.simpleSearch.setAttr('max_age', user.get_candidate.pre_partner_age_max)
+        setTimeout(() =>{this.$refs.simpleSearch.setAttr('max_age', user.get_candidate.pre_partner_age_max)},1000)
+        url += `&max_age=${user.get_candidate.pre_partner_age_max}`
+      }
       // const res = await this.searchUser('v1/home-searches?page=0&parpage=10&min_age=20&max_age=40&ethnicity=Amara&marital_status=single');
       this.setLoading(true);
       try {
         const res = await this.searchUser(
-          "v1/home-searches?page=0&parpage=10&ethnicity=Aboriginal&min_age=20&max_age=40"
+          {
+            // url: "v1/home-searches?page=0&parpage=10&min_age=20&max_age=40",
+            url: url,
+            removePrevious: true
+          }       
         );
         this.setLoading(false);
         if (res == undefined) {
           this.setProfiles([]);
         }
         if (res.data && res.data.length) {
+          this.clearProfiles();
           this.setProfiles(res.data);
         }
       } catch (err) {
@@ -159,6 +189,35 @@ export default {
     switchComponent(name) {
       this.componentName = name;
     },
+    async fetchCandidate(userId) {
+      let url = `v1/candidate/info/${userId}`
+      try {
+        await this.fetchProfileDetail(url)
+      } catch (e) {
+        if(e.response) {
+          this.showError(e.response.data.message)
+        }
+      }
+    },
+    async navigateProfile(data) {
+      if(data.type == 'previous') {
+        let previousId = await this.getPreviousUserId(data.userId)
+        if(previousId) this.fetchCandidate(previousId)
+        if(!previousId) this.showError("It's the first candidate")
+        console.log(previousId, 'previous userid')
+      }
+
+      if(data.type == 'next') {
+        let nextUserId = await this.getNextUserId(data.userId)
+        if(nextUserId) this.fetchCandidate(nextUserId)
+        if(!nextUserId) this.showError("It's the last candidate")
+        console.log(nextUserId, 'next userid')
+      }
+      
+    },
+    toggleCollapse() {
+      this.collapsed = !this.collapsed;
+    }
   },
   created() {
     this.fetchInitialCandidate();
@@ -238,5 +297,8 @@ export default {
       height: 100%;
     }
   }
+}
+.shadow-sidebar {
+  box-shadow: 0 0 10px 6px rgb(0 0 0 / 12%);
 }
 </style>

@@ -1,54 +1,67 @@
 <template>
-  <div class="admin-user-container">
-    <div class="panel-header">
+  <div class="active-user-container">
+    <div class="admin-header">
       <div class="top-header">
-        <div>
+        <div class="top-left">
           <v-btn style="background-color: #522e8e; color: #fff" large>
             Active Users
           </v-btn>
+          <v-tabs
+            @change="onSelectedTab"
+            v-model="selectedTab"
+            style="height: 46px"
+          >
+            <v-tab value="0"
+              ><v-badge color="red" :content="totalNumberOfItems"
+                >All</v-badge
+              ></v-tab
+            >
+            <v-tab value="1"
+              ><v-badge color="red" content="0">Candidate</v-badge></v-tab
+            >
+            <v-tab value="2"
+              ><v-badge color="red" content="0">Representative</v-badge></v-tab
+            >
+          </v-tabs>
         </div>
         <div class="top-right">
-          <v-btn style="background-color: #522e8e; color: #fff" small>
+          <!-- <v-btn style="background-color: #522e8e; color: #fff" small>
             Add New User
           </v-btn>
           <v-btn style="background-color: rgb(61 185 156); color: #fff" small>
             <v-icon dark> md-minus </v-icon>
             Suspended Users
-          </v-btn>
+          </v-btn> -->
+          <v-text-field
+            v-model="search"
+            filled
+            rounded
+            dense
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+            @blur="onSearch"
+          ></v-text-field>
         </div>
       </div>
-      <div class="bottom-header">
-        <v-tabs>
-          <v-tab><v-badge color="red" content="6">All</v-badge></v-tab>
-          <v-tab><v-badge color="red" content="6">Candidate</v-badge></v-tab>
-          <v-tab
-            ><v-badge color="red" content="6">Representative</v-badge></v-tab
-          >
-          <v-tab><v-badge color="red" content="6">Rep.to Cand.</v-badge></v-tab>
-          <v-tab><v-badge color="red" content="6">Matchmaker</v-badge></v-tab>
-        </v-tabs>
-        <v-text-field
-          v-model="search"
-          filled
-          rounded
-          dense
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-        ></v-text-field>
-      </div>
+      <!-- <div class="bottom-header"></div> -->
     </div>
     <div class="panel-content">
       <v-data-table
         v-model="selectedTasks"
         show-select
-        :items="desserts"
+        :items="items"
         :headers="headers"
         :single-select="false"
         :search="search"
         item-key="name"
-        class="dt-table"
+        class="elevation-1 dt-table"
+        :server-items-length="totalNumberOfItems"
+        :options="options"
+        @update:options="paginate"
+        :loading="loading"
+        :loading-text="'Loading... Please wait'"
         :footer-props="{
           'items-per-page-text': 'Show',
         }"
@@ -88,16 +101,30 @@
                 hide-details
               />
             </td>
-            <td class="booking_artist_trackname">{{ item["name"] }}</td>
-            <td class="reference">{{ item["calories"] }}</td>
-            <td class="composer">{{ item["fat"] }}</td>
-            <td class="composer">{{ item["carbs"] }}</td>
+            <td class="id">{{ item["id"] }}</td>
+            <td class="email_verified_at">
+              {{ item["email_verified_at"] | formatDate }}
+            </td>
+            <td class="full_name">{{ item["full_name"] }}</td>
+            <td class="account_type">
+              {{
+                item["account_type"] == 1
+                  ? "Candidate"
+                  : item["account_type"] == 1
+                  ? "Representative"
+                  : ""
+              }}
+            </td>
+            <td class="email">
+              {{ item["email"] }}
+            </td>
             <td class="publisher">
-              <a
-                :href="'https://www.ncbi.nlm.nih.gov/pubmed/' + item.pmid"
-                target="_blank"
-                >Yes</a
-              >
+              <router-link
+                v-if="item['status'] > 1"
+                :to="'/admin/user_candidate_details/' + item.id"
+                >{{ item["status"] > 1 ? "Yes" : "No" }}
+              </router-link>
+              <span v-else>{{ item["status"] > 1 ? "Yes" : "No" }}</span>
             </td>
             <td class="publisher">
               <a
@@ -108,16 +135,30 @@
             </td>
             <td class="Actions">
               <div>
-                <v-btn style="background-color: #522e8e; color: #fff" small>
-                  view
-                </v-btn>
+                <router-link
+                  v-if="item.account_type === 1"
+                  :to="'/admin/user_candidate_details/' + item.id"
+                >
+                  <v-btn style="background-color: #522e8e; color: #fff" small>
+                    view
+                  </v-btn>
+                </router-link>
+                <router-link
+                  v-else
+                  :to="'/admin/user_candidate_details/' + item.id"
+                >
+                  <v-btn style="background-color: #522e8e; color: #fff" small>
+                    view
+                  </v-btn>
+                </router-link>
                 <v-btn
                   style="background-color: rgb(42 205 100); color: #fff"
                   small
                 >
                   Edit
                 </v-btn>
-                <v-btn
+                <!-- <v-btn
+                  @click="updateUserVerifyOrReject(item)"
                   style="background-color: rgb(61 185 156); color: #fff"
                   small
                 >
@@ -128,7 +169,7 @@
                   small
                 >
                   Note
-                </v-btn>
+                </v-btn> -->
               </div>
             </td>
           </tr>
@@ -145,6 +186,9 @@ export default {
     return {
       search: "",
       selectedTasks: [],
+      selectedTab: 0,
+      current_page: 1,
+      loading: false,
       headers: [
         {
           text: "ID",
@@ -155,104 +199,107 @@ export default {
         { text: "Created", value: "calories" },
         { text: "Name", value: "fat" },
         { text: "Type", value: "carbs" },
+        { text: "Email", value: "email" },
         { text: "Documents", value: "protein" },
         { text: "Images", value: "protein" },
 
         { text: "actions", value: "actions", sortable: false, align: "start" },
       ],
-      desserts: [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: "1%",
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: "1%",
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: "7%",
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: "8%",
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: "16%",
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: "0%",
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: "2%",
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: "45%",
-        },
-        {
-          name: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: "22%",
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: "6%",
-        },
-      ],
+      items: [],
+      totalNumberOfItems: 0,
+      options: {
+        rowsPerPage: 8,
+        page: 1,
+        totalItems: 0,
+      },
     };
   },
-
+  mounted() {
+    this.getUserReports();
+  },
   methods: {
     onItemClick(e) {},
+    onSearch() {
+      const _payload = {
+        page: 1,
+        keyword: this.search,
+        account_type: this.selectedTab,
+      };
+      this.getPageiniationUsers(_payload);
+    },
+    onSelectedTab(tab) {
+      const _payload = {
+        page: 1,
+        keyword: this.search,
+        account_type: this.selectedTab,
+      };
+      this.getPageiniationUsers(_payload);
+    },
+    paginate(e) {
+      if (!e || e.page == 1) {
+        return;
+      }
+
+      const _payload = {
+        page: e.page,
+        keyword: this.search,
+        account_type: this.selectedTab,
+      };
+      this.getPageiniationUsers(_payload);
+    },
+    async getPageiniationUsers(_payload) {
+      this.items = [];
+      this.loading = true;
+      await this.$store
+        .dispatch("getUserReportsByPage", _payload)
+        .then((data) => {
+          this.items = data.data;
+          this.totalNumberOfItems = data.total;
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.loading = false;
+        });
+    },
+    async updateUserVerifyOrReject(user) {
+      const data = {
+        id: user.id,
+        status: "rejected",
+      };
+      await this.$store
+        .dispatch("updateUserVerifyOrReject", data)
+        .then((data) => {
+          this.items = this.items.filter((item) => item.id !== user.id);
+          let loggedUser = JSON.parse(localStorage.getItem("user"));
+          if (loggedUser.id == user.id) {
+            loggedUser.status = "4";
+            localStorage.setItem("user", JSON.stringify(loggedUser));
+          }
+        })
+        .catch((error) => {});
+    },
+    async getUserReports() {
+      this.search = "";
+      this.selectedTab = 0;
+      this.items = [];
+      this.loading = true;
+      await this.$store
+        .dispatch("getUserReports")
+        .then((data) => {
+          this.items = data.data;
+          this.totalNumberOfItems = data.total;
+          this.loading = false;
+        })
+        .catch((error) => {
+          this.loading = false;
+        });
+    },
   },
 };
 </script>
 
-<style lang="scss" >
-.admin-user-container {
+<style  lang="scss" >
+.active-user-container {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -261,10 +308,10 @@ export default {
   border-radius: 15px;
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 10px 30px #fff;
-  margin: 20px;
+  margin: 5px;
   opacity: 1;
-  .panel-header {
-    height: 103px;
+  .admin-header {
+    height: 52px;
     border-bottom: 1px solid #ccc;
     display: flex;
     align-items: flex-start;
@@ -277,9 +324,18 @@ export default {
       width: 100%;
       padding: 5px;
 
-      .top-right .v-btn {
-        margin-right: 5px;
-        border-radius: 20px;
+      .top-right {
+        display: flex;
+        .v-btn {
+          margin-right: 5px;
+          border-radius: 20px;
+        }
+      }
+      .top-left {
+        display: flex;
+        .v-item-group {
+          height: 46px;
+        }
       }
     }
     .bottom-header {

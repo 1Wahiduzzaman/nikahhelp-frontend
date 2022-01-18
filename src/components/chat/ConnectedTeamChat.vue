@@ -21,9 +21,6 @@
           <a-menu-item class="border-bottom" @click="request()">
             <a class="fs-12 color-primary">Request Private Chat</a>
           </a-menu-item>
-<!--          <a-menu-item class="border-bottom" @click="rejectRequest()">-->
-<!--            <a class="fs-12 text-danger">Reject</a>-->
-<!--          </a-menu-item>-->
         </a-menu>
       </a-dropdown>
     </div>
@@ -115,12 +112,17 @@ export default {
       await ApiService.post(`/v1/private-chat-request-accept-reject`, payload)
       .then(response => {
         console.log(response);
+        let data = {
+          receivers: [payload.to_owner.toString()],
+          title: `requested for a private chat`,
+          team_id: this.to_team_id,
+          event: 'private_chat_request',
+          type: 'private-chat'
+        };
+        this.$emit("socketNotification", data);
       }).catch(e => {
             console.log(e);
           });
-    },
-    rejectRequest() {
-
     },
     prepareData(type) {
       let payload = {
@@ -138,9 +140,11 @@ export default {
       if(this.activeTeam == this.item.to_team_id) {
         payload.receiver = this.getCandidate(this.item.from_team.team_members);
         payload.sender = this.getCandidate(this.item.to_team.team_members);
+        payload.to_owner = this.getOwner(this.item.from_team.team_members);
       } else {
         payload.receiver = this.getCandidate(this.item.to_team.team_members);
         payload.sender = this.getCandidate(this.item.from_team.team_members);
+        payload.to_owner = this.getOwner(this.item.to_team.team_members);
       }
       return payload;
     },
@@ -150,7 +154,14 @@ export default {
         return candidate.user_id;
       }
       return null;
-    }
+    },
+    getOwner(members) {
+      let owner = members.find(item => item.role == 'Owner+Admin');
+      if(owner) {
+        return owner.user_id;
+      }
+      return null;
+    },
   }
 }
 </script>

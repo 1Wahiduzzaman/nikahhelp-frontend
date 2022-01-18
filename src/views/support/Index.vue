@@ -41,7 +41,7 @@
                 <a-select-option value=""> Select help category </a-select-option>
               </a-select>
               <a-input
-                  size="medium"
+                  medium
                   type="text"
                   class="w-25 search-ml"
                   placeholder="Search FAQs"
@@ -79,27 +79,27 @@
                 <div class="chat-area px-4">
                   <div class="position-relative">
                     <div class="chat-messages py-4 pr-1" id="chat-messages">
-                      <div class="position-relative">
-                        <div
-                            class="chat-message-right pb-4 position-relative">
+                      <div class="position-relative" v-for="(item, cIndex) in chats"
+                           :key="item.id"
+                           :id="chats.length === cIndex + 1 ? 'messagesid' : ''">
+                        <div class="chat-message-right pb-4 position-relative"
+                             v-if="(parseInt(item.senderId) == parseInt(getAuthUserId))"
+                             :class="{'conv-mb': chats.length !== cIndex + 1}">
                           <div class="text-right">
                             <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
                           </div>
-                          <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 white-space-pre">
-                            hello
-                          </div>
-                          <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">2021-12-31</div>
+                          <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 white-space-pre" v-html="item.body"></div>
+<!--                          <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">{{ messageCreatedAt(item.created_at) }}</div>-->
                         </div>
 
-                        <div
-                            class="chat-message-left pb-4 position-relative">
+                        <div class="chat-message-left pb-4 position-relative"
+                             :class="{'conv-mb': chats.length !== cIndex + 1}"
+                             v-else>
                           <div class="text-left">
                             <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
                           </div>
-                          <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 white-space-pre">
-                            Hello
-                          </div>
-                          <div class="text-muted small text-nowrap mt-2 position-absolute msg-left-created-at">2021-12-31</div>
+                          <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 white-space-pre" v-html="item.body"></div>
+<!--                          <div class="text-muted small text-nowrap mt-2 position-absolute msg-left-created-at">2021-12-31</div>-->
                         </div>
                       </div>
 
@@ -108,10 +108,10 @@
                   <div class="footer">
                     <!--                <div class="footer-top"><strong>{{ chatheadopen.typer_name }}</strong> {{ chatheadopen.typing_text }}</div>-->
                     <div class="footer-bottom px-4">
-                      <form action="#">
+                      <form action="#" @submit.prevent="sendMsg">
                         <div class="left flex justify-content-end align-items-end">
                           <div class="message-box">
-                            <textarea name="message" id="" cols="30" rows="4" placeholder="Enter message..."></textarea>
+                            <textarea name="message" id="" cols="30" rows="4" v-model="message" placeholder="Enter message..."></textarea>
                             <div class="position-absolute msgbox-right">
                               <div class="flex flex-column justify-content-center align-items-center h-full">
                                 <a-tooltip>
@@ -136,7 +136,7 @@
                             </div>
                           </div>
                           <!-- <button :disabled="returnMsgSendBtnDeactiveStatus" class="btn btn-primary btn-submit js-msg-send">  -->
-                          <button class="btn btn-primary btn-submit js-msg-send">
+                          <button class="btn btn-primary btn-submit js-msg-send" @keydown.enter.exact.prevent="sendMsg($event)">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.68 18.77">
                               <g id="Layer_2" data-name="Layer 2">
                                 <g id="middle" fill="white">
@@ -168,15 +168,96 @@
 </template>
 
 <script>
+import ApiService from '@/services/api.service';
+import {format} from "timeago.js";
 export default {
   name: "Index",
+  sockets: {
+    connect: function () {
+      console.log('socket connected')
+    },
+    ping: function (data) {
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
   data() {
     return {
       tab: 'tab-1',
       text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
-      customStyle:
-          'border: none; background: #ffffff',
+      customStyle: 'border: none; background: #ffffff',
+      message: '',
+      chats: [],
+      supportAdmin: null
+    }
+  },
+  computed: {
+    getAuthUserId() {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      if (loggedUser) {
+        return loggedUser.id;
+      }
+      return null;
+    },
+  },
+  created() {
+    this.getSupportAdmin();
+  },
+  methods: {
+    async sendMsg(e) {
+      console.log(e);
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let receiver = this.supportAdmin ? this.supportAdmin.id : null;
+      let payload = {
+        sender: loggedUser.id,
+        receiver: receiver.toString(),
+        to: receiver.toString(),
+        message: this.message,
+        user: loggedUser,
+        support: true,
+        last_message: {
+          body: this.message,
+          created_at: new Date(),
+          sender: loggedUser,
+          senderId: loggedUser.id,
+          receiver: this.supportAdmin ? this.supportAdmin : null,
+          receiverId: this.supportAdmin ? this.supportAdmin.id : null,
+          seen: 0
+        }
+      };
+      this.$socket.emit('send_message', payload);
+      this.chats.push(payload.last_message);
+      this.message = '';
+      await ApiService.post('/v1/support-send-message', payload).then(response => {
+        console.log(response);
+      });
+    },
+    async getSupportAdmin() {
+      let {data} = await ApiService.get('/v1/support-admin').then(res => res.data);
+      this.supportAdmin = data;
+    },
+    messageCreatedAt(time) {
+      return format(time);
+    },
+  },
+  mounted() {
+    let loggedUser = JSON.parse(localStorage.getItem('user'));
+    this.$socket.emit('ping', {user_id: loggedUser.id});
+
+    this.sockets.subscribe('receive_message', function (res) {
+      if(res.support) {
+        this.chats.push(res.last_message);
+      }
+    });
+  },
+  watch: {
+    chats: function(val) {
+      // console.log(val);
+      setTimeout(() => {
+        const messages = document.getElementById('chat-messages');
+        const messagesid = document.getElementById('messagesid');
+        messages.scrollTop = messagesid.offsetTop - 10;
+      });
     }
   }
 }
@@ -451,5 +532,8 @@ export default {
   @media (min-width: 768px) {
     display: none;
   }
+}
+.conv-mb {
+  margin-bottom: 30px;
 }
 </style>

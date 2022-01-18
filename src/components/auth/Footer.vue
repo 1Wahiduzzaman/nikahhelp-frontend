@@ -2,7 +2,7 @@
   <footer>
     <div class="container py-3">
       <div class="text-center">
-        <a href="/dashboard">
+        <a href="/">
           <img
             src="@/assets/Icons/Logo/SVG/Black_logo_footer.svg"
             width="150"
@@ -21,7 +21,7 @@
         </li>
         <li>
           <a href="javascript:void()">
-            <router-link to="/privacy-policy" class="color-primary">
+            <router-link to="/privacy-cookie-policy" class="color-primary">
               Privacy & Cookie Policy
             </router-link></a
           >

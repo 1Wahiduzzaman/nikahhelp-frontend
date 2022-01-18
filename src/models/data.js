@@ -474,12 +474,17 @@ export const HEIGHTS = [
 
 ]
 
-export const Employment_Statuses = [{
-  value: 'Employment', name: 'Employment'
-},
-{
-  value: 'Unemployment', name: 'Unemployment'
-},
+export const Employment_Statuses = [  
+  {value: 'Employed full-time', name: 'Employed full-time'},
+  {value: 'Employed part-time', name: 'Employed part-time'},
+  {value: 'Self-employed', name: 'Self-employed'},
+  {value: 'Homemaker', name: 'Homemaker'},
+  {value: 'Student', name: 'Student'},
+  {value: 'Retired', name: 'Retired'},
+  {value: 'Own a business', name: 'Own a business'},
+  {value: 'On professional training', name: 'On professional training'},
+  {value: 'On apprenticeship training', name: 'On apprenticeship training'},
+  {value: 'Other', name: 'Other'},
 
   // {
   //   value:'Other' ,name:"Don't Mind"

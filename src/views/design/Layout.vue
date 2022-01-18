@@ -1,15 +1,15 @@
 <template>
   <div class="main-container">
-    <MainHeader />
+    <MainHeader :collapsed="collapsed" @toggleCollapse="toggleCollapse" />
 
     <a-layout
       id="layout"
       style="background-color: #fff"
-      :style="{ overflow: 'auto', height: 'calc(100vh - 80px)' }"
+      :style="{ overflow: 'auto' }"
     >
       <a-layout-sider
-        :style="{ overflow: 'hidden auto', height: 'calc(100vh - 80px)' }"
-        class="bg-white shadow-default"
+        :style="{ overflow: 'hidden auto' }"
+        class="bg-white shadow-sidebar sidebar-height"
         v-model="collapsed"
         :trigger="null"
         collapsible
@@ -49,6 +49,7 @@ import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import ModalContainer from "@/plugins/modal/modal-container";
 import ManageTeamRedirect from "@/views/design/ManageTeamRedirect.vue";
 import { createModalMixin, openModalRoute } from "@/plugins/modal/modal.mixin";
+import JwtService from "@/services/jwt.service";
 
 export default {
   name: "Layout",
@@ -74,7 +75,9 @@ export default {
     responsiveToggle() {
       this.collapsed = false;
     },
-
+    toggleCollapse() {
+      this.collapsed = !this.collapsed;
+    },
     checkTurnedOnSwitch() {
       this.activeTeamId = JwtService.getTeamIDAppWide();
     },
@@ -200,5 +203,14 @@ export default {
     padding-top: 0;
     padding-bottom: 0;
   }
+}
+.sidebar-height {
+  height: calc(100vh - 60px);
+  @media (min-width: 768px) {
+    height: calc(100vh - 70px);
+  }
+}
+.shadow-sidebar {
+  box-shadow: 0 0 10px 6px rgb(0 0 0 / 12%);
 }
 </style>

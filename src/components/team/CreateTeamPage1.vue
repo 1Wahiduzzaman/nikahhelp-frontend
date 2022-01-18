@@ -1,6 +1,6 @@
 <template>
   <div class="col-lg-6 col-xl-3 cards position-relative">
-    <div class="team-card card position-relative" style="min-height: 500px;">
+    <div class="team-card card position-relative" style="min-height: 650px;">
       <div class="d-flex align-items-center justify-content-center joining-header" style="width: 100%">
         <div class="logo-position position-absolute">
           <img
@@ -46,77 +46,67 @@
             <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.description">Team description required</span>
           </a-col>
           <a-col class="mt-2" :span="24">
-            <a-row>
-              <a-col :span="11">
-                <a-input
-                    v-model="team.password"
-                    size="large"
-                    type="password"
-                    class="team-name-input"
-                    placeholder="Type Team Password"
-                    autocomplete="new-password"
-                    @input="in_progress = true"
-                />
-                <span class="fs-12 text-danger ml-2 fs-12" v-if="team.password && team.password.length !== 4">Password must be 4 digits</span>
-              </a-col>
-              <a-col :span="2"></a-col>
-              <a-col :span="11">
-                <a-input
-                    v-model="team.confirm_password"
-                    size="large"
-                    type="password"
-                    class="team-name-input"
-                    placeholder="Re-Type Password"
-                    autocomplete="new-password"
-                    @input="in_progress = true"
-                />
-                <span class="text-danger mt-2 ml-2 fs-12" v-if="team.password && team.confirm_password && team.password !== team.confirm_password">Password doesn't match.</span>
-                <span v-if="team.confirm_password && team.confirm_password.length !== 4" class="fs-12 text-danger ml-2">Password must be 4 digits</span>
-              </a-col>
-            </a-row>
+            <a-input
+                v-model="team.password"
+                size="large"
+                type="password"
+                class="team-name-input"
+                placeholder="Type Team Password"
+                autocomplete="new-password"
+                @input="in_progress = true"
+            />
+            <span class="fs-12 text-danger ml-2 fs-12" v-if="team.password && team.password.length !== 4">Password must be 4 digits</span>
+          </a-col>
+          <a-col :span="24" class="mt-2">
+            <a-input
+                v-model="team.confirm_password"
+                size="large"
+                type="password"
+                class="team-name-input"
+                placeholder="Re-Type Password"
+                autocomplete="new-password"
+                @input="in_progress = true"
+            />
+            <span class="text-danger mt-2 ml-2 fs-12" v-if="team.password && team.confirm_password && team.password !== team.confirm_password">Password doesn't match.</span>
+            <span v-if="team.confirm_password && team.confirm_password.length !== 4" class="fs-12 text-danger ml-2">Password must be 4 digits</span>
           </a-col>
           <a-col class="mt-2" :span="24">
-            <a-row>
-              <a-col :span="11">
-                <a-tooltip>
-                  <template slot="title">
-                    You are joining as a
-                  </template>
-                  <a-select
-                      size="large"
-                      placeholder="Add as a"
-                      class="ml-1 fs-14 member-add mr-2"
-                      v-model="addAs"
-                      style="width: 96%"
-                      disabled
-                  >
-                    <a-select-option value="Candidate"> Candidate </a-select-option>
-                    <a-select-option value="Representative"> Representative </a-select-option>
-                    <a-select-option value="Match Maker"> Match Maker </a-select-option>
-                  </a-select>
-                </a-tooltip>
-              </a-col>
-              <a-col :span="2"></a-col>
-              <a-col :span="11">
-                <a-tooltip>
-                  <template slot="title">
-                    Your relationship with candidate as
-                  </template>
-                  <a-select
-                      size="large"
-                      placeholder="Relationship"
-                      class="fs-14 member-add"
-                      v-model="selfRole.relationship"
-                      :disabled="addAs == 'Candidate'"
-                      style="width: 100%"
-                  >
-                    <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
-                  </a-select>
-                </a-tooltip>
-              </a-col>
-            </a-row>
-<!--            <div class="d-flex create-role">-->
-<!--            </div>-->
+            <a-tooltip>
+              <template slot="title">
+                Joining as
+              </template>
+              <a-select
+                  size="large"
+                  placeholder="Add as a"
+                  class="fs-16 member-add mr-2"
+                  v-model="addAs"
+                  style="width: 100%"
+              >
+                <a-select-option value="Candidate" v-if="!joinedAsCandidate"> Candidate </a-select-option>
+                <a-select-option value="Representative"> Representative </a-select-option>
+                <!--                    <a-select-option value="Candidate" v-if="addAs == 'Candidate' || teamCount <= 0"> Candidate </a-select-option>-->
+                <!--                    <a-select-option value="Representative" v-if="addAs == 'Representative' || teamCount <= 0"> Representative </a-select-option>-->
+                <!--                    <a-select-option value="Match Maker"> Match Maker </a-select-option>-->
+              </a-select>
+            </a-tooltip>
+          </a-col>
+          <a-col class="mt-2" :span="24" v-if="addAs != 'Candidate'">
+            <a-tooltip>
+              <template slot="title">
+                Relationship with candidate
+              </template>
+              <a-select
+                  size="large"
+                  placeholder="Relationship with candidate"
+                  class="fs-16 member-add"
+                  v-model="selfRole.relationship"
+                  :disabled="addAs == 'Candidate'"
+                  style="width: 100%"
+              >
+                <!--                    <a-select-option value="Candidate" v-if="addAs == 'Candidate'"> Candidate </a-select-option>-->
+                <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
+              </a-select>
+            </a-tooltip>
           </a-col>
         </a-row>
         <div class="position-absolute footer-cancel-btn">
@@ -171,7 +161,7 @@ import TeamCreateSuccess from "./TeamCreateSuccess";
 export default {
 	name: "CreateTeam1",
 	components: {TeamCreateSuccess, CreateAddMember},
-  props: ['addAs'],
+  props: ['addAs', 'teamCount', 'joinedAsCandidate'],
 	data() {
 		return {
       relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-law'],
@@ -191,7 +181,7 @@ export default {
       logoBobUrl: null,
       loading: false,
       selfRole: {
-        relationship: "Father",
+        relationship: undefined,
       },
 		};
 	},
@@ -219,6 +209,9 @@ export default {
     //     this.selfRole.add_as_a = 'Match Maker';
     //     this.selfRole.relationship = 'Father';
     //   }
+    // }
+    // if(this.addAs == 'Candidate') {
+    //   this.selfRole.relationship = 'Candidate';
     // }
   },
 	methods: {
@@ -311,7 +304,8 @@ export default {
         this.loading = true;
         this.in_progress = true;
         this.team.add_as_a = this.addAs;
-        this.team.relationship = this.selfRole.relationship;
+        this.team.user_type = this.addAs;
+        this.team.relationship = this.addAs == 'Candidate' ? 'Candidate' : this.selfRole.relationship;
         let formData = new FormData();
         formData.append('logo', this.file);
         Object.keys(this.team).map(data =>{
@@ -322,6 +316,13 @@ export default {
           this.loading = false;
           if(res && res.data && res.data.status != 'FAIL') {
             res.data.data.add_as_a = this.addAs;
+            let team_members = {
+              user_type: this.addAs,
+              relationship: this.selfRole.relationship,
+              role: 'Owner+Admin'
+            };
+            res.data.data.team_members = [team_members];
+            res.data.data.team_invited_members = [];
             this.updateTeamData(res.data.data);
             this.goNextStep(2);
           } else {
@@ -342,7 +343,7 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .team-card {
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .ant-card-body {
   padding: 0 !important;

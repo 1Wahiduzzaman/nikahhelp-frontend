@@ -336,6 +336,19 @@
         </div>
       </div>
     </div>
+
+    <a-modal v-model="freeModal" title="Free Coupon">
+      <a-input v-model="cupon" placeholder="Coupon" />
+
+      <template slot="footer">
+        <a-button key="back" @click="handleCancel">
+          Back
+        </a-button>
+        <a-button key="submit" type="primary" @click="handleOkFreeModal">
+          Submit
+        </a-button>
+      </template>
+    </a-modal>
   </div>
 </template>
 
@@ -353,6 +366,8 @@ export default {
   },
   data() {
     return {
+      fixedCupon: '123456',
+      cupon: '',
       isLoading: false,
       user: {},
       is_verified: 1,
@@ -367,6 +382,7 @@ export default {
       teamSelected: null,
       contentShow: "details",
       activeStep: 1,
+      freeModal: false
     };
   },
   created() {
@@ -508,24 +524,6 @@ export default {
       this.nextStep(2);
     },
     handleContinue() {
-      var subId;
-      if (this.isSelected1) {
-        subId = 1;
-      } else if (this.isSelected2) {
-        subId = 2;
-      } else if (this.isSelected3) {
-        subId = 3;
-      } else if (this.isSelected4) {
-        subId = 0;
-      } else {
-        //alert("You have to select a subscription plan");
-        this.$error({
-          title: "No Subscription Plan is Selected!",
-          content: "You have to select a subscription plan",
-          centered: true,
-        });
-        return;
-      }
       if (this.teamSelected == null) {
         //alert("You have to select a team");
         this.$error({
@@ -535,10 +533,48 @@ export default {
         });
         return;
       }
-      this.$router.push(
-        `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${subId}`
-      );
+      var subId;
+      if (this.isSelected1) {
+        subId = 1;
+      } else if (this.isSelected2) {
+        subId = 2;
+      } else if (this.isSelected3) {
+        subId = 3;
+      } else if (this.isSelected4) {
+        subId = 0;
+        this.freeModal = true;
+        return;
+      } else {
+        //alert("You have to select a subscription plan");
+        this.$error({
+          title: "No Subscription Plan is Selected!",
+          content: "You have to select a subscription plan",
+          centered: true,
+        });
+        return;
+      }
+      if(subId !== 0) {
+        this.$router.push(
+            `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${subId}`
+        );
+      }
     },
+    handleCancel() {
+      this.freeModal = false;
+    },
+    handleOkFreeModal() {
+      if(this.cupon === this.fixedCupon) {
+        this.$router.push(
+            `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/0?cupon=${this.cupon}`
+        );
+      } else {
+        this.$error({
+          title: "Invalid coupon",
+          content: "Please try with a valid coupon",
+          centered: true,
+        });
+      }
+    }
   },
 };
 </script>

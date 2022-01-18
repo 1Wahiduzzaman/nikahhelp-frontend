@@ -663,7 +663,7 @@
                 <v-select
                   :clearable="false"
                   class="style-chooser w-full form-right-content"
-                   @input="onValueChange"
+                  @input="onValueChange"
                   :reduce="(option) => option.id"
                   placeholder="Please select your education status"
                   v-model.lazy="preferenceData.pre_study_level_id"
@@ -731,7 +731,7 @@
                   :clearable="false"
                   class="style-chooser w-full form-right-content"
                   :reduce="(option) => option.value"
-                 @input="onValueChange"
+                  @input="onValueChange"
                   placeholder="Please select your employment status"
                   v-model.lazy="preferenceData.pre_employment_status"
                   label="name"
@@ -782,7 +782,10 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                  v-if="preferenceData.pre_occupation"
+                  v-if="
+                    preferenceData.pre_occupation &&
+                    preferenceData.pre_occupation.length > 0
+                  "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />What occupation do you prefer your prospective partner to
@@ -795,14 +798,12 @@
                   :clearable="false"
                   :multiple="true"
                   @input="onMultiNameChange($event, 'pre_occupation')"
+                  :reduce="(option) => option.name"
                   class="nationality-select form-right-content w-full"
                   v-model.lazy="preferenceData.pre_occupation"
                   placeholder="Please select your preferred occupation"
                   label="name"
-                  :options="[
-                    `Don't Mind`,
-                    ...candidateDetails.occupations,
-                  ]"
+                  :options="[`Don't Mind`, ...candidateDetails.occupations]"
                 >
                   <template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
@@ -929,7 +930,7 @@
                 <a-textarea
                   @blur="onValueChange"
                   :rows="3"
-                   :maxLength="200"
+                  :maxLength="200"
                   autocomplete="off"
                   autocorrect="off"
                   autocapitalize="off"
@@ -1817,7 +1818,11 @@ export default {
       });
     },
     onNationalityValueChange(e, name) {
-      if (this.preferenceData[name][this.preferenceData[name].length - 1].name !=  `Don't Mind` && this.preferenceData[name].length > 3) {
+      if (
+        this.preferenceData[name][this.preferenceData[name].length - 1].name !=
+          `Don't Mind` &&
+        this.preferenceData[name].length > 3
+      ) {
         this.preferenceData[name] = this.preferenceData[name].splice(0, 3);
         return;
       }
@@ -1846,24 +1851,24 @@ export default {
 
       this.savePreference();
     },
-     onMultiNameChange(e, name) {
+    onMultiNameChange(e, name) {
       if (
-        this.preferenceData[name][this.preferenceData[name].length - 1] !=  `Don't Mind` &&
+        this.preferenceData[name][this.preferenceData[name].length - 1] !=
+          `Don't Mind` &&
         this.preferenceData[name].length > 3
       ) {
         this.preferenceData[name] = this.preferenceData[name].splice(0, 3);
         return;
       }
       this.preferenceData[name] =
-        this.preferenceData[name][this.preferenceData[name].length - 1] ==  `Don't Mind`
-          ? [ `Don't Mind`]
+        this.preferenceData[name][this.preferenceData[name].length - 1] ==
+        `Don't Mind`
+          ? [`Don't Mind`]
           : this.preferenceData[name].filter((item) => item != `Don't Mind`);
-
 
       this.savePreference();
     },
-    onValueChange(e,name) {
-     
+    onValueChange(e, name) {
       this.savePreference();
     },
     onRateChange(e, name) {
@@ -1884,7 +1889,7 @@ export default {
     savePreference() {
       const response = this.$store.dispatch("savePreferenceInfoAbout", {
         ...this.preferenceData,
-       
+
         pre_nationality:
           this.preferenceData.preferred_nationality.length > 0
             ? this.preferenceData.preferred_nationality.map((n) => n.id)

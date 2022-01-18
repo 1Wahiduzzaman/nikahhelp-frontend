@@ -4,7 +4,7 @@
       <template v-if="showMenu && path == 'AdvanceSearch'">
         <div class="mt-1">
           <SidebarHeader @onClickBack="showMenu = false" v-if="!collapsed" />
-          <div v-if="!collapsed" class="mt-5 pl-2 pr-3">
+          <div v-if="!collapsed" class="mt-2 pl-2 pr-3">
             <slot name="search"> </slot>
           </div>
         </div>
@@ -86,7 +86,7 @@
                 <a-badge
                   class="ml-2"
                   :number-style="{ backgroundColor: '#e42076' }"
-                  :count="chats.length"
+                  :count="unseenChat"
                 />
               </router-link>
             </li>
@@ -117,6 +117,15 @@
                 />Subscription
               </router-link>
             </li>
+            <!-- <li class="list-item">
+              <router-link to="/settings">
+                <img
+                  class="mr-3"
+                  src="@/assets/icon/gear-fill-secondary.svg"
+                  alt="icon"
+                />Setting
+              </router-link>
+            </li> -->
             <!--				<li class="list-item">-->
             <!--					<a href="#"-->
             <!--						><img-->
@@ -198,6 +207,15 @@ export default {
     chats() {
       return this.$store.state.chat.chats;
     },
+    unseenChat() {
+      let count = 0;
+      this.$store.state.chat.chats.forEach(item => {
+        count = count + item && item.message && item.message.seen == 0 ? 1 : 0;
+        count = count + item && item.last_message && item.last_message.seen == 0 ? 1 : 0;
+        count = count + item && item.last_group_message && item.last_message.seen == 0 ? 1 : 0;
+      });
+      return count;
+    }
   },
   props: {
     collapsed: Boolean,
@@ -307,7 +325,7 @@ export default {
   .links {
     padding: 5px;
     position: fixed;
-    bottom: 15px;
+    bottom: 0;
     & > li {
       font-size: 12px;
       margin-bottom: 2px;

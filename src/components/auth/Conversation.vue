@@ -44,7 +44,7 @@
 <!--       <img src="@/assets/icon/bg_layer_2.svg" alt="bg" class="position-absolute bg-layer-2" />-->
 <!--       <img src="@/assets/icon/bg_layer_2_1.svg" alt="bg" class="position-absolute bg-layer-2-1" />-->
 
-       <img src="@/assets/icon/bg_layer_1.svg" alt="bg" class="position-absolute bg-layer-1" />
+       <img src="@/assets/icon/bg_layer_1.svg" alt="bg" class="position-absolute bg-layer-1 layer-1" />
        <img src="@/assets/icon/bg_layer_1_1.svg" alt="bg" class="position-absolute bg-layer-1-1" />
    </div>
 </template>
@@ -116,7 +116,7 @@ export default {
 
 #firstStepImageLine
 {
-     height: 30px;
+     height: 45px;
      
 }
 .panel {
@@ -125,7 +125,7 @@ export default {
 .alignImageLine
 {
   position: absolute;
-  margin-top: -15px;
+  margin-top: -22px;
   margin-left: -2px;
   margin-right: -10px;
   box-sizing: border-box;
@@ -156,7 +156,7 @@ export default {
 
 .imageTick {
    padding-right: 220px;
-   padding-left: 245px;
+   padding-left: 200px;
    z-index: 1;
 }
 
@@ -191,5 +191,17 @@ export default {
   top: 80px;
   left: 70px;
   width: 7%;
+}
+.layer-1 {
+  animation-name: layer-1;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+@keyframes layer-1 {
+  0%   {right: 30px; bottom: 30px;}
+  25%  {right: 50px; bottom: 10px;}
+  50%  {right: 50px; bottom: 40px;}
+  75%  {right: 40px; bottom: 60px;}
+  100% {right: 30px; bottom: 30px;}
 }
 </style>

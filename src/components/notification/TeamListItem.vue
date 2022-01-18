@@ -6,7 +6,7 @@
       <span class="active-icon ml-2" v-if="index == 0 && turnOn"></span>
     </div>
     <div class="d-flex">
-      <img class="avatar" width="45" height="45" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+      <img class="avatar" width="45" height="45" :src="item.logo"
            alt="">
       <div class="content">
         <h4 class="mt-1">{{ item.name }}</h4>
@@ -141,7 +141,7 @@ export default {
 
         try {
           await ApiService.post("v1/team-turn-on", {
-            team_id: this.item.team_id,
+            team_id: this.item.id,
           })
               .then((data) => {
                 if (data.data.status == "FAIL") {

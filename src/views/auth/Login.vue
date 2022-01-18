@@ -1,112 +1,109 @@
 <template>
-  <div class="login-container">
-    <div class="signin">
-      <div class="signin-inner desktop-padding">
-        <a class="logo" href="/"><img src="@/assets/logo.png" alt="logo" class="mat-logo" /></a>
-        <h3 id="welcome-back-tag" class="welcome-back-tag"><b>Welcome Back</b></h3>
-      </div>
+  <div class="signin login-main-container">
+    <div class="signin-inner desktop-padding login-header-container">
+      <a class="logo" href="/"><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo" /></a>
+      <h3 id="welcome-back-tag" class="welcome-back-tag"><b>Welcome Back</b></h3>
+    </div>
 
-      <div class="signin-inner none-padding">
-        <a-form-model
+    <div class="signin-inner login-body-container">
+      <a-form-model
           ref="signinForm"
           :model="signinModel"
           :rules="rules"
-          class="form-signin pb-1px"
-        >
-          <!-- <Spinner v-if="isLoading" /> -->
-          <p v-if="error">
-            {{ error }}
-            <router-link
+          class="form-signin pb-1px shadow"
+      >
+        <!-- <Spinner v-if="isLoading" /> -->
+        <p v-if="error">
+          {{ error }}
+          <router-link
               to="/login"
               class="
                 btn btn-sm btn-outline-primary btn-round-sm
                 ms-2
                 text-nowrap
               "
-            >
-              Sign in
-            </router-link>
-          </p>
-          <div v-else>
-            <div class="">
-              <a-form-model-item ref="email" prop="email">
-                <a-input
+          >
+            Sign in
+          </router-link>
+        </p>
+        <div v-else>
+          <div class="">
+            <h4 class="fs-16 text-black-50">Type your email & password </h4>
+            <a-form-model-item ref="email" prop="email">
+              <a-input
                   type="email"
                   id="email"
                   v-model="signinModel.email"
                   placeholder="Enter email"
                   class="fs-14"
-                />
-              </a-form-model-item>
-            </div>
+              />
+            </a-form-model-item>
+          </div>
 
-            <div class="">
-              <a-form-model-item ref="password" prop="password">
-                <a-input-password
+          <div class="">
+            <a-form-model-item ref="password" prop="password">
+              <a-input-password
                   type="password"
                   class="form-control fs-14"
                   id="password"
                   v-model="signinModel.password"
                   placeholder="Password"
-                />
-              </a-form-model-item>
-            </div>
-            <button
+              />
+            </a-form-model-item>
+          </div>
+          <button
               type="button"
               @click="handleSubmit"
-              class="btn signin-btn w-100"
-            >
-              <a-icon type="loading" class="mr-2 fs-20" v-if="isLoading" />
-              Sign in
-            </button>
+              class="btn signin-btn h-32 w-100 pt-1 mt-1"
+          >
+            <a-icon type="loading" class="mr-2 fs-20" v-if="isLoading" />
+            Sign in
+          </button>
 
-            <p
+          <p
               class="
                 ms-2
                 text-nowrap
-                mt-1
+                mt-3
               "
-            >
-              <router-link to="/forgot-password" class="forgot-password">
-                Forgot Password?
-              </router-link>
-            </p>
-          </div>
-        </a-form-model>
-
-        <div class="join-now pb-4">
-          <p
-            class="flex-center-center mt-3 text-white"
-            style="
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            "
           >
-            New to <span class="logo-text"> Matrimony Assist? </span>
+            <router-link to="/forgot-password" class="forgot-password">
+              Forgot Password?
+            </router-link>
+          </p>
+        </div>
+      </a-form-model>
 
-            <router-link
+      <div class="join-now pb-4">
+        <p
+            class="flex-center-center mt-3 text-white bottom-link-text"
+        >
+          New to <span class="logo-text"> Matrimony Assist? </span>
+
+          <router-link
               to="/signup"
               class="
-                btn btn-sm btn-round-sm
+                btn
                 ms-2
                 text-nowrap
                 join-now-btn
               "
-              style="margin-left: 5px; font-weight: bold"
-            >
-              Join Now
-            </router-link>
-          </p>
-        </div>
+              style="margin-left: 5px;"
+          >
+            Join Now
+          </router-link>
+        </p>
+      </div>
 
-        <div class="welcome-back">
-          <p class="welcome-back-text">
-            Don't miss your next opportunity. Sign in to stay updatd on
-            your<strong id="name">Matrimony Assist</strong> world.
-          </p>
-        </div>
+      <div class="welcome-back">
+        <p class="welcome-back-text">
+          <strong id="name">Matrimony Assist</strong>
+          is team based, the candidate is never alone
+        </p>
       </div>
     </div>
-    <Footer />
+
+    <Footer class="login-footer-container bg-white" />
   </div>
 </template>
 
@@ -150,6 +147,12 @@ export default {
             this.$store.dispatch("login", this.signinModel).then(response => {
               console.log(response)
               this.isLoading = false;
+              if(this.$store.state.auth.errorMessage) {
+                this.$error({
+                  title: this.$store.state.auth.errorMessage,
+                  centered: true,
+                });
+              }
             });
           } catch (error) {
             this.error = error.response.data.message;
@@ -172,14 +175,14 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 @import "@/styles/components/_inputs.scss";
-.login-container {
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-  height: calc(100vh);
+//.login-container {
+  //display: flex;
+  //flex-direction: column;
+  //overflow: auto;
+  //height: calc(100vh);
 
   .signin {
-    height: 100vh;
+    //height: 100vh;
     background-color: #522e8e;
     background-image: linear-gradient(
       0deg,
@@ -194,16 +197,18 @@ export default {
       margin: 0 auto;
       text-align: center;
       @media (min-width: 768px) {
-        padding: 50px 15px;
+        padding: 30px 15px;
       }
       .logo {
         max-width: 250px;
         display: inline-block;
         margin-bottom: 8px;
         .mat-logo {
-          width: 138px;
+          width: 120px;
+          height: 80px;
           @media (min-width: 768px) {
-            width: 250px;
+            width: 170px;
+            height: 110px;
           }
         }
       }
@@ -272,7 +277,6 @@ export default {
     background: -webkit-linear-gradient(white, pink, white, #8debf2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-top: -10px;
   }
 
   .btn-primary {
@@ -282,7 +286,7 @@ export default {
       box-shadow: 2px 2px 2px #999;
     }
   }
-}
+//}
 
 .ant-form-item {
   margin-bottom: 0px;
@@ -299,17 +303,25 @@ export default {
 }
 .join-now-btn {
   color: #FFFFFF;
-  font-size: 14px;
   border: 1px solid #FFFFFF;
+  padding: 0 6px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-width: 300;
 }
 .join-now-btn:hover {
   background: $bg-primary;
-  box-shadow: 0 2px 2px #999;
-  border: none;
+  box-shadow: 0 2px 2px rgb(0 0 0 / 25%);
 }
 .join-now-btn:focus {
   outline: none;
   box-shadow: none;
+}
+.bottom-link-text {
+  font-size: 14px;
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
 }
 .welcome-back-tag {
   @media (min-width: 768px) {
@@ -317,9 +329,9 @@ export default {
   }
 }
 .desktop-padding {
-  padding: 10px 15px 0 15px !important;
+  padding: 0 15px 0 15px !important;
   @media (min-width: 768px) {
-    padding: 50px 0 0 0 !important;
+    padding: 0 0 0 0 !important;
   }
 }
 .none-padding {
@@ -332,7 +344,10 @@ export default {
   font-family: $header-font;
   margin-left: 10px;
   margin-right: 5px;
-  font-size: 24px;
+  font-size: 18px;
+  @media (min-width: 768px) {
+    font-size: 24px;
+  }
 }
 .signin-btn {
   border: 1px solid #3A3092;
@@ -348,5 +363,26 @@ export default {
 .signin-btn:focus {
   outline: none;
   box-shadow: none;
+}
+.h-32 {
+  height: 32px;
+}
+.login-main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.login-header-container {
+  flex-shrink: 0;
+}
+.login-body-container{
+  flex-grow: 1;
+  overflow: auto;
+  min-height: 2em;
+}
+.login-footer-container{
+  flex-shrink: 0;
 }
 </style>

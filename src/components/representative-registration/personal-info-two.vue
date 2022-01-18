@@ -624,6 +624,7 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+@import "@/styles/base/_generic.scss";
 .anticon {
   color: #b3b2b2;
 }
