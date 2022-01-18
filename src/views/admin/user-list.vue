@@ -6,22 +6,32 @@
           <v-btn style="background-color: #522e8e; color: #fff" large>
             Active Users
           </v-btn>
-          <v-tabs style="height: 46px">
-            <v-tab><v-badge color="red" content="6">All</v-badge></v-tab>
-            <v-tab><v-badge color="red" content="6">Candidate</v-badge></v-tab>
-            <v-tab
-              ><v-badge color="red" content="6">Representative</v-badge></v-tab
+          <v-tabs
+            @change="onSelectedTab"
+            v-model="selectedTab"
+            style="height: 46px"
+          >
+            <v-tab value="0"
+              ><v-badge color="red" :content="totalNumberOfItems"
+                >All</v-badge
+              ></v-tab
+            >
+            <v-tab value="1"
+              ><v-badge color="red" content="0">Candidate</v-badge></v-tab
+            >
+            <v-tab value="2"
+              ><v-badge color="red" content="0">Representative</v-badge></v-tab
             >
           </v-tabs>
         </div>
         <div class="top-right">
-          <v-btn style="background-color: #522e8e; color: #fff" small>
+          <!-- <v-btn style="background-color: #522e8e; color: #fff" small>
             Add New User
           </v-btn>
           <v-btn style="background-color: rgb(61 185 156); color: #fff" small>
             <v-icon dark> md-minus </v-icon>
             Suspended Users
-          </v-btn>
+          </v-btn> -->
           <v-text-field
             v-model="search"
             filled
@@ -31,6 +41,7 @@
             label="Search"
             single-line
             hide-details
+            @blur="onSearch"
           ></v-text-field>
         </div>
       </div>
@@ -45,10 +56,12 @@
         :single-select="false"
         :search="search"
         item-key="name"
-        class="dt-table"
+        class="elevation-1 dt-table"
         :server-items-length="totalNumberOfItems"
         :options="options"
         @update:options="paginate"
+        :loading="loading"
+        :loading-text="'Loading... Please wait'"
         :footer-props="{
           'items-per-page-text': 'Show',
         }"
@@ -93,8 +106,14 @@
               {{ item["email_verified_at"] | formatDate }}
             </td>
             <td class="full_name">{{ item["full_name"] }}</td>
-            <td class="account_type_meaning">
-              {{ item["account_type_meaning"] }}
+            <td class="account_type">
+              {{
+                item["account_type"] == 1
+                  ? "Candidate"
+                  : item["account_type"] == 1
+                  ? "Representative"
+                  : ""
+              }}
             </td>
             <td class="email">
               {{ item["email"] }}
@@ -167,6 +186,9 @@ export default {
     return {
       search: "",
       selectedTasks: [],
+      selectedTab: 0,
+      current_page: 1,
+      loading: false,
       headers: [
         {
           text: "ID",
@@ -197,17 +219,47 @@ export default {
   },
   methods: {
     onItemClick(e) {},
-    async paginate(e) {
+    onSearch() {
+      const _payload = {
+        page: 1,
+        keyword: this.search,
+        account_type: this.selectedTab,
+      };
+      this.getPageiniationUsers(_payload);
+    },
+    onSelectedTab(tab) {
+      const _payload = {
+        page: 1,
+        keyword: this.search,
+        account_type: this.selectedTab,
+      };
+      this.getPageiniationUsers(_payload);
+    },
+    paginate(e) {
       if (!e || e.page == 1) {
         return;
       }
+
+      const _payload = {
+        page: e.page,
+        keyword: this.search,
+        account_type: this.selectedTab,
+      };
+      this.getPageiniationUsers(_payload);
+    },
+    async getPageiniationUsers(_payload) {
+      this.items = [];
+      this.loading = true;
       await this.$store
-        .dispatch("getUserReportsByPage", e.page)
+        .dispatch("getUserReportsByPage", _payload)
         .then((data) => {
-          this.items = data.result;
-          this.totalNumberOfItems = data.pagination.total_items;
+          this.items = data.data;
+          this.totalNumberOfItems = data.total;
+          this.loading = false;
         })
-        .catch((error) => {});
+        .catch((error) => {
+          this.loading = false;
+        });
     },
     async updateUserVerifyOrReject(user) {
       const data = {
@@ -227,13 +279,20 @@ export default {
         .catch((error) => {});
     },
     async getUserReports() {
+      this.search = "";
+      this.selectedTab = 0;
+      this.items = [];
+      this.loading = true;
       await this.$store
         .dispatch("getUserReports")
         .then((data) => {
-          this.items = data.result;
-          this.totalNumberOfItems = data.pagination.total_items;
+          this.items = data.data;
+          this.totalNumberOfItems = data.total;
+          this.loading = false;
         })
-        .catch((error) => {});
+        .catch((error) => {
+          this.loading = false;
+        });
     },
   },
 };
