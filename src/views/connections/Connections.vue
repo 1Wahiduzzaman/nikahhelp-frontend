@@ -65,6 +65,7 @@
                         connectionReports.result.length > 0
                       "
                           :connection="connection"
+                          :active_team_id="active_team_id"
                           @selected-connection="selectedConnection"
                           @accept-request="acceptRequest"
                           @disconnect-team="disconnectTeam"
@@ -530,9 +531,9 @@ export default {
       connectionOverview: null,
       displayMode: "grid",
       connection_type_choosed: "all",
+      active_team_id: null
     };
   },
-
   computed: {
     getFilteredConnections() {
       if (
@@ -631,6 +632,7 @@ export default {
           openModalRoute(this, "manage_team_redirect");
         }, 2000);
       } else {
+        this.active_team_id = JwtService.getTeamIDAppWide();
         this.loadConnectionReports();
       }
     },

@@ -20,7 +20,7 @@
                                   :shortListedIds="shortListedIds"
                                   :teamListedIds="teamListedIds"
                                   @loadList="loadList"
-                                  @socketNotification />
+                                  @socketNotification="socketNotification" />
                 </div>
               </div>
             </v-tab-item>

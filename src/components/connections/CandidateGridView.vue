@@ -93,7 +93,7 @@
               <li class="flex-between-start">
                 <span class="flex-30 label-text">Team</span>
                 <span class="flex-70">:
-                    <span class="ml-1"><router-link class="team-link" :to="{name: 'ManageTeam', query: {team_id: connection.to_team_id}}">{{ connection.to_team_name }}</router-link>
+                    <span class="ml-1"><router-link class="team-link" :to="{name: 'ManageTeam', query: {team_id: getTeamLink()}}">{{ getTeamName() }}</router-link>
                     </span>
                 </span>
               </li>
@@ -206,7 +206,7 @@ import GridButtons from "./GridButtons";
 export default {
   name: "CandidateGridView",
   components: {GridButtons},
-  props: ["connection"],
+  props: ["connection", "active_team_id"],
   data() {
     return {
       avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
@@ -354,6 +354,20 @@ export default {
       }
       return false;
     },
+    getTeamName() {
+      if(this.active_team_id == this.connection.from_team_id) {
+        return this.connection.to_team_name;
+      } else {
+        return this.connection.from_team_name;
+      }
+    },
+    getTeamLink() {
+      if(this.active_team_id == this.connection.from_team_id) {
+        return this.connection.to_team_table_id;
+      } else {
+        return this.connection.from_team_table_id;
+      }
+    }
   },
 }
 </script>

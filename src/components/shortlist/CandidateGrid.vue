@@ -181,6 +181,17 @@ export default {
       );
     },
     actionShortlist() {
+      let loggedUser = JSON.parse(localStorage.getItem("user"));
+      if(parseInt(loggedUser.status) !== 3) {
+        this.showError("Your account is not verified");
+        return;
+      }
+
+      // if(parseInt(this.item.candidate_status) !== 3) {
+      //   this.showError("Opposite candidate account is not verified");
+      //   return;
+      // }
+
       if(this.shortListedIds.includes(parseInt(this.item.user_id))) {
         ApiService.delete(`/v1/delete-short-listed-by-candidates?user_id=${this.item.user_id}`).then(res => {
           this.$emit("loadList");
@@ -196,6 +207,17 @@ export default {
       }
     },
     actionTeamlist() {
+      let loggedUser = JSON.parse(localStorage.getItem("user"));
+      if(parseInt(loggedUser.status) !== 3) {
+        this.showError("Your account is not verified");
+        return;
+      }
+
+      // if(parseInt(this.item.candidate_status) !== 3) {
+      //   this.showError("Opposite candidate account is not verified");
+      //   return;
+      // }
+
       if(this.teamListedIds.includes(this.item.user_id)) {
         ApiService.delete(`/v1/delete-team-short-listed-by-candidates?user_id=${this.item.user_id}`).then(res => {
           this.$emit("loadList");
@@ -211,6 +233,17 @@ export default {
       }
     },
     actionBlock() {
+      let loggedUser = JSON.parse(localStorage.getItem("user"));
+      if(parseInt(loggedUser.status) !== 3) {
+        this.showError("Your account is not verified");
+        return;
+      }
+
+      // if(parseInt(this.item.candidate_status) !== 3) {
+      //   this.showError("Opposite candidate account is not verified");
+      //   return;
+      // }
+
       ApiService.post(`/v1/store-block-list`, { user_id: this.item.user_id })
           .then(res => {
             this.$emit("loadList");
@@ -221,12 +254,23 @@ export default {
     actionConnection() {
       let myTeamId = JwtService.getTeamIDAppWide();
       if(!this.item.is_connect) {
+        let loggedUser = JSON.parse(localStorage.getItem("user"));
+        if(parseInt(loggedUser.status) !== 3) {
+          this.showError("Your account is not verified");
+          return;
+        }
+
+        // if(parseInt(this.item.candidate_status) !== 3) {
+        //   this.showError("Opposite candidate account is not verified");
+        //   return;
+        // }
+
         if(!myTeamId) {
-          this.showError("You don't have an active team")
+          this.showError("You don't have an active team");
           return;
         }
         if(!this.item.team_id) {
-          this.showError("This candidate has no active team")
+          this.showError("This candidate has no active team");
           return;
         }
 
