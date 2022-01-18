@@ -15,7 +15,7 @@
       </a-row>
     </div>
 
-    <div class="bottom-half">
+    <div class="bottom-half flex justify-content-center align-items-center flex-column">
       <a-row>
         <a-col :span="24">
 						<h4 class="sub-msg text-center">To activate this team, You have to <br> choose a subscription plan</h4>
@@ -97,7 +97,7 @@ export default {
   padding: 20px;
   margin-left: -8px;
   /*margin-right: -8px;*/
-  /*height: 286px;*/
+  height: 350px;
   /*margin-bottom: -8px;*/
   position: absolute;
   bottom: 0;

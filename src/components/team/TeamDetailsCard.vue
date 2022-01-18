@@ -396,7 +396,7 @@
                   :title="accountTypeReducer(member.user_type)"
               >
                 <div class="member-type">
-                  <span class="badge badge-secondary fs-10">{{ accountTypeReducer(member.user_type).substr(0, 3) }} {{ member.user_type ? '.' : '' }}</span>
+                  <span class="badge badge-secondary fs-10">{{ member.user_type ? accountTypeReducer(member.user_type).substr(0, 3) : '' }} {{ member.user_type ? '.' : '' }}</span>
                 </div>
               </a-tooltip>
               <div class="check-tick">
@@ -425,7 +425,7 @@
                   :title="accountTypeReducer(item.user_type)"
               >
                 <div class="member-type">
-                  <span class="badge badge-secondary fs-10">{{ accountTypeReducer(item.user_type).substr(0, 3) }} {{ item.user_type ? '.' : '' }}</span>
+                  <span class="badge badge-secondary fs-10">{{ item.user_type ? accountTypeReducer(item.user_type).substr(0, 3) : '' }} {{ item.user_type ? '.' : '' }}</span>
                 </div>
               </a-tooltip>
               <div class="check-tick">
