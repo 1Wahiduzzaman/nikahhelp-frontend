@@ -569,7 +569,15 @@ export default {
             teamPersonalChat.message.body = res.body;
             teamPersonalChat.message.created_at = res.created_at;
             teamPersonalChat.message.seen = 0;
+
+            this.teamChat.unshift(
+                this.teamChat.splice(
+                    this.teamChat.findIndex(
+                        elt => elt.user_id == res.senderId),
+                    1)[0]
+            );
           }
+
           let teamChat = this.teamChat.find(item => item.team_id == res.target_opened_chat);
           if(teamChat) {
             teamChat.last_group_message.body = res.body;
@@ -579,6 +587,13 @@ export default {
             teamChat.message.body = res.body;
             teamChat.message.created_at = res.created_at;
             teamChat.message.seen = 0;
+
+            this.teamChat.unshift(
+                this.teamChat.splice(
+                    this.teamChat.findIndex(
+                        elt => elt.team_id == res.target_opened_chat),
+                    1)[0]
+            );
           }
 
           let recentTeamMemberChat = this.chatHistory.find(item => item.user_id == res.target_opened_chat);
@@ -586,6 +601,13 @@ export default {
             recentTeamMemberChat.message.body = res.body;
             recentTeamMemberChat.message.created_at = res.created_at;
             recentTeamMemberChat.message.seen = 0;
+
+            this.chatHistory.unshift(
+                this.chatHistory.splice(
+                    this.chatHistory.findIndex(
+                        elt => elt.user_id == res.target_opened_chat),
+                    1)[0]
+            );
           }
 
           let recentPrivateChat = this.chatHistory.find(item => res.target_opened_chat && item.private_team_chat_id == res.target_opened_chat.private_team_chat_id);
@@ -593,13 +615,41 @@ export default {
             recentPrivateChat.message.body = res.body;
             recentPrivateChat.message.created_at = res.created_at;
             recentPrivateChat.message.seen = 0;
+
+            this.chatHistory.unshift(
+                this.chatHistory.splice(
+                    this.chatHistory.findIndex(
+                        elt => res.target_opened_chat && elt.private_team_chat_id == res.target_opened_chat.private_team_chat_id),
+                    1)[0]
+            );
           }
 
-          let connectedTeamChat = this.connectedTeam.find(item => item.id == res.team_connection_id);
+          let connectedTeamChat = this.connectedTeam.find(item => item && item.team_private_chat && item.team_private_chat.team_connection_id == res.team_connection_id);
           if(connectedTeamChat) {
             connectedTeamChat.message.body = res.body;
             connectedTeamChat.message.created_at = res.created_at;
             connectedTeamChat.message.seen = 0;
+
+            this.connectedTeam.unshift(
+                this.connectedTeam.splice(
+                    this.connectedTeam.findIndex(
+                        elt => elt && elt.team_private_chat && elt.team_private_chat.team_connection_id == res.team_connection_id),
+                    1)[0]
+            );
+          }
+
+          let connectHistory = this.chatHistory.find(item => item && item.team_connection_id == res.team_connection_id);
+          if(connectHistory) {
+            connectHistory.message.body = res.body;
+            connectHistory.message.created_at = res.created_at;
+            connectHistory.message.seen = 0;
+
+            this.chatHistory.unshift(
+                this.chatHistory.splice(
+                    this.chatHistory.findIndex(
+                        elt => elt && elt.team_connection_id == res.team_connection_id),
+                    1)[0]
+            );
           }
         }
       });
@@ -1109,6 +1159,9 @@ export default {
         this.chatheadopen.message.sender = loggedUser;
         this.$socket.emit('send_message_in_group', payload);
       }
+
+      this.findOneAndPushToFirst();
+
       // this.chats.unshift(payload);
       this.chats.push(payload);
       payload.sender = loggedUser.id.toString();
@@ -1134,6 +1187,15 @@ export default {
         to_team_id = this.chatheadopen.from_team_id;
       }
 
+      let teamConnectionId = null;
+      if(this.chatheadopen.team_connection_id) {
+        teamConnectionId = this.chatheadopen.team_connection_id;
+      } else if(this.chatheadopen.team_private_chat && this.chatheadopen.team_private_chat.team_connection_id) {
+        teamConnectionId = this.chatheadopen.team_private_chat.team_connection_id;
+      } else {
+        teamConnectionId = this.chatheadopen.id;
+      }
+
       let payload = {
         support: false,
         to_team_id: to_team_id,
@@ -1149,10 +1211,14 @@ export default {
         label: 'Connected',
         conv_title: this.conversationTitle,
         logo: this.chatheadopen.logo,
-        team_connection_id: this.chatheadopen.id,
+        // team_connection_id: this.chatheadopen.id,
+        team_connection_id: teamConnectionId,
       };
       payload.target_opened_chat = payload.to_team_id;
       this.$socket.emit('send_message_in_group', payload);
+
+      this.findOneAndPushToFirst();
+
       this.chats.push(payload);
       teamMembers.splice(selfIndex, 1);
       this.msg_text = null;
@@ -1191,6 +1257,8 @@ export default {
       this.chatheadopen.message.senderId = loggedUser.id.toString();
       this.chatheadopen.message.senderInfo = loggedUser;
       this.$socket.emit('send_message', payload);
+
+      this.findOneAndPushToFirst();
 
       payload.from_team_id = this.activeTeam;
       if(parseInt(this.activeTeam) == parseInt(this.chatheadopen.from_team_id)) {
@@ -1301,6 +1369,28 @@ export default {
       }
 
       return date;
+    },
+    findOneAndPushToFirst() {
+      let recentIndex = this.chatHistory.findIndex(item => item == this.chatheadopen);
+      if(recentIndex >= 0) {
+        let data = this.chatHistory[recentIndex];
+        this.chatHistory.splice(recentIndex, 1);
+        this.chatHistory.unshift(data);
+      }
+
+      let teamIndex = this.teamChat.findIndex(item => item == this.chatheadopen);
+      if(teamIndex >= 0) {
+        let data = this.teamChat[teamIndex];
+        this.teamChat.splice(teamIndex, 1);
+        this.teamChat.unshift(data);
+      }
+
+      let connectIndex = this.connectedTeam.findIndex(item => item == this.chatheadopen);
+      if(connectIndex >= 0) {
+        let data = this.connectedTeam[connectIndex];
+        this.connectedTeam.splice(connectIndex, 1);
+        this.connectedTeam.unshift(data);
+      }
     }
   }
 };
