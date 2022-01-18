@@ -1269,6 +1269,7 @@ export default {
 
 						this.showModalDeletion = false;
 						this.$emit("teamListUpdated");
+            location.reload();
 					} else {
 						this.$message.error("Something went wrong");
 
