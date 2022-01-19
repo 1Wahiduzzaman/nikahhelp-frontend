@@ -2,7 +2,7 @@
   <div>
     <LandingPageHeader />
     <div class="main-content">
-      <h3>Privacy and cookie policy</h3>
+     <h3 class="text-header-black">Privacy and cookie policy</h3>
       <p>Last updated: 07/01/2022</p>
 
       <h5>Who are we?</h5>
