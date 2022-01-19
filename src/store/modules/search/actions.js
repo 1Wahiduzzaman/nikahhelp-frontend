@@ -154,4 +154,19 @@ export default {
     }
     return null;
   },
+
+  async getCandidateInfo(context, url) {
+    return new Promise((resolve, reject) => {
+      context.commit('setLoading', true)
+      ApiService.get(url)
+        .then((data) => {
+          //context.commit('setLoading', false)
+          resolve(data.data);
+        })
+        .catch((err) => {
+          context.commit('setLoading', false)
+          reject(err);
+        });
+    });
+  },
 };
