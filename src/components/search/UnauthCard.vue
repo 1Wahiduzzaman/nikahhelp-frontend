@@ -200,6 +200,12 @@ export default {
       if(eventData.event == 'viewProfileDetail') {
         this.ViewProfileDetail()
       }
+      
+      let userInfo = JSON.parse(localStorage.getItem("userInfo"))
+      if(userInfo.status != 3) {
+        this.showError('Your account is not verified')
+        return
+      }
       if(eventData.event == 'addConnection') {
         this.connectCandidate();
       }
