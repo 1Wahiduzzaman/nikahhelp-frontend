@@ -9,7 +9,7 @@
 					<div class="col-6 col-md-4">
 						<a-tooltip placement="top">
 							<template slot="title">
-								<span>User Friendly Feature</span>
+								<span>Bring family members on board & take adavantage of collective wisdom</span>
 							</template>
 							<div class="item">
 								<div class="feature-icon">
@@ -20,37 +20,10 @@
 							</div>
 						</a-tooltip>
 					</div>
-					
 					<div class="col-6 col-md-4">
 						<a-tooltip placement="top">
 							<template slot="title">
-								<span>User Friendly Feature</span>
-							</template>
-							<div class="item">
-								<div class="feature-icon">
-									<img src="@/assets/Icons/connection.svg" alt="Icon" />
-								</div>
-								<p class="mt-4 fs-18 color-brand">Connection</p>
-							</div>
-						</a-tooltip>
-					</div>
-					<div class="col-6 col-md-4">
-						<a-tooltip placement="top">
-							<template slot="title">
-								<span>User Friendly Feature</span>
-							</template>
-							<div class="item">
-								<div class="feature-icon">
-									<img src="@/assets/Icons/chat.svg" alt="Icon" />
-								</div>
-								<p class="mt-4 fs-18 color-brand">Easy chat</p>
-							</div>
-						</a-tooltip>
-					</div>
-					<div class="col-6 col-md-4">
-						<a-tooltip placement="top">
-							<template slot="title">
-								<span>User Friendly Feature</span>
+								<span>Create short-lists  of suitable profiles for discussion</span>
 							</template>
 							<div class="item">
 								<div class="feature-icon">
@@ -64,7 +37,34 @@
 					<div class="col-6 col-md-4">
 						<a-tooltip placement="top">
 							<template slot="title">
-								<span>User Friendly Feature</span>
+								<span>Send a request to link with another team </span>
+							</template>
+							<div class="item">
+								<div class="feature-icon">
+									<img src="@/assets/Icons/connection.svg" alt="Icon" />
+								</div>
+								<p class="mt-4 fs-18 color-brand">Connection</p>
+							</div>
+						</a-tooltip>
+					</div>
+					<div class="col-6 col-md-4">
+						<a-tooltip placement="top">
+							<template slot="title">
+								<span>Once connected, instantly chat with prospect & their team</span>
+							</template>
+							<div class="item">
+								<div class="feature-icon">
+									<img src="@/assets/Icons/chat.svg" alt="Icon" />
+								</div>
+								<p class="mt-4 fs-18 color-brand">Team & private chat</p>
+							</div>
+						</a-tooltip>
+					</div>
+					
+					<div class="col-6 col-md-4">
+						<a-tooltip placement="top">
+							<template slot="title">
+								<span>See how many people are viewing a profile</span>
 							</template>
 							<div class="item">
 								<div class="feature-icon">
@@ -77,7 +77,7 @@
 					<div class="col-6 col-md-4">
 						<a-tooltip placement="top">
 							<template slot="title">
-								<span>User Friendly Feature</span>
+								<span>You decide the information & images that are shared with others</span>
 							</template>
 							<div class="item">
 								<div class="feature-icon">
