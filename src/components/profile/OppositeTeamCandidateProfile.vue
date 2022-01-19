@@ -311,7 +311,7 @@ import Footer from "@/components/auth/Footer.vue";
 import ProfileBanner from "@/components/atom/ProfileBanner";
 import PersonalInformationTable from '@/components/search/personal-information/PersonalInformationTable.vue'
 import FamilyInfoTable from '@/components/search/personal-information/FamilyInfoTable.vue'
-import MyPrefTable from '@/components/search/personal-information/MyPrefTable.vue'
+import MyPrefTable from '@/components/search/personal-information/MyPrefTableProfile.vue'
 import CardInfo from '@/components/atom/CardInfo'
 import MoreAbout from '@/components/search/personal-information/MoreAbout.vue'
 import Scroller from  '@/components/atom/Scroller'
@@ -486,6 +486,12 @@ export default {
 		
         onClickButton(eventData) {
             if(eventData.event == 'openGallery') this.openGallery();
+
+			let userInfo = JSON.parse(localStorage.getItem("userInfo"))
+			if(userInfo.status != 3) {
+				this.showError('Your account is not verified')
+				return
+			}
             if(eventData.event == 'addConnection') {
                 this.connectCandidate();
             }

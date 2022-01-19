@@ -49,7 +49,7 @@
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Ethnicity</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1"></td>
+                <td class="text--secondary text-subtitle-1">{{ personal.per_ethnicity }}</td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Mother Tongue</td>
