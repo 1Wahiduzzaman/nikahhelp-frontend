@@ -252,10 +252,19 @@
                           }}
                         </p>
                       </li>
+                      <li class="list-item">
+                        <span>Your Role:</span>
+                        <p class="mb-0 color-primary w-100px ellipse">
+                          {{ activeTeamInfo ? teamRole : 'N/A' }}
+                        </p>
+                      </li>
                     </ul>
                   </template>
                 </a-dropdown>
-                <span class="role px-2 ml-1 shrink-none">{{ teamRole }}</span>
+                <img src="@/assets/icon/verified_icon.svg" alt="icon" class="verify-icon" width="14px" v-if="loggedUser && parseInt(loggedUser.status) === 3" />
+<!--                <span class="role px-2 ml-1 shrink-none">-->
+<!--&lt;!&ndash;                  {{ loggedUser && parseInt(loggedUser.status) === 3 ? 'V' : 'Not verified' }}&ndash;&gt;-->
+<!--                </span>-->
               </div>
             </div>
           </div>

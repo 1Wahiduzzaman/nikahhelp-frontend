@@ -6,18 +6,18 @@
         &#10006;
       </div>
     </div>
-    <div class="profile text-center">
+    <div class="profile text-center pt-3">
       <img src="https://picsum.photos/200/300?random=1" alt="profile" class="profile-img">
-      <h4 class="fs-16 text-white pt-2" v-if="profileActive.profile_from_type === 'member'">{{ profileActive.user && profileActive.user.full_name ? profileActive.user.full_name : profileActive.user.email }}</h4>
+      <h4 class="fs-16 text-white pt-4" v-if="profileActive.profile_from_type === 'member'">{{ profileActive.user && profileActive.user.full_name ? profileActive.user.full_name : profileActive.user.email }}</h4>
       <h4 class="fs-16 text-white pt-2" v-else>{{ profileActive.email ? profileActive.email : 'N/A' }}</h4>
-      <div class="d-flex justify-content-center mb-2 mt-2">
+      <div class="d-flex justify-content-center mb-2 mt-4">
         <div class="role-section position-relative">
           <button class="btn btn-sm text-white role-btn"
                   @click="roleChangeBox = !roleChangeBox"
                   :disabled="checkIsOwnerAdmin">Change Role</button>
           <div class="position-absolute role-options bg-white" v-if="roleChangeBox">
-            <h4 class="fs-12 py-1 cursor-pointer text-left px-2" @click="changeRole('Admin')">Admin</h4>
-            <h4 class="fs-12 py-1 cursor-pointer text-left px-2" @click="changeRole('Member')">Member</h4>
+            <h4 class="fs-14 py-1 cursor-pointer text-left px-2" @click="changeRole('Admin')">Admin</h4>
+            <h4 class="fs-14 py-1 cursor-pointer text-left px-2" @click="changeRole('Member')">Member</h4>
           </div>
         </div>
         <button class="btn btn-sm text-white remove-btn ml-3 bright-20"
@@ -27,29 +27,29 @@
       <div class="team-profile-short pt-2 text-center d-flex justify-content-center">
         <table class="table table-borderless short-table">
           <tr>
-            <td class="fs-12 text-white opacity-60" >Team join Date</td>
-            <td class="fs-12 text-white opacity-60">:</td>
-            <td class="fs-12 text-white ml-3">{{ profileActive.profile_from_type === 'member' ? formateDate(profileActive.created_at) : 'N/A' }}</td>
+            <td class="fs-14 text-white opacity-60" >Team join Date</td>
+            <td class="fs-14 text-white opacity-60">:</td>
+            <td class="fs-14 text-white ml-3">{{ profileActive.profile_from_type === 'member' ? formateDate(profileActive.created_at) : 'N/A' }}</td>
           </tr>
           <tr>
-            <td class="fs-12 text-white opacity-60">Joined as a</td>
-            <td class="fs-12 text-white opacity-60">:</td>
-            <td class="fs-12 text-white ml-3">{{ profileActive.user_type }}</td>
+            <td class="fs-14 text-white opacity-60">Joined as a</td>
+            <td class="fs-14 text-white opacity-60">:</td>
+            <td class="fs-14 text-white ml-3">{{ profileActive.user_type }}</td>
           </tr>
           <tr>
-            <td class="fs-12 text-white opacity-60">Relationship</td>
-            <td class="fs-12 text-white opacity-60">:</td>
-            <td class="fs-12 text-white ml-3">{{ profileActive.relationship }}</td>
+            <td class="fs-14 text-white opacity-60">Relationship</td>
+            <td class="fs-14 text-white opacity-60">:</td>
+            <td class="fs-14 text-white ml-3">{{ profileActive.relationship }}</td>
           </tr>
           <tr>
-            <td class="fs-12 text-white opacity-60">Team Role</td>
-            <td class="fs-12 text-white opacity-60">:</td>
-            <td class="fs-12 text-white ml-3">{{ profileActive.role.replace('+', ' & ') }}</td>
+            <td class="fs-14 text-white opacity-60">Team Role</td>
+            <td class="fs-14 text-white opacity-60">:</td>
+            <td class="fs-14 text-white ml-3">{{ profileActive.role.replace('+', ' & ') }}</td>
           </tr>
           <tr>
-            <td class="fs-12 text-white opacity-60">Invitation Link</td>
-            <td class="fs-12 text-white opacity-60">:</td>
-            <td class="fs-12 text-white ml-3 cursor-pointer" @click="copyToken">
+            <td class="fs-14 text-white opacity-60">Invitation Link</td>
+            <td class="fs-14 text-white opacity-60">:</td>
+            <td class="fs-14 text-white ml-3 cursor-pointer" @click="copyToken">
               <a-tooltip
                   placement="top"
                   :title="copyBtnText"
@@ -166,6 +166,10 @@ export default {
 @import "@/styles/base/_variables.scss";
 .opacity-60 {
   opacity: 0.6;
+}
+.short-table {
+  border-collapse: separate;
+  border-spacing: 8px;
 }
 .short-table tr td {
   padding: 0 !important;

@@ -827,7 +827,7 @@ export default {
 .buttons-position {
   top: -24px;
   left: 15px;
-  z-index: 9;
+  //z-index: 9;
   width: 90%;
 }
 .btn-payment {

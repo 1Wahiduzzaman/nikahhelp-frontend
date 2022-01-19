@@ -744,10 +744,10 @@ export default {
 @import "@/styles/base/_variables.scss";
 .shortlist-content-wrapper {
   flex-wrap: wrap;
-  margin-top: 20px;
+  margin-top: 4px;
   .main-content-1 {
     width: 100%;
-    margin: 20px 10px;
+    margin: 4px 10px 20px;
     //margin-left: 260px;
     //margin-right: -800px;
     //@media (max-width: 1024px) {

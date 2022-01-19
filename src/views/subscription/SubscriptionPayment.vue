@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="w-d-50 desktop-non-margin col-flex shadow-default border-right position-relative"
-               :class="{'mobile-block': activeStep !== 2 && !agree}">
+               :class="{'mobile-block': activeStep !== 2 && !agree, 'mobile-mode': activeStep === 2}">
             <div class="div-2 desktop-pl">
               <div class="section-heading"
                    v-if="subscriptionName == 'Free 1 day Subscription Plan'"
@@ -653,11 +653,16 @@ export default {
 .mobile-block {
   display: none;
 }
-
+.mobile-mode {
+  margin-top: 40px;
+  @media (min-width: 768px) {
+    margin-top: 0;
+  }
+}
 .buttons-position {
   top: -44px;
   left: 8px;
-  z-index: 9;
+  //z-index: 9;
   width: 100%
 }
 

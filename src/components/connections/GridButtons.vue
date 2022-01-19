@@ -137,7 +137,7 @@
             small
             color="error darken-1"
             dark
-            @click="$emit('declineConnection')"
+            @click="$emit('declineRequest')"
         >
           <div class="flex justify-center align-center">
             <a-icon type="cross" class="mr-2" />

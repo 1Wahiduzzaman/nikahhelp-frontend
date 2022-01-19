@@ -193,7 +193,8 @@
 <!--             'request-received-bg': type == 'Request received',-->
 <!--             'request-sent-bg': type == 'Request send',}"></div>-->
     <div class="position-absolute icon-rotate-box cursor-pointer" @click="rotated = !rotated">
-      <a-icon type="rollback" class="rotate-icon" size="large" />
+<!--      <a-icon type="rollback" class="rotate-icon" size="large" />-->
+      <img src="@/assets/icon/flip_icon.svg" alt="icon" class="flip-icon" />
     </div>
   </div>
 </template>
@@ -781,5 +782,8 @@ export default {
 }
 .flipped {
   padding: 50px 10px;
+}
+.flip-icon {
+  width: 16px;
 }
 </style>
