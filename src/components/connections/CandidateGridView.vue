@@ -129,7 +129,8 @@
                         @startConversation="startConversation"
                         @viewProfile="viewProfile"
                         @acceptRequest="acceptRequest"
-                        @declineRequest="declineRequest"/>
+                        @declineRequest="declineRequest"
+                        @gotoChat="gotoChat" />
         </v-card>
 
       </div>
@@ -192,7 +193,8 @@
 <!--             'request-received-bg': type == 'Request received',-->
 <!--             'request-sent-bg': type == 'Request send',}"></div>-->
     <div class="position-absolute icon-rotate-box cursor-pointer" @click="rotated = !rotated">
-      <a-icon type="rollback" class="rotate-icon" size="large" />
+<!--      <a-icon type="rollback" class="rotate-icon" size="large" />-->
+      <img src="@/assets/icon/flip_icon.svg" alt="icon" class="flip-icon" />
     </div>
   </div>
 </template>
@@ -367,6 +369,9 @@ export default {
       } else {
         return this.connection.from_team_table_id;
       }
+    },
+    gotoChat() {
+      this.$router.push({ name: 'ChatWindow', query: { connection_id: this.connection.connection_id } });
     }
   },
 }
@@ -777,5 +782,8 @@ export default {
 }
 .flipped {
   padding: 50px 10px;
+}
+.flip-icon {
+  width: 16px;
 }
 </style>

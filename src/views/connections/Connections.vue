@@ -3,43 +3,43 @@
     <div>
       <Loader v-if="isLoading" :isLoading="isLoading" />
       <div v-else>
-        <div class="row">
+        <div class="row" :class="{'loader-opacity pointer-events-none': innerLoading}">
           <div class="col-12">
             <div class="main-content-1">
-              <div
-                class="
-                  d-flex
-                  justify-content-between
-                  mb-3
-                  align-items-center
-                  mr-4
-                "
-              >
-                <h5 class="mt-2 px-4 connect-heading-text">
-                  Recent all connection activity <span class="mr-2"></span>
-                </h5>
-                <div class="d-flex align-items-center">
-                  <!--                    <div class="cursor-pointer" @click="displayMode = 'grid'">-->
-                  <!--                      <img src="@/assets/icon/grid_icon.svg" alt="icon" width="30" class="opacity-60" :class="{'opacity-100': displayMode === 'grid'}" />-->
-                  <!--                    </div>-->
-                  <!--                    <div class="cursor-pointer ml-4" @click="displayMode = 'list'">-->
-                  <!--                      <img src="@/assets/icon/list_icon.svg" alt="icon" width="25" class="opacity-60" :class="{'opacity-100': displayMode === 'list'}" />-->
-                  <!--                    </div>-->
-                  <select
-                    v-if="user.account_type === 3"
-                    v-model="teamId"
-                    class="custom-select w-50"
-                  >
-                    <option
-                      v-for="team in teams"
-                      :key="team.id"
-                      :value="team.team_id"
-                    >
-                      {{ team.name }}
-                    </option>
-                  </select>
-                </div>
-              </div>
+<!--              <div-->
+<!--                class="-->
+<!--                  d-flex-->
+<!--                  justify-content-between-->
+<!--                  mb-3-->
+<!--                  align-items-center-->
+<!--                  mr-4-->
+<!--                "-->
+<!--              >-->
+<!--                <h5 class="mt-2 px-4 connect-heading-text">-->
+<!--                  Recent all connection activity <span class="mr-2"></span>-->
+<!--                </h5>-->
+<!--                <div class="d-flex align-items-center">-->
+<!--                  &lt;!&ndash;                    <div class="cursor-pointer" @click="displayMode = 'grid'">&ndash;&gt;-->
+<!--                  &lt;!&ndash;                      <img src="@/assets/icon/grid_icon.svg" alt="icon" width="30" class="opacity-60" :class="{'opacity-100': displayMode === 'grid'}" />&ndash;&gt;-->
+<!--                  &lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--                  &lt;!&ndash;                    <div class="cursor-pointer ml-4" @click="displayMode = 'list'">&ndash;&gt;-->
+<!--                  &lt;!&ndash;                      <img src="@/assets/icon/list_icon.svg" alt="icon" width="25" class="opacity-60" :class="{'opacity-100': displayMode === 'list'}" />&ndash;&gt;-->
+<!--                  &lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--                  <select-->
+<!--                    v-if="user.account_type === 3"-->
+<!--                    v-model="teamId"-->
+<!--                    class="custom-select w-50"-->
+<!--                  >-->
+<!--                    <option-->
+<!--                      v-for="team in teams"-->
+<!--                      :key="team.id"-->
+<!--                      :value="team.team_id"-->
+<!--                    >-->
+<!--                      {{ team.name }}-->
+<!--                    </option>-->
+<!--                  </select>-->
+<!--                </div>-->
+<!--              </div>-->
 
               <v-tabs color="indigo accent-4" class="w-full d-flex justify-content-between support-tab ml-2">
                 <v-tab href="#tab-1" @click="tab = 'tab-1', connection_type_choosed = 'all'" class="font-weight-bold">All</v-tab>
@@ -489,6 +489,14 @@
             </div>
           </div>
         </div>
+
+        <div class="overlay-container" v-if="innerLoading">
+          <v-overlay :opacity="1" :value="innerLoading">
+            <v-progress-circular :size="100" :width="7" color="purple" indeterminate>
+              Loading...
+            </v-progress-circular>
+          </v-overlay>
+        </div>
       </div>
     </div>
   </div>
@@ -501,6 +509,7 @@ import { dateFromDateTime, dateFromTimeStamp } from "@/common/helpers.js";
 import CandidateGridView from "../../components/connections/CandidateGridView";
 import Notification from "@/common/notification.js";
 import { openModalRoute } from "@/plugins/modal/modal.mixin";
+// import ApiService from "../../services/api.service";
 export default {
   name: "Connections",
   components: {
@@ -531,7 +540,8 @@ export default {
       connectionOverview: null,
       displayMode: "grid",
       connection_type_choosed: "all",
-      active_team_id: null
+      active_team_id: null,
+      innerLoading: false
     };
   },
   computed: {
@@ -726,9 +736,11 @@ export default {
       };
       console.log(payload);
       //return;
+      this.innerLoading = true;
       const response = this.$store.dispatch("respondToRequest", payload);
       response
         .then((data) => {
+          this.innerLoading = false;
           console.log(data);
           const vm = this;
           this.$success({
@@ -748,6 +760,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.innerLoading = false;
         });
     },
     disconnectTeam(connection) {
@@ -756,10 +769,12 @@ export default {
       };
       console.log(payload);
       //return;
+      this.innerLoading = true;
       const response = this.$store.dispatch("disconnectTeam", payload);
       response
         .then((data) => {
           console.log(data);
+          this.innerLoading = false;
           const vm = this;
 
           this.$success({
@@ -775,6 +790,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.innerLoading = false;
         });
     },
     declineRequest(connectionId) {
@@ -782,10 +798,13 @@ export default {
         request_id: connectionId,
         connection_status: "2",
       };
+
+      this.innerLoading = true;
       const response = this.$store.dispatch("respondToRequest", payload);
       response
         .then((data) => {
-          console.log(data);
+          this.innerLoading = false;
+          console.log('here', data);
           const vm = this;
           this.$success({
             title: "Success",
@@ -804,6 +823,12 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.innerLoading = false;
+          this.$error({
+            title: 'Something went wrong',
+            center: true,
+          });
+
         });
     },
     connectRequest(to_team_id) {
@@ -813,9 +838,11 @@ export default {
         from_team_id: teamId,
       };
       console.log(payload);
+      this.innerLoading = true;
       const response = this.$store.dispatch("connectWithTeam", payload);
       response
         .then((data) => {
+          this.innerLoading = false;
           console.log(data);
           const vm = this;
           this.$success({
@@ -835,6 +862,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.innerLoading = false;
         });
     },
     blockCandidate(candidateId) {
@@ -851,8 +879,10 @@ export default {
             block_by: vm.user.id,
             type: "single",
           };
+          vm.innerLoading = true;
           await vm.$store.dispatch("blockCandidate", payload);
           //vm.$message.success("Candidate block listed successfully");
+          vm.innerLoading = false;
           vm.$success({
             title: "Success",
             content: "Candidate block listed successfully",
@@ -864,6 +894,7 @@ export default {
         },
         onCancel() {
           console.log("Cancel");
+          this.innerLoading = false;
         },
       });
     },
@@ -872,10 +903,12 @@ export default {
         request_id: connectionId,
         connection_status: "2",
       };
+      this.innerLoading = true;
       const response = this.$store.dispatch("respondToRequest", payload);
       response
           .then((data) => {
             console.log(data);
+            this.innerLoading = false;
             const vm = this;
             this.$success({
               title: "Success",
@@ -894,6 +927,7 @@ export default {
           })
           .catch((error) => {
             console.log(error);
+            this.innerLoading = false;
           });
     },
     profileOverview() {
@@ -927,8 +961,8 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .main-content-1 {
-  margin: 20px 0;
   width: 100%;
+  margin: 4px 0 20px;
   //margin-left: 260px;
   //@media (max-width: 1024px) {
   //  width: calc(100% - 270px);
@@ -1043,5 +1077,8 @@ export default {
   @media (min-width: 768px) {
     font-size: 18px;
   }
+}
+.loader-opacity {
+  opacity: 0.4;
 }
 </style>

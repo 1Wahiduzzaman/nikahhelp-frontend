@@ -187,10 +187,10 @@ export default {
         return;
       }
 
-      // if(parseInt(this.item.candidate_status) !== 3) {
-      //   this.showError("Opposite candidate account is not verified");
-      //   return;
-      // }
+      if(parseInt(this.item.verification_status) !== 3) {
+        this.showError("Opposite candidate account is not verified");
+        return;
+      }
 
       if(this.shortListedIds.includes(parseInt(this.item.user_id))) {
         ApiService.delete(`/v1/delete-short-listed-by-candidates?user_id=${this.item.user_id}`).then(res => {
@@ -213,10 +213,10 @@ export default {
         return;
       }
 
-      // if(parseInt(this.item.candidate_status) !== 3) {
-      //   this.showError("Opposite candidate account is not verified");
-      //   return;
-      // }
+      if(parseInt(this.item.verification_status) !== 3) {
+        this.showError("Opposite candidate account is not verified");
+        return;
+      }
 
       if(this.teamListedIds.includes(this.item.user_id)) {
         ApiService.delete(`/v1/delete-team-short-listed-by-candidates?user_id=${this.item.user_id}`).then(res => {
@@ -239,10 +239,10 @@ export default {
         return;
       }
 
-      // if(parseInt(this.item.candidate_status) !== 3) {
-      //   this.showError("Opposite candidate account is not verified");
-      //   return;
-      // }
+      if(parseInt(this.item.verification_status) !== 3) {
+        this.showError("Opposite candidate account is not verified");
+        return;
+      }
 
       ApiService.post(`/v1/store-block-list`, { user_id: this.item.user_id })
           .then(res => {
@@ -260,10 +260,10 @@ export default {
           return;
         }
 
-        // if(parseInt(this.item.candidate_status) !== 3) {
-        //   this.showError("Opposite candidate account is not verified");
-        //   return;
-        // }
+        if(parseInt(this.item.verification_status) !== 3) {
+          this.showError("Opposite candidate account is not verified");
+          return;
+        }
 
         if(!myTeamId) {
           this.showError("You don't have an active team");
