@@ -767,20 +767,20 @@ div[data-unique="second_one"] >  .ant-select-selection{
 .support-tab .v-slide-group__prev {
     display: none !important;
 }
-#sheightMin {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-bottom: 4px;
-    @media (min-width: 768px) {
-        margin-bottom: 0;
+.search-flex {
+    #heightMin {
+        @media (max-width: 768px) {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin-bottom: 4px;
+        }
     }
-}
-#sheightMax {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-top: 4px;
-    @media (min-width: 768px) {
-        margin-top: 0;
+    #heightMax {
+        @media (max-width: 768px) {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin-bottom: 4px;
+        }
     }
 }
 @media (min-width: 576px) {

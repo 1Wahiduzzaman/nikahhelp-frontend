@@ -129,7 +129,8 @@
                         @startConversation="startConversation"
                         @viewProfile="viewProfile"
                         @acceptRequest="acceptRequest"
-                        @declineRequest="declineRequest"/>
+                        @declineRequest="declineRequest"
+                        @gotoChat="gotoChat" />
         </v-card>
 
       </div>
@@ -367,6 +368,9 @@ export default {
       } else {
         return this.connection.from_team_table_id;
       }
+    },
+    gotoChat() {
+      this.$router.push({ name: 'ChatWindow', query: { connection_id: this.connection.connection_id } });
     }
   },
 }
