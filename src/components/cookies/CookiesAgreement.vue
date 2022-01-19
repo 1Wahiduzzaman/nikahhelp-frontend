@@ -227,7 +227,7 @@
         </p>
       </div> 
 
-      <div class="headings">
+      <div class="headings"> 
         <h6>Information Collection and Use</h6>
       </div>
 
