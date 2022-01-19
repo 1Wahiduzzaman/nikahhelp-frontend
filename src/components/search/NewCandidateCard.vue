@@ -190,6 +190,10 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
           this.showError('Your account is not verified')
           return
         }
+        if(this.candidate.verification_status != 3) {
+          this.showError('This candidate is not verified')
+          return
+        }
         
         if(eventData.event == 'addConnection') {
           this.connectCandidate();

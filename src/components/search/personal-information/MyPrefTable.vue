@@ -40,7 +40,12 @@
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Religion</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
                 <td class="text--secondary text-subtitle-1">
-                    <!-- {{ preference.pre_height_max }} -->
+                    <span
+                        v-for="(nationality, i) in preference.pre_partner_religion_id"
+                        :key="i"
+                    >
+                        {{ nationality }}<span v-if="i+1 < preference.pre_partner_religion_id.length">,&nbsp</span>
+                    </span>
                 </td>
             </tr>
             <tr>
@@ -59,8 +64,7 @@
                             v-for="(nationality, i) in preference.preferred_nationality"
                             :key="i"
                         >
-                            {{ nationality.name }}
-                            <span v-if="i+1 < preference.preferred_nationality">,</span>
+                            {{ nationality.name }}<span v-if="i+1 < preference.preferred_nationality.length">,&nbsp</span>
                         </div>
                     </span>
                 </td>
@@ -68,7 +72,7 @@
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Education</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1"></td>
+                <td class="text--secondary text-subtitle-1">{{preference.pre_study_level}}</td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Employment Status</td>
@@ -90,11 +94,11 @@
                     </span>
                 </td>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Willing to Relocate</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
                 <td class="text--secondary text-subtitle-1"></td>
-            </tr>
+            </tr> -->
         </table>
     </v-card>
 </template>

@@ -181,6 +181,15 @@ export default {
         }),
         onClickButton(eventData) {
             if(eventData.event == 'openGallery') this.openGallery();
+            let userInfo = JSON.parse(localStorage.getItem("userInfo"))
+            if(userInfo.status != 3) {
+                this.showError('Your account is not verified')
+                return
+            }
+            if(this.profile.verification_status != 3) {
+                this.showError('This candidate is not verified')
+                return
+            }
             if(eventData.event == 'addConnection') {
                 this.connectCandidate();
             }
