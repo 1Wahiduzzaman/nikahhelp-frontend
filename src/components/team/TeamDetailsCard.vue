@@ -236,7 +236,7 @@
 					<!-- Team Created By -->
 					<div class="creator">
 						Team Created by
-						<span class="fw-600"> {{ teamData.created_by.full_name }}</span>
+						<span class="fw-600"> {{ teamData && teamData.created_by ? teamData.created_by.full_name : '' }}</span>
 					</div>
 					<!-- Message Button for team -->
 					<!-- <div class="creator">
