@@ -2349,5 +2349,11 @@ export default {
 .bright-20 {
   border-radius: 0 20px 20px 0;
 }
+.col-lg-6 {
+  padding: 12px 8px !important;
+}
+.col-xl-3 {
+  padding: 12px 8px !important;
+}
 // end css for team-card
 </style>
