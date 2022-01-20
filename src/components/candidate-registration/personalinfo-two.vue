@@ -1611,10 +1611,11 @@
                   label="name"
                   :options="[
                     { name: 'Single', value: 'single' },
-                    { name: 'Married', value: 'married' },
-                    { name: 'Divorced', value: 'divorced' },
+                     { name: 'Widow', value: 'widow' },
+                      { name: 'Widower', value: 'widower' },
+                    { name: 'Divorcee', value: 'divorced' },
                     {
-                      name: 'Divorced with Children',
+                      name: 'Divorcee with children',
                       value: 'divorced_with_children',
                     },
                   ]"
@@ -1702,15 +1703,21 @@
                   :reduce="(option) => option.value"
                   label="name"
                   :options="[
-                    { name: 'Parents', value: 'Parents' },
+                    { name: 'Living with my parents', value: 'Parents' },
                     {
-                      name: 'Live in my own home',
+                      name: 'Living in a rented home',
+                      value: 'Living in a rented home',
+                    },
+
+                    {
+                      name: 'Living in my own home',
                       value: 'Live in my own home',
                     },
                     {
-                      name: 'live in others home',
-                      value: 'live in others home',
+                      name: 'Living with relatives',
+                      value: 'Living with relatives',
                     },
+
                     { name: 'Other', value: 'Other' },
                   ]"
                   ><template #open-indicator> <a-icon type="down" /> </template

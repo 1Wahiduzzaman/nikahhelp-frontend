@@ -390,7 +390,7 @@ export default {
       instructions: [
         { title: 'candidiate',
           data: [
-              'Variety of information about yourself & the kind of partner you are seeking',
+              'Candidate is either the bride or groom looking to get married',
               'Create your own team or join a team',
               'Represented by only ONE team',
               'Be a representative for another 4 candidates'
@@ -398,7 +398,7 @@ export default {
         },
         { title: 'representative',
           data: [
-            'Very brief information is requested for your profile',
+            'Anyone can be a representative, they simply help and guide the candidate to find suitable match',
             'Create your own team or join a team',
             'Can switch account to candidate',
             'Can create or join upto 5 teams',
@@ -406,7 +406,7 @@ export default {
         },
         { title: 'match-maker',
           data: [
-            'Information is requested about your business or work as matchmaker',
+            'Matchmaker is a professional who helps the candidate to find prospects ',
             'Matchmaker role is same as representative',
             'Can not switch membership to candidate',
             'Can create or join upto 100+ teams',

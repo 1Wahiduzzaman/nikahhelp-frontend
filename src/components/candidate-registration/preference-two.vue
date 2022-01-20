@@ -1,8 +1,8 @@
 <template>
   <div id="accordion" class="preference">
     <div class="section-heading heading-text">
-      <h5>Your Preferences</h5>
-      <p>Your Preferences About Your Prospective Partner</p>
+      <h5>So, what kind of companion you are looking for </h5>
+      <p>Your preferences about your companion</p>
     </div>
 
     <a-collapse
@@ -17,7 +17,7 @@
       </template>
       <a-collapse-panel
         key="1"
-        header="1. Your Preferences about your prospective partner."
+        header="1. Preferences about your prospective companion"
       >
         <a-form-model
           v-if="preferenceData && activeKey == 1"
@@ -33,7 +33,7 @@
                 <a-icon
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What should be the age range of your prospective partner?
+                />What should be the age range of your prospective companion?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -95,7 +95,7 @@
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />What is your preferred height range for your prospective
-                partner?
+               companion?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -156,8 +156,7 @@
                   "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Do you have preferences for countries or cities where your
-                prospective partner comes from?
+                />Do you have a preference about where your companion comes from?
               </div>
             </div>
             <div class="col-12 col-md-6 non-padding-mobile-margin">
@@ -359,7 +358,7 @@
                   "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Are there countries or cities that you do not wish to be
+                />Is there any country and city that you do not wish to be
                 contacted from?
               </div>
             </div>
@@ -454,7 +453,7 @@
                   v-if="preferenceData.pre_partner_religion_id.length > 0"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What is the preferred religion of your prospective partner?
+                />What is the preferred religion of your prospective companion?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -519,7 +518,7 @@
                   v-if="preferenceData.pre_ethnicities"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Which ethnic background do you prefer your prospective partner
+                />Which ethnic background do you prefer your prospective companion
                 to be from?
               </div>
             </div>
@@ -581,7 +580,7 @@
                   "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What is the preferred nationality of your prospective partner?
+                />What is the preferred nationality of your prospective companion?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -652,7 +651,7 @@
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />Which is the minimum education level you prefer your
-                prospective partner to have?
+                prospective companion to have?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -718,7 +717,7 @@
                   v-if="preferenceData.pre_employment_status"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What employment status do you prefer you prospective partner
+                />What employment status do you prefer you prospective companion
                 to have?
               </div>
             </div>
@@ -788,7 +787,7 @@
                   "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What occupation do you prefer your prospective partner to
+                />What occupation do you prefer your prospective companion to
                 have?
               </div>
             </div>
@@ -937,7 +936,7 @@
                   spellcheck="false"
                   id="pre_other_preference"
                   v-model.lazy.lazy="preferenceData.pre_other_preference"
-                  placeholder="* Sample Text"
+                  placeholder="here you can write other things that are important to you but could not provide elsewhere above"
                   class="w-full form-right-content"
                 />
               </a-form-model-item>
@@ -981,7 +980,7 @@
                   v-if="preferenceData.pre_description"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Describe your requirements about your preferred partner
+                />Describe your requirements about your preferred companion
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -989,14 +988,14 @@
                 <a-textarea
                   @blur="onValueChange"
                   :rows="3"
-                  :maxLength="250"
+                  :maxLength="1000"
                   autocomplete="off"
                   autocorrect="off"
                   autocapitalize="off"
                   spellcheck="false"
                   id="pre_description"
                   v-model.lazy.lazy="preferenceData.pre_description"
-                  placeholder="* Sample Text"
+                  placeholder="maximum 1000 charaters"
                   class="w-full form-right-input"
                 />
               </a-form-model-item>
@@ -1028,7 +1027,7 @@
                 id="anyotherRequirementOnPartner"
               >
                 <div class="card card-body bubble">
-                  Any other requirements for partner
+                  Any other requirements for companion
                 </div>
               </div>
             </div>
@@ -1049,7 +1048,7 @@
       <!-- Important things for you (Ratings) -->
       <a-collapse-panel
         key="2"
-        header="2. What things are important to you when considering for a prospective partner?"
+        header="2.Think of the people who know you well? How would they rate the following aspects in their search for a prospective companion for you?"
         style="margin-top: 5px"
       >
         <a-form-model
@@ -1059,7 +1058,7 @@
           class="form-ma"
         >
           <!-- Character -->
-          <div class="row py-3 border-bottom">
+          <!-- <div class="row py-3 border-bottom">
             <div class="col-12 col-md-6">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -1069,6 +1068,7 @@
                 />Do you have any other requirements?
               </div>
             </div>
+
             <div class="col-12 col-md-6">
               <a-form-model-item
                 ref="pre_strength_of_character_rate"
@@ -1084,6 +1084,7 @@
                 />
               </a-form-model-item>
             </div>
+
             <div class="col-12 mobile-margin mobile-help">
               <p>
                 <a
@@ -1115,7 +1116,8 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
+
 
           <!-- Looks and Appearance -->
           <div class="row pt-3 border-bottom">
@@ -1126,7 +1128,7 @@
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />
-                Looks and appearance
+                Looks, appearance & attractiveness
               </div>
             </div>
             <div class="col-12 col-md-6">
@@ -1185,7 +1187,7 @@
                   v-if="preferenceData.pre_religiosity_or_faith_rate"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Religiosity/Faith
+                />Religiosity/faith compatibility in practice, or commitment to improve
               </div>
             </div>
             <div class="col-12 col-md-6">
@@ -1244,7 +1246,7 @@
                   v-if="preferenceData.pre_manners_socialskill_ethics_rate"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Manners, Social skills and ethics
+                />Manners, Social skills, etiquettes & consideration for others
               </div>
             </div>
             <div class="col-12 col-md-6">
@@ -1305,7 +1307,7 @@
                   v-if="preferenceData.pre_emotional_maturity_rate"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Emotional Maturity and compatibility
+                />Emotional maturity and general intelligence
               </div>
             </div>
             <div class="col-12 col-md-6">
@@ -1423,7 +1425,7 @@
                   v-if="preferenceData.pre_good_talker_rate"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Good Talker
+                />Good communicator and great to have two way converstations with
               </div>
             </div>
             <div class="col-12 col-md-6">
@@ -1482,7 +1484,7 @@
                   v-if="preferenceData.pre_wiling_to_learn_rate"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Willing to learn
+                />Willing to learnfrom feedback and constructive criticism
               </div>
             </div>
             <div class="col-12 col-md-6">
@@ -1541,7 +1543,7 @@
                   v-if="preferenceData.pre_family_social_status_rate"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Family or Social Status
+                />Family,  social status, respectability
               </div>
             </div>
             <div class="col-12 col-md-6">
@@ -1600,7 +1602,7 @@
                   v-if="preferenceData.pre_employment_wealth_rate"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Employment or Wealth
+                />Employment and financial stability
               </div>
             </div>
             <div class="col-12 col-md-6">
@@ -1659,7 +1661,7 @@
                   v-if="preferenceData.pre_education_rate"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Education
+                />Education and academic accomplishments
               </div>
             </div>
             <div class="col-12 col-md-6">
@@ -1756,11 +1758,11 @@ export default {
       },
       activeKey: 1,
       desc: [
-        "Not Important",
-        "Quite Important",
+        "Not important",
+        "Quite important",
         "Important",
-        "Very Important",
-        "Extremely Important",
+        "Very important",
+        "Extremely important",
       ],
       rules: RULES,
       RULES_RATE: RULES_RATE,
