@@ -207,7 +207,7 @@
                 </a-menu>
               </a-dropdown>
               <div
-                class="d-flex justify-content-between align-items-center mt-1"
+                class="d-flex align-items-center mt-1"
               >
                 <a-dropdown :trigger="['click']" placement="bottomRight">
                   <span
@@ -261,7 +261,7 @@
                     </ul>
                   </template>
                 </a-dropdown>
-                <img src="@/assets/icon/verified_icon.svg" alt="icon" class="verify-icon" width="14px" v-if="loggedUser && parseInt(loggedUser.status) === 3" />
+                <img src="@/assets/icon/verified_icon.svg" alt="icon" class="verify-icon ml-1" width="14px" v-if="loggedUser && parseInt(loggedUser.status) === 3" />
 <!--                <span class="role px-2 ml-1 shrink-none">-->
 <!--&lt;!&ndash;                  {{ loggedUser && parseInt(loggedUser.status) === 3 ? 'V' : 'Not verified' }}&ndash;&gt;-->
 <!--                </span>-->
