@@ -1,9 +1,9 @@
 <template>
   <div>
     <Loader v-if="isLoading" :isLoading="isLoading" />
-    <div v-else>
-      <div class="">
-        <div style="margin: 0px auto">
+    <v-container fluid v-else>
+      <v-row no-gutter>
+        <v-col cols="12">
           <div v-if="user && user.account_type == 1">
             <!-- Candidate Profile Component goes here -->
             <candidate-profile></candidate-profile>
@@ -14,9 +14,9 @@
               :representativeData="representativeInfo"
             ></representative-profile>
           </div>
-        </div>
-      </div>
-    </div>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 

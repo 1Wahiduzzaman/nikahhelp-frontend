@@ -1,26 +1,9 @@
 <template>
-  <div class="row">
-    <div v-if="isLoading">Loading</div>
-    <div v-else>
-      <div class="main-content-wrapper">
-        <div class="main-content col-10">
-          <div class="col-11" style="margin: 0px auto">
-            <!-- <div v-if="userProfile.account_type == 1"> -->
-            <!-- Candidate Profile Component goes here -->
-            <!-- {{ candidateProfileInfo }} -->
-            <!-- <candidate-profile
-							:candidateData="candidateProfileInfo"
-						></candidate-profile>
-					</div> -->
-            <!-- <div v-else> -->
-            <!-- Representative profile component goes here -->
-            <!-- {{ representativeProfileInfo }} -->
-            <!-- <representative-profile
-							:representativeData="representativeProfileInfo"
-						></representative-profile> -->
-            <!-- </div> -->
-
-            <!-- Upper portion of the code was written by Syed Shadman Bhaiya -->
+  <div>
+    <Loader v-if="isLoading" :isLoading="isLoading" />
+    <v-container fluid v-else>
+      <v-row no-gutters>
+        <v-col cols="12">
             <div v-if="user.account_type == 1">
               <!-- Opposite Candidate Profile Component goes here -->
               <candidate-profile
@@ -33,10 +16,9 @@
                 :representativeData="representativeProfileInfo"
               ></representative-profile>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
