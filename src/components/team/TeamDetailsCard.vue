@@ -1710,17 +1710,17 @@ export default {
 		async onChangeActivateTeam(checked) {
 			if (checked) {
 				let returnedResult = await this.turnOnTeam();
-				console.log(this.teamData);
-				//JwtService.saveTeamIDAppWide(this.teamData.team_id);
 				this.$store.commit("setTeamInfo", this.teamData);
 				if (returnedResult) {
 					this.turnOn = true;
 				} else {
 					this.turnOn = false;
+          this.$router.go();
 				}
 			} else {
 				this.$store.commit("setTeamInfo", null);
 				JwtService.destroyTeamIDAppWide();
+        this.$router.go();
 			}
 		},
 		startConversation() {
