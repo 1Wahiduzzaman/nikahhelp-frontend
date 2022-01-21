@@ -16,7 +16,7 @@
       </template>
       <!-- <pre>{{ $store.state.candidateInfo.personalInformation }}</pre> -->
       <!-- 1. Essential Information -->
-      <a-collapse-panel key="1" header="1. Essential Information">
+      <a-collapse-panel key="1" header="2.1 Essential Information">
         <a-form-model
           ref="personalInfoFormOne"
           v-if="
@@ -50,7 +50,7 @@
                   @input="onValueChange($event, 'essential')"
                   id="per_gender"
                   :reduce="(option) => option.value"
-                  placeholder="Select your gender"
+                  placeholder="please select"
                   v-model="personalInformation.essential.per_gender"
                   label="name"
                   :options="[
@@ -186,7 +186,7 @@
                   :filter-option="filterOption"
                   :showArrow="true"
                   style="width: 150px"
-                  placeholder="Please select your height"
+                  placeholder="please select"
                   v-model.number="personalInformation.essential.per_height"
                   class="select-ma w-100"
                 >
@@ -259,7 +259,7 @@
                   @input="onValueChange($event, 'essential')"
                   id="per_employment_status"
                   :reduce="(option) => option.value"
-                  placeholder="Select your employment status"
+                  placeholder="please select"
                   v-model="personalInformation.essential.per_employment_status"
                   label="name"
                   :options="employment_Statuses"
@@ -338,7 +338,7 @@
                   class="style-chooser"
                   @input="onValueChange($event, 'essential')"
                   id="per_occupation"
-                  placeholder="Please select your occupation"
+                  placeholder="please select"
                   :reduce="(option) => option.name"
                   v-model="personalInformation.essential.per_occupation"
                   label="name"
@@ -424,7 +424,7 @@
                   @input="onValueChange($event, 'essential')"
                   id="per_education_level_id"
                   :reduce="(option) => option.id"
-                  placeholder="Please select your education status"
+                  placeholder="please select"
                   v-model="personalInformation.essential.per_education_level_id"
                   label="name"
                   :options="candidateDetails.studylevels"
@@ -509,7 +509,7 @@
                   @input="onValueChange($event, 'essential')"
                   id="per_religion_id"
                   :reduce="(option) => option.id"
-                  placeholder="Select your religion"
+                  placeholder="please select"
                   v-model="personalInformation.essential.per_religion_id"
                   label="name"
                   :options="candidateDetails.religions"
@@ -587,7 +587,7 @@
       <!-- 2. General Information -->
       <a-collapse-panel
         key="2"
-        header="2. General Information"
+        header="2.2 General Information"
         style="margin-top: 5px"
       >
         <a-form-model
@@ -617,7 +617,7 @@
                   class="style-chooser"
                   @input="onValueChange($event, 'general')"
                   id="per_ethnicity"
-                  placeholder="Please select your ethnicities"
+                  placeholder="please select"
                   v-model="personalInformation.general.per_ethnicity"
                   label="name"
                   :options="candidateDetails.ethnicities"
@@ -702,7 +702,7 @@
                   class="style-chooser"
                   @input="onValueChange($event, 'general')"
                   id="per_mother_tongue"
-                  placeholder="Select your mother tongue"
+                  placeholder="please select"
                   v-model="personalInformation.general.per_mother_tongue"
                   label="name"
                   :options="candidateDetails.languages"
@@ -782,7 +782,7 @@
                   class="style-chooser"
                   @input="onValueChange($event, 'general')"
                   id="per_nationality"
-                  placeholder="Select Country"
+                  placeholder="please select"
                   :reduce="(option) => option.id"
                   v-model="personalInformation.general.per_nationality"
                   label="name"
@@ -865,7 +865,7 @@
                   class="style-chooser"
                   @input="onValueChange($event, 'general')"
                   id="per_country_of_birth"
-                  placeholder=" Select your Country of birth"
+                  placeholder=" please select"
                   :reduce="(option) => option.id"
                   v-model="personalInformation.general.per_country_of_birth"
                   label="name"
@@ -931,7 +931,7 @@
                   v-if="personalInformation.general.per_health_condition"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />How would you describe your general health and wellbeing?
+                />How would you describe your general health and wellbeing?(optional) 
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -942,7 +942,7 @@
                 <a-textarea
                   @blur="onValueChange($event, 'general')"
                   id="per_health_condition"
-                  placeholder="Exp: Bangladesh"
+                  placeholder="Your may wish to use a  description like fair, good, very good, or excellent."
                   :rows="3"
                   :maxLength="200"
                   v-model="personalInformation.general.per_health_condition"
@@ -976,7 +976,7 @@
                 id="collapsePersonalInfoHealthCondition"
               >
                 <div class="card card-body bubble">
-                  Your current health condition
+                  Please do not include very sensitive information. General indication is expected only.Your may wish to use a  description like cannot complain, in good health, no chronic illness, fair, good, very good, or excellent. You do not have to give a response if you do not wish to at this stage. 
                 </div>
               </div>
             </div>
@@ -997,7 +997,7 @@
       <!-- 3. Contact Details -->
       <a-collapse-panel
         key="3"
-        header="3. Contact Details"
+        header="2.3 Contact Details"
         style="margin-top: 5px"
       >
         <a-form-model
@@ -1159,7 +1159,7 @@
 
           <!-- Permanent Address Heading -->
           <div class="pt-3">
-            <div class="mb-2 font-weight-bold fs-16">
+            <div class="mb-2 font-weight-bold">
               What is your permanent address?
             </div>
           </div>
@@ -1452,6 +1452,8 @@
                     >
                       <a-select-option value="">Select</a-select-option>
                       <a-select-option value="+44">+44</a-select-option>
+                        <a-select-option value="+88">+88</a-select-option>
+
                     </a-select>
                   </a-form-model-item>
                 </div>
@@ -1572,7 +1574,7 @@
       <!-- 4. More About You -->
       <a-collapse-panel
         key="4"
-        header="4. More About You"
+        header="2.4 More About You"
         style="margin-top: 5px"
       >
         <a-form-model
@@ -1607,7 +1609,7 @@
                   class="style-chooser"
                   @input="onValueChange($event, 'more_about')"
                   id="per_marital_status"
-                  placeholder="Select your Marital Status"
+                  placeholder="please select"
                   v-model="personalInformation.more_about.per_marital_status"
                   :reduce="(option) => option.value"
                   label="name"
@@ -1698,7 +1700,7 @@
                   class="style-chooser"
                   @input="onValueChange($event, 'more_about')"
                   id="per_currently_living_with"
-                  placeholder="Please select Currently Living With"
+                  placeholder="Please select"
                   v-model="
                     personalInformation.more_about.per_currently_living_with
                   "
@@ -1802,7 +1804,7 @@
                   class="style-chooser"
                   @input="onValueChange($event, 'more_about')"
                   id="per_willing_to_relocate"
-                  placeholder="Willing to relocate"
+                  placeholder="please select"
                   v-model="
                     personalInformation.more_about.per_willing_to_relocate
                   "
@@ -1891,7 +1893,7 @@
                   class="style-chooser"
                   @input="onValueChange($event, 'more_about')"
                   id="per_smoker"
-                  placeholder="Please select Are you a Smoker"
+                  placeholder="Please select"
                   v-model="personalInformation.more_about.per_smoker"
                   :reduce="(option) => option.value"
                   label="name"
@@ -1990,7 +1992,7 @@
                       'more_about'
                     )
                   "
-                  placeholder="Please select the languages you speak"
+                  placeholder="please select"
                   v-model="personalInformation.more_about.per_language_speak"
                   label="name"
                   :options="[...candidateDetails.languages]"
@@ -2094,7 +2096,7 @@
                     'more_about'
                   )
                 "
-                placeholder="Please select your hobbies"
+                placeholder="you may select up to three"
                 v-model="personalInformation.more_about.per_hobbies_interests"
                 label="name"
                 :options="candidateDetails.hobbies"
@@ -2166,7 +2168,7 @@
                       'more_about'
                     )
                   "
-                  placeholder="Please select your Food and Cuisine you like"
+                  placeholder="you may select up to three"
                   v-model="personalInformation.more_about.per_food_cuisine_like"
                   label="name"
                   :options="candidateDetails.foods"
@@ -2267,7 +2269,7 @@
                 @input="
                   onMultiValueChange($event, 'per_things_enjoy', 'more_about')
                 "
-                placeholder="Please select your hobbies"
+                placeholder="you may select up to three"
                 v-model="personalInformation.more_about.per_things_enjoy"
                 label="name"
                 :options="candidateDetails.hobbies"
@@ -2338,7 +2340,7 @@
                       'more_about'
                     )
                   "
-                  placeholder="Please select your Thankfull For"
+                  placeholder="you may select up to three"
                   :reduce="(option) => option.value"
                   v-model="personalInformation.more_about.per_thankfull_for"
                   label="label"
@@ -2444,7 +2446,7 @@
                       'more_about'
                     )
                   "
-                  placeholder="Please select how you improve?"
+                  placeholder="you may select up to three"
                   :reduce="(option) => option.value"
                   v-model="personalInformation.more_about.per_improve_myself"
                   label="label"
@@ -2533,7 +2535,7 @@
                 <a-textarea
                   @blur="onValueChange($event, 'more_about')"
                   id="per_about"
-                  placeholder="Exp: 19/ burder way, england"
+                  placeholder="maximum 500 characters"
                   :rows="3"
                   :maxLength="200"
                   v-model="personalInformation.more_about.per_about"
