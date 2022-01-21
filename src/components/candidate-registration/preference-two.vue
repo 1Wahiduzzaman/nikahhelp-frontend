@@ -807,7 +807,10 @@
                   v-model.lazy="preferenceData.pre_occupation"
                   placeholder="Please select your preferred occupation"
                   label="name"
-                  :options="[`Don't Mind`, ...candidateDetails.occupations]"
+                  :options="[
+                    { id: `Don't Mind`, name: `Don't Mind` },
+                    ...candidateDetails.occupations,
+                  ]"
                 >
                   <template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
