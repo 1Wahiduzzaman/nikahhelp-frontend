@@ -2,7 +2,7 @@
   <div>
     <LandingPageHeader />
     <div class="main-content">
-      <h3>Privacy and cookie policy</h3>
+     <h3 class="text-header-black">Privacy and cookie policy</h3>
       <p>Last updated: 07/01/2022</p>
 
       <h5>Who are we?</h5>
@@ -73,9 +73,10 @@
     <p>This banner gives you a settings option for our websites. If you click on this, you can turn certain cookies on and off.</p>
     <p>You can access these settings and change your choices at any time in the future by clicking on the Cookies Settings link at the bottom of our website pages.</p>
     <p>You can also control cookies by activating relevant settings on your browser. Please see below for more information on browser controls.</p>
-    <p>Please be aware that if you turn cookies off you may not be able to access all or parts of our sites.</p>
     
+    <p>Please be aware that if you turn cookies off you may not be able to access all or parts of our sites.</p>
     <h5>Browser controls</h5>
+
 <p>You can use your web browser to:</p>
 
 <p><ul style="list-style-type: disc"> 

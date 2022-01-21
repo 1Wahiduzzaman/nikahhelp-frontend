@@ -34,22 +34,22 @@
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Occupation</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">{{ personal.per_profession }}</td>
+                <td class="text--secondary text-subtitle-1">{{ essential.per_occupation }}</td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Education</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1"></td>
+                <td class="text--secondary text-subtitle-1">{{ essential.per_education_level }}</td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Religion</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1"></td>
+                <td class="text--secondary text-subtitle-1">{{ essential.per_religion }}</td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Ethnicity</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1"></td>
+                <td class="text--secondary text-subtitle-1">{{ personal.per_ethnicity }}</td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Mother Tongue</td>
@@ -101,12 +101,12 @@
                         }}
                 </td>
             </tr>
-            <!-- <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 160px">Address</td>
+             <tr>
+                <td class="text--disabled text-subtitle-1" style="width: 160px">Willing to Relocate</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1"></td>
+                <td class="text--secondary text-subtitle-1">{{ personal.per_willing_to_relocate == 1 ? 'Yes' : 'No' }}</td>
             </tr>
-            <tr>
+           <!-- <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 160px">Mobile No</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
                 <td class="text--secondary text-subtitle-1"></td>
@@ -137,7 +137,10 @@ export default {
     computed: {
         personal() {
             return this.data?.personal ? this.data.personal : {}
-        }
+        },
+        essential() {
+            return this.data?.essential  ? this.data.essential    : {}
+        },
     },
     methods: {
         getAge(dateString) {

@@ -243,7 +243,7 @@ export default {
   width: 100%;
   .block-main-content {
     width: 100%;
-    margin: 20px 10px;
+    margin: 4px 10px 20px;
   }
 }
 </style>

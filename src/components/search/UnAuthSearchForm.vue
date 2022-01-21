@@ -43,13 +43,14 @@
         <SelectGroup
           @selected="onDropdownChange"
           :values="[searchModel.heightMin, searchModel.heightMax]"
-          :uniqueNames="['sheightMin', 'sheightMax']"
+          :uniqueNames="['heightMin', 'heightMax']"
+          size="default"
           :options="getHeights"
           :placeholder="'Height'"
           :size="'large'"
           :width="'120'"
           :suffixIcon="true"
-          class="mobile-flex"
+          class="search-flex"
         />
         <h6 v-if="(!searchModel.heightMin || !searchModel.heightMax) && trying" class="text-danger fs-12 text-left pt-2 pl-2">Minimum and maximum height is required</h6>
       </div>
@@ -372,7 +373,7 @@ export default {
   letter-spacing: .0125em;
   line-height: 2rem;
 }
-.mobile-flex {
+.search-flex {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -380,4 +381,5 @@ export default {
     flex-direction: row;
   }
 }
+
 </style>

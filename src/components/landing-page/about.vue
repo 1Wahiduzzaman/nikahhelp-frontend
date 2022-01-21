@@ -3,7 +3,7 @@
     <LandingPageHeader class="header" />
 
     <div class="main-content">
-      <h3 class="text-header-black">About Matrimony Assist</h3>
+      <h3 class="text-header-black">About Us</h3>
       <p>
         Matrimony Assist is an online platform to facilitate conversation
         between families who are seeking marriage partners for their loved ones.
@@ -42,6 +42,16 @@
         family and friends on a secure portal, without too much sweat and
         stress.
       </p>
+
+            <h4>Why Matrimony Assist?</h4>
+            <p>Matrimony Assist. Why did we call it this name? Well,  when it comes to matrimonial matters,   parents, relatives, friends and well wishers cannot force a decision on their loved ones. Doing so has dire and serious mental, physical, economic and social health consequences with too many unhappy and depressed lives, suffering families and bad memories all round, including for friends and  extended family members. We wan to prevent that, or at least reduce those outcomes.</p>
+    <p>We can all assist our loved ones find the best matrimonial partner or companion.  Often family, friends and well-wishers (representatives - of their best interest) like to team up at the request of their bride or groom (we call them the candidate) to assist them to find a suitable matrimonial partner, so we called this effort and online application MatrimonyAssist. </p>
+    <p>MatrimonyAssist is for every family in our human community, for marriage is a treasured and valued institution that people of different faith and culture hold close to their heart. It is regarded as  stabilising force for versatile and prosperous communities that can produce the next generation of caring, empathetic and community oriented individuals brought up in extended family networks, though nowadays the connections are remote through technology across towns, cities and continents.  </p>
+    <p>Marriage is an age-old and more often than not, faith-based commitment, guided by sets of values to love and cherish each other and be a critical and caring companion and friend for life. Every family and friends group holds up high hopes and plays a critical, affectionate and support role before, during and after marriage. What better way to make sure the family and friends also have a role in helping their loved one find and select a suitable and loving marriage partner and companion for their loved one.   Out of this desire to facilitate every family and friends group that wish to play this role, with the consent of their loved one,  at a time when the situation might be steeped in emotion and guided more by the heart than the mind, the family and friends can play the role of a team, with the objective of showering some ration and objectivity into critical and constructive assessment through asking probing and general questions to gauge a variety of information, including family background and upbringing, faith orientation, hobbies and interests, moral or ethical underpinning as deemed appropriate, education and economic standing,   as well as personal traits and characteristics and potential for growth and compatibility,  as best as possible.  </p>
+   <p>Hopefully the decision making process then becomes more objective, with input from those who really care and would like to see the best outcome for their loved one, with a balanced assessment and decision on the next moves for what is often a heavily emotionally invested life changing decision for the bride and groom to be. The family and friends can play the role of the go-between, as they often do, in arranging meetings between the couples and families according to their own tradition, hopefully leading to marriage. </p>
+    <p>It is not easy and may take a longer time period than one expects, even disappointments and near misses, with several tries. What is meant to be will happen, but one must try their best.  So these thoughts have resulted in our attempt to produce a marriage partner and companion finding application online on MatrimonyAssist, to identify and spot suitable prospects, before meeting them in person or arranging video meetings, if separated by far distances.</p>
+    <p>We hope MatrimonyAssist will develop over time as well, with your support and feedback,  to help you in that important companion finding endeavour, saving you time, effort and struggle, hopefully, in your search for the one who is searching for you or your loved one, the best possible match and catch for life. We sincerely hope you find love, happiness, and this is the beginning of endless happy moments and memories. </p>
+    <p>Best wishes from us. </p>
     </div>
     <Footer />
   </div>

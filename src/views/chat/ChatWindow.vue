@@ -533,6 +533,9 @@ export default {
   created() {
     // this.$store.state.chat.chats = [];
     this.getActiveTeamId();
+    if(this.$route.query.connection_id) {
+      this.setChatTab('Connected');
+    }
   },
   mounted() {
     let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -874,6 +877,18 @@ export default {
           item.is_friend = item.team_private_chat ? item.team_private_chat.is_friend : 0;
           return item;
         });
+
+        if(this.$route.query.connection_id) {
+          // let queryChat = this.connectedTeam.find(chat => chat.id == this.$route.query.connection_id);
+          // if(queryChat) {
+          //   this.getConnectedTeamChatHistory(queryChat);
+          // }
+
+          const query = Object.assign({}, this.$route.query);
+          delete query.connection_id;
+          this.$router.replace({ query });
+        }
+
         // if (data && data.connected_teams) {
         //   this.connectedTeam = map(data.connected_teams, item => {
         //     return {

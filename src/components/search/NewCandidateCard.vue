@@ -183,7 +183,18 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
       onClickButton(eventData) {
         if(eventData.event == 'viewProfileDetail') {
           this.ViewProfileDetail()
+          return
         }
+        let userInfo = JSON.parse(localStorage.getItem("userInfo"))
+        if(userInfo.status != 3) {
+          this.showError('Your account is not verified')
+          return
+        }
+        if(this.candidate.verification_status != 3) {
+          this.showError('This candidate is not verified')
+          return
+        }
+        
         if(eventData.event == 'addConnection') {
           this.connectCandidate();
         }
@@ -217,8 +228,8 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         if(eventData.event == 'removeTeam') {
           this.removeFromTeamList();
         }
-
       },
+
       shortList() {
         console.log('short list')
       },

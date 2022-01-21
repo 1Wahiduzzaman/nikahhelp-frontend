@@ -93,7 +93,7 @@
               <li class="flex-between-start">
                 <span class="flex-30 label-text">Team</span>
                 <span class="flex-70">:
-                    <span class="ml-1"><router-link class="team-link" :to="{name: 'ManageTeam', query: {team_id: connection.to_team_id}}">{{ connection.to_team_name }}</router-link>
+                    <span class="ml-1"><router-link class="team-link" :to="{name: 'ManageTeam', query: {team_id: getTeamLink()}}">{{ getTeamName() }}</router-link>
                     </span>
                 </span>
               </li>
@@ -129,7 +129,8 @@
                         @startConversation="startConversation"
                         @viewProfile="viewProfile"
                         @acceptRequest="acceptRequest"
-                        @declineRequest="declineRequest"/>
+                        @declineRequest="declineRequest"
+                        @gotoChat="gotoChat" />
         </v-card>
 
       </div>
@@ -192,7 +193,8 @@
 <!--             'request-received-bg': type == 'Request received',-->
 <!--             'request-sent-bg': type == 'Request send',}"></div>-->
     <div class="position-absolute icon-rotate-box cursor-pointer" @click="rotated = !rotated">
-      <a-icon type="rollback" class="rotate-icon" size="large" />
+<!--      <a-icon type="rollback" class="rotate-icon" size="large" />-->
+      <img src="@/assets/icon/flip_icon.svg" alt="icon" class="flip-icon" />
     </div>
   </div>
 </template>
@@ -206,7 +208,7 @@ import GridButtons from "./GridButtons";
 export default {
   name: "CandidateGridView",
   components: {GridButtons},
-  props: ["connection"],
+  props: ["connection", "active_team_id"],
   data() {
     return {
       avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
@@ -354,6 +356,23 @@ export default {
       }
       return false;
     },
+    getTeamName() {
+      if(this.active_team_id == this.connection.from_team_id) {
+        return this.connection.to_team_name;
+      } else {
+        return this.connection.from_team_name;
+      }
+    },
+    getTeamLink() {
+      if(this.active_team_id == this.connection.from_team_id) {
+        return this.connection.to_team_table_id;
+      } else {
+        return this.connection.from_team_table_id;
+      }
+    },
+    gotoChat() {
+      this.$router.push({ name: 'ChatWindow', query: { connection_id: this.connection.connection_id } });
+    }
   },
 }
 </script>
@@ -763,5 +782,8 @@ export default {
 }
 .flipped {
   padding: 50px 10px;
+}
+.flip-icon {
+  width: 16px;
 }
 </style>

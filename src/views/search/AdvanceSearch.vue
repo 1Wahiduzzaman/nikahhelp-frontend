@@ -119,6 +119,7 @@ export default {
       getNextUserId: "search/getNextUserId",
       getPreviousUserId: "search/getPreviousUserId",
       fetchProfileDetail: 'search/fetchProfileDetail',
+      getCandidateInfo: 'search/getCandidateInfo',
     }),
     ...mapMutations({
       clearProfiles: "search/clearProfiles",
@@ -217,9 +218,14 @@ export default {
     },
     toggleCollapse() {
       this.collapsed = !this.collapsed;
+    },
+    async handleCandidateInfo() {
+       const info = await this.getCandidateInfo('v1/candidate-of-team')
+       console.log(info, 'infooooooooooooooooooooo')
     }
   },
   created() {
+    this.handleCandidateInfo();
     this.fetchInitialCandidate();
   },
 };
