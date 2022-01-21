@@ -63,7 +63,7 @@
                   />
                 </a>
                 <template v-slot:overlay>
-                  <NotificationPopup :items="[]" :use-for="'shortlist'" />
+                  <NotificationPopup :items="shortlisetdCandidates" :use-for="'shortlist'" />
                 </template>
               </a-dropdown>
             </li>
@@ -338,7 +338,7 @@
                   <template v-slot:overlay>
                     <NotificationPopup
                         count="29"
-                        :items="[]"
+                        :items="shortlisetdCandidates"
                         :use-for="'shortlist'"
                     />
                   </template>
@@ -515,6 +515,9 @@ export default {
         count = count + item && item.last_group_message && item.last_message.seen == 0 ? 1 : 0;
       });
       return count;
+    },
+    shortlisetdCandidates() {
+      return this.$store.state.shortList.shortlistedItems;
     }
   },
   methods: {

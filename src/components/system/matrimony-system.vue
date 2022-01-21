@@ -132,6 +132,10 @@ export default {
         }
       })];
     },
+    async loadShortListedCandidates() {
+      let {data} = await ApiService.get('/v1/short-listed-candidates').then(res => res.data);
+      this.$store.state.shortList.shortlistedItems = data;
+    }
   },
   mounted() {
     let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -158,6 +162,7 @@ export default {
     if(this.active_team_id) {
       this.loadChatHistory();
       this.loadTeamChat();
+      this.loadShortListedCandidates();
     }
   },
 };

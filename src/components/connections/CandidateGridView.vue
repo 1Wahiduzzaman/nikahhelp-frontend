@@ -136,53 +136,95 @@
       </div>
       <div class="flip-card-back">
         <v-card class="mx-auto shadow-default shortlist-card flipped">
-          <h6 class="pb-2 pt-3">This Profile Connection Overview</h6>
-          <table class="table table-borderless overview-table">
-            <tr>
-              <td class="td-60">Connection Status</td>
-              <td class="text-end">:</td>
-              <td class="text-capitalize">{{ connection.connection }}</td>
-            </tr>
-            <tr>
-              <td class="td-60">Connected date</td>
-              <td class="text-end">:</td>
-              <td>{{ dateFromDateTime(connection.responded_at) }}</td>
-            </tr>
-            <tr>
-              <td class="td-60">Connection requested by</td>
-              <td class="text-end">:</td>
-              <td>{{ connection.requested_by.full_name }}</td>
-            </tr>
-            <tr>
-              <td class="td-60">Request Date</td>
-              <td class="text-end">:</td>
-              <td>{{ dateFromDateTime(connection.requested_at) }}</td>
-            </tr>
-          </table>
+          <h6 class="pt-4">This Profile Connection Overview</h6>
 
-          <h6 class="pb-2 pt-8">This Profile Team Overview</h6>
-          <table class="table table-borderless overview-table">
-            <tr>
-              <td class="td-60">Team name</td>
-              <td class="text-end">:</td>
-              <td>{{ connection.to_team_name }}</td>
-            </tr>
-            <tr>
-              <td class="td-60">Team members</td>
-              <td class="text-end">:</td>
-              <td>{{ connection.total_teamMember }}</td>
-            </tr>
-            <tr>
-              <td class="td-60">Team creation date</td>
-              <td class="text-end">:</td>
-              <td>{{ dateFromTimeStamp(connection.team_created_date) }}</td>
-            </tr>
-            <tr>
-              <td class="td-60">Team created by</td>
-              <td class="text-end">:</td>
-              <td>{{ connection.team_created_by }}</td>
-            </tr>
-          </table>
+          <div class="">
+            <h6 class="fs-14">Connection Status</h6>
+            <h6 class="text-capitalize fs-16 ml-4">{{ connection.connection }}</h6>
+          </div>
+
+          <div>
+            <h6 class="fs-14">Connected date</h6>
+            <h6 class="text-capitalize fs-16 ml-4">{{ dateFromDateTime(connection.responded_at) }}</h6>
+          </div>
+
+          <div>
+            <h6 class="fs-14">Connection requested by</h6>
+            <h6 class="text-capitalize fs-16 ml-4">{{ connection.requested_by.full_name }}</h6>
+          </div>
+
+          <div>
+            <h6 class="fs-14">Request Date</h6>
+            <h6 class="text-capitalize fs-16 ml-4">{{ dateFromDateTime(connection.requested_at) }}</h6>
+          </div>
+
+<!--          <table class="table table-borderless overview-table">-->
+<!--            <tr>-->
+<!--              <td class="td-60">Connection Status</td>-->
+<!--              <td class="text-end">:</td>-->
+<!--              <td class="text-capitalize">{{ connection.connection }}</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td class="td-60">Connected date</td>-->
+<!--              <td class="text-end">:</td>-->
+<!--              <td>{{ dateFromDateTime(connection.responded_at) }}</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td class="td-60">Connection requested by</td>-->
+<!--              <td class="text-end">:</td>-->
+<!--              <td>{{ connection.requested_by.full_name }}</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td class="td-60">Request Date</td>-->
+<!--              <td class="text-end">:</td>-->
+<!--              <td>{{ dateFromDateTime(connection.requested_at) }}</td>-->
+<!--            </tr>-->
+<!--          </table>-->
+
+          <h6 class="pt-3">This Profile Team Overview</h6>
+
+          <div>
+            <h6 class="fs-14">Team name</h6>
+            <h6 class="text-capitalize fs-16 ml-4">{{ connection.to_team_name }}</h6>
+          </div>
+
+          <div>
+            <h6 class="fs-14">Team members</h6>
+            <h6 class="text-capitalize fs-16 ml-4">{{ connection.total_teamMember }}</h6>
+          </div>
+
+          <div>
+            <h6 class="fs-14">Team creation date</h6>
+            <h6 class="text-capitalize fs-16 ml-4">{{ dateFromTimeStamp(connection.team_created_date) }}</h6>
+          </div>
+
+          <div>
+            <h6 class="fs-14">Team created by</h6>
+            <h6 class="text-capitalize fs-16 ml-4">{{ connection.team_created_by }}</h6>
+          </div>
+
+<!--          <table class="table table-borderless overview-table">-->
+<!--            <tr>-->
+<!--              <td class="td-60">Team name</td>-->
+<!--              <td class="text-end">:</td>-->
+<!--              <td>{{ connection.to_team_name }}</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td class="td-60">Team members</td>-->
+<!--              <td class="text-end">:</td>-->
+<!--              <td>{{ connection.total_teamMember }}</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td class="td-60">Team creation date</td>-->
+<!--              <td class="text-end">:</td>-->
+<!--              <td>{{ dateFromTimeStamp(connection.team_created_date) }}</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td class="td-60">Team created by</td>-->
+<!--              <td class="text-end">:</td>-->
+<!--              <td>{{ connection.team_created_by }}</td>-->
+<!--            </tr>-->
+<!--          </table>-->
         </v-card>
       </div>
     </div>
@@ -733,7 +775,7 @@ export default {
 .flip-card {
   background-color: #FFFFFF;
   width: 100%;
-  height: 520px;
+  height: 510px;
   perspective: 1000px;
 }
 .flip-card-inner {
@@ -781,7 +823,7 @@ export default {
   }
 }
 .flipped {
-  padding: 50px 10px;
+  padding: 15px 10px;
 }
 .flip-icon {
   width: 16px;

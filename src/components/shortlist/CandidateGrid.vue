@@ -71,78 +71,86 @@
 
     <div class="flex flex-wrap justify-space-between px-4">
       <v-btn
-          class="text-capitalize"
+          class="text-capitalize btn-connection color-primary"
           style="width:47%"
           rounded
+          outlined
           small
-          color="deep-purple darken-1"
+          color=""
           dark
           @click="actionShortlist"
       >
         <div class="flex justify-center align-center">
           <img
               style="height: 13px; margin-right: 4px;"
-              src="@/assets/icon/star-fill-white.svg"
+              src="@/assets/icon/star-fill-secondary.svg"
               alt=""
           >
           {{ shortlisted ? 'Unlist' : 'Shortlist' }}
         </div>
       </v-btn>
       <v-btn
-          class="text-capitalize"
+          class="text-capitalize btn-connection color-primary"
           style="width:47%"
           rounded
+          outlined
           small
-          color="deep-purple darken-1"
+          color=""
           dark
           @click="actionConnection"
       >
         <div class="flex justify-center align-center">
-          <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/connect.svg" alt="">
+          <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/connection-secondary.svg" alt="">
           {{ item.is_connect ? 'Connected' : 'Connect' }}
         </div>
       </v-btn>
     </div>
     <div class="mt-3 px-4 flex flex-wrap justify-space-between">
       <v-btn
-          class="text-capitalize"
+          class="text-capitalize btn-connection color-primary"
           style="width:47%"
           rounded
+          outlined
           small
-          color="deep-purple darken-1"
+          color=""
           dark
           @click="actionTeamlist"
       >
         <div class="flex justify-center align-center">
-          <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/teamlist.svg" alt="">
+          <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/group-fill-secondary.svg" alt="">
           {{ teamlisted ? 'Unlist team' : 'Teamlist' }}
         </div>
       </v-btn>
       <v-btn
-          class="text-capitalize"
+          class="text-capitalize btn-connection color-primary"
           style="width:47%"
           rounded
+          outlined
           small
-          color="pink darken-1"
+          color=""
           dark
           @click="actionBlock"
       >
         <div class="flex justify-center align-center">
-          <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/block.svg" alt="">
+          <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/block-secondary.svg" alt="">
           Block
         </div>
       </v-btn>
     </div>
     <div class="px-4 pb-4 mt-4">
       <v-btn
-          class="mt-1 text-capitalize"
+          class="mt-1 text-capitalize btn-connection color-primary"
           block
           rounded
-          color="deep-purple darken-1"
+          outlined
+          color=""
           dark
           @click="viewProfile"
       >
-        view profile
+        <div class="flex justify-center align-center">
+          <a-icon type="user" class="mr-2" />
+          View Profile
+        </div>
       </v-btn>
     </div>
   </v-card>
@@ -195,12 +203,14 @@ export default {
       if(this.shortListedIds.includes(parseInt(this.item.user_id))) {
         ApiService.delete(`/v1/delete-short-listed-by-candidates?user_id=${this.item.user_id}`).then(res => {
           this.$emit("loadList");
+          this.loadShortListedCandidates();
         }).catch(e => {
           console.log(e);
         });
       } else {
         ApiService.post(`/v1/short-listed-candidates/store`, { user_id: this.item.user_id, shortlisted_by: this.loggedUser.id }).then(res => {
           this.$emit("loadList");
+          this.loadShortListedCandidates();
         }).catch(e => {
           console.log(e);
         });
@@ -304,6 +314,10 @@ export default {
         center: true,
       });
     },
+    async loadShortListedCandidates() {
+      let {data} = await ApiService.get('/v1/short-listed-candidates').then(res => res.data);
+      this.$store.state.shortList.shortlistedItems = data;
+    }
   }
 }
 </script>
@@ -314,6 +328,17 @@ export default {
   max-width: 300px;
   @media (min-width: 1200px) {
     max-width: 374px;
+  }
+}
+.btn-connection:hover {
+  box-shadow: 0 1px 6px #787474;
+  border: 1px solid white !important;
+  background: $bg-primary;
+  color: $color-white !important;
+  div {
+    img {
+      filter: brightness(0) invert(1);
+    }
   }
 }
 </style>

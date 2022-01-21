@@ -132,6 +132,7 @@
 <script>
 import {mapMutations, mapActions} from 'vuex'
 import JwtService from "@/services/jwt.service";
+import ApiService from '@/services/api.service';
 import ButtonComponent from '@/components/atom/ButtonComponent'
   export default {
     name: 'CandidateListCard',
@@ -290,6 +291,7 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         }
         try {
           await this.shortListCandidate(data)
+          await this.loadShortListedCandidates();
         } catch (e) {
           if(e.response) {
             this.showError(e.response.data.message)
@@ -328,6 +330,7 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         }
         try {
           await this.shortListCandidate(data)
+          await this.loadShortListedCandidates();
         } catch (e) {
           if(e.response) {
             this.showError(e.response.data.message)
@@ -404,6 +407,10 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         setTimeout(() => {
           this.setComponent('RightSidebar')
         }, 10)
+      },
+      async loadShortListedCandidates() {
+        let {data} = await ApiService.get('/v1/short-listed-candidates').then(res => res.data);
+        this.$store.state.shortList.shortlistedItems = data;
       },
       reserve () {
         this.loading = true

@@ -71,43 +71,49 @@
 
     <div class="mt-3 px-4 flex flex-wrap justify-space-between pb-3">
       <v-btn
-          class="text-capitalize"
+          class="text-capitalize btn-connection color-primary"
           style="width:47%"
           rounded
           small
-          color="deep-purple darken-1"
+          outlined
+          color=""
           dark
           @click="unblockAction"
       >
         <div class="flex justify-center align-center">
-          <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/teamlist.svg" alt="">
+          <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/block-secondary.svg" alt="">
           Unblock
         </div>
       </v-btn>
       <v-btn
-          class="text-capitalize"
+          class="text-capitalize btn-connection color-primary"
           style="width:47%"
           rounded
+          outlined
           small
-          color="pink darken-1"
+          color=""
           dark
       >
         <div class="flex justify-center align-center">
-          <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/block.svg" alt="">
+          <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/block-secondary.svg" alt="">
           Report
         </div>
       </v-btn>
     </div>
     <div class="px-4 pb-4">
       <v-btn
-          class="mt-1 text-capitalize"
+          class="mt-1 text-capitalize btn-connection color-primary"
           block
           rounded
-          color="deep-purple darken-1"
+          outlined
+          color=""
           dark
           @click="viewProfile"
       >
-        view profile
+        <div class="flex justify-center align-center">
+          <a-icon type="user" class="mr-2" />
+          View Profile
+        </div>
       </v-btn>
     </div>
   </v-card>
@@ -157,6 +163,17 @@ export default {
   max-width: 300px;
   @media (min-width: 1200px) {
     max-width: 374px;
+  }
+}
+.btn-connection:hover {
+  box-shadow: 0 1px 6px #787474;
+  border: 1px solid white !important;
+  background: $bg-primary;
+  color: $color-white !important;
+  div {
+    img {
+      filter: brightness(0) invert(1);
+    }
   }
 }
 </style>
