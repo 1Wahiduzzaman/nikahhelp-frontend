@@ -930,6 +930,7 @@
                 <a-textarea
                   @blur="onValueChange"
                   :rows="3"
+                  showCount
                   :maxLength="200"
                   autocomplete="off"
                   autocorrect="off"
@@ -986,19 +987,36 @@
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="pre_description" prop="pre_description">
-                <a-textarea
+                <!-- <a-textarea
                   @blur="onValueChange"
                   :rows="3"
+                  showCount
                   :maxLength="250"
                   autocomplete="off"
                   autocorrect="off"
                   autocapitalize="off"
                   spellcheck="false"
                   id="pre_description"
-                  v-model.lazy.lazy="preferenceData.pre_description"
+                  v-model.lazy="preferenceData.pre_description"
                   placeholder="* Sample Text"
                   class="w-full form-right-input"
-                />
+                /> -->
+                <v-textarea
+                  counter
+                  @blur="onValueChange"
+                  :rows="3"
+                  outlined
+                  shaped
+                  :maxLength="250"
+                  autocomplete="off"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  spellcheck="false"
+                  id="pre_description"
+                  v-model="preferenceData.pre_description"
+                  placeholder="* Sample Text"
+                  class="w-full form-right-input"
+                ></v-textarea>
               </a-form-model-item>
             </div>
             <div class="col-12 mobile-margin mobile-help none-padding">
