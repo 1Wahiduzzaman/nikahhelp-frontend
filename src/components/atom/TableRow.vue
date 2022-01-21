@@ -28,3 +28,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+td {
+    vertical-align: baseline;
+}
+</style>
