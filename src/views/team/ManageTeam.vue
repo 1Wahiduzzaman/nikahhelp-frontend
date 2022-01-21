@@ -36,7 +36,7 @@
             </template>
           </a-modal>
           <Banner v-if="1 !== 1" />
-          <div class="row mx-0" id="team-container">
+          <div class="row mx-0 team-container" id="team-container">
             <TeamDetailsCard
               v-for="(team, teamIndex) in teams"
               :key="team.id"
@@ -385,5 +385,8 @@ export default {
       font-size: 18px;
     }
   }
+}
+.team-container {
+  margin-left: 6px !important;
 }
 </style>

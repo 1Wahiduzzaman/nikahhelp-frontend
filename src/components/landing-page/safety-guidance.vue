@@ -36,6 +36,14 @@
 </ul>
     </p>
     <p>Please bear these points in mind and  you can always report or seek clarification from  the MatrimonyAssist Admin Team for guidance.</p>
+    
+    <h5>Why do we request ID for the candidate and at least one representative?  </h5>
+    <p>We want you, your friends and family members that are assisting  in the search for a marriage partner and life companion,  to be confident that every candidate on Matrimony Assist is a genuine person.  </p>
+    <p>In addition at least one other person in their team knows them and that person is a real person, whose ID has been verified also. </p>
+    <p>This will help enhance trust between teams that are connecting and chatting with each other and  reduce romance scams. We can take appropriate administrative and legal action against those who act in bad faith if they are known and their IDs have been verified. </p>
+    <p>We also want to deter people from registering who are likely to cause nuisance and have no real intention of looking for a marriage partner and a life companion. </p>
+    <p>We have zero tolerance for such behaviour and if this means some people may not join MatrimonyAssist as they do not wish to be verified, then it is  a decision we respect. </p>
+    <p>We believe it is not acceptable to take advantage of the emotions and trust of genuine people who are on MatrimonyAssist to find a loving, caring, honest, ethical, emotionally mature  and compatible life long companion and marriage partner. </p>
     </div>
     <Footer />
   </div>

@@ -1710,17 +1710,17 @@ export default {
 		async onChangeActivateTeam(checked) {
 			if (checked) {
 				let returnedResult = await this.turnOnTeam();
-				console.log(this.teamData);
-				//JwtService.saveTeamIDAppWide(this.teamData.team_id);
 				this.$store.commit("setTeamInfo", this.teamData);
 				if (returnedResult) {
 					this.turnOn = true;
 				} else {
 					this.turnOn = false;
+          this.$router.go();
 				}
 			} else {
 				this.$store.commit("setTeamInfo", null);
 				JwtService.destroyTeamIDAppWide();
+        this.$router.go();
 			}
 		},
 		startConversation() {
@@ -2348,6 +2348,12 @@ export default {
 }
 .bright-20 {
   border-radius: 0 20px 20px 0;
+}
+.col-lg-6 {
+  padding: 12px 8px !important;
+}
+.col-xl-3 {
+  padding: 12px 8px !important;
 }
 // end css for team-card
 </style>
