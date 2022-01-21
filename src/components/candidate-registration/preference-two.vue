@@ -1,7 +1,7 @@
 <template>
   <div id="accordion" class="preference">
     <div class="section-heading heading-text">
-      <h5>So, what kind of companion you are looking for </h5>
+      <h5>So, what kind of companion you are looking for</h5>
       <p>Your preferences about your companion</p>
     </div>
 
@@ -95,7 +95,7 @@
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />What is your preferred height range for your prospective
-               companion?
+                companion?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -156,7 +156,8 @@
                   "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Do you have a preference about where your companion comes from?
+                />Do you have a preference about where your companion comes
+                from?
               </div>
             </div>
             <div class="col-12 col-md-6 non-padding-mobile-margin">
@@ -195,6 +196,7 @@
                   <div class="col-md-6 mobile-margin">
                     <v-select
                       :clearable="false"
+                      :loading="loading"
                       id="preferred_cities0"
                       class="style-chooser"
                       label="name"
@@ -203,8 +205,9 @@
                       :options="preferenceData.allowedCity.listOne"
                       @input="onValueChange"
                       ><template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
+                        <a-icon type="down" />
+                      </template>
+                    </v-select>
                   </div>
                 </div>
 
@@ -397,6 +400,7 @@
                   <div class="col-md-6 mobile-margin">
                     <v-select
                       :clearable="false"
+                      :loading="loadingDisallowed"
                       id="blocked_cities0"
                       class="style-chooser"
                       placeholder="Select City"
@@ -518,8 +522,8 @@
                   v-if="preferenceData.pre_ethnicities"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Which ethnic background do you prefer your prospective companion
-                to be from?
+                />Which ethnic background do you prefer your prospective
+                companion to be from?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -580,7 +584,8 @@
                   "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What is the preferred nationality of your prospective companion?
+                />What is the preferred nationality of your prospective
+                companion?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -802,7 +807,10 @@
                   v-model.lazy="preferenceData.pre_occupation"
                   placeholder="Please select your preferred occupation"
                   label="name"
-                  :options="[`Don't Mind`, ...candidateDetails.occupations]"
+                  :options="[
+                    { id: `Don't Mind`, name: `Don't Mind` },
+                    ...candidateDetails.occupations,
+                  ]"
                 >
                   <template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
@@ -929,6 +937,7 @@
                 <a-textarea
                   @blur="onValueChange"
                   :rows="3"
+                  showCount
                   :maxLength="200"
                   autocomplete="off"
                   autocorrect="off"
@@ -998,6 +1007,22 @@
                   placeholder="maximum 1000 charaters"
                   class="w-full form-right-input"
                 />
+                <!-- <v-textarea
+                  counter
+                  @blur="onValueChange"
+                  :rows="3"
+                  outlined
+                  shaped
+                  :maxLength="1000"
+                  autocomplete="off"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  spellcheck="false"
+                  id="pre_description"
+                  v-model="preferenceData.pre_description"
+                  placeholder="* Sample Text"
+                  class="w-full form-right-input"
+                ></v-textarea> -->
               </a-form-model-item>
             </div>
             <div class="col-12 mobile-margin mobile-help none-padding">
@@ -1118,7 +1143,6 @@
             </div>
           </div> -->
 
-
           <!-- Looks and Appearance -->
           <div class="row pt-3 border-bottom">
             <div class="col-12 col-md-6">
@@ -1187,7 +1211,8 @@
                   v-if="preferenceData.pre_religiosity_or_faith_rate"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Religiosity/faith compatibility in practice, or commitment to improve
+                />Religiosity/faith compatibility in practice, or commitment to
+                improve
               </div>
             </div>
             <div class="col-12 col-md-6">
@@ -1425,7 +1450,8 @@
                   v-if="preferenceData.pre_good_talker_rate"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Good communicator and great to have two way converstations with
+                />Good communicator and great to have two way converstations
+                with
               </div>
             </div>
             <div class="col-12 col-md-6">
@@ -1543,7 +1569,7 @@
                   v-if="preferenceData.pre_family_social_status_rate"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Family,  social status, respectability
+                />Family, social status, respectability
               </div>
             </div>
             <div class="col-12 col-md-6">
@@ -1771,6 +1797,8 @@ export default {
       heightTV: HEIGHTS,
       employment_Statuses: Employment_Statuses,
       ethnicityList: ethnicities,
+      loading: false,
+      loadingDisallowed: false,
     };
   },
   mounted() {},
@@ -1972,9 +2000,16 @@ export default {
         .catch((error) => {});
     },
     async onChangeCountry(e, name, action) {
+      if (action === "allowed") {
+        this.loading = true;
+      } else {
+        this.loadingDisallowed = true;
+      }
       const res = await ApiService.get(`v1/utilities/cities/${e.id}`);
 
       if (res.status === 200) {
+        this.loadingDisallowed = false;
+        this.loading = false;
         switch (name) {
           case "listOne":
             action == "allowed"

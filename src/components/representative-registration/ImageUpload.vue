@@ -280,7 +280,7 @@ export default {
                 per_avatar_url: data.data.data.gallery.per_avatar_url,
                 per_main_image_url: data.data.data.gallery.per_main_image_url,
               },
-              current: 2,
+              current: 1,
             });
           }
           if (data.data.status && data.data.status == "FAIL") {
