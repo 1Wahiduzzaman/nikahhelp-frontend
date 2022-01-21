@@ -546,6 +546,12 @@
 			<!-- Subscription Information -->
 			<div class="team-card-footer" :class="{'disabled-team': !turnOn && !tempActive}">
 				<div class="left">
+          <div class="subscription-info">
+            <a :href="'subscription/' + teamData.team_id"
+            ><img src="../../assets/icon/renew.svg" alt="Renew Subscription" class="subscription-img" />
+              <span class="ml-2">{{ teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription' }}</span></a
+            >
+          </div>
 					<p>Team Creation Date : {{ formateDate(teamData.created_at) }}</p>
 					<p class="text-success" v-if="!subTextShow">
 						Subscription Expire :
@@ -555,28 +561,22 @@
 						Subscription Expire :
 						{{ formateDate(teamData.subscription_expire_at) }}
 					</p>
-          <div class="d-subs-mb">
-            <a :href="'subscription/' + teamData.team_id"
-            ><img src="../../assets/icon/renew.svg" alt="Renew Subscription" class="subscription-img" />
-              <span class="ml-2">{{ teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription' }}</span></a
-            >
-          </div>
 				</div>
-				<div class="right d-subs-dk">
-          <a-tooltip
-              placement="top"
-              :title="teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription'"
-          >
-            <a :href="'subscription/' + teamData.team_id" class="text-center"
-            ><img src="../../assets/icon/renew.svg" alt="Renew Subscription"/>
-              <span class="display-subs-text">{{ teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription' }}</span></a
-            >
-          </a-tooltip>
-<!--					<a :href="'subscription/' + teamData.team_id"-->
-<!--						><img src="../../assets/icon/renew.svg" alt="Renew Subscription" />-->
-<!--						<span>{{ teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription' }}</span></a-->
-<!--					>-->
-				</div>
+<!--				<div class="right d-subs-dk">-->
+<!--          <a-tooltip-->
+<!--              placement="top"-->
+<!--              :title="teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription'"-->
+<!--          >-->
+<!--            <a :href="'subscription/' + teamData.team_id" class="text-center"-->
+<!--            ><img src="../../assets/icon/renew.svg" alt="Renew Subscription"/>-->
+<!--              <span class="display-subs-text">{{ teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription' }}</span></a-->
+<!--            >-->
+<!--          </a-tooltip>-->
+<!--&lt;!&ndash;					<a :href="'subscription/' + teamData.team_id"&ndash;&gt;-->
+<!--&lt;!&ndash;						><img src="../../assets/icon/renew.svg" alt="Renew Subscription" />&ndash;&gt;-->
+<!--&lt;!&ndash;						<span>{{ teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription' }}</span></a&ndash;&gt;-->
+<!--&lt;!&ndash;					>&ndash;&gt;-->
+<!--				</div>-->
 			</div>
 		</div>
 		<!-- end box card s -->
@@ -2354,6 +2354,15 @@ export default {
 }
 .col-xl-3 {
   padding: 12px 8px !important;
+}
+.subscription-info {
+  a {
+    span {
+      font-size: 12px;
+      color: #e51f76;
+      text-decoration: underline;
+    }
+  }
 }
 // end css for team-card
 </style>

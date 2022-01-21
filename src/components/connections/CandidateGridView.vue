@@ -1,7 +1,7 @@
 <template>
-  <div class="m-2 position-relative flip-card" :class="{'flip-card-toggle': rotated}">
+  <div class="m-2 flip-card" :class="{'flip-card-toggle': rotated}">
     <div class="flip-card-inner">
-      <div class="flip-card-front">
+      <div class="flip-card-front ">
 <!--        <div class="col-12" id="flex-container">-->
 <!--          <img-->
 <!--              :src="connection.candidateInfo && connection.candidateInfo.candidate_image ? connection.candidateInfo.candidate_image : avatarSrc"-->
@@ -69,7 +69,7 @@
 <!--        </div>-->
 
         <v-card
-            class="mx-auto shadow-default shortlist-card"
+            class="mx-auto shadow-default shortlist-card position-relative"
         >
           <template slot="progress">
             <v-progress-linear
@@ -93,7 +93,7 @@
               <li class="flex-between-start">
                 <span class="flex-30 label-text">Team</span>
                 <span class="flex-70">:
-                    <span class="ml-1"><router-link class="team-link" :to="{name: 'ManageTeam', query: {team_id: getTeamLink()}}">{{ getTeamName() }}</router-link>
+                    <span class="ml-1 team-link cursor-pointer" @click="rotated = !rotated">{{ getTeamName() }}
                     </span>
                 </span>
               </li>
@@ -124,7 +124,7 @@
           </div>
           <v-divider class="mx-4"></v-divider>
 
-          <grid-buttons class="px-4 pb-3" :type="type" @block="block"
+          <grid-buttons class="pb-3" :type="type" @block="block"
                         @disconnectTeam="disconnectTeam"
                         @startConversation="startConversation"
                         @viewProfile="viewProfile"
@@ -135,7 +135,7 @@
 
       </div>
       <div class="flip-card-back">
-        <v-card class="mx-auto shadow-default shortlist-card flipped">
+        <v-card class="mx-auto shadow-default shortlist-card flipped position-relative">
           <h6 class="pt-4">This Profile Connection Overview</h6>
 
           <div class="">
@@ -234,7 +234,7 @@
 <!--             'connected-bg': type == 'connected',-->
 <!--             'request-received-bg': type == 'Request received',-->
 <!--             'request-sent-bg': type == 'Request send',}"></div>-->
-    <div class="position-absolute icon-rotate-box cursor-pointer" @click="rotated = !rotated">
+    <div class="position-absolute icon-rotate-box cursor-pointer" @click="rotated = !rotated" :class="{'invert-filter': rotated}">
 <!--      <a-icon type="rollback" class="rotate-icon" size="large" />-->
       <img src="@/assets/icon/flip_icon.svg" alt="icon" class="flip-icon" />
     </div>
@@ -798,8 +798,11 @@ export default {
   transform: rotateY(180deg);
 }
 .icon-rotate-box {
-  left: 15px;
-  top: 5px;
+  left: 35px;
+  top: 10px;
+}
+.invert-filter {
+  filter: invert(1);
 }
 .rotate-icon:hover {
   color: $color-brand;
@@ -817,7 +820,8 @@ export default {
   }
 }
 .shortlist-card {
-  max-width: 300px;
+  //max-width: 300px;
+  width: 100%;
   @media (min-width: 1200px) {
     max-width: 374px;
   }

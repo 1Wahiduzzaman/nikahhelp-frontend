@@ -263,6 +263,7 @@
                   </template>
                 </a-dropdown>
                 <img src="@/assets/icon/verified_icon.svg" alt="icon" class="verify-icon ml-1" width="14px" v-if="loggedUser && parseInt(loggedUser.status) === 3" />
+                <img src="@/assets/icon/non_verified_icon.svg" alt="icon" class="verify-icon ml-1 animate-flicker" width="14px" v-else />
 <!--                <span class="role px-2 ml-1 shrink-none">-->
 <!--&lt;!&ndash;                  {{ loggedUser && parseInt(loggedUser.status) === 3 ? 'V' : 'Not verified' }}&ndash;&gt;-->
 <!--                </span>-->
@@ -588,7 +589,8 @@ export default {
 .notification-wrapper {
   padding: 10px;
   background-color: #fff;
-  box-shadow: 0 3px 8px 1px #d3d3d3;
+  //box-shadow: 0 3px 8px 1px #d3d3d3;
+  box-shadow: 0 3px 8px 1px rgb(0 0 0 / 12%);
   border-radius: 5px;
 }
 .header-nav-icons .nav-item {
@@ -722,5 +724,31 @@ export default {
     padding-top: 0;
     padding-bottom: 0;
   }
+}
+@keyframes flickerAnimation {
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-o-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-moz-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-webkit-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+.animate-flicker {
+  -webkit-animation: flickerAnimation 1s infinite;
+  -moz-animation: flickerAnimation 1s infinite;
+  -o-animation: flickerAnimation 1s infinite;
+  animation: flickerAnimation 1s infinite;
 }
 </style>
