@@ -1823,6 +1823,7 @@ export default {
     handleSubmitFormOne() {
       this.$refs.preferenceFormOne.validate((valid) => {
         if (valid) {
+          window.scrollTo(0, 0);
           this.activeKey = ["2"];
         } else {
           setTimeout(() => {
