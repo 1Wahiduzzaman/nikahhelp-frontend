@@ -91,15 +91,15 @@
 								<option value="" disabled>Select Employment Status</option>
 								<option value="Don't Mind">Don't Mind</option>
 								<option value="Unemployed">Employed full-time</option>
-								<option value="Unemployed">Employed part-time</option>
-								<option value="Employed">Self-employed</option>
-								<option value="Employed">Homemaker</option>
-								<option value="Employed">Student</option>
-								<option value="Employed">Retired</option>
-								<option value="Employed">On professional training</option>
-								<option value="Employed">On apprenticeship training</option>
-								<option value="Employed">Own a business</option>
-								<option value="Employed">Other</option>
+								<option value="Employed part-time">Employed part-time</option>
+								<option value="Self-employed">Self-employed</option>
+								<option value="Homemaker">Homemaker</option>
+								<option value="Student">Student</option>
+								<option value="Retired">Retired</option>
+								<option value="On professional training">On professional training</option>
+								<option value="On apprenticeship training">On apprenticeship training</option>
+								<option value="Own a business">Own a business</option>
+								<option value="Other">Other</option>
 							</select>
 						</div>
 					</div>
@@ -500,7 +500,9 @@ export default {
 		},
 
 		setAttr(attr, value) {
-			this[attr] = value
+			if(value) {
+				this[attr] = value
+			}
 		},
 
 		handleSearch() {

@@ -52,27 +52,33 @@
              <table> 
                 <TableRow 
                     title="Age"
+                    :value="profile.preference.pre_partner_age_min + ' to ' + profile.preference.pre_partner_age_max"
                 />
                 <TableRow 
                     title="Height"
+                    
                 />
                 <TableRow 
                     title="Country & Cities Preferred"
+                    :value="getCountry()"
                 />
                 <TableRow 
                     title="Religion"
                 />
                 <TableRow 
                     title="Ethnicity"
+                    :value="profile.preference.pre_ethnicities"
                 />
                 <TableRow 
                     title="Nationality"
+                    :value="getNationality()"
                 />
                 <TableRow 
                     title="Education"
                 />
                 <TableRow 
                     title="Profession"
+                    :value="getProfession()"
                 />
                 <!-- <tr>
                     <td class="text--disabled text-subtitle-1" style="width: 50px">Country & Cities Preferred</td>
@@ -116,6 +122,32 @@ export default {
         }),
         infoArr() {
             return Object.keys(this.profile)
+        }
+    },
+    methods: {
+        getCountry() {
+            let cityArr = [];
+            if(this.profile.preference.preferred_cities.length) {
+                this.profile.preference.preferred_cities.map(city => {
+                    cityArr.push(city.name)
+                })
+            }
+            return cityArr.join(', ')
+        },
+        getNationality() {
+            let cityArr = [];
+            if(this.profile.preference.preferred_nationality.length) {
+                this.profile.preference.preferred_nationality.map(city => {
+                    cityArr.push(city.name)
+                })
+            }
+            return cityArr.join(', ')
+        },
+        getProfession() {
+            if(this.profile.preference.pre_occupation.length) {
+                return JSON.parse(this.profile.preference.pre_occupation).join(', ')
+            }
+            return ''
         }
     }
 }
