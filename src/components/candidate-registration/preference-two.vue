@@ -1,7 +1,7 @@
 <template>
   <div id="accordion" class="preference">
     <div class="section-heading heading-text">
-      <h5>So, what kind of companion you are looking for </h5>
+      <h5>So, what kind of life companion are you looking for </h5>
       <p>Your preferences about your companion</p>
     </div>
 
@@ -17,7 +17,7 @@
       </template>
       <a-collapse-panel
         key="1"
-        header="1. Preferences about your prospective companion"
+        header="1.1 Preferences about your prospective companion"
       >
         <a-form-model
           v-if="preferenceData && activeKey == 1"
@@ -77,7 +77,7 @@
                 id="collapseExampleAge"
               >
                 <div class="card card-body bubble">
-                  Provide your preferred age range
+                 Provide your preferred age range
                 </div>
               </div>
             </div>
@@ -463,7 +463,7 @@
                 id="pre_partner_religion_id"
                 :reduce="(option) => option.id"
                 class="nationality-select form-right-content w-full"
-                placeholder="Select your preferred religion"
+                placeholder="you may select up to three"
                 @input="onMultiValueChange($event, 'pre_partner_religion_id')"
                 v-model.lazy="preferenceData.pre_partner_religion_id"
                 label="name"
@@ -527,7 +527,7 @@
                 :clearable="false"
                 id="pre_ethnicities"
                 class="style-chooser w-full form-right-content"
-                placeholder="Please select your ethnicities"
+                placeholder="you may select up to three"
                 @input="onValueChange"
                 v-model.lazy="preferenceData.pre_ethnicities"
                 label="name"
@@ -597,7 +597,7 @@
                     onNationalityValueChange($event, 'preferred_nationality')
                   "
                   v-model.lazy="preferenceData.preferred_nationality"
-                  placeholder="Select your Nationality"
+                  placeholder="you may select up to three"
                   label="name"
                   :options="[
                     { id: -1, name: `Don't Mind` },
@@ -664,7 +664,7 @@
                   class="style-chooser w-full form-right-content"
                   @input="onValueChange"
                   :reduce="(option) => option.id"
-                  placeholder="Please select your education status"
+                  placeholder="please select"
                   v-model.lazy="preferenceData.pre_study_level_id"
                   label="name"
                   :options="[
@@ -731,7 +731,7 @@
                   class="style-chooser w-full form-right-content"
                   :reduce="(option) => option.value"
                   @input="onValueChange"
-                  placeholder="Please select your employment status"
+                  placeholder="please select"
                   v-model.lazy="preferenceData.pre_employment_status"
                   label="name"
                   :options="[
@@ -787,7 +787,7 @@
                   "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What occupation do you prefer your prospective companion to
+                />What occupation(s) do you prefer your prospective companion to
                 have?
               </div>
             </div>
@@ -800,7 +800,7 @@
                   :reduce="(option) => option.name"
                   class="nationality-select form-right-content w-full"
                   v-model.lazy="preferenceData.pre_occupation"
-                  placeholder="Please select your preferred occupation"
+                  placeholder="you may select up to three"
                   label="name"
                   :options="[`Don't Mind`, ...candidateDetails.occupations]"
                 >
@@ -936,7 +936,7 @@
                   spellcheck="false"
                   id="pre_other_preference"
                   v-model.lazy.lazy="preferenceData.pre_other_preference"
-                  placeholder="here you can write other things that are important to you but could not provide elsewhere above"
+                  placeholder="maximum 500 characters"
                   class="w-full form-right-content"
                 />
               </a-form-model-item>
@@ -967,7 +967,7 @@
                 data-parent="#accordion"
                 id="otherRequirementsForPartner"
               >
-                <div class="card card-body bubble">Any other requirements</div>
+                <div class="card card-body bubble">Here you can write other things that are important to you but could not provide elsewhere above</div>
               </div>
             </div>
           </div>
@@ -1048,7 +1048,7 @@
       <!-- Important things for you (Ratings) -->
       <a-collapse-panel
         key="2"
-        header="2.Think of the people who know you well? How would they rate the following aspects in their search for a prospective companion for you?"
+        header="1.2 Think of the people who know you well. Now, how would they rate the following aspects in their search for a prospective companion for you?"
         style="margin-top: 5px"
       >
         <a-form-model
