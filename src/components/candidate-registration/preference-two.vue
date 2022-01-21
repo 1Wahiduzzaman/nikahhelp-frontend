@@ -929,6 +929,7 @@
                 <a-textarea
                   @blur="onValueChange"
                   :rows="3"
+                  showCount
                   :maxLength="200"
                   autocomplete="off"
                   autocorrect="off"
@@ -998,6 +999,22 @@
                   placeholder="maximum 1000 charaters"
                   class="w-full form-right-input"
                 />
+                <!-- <v-textarea
+                  counter
+                  @blur="onValueChange"
+                  :rows="3"
+                  outlined
+                  shaped
+                  :maxLength="1000"
+                  autocomplete="off"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  spellcheck="false"
+                  id="pre_description"
+                  v-model="preferenceData.pre_description"
+                  placeholder="* Sample Text"
+                  class="w-full form-right-input"
+                ></v-textarea> -->
               </a-form-model-item>
             </div>
             <div class="col-12 mobile-margin mobile-help none-padding">

@@ -366,6 +366,7 @@
                     class="w-100"
                     placeholder="+8801685117737"
                     id="inputNumber"
+                    :maxLength="10"
                     v-model="personalInformation.personal.mobile_number"
                     @blur="onValueChange($event, 'mobile_number', 'contact')"
                 />
@@ -565,7 +566,7 @@ export default {
         .then((data) => {
           this.$emit("valueChange", {
             value: this.personalInformation,
-            current: 1,
+            current: 0,
           });
         })
         .catch((error) => {});
