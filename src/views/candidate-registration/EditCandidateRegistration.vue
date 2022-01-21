@@ -4,8 +4,8 @@
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else class="steps ma-steps">
       <div class="steper-header text-center heading-text px-3">
-        <h4>CANDIDATE PROFILE AND REQUIREMENT FORM</h4>
-        <p>Please answer all question accurately and in full</p>
+        <h4>About you and the companion you are looking for</h4>
+        <p>To get the best results please complete the questions fully</p>
       </div>
 
       <VueFixedHeader

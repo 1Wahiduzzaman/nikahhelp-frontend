@@ -207,12 +207,13 @@
                 </a-menu>
               </a-dropdown>
               <div
-                class="d-flex justify-content-between align-items-center mt-1"
+                class="d-flex align-items-center mt-1"
               >
                 <a-dropdown :trigger="['click']" placement="bottomRight">
                   <span
                     @click.self="(e) => e.preventDefault()"
-                    class="team color-primary pl-2 mr-1 shrink-none"
+                    class="color-primary pl-2 mr-1 shrink-none"
+                    :class="{'team-active': activeTeamIndex >= 0, 'team-deactive': activeTeamIndex < 0}"
                   >
                     {{
                       activeTeamIndex >= 0
@@ -261,7 +262,7 @@
                     </ul>
                   </template>
                 </a-dropdown>
-                <img src="@/assets/icon/verified_icon.svg" alt="icon" class="verify-icon" width="14px" v-if="loggedUser && parseInt(loggedUser.status) === 3" />
+                <img src="@/assets/icon/verified_icon.svg" alt="icon" class="verify-icon ml-1" width="14px" v-if="loggedUser && parseInt(loggedUser.status) === 3" />
 <!--                <span class="role px-2 ml-1 shrink-none">-->
 <!--&lt;!&ndash;                  {{ loggedUser && parseInt(loggedUser.status) === 3 ? 'V' : 'Not verified' }}&ndash;&gt;-->
 <!--                </span>-->
@@ -618,7 +619,7 @@ export default {
     width: 35px;
     height: 35px;
   }
-  .team {
+  .team-active {
     display: inline-block;
     background-color: #fff;
     border-radius: 10px;
@@ -636,6 +637,26 @@ export default {
       height: 6px;
       border-radius: 50%;
       box-shadow: 0px 0px 3px 1px #639e4e;
+    }
+  }
+  .team-deactive {
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 10px;
+    font-size: 11px;
+    position: relative;
+    padding-right: 20px;
+    cursor: pointer;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 5px;
+      right: 6px;
+      background-color: $bg-brand;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      box-shadow: 0px 0px 3px 1px $border-brand;
     }
   }
   .role {

@@ -428,15 +428,15 @@ export default {
       let isEnabled = false;
       switch (this.current) {
         case 0:
-          let { essential } = this.representativeDetails.personalInformation;
+          let { dob, per_gender, per_occupation } =
+            this.representativeDetails.personalInformation.essential;
+          const essential = { dob, per_gender, per_occupation };
           let {
-            mobile_country_code,
             mobile_number,
             per_current_residence_city,
             per_current_residence_country,
           } = this.representativeDetails.personalInformation.personal;
           const personal = {
-            mobile_country_code,
             mobile_number,
             per_current_residence_city,
             per_current_residence_country,

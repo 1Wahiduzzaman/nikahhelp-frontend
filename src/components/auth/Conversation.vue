@@ -2,7 +2,7 @@
      <div class="conversation section-padding position-relative">
       <div class="container">
          <div class="panel">
-            <h2 class="text-center color-white" style="font-size: 45px"> Four step to your first conversation</h2>
+            <h2 class="text-center color-white" style="font-size: 45px"> Four steps to your first conversation</h2>
             <div class="iconLine">
                <span class="alignImageLine">
                   <img src="@/assets/Icons/form.svg" alt="Icon" id="firstStepImageLine">
@@ -16,13 +16,13 @@
                <div class="col-12 col-sm-6 col-xl-3 mb-3">
                   <div class="item">
                      <img class="static-img" src="@/assets/Icons/form.svg" alt="Icon">
-                     <span>Complete your profile information & submit</span>
+                     <span>Complete profile, create team & submit for approval</span>
                   </div>
                </div>
                <div class="col-12 col-sm-6 col-xl-3 mb-3">
                   <div class="item">
                      <img class="static-img" src="@/assets/Icons/tick 1.svg" alt="Icon" >
-                     <span>Your ID is checked and verified by human expertise</span>
+                     <span>ID is checked and select subscription package  </span>
                   </div>
                </div>
                <div class="col-12 col-sm-6 col-xl-3 mb-3">
