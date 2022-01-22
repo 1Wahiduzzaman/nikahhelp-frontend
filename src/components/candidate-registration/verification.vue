@@ -283,7 +283,7 @@
                       v-if="verification.ver_image_front"
                       ><img src="@/assets/icon/close.svg" alt="img"
                     /></span>
-                    <img
+                    <img    v-viewer
                       :src="
                         imageFont ? imageFont : verification.ver_image_front
                       "
@@ -367,7 +367,7 @@
                       v-if="verification.ver_image_back"
                       ><img src="@/assets/icon/close.svg" alt="img"
                     /></span>
-                    <img
+                    <img    v-viewer
                       :src="imageBack ? imageBack : verification.ver_image_back"
                       width="180"
                       height="200"
@@ -532,6 +532,7 @@
                   <a-input
                     class="w-100"
                     id="inputNumber"
+                      :maxLength="10"
                     placeholder="Mobile number"
                     v-model="verification.ver_recommences_mobile_no"
                     @blur="onValueChange"

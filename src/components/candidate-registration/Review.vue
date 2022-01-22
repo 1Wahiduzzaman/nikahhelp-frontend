@@ -40,7 +40,7 @@
                     <span class="flex-50 px-2 label-text">Height</span
                     ><span class="flex-50 px-2"
                       >:
-                     
+
                       <span
                         v-html="
                           `${
@@ -195,18 +195,13 @@
                   :value="
                     candidateData.preference.pre_strength_of_character_rate
                   "
-                  :valueString="
-                    candidateData.preference
-                      .pre_strength_of_character_rate_string
-                  "
+                  
                 ></rating-component>
                 <!-- Looks and Apperance -->
                 <rating-component
                   title="Looks and apperance"
                   :value="candidateData.preference.pre_look_and_appearance_rate"
-                  :valueString="
-                    candidateData.preference.pre_look_and_appearance_rate_string
-                  "
+                  
                 ></rating-component>
                 <!-- Religiosity/Faith -->
                 <rating-component
@@ -712,7 +707,7 @@
           <div class="row">
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
-                <img
+                <img    v-viewer
                   :src="candidateData.personal.per_avatar_url"
                   class="user-image"
                   alt="img"
@@ -724,7 +719,7 @@
             </div>
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
-                <img
+                <img    v-viewer
                   :src="candidateData.personal.per_main_image_url"
                   class="user-image"
                   alt="img"
@@ -737,7 +732,7 @@
 
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
-                <img
+                <img    v-viewer
                   :src="candidateData.personal.per_main_image_url"
                   class="user-image"
                   alt="img"
@@ -824,6 +819,7 @@ export default {
     return {
       candidateData: {},
       heightTV: HEIGHTS,
+    
     };
   },
   created() {

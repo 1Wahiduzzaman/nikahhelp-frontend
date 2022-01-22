@@ -44,8 +44,11 @@
     > .ant-steps-item-container
     > .ant-steps-item-tail::after {
     background-color: $bg-primary;
+   
   }
-
+  .ant-steps-item-container{
+    cursor: pointer;
+  }
   .steps-content {
     overflow: auto;
     .ant-collapse-item:last-child .ant-collapse-header {

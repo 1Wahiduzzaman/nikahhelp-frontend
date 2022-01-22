@@ -2529,6 +2529,7 @@
                   type="check"
                 />A little bit about me
               </div>
+              
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_about" prop="per_about">
@@ -2626,7 +2627,7 @@
                   /></span>
                 </div>
                 <span class="mb-2"
-                  >The format supported are pdf, docx. Maximum file size 15
+                  >The format supported are pdf, docx. Maximum file size 5
                   mb</span
                 >
               </div>
@@ -2803,10 +2804,10 @@ export default {
         .catch((error) => {});
     },
     imageSizeCheck(file) {
-      if (file["size"] > 15838312.5) {
+      if (file["size"] > 5,279,437.5) {
         this.$error({
           title: "Validation Error",
-          content: "Image size can't be more than 2 mb",
+          content: "Image size can't be more than 5 mb",
           center: true,
         });
         return false;
@@ -2859,6 +2860,7 @@ export default {
     handleSubmitFormOne() {
       this.$refs.personalInfoFormOne.validate((valid) => {
         if (valid) {
+          window.scrollTo(0, 0);
           this.activeKey = ["2"];
         } else {
           setTimeout(() => {
@@ -2872,6 +2874,7 @@ export default {
     handleSubmitFormTwo() {
       this.$refs.personalInfoFormTwo.validate((valid) => {
         if (valid) {
+          window.scrollTo(0, 0);
           this.activeKey = ["3"];
         } else {
           setTimeout(() => {
@@ -2885,6 +2888,7 @@ export default {
     handleSubmitFormThree() {
       this.$refs.personalInfoFormThree.validate((valid) => {
         if (valid) {
+          window.scrollTo(0, 0);
           this.activeKey = ["4"];
         } else {
           setTimeout(() => {
