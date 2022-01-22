@@ -13,7 +13,7 @@ const languages = [
   "Balochi",
   "Bavarian",
   "Belarusian",
-  "Bengali",
+  "Bangla",
   "Bhojpuri",
   "Brazilain",
   "Burmese",
