@@ -21,11 +21,10 @@
             <p>
               Wrong email address or didn’t get any email? don’t worry <a href="" class="text-decoration-underline">contact us</a>
             </p>
-            <p class="instruction">
-              If you do not verify your email address by sent link within <span class="font-italic font-weight-bold">30 minutes</span> then the sent
-              verification link & your signup information will automatically unenrolled from Matrimony Assist platform, you can rejoin Matrimony Assist at any time by once again
-              completing the Matrimony Assist signup process
-            </p>
+            
+<p class="instruction">
+              If you do not verify your email address with the sent verification link within <span class="font-italic font-weight-bold">30 minutes</span>,then this will expire, and your signup information will be deleted from MatrimonyAssist.</p>
+<p class="instruction">You can re-join at any time by once again following the MatrimonyAssist signup process.</p>
             <p>
               For user safety we need to ensure that only genuine and identifiable
               <br />
