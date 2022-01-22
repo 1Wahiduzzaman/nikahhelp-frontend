@@ -48,6 +48,7 @@
                 :activeTeam="getActiveTeam"
                 action
                 class="w-full pr-3 cursor-pointer"
+                style="min-width: 300px"
             />
             <ChatListItem
                 v-else
@@ -57,6 +58,7 @@
                 :teamMembers="getTeamMembers"
                 action
                 class="w-full pr-3 cursor-pointer"
+                style="min-width: 300px"
             />
           </slot>
         </a-list-item>

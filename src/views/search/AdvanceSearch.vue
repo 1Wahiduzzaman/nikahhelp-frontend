@@ -96,6 +96,7 @@ export default {
   },
   data() {
     return {
+      query: 'v1/home-searches?page=0&parpage=10',
       isLoading: false,
       user: {},
       is_verified: 1,
@@ -150,24 +151,16 @@ export default {
       });
     },
     async fetchInitialCandidate() {
-      let url = 'v1/home-searches?page=0&parpage=10'
-      let user = JSON.parse(localStorage.getItem("user"));
-      if(user.get_candidate?.pre_partner_age_min){
-        setTimeout(() =>{this.$refs.simpleSearch.setAttr('min_age', user.get_candidate.pre_partner_age_min)},1000)
-        url += `&min_age=${user.get_candidate.pre_partner_age_min}`
-      }
-      if(user.get_candidate?.pre_partner_age_max){
-        //this.$refs.simpleSearch.setAttr('max_age', user.get_candidate.pre_partner_age_max)
-        setTimeout(() =>{this.$refs.simpleSearch.setAttr('max_age', user.get_candidate.pre_partner_age_max)},1000)
-        url += `&max_age=${user.get_candidate.pre_partner_age_max}`
-      }
+      const genderObj = {1:2, 2:1};
+      const gender = JSON.parse(localStorage.getItem('user')).get_candidate.per_gender
+      this.query += `&gender=${genderObj[gender]}`
       // const res = await this.searchUser('v1/home-searches?page=0&parpage=10&min_age=20&max_age=40&ethnicity=Amara&marital_status=single');
       this.setLoading(true);
       try {
         const res = await this.searchUser(
           {
             // url: "v1/home-searches?page=0&parpage=10&min_age=20&max_age=40",
-            url: url,
+            url: this.query,
             removePrevious: true
           }       
         );
@@ -219,14 +212,58 @@ export default {
     toggleCollapse() {
       this.collapsed = !this.collapsed;
     },
+    setCandidatePref(data) {
+      setTimeout(() =>{
+        if(data.pre_partner_age_max) {
+          this.query += `&max_age=${data.pre_partner_age_max}`
+          this.$refs.simpleSearch.setAttr('max_age', data.pre_partner_age_max);
+        }
+        if(data.pre_partner_age_min) {
+          this.query += `&min_age=${data.pre_partner_age_min}`
+          this.$refs.simpleSearch.setAttr('min_age', data.pre_partner_age_min);
+        }
+        if(data.pre_ethnicities) {
+          this.$refs.simpleSearch.setAttr('ethnicity', data.pre_ethnicities);
+        }
+        if(data.pre_ethnicities) {
+          this.$refs.simpleSearch.setAttr('ethnicity', data.pre_ethnicities);
+        }
+        if(data.pre_height_min) {
+          this.query += `&min_height=${data.pre_height_min}`
+          this.$refs.simpleSearch.setAttr('heightMin', data.pre_height_min);
+        }
+        if(data.pre_height_max) {
+          this.query += `&max_height=${data.pre_height_max}`
+          this.$refs.simpleSearch.setAttr('heightMax', data.pre_height_max);
+        }
+        
+        // this.$refs.simpleSearch.setAttr('employmentStatus', data.pre_employment_status);
+          // if(data.pre_partner_religion_id.length) {
+          //   this.$refs.simpleSearch.setAttr('religion', data.pre_partner_religion_id[0]);
+          // }
+        if(data.preferred_countries.length) {
+          this.query += `&country=${data.preferred_countries[0].id}`
+          this.$refs.simpleSearch.setAttr('country', data.preferred_countries[0].id);
+        }
+        if(data.preferred_nationality.length) {
+          this.$refs.simpleSearch.setAttr('nationality', data.preferred_nationality[0].id);
+        }
+        this.fetchInitialCandidate();
+      },1000)
+    },
     async handleCandidateInfo() {
-       const info = await this.getCandidateInfo('v1/candidate-of-team')
-       console.log(info, 'infooooooooooooooooooooo')
+      const info = await this.getCandidateInfo('v1/candidate-of-team')
+        if(info.data) {
+          if(info.data.preference) {
+            this.setCandidatePref(info.data.preference)
+          } else {
+            this.fetchInitialCandidate()
+          }
+        }
     }
   },
   created() {
     this.handleCandidateInfo();
-    this.fetchInitialCandidate();
   },
 };
 </script>

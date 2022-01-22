@@ -329,6 +329,9 @@ export default {
     & > li {
       font-size: 12px;
       margin-bottom: 2px;
+      a {
+        color: #a5a5a5;
+      }
     }
   }
 }

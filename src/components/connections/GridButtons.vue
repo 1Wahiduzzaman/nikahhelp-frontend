@@ -3,10 +3,10 @@
     <div v-if="type == 'connected'">
       <div class="flex flex-wrap justify-space-between px-4">
         <v-btn
-            class="text-capitalize"
+            class="text-capitalize btn-connection color-primary"
             rounded
+            outlined
             small
-            color="error darken-1"
             style="width: 47%"
             dark
             @click="$emit('disconnectTeam')"
@@ -18,11 +18,12 @@
         </v-btn>
 
         <v-btn
-            class="text-capitalize"
+            class="text-capitalize btn-connection color-primary"
             style="width: 47%"
             rounded
+            outlined
             small
-            color="danger darken-1"
+            color=""
             dark
             @click="$emit('block')"
         >
@@ -34,11 +35,12 @@
       </div>
       <div class="flex flex-wrap justify-space-between px-4 mt-3">
         <v-btn
-            class="text-capitalize"
+            class="text-capitalize btn-connection color-primary"
             style="width: 47%"
             rounded
             small
-            color="deep-purple darken-1"
+            outlined
+            color=""
             dark
             @click="$emit('gotoChat')"
         >
@@ -49,11 +51,12 @@
         </v-btn>
 
         <v-btn
-            class="text-capitalize"
+            class="text-capitalize btn-connection color-primary"
             style="width: 47%"
             rounded
+            outlined
             small
-            color="deep-purple darken-1"
+            color=""
             dark
             @click="$emit('viewProfile')"
         >
@@ -67,11 +70,12 @@
     <div v-if="type == 'Request received'">
       <div class="flex flex-wrap justify-space-between px-4">
         <v-btn
-            class="text-capitalize"
+            class="text-capitalize btn-connection color-primary"
             style="width: 47%"
             rounded
             small
-            color="success darken-1"
+            outlined
+            color=""
             dark
             @click="$emit('acceptRequest')"
         >
@@ -82,11 +86,12 @@
         </v-btn>
 
         <v-btn
-            class="text-capitalize"
+            class="text-capitalize btn-connection color-primary"
             style="width: 47%"
             rounded
             small
-            color="error darken-1"
+            outlined
+            color=""
             dark
             @click="$emit('declineRequest')"
         >
@@ -98,11 +103,12 @@
       </div>
       <div class="flex flex-wrap justify-space-between px-4 mt-3">
         <v-btn
-            class="text-capitalize"
+            class="text-capitalize btn-connection color-primary"
             style="width: 47%"
             rounded
+            outlined
             small
-            color="danger darken-1"
+            color=""
             dark
             @click="$emit('block')"
         >
@@ -113,11 +119,12 @@
         </v-btn>
 
         <v-btn
-            class="text-capitalize"
+            class="text-capitalize btn-connection color-primary"
             style="width: 47%"
             rounded
+            outlined
             small
-            color="deep-purple darken-1"
+            color=""
             dark
             @click="$emit('viewProfile')"
         >
@@ -131,11 +138,12 @@
     <div v-if="type == 'Request send'">
       <div class="flex flex-wrap justify-space-between px-4">
         <v-btn
-            class="text-capitalize"
+            class="text-capitalize btn-connection color-primary"
             style="width: 47%"
             rounded
+            outlined
             small
-            color="error darken-1"
+            color=""
             dark
             @click="$emit('declineRequest')"
         >
@@ -146,11 +154,12 @@
         </v-btn>
 
         <v-btn
-            class="text-capitalize"
+            class="text-capitalize btn-connection color-primary"
             style="width: 47%"
             rounded
+            outlined
             small
-            color="danger darken-1"
+            color=""
             dark
             @click="$emit('block')"
         >
@@ -163,11 +172,12 @@
 
       <div class="flex flex-wrap justify-space-between px-4 mt-3">
         <v-btn
-            class="text-capitalize"
+            class="text-capitalize btn-connection color-primary"
             block
             rounded
+            outlined
             small
-            color="deep-purple darken-1"
+            color=""
             dark
             @click="$emit('viewProfile')"
         >
@@ -222,5 +232,11 @@ export default {
 }
 .btn-info:hover {
   background: #1bb9c2;
+}
+.btn-connection:hover {
+  box-shadow: 0 1px 6px #787474;
+  border: 1px solid white !important;
+  background: $bg-primary;
+  color: $color-white !important;
 }
 </style>
