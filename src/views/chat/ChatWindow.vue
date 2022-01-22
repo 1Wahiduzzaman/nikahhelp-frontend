@@ -47,10 +47,9 @@
 <!--                        </a>-->
 <!--                      </div>-->
 <!--                    </a>-->
-                    <a class="nav-link" :class="{'active': chatTab == 'Team'}" id="nav-profile-tab" data-toggle="tab" role="tab"
-                       aria-controls="nav-profile" aria-selected="false">
+                    <a class="nav-link" :class="{'active': chatTab == 'Team'}">
                       <div class="category-item" @click="setChatTab('Team')">
-                        <a href="#">
+                        <a>
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.02 31.17" style="margin-top:3px">
                             <g id="Layer_2" data-name="Layer 2">
                               <g id="middle">
@@ -65,10 +64,9 @@
                         </a>
                       </div>
                     </a>
-                    <a class="nav-link" :class="{'active': chatTab == 'Connected'}" id="nav-contact-tab" data-toggle="tab" role="tab"
-                       aria-controls="nav-contact" aria-selected="false">
+                    <a class="nav-link" :class="{'active': chatTab == 'Connected'}">
                       <div class="category-item" @click="setChatTab('Connected')">
-                        <a href="#">
+                        <a>
                           <!-- <img src="@/assets/icon/connected.svg" alt="connected icon"/> -->
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.52 39.16" style="margin-top:3px">
                             <g id="Layer_2" data-name="Layer 2">
@@ -84,10 +82,9 @@
                         </a>
                       </div>
                     </a>
-                    <a class="nav-link" :class="{'active': chatTab == 'Private'}" id="nav-private-tab" data-toggle="tab" role="tab"
-                       aria-controls="nav-contact" aria-selected="false">
+                    <a class="nav-link" :class="{'active': chatTab == 'Private'}">
                       <div class="category-item" @click="setChatTab('Private')">
-                        <a href="#">
+                        <a>
                           <!-- <img src="@/assets/icon/connected.svg" alt="connected icon"/> -->
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.52 39.16" style="margin-top:3px">
                             <g id="Layer_2" data-name="Layer 2">
@@ -103,7 +100,7 @@
                         </a>
                       </div>
                     </a>
-                    <a class="nav-link mt-2" :class="{'active': chatTab == 'Request'}" id="private-request-tab" data-toggle="tab" role="tab">
+                    <a class="nav-link mt-2" :class="{'active': chatTab == 'Request'}">
                       <a-dropdown>
                         <a class="ant-dropdown-link position-relative" @click="e => e.preventDefault()">
                           <a-icon type="more" class="fs-30 font-weight-bolder br-50 bg-c9 color-primary"/>
@@ -129,7 +126,7 @@
                 </div>
               </div>
               <div class="chat-item-wrapper">
-                <div class="tab-content" id="nav-tabContent">
+                <div class="tab-content">
 <!--                  <div v-if="chatTab == 'Recent'" class="tab-pane fade" :class="{'show active': chatTab == 'Recent'}" role="tabpanel" aria-labelledby="nav-home-tab">-->
 <!--                    <div-->
 <!--                        class="chat-item"-->
@@ -160,7 +157,7 @@
 <!--                      />-->
 <!--                    </div>-->
 <!--                  </div>-->
-                  <div v-if="chatTab == 'Team'" class="tab-pane fade" :class="{'show active': chatTab == 'Team'}" role="tabpanel" aria-labelledby="nav-profile-tab">
+                  <div v-if="chatTab == 'Team'" class="tab-pane fade" :class="{'show active': chatTab == 'Team'}">
                     <div class="chat-item"
                          v-for="item in teamChat"
                          v-if="item.user_id != getAuthUserId"
@@ -178,7 +175,7 @@
                       />
                     </div>
                   </div>
-                  <div v-if="chatTab == 'Connected'" class="tab-pane fade" :class="{'show active': chatTab == 'Connected'}" role="tabpanel" aria-labelledby="nav-contact-tab">
+                  <div v-if="chatTab == 'Connected'" class="tab-pane fade" :class="{'show active': chatTab == 'Connected'}">
                     <div class="chat-item"
                          v-for="item in connectedTeam"
                          :key="item.team_id"
@@ -197,7 +194,7 @@
                       />
                     </div>
                   </div>
-                  <div v-if="chatTab == 'Private'" class="tab-pane fade" :class="{'show active': chatTab == 'Private'}" role="tabpanel" aria-labelledby="nav-private-tab">
+                  <div v-if="chatTab == 'Private'" class="tab-pane fade" :class="{'show active': chatTab == 'Private'}">
                     <div
                         class="chat-item"
                         v-for="item in chatHistory"
@@ -226,7 +223,7 @@
                       />
                     </div>
                   </div>
-                  <div v-if="chatTab == 'Request'" class="tab-pane fade" :class="{'show active': chatTab == 'Request'}" role="tabpanel" aria-labelledby="private-request-tab">
+                  <div v-if="chatTab == 'Request'" class="tab-pane fade" :class="{'show active': chatTab == 'Request'}">
                     <div class="chat-item cursor-pointer"
                          v-for="item in privateRequested"
                          :key="item.id">
