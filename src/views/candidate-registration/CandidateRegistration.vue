@@ -119,7 +119,7 @@
           type="primary"
           shape="round"
           style="float: right; margin-top: 15px"
-          @click="doneBtn"
+          @click="openDialog"
         >
           Review and Publish
         </a-button>
@@ -145,6 +145,7 @@
         </a-button>
       </div>
     </div>
+    <ReviewAndPublishModal @save="doneBtn" @cancel="cancel" :dialog="dialog" />
   </div>
 </template>
 <script>
@@ -154,7 +155,7 @@ const createData = () => ({
   fixedClass: "vue-fixed-header--isFixed",
   hideScrollUp: false,
 });
-
+import ReviewAndPublishModal from "@/views/candidate-registration/ReviewAndPublishModal.vue";
 import PreferenceTwo from "@/components/candidate-registration/preference-two.vue";
 import Verification from "@/components/candidate-registration/verification.vue";
 import PersonalInfoTwo from "@/components/candidate-registration/personalinfo-two.vue";
@@ -180,12 +181,14 @@ export default {
     Verification,
     VueFixedHeader,
     Header,
+    ReviewAndPublishModal,
   },
   mounted() {
     this.getCandidateInitialInfo();
   },
   data() {
     return {
+      dialog: false,
       isLoading: false,
       fixedStatus: {
         headerIsFixed: false,
@@ -233,6 +236,16 @@ export default {
     };
   },
   methods: {
+    openDialog() {
+      this.dialog = false;
+      setTimeout(() => {
+        this.dialog = true;
+      });
+    },
+    cancel(e) {
+      this.dialog = false;
+    },
+
     updateFixedStatus(next) {
       this.fixedStatus.headerIsFixed = next;
     },
@@ -717,7 +730,8 @@ export default {
       this.$router.push("/login");
     },
     doneBtn() {
-      this.saveDataInputStatus(5);
+      this.dialog = false;
+      //this.saveDataInputStatus(5);
     },
     toggleStep(step) {
       this.current = step;

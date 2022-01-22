@@ -40,7 +40,7 @@
                     <span class="flex-50 px-2 label-text">Height</span
                     ><span class="flex-50 px-2"
                       >:
-                     
+
                       <span
                         v-html="
                           `${
@@ -195,18 +195,13 @@
                   :value="
                     candidateData.preference.pre_strength_of_character_rate
                   "
-                  :valueString="
-                    candidateData.preference
-                      .pre_strength_of_character_rate_string
-                  "
+                  
                 ></rating-component>
                 <!-- Looks and Apperance -->
                 <rating-component
                   title="Looks and apperance"
                   :value="candidateData.preference.pre_look_and_appearance_rate"
-                  :valueString="
-                    candidateData.preference.pre_look_and_appearance_rate_string
-                  "
+                  
                 ></rating-component>
                 <!-- Religiosity/Faith -->
                 <rating-component
@@ -824,6 +819,7 @@ export default {
     return {
       candidateData: {},
       heightTV: HEIGHTS,
+    
     };
   },
   created() {
