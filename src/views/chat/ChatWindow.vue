@@ -26,27 +26,27 @@
               <div class="chat-category">
                 <nav>
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-link" :class="{'active': chatTab == 'Recent'}" id="nav-home-tab" data-toggle="tab" role="tab"
-                       aria-controls="nav-home" aria-selected="true">
-                      <div class="category-item" @click="setChatTab('Recent')">
-                        <a href="#">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="recent-icon" viewBox="0 0 33.75 33.75"
-                               style="margin-top:3px">
-                            <g id="Layer_2" data-name="Layer 2">
-                              <g id="middle">
-                                <path class="cls-1"
-                                      d="M16.88,3A13.88,13.88,0,1,1,3,16.88,13.89,13.89,0,0,1,16.88,3m0-3A16.88,16.88,0,1,0,33.75,16.88,16.88,16.88,0,0,0,16.88,0Z"/>
-                                <polygon class="cls-1"
-                                         points="25.49 19.47 13.92 19.47 13.92 10.67 15.92 10.67 15.92 17.47 25.49 17.47 25.49 19.47"/>
-                              </g>
-                            </g>
-                          </svg>
-<!--                          <span class="countOfChat">{{ totalUnreadCount }}</span>-->
-<!--                          <span class="countOfChat">{{ chatHistory.length }}</span>-->
-                          <p class="category-name">Recent</p>
-                        </a>
-                      </div>
-                    </a>
+<!--                    <a class="nav-link" :class="{'active': chatTab == 'Recent'}" id="nav-home-tab" data-toggle="tab" role="tab"-->
+<!--                       aria-controls="nav-home" aria-selected="true">-->
+<!--                      <div class="category-item" @click="setChatTab('Recent')">-->
+<!--                        <a href="#">-->
+<!--                          <svg xmlns="http://www.w3.org/2000/svg" class="recent-icon" viewBox="0 0 33.75 33.75"-->
+<!--                               style="margin-top:3px">-->
+<!--                            <g id="Layer_2" data-name="Layer 2">-->
+<!--                              <g id="middle">-->
+<!--                                <path class="cls-1"-->
+<!--                                      d="M16.88,3A13.88,13.88,0,1,1,3,16.88,13.89,13.89,0,0,1,16.88,3m0-3A16.88,16.88,0,1,0,33.75,16.88,16.88,16.88,0,0,0,16.88,0Z"/>-->
+<!--                                <polygon class="cls-1"-->
+<!--                                         points="25.49 19.47 13.92 19.47 13.92 10.67 15.92 10.67 15.92 17.47 25.49 17.47 25.49 19.47"/>-->
+<!--                              </g>-->
+<!--                            </g>-->
+<!--                          </svg>-->
+<!--&lt;!&ndash;                          <span class="countOfChat">{{ totalUnreadCount }}</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                          <span class="countOfChat">{{ chatHistory.length }}</span>&ndash;&gt;-->
+<!--                          <p class="category-name">Recent</p>-->
+<!--                        </a>-->
+<!--                      </div>-->
+<!--                    </a>-->
                     <a class="nav-link" :class="{'active': chatTab == 'Team'}" id="nav-profile-tab" data-toggle="tab" role="tab"
                        aria-controls="nav-profile" aria-selected="false">
                       <div class="category-item" @click="setChatTab('Team')">
@@ -84,6 +84,25 @@
                         </a>
                       </div>
                     </a>
+                    <a class="nav-link" :class="{'active': chatTab == 'Private'}" id="nav-private-tab" data-toggle="tab" role="tab"
+                       aria-controls="nav-contact" aria-selected="false">
+                      <div class="category-item" @click="setChatTab('Private')">
+                        <a href="#">
+                          <!-- <img src="@/assets/icon/connected.svg" alt="connected icon"/> -->
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.52 39.16" style="margin-top:3px">
+                            <g id="Layer_2" data-name="Layer 2">
+                              <g id="middle">
+                                <path class="cls-1"
+                                      d="M24.46,14.64c1.43,1.43,1.62,4.38-3.42,7-5-2.6-4.85-5.55-3.42-7S21,14.17,21,15.3C21,14.17,23,13.2,24.46,14.64ZM8.59,25.1a6.48,6.48,0,1,0-6.48-6.48A6.48,6.48,0,0,0,8.59,25.1Zm1.29,0H7.3A7.37,7.37,0,0,0,0,31.59a.84.84,0,0,0,.85.91H16.32a.84.84,0,0,0,.85-.91A7.37,7.37,0,0,0,9.88,25.15Zm24-7.43a6.48,6.48,0,1,0-6.48-6.48A6.48,6.48,0,0,0,33.93,17.72Zm1.29.05H32.64a7.38,7.38,0,0,0-7.3,6.44.85.85,0,0,0,.86.91H41.66a.84.84,0,0,0,.85-.91A7.37,7.37,0,0,0,35.22,17.77ZM7,11a1.53,1.53,0,0,0,.68.23,1.48,1.48,0,0,0,1.38-.65,12.12,12.12,0,0,1,11-4.86l-.92,2.71,8.72-1.76L22,0,21,2.84A15.07,15.07,0,0,0,6.59,8.94,1.49,1.49,0,0,0,7,11ZM37,26a1.49,1.49,0,0,0-2,.73A12.15,12.15,0,0,1,25,33.22l.48-2.83-8.34,3.1L24,39.16l.51-3h.63a15.08,15.08,0,0,0,12.68-8.25A1.49,1.49,0,0,0,37,26Z"/>
+                              </g>
+                            </g>
+                          </svg>
+<!--                          <span class="countOfChat">{{ connectedUnreadCount }}</span>-->
+<!--                          <span class="countOfChat">{{ connectedTeam.length }}</span>-->
+                          <p class="category-name">Private</p>
+                        </a>
+                      </div>
+                    </a>
                     <a class="nav-link mt-2" :class="{'active': chatTab == 'Request'}" id="private-request-tab" data-toggle="tab" role="tab">
                       <a-dropdown>
                         <a class="ant-dropdown-link position-relative" @click="e => e.preventDefault()">
@@ -111,36 +130,36 @@
               </div>
               <div class="chat-item-wrapper">
                 <div class="tab-content" id="nav-tabContent">
-                  <div v-if="chatTab == 'Recent'" class="tab-pane fade" :class="{'show active': chatTab == 'Recent'}" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <div
-                        class="chat-item"
-                        v-for="item in chatHistory"
-                        :key="item.team_id"
-                        :class="{'selected-chat': chatheadopen == item}"
-                        @click="item.label == 'Connected Team' ? getConnectedTeamChatHistory(item) : getIndividualChat(item, item)"
-                    >
-                      <ConnectedTeamChat
-                          v-if="item.label == 'Connected Team'"
-                          :item="item"
-                          :status="'connected'"
-                          :online_users="online_users"
-                          :teamMembers="teamMembers"
-                          :activeTeam="activeTeam"
-                          action
-                          @socketNotification="socketNotification"
-                          class="w-full pr-3 cursor-pointer"
-                      />
-                      <ChatListItem
-                          v-else
-                          :item="item"
-                          :status="'recent'"
-                          :online_users="online_users"
-                          :teamMembers="teamMembers"
-                          action
-                          class="w-full pr-3 cursor-pointer"
-                      />
-                    </div>
-                  </div>
+<!--                  <div v-if="chatTab == 'Recent'" class="tab-pane fade" :class="{'show active': chatTab == 'Recent'}" role="tabpanel" aria-labelledby="nav-home-tab">-->
+<!--                    <div-->
+<!--                        class="chat-item"-->
+<!--                        v-for="item in chatHistory"-->
+<!--                        :key="item.team_id"-->
+<!--                        :class="{'selected-chat': chatheadopen == item}"-->
+<!--                        @click="item.label == 'Connected Team' ? getConnectedTeamChatHistory(item) : getIndividualChat(item, item)"-->
+<!--                    >-->
+<!--                      <ConnectedTeamChat-->
+<!--                          v-if="item.label == 'Connected Team'"-->
+<!--                          :item="item"-->
+<!--                          :status="'connected'"-->
+<!--                          :online_users="online_users"-->
+<!--                          :teamMembers="teamMembers"-->
+<!--                          :activeTeam="activeTeam"-->
+<!--                          action-->
+<!--                          @socketNotification="socketNotification"-->
+<!--                          class="w-full pr-3 cursor-pointer"-->
+<!--                      />-->
+<!--                      <ChatListItem-->
+<!--                          v-else-->
+<!--                          :item="item"-->
+<!--                          :status="'recent'"-->
+<!--                          :online_users="online_users"-->
+<!--                          :teamMembers="teamMembers"-->
+<!--                          action-->
+<!--                          class="w-full pr-3 cursor-pointer"-->
+<!--                      />-->
+<!--                    </div>-->
+<!--                  </div>-->
                   <div v-if="chatTab == 'Team'" class="tab-pane fade" :class="{'show active': chatTab == 'Team'}" role="tabpanel" aria-labelledby="nav-profile-tab">
                     <div class="chat-item"
                          v-for="item in teamChat"
@@ -174,6 +193,35 @@
                           :activeTeam="activeTeam"
                           action
                           @socketNotification="socketNotification"
+                          class="w-full pr-3 cursor-pointer"
+                      />
+                    </div>
+                  </div>
+                  <div v-if="chatTab == 'Private'" class="tab-pane fade" :class="{'show active': chatTab == 'Private'}" role="tabpanel" aria-labelledby="nav-private-tab">
+                    <div
+                        class="chat-item"
+                        v-for="item in chatHistory"
+                        :key="item.team_id"
+                        :class="{'selected-chat': chatheadopen == item}"
+                        @click="item.label == 'Connected Team' ? getConnectedTeamChatHistory(item) : getIndividualChat(item, item)"
+                    >
+<!--                      <ConnectedTeamChat-->
+<!--                          v-if="item.label == 'Connected Team'"-->
+<!--                          :item="item"-->
+<!--                          :status="'connected'"-->
+<!--                          :online_users="online_users"-->
+<!--                          :teamMembers="teamMembers"-->
+<!--                          :activeTeam="activeTeam"-->
+<!--                          action-->
+<!--                          @socketNotification="socketNotification"-->
+<!--                          class="w-full pr-3 cursor-pointer"-->
+<!--                      />-->
+                      <ChatListItem
+                          :item="item"
+                          :status="'recent'"
+                          :online_users="online_users"
+                          :teamMembers="teamMembers"
+                          action
                           class="w-full pr-3 cursor-pointer"
                       />
                     </div>
@@ -409,7 +457,7 @@ export default {
       inConnectedChat: false,
       chat_type: null,
       chat_id: null,
-      chatTab: 'Recent',
+      chatTab: 'Team',
       other_mate_id: null,
       private_chat: {
         to_team_id: null,
@@ -791,19 +839,19 @@ export default {
     processChatHistoryResponse(data) {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
 
-      let singleChat = map(data.single_chat, item => {
-        return {
-          label: 'Team member',
-          state: 'seen',
-          name: item.user?.full_name || 'user name',
-          logo: item.user?.avatar,
-          user_id: item.user.id,
-          other_mate_id: item.user_id,
-          typing_status: 0,
-          typing_text: '',
-          message: pick(item.last_message, messageKeys)
-        }
-      });
+      // let singleChat = map(data.single_chat, item => {
+      //   return {
+      //     label: 'Team member',
+      //     state: 'seen',
+      //     name: item.user?.full_name || 'user name',
+      //     logo: item.user?.avatar,
+      //     user_id: item.user.id,
+      //     other_mate_id: item.user_id,
+      //     typing_status: 0,
+      //     typing_text: '',
+      //     message: pick(item.last_message, messageKeys)
+      //   }
+      // });
 
       let privateChat = map(data.private_chat, item => {
         return {
@@ -824,26 +872,27 @@ export default {
         }
       });
 
-      let lastGroupMsg = data.last_group_msg ? [{
-        label: 'Group chat',
-        state: 'Typing...',
-        name: data.last_group_msg.team.name,
-        logo: data.last_group_msg.team.logo,
-        typing_status: 0,
-        typing_text: '',
-        message: pick(data.last_group_msg, messageKeys)
-      }] : []
+      // let lastGroupMsg = data.last_group_msg ? [{
+      //   label: 'Group chat',
+      //   state: 'Typing...',
+      //   name: data.last_group_msg.team.name,
+      //   logo: data.last_group_msg.team.logo,
+      //   typing_status: 0,
+      //   typing_text: '',
+      //   message: pick(data.last_group_msg, messageKeys)
+      // }] : []
+      //
+      // let connectedMsg = data.connected_team_msgs.map(item => {
+      //   item.label = 'Connected Team';
+      //   item.typing_status = 0;
+      //   item.typing_text = '';
+      //   item.message = item.id && item.last_message ? item.last_message : {};
+      //   item.is_friend = 1;
+      //   return item;
+      // });
 
-      let connectedMsg = data.connected_team_msgs.map(item => {
-        item.label = 'Connected Team';
-        item.typing_status = 0;
-        item.typing_text = '';
-        item.message = item.id && item.last_message ? item.last_message : {};
-        item.is_friend = 1;
-        return item;
-      });
-
-      return [...lastGroupMsg, ...connectedMsg, ...singleChat, ...privateChat];
+      // return [...lastGroupMsg, ...connectedMsg, ...singleChat, ...privateChat];
+      return [...privateChat];
     },
     getPrivateChatUserName(item) {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
