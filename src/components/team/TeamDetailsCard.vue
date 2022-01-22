@@ -1003,6 +1003,7 @@ export default {
 					.then((data) => {
 						if (data.data.status == "FAIL") {
 							//this.$message.error(data.data.message);
+
 							this.$error({
 								title: "Error",
 								content: data.data.message,
