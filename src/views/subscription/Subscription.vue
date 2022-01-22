@@ -40,15 +40,16 @@
               </div>
               <div class="div-2 position-relative pt-4 bg-white">
                 <div
-                  class="d-flex cursor-pointer py-2 px-4 item-duration"
+                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center"
                   :class="{ 'bg-brand-gradient': isSelected1 }"
                   @click="firstOption"
                 >
-                  <a-icon
-                    type="check"
-                    class="text-transparent fs-24 icon-check"
-                    :class="{ 'text-white': isSelected1 }"
-                  />
+<!--                  <a-icon-->
+<!--                    type="check"-->
+<!--                    class="text-transparent icon-check"-->
+<!--                    :class="{ 'text-white': isSelected1 }"-->
+<!--                  />-->
+                  <img src="@/assets/icon/subscription_check.svg" alt="icon" v-if="isSelected1" class="mr-4" />
                   <h4
                     class="duration"
                     :class="{ selected: isSelected1 }"
@@ -57,15 +58,16 @@
                   </h4>
                 </div>
                 <div
-                  class="d-flex cursor-pointer py-3 px-4 item-duration"
+                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center"
                   :class="{ 'bg-brand-gradient': isSelected2 }"
                   @click="secondOption"
                 >
-                  <a-icon
-                    type="check"
-                    class="text-transparent fs-24 icon-check"
-                    :class="{ 'text-white': isSelected2 }"
-                  />
+<!--                  <a-icon-->
+<!--                    type="check"-->
+<!--                    class="text-transparent fs-24 icon-check"-->
+<!--                    :class="{ 'text-white': isSelected2 }"-->
+<!--                  />-->
+                  <img src="@/assets/icon/subscription_check.svg" alt="icon" v-if="isSelected2" class="mr-4" />
                   <h4
                     class="duration"
                     :class="{ selected: isSelected2 }"
@@ -74,15 +76,16 @@
                   </h4>
                 </div>
                 <div
-                  class="d-flex cursor-pointer py-3 px-4 item-duration"
+                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center"
                   :class="{ 'bg-brand-gradient': isSelected3 }"
                   @click="thirdOption"
                 >
-                  <a-icon
-                    type="check"
-                    class="text-transparent fs-24 icon-check"
-                    :class="{ 'text-white': isSelected3 }"
-                  />
+<!--                  <a-icon-->
+<!--                    type="check"-->
+<!--                    class="text-transparent fs-24 icon-check"-->
+<!--                    :class="{ 'text-white': isSelected3 }"-->
+<!--                  />-->
+                  <img src="@/assets/icon/subscription_check.svg" alt="icon" v-if="isSelected3" class="mr-4" />
                   <h4
                     class="duration"
                     :class="{ selected: isSelected3 }"
@@ -91,15 +94,16 @@
                   </h4>
                 </div>
                 <div
-                  class="d-flex cursor-pointer py-3 px-4 bg-info free-duration"
+                  class="d-flex cursor-pointer py-4 px-5 bg-info free-duration"
                   :class="{ 'bg-brand-gradient': isSelected4 }"
                   @click="fourthOption"
                 >
-                  <a-icon
-                    type="check"
-                    class="text-transparent fs-24 icon-check"
-                    :class="{ 'text-white': isSelected4 }"
-                  />
+<!--                  <a-icon-->
+<!--                    type="check"-->
+<!--                    class="text-transparent fs-24 icon-check"-->
+<!--                    :class="{ 'text-white': isSelected4 }"-->
+<!--                  />-->
+                  <img src="@/assets/icon/subscription_check.svg" alt="icon" v-if="isSelected4" class="mr-4" />
                   <h4
                     class="duration"
                     :class="{ selected: isSelected4 }"
@@ -193,12 +197,12 @@
                 height-2
               "
             >
-              <h1 class="px-4 text-white pt-2 fs-30 text-center">
+              <h1 class="px-4 text-white pt-2 fs-24 text-center">
                 Select Team
               </h1>
 
               <div class="form-group px-4">
-                <select class="w-100 custom-select" v-model="teamSelected">
+                <select class="w-100 custom-select fs-18" v-model="teamSelected">
                   <option
                     v-for="(team, teamIndex) in teams"
                     :value="team"
@@ -222,14 +226,13 @@
                   @click="setContentType('details')"
                 >
                   <h4 class="fs-14 pt-1">This team details</h4>
-                  <a-icon
-                    type="up"
-                    :class="{ 'rotate-180': contentShow == 'details' }"
-                  />
+<!--                  <a-icon-->
+<!--                    type="up"-->
+<!--                    :class="{ 'rotate-180': contentShow == 'details' }"-->
+<!--                  />-->
                 </div>
                 <div
-                  class="team-details mt-2 px-4 d-none text-white mb-2"
-                  :class="{ 'd-block': contentShow == 'details' }"
+                  class="team-details mt-2 px-4 d-block text-white mb-2"
                 >
                   <li class="flex-between-start">
                     <span class="flex-45 px-2">Team Name </span>
@@ -284,14 +287,13 @@
                   <h4 class="fs-14 pt-1">
                     This team's last subscription details
                   </h4>
-                  <a-icon
-                    type="up"
-                    :class="{ 'rotate-180': contentShow == 'subscription' }"
-                  />
+<!--                  <a-icon-->
+<!--                    type="up"-->
+<!--                    :class="{ 'rotate-180': contentShow == 'subscription' }"-->
+<!--                  />-->
                 </div>
                 <div
-                  class="px-4 d-none mt-1"
-                  :class="{ 'd-block': contentShow == 'subscription' }"
+                  class="px-4 d-block mt-1"
                 >
                   <small class="text-white">Today, 6m ago</small>
                   <h4 class="fs-12 text-white mt-2">
@@ -404,7 +406,7 @@ export default {
       // 	return member.user_id == this.teamSelected.created_by;
       // });
       // return member.user.full_name;
-      return this.teamSelected.created_by.full_name;
+      return this.teamSelected && this.teamSelected.created_by ? this.teamSelected.created_by.full_name : '';
     },
   },
   methods: {
@@ -626,6 +628,7 @@ export default {
             padding: 5px;
             text-align: center;
             cursor: pointer;
+            margin-bottom: 0 !important;
           }
           .selected {
             background-color: rgb(180, 61, 151);
@@ -906,5 +909,8 @@ export default {
   .height-2 {
     height: 406px;
   }
+}
+.duration {
+  margin-bottom: 0 !important;
 }
 </style>

@@ -1,10 +1,10 @@
 <template>
-  <div class="email-verification font-poppins">
-    <header>
+  <div class="email-verification font-poppins main-container">
+    <header class="header-container">
       <a href="/"><img src="@/assets/logo.png" alt="" /></a>
     </header>
 
-    <div class="container-fluid">
+    <div class="container-fluid body-container">
       <div class="row">
         <div class="col-12 col-md-6 offset-md-3">
           <div class="message">
@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-    <div class="footer">
+    <div class="footer footer-container">
       <Footer />
     </div>
   </div>
@@ -110,22 +110,22 @@ export default {
     }
   }
   .footer {
-    @media (min-width: 576px) {
-      bottom: 0;
-      width: 100%;
-      position: fixed;
-    }
-    @media (min-width: 768px) {
-      position: relative;
-    }
-    @media (min-width: 1024px) {
-      position: relative;
-    }
-    @media (min-width: 1200px) {
-      bottom: 0;
-      width: 100%;
-      position: fixed;
-    }
+    //@media (min-width: 576px) {
+    //  bottom: 0;
+    //  width: 100%;
+    //  position: fixed;
+    //}
+    //@media (min-width: 768px) {
+    //  position: relative;
+    //}
+    //@media (min-width: 1024px) {
+    //  position: relative;
+    //}
+    //@media (min-width: 1200px) {
+    //  bottom: 0;
+    //  width: 100%;
+    //  position: fixed;
+    //}
   }
 }
 .email-box {
@@ -144,5 +144,23 @@ export default {
   color: $color-white;
   padding: 12px;
   border-radius: 8px;
+}
+.main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.header-container {
+  flex-shrink: 0;
+}
+.body-container{
+  flex-grow: 1;
+  overflow: auto;
+  min-height: 2em;
+}
+.footer-container{
+  flex-shrink: 0;
 }
 </style>

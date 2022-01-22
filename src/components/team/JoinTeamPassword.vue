@@ -600,6 +600,12 @@ export default {
 .footer-cancel-btn {
   bottom: 50px;
   left: 32px;
+  @media (min-width: 1200px) {
+    right: 8px;
+  }
+  @media (min-width: 1500px) {
+    right: 32px;
+  }
   .button {
     border-radius: 16px;
     background: $bg-brand;
@@ -609,6 +615,12 @@ export default {
 .footer-conf-btn {
   bottom: 50px;
   right: 32px;
+  @media (min-width: 1200px) {
+    right: 8px;
+  }
+  @media (min-width: 1500px) {
+    right: 32px;
+  }
   .button {
     border-radius: 16px;
   }

@@ -1,7 +1,7 @@
 <template>
-  <div class="m-2 position-relative flip-card" :class="{'flip-card-toggle': rotated}">
+  <div class="m-2 flip-card" :class="{'flip-card-toggle': rotated}">
     <div class="flip-card-inner">
-      <div class="flip-card-front">
+      <div class="flip-card-front ">
 <!--        <div class="col-12" id="flex-container">-->
 <!--          <img-->
 <!--              :src="connection.candidateInfo && connection.candidateInfo.candidate_image ? connection.candidateInfo.candidate_image : avatarSrc"-->
@@ -69,7 +69,7 @@
 <!--        </div>-->
 
         <v-card
-            class="mx-auto shadow-default shortlist-card"
+            class="mx-auto shadow-default shortlist-card position-relative"
         >
           <template slot="progress">
             <v-progress-linear
@@ -93,7 +93,7 @@
               <li class="flex-between-start">
                 <span class="flex-30 label-text">Team</span>
                 <span class="flex-70">:
-                    <span class="ml-1"><router-link class="team-link" :to="{name: 'ManageTeam', query: {team_id: getTeamLink()}}">{{ getTeamName() }}</router-link>
+                    <span class="ml-1 team-link cursor-pointer" @click="rotated = !rotated">{{ getTeamName() }}
                     </span>
                 </span>
               </li>
@@ -124,7 +124,7 @@
           </div>
           <v-divider class="mx-4"></v-divider>
 
-          <grid-buttons class="px-4 pb-3" :type="type" @block="block"
+          <grid-buttons class="pb-3" :type="type" @block="block"
                         @disconnectTeam="disconnectTeam"
                         @startConversation="startConversation"
                         @viewProfile="viewProfile"
@@ -135,54 +135,96 @@
 
       </div>
       <div class="flip-card-back">
-        <v-card class="mx-auto shadow-default shortlist-card flipped">
-          <h6 class="pb-2 pt-3">This Profile Connection Overview</h6>
-          <table class="table table-borderless overview-table">
-            <tr>
-              <td class="td-60">Connection Status</td>
-              <td class="text-end">:</td>
-              <td class="text-capitalize">{{ connection.connection }}</td>
-            </tr>
-            <tr>
-              <td class="td-60">Connected date</td>
-              <td class="text-end">:</td>
-              <td>{{ dateFromDateTime(connection.responded_at) }}</td>
-            </tr>
-            <tr>
-              <td class="td-60">Connection requested by</td>
-              <td class="text-end">:</td>
-              <td>{{ connection.requested_by.full_name }}</td>
-            </tr>
-            <tr>
-              <td class="td-60">Request Date</td>
-              <td class="text-end">:</td>
-              <td>{{ dateFromDateTime(connection.requested_at) }}</td>
-            </tr>
-          </table>
+        <v-card class="mx-auto shadow-default shortlist-card flipped position-relative">
+          <h6 class="pt-4">This Profile Connection Overview</h6>
 
-          <h6 class="pb-2 pt-8">This Profile Team Overview</h6>
-          <table class="table table-borderless overview-table">
-            <tr>
-              <td class="td-60">Team name</td>
-              <td class="text-end">:</td>
-              <td>{{ connection.to_team_name }}</td>
-            </tr>
-            <tr>
-              <td class="td-60">Team members</td>
-              <td class="text-end">:</td>
-              <td>{{ connection.total_teamMember }}</td>
-            </tr>
-            <tr>
-              <td class="td-60">Team creation date</td>
-              <td class="text-end">:</td>
-              <td>{{ dateFromTimeStamp(connection.team_created_date) }}</td>
-            </tr>
-            <tr>
-              <td class="td-60">Team created by</td>
-              <td class="text-end">:</td>
-              <td>{{ connection.team_created_by }}</td>
-            </tr>
-          </table>
+          <div class="">
+            <h6 class="fs-14">Connection Status</h6>
+            <h6 class="text-capitalize fs-16 ml-4">{{ connection.connection }}</h6>
+          </div>
+
+          <div>
+            <h6 class="fs-14">Connected date</h6>
+            <h6 class="text-capitalize fs-16 ml-4">{{ dateFromDateTime(connection.responded_at) }}</h6>
+          </div>
+
+          <div>
+            <h6 class="fs-14">Connection requested by</h6>
+            <h6 class="text-capitalize fs-16 ml-4">{{ connection.requested_by.full_name }}</h6>
+          </div>
+
+          <div>
+            <h6 class="fs-14">Request Date</h6>
+            <h6 class="text-capitalize fs-16 ml-4">{{ dateFromDateTime(connection.requested_at) }}</h6>
+          </div>
+
+<!--          <table class="table table-borderless overview-table">-->
+<!--            <tr>-->
+<!--              <td class="td-60">Connection Status</td>-->
+<!--              <td class="text-end">:</td>-->
+<!--              <td class="text-capitalize">{{ connection.connection }}</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td class="td-60">Connected date</td>-->
+<!--              <td class="text-end">:</td>-->
+<!--              <td>{{ dateFromDateTime(connection.responded_at) }}</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td class="td-60">Connection requested by</td>-->
+<!--              <td class="text-end">:</td>-->
+<!--              <td>{{ connection.requested_by.full_name }}</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td class="td-60">Request Date</td>-->
+<!--              <td class="text-end">:</td>-->
+<!--              <td>{{ dateFromDateTime(connection.requested_at) }}</td>-->
+<!--            </tr>-->
+<!--          </table>-->
+
+          <h6 class="pt-3">This Profile Team Overview</h6>
+
+          <div>
+            <h6 class="fs-14">Team name</h6>
+            <h6 class="text-capitalize fs-16 ml-4">{{ connection.to_team_name }}</h6>
+          </div>
+
+          <div>
+            <h6 class="fs-14">Team members</h6>
+            <h6 class="text-capitalize fs-16 ml-4">{{ connection.total_teamMember }}</h6>
+          </div>
+
+          <div>
+            <h6 class="fs-14">Team creation date</h6>
+            <h6 class="text-capitalize fs-16 ml-4">{{ dateFromTimeStamp(connection.team_created_date) }}</h6>
+          </div>
+
+          <div>
+            <h6 class="fs-14">Team created by</h6>
+            <h6 class="text-capitalize fs-16 ml-4">{{ connection.team_created_by }}</h6>
+          </div>
+
+<!--          <table class="table table-borderless overview-table">-->
+<!--            <tr>-->
+<!--              <td class="td-60">Team name</td>-->
+<!--              <td class="text-end">:</td>-->
+<!--              <td>{{ connection.to_team_name }}</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td class="td-60">Team members</td>-->
+<!--              <td class="text-end">:</td>-->
+<!--              <td>{{ connection.total_teamMember }}</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td class="td-60">Team creation date</td>-->
+<!--              <td class="text-end">:</td>-->
+<!--              <td>{{ dateFromTimeStamp(connection.team_created_date) }}</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--              <td class="td-60">Team created by</td>-->
+<!--              <td class="text-end">:</td>-->
+<!--              <td>{{ connection.team_created_by }}</td>-->
+<!--            </tr>-->
+<!--          </table>-->
         </v-card>
       </div>
     </div>
@@ -192,7 +234,7 @@
 <!--             'connected-bg': type == 'connected',-->
 <!--             'request-received-bg': type == 'Request received',-->
 <!--             'request-sent-bg': type == 'Request send',}"></div>-->
-    <div class="position-absolute icon-rotate-box cursor-pointer" @click="rotated = !rotated">
+    <div class="position-absolute icon-rotate-box cursor-pointer" @click="rotated = !rotated" :class="{'invert-filter': rotated}">
 <!--      <a-icon type="rollback" class="rotate-icon" size="large" />-->
       <img src="@/assets/icon/flip_icon.svg" alt="icon" class="flip-icon" />
     </div>
@@ -733,7 +775,7 @@ export default {
 .flip-card {
   background-color: #FFFFFF;
   width: 100%;
-  height: 520px;
+  height: 510px;
   perspective: 1000px;
 }
 .flip-card-inner {
@@ -756,8 +798,11 @@ export default {
   transform: rotateY(180deg);
 }
 .icon-rotate-box {
-  left: 15px;
-  top: 5px;
+  left: 35px;
+  top: 10px;
+}
+.invert-filter {
+  filter: invert(1);
 }
 .rotate-icon:hover {
   color: $color-brand;
@@ -775,13 +820,14 @@ export default {
   }
 }
 .shortlist-card {
-  max-width: 300px;
+  //max-width: 300px;
+  width: 100%;
   @media (min-width: 1200px) {
     max-width: 374px;
   }
 }
 .flipped {
-  padding: 50px 10px;
+  padding: 15px 10px;
 }
 .flip-icon {
   width: 16px;

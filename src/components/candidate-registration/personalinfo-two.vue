@@ -1082,6 +1082,7 @@
                   >
                     <v-select
                       :clearable="false"
+                      :loading="loading"
                       class="style-chooser"
                       @input="onValueChange($event, 'contact')"
                       id="per_current_residence_city"
@@ -1292,6 +1293,7 @@
                   >
                     <v-select
                       :clearable="false"
+                      :loading="loadingPermanant"
                       class="style-chooser"
                       @input="onValueChange($event, 'contact')"
                       id="per_permanent_city"
@@ -1613,8 +1615,8 @@
                   label="name"
                   :options="[
                     { name: 'Single', value: 'single' },
-                     { name: 'Widow', value: 'widow' },
-                      { name: 'Widower', value: 'widower' },
+                    { name: 'Widow', value: 'widow' },
+                    { name: 'Widower', value: 'widower' },
                     { name: 'Divorcee', value: 'divorced' },
                     {
                       name: 'Divorcee with children',
@@ -2714,6 +2716,8 @@ export default {
       ethnicityList: ethnicities,
       arr: ARR_PersonalInfo,
       heightTV: HEIGHTS,
+      loading: false,
+      loadingPermanant: false,
       activeRouteName: "CandidateRegistration",
       dateOfbirth: {
         day: null,
@@ -3074,8 +3078,14 @@ export default {
         .catch((error) => {});
     },
     async onCountryChange(e, name, action) {
+      if (action === "residence") {
+        this.loading = true;
+      } else {
+        this.loadingPermanant = true;
+      }
       const res = await ApiService.get(`v1/utilities/cities/${e}`);
-
+      this.loading = false;
+      this.loadingPermanant = false;
       if (res.status === 200) {
         switch (action) {
           case "permanant":
