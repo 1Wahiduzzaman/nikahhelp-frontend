@@ -48,10 +48,10 @@
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 3 }"
               ></div>
-              <!-- <div
+              <div
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 4 }"
-              ></div> -->
+              ></div>
             </div>
           </div>
         </div>
@@ -72,14 +72,7 @@
           ref="personalInfoTwo"
         />
       </div>
-      <!-- <div class="steps-content" v-if="current == 2">
-        <Verification
-          @valueChange="onDataChange($event)"
-          :verification="candidateDetails.verification"
-          :candidateDetails="candidateDetails"
-          ref="Verification"
-        />
-      </div> -->
+
       <div class="steps-content" v-if="current == 2">
         <FamilyInfoTwo
           @valueChange="onDataChange($event)"
@@ -95,6 +88,20 @@
         />
       </div>
       <div class="steps-content" v-if="current == 4">
+        <Verification
+          v-if="showAgreement"
+          @valueChange="onDataChange($event)"
+          :verification="candidateDetails.verification"
+          :candidateDetails="candidateDetails"
+          ref="Verification"
+        />
+        <VerificationAgreement
+          @agree="onAgree($event)"
+          v-if="!showAgreement"
+          ref="VerificationAgreement"
+        />
+      </div>
+      <div class="steps-content" v-if="current == 5">
         <Review :candidateDetails="candidateDetails" @toggleStep="toggleStep" />
       </div>
 
@@ -157,6 +164,7 @@ const createData = () => ({
 });
 import ReviewAndPublishModal from "@/views/candidate-registration/ReviewAndPublishModal.vue";
 import PreferenceTwo from "@/components/candidate-registration/preference-two.vue";
+import VerificationAgreement from "@/components/candidate-registration/verification-agreement.vue";
 import Verification from "@/components/candidate-registration/verification.vue";
 import PersonalInfoTwo from "@/components/candidate-registration/personalinfo-two.vue";
 import FamilyInfoTwo from "@/components/candidate-registration/familyinfo-two.vue";
@@ -171,6 +179,7 @@ import thankfulThings from "@/common/thankfulThings.js";
 import VueFixedHeader from "vue-fixed-header";
 import jwtService from "../../services/jwt.service";
 import Header from "../../components/header/header";
+
 export default {
   components: {
     PreferenceTwo,
@@ -182,6 +191,7 @@ export default {
     VueFixedHeader,
     Header,
     ReviewAndPublishModal,
+    VerificationAgreement,
   },
   mounted() {
     this.getCandidateInitialInfo();
@@ -190,6 +200,7 @@ export default {
     return {
       dialog: false,
       isLoading: false,
+      showAgreement: false,
       fixedStatus: {
         headerIsFixed: false,
       },
@@ -208,16 +219,17 @@ export default {
           title: "Personal Information",
           content: "Second-content",
         },
-        // {
-        //   title: "Verification",
-        //   content: "Last-content",
-        // },
+
         {
           title: "Family Information",
           content: "Last-content",
         },
         {
           title: "Image Upload",
+          content: "Last-content",
+        },
+        {
+          title: "Verification",
           content: "Last-content",
         },
         {
@@ -228,9 +240,9 @@ export default {
       mobileSteps: [
         "Preference",
         "Personal Information",
-        //"Verification",
         "Family Information",
         "Image Upload",
+        "Verification",
         "Review & Publish",
       ],
     };
@@ -248,6 +260,14 @@ export default {
 
     updateFixedStatus(next) {
       this.fixedStatus.headerIsFixed = next;
+    },
+    onAgree(value) {
+      this.showAgreement = value;
+      if (!this.showAgreement) {
+        this.current++;
+      } else {
+        this.checkExistData();
+      }
     },
     onDataChange(e) {
       switch (e.current) {
@@ -531,7 +551,7 @@ export default {
         localStorage.setItem("user", JSON.stringify(user));
       }
 
-      if (satge === 5) {
+      if (satge === 6) {
         this.$router.push("/dashboard");
       }
     },
@@ -662,33 +682,7 @@ export default {
           });
 
           break;
-        // case 2:
-        //   const {
-        //     ver_country_id,
-        //     ver_document_type,
-        //     ver_image_back,
-        //     ver_image_front,
-        //     ver_recommences_address,
-        //     ver_recommences_first_name,
-        //     ver_recommences_last_name,
-        //     ver_recommences_mobile_no,
-        //     ver_recommences_occupation,
-        //     ver_recommences_title,
-        //   } = this.candidateDetails.verification;
-        //   isEnabled = Object.values({
-        //     ver_country_id,
-        //     ver_document_type,
-        //     ver_image_back,
-        //     ver_image_front,
-        //     ver_recommences_address,
-        //     ver_recommences_first_name,
-        //     ver_recommences_last_name,
-        //     ver_recommences_mobile_no,
-        //     ver_recommences_occupation,
-        //     ver_recommences_title,
-        //   }).every((x) => x !== undefined && x !== null && x !== "");
-        //   break;
-        //   break;
+
         case 2:
           const {
             country_of_origin,
@@ -712,6 +706,34 @@ export default {
             (x) => x !== undefined && x !== null && x !== ""
           );
           break;
+        case 4:
+          const {
+            ver_country_id,
+            ver_document_type,
+            ver_image_back,
+            ver_image_front,
+            ver_recommences_address,
+            ver_recommences_first_name,
+            ver_recommences_last_name,
+            ver_recommences_mobile_no,
+            ver_recommences_occupation,
+            ver_recommences_title,
+          } = this.candidateDetails.verification;
+          isEnabled = this.showAgreement
+            ? Object.values({
+                ver_country_id,
+                ver_document_type,
+                ver_image_back,
+                ver_image_front,
+                ver_recommences_address,
+                ver_recommences_first_name,
+                ver_recommences_last_name,
+                ver_recommences_mobile_no,
+                ver_recommences_occupation,
+                ver_recommences_title,
+              }).every((x) => x !== undefined && x !== null && x !== "")
+            : true;
+          break;
       }
 
       this.enabledNextBtn = isEnabled;
@@ -731,10 +753,25 @@ export default {
     },
     doneBtn() {
       this.dialog = false;
-      //this.saveDataInputStatus(5);
+      this.saveDataInputStatus(6);
     },
     toggleStep(step) {
       this.current = step;
+    },
+    async updateUserVerifyOrReject() {
+      let user = JSON.parse(localStorage.getItem("user"));
+      const data = {
+        id: user.id,
+        status: "completed",
+      };
+      await this.$store
+        .dispatch("updateUserVerifyOrReject", data)
+        .then((data) => {
+          user.status = "2";
+          localStorage.setItem("user", JSON.stringify(user));
+          this.$emit("valueChange", true);
+        })
+        .catch((error) => {});
     },
     async next() {
       switch (this.current) {
@@ -754,10 +791,13 @@ export default {
           this.current++;
           break;
         }
-        // case 4: {
-        //   this.current++;
-        //   break;
-        // }
+        case 4: {
+          if (this.showAgreement) {
+            this.updateUserVerifyOrReject();
+          }
+          this.current++;
+          break;
+        }
         default: {
           this.current = 0;
         }
@@ -856,7 +896,7 @@ export default {
 
 .step-bar.vue-fixed-header--isFixed {
   position: fixed;
-  top: 10px;
+  top: 0px;
   z-index: 1000;
   width: 100%;
   padding: 0;
@@ -900,7 +940,7 @@ export default {
     display: none;
   }
   .step-bar.vue-fixed-header--isFixed {
-    top: 15px;
+    // top: 15px;
     padding-top: 20px !important;
   }
 }

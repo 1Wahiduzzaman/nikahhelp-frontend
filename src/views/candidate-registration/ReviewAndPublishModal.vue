@@ -7,7 +7,7 @@
         </v-card-title>
 
         <v-card-text>
-         Are you sure, you want to suubmit the form for review and publish?
+         Are you sure, you want to submit the form for review and publish?
         </v-card-text>
 
         <v-divider></v-divider>

@@ -1,7 +1,7 @@
 <template>
   <div id="accordion" class="preference">
     <div class="section-heading heading-text">
-      <h5>So, what kind of life companion are you looking for </h5>
+      <h5>So, what kind of life companion are you looking for</h5>
       <p>Your preferences about your companion</p>
     </div>
 
@@ -77,7 +77,7 @@
                 id="collapseExampleAge"
               >
                 <div class="card card-body bubble">
-                 Provide your preferred age range
+                  Provide your preferred age range
                 </div>
               </div>
             </div>
@@ -976,7 +976,10 @@
                 data-parent="#accordion"
                 id="otherRequirementsForPartner"
               >
-                <div class="card card-body bubble">Here you can write other things that are important to you but could not provide elsewhere above</div>
+                <div class="card card-body bubble">
+                  Here you can write other things that are important to you but
+                  could not provide elsewhere above
+                </div>
               </div>
             </div>
           </div>
@@ -1809,8 +1812,9 @@ export default {
     changeActivekey(key) {
       this.activeKey = key;
     },
+
     onDropdownChange({ name, value }) {
-      this.preferenceData[name] = value;
+      this.preferenceData[name] = typeof value == "string" ? 0 : value;
       this.savePreference();
     },
     filterOption(input, option) {

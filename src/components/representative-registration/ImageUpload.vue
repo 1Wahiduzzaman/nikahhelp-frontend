@@ -29,7 +29,7 @@
                     <div class="col-md-4 text-center">
                       <div>
                         <div class="img-preview mb-2">
-                          <img
+                          <img    v-viewer
                             :src="avatarSrc"
                             width="180"
                             height="200"
@@ -57,7 +57,7 @@
                     <div class="col-md-4 text-center">
                       <div>
                         <div class="img-preview mb-2">
-                          <img
+                          <img    v-viewer
                             :src="mainImageSrc"
                             width="180"
                             height="200"

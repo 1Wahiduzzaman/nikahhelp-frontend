@@ -707,7 +707,7 @@
           <div class="row">
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
-                <img
+                <img    v-viewer
                   :src="candidateData.personal.per_avatar_url"
                   class="user-image"
                   alt="img"
@@ -719,7 +719,7 @@
             </div>
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
-                <img
+                <img    v-viewer
                   :src="candidateData.personal.per_main_image_url"
                   class="user-image"
                   alt="img"
@@ -732,7 +732,7 @@
 
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
-                <img
+                <img    v-viewer
                   :src="candidateData.personal.per_main_image_url"
                   class="user-image"
                   alt="img"
