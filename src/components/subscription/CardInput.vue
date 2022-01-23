@@ -6,7 +6,7 @@
 				<input
 					type="text"
 					id="name"
-					class="w-100 py-2 px-4"
+					class="w-100 py-2 px-4 bg-white"
 					v-model="name"
 					placeholder="Your name on card"
 				/>
@@ -37,7 +37,7 @@
 					<input
 						type="text"
 						id="postCode"
-						class="w-100 py-2 px-4"
+						class="w-100 py-2 px-4 bg-white"
 						v-model="postCode"
 						placeholder="Example: 1234"
 					/>
@@ -47,7 +47,7 @@
 					<input
 						type="text"
 						id="country"
-						class="w-100 py-2 px-4"
+						class="w-100 py-2 px-4 bg-white"
 						v-model="city"
 						placeholder="New York"
 					/>
@@ -55,9 +55,9 @@
 			</div>
 			<label class="text-white ml-2 mt-3">Card Number</label>
 			<div ref="card" class="form-control rounded-pill px-4 cspt-9"></div>
-			<div class="mt-4 mb-3 text-right">
-				<button class="btn btn-success validate-button br-30 py-2" @click.prevent="submitPayment">
-          <a-icon type="loading" class="" v-if="loading" /> Validate
+			<div class="mt-5 mb-3 text-right">
+				<button class="btn btn-success btn-block validate-button br-30 py-2" @click.prevent="submitPayment">
+          <a-icon type="loading" class="" v-if="loading" /> Check Card Validity
 				</button>
 			</div>
 		</div>
@@ -168,8 +168,14 @@ export default {
 .validate-button {
 	padding: 1px 60px;
 	font-size: 20px;
-	margin-top: 5px;
-
+	margin-top: 30px;
+  height: 40px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #747373;
+  outline-style: solid;
+  outline-color: #cfcece;
 }
 .br-30 {
   border-radius: 30px;

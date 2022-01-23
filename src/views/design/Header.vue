@@ -263,7 +263,7 @@
                   </template>
                 </a-dropdown>
                 <img src="@/assets/icon/verified_icon.svg" alt="icon" class="verify-icon ml-1" width="14px" v-if="loggedUser && parseInt(loggedUser.status) === 3" />
-                <img src="@/assets/icon/non_verified_icon.svg" alt="icon" class="verify-icon ml-1 animate-flicker" width="14px" v-else />
+                <img src="@/assets/icon/non_verified_icon.svg" alt="icon" class="verify-icon ml-1 animate-flicker cursor-pointer" width="14px" v-else @click="verifyPopup" />
 <!--                <span class="role px-2 ml-1 shrink-none">-->
 <!--&lt;!&ndash;                  {{ loggedUser && parseInt(loggedUser.status) === 3 ? 'V' : 'Not verified' }}&ndash;&gt;-->
 <!--                </span>-->
@@ -574,6 +574,19 @@ export default {
         },
       });
     },
+    verifyPopup() {
+      const self = this;
+      self.$confirm({
+        icon: "info-circle",
+        title: "Your account is not verified. Please verify the account",
+        okText: 'Verify Now',
+        center: true,
+        confirmLoading: true,
+        onOk() {
+          self.$router.push({name: 'Settings'});
+        },
+      });
+    }
   },
 };
 </script>

@@ -3,7 +3,7 @@
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else>
       <!-- Heading -->
-      <div class="section-header text-center heading-text px-2">
+      <div class="section-header text-center heading-text px-2 font-poppins">
         <h4 class="heading color-primary font-weight-bolder">
           Choose a Subscription Plan that Works for You
         </h4>
@@ -15,10 +15,10 @@
         </p>
       </div>
       <!-- Subscription details -->
-      <div class="subscription-details container-fluid mt-4">
+      <div class="subscription-details container-fluid mt-4 font-poppins">
         <div class="row" :class="{ 'mobile-section': activeStep > 1 }">
           <div
-            class="col-12 col-md-4 col-xl-4"
+            class="col-12 col-md-4 col-xl-4 font-poppins"
             :class="{ 'mobile-block': activeStep !== 1 }"
           >
             <!-- Card 1 -->
@@ -40,7 +40,7 @@
               </div>
               <div class="div-2 position-relative pt-4 bg-white">
                 <div
-                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center"
+                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center"
                   :class="{ 'bg-brand-gradient': isSelected1 }"
                   @click="firstOption"
                 >
@@ -58,7 +58,7 @@
                   </h4>
                 </div>
                 <div
-                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center"
+                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center"
                   :class="{ 'bg-brand-gradient': isSelected2 }"
                   @click="secondOption"
                 >
@@ -76,7 +76,7 @@
                   </h4>
                 </div>
                 <div
-                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center"
+                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center"
                   :class="{ 'bg-brand-gradient': isSelected3 }"
                   @click="thirdOption"
                 >
@@ -94,7 +94,7 @@
                   </h4>
                 </div>
                 <div
-                  class="d-flex cursor-pointer py-4 px-5 bg-info free-duration"
+                  class="d-flex cursor-pointer py-4 px-5 free-duration align-items-center justify-content-center"
                   :class="{ 'bg-brand-gradient': isSelected4 }"
                   @click="fourthOption"
                 >
@@ -114,14 +114,13 @@
               </div>
               <div class="div-3 bg-primary-gradient">
                 <p class="text-center fs-12 text-white">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Magni eius at expedita? Explicabo laboriosam ipsa commod
+                  {{ activeStepIndex >=0 ? descriptions[activeStepIndex] : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni eius at expedita? Explicabo laboriosam ipsa commod' }}
                 </p>
               </div>
             </div>
           </div>
           <div
-            class="col-12 col-md-4 col-xl-4 position-relative"
+            class="col-12 col-md-4 col-xl-4 position-relative font-poppins"
             :class="{ 'mobile-block': activeStep !== 2 }"
           >
             <!-- Card 2 -->
@@ -184,7 +183,7 @@
             </div>
           </div>
           <div
-            class="col-12 col-md-4 col-xl-4"
+            class="col-12 col-md-4 col-xl-4 font-poppins"
             :class="{ 'mobile-block': activeStep !== 3 }"
           >
             <!-- Card 3 -->
@@ -243,20 +242,20 @@
                   <li class="flex-between-start">
                     <span class="flex-45 px-2">Team ID</span>
                     <span class="flex-55 px-2" v-if="teamSelected">
-                      :<span class="ml-2">{{ teamSelected.id }}</span></span
+                      :<span class="ml-2">{{ teamSelected.team_id.substr(0, 8) }}</span></span
                     >
                   </li>
-                  <li class="flex-between-start">
-                    <span class="flex-45 px-2">Team Status </span>
-                    <span class="flex-55 px-2" v-if="teamSelected">
-                      :<span class="ml-2"
-                        >{{ teamSelected.status == 1 ? "Active" : "Inactive" }},
-                        {{
-                          teamSelected.member_count > 1 ? "Valid" : "Invalid"
-                        }}, Verified</span
-                      ></span
-                    >
-                  </li>
+<!--                  <li class="flex-between-start">-->
+<!--                    <span class="flex-45 px-2">Team Status </span>-->
+<!--                    <span class="flex-55 px-2" v-if="teamSelected">-->
+<!--                      :<span class="ml-2"-->
+<!--                        >{{ teamSelected.status == 1 ? "Active" : "Inactive" }},-->
+<!--                        {{-->
+<!--                          teamSelected.member_count > 1 ? "Valid" : "Invalid"-->
+<!--                        }}, Verified</span-->
+<!--                      ></span-->
+<!--                    >-->
+<!--                  </li>-->
                   <li class="flex-between-start">
                     <span class="flex-45 px-2">Team Creation Date </span>
                     <span class="flex-55 px-2" v-if="teamSelected">
@@ -267,6 +266,18 @@
                     <span class="flex-45 px-2">Team Created By </span>
                     <span class="flex-55 px-2" v-if="teamSelected">
                       :<span class="ml-2">{{ teamCreatedBy }}</span></span
+                    >
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-45 px-2">My Role </span>
+                    <span class="flex-55 px-2" v-if="teamSelected">
+                      :<span class="ml-2">{{ selfMember ? selfMember.role : '' }}</span></span
+                    >
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-45 px-2">Participated As </span>
+                    <span class="flex-55 px-2" v-if="teamSelected">
+                      :<span class="ml-2">{{ selfMember ? selfMember.user_type : '' }}</span></span
                     >
                   </li>
                 </div>
@@ -384,7 +395,14 @@ export default {
       teamSelected: null,
       contentShow: "details",
       activeStep: 1,
-      freeModal: false
+      freeModal: false,
+      activeStepIndex: 0,
+      descriptions: [
+          'Plan 1',
+          'Plan 2',
+          'Plan 3',
+          'Plan 4'
+      ]
     };
   },
   created() {
@@ -408,6 +426,13 @@ export default {
       // return member.user.full_name;
       return this.teamSelected && this.teamSelected.created_by ? this.teamSelected.created_by.full_name : '';
     },
+    selfMember() {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      if(loggedUser && this.teamSelected) {
+        return this.teamSelected.team_members.find(member => parseInt(member.user_id) === parseInt(loggedUser.id));
+      }
+      return null;
+    }
   },
   methods: {
     setContentType(type) {
@@ -497,6 +522,7 @@ export default {
       this.amount = 10.0;
       this.savedAmount = 0.0;
       this.nextStep(2);
+      this.activeStepIndex = 0;
     },
     secondOption() {
       this.isSelected2 = !this.isSelected2;
@@ -506,6 +532,7 @@ export default {
       this.amount = 24.0;
       this.savedAmount = 6.0;
       this.nextStep(2);
+      this.activeStepIndex = 1;
     },
     thirdOption() {
       this.isSelected3 = !this.isSelected3;
@@ -515,6 +542,7 @@ export default {
       this.amount = 42.0;
       this.savedAmount = 18.0;
       this.nextStep(2);
+      this.activeStepIndex = 2;
     },
     fourthOption() {
       this.isSelected4 = !this.isSelected4;
@@ -524,6 +552,7 @@ export default {
       this.amount = 0.0;
       this.savedAmount = 0.0;
       this.nextStep(2);
+      this.activeStepIndex = 3;
     },
     handleContinue() {
       if (this.teamSelected == null) {
@@ -681,7 +710,7 @@ export default {
           .custom-select {
             font-size: 18px;
             width: auto;
-            height: 40px;
+            height: 50px;
             border-radius: 20px !important;
             background: #e6e6e6 url("~@/assets/select-arrow.png") no-repeat;
             background-position: right 2px center;
@@ -719,13 +748,14 @@ export default {
   }
 }
 .background-design {
-  background-image: linear-gradient(
-    to right,
-    #eb5e94,
-    #eb5e94,
-    #bf47a1,
-    #962a7b
-  );
+  //background-image: linear-gradient(
+  //  to right,
+  //  #eb5e94,
+  //  #eb5e94,
+  //  #bf47a1,
+  //  #962a7b
+  //);
+  background-image: linear-gradient(to right top, #522e8e, #602d8d, #6e2b8c, #7a2a8a, #852888, #912787, #9d2585, #a82483, #b72181, #c51f7e, #d31f7b, #e02076);
   padding-top: 10px;
 }
 .background-design-cardfooter {
@@ -734,18 +764,20 @@ export default {
 }
 
 .background-design-middle {
-  background-image: linear-gradient(
-    to top right,
-    #6159a7,
-    #a459a7,
-    #ca56ad,
-    #eb5e94
-  );
+  //background-image: linear-gradient(
+  //  to top right,
+  //  #6159a7,
+  //  #a459a7,
+  //  #ca56ad,
+  //  #eb5e94
+  //);
+  background-image: linear-gradient(to right top, #522e8e, #602d8d, #6e2b8c, #7a2a8a, #852888, #912787, #9d2585, #a82483, #b72181, #c51f7e, #d31f7b, #e02076);
   margin-top: 18px;
 }
 
 .background-design-rightcard {
-  background-image: linear-gradient(to bottom, #6159a7, #ca56ad, #eb5e94);
+  //background-image: linear-gradient(to bottom, #6159a7, #ca56ad, #eb5e94);
+  background-image: linear-gradient(to right top, #522e8e, #602d8d, #6e2b8c, #7a2a8a, #852888, #912787, #9d2585, #a82483, #b72181, #c51f7e, #d31f7b, #e02076);
   margin-top: 18px;
 }
 
@@ -783,22 +815,24 @@ export default {
   color: white;
 }
 .bg-brand-gradient {
-  background-image: linear-gradient(
-    to right,
-    #eb5e94,
-    #eb5e94,
-    #bf47a1,
-    #962a7b
-  );
+  //background-image: linear-gradient(
+  //  to right,
+  //  #eb5e94,
+  //  #eb5e94,
+  //  #bf47a1,
+  //  #962a7b
+  //);
+  background-image: linear-gradient(to right top, #522e8e, #602d8d, #6e2b8c, #7a2a8a, #852888, #912787, #9d2585, #a82483, #b72181, #c51f7e, #d31f7b, #e02076) !important;
 }
 .bg-primary-gradient {
-  background-image: linear-gradient(
-    to top right,
-    #6159a7,
-    #a459a7,
-    #ca56ad,
-    #eb5e94
-  );
+  //background-image: linear-gradient(
+  //  to top right,
+  //  #6159a7,
+  //  #a459a7,
+  //  #ca56ad,
+  //  #eb5e94
+  //);
+  background-image: linear-gradient(to right top, #522e8e, #602d8d, #6e2b8c, #7a2a8a, #852888, #912787, #9d2585, #a82483, #b72181, #c51f7e, #d31f7b, #e02076);
 }
 .price {
   font-size: 54px;
@@ -855,10 +889,13 @@ export default {
   margin-top: 50px;
 }
 .item-duration:hover {
-  background: $bg-primary;
+  background-image: linear-gradient(to right top, #522e8e, #602d8d, #6e2b8c, #7a2a8a, #852888, #912787, #9d2585, #a82483, #b72181, #c51f7e, #d31f7b, #e02076);
   .duration {
     color: #ffffff;
   }
+}
+.free-duration {
+  background: #498ba133;
 }
 .free-duration:hover {
   background: $bg-brand !important;
@@ -889,7 +926,7 @@ export default {
     height: 485px;
   }
   .heading-text {
-    margin-top: 4rem;
+    margin-top: 2rem;
   }
   .mobile-section {
     margin-top: 0;
@@ -912,5 +949,10 @@ export default {
 }
 .duration {
   margin-bottom: 0 !important;
+}
+.custom-select {
+  height: 50px;
+  font-weight: bolder;
+  text-align: center;
 }
 </style>

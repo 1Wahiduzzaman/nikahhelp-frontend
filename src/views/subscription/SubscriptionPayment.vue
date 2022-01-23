@@ -4,7 +4,7 @@
       <div class="container-fluid mt-5 section-padding-payment">
         <div class="d-flex flex-mb-direction">
           <div class="w-d-50 bg-1 col-flex position-relative shadow-default"
-               :class="{'mobile-block': activeStep !== 1}">
+               :class="{'mobile-block': activeStep !== 1, 'custom-height': cardStat}">
             <div class="div-1">
               <div class="section-heading">
                 <h4 class="heading-title-payment">Team Subscription & Payment</h4>
@@ -93,13 +93,13 @@
                   and Cancellation Terms.
                 </p>
                 <div class="text-center">
-                  <spinner v-if="isLoading"></spinner>
+<!--                  <spinner v-if="isLoading"></spinner>-->
                   <button
-                      v-if="!isLoading && agree"
-                      class="btn bg-success text-white agree-button br-30"
+                      v-if="agree"
+                      class="btn bg-success text-white agree-button br-30 btn-block"
                       @click="subscribe"
                   >
-                    Agree and Subscribe
+                    <a-icon type="loading" class="fs-24" v-if="isLoading" /> Agree and Subscribe
                   </button>
                 </div>
               </div>
@@ -145,7 +145,8 @@ export default {
       teamName: null,
       teamId: null,
       agree: false,
-      activeStep: 1
+      activeStep: 1,
+      cardStat: false
     };
   },
   created() {
@@ -163,6 +164,7 @@ export default {
       console.log(paymentMethod);
       this.agree = true;
       this.activeStep = 2;
+      this.cardStat = paymentMethod;
     },
     async subscribe() {
       console.log(this.$store.state.user.payment_method);
@@ -430,6 +432,7 @@ export default {
   outline-style: solid;
   outline-color: #cfcece;
   font-size: 16px;
+  margin-top: 46px;
 }
 
 .border-right {
@@ -716,6 +719,11 @@ export default {
   }
   .heading-desc-payment {
     font-size: 14x;
+  }
+}
+.custom-height {
+  @media (min-width: 1200px) {
+    height: 638px;
   }
 }
 </style>

@@ -43,10 +43,10 @@
                 >
                   Unread
                 </v-btn>
-                <v-btn rounded color="success" dark class="ml-2 read-btn" small @click="markAllAsRead()">
-                  <a-icon type="check" color="success" class="pr-2" />
-                  Mark all as read
-                </v-btn>
+<!--                <v-btn rounded color="success" dark class="ml-2 read-btn" small @click="markAllAsRead()">-->
+<!--                  <a-icon type="check" color="success" class="pr-2" />-->
+<!--                  Mark all as read-->
+<!--                </v-btn>-->
               </div>
             </div>
             <div class="notification-page-height pr-3 mt-4">

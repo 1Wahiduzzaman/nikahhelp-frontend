@@ -252,17 +252,16 @@ export default {
 
     this.sockets.subscribe('receive_message', function (res) {
       if(res.support) {
-        // let hasChat = this.histories.find(history => history && history.last_message && history.last_message.chat_id);
-        // if(hasChat) {
-        //   let chatId = hasChat.last_message.chat_id;
-        //   hasChat.last_message = res.last_message;
-        //   hasChat.last_message.chat_id = chatId;
-        //   if(this.chatheadopen && this.chatheadopen.user.id == res.sender) {
-        //     this.chats.push(res.last_message);
-        //   }
-        // } else {
-          this.loadLists();
-        // }
+        this.loadLists();
+        let hasChat = this.histories.find(history => history && history.last_message && history.last_message.chat_id);
+        if(hasChat) {
+          let chatId = hasChat.last_message.chat_id;
+          hasChat.last_message = res.last_message;
+          hasChat.last_message.chat_id = chatId;
+          if(this.chatheadopen && this.chatheadopen.user.id == res.sender) {
+            this.chats.push(res.last_message);
+          }
+        }
       }
     });
   },

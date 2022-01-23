@@ -8,11 +8,11 @@
       <v-chip
         class="ml-5"
         style="background: #6159a7"
-        text-color="white" 
+        text-color="white"
         small
-      >Very Important</v-chip>
+        >{{ rate[value] }}</v-chip
+      >
     </div>
-<!--    <div class="col-2 mt-2 text-center value-string">{{ valueString }}</div>-->
   </div>
 </template>
 
@@ -20,6 +20,18 @@
 export default {
   name: "RatingComponent",
   props: ["title", "value", "valueString"],
+  data() {
+    return {
+      rate: {
+        0: "",
+        1: "Not Important",
+        2: "Quite Important",
+        3: "Important",
+        4: "Very Important",
+        5: "Extremly Important",
+      },
+    };
+  },
 };
 </script>
 
