@@ -1,5 +1,5 @@
 <template>
-    <v-card class="p-3">
+    <v-card class="p-3" style="height: 100%">
         <table>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 160px">Name</td>
@@ -75,30 +75,14 @@
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Country of Birth</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
                 <td class="text--secondary text-subtitle-1">
-                    {{
-                        $store.state.candidateInfo.countries[
-                            personal.per_country_of_birth
-                        ]
-                        ? $store.state.candidateInfo.countries[
-                            personal.per_country_of_birth
-                        ].name
-                        : ""
-                    }}
+                    {{ personal.per_country_of_birth }}
                 </td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Current Residence</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
                 <td class="text--secondary text-subtitle-1">
-                    {{
-                        $store.state.candidateInfo.countries[
-                            personal.per_current_residence
-                        ]
-                            ? $store.state.candidateInfo.countries[
-                                personal.per_current_residence
-                            ].name
-                            : ""
-                        }}
+                    {{ personal.per_current_residence }}
                 </td>
             </tr>
              <tr>

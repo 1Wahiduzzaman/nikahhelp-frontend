@@ -23,16 +23,18 @@
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Country & Cities Preferred</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
                 <td class="text--secondary text-subtitle-1">
-                    <!-- <div
-                        v-for="(country, index) in countries || []"
-                        :key="country.id"
-                        >
-                            {{ country.name }},
-                            {{
-                            candidateData.preference.preferred_cities[index]
-                                .name
-                            }}
-                    </div> -->
+                    <span
+                        v-for="(occupation, i) in (preference.preferred_cities)"
+                        :key="i"
+                    >
+                        {{ occupation.name }}<span v-if="i+1 < preference.preferred_cities.length">,&nbsp</span>
+                    </span>
+                    <span
+                        v-for="(occupation, i) in (preference.preferred_countries)"
+                        :key="i"
+                    >
+                        , {{ occupation.name }}<span v-if="i+1 < preference.preferred_cities.length">,&nbsp</span>
+                    </span>
                 </td>
             </tr>
             <tr>
@@ -58,14 +60,12 @@
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Nationality</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
                 <td class="text--secondary text-subtitle-1">
-                    <span class="flex">
-                        <div
+                        <span
                             v-for="(nationality, i) in preference.preferred_nationality"
                             :key="i"
                         >
                             {{ nationality.name }}<span v-if="i+1 < preference.preferred_nationality.length">,&nbsp</span>
-                        </div>
-                    </span>
+                        </span>
                 </td>
             </tr>
             <tr>
@@ -81,15 +81,13 @@
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Occupation</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">
-                    <span class="flex">
-                        <div
-                            v-for="(occupation, i) in preference.pre_occupation"
-                            :key="i"
-                        >
-                            {{ occupation.name }}
-                            <span v-if="i+1 < preference.pre_occupation">,</span>
-                        </div>
+                <td class="text--secondary text-subtitle-1"> 
+                    <span
+                        v-for="(occupation, i) in preference.pre_occupation"
+                        :key="i"
+                    >
+                        {{ occupation }}
+                        <span v-if="i+1 < preference.pre_occupation">,</span>
                     </span>
                 </td>
             </tr>
@@ -135,6 +133,10 @@ export default {
 </script>
 
 <style scoped>
+table {
+    table-layout: fixed;
+    width: 100%;
+}
 td {
     vertical-align: top;
 }
