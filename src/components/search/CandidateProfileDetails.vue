@@ -103,17 +103,17 @@
             <ButtonComponent
                 iconHeight="14px"
                 :isSmall="true"
-                :title="profile.is_short_listed ? 'Unlist' : 'ShortList'"
-                icon="/assets/icon/star-fill-secondary.svg"
-                :customEvent="profile.is_short_listed ? 'removeShortList' : 'addShortList'"
+                :title="profile.is_connect ? 'Disconnect' : 'Connect'"
+                icon="/assets/icon/connect-s.svg"
+                :customEvent="profile.is_connect ? 'removeConnection' : 'addConnection'"
                 @onClickButton="onClickButton"
             />
             <ButtonComponent
                 iconHeight="14px"
                 :isSmall="true"
-                :title="profile.is_connect ? 'Disconnect' : 'Connect'"
-                icon="/assets/icon/connect-s.svg"
-                :customEvent="profile.is_connect ? 'removeConnection' : 'addConnection'"
+                :title="profile.is_short_listed ? 'Unlist' : 'ShortList'"
+                icon="/assets/icon/star-fill-secondary.svg"
+                :customEvent="profile.is_short_listed ? 'removeShortList' : 'addShortList'"
                 @onClickButton="onClickButton"
             />
             <ButtonComponent
