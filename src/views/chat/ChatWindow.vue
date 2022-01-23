@@ -250,7 +250,7 @@
                 <div class="left">
                   <div class="top">
                     <div class="item-img">
-                      <img src="../../assets/info-img.png" alt="info image">
+                      <img :src="chatheadopen.logo ? chatheadopen.logo : getImage()" alt="info image">
 <!--                      <span></span>-->
                     </div>
                     <div class="chat-info">
@@ -317,7 +317,7 @@
                            :class="{'conv-mb': chats.length !== cIndex + 1}"
                            v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))" >
                         <div class="text-right">
-                          <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
+                          <img :src="getAuthUser && getAuthUser.per_main_image_url ? getAuthUser.per_main_image_url : getImage()" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
                         </div>
                         <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 white-space-pre" v-html="item.body">
                           <!--                        <div class="font-weight-bold mb-1">You</div>-->
@@ -416,15 +416,15 @@
 <script>
 import ChatListItem from '@/components/notification/ChatListItem';
 import ApiService from '@/services/api.service';
-import {pick, map} from 'lodash';
-
-const messageKeys = ['id', 'user_id', 'chat_id', 'team_id', 'from_team_id', 'to_team_id', 'private_receiver_id', 'private_team_chat_id', 'body', 'seen', 'created_at'];
+import {map, pick} from 'lodash';
 import {format} from 'timeago.js'
 import JwtService from "@/services/jwt.service";
-import { openModalRoute } from "@/plugins/modal/modal.mixin";
+import {openModalRoute} from "@/plugins/modal/modal.mixin";
 import ConnectedTeamChat from "../../components/chat/ConnectedTeamChat";
 import PrivateRequestChat from "../../components/chat/PrivateRequestChat";
 import Notification from "@/common/notification.js";
+
+const messageKeys = ['id', 'user_id', 'chat_id', 'team_id', 'from_team_id', 'to_team_id', 'private_receiver_id', 'private_team_chat_id', 'body', 'seen', 'created_at'];
 
 export default {
   name: 'ChatWindow',
@@ -566,6 +566,9 @@ export default {
         return loggedUser.id;
       }
       return null;
+    },
+    getAuthUser() {
+      return JSON.parse(localStorage.getItem('user'));
     },
     getChatType() {
       if (this.inConnectedChat) {
@@ -825,7 +828,7 @@ export default {
           user_id: item.user_id,
           state: 'seen',
           name: item.user?.full_name || 'user name',
-          logo: item.user?.avatar,
+          logo: item.user && item.user.candidate_info && item.user.candidate_info.per_avatar_url ? item.user.candidate_info.per_main_image_url : require('../../assets/info-img.png'),
           other_mate_id: item.user_id,
           typing_status: 0,
           typing_text: '',
@@ -854,7 +857,7 @@ export default {
         return {
           label: 'Private chat',
           state: 'seen',
-          name: this.getPrivateChatUserName(item),
+          name: this.getPrivateChatUserName(item)?.full_name,
           logo: item.private_receiver_data?.avatar,
           to_team_id: item.to_team_id,
           from_team_id: item.from_team_id,
@@ -893,8 +896,7 @@ export default {
     },
     getPrivateChatUserName(item) {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
-      let user = loggedUser.id == item.sender ? item.private_receiver_data : item.private_sender_data;
-      return user?.full_name || 'user name';
+      return loggedUser.id == item.sender ? item.private_receiver_data : item.private_sender_data;
     },
     async loadTeamChat() {
       try {
@@ -919,6 +921,7 @@ export default {
           item.label = 'Connected Team';
           item.typing_status = 0;
           item.typing_text = '';
+          item.logo = this.getConnectedTeamInfo(item) ? this.getConnectedTeamInfo(item).logo : '';
           item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
           item.is_friend = item.team_private_chat ? item.team_private_chat.is_friend : 0;
           return item;
@@ -950,6 +953,13 @@ export default {
         // this.connectedChat = this.processTeamChatResponse(data);
       } catch (e) {
         console.error(e);
+      }
+    },
+    getConnectedTeamInfo(item) {
+      if(item.from_team_id == this.activeTeam) {
+        return item.to_team ? item.to_team : null;
+      } else {
+        return item.from_team ? item.from_team : null;
       }
     },
     async getPrivateRequests() {
@@ -1452,6 +1462,9 @@ export default {
         this.connectedTeam.splice(connectIndex, 1);
         this.connectedTeam.unshift(data);
       }
+    },
+    getImage() {
+      return require('../../assets/info-img.png');
     }
   }
 };
@@ -1840,6 +1853,7 @@ export default {
 
             img {
               width: 50px;
+              height: 50px;
               border: 2px solid #3ab54a;
               border-radius: 50%;
             }
@@ -2027,6 +2041,7 @@ export default {
 
             img {
               width: 50px;
+              height: 50px;
               border: 2px solid #3ab54a;
               border-radius: 50%;
             }
@@ -2299,6 +2314,7 @@ export default {
 
             img {
               width: 50px;
+              height: 50px;
               border: 2px solid #3ab54a;
               border-radius: 50%;
             }

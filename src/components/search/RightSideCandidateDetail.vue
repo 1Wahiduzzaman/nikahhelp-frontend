@@ -17,6 +17,7 @@
                 />
                 <TableRow 
                     title="Height"
+                    :value="getHeightPersonal"
                 />
                 <TableRow 
                     title="Nationality"
@@ -56,7 +57,7 @@
                 />
                 <TableRow 
                     title="Height"
-                    
+                    :value="getMinHeight + ' to ' + getMaxHeight"
                 />
                 <TableRow 
                     title="Country & Cities Preferred"
@@ -111,17 +112,36 @@
 <script>
 import {mapGetters} from 'vuex'
 import TableRow from '@/components/atom/TableRow'
+import { HEIGHTS } from "@/models/data";
 export default {
     name: 'RightSideCandidateDetail',
     components: {
         TableRow
     },
+    data: () => ({
+      HEIGHTS  
+    }),
     computed: {
         ...mapGetters({
             profile: 'search/getSelectedProfileInfo'
         }),
         infoArr() {
             return Object.keys(this.profile)
+        },
+        preference() {
+            return this.profile.preference
+        },
+        personal() {
+            return this.profile.personal
+        },
+        getMaxHeight() {
+            return this.preference.pre_height_max ? this.HEIGHTS[this.preference.pre_height_max - 1].name : ''
+        },
+        getMinHeight() {
+            return this.preference.pre_height_min ? this.HEIGHTS[this.preference.pre_height_min - 1].name : ''
+        },
+        getHeightPersonal() {
+            return this.personal.per_height ? this.HEIGHTS[this.personal.per_height - 1].name : ''
         }
     },
     methods: {

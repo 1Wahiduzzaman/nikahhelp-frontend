@@ -359,6 +359,7 @@ export default {
 			activeTeamId: null,
 			heithtTV : HEIGHTS,
 			currentPage: 1,
+			gender: ''
 		};
 	},
 	computed: {
@@ -424,9 +425,9 @@ export default {
 			// let _payload = `?page=0&parpage=10&min_age=${params.age_min}&max_age=${params.age_max}&active_team_id=${this.activeTeamId}`;
 			let _payload = `?page=${this.currentPage}&parpage=10&min_age=${this.min_age}&max_age=${this.max_age}`;
 
-			// if (this.gender != 0) {
-			// 	_payload += `&gender=1`;
-			// }
+			if (this.gender != "") {
+				_payload += `&gender=${this.gender}`;
+			}
 			if (this.heightMin > 0 || this.minHeightFt > 0) {
 				if (this.minHeightFt) {
 					this.heightMin = this.minHeightFt * 30.48;

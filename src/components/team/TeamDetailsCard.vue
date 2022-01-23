@@ -988,7 +988,6 @@ export default {
 				});
 		},
 		async handleOkLT(payload) {
-			console.log("Handle LT Got Triggered");
 			console.log(payload);
 			if (payload.member_id == undefined) {
 				// as a member user
@@ -1716,7 +1715,7 @@ export default {
 					this.turnOn = true;
 				} else {
 					this.turnOn = false;
-          this.$router.go();
+          // this.$router.go();
 				}
 			} else {
 				this.$store.commit("setTeamInfo", null);

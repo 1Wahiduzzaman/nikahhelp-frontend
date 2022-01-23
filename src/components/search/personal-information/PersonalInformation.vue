@@ -51,10 +51,14 @@
                 <v-row dense>
                     <v-col class="pt-1" cols="12" md="8">
                         <PersonalInformationTable :data="profileDetails"/>
-                        <CardInfo :detail="profileDetails.personal.per_about" height="149px" class="mt-2"/>
                     </v-col>
                     <v-col ref="family-information" class="pt-1" cols="12" md="4">
                         <MoreAbout :data="profileDetails"/>
+                    </v-col>
+                    <v-col class="pt-1 mb-2" cols="12">
+                        <CardInfo
+                            title="More about me"
+                            :detail="profileDetails.personal.per_about" height="149px" class="mt-2"/>
                     </v-col>
                     <v-col class="pt-1 mb-2" cols="12">
                         <CardInfo
@@ -85,7 +89,7 @@
                     <FamilyInfoTable :data="profileDetails"/>
                 </v-col>
                 <v-col class="pt-1 mb-5" cols="12" md="5">
-                    <CardInfo />
+                    <CardInfo :detail="profileDetails.personal.per_about"/>
                 </v-col>
             </v-row>
         </v-container>
@@ -273,7 +277,8 @@ export default {
         }),
         domain() {
             return window.location.origin
-        },
+        }
+        
     },
     methods: {
         onClickTeamDetail() {

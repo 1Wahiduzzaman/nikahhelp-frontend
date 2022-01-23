@@ -7,7 +7,7 @@
       <a-rate disabled :value="value" />
       <v-chip
         class="ml-5"
-        style="background: #6159a7"
+        style="background: #6159a7; width: 115px; text-align:center"
         text-color="white"
         small
         >{{ rate[value] }}</v-chip
@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       rate: {
-        0: "",
+        0: "----",
         1: "Not Important",
         2: "Quite Important",
         3: "Important",

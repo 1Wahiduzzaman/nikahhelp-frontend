@@ -200,6 +200,10 @@ export default {
 
           return candidate;
         }
+      } else {
+        if(loggedUser.account_type == 1 && this.teams.length <= 0) {
+          return false;
+        }
       }
       return true;
     }

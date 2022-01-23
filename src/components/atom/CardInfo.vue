@@ -30,7 +30,7 @@ export default {
     },
     props: {
         title: {
-            default : 'A little bit about me'
+            default : 'More about my family'
         },
         detail: {
             default : ''

@@ -3,7 +3,7 @@
     <div class="flex position-relative">
       <div class="avatar-area">
         <img class="avatar" width="45" height="45"
-             src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="">
+             :src="getTeamImage" alt="">
         <span :class="{'online-icon-avatar': ifOnline}"></span>
       </div>
       <div class="content">
@@ -73,6 +73,13 @@ export default {
         return this.item.to_team ? this.item.to_team.name : 'N/A';
       } else {
         return this.item.from_team ? this.item.from_team.name : 'N/A';
+      }
+    },
+    getTeamImage() {
+      if(this.item.from_team_id == this.activeTeam) {
+        return this.item.to_team && this.item.to_team.logo ? this.item.to_team.logo : require('../../assets/info-img.png');
+      } else {
+        return this.item.from_team && this.item.from_team.logo ? this.item.from_team.logo : require('../../assets/info-img.png');
       }
     }
   },

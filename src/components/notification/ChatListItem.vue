@@ -3,7 +3,7 @@
     <div class="flex position-relative">
       <div class="avatar-area">
         <img class="avatar" width="45" height="45"
-             src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="">
+             :src="item.logo ? item.logo : getImage()" alt="">
         <span :class="{'online-icon-avatar': ifOnline}"></span>
       </div>
       <div class="content">
@@ -102,6 +102,9 @@ export default {
       } else {
         return false;
       }
+    },
+    getImage() {
+      return require('../../assets/info-img.png');
     }
   }
 }
