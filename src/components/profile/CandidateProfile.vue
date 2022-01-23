@@ -94,12 +94,14 @@
                         <v-row dense>
                             <v-col class="pt-1" cols="12" md="8">
                               <PersonalInformationTable :data="candidateData"/>
-                              <CardInfo :detail="candidateData.personal.per_about" height="149px" class="mt-2"/>
                             </v-col>
                             <v-col ref="family-information" class="pt-1" cols="12" md="4">
                                 <MoreAbout 
                                   :data="candidateData"
                                 />
+                            </v-col>
+                            <v-col class="pt-1" cols="12">
+                              <CardInfo title="More about me" :detail="candidateData.personal.per_about" height="149px" class="mt-2"/>
                             </v-col>
                             <v-col class="pt-1" cols="12">
                               <CardInfo
@@ -132,7 +134,7 @@
                             <FamilyInfoTable :data="candidateData"/>
                         </v-col>
                         <v-col class="pt-1 mb-5" cols="12" md="5">
-                            <CardInfo />
+                            <CardInfo :detail="candidateData.family.family_info"/>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -175,9 +177,9 @@
                                       .pre_strength_of_character_rate_string
                                   "
                                 ></rating-component>
-                                <!-- Looks and Apperance -->
+                                <!-- Looks and Appearance -->
                                 <rating-component
-                                  title="Looks and apperance"
+                                  title="Looks and appearance"
                                   :value="
                                     candidateData.preference.pre_look_and_appearance_rate
                                   "

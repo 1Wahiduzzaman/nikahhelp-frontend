@@ -131,6 +131,10 @@ export default {
 </script>
 
 <style scoped>
+table {
+    table-layout: fixed;
+    width: 100%;
+}
 td {
     vertical-align: top;
 }
