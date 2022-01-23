@@ -24,7 +24,7 @@
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Height</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">{{ personal.per_height }}</td>
+                <td class="text--secondary text-subtitle-1">{{ getPersonalHeight }}</td>
             </tr>
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Employment Status</td>
@@ -127,8 +127,13 @@
 </template>
 
 <script>
+import { HEIGHTS } from "@/models/data";
+
 export default {
     name:'PersonalInfoTable',
+    data: () => ({
+        HEIGHTS
+    }),
     props: {
         data: {
             type: Object
@@ -141,6 +146,9 @@ export default {
         essential() {
             return this.data?.essential  ? this.data.essential    : {}
         },
+        getPersonalHeight() {
+            return this.personal.per_height ? this.HEIGHTS[this.personal.per_height - 1].name : ''
+        }
     },
     methods: {
         getAge(dateString) {
