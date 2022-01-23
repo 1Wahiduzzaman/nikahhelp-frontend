@@ -273,7 +273,8 @@ export default {
         }),
         domain() {
             return window.location.origin
-        },
+        }
+        
     },
     methods: {
         onClickTeamDetail() {

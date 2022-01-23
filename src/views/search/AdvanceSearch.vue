@@ -151,9 +151,6 @@ export default {
       });
     },
     async fetchInitialCandidate() {
-      const genderObj = {1:2, 2:1};
-      const gender = JSON.parse(localStorage.getItem('user')).get_candidate.per_gender
-      this.query += `&gender=${genderObj[gender]}`
       // const res = await this.searchUser('v1/home-searches?page=0&parpage=10&min_age=20&max_age=40&ethnicity=Amara&marital_status=single');
       this.setLoading(true);
       try {
@@ -212,7 +209,7 @@ export default {
     toggleCollapse() {
       this.collapsed = !this.collapsed;
     },
-    setCandidatePref(data) {
+    setCandidatePref(data, personal) {
       setTimeout(() =>{
         if(data.pre_partner_age_max) {
           this.query += `&max_age=${data.pre_partner_age_max}`
@@ -248,6 +245,9 @@ export default {
         if(data.preferred_nationality.length) {
           this.$refs.simpleSearch.setAttr('nationality', data.preferred_nationality[0].id);
         }
+        let genderObj = {1:2, 2:1};
+        this.query += `&gender=${genderObj[1]}`
+        this.$refs.simpleSearch.setAttr('gender', 1); //have to set depending on candidate
         this.fetchInitialCandidate();
       },1000)
     },
@@ -255,8 +255,12 @@ export default {
       const info = await this.getCandidateInfo('v1/candidate-of-team')
         if(info.data) {
           if(info.data.preference) {
-            this.setCandidatePref(info.data.preference)
-          } else {
+            this.setCandidatePref(info.data.preference, info.data.personal)
+          } else {//if logged in user don't have a team
+            let genderObj = {1:2, 2:1};
+            const gender = JSON.parse(localStorage.getItem('user')).get_candidate.per_gender
+            this.query += `&gender=${genderObj[gender]}`
+            this.$refs.simpleSearch.setAttr('gender', genderObj[gender]);
             this.fetchInitialCandidate()
           }
         }

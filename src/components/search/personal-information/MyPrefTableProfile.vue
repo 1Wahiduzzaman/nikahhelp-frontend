@@ -14,10 +14,9 @@
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Height</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
                 <td class="text--secondary text-subtitle-1">
-                    {{ preference.pre_height_min }} inch
-                            to
-                    {{ preference.pre_height_max }}
-                    inch
+                    {{ getMinHeight }}
+                        to
+                    {{ getMaxHeight }}
                 </td>
             </tr>
             <tr>
@@ -100,8 +99,20 @@
 </template>
 
 <script>
+import { HEIGHTS } from "@/models/data";
 export default {
     name:'MyPrefTable',
+    data: () => ({
+      HEIGHTS  
+    }),
+    computed: {
+        getMaxHeight() {
+            return this.preference.pre_height_max ? this.HEIGHTS[this.preference.pre_height_max - 1].name : ''
+        },
+        getMinHeight() {
+            return this.preference.pre_height_min ? this.HEIGHTS[this.preference.pre_height_min - 1].name : ''
+        }
+    },
     props: {
         countries: {
             type: Array,

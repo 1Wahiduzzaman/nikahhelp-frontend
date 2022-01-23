@@ -25,7 +25,7 @@
 <script>
 import Header from "@/components/dashboard/layout/Header.vue";
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
-import Footer from "@/components/dashboard/layout/Footer.vue";
+// import Footer from "@/components/dashboard/layout/Footer.vue";
 // import CandidateProfile from "@/components/profile/CandidateProfile.vue";
 // import RepresentativeProfile from "@/components/profile/RepresentativeProfile.vue";
 // import OtherCandidate from "@/components/profile/OppositeTeamCandidateProfile.vue";
@@ -37,7 +37,7 @@ export default {
   components: {
     Header,
     Sidebar,
-    Footer,
+    // Footer,
     CandidateProfile,
     RepresentativeProfile,
   },
