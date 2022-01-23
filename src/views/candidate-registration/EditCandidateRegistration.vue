@@ -22,7 +22,8 @@
             labelPlacement="vertical"
           >
             <a-step
-              v-for="item in steps"
+              @click="onStep(index)"
+              v-for="(item, index) in steps"
               :key="item.title"
               :title="item.title"
             />
@@ -33,14 +34,17 @@
             </h4>
             <div class="mobile-block px-3">
               <div
+                @click="onStep(0)"
                 class="mobile-step"
                 :class="{ 'bg-primary': current >= 0 }"
               ></div>
               <div
+                @click="onStep(1)"
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 1 }"
               ></div>
               <div
+                @click="onStep(2)"
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 2 }"
               ></div>
@@ -689,6 +693,9 @@ export default {
     },
     toggleStep(step) {
       this.current = step;
+    },
+    onStep(index) {
+      this.current = index;
     },
     async next() {
       switch (this.current) {

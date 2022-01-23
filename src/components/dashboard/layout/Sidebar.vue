@@ -331,6 +331,9 @@ export default {
       margin-bottom: 2px;
       a {
         color: #a5a5a5;
+        &:hover {
+          color: #242424;
+        }
       }
     }
   }

@@ -162,7 +162,7 @@ export default {
           value: value,
           name: option.key.substring(0, option.key.indexOf("=")),
         });
-      }, 100);
+      }, 200);
     },
   },
 };

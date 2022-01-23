@@ -45,6 +45,7 @@
                   /></span>
                   <div class="img-preview mb-2">
                     <img
+                      v-viewer
                       :src="avatarSrc ? avatarSrc : imageModel.avatar_image_url"
                       width="180"
                       height="200"
@@ -96,6 +97,7 @@
                   /></span>
                   <div class="img-preview mb-2">
                     <img
+                      v-viewer
                       :src="
                         mainImageSrc ? mainImageSrc : imageModel.main_image_url
                       "
@@ -149,6 +151,7 @@
                   /></span>
                   <div class="img-preview mb-2">
                     <img
+                      v-viewer
                       :src="
                         additionalImageSrc
                           ? additionalImageSrc

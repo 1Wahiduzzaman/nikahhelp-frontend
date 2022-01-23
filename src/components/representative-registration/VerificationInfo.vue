@@ -250,7 +250,7 @@
                           ><img src="@/assets/icon/close.svg" alt="img"
                         /></span>
                         <div class="img-preview mb-2">
-                          <img
+                          <img    v-viewer
                             :src="verification.ver_image_front"
                             width="180"
                             height="200"
@@ -309,7 +309,7 @@
                           ><img src="@/assets/icon/close.svg" alt="img"
                         /></span>
                         <div class="img-preview mb-2">
-                          <img
+                          <img    v-viewer
                             :src="verification.ver_image_back"
                             width="180"
                             height="200"

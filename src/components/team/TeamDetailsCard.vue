@@ -1003,6 +1003,7 @@ export default {
 					.then((data) => {
 						if (data.data.status == "FAIL") {
 							//this.$message.error(data.data.message);
+
 							this.$error({
 								title: "Error",
 								content: data.data.message,
@@ -1034,7 +1035,7 @@ export default {
 				};
 				console.log(_payload);
 				await ApiService.post("v1/leave-team", {
-					team_id: this.teamData.team_id,
+					team_id: this.teamData.id,
 					user_id: this.$store.getters.userInfo.id,
 					new_owner: payload.member_id,
 				})
