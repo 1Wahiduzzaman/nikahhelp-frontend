@@ -292,9 +292,9 @@
 						</v-row>
 					</v-container>
 				</div>
-				<div class="profile-footer">
+				<!-- <div class="profile-footer">
 					<Footer></Footer>
-				</div>
+				</div> -->
 				<ComingSoonModal
 					title="Team details quick view"
 					@closeDialog="closeDialog"
@@ -308,7 +308,7 @@
 <script>
 import RatingComponent from "./RatingComponent.vue";
 import firebase from "../../configs/firebase";
-import Footer from "@/components/auth/Footer.vue";
+// import Footer from "@/components/auth/Footer.vue";
 
 import ProfileBanner from "@/components/atom/ProfileBanner";
 import PersonalInformationTable from '@/components/search/personal-information/PersonalInformationTable.vue'
@@ -328,7 +328,7 @@ export default {
 	props: ["candidateData", "userId"],
 	components: { 
 		RatingComponent, 
-		Footer,
+		// Footer,
 		ProfileBanner,
 		PersonalInformationTable,
 		FamilyInfoTable,
