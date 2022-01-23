@@ -12,7 +12,7 @@
 					"
 				/>
 
-				<div class="flex justify-space-between flex-wrap mt-10">
+				<div v-if="!isOwnProfile" class="flex justify-space-between flex-wrap mt-10">
 					<ButtonComponent
 						class="mb-3"
 						iconHeight="14px"
@@ -25,17 +25,17 @@
 					<ButtonComponent
 						iconHeight="14px"
 						:isSmall="true"
-						:title="profile.is_short_listed ? 'Unlist' : 'ShortList'"
-						icon="/assets/icon/star-fill-secondary.svg"
-						:customEvent="profile.is_short_listed ? 'removeShortList' : 'addShortList'"
+						:title="profile.is_connect ? 'Disconnect' : 'Connect'"
+						icon="/assets/icon/connect-s.svg"
+						:customEvent="profile.is_connect ? 'removeConnection' : 'addConnection'"
 						@onClickButton="onClickButton"
 					/>
 					<ButtonComponent
 						iconHeight="14px"
 						:isSmall="true"
-						:title="profile.is_connect ? 'Disconnect' : 'Connect'"
-						icon="/assets/icon/connect-s.svg"
-						:customEvent="profile.is_connect ? 'removeConnection' : 'addConnection'"
+						:title="profile.is_short_listed ? 'Unlist' : 'ShortList'"
+						icon="/assets/icon/star-fill-secondary.svg"
+						:customEvent="profile.is_short_listed ? 'removeShortList' : 'addShortList'"
 						@onClickButton="onClickButton"
 					/>
 					<ButtonComponent
@@ -380,6 +380,10 @@ export default {
 				return null;
 			}
 		},
+		isOwnProfile() {
+			let loggedInUserId = JSON.parse(localStorage.getItem('userId'))
+			return this.candidateData.id == loggedInUserId
+		}
 	},
 	methods: {
 		...mapActions({

@@ -21,23 +21,23 @@
 			</div> -->
 			<!-- Buttons -->
 			<div class="row mt-3 mb-3 text-center">
-				<div class="col">
+				<!-- <div class="col">
 					<button disabled class="btn btn-primary px-4">Gallery</button>
-				</div>
-				<div class="col">
-					 <router-link to="/edit_representative" class="btn btn-primary px-4">
-                <img src="@/assets/icon/pencil-square.svg" />Edit Profile
-              </router-link>
-				</div>
-				<div class="col">
+				</div> -->
+				<!-- <div class="col">
+					<router-link to="/edit_representative" class="btn btn-primary px-4">
+						<img src="@/assets/icon/pencil-square.svg" />Edit Profile
+					</router-link>
+				</div> -->
+				<!-- <div class="col">
 					<button class="btn btn-primary px-4" @click="startConversation">
 						<img src="@/assets/icon/chat-dots-fill-white.svg" alt="">
 						Message
 					</button>
-				</div>
+				</div> -->
 			</div>
 			<!-- Team name and profile link -->
-			<div class="row mt-3 mb-3">
+			<!-- <div class="row mt-3 mb-3">
 				<div class="col">
 					<div class="team-name-div">
 						<span class="team-name-title">Representated by</span>
@@ -52,7 +52,7 @@
 						>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<!-- Representative Info -->
 		<fieldset class="review">
@@ -69,80 +69,30 @@
 					<div class="row">
 						<div class="col">
 							<div class="card-custom h-100">
-								<ul>
-									<!-- Full Name -->
-									<li class="flex-between-start">
-										<span class="flex-50 px-2 label-text">Full Name</span
-										><span class="flex-50 px-2"
-											>:<span class="ml-3">
-												{{ representativeData.first_name }}
-												{{ representativeData.last_name }}
-											</span>
-										</span>
-									</li>
-									<!-- Screen Name -->
-									<li class="flex-between-start">
-										<span class="flex-50 px-2 label-text">Screen Name</span
-										><span class="flex-50 px-2"
-											>:<span class="ml-3">
-												{{ representativeData.screen_name }}
-											</span>
-										</span>
-									</li>
-									<!-- Gender -->
-									<li class="flex-between-start">
-										<span class="flex-50 px-2 label-text">Gender</span
-										><span class="flex-50 px-2 d-inherit"
-											>:<span
-												class="ml-3"
-												v-if="representativeData.per_gender == 1"
-											>
-												Male
-											</span>
-											<span
-												class="ml-3"
-												v-if="representativeData.per_gender == 2"
-											>
-												Female
-											</span>
-										</span>
-									</li>
-									<!-- DOB -->
-									<li class="flex-between-start">
-										<span class="flex-50 px-2 label-text">Age</span
-										><span class="flex-50 px-2"
-											>:<span class="ml-3">
-												{{ representativeData.dob }}
-											</span>
-										</span>
-									</li>
-									<!-- Occupation -->
-									<li class="flex-between-start">
-										<span class="flex-50 px-2 label-text">Occupation</span
-										><span class="flex-50 px-2"
-											>:<span class="ml-3">
-												{{ representativeData.per_occupation }}
-											</span>
-										</span>
-									</li>
-									<!-- Current Residence -->
-									<li class="flex-between-start">
-										<span class="flex-50 px-2 label-text"
-											>Current Residence</span
-										><span class="flex-50 px-2"
-											>:<span class="ml-3">
-												{{ representativeData.per_current_residence_city }},
-												{{ representativeData.per_current_residence_country }}
-											</span>
-										</span>
-									</li>
-									<!-- Permanent Residence -->
-									
-									<!-- Permanent Residence -->
-									
-									<!-- Mobile Number -->
-									
-								</ul>
+								<TableRow 
+									title="Full Name"
+									:value="representativeData.first_name + ' ' + representativeData.last_name"
+								/>
+								<TableRow 
+									title="Screen Name"
+									:value="representativeData.screen_name"
+								/>
+								<TableRow 
+									title="Gender"
+									:value="representativeData.per_gender == 1 ? 'Male' : 'Female'"
+								/>
+								<TableRow 
+									title="Age"
+									:value="representativeData.dob"
+								/>
+								<TableRow 
+									title="Occupation"
+									:value="representativeData.per_occupation"
+								/>
+								<TableRow 
+									title="Current Residence"
+									:value="representativeData.per_current_residence_city + ', ' +representativeData.per_current_residence_country"
+								/>
 							</div>
 						</div>
 					</div>
@@ -156,11 +106,14 @@
 import firebase from "../../configs/firebase";
 import ApiService from "@/services/api.service";
 import ProfileBanner from "@/components/atom/ProfileBanner";
+import TableRow from '@/components/atom/TableRow'
+
 export default {
 	name: "RepresentativeProfile",
 	props: ["representativeData"],
 	components: {
-		ProfileBanner
+		ProfileBanner,
+		TableRow
 	},
 	data() {
 		return {
