@@ -921,6 +921,7 @@ export default {
           item.label = 'Connected Team';
           item.typing_status = 0;
           item.typing_text = '';
+          item.logo = this.getConnectedTeamInfo(item) ? this.getConnectedTeamInfo(item).logo : '';
           item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
           item.is_friend = item.team_private_chat ? item.team_private_chat.is_friend : 0;
           return item;
@@ -952,6 +953,13 @@ export default {
         // this.connectedChat = this.processTeamChatResponse(data);
       } catch (e) {
         console.error(e);
+      }
+    },
+    getConnectedTeamInfo(item) {
+      if(item.from_team_id == this.activeTeam) {
+        return item.to_team ? item.to_team : null;
+      } else {
+        return item.from_team ? item.from_team : null;
       }
     },
     async getPrivateRequests() {
