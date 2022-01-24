@@ -29,12 +29,15 @@
                 />
                 <TableRow 
                     title="Country of Birth"
+                    :value="personal.per_country_of_birth"
                 />
                 <TableRow 
                     title="Current Residence"
+                    :value="personal.per_current_residence"
                 />
                 <TableRow 
                     title="Education"
+                    :value="personal.per_education_level"
                 />
                 <TableRow 
                     title="Profession"
@@ -65,6 +68,7 @@
                 />
                 <TableRow 
                     title="Religion"
+                    :value="getReligion()"
                 />
                 <TableRow 
                     title="Ethnicity"
@@ -76,6 +80,7 @@
                 />
                 <TableRow 
                     title="Education"
+                    :value="preference.pre_study_level"
                 />
                 <TableRow 
                     title="Profession"
@@ -166,6 +171,12 @@ export default {
         getProfession() {
             if(this.profile.preference.pre_occupation.length) {
                 return JSON.parse(this.profile.preference.pre_occupation).join(', ')
+            }
+            return ''
+        },
+        getReligion() {
+            if(this.preference.pre_partner_religion.length) {
+                return this.preference.pre_partner_religion.join(', ')
             }
             return ''
         }
