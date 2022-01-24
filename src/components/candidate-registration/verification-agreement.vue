@@ -3,18 +3,18 @@
     <div>
       <h3 class="mt-3 fw-700 text-black-50 header-text">ID Verification</h3>
 
-      <p class="mt-5 verify-text fs-20">Do you want to verify your ID?</p>
+      <p class="mt-5 verify-text fs-20">Do you wish to upload your ID now?</p>
       <p class="mt-4">
-        Please press Agree button to complete the
+        Please press Yes button to complete the
         <span class="type-access">ID</span> Verification.
       </p>
-      <p class="mt-4">Or Please press Disagree button to ignore it.</p>
+      <p class="mt-4">Or Please press No button to ignore it.</p>
       <div class="actions">
         <button
           @click="handleClick(false)"
           class="btn ms-2 text-nowrap disagree-button"
         >
-          Disagree
+          No
         </button>
         <button
           @click="handleClick(true)"
