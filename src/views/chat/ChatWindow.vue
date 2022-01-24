@@ -245,11 +245,12 @@
 <!--                      @click="backToTabList()">-->
 <!--                <a-icon type="caret-left"/>-->
 <!--              </button>-->
-              <h4 class="cursor-pointer btn-short-back" @click="backToTabList()">&#8592;</h4>
+<!--              <h4 class="cursor-pointer btn-short-back" @click="backToTabList()">&#8592;</h4>-->
               <div class="header clearfix">
                 <div class="left">
                   <div class="top">
-                    <div class="item-img">
+                    <h4 class="cursor-pointer btn-mobile-back" @click="backToTabList()">&#8592;</h4>
+                    <div class="item-img conv-head-logo">
                       <img :src="chatheadopen.logo ? chatheadopen.logo : getImage()" alt="info image">
 <!--                      <span></span>-->
                     </div>
@@ -2834,6 +2835,30 @@ export default {
   background-color: #efefef;
   border-radius: 20px;
   padding-left: 4px;
+}
+.btn-mobile-back {
+  margin-left: -20px;
+  @media (min-width: 576px) {
+    display: none;
+  }
+}
+.conv-head-logo {
+  width: 35px;
+  height: 35px;
+  img {
+    width: 35px !important;
+    height: 35px !important;
+    margin-left: 10px;
+    @media (min-width: 576px) {
+      width: 50px !important;
+      height: 50px !important;
+      margin-left: 0;
+    }
+  }
+  @media (min-width: 576px) {
+    width: 50px;
+    height: 50px;
+  }
 }
 // end css for chat
 </style>
