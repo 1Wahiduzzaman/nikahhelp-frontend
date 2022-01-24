@@ -14,18 +14,18 @@
         <a-icon type="caret-down" :rotate="props.isActive ? 180 : 0" />
       </template>
       <!-- 1. Required Information -->
-      <a-collapse-panel key="1" header="1. Required Information">
-        <h5 class="text-left ml-4 pl-3 mt-2">Upload your Image</h5>
+      <a-collapse-panel key="1" header="4.1 Image Required">
+        <h5 class="text-left ml-4 pl-3 mt-2">Upload your image</h5>
         <div class="row">
           <div class="col-12">
             <div class="instruction">
               <p>
-                * You are required to upload at least one Avatar and a Main
-                Image. All together you can upload 3 pictures.
+              You are required to upload at least one avatar and a main
+                image. All together you can upload up to 3 images.
               </p>
               <p>
-                * Select images from your devices. Supported file format are
-                JPG, JPEG, PNG. Maximum file size 2 MB
+                Select images from your devices. Supported file formats are
+                JPG, JPEG, PNG. Maximum file size 2 MB.
               </p>
             </div>
           </div>

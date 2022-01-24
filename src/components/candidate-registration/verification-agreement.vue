@@ -2,13 +2,26 @@
   <div class="success-message font-poppins">
     <div>
       <h3 class="mt-3 fw-700 text-black-50 header-text">ID Verification</h3>
-
-      <p class="mt-5 verify-text fs-20">Do you wish to upload your ID now?</p>
       <p class="mt-4">
+        We wish to provide genuine and ID verified candidates.
+        </p>
+  <p class="mt-4">
+       To connect, a team must have the candidate and at  least one representative ID verified.
+        </p>
+
+
+  <p class="mt-4">
+        You can upload your ID now or later. If you choose to do this later, you can do it through your personal settings screen. By proceeding you agree to do this in line with your consent and agreement to the MatrimonyAssist terms and conditions.
+        </p>
+      <p class="mt-5 verify-text fs-20">Do you wish to upload your ID now?</p>
+
+
+      <!-- <p class="mt-4">
         Please press Yes button to complete the
         <span class="type-access">ID</span> Verification.
       </p>
-      <p class="mt-4">Or Please press No button to ignore it.</p>
+      <p class="mt-4">Or please press No button to ignore it.</p> -->
+      
       <div class="actions">
         <button
           @click="handleClick(false)"
@@ -20,9 +33,11 @@
           @click="handleClick(true)"
           class="btn ms-2 text-nowrap disagree-button"
         >
-          Agree
+          Yes
         </button>
       </div>
+
+
     </div>
   </div>
 </template>

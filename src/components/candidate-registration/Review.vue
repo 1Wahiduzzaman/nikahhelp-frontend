@@ -3,8 +3,8 @@
     <fieldset v-if="candidateDetails && candidateData.personal" class="review">
       <h4 class="fw-700 px-2">Review and Publish Profile</h4>
       <p class="mb-5 px-2">
-        If anything needs to be editted, then go back to previous page by
-        pressing previous button
+        Please check the information and details that you have provided, if you are happy with it please submit for approval by MatrimonyAssist Team. 
+        If anything needs to be changed, then you can access relavant sections by pressing previous button. 
       </p>
       <div class="text-start">
         <!-- Preference -->
