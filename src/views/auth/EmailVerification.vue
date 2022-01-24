@@ -157,7 +157,7 @@ export default {
 }
 .body-container{
   flex-grow: 1;
-  overflow: auto;
+  //overflow: auto;
   min-height: 2em;
 }
 .footer-container{

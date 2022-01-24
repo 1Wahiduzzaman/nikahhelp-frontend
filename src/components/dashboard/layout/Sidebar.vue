@@ -177,7 +177,7 @@
           </ul>
         </div>
       </template>
-      <div class="trigger" @click="$emit('collapseSideBar')">
+      <div class="trigger" @click="$emit('collapseSideBar')" :class="{'hide-sidebar': collapsed}">
         <a-icon
           :type="collapsed ? 'caret-right' : 'caret-left'"
           style="font-size: 20px"
@@ -337,5 +337,8 @@ export default {
       }
     }
   }
+}
+.hide-sidebar {
+  display: none !important;
 }
 </style>
