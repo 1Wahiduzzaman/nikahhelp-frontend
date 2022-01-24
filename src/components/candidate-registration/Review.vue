@@ -822,7 +822,7 @@ export default {
     
     };
   },
-  created() {
+  mounted() {
     this.getCandidateData();
   },
   methods: {

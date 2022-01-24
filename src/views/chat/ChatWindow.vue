@@ -8,21 +8,21 @@
           <div class="chat-wrapper my-2">
             <div class="chat-left" :class="{'chat-hide': conversationTitle}">
               <div class="chat-title d-chat-title">My {{ chatTab }} chats</div>
-              <div class="chat-search">
-                <div class="form-group has-search">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.02 40.76">
-                    <g id="Layer_2" data-name="Layer 2">
-                      <g id="draw_boxes" data-name="draw boxes">
-                        <path fill="#cccccc" class="cls-1"
-                              d="M41.67,35.89A1.33,1.33,0,0,0,41.58,34L30.34,23.79a1.34,1.34,0,0,0-1.88.09l-4,4.44a1.34,1.34,0,0,0,.09,1.88L35.78,40.41a1.32,1.32,0,0,0,1.88-.09Z"/>
-                        <path fill="#cccccc" class="cls-1"
-                              d="M14.72,0A14.72,14.72,0,1,1,9.91.81,14.73,14.73,0,0,1,14.72,0m0,4a10.82,10.82,0,0,0-3.51.59h0A10.73,10.73,0,1,0,14.72,4Z"/>
-                      </g>
-                    </g>
-                  </svg>
-                  <input type="text" class="form-control" placeholder="Search..." v-model="conv_search_key">
-                </div>
-              </div>
+<!--              <div class="chat-search">-->
+<!--                <div class="form-group has-search">-->
+<!--                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.02 40.76">-->
+<!--                    <g id="Layer_2" data-name="Layer 2">-->
+<!--                      <g id="draw_boxes" data-name="draw boxes">-->
+<!--                        <path fill="#cccccc" class="cls-1"-->
+<!--                              d="M41.67,35.89A1.33,1.33,0,0,0,41.58,34L30.34,23.79a1.34,1.34,0,0,0-1.88.09l-4,4.44a1.34,1.34,0,0,0,.09,1.88L35.78,40.41a1.32,1.32,0,0,0,1.88-.09Z"/>-->
+<!--                        <path fill="#cccccc" class="cls-1"-->
+<!--                              d="M14.72,0A14.72,14.72,0,1,1,9.91.81,14.73,14.73,0,0,1,14.72,0m0,4a10.82,10.82,0,0,0-3.51.59h0A10.73,10.73,0,1,0,14.72,4Z"/>-->
+<!--                      </g>-->
+<!--                    </g>-->
+<!--                  </svg>-->
+<!--                  <input type="text" class="form-control" placeholder="Search..." v-model="conv_search_key">-->
+<!--                </div>-->
+<!--              </div>-->
               <div class="chat-category">
                 <nav>
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -245,11 +245,12 @@
 <!--                      @click="backToTabList()">-->
 <!--                <a-icon type="caret-left"/>-->
 <!--              </button>-->
-              <h4 class="cursor-pointer btn-short-back" @click="backToTabList()">&#8592;</h4>
+<!--              <h4 class="cursor-pointer btn-short-back" @click="backToTabList()">&#8592;</h4>-->
               <div class="header clearfix">
                 <div class="left">
                   <div class="top">
-                    <div class="item-img">
+                    <h4 class="cursor-pointer btn-mobile-back" @click="backToTabList()">&#8592;</h4>
+                    <div class="item-img conv-head-logo">
                       <img :src="chatheadopen.logo ? chatheadopen.logo : getImage()" alt="info image">
 <!--                      <span></span>-->
                     </div>
@@ -333,7 +334,7 @@
                            class="chat-message-left pb-4 position-relative"
                            :class="{'conv-mb': chats.length !== cIndex + 1}" v-else>
                         <div class="text-left">
-                          <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+                          <img :src="getConversationUserImage(item.sender.id)" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
                         </div>
                         <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 white-space-pre" v-html="item.body">
                           <!--                        <div class="font-weight-bold mb-1">Sharon Lessman</div>-->
@@ -463,7 +464,8 @@ export default {
       chatheadopen: null,
       isLoading: false,
       fromChatItem: null,
-      active_team_id: null
+      active_team_id: null,
+      chatListedImage: []
     }
   },
   components: {
@@ -858,7 +860,7 @@ export default {
           label: 'Private chat',
           state: 'seen',
           name: this.getPrivateChatUserName(item)?.full_name,
-          logo: item.private_receiver_data?.avatar,
+          logo: this.getPrivateChatLogo(item),
           to_team_id: item.to_team_id,
           from_team_id: item.from_team_id,
           private_receiver_id: item.receiver,
@@ -898,6 +900,14 @@ export default {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       return loggedUser.id == item.sender ? item.private_receiver_data : item.private_sender_data;
     },
+    getPrivateChatLogo(item) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let opositeUser = loggedUser.id == item.sender ? item.private_receiver_data : item.private_sender_data;
+      if(opositeUser && opositeUser.candidate_info && opositeUser.candidate_info.per_main_image_url) {
+        return opositeUser.candidate_info.per_main_image_url;
+      }
+      return require('../../assets/info-img.png');
+    },
     async loadTeamChat() {
       try {
         let {data} = await ApiService.get(`/v1/team-chat?team_id=${this.active_team_id}`).then(res => res.data);
@@ -928,10 +938,10 @@ export default {
         });
 
         if(this.$route.query.connection_id) {
-          // let queryChat = this.connectedTeam.find(chat => chat.id == this.$route.query.connection_id);
-          // if(queryChat) {
-          //   this.getConnectedTeamChatHistory(queryChat);
-          // }
+          let queryChat = this.connectedTeam.find(chat => chat.id == this.$route.query.connection_id);
+          if(queryChat) {
+            this.getConnectedTeamChatHistory(queryChat);
+          }
 
           const query = Object.assign({}, this.$route.query);
           delete query.connection_id;
@@ -968,6 +978,7 @@ export default {
         item.label = 'Private chat request';
         item.typing_status = 0;
         item.typing_text = '';
+        item.logo = this.getPrivateChatLogo(item);
         // item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
         return item;
       });
@@ -1041,6 +1052,7 @@ export default {
       // this.activeTeam = team_id;
       this.conversationTitle = name;
       this.inConnectedChat = false;
+
       if(this.one_to_one_user) {
         this.chat_type = 'one-to-one';
         this.private_chat = {};
@@ -1070,6 +1082,9 @@ export default {
       }
       this.chatheadopen = item;
       this.chatheadopen.message.seen = 1;
+
+      this.processChatConnectedImage();
+
       this.chats = await this.loadIndividualChatHistory(payload);
       // this.chats = this.chats.reverse();
 
@@ -1097,6 +1112,8 @@ export default {
       this.chatheadopen = item;
       this.chatheadopen.message.seen = 1;
 
+      this.processChatConnectedImage();
+
       let url = 'connected-team-chat-history';
       let payload = {
         to_team_id: to_team_id
@@ -1109,6 +1126,44 @@ export default {
         item.senderId = item.sender?.id
         return item;
       });
+    },
+    processChatConnectedImage() {
+      this.chatListedImage = [];
+      if(this.chatheadopen.label == 'Group chat') {
+        this.chatheadopen.team_members.forEach(member => {
+          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url : '';
+          this.chatListedImage.push({
+            user_id: member.user_id,
+            logo: candidateLogo
+          });
+        });
+      } else if(this.chatheadopen.label == 'Connected Team') {
+        this.chatheadopen.from_team.team_members.forEach(member => {
+          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url : '';
+          this.chatListedImage.push({
+            user_id: member.user_id,
+            logo: candidateLogo
+          });
+        });
+
+        this.chatheadopen.to_team.team_members.forEach(member => {
+          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url : '';
+          this.chatListedImage.push({
+            user_id: member.user_id,
+            logo: candidateLogo
+          });
+        });
+      } else if(this.chatheadopen.label == 'Private chat') {
+        this.chatListedImage.push({
+          user_id: this.chatheadopen.other_mate_id,
+          logo: this.chatheadopen.logo
+        });
+      } else if(this.chatheadopen.label == 'Team member') {
+        this.chatListedImage.push({
+          user_id: this.chatheadopen.other_mate_id,
+          logo: this.chatheadopen.logo
+        });
+      }
     },
     messageCreatedAt(time) {
       return format(time);
@@ -1465,6 +1520,14 @@ export default {
     },
     getImage() {
       return require('../../assets/info-img.png');
+    },
+    getConversationUserImage(id) {
+      let imageObj = this.chatListedImage.find(item => item.user_id == id);
+      if(imageObj) {
+        return imageObj.logo;
+      } else {
+        return this.getImage();
+      }
     }
   }
 };
@@ -2684,24 +2747,24 @@ export default {
 }
 .chat-item-wrapper {
   //height: 500px;
-  height: calc(100vh - 250px);
+  height: calc(100vh - 200px);
   @media (min-width: 410px) {
-    height: calc(100vh - 250px);
+    height: calc(100vh - 200px);
   }
   @media (min-width: 576px) {
-    height: calc(100vh - 250px);
+    height: calc(100vh - 200px);
   }
   @media (min-width: 768px) {
-    height: calc(100vh - 250px);
+    height: calc(100vh - 210px);
   }
   @media (min-width: 992px) {
-    height: calc(100vh - 395px);
+    height: calc(100vh - 310px);
   }
   @media (min-width: 1200px) {
-    height: calc(100vh - 345px);
+    height: calc(100vh - 310px);
   }
   @media (min-width: 1920px) {
-    height: calc(100vh - 345px);
+    height: calc(100vh - 310px);
   }
 }
 .chat-area {
@@ -2772,6 +2835,30 @@ export default {
   background-color: #efefef;
   border-radius: 20px;
   padding-left: 4px;
+}
+.btn-mobile-back {
+  margin-left: -20px;
+  @media (min-width: 576px) {
+    display: none;
+  }
+}
+.conv-head-logo {
+  width: 35px;
+  height: 35px;
+  img {
+    width: 35px !important;
+    height: 35px !important;
+    margin-left: 10px;
+    @media (min-width: 576px) {
+      width: 50px !important;
+      height: 50px !important;
+      margin-left: 0;
+    }
+  }
+  @media (min-width: 576px) {
+    width: 50px;
+    height: 50px;
+  }
 }
 // end css for chat
 </style>

@@ -152,7 +152,12 @@
         </a-button>
       </div>
     </div>
-    <ReviewAndPublishModal @save="doneBtn" @cancel="cancel" :dialog="dialog" />
+    <ReviewAndPublishModal
+      @continue="continueToDashboard"
+      @submit="doneBtn"
+      @cancel="cancel"
+      :dialog="dialog"
+    />
   </div>
 </template>
 <script>
@@ -550,10 +555,6 @@ export default {
         localStorage.removeItem("user");
         localStorage.setItem("user", JSON.stringify(user));
       }
-
-      if (satge === 6) {
-        this.$router.push("/dashboard");
-      }
     },
     async onChangeCountry(e, name, action, isDefault = false) {
       const res = await ApiService.get(`v1/utilities/cities/${e.id}`);
@@ -752,8 +753,11 @@ export default {
       this.$router.push("/login");
     },
     doneBtn() {
-      this.dialog = false;
       this.saveDataInputStatus(6);
+    },
+    continueToDashboard() {
+      this.dialog = false;
+      this.$router.push("/dashboard");
     },
     toggleStep(step) {
       this.current = step;
