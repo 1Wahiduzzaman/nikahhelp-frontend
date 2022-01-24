@@ -333,7 +333,7 @@
                            class="chat-message-left pb-4 position-relative"
                            :class="{'conv-mb': chats.length !== cIndex + 1}" v-else>
                         <div class="text-left">
-                          <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+                          <img :src="getConversationUserImage(item.sender.id)" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
                         </div>
                         <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 white-space-pre" v-html="item.body">
                           <!--                        <div class="font-weight-bold mb-1">Sharon Lessman</div>-->
@@ -463,7 +463,8 @@ export default {
       chatheadopen: null,
       isLoading: false,
       fromChatItem: null,
-      active_team_id: null
+      active_team_id: null,
+      chatListedImage: []
     }
   },
   components: {
@@ -858,7 +859,7 @@ export default {
           label: 'Private chat',
           state: 'seen',
           name: this.getPrivateChatUserName(item)?.full_name,
-          logo: item.private_receiver_data?.avatar,
+          logo: this.getPrivateChatLogo(item),
           to_team_id: item.to_team_id,
           from_team_id: item.from_team_id,
           private_receiver_id: item.receiver,
@@ -897,6 +898,14 @@ export default {
     getPrivateChatUserName(item) {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       return loggedUser.id == item.sender ? item.private_receiver_data : item.private_sender_data;
+    },
+    getPrivateChatLogo(item) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      let opositeUser = loggedUser.id == item.sender ? item.private_receiver_data : item.private_sender_data;
+      if(opositeUser && opositeUser.candidate_info && opositeUser.candidate_info.per_main_image_url) {
+        return opositeUser.candidate_info.per_main_image_url;
+      }
+      return require('../../assets/info-img.png');
     },
     async loadTeamChat() {
       try {
@@ -968,6 +977,7 @@ export default {
         item.label = 'Private chat request';
         item.typing_status = 0;
         item.typing_text = '';
+        item.logo = this.getPrivateChatLogo(item);
         // item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
         return item;
       });
@@ -1041,6 +1051,7 @@ export default {
       // this.activeTeam = team_id;
       this.conversationTitle = name;
       this.inConnectedChat = false;
+
       if(this.one_to_one_user) {
         this.chat_type = 'one-to-one';
         this.private_chat = {};
@@ -1070,6 +1081,9 @@ export default {
       }
       this.chatheadopen = item;
       this.chatheadopen.message.seen = 1;
+
+      this.processChatConnectedImage();
+
       this.chats = await this.loadIndividualChatHistory(payload);
       // this.chats = this.chats.reverse();
 
@@ -1097,6 +1111,8 @@ export default {
       this.chatheadopen = item;
       this.chatheadopen.message.seen = 1;
 
+      this.processChatConnectedImage();
+
       let url = 'connected-team-chat-history';
       let payload = {
         to_team_id: to_team_id
@@ -1109,6 +1125,44 @@ export default {
         item.senderId = item.sender?.id
         return item;
       });
+    },
+    processChatConnectedImage() {
+      this.chatListedImage = [];
+      if(this.chatheadopen.label == 'Group chat') {
+        this.chatheadopen.team_members.forEach(member => {
+          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url : '';
+          this.chatListedImage.push({
+            user_id: member.user_id,
+            logo: candidateLogo
+          });
+        });
+      } else if(this.chatheadopen.label == 'Connected Team') {
+        this.chatheadopen.from_team.team_members.forEach(member => {
+          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url : '';
+          this.chatListedImage.push({
+            user_id: member.user_id,
+            logo: candidateLogo
+          });
+        });
+
+        this.chatheadopen.to_team.team_members.forEach(member => {
+          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url : '';
+          this.chatListedImage.push({
+            user_id: member.user_id,
+            logo: candidateLogo
+          });
+        });
+      } else if(this.chatheadopen.label == 'Private chat') {
+        this.chatListedImage.push({
+          user_id: this.chatheadopen.other_mate_id,
+          logo: this.chatheadopen.logo
+        });
+      } else if(this.chatheadopen.label == 'Team member') {
+        this.chatListedImage.push({
+          user_id: this.chatheadopen.other_mate_id,
+          logo: this.chatheadopen.logo
+        });
+      }
     },
     messageCreatedAt(time) {
       return format(time);
@@ -1465,6 +1519,14 @@ export default {
     },
     getImage() {
       return require('../../assets/info-img.png');
+    },
+    getConversationUserImage(id) {
+      let imageObj = this.chatListedImage.find(item => item.user_id == id);
+      if(imageObj) {
+        return imageObj.logo;
+      } else {
+        return this.getImage();
+      }
     }
   }
 };
