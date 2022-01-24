@@ -9,7 +9,6 @@
         d-flex
         justify-content-center
         mt-5
-        shadow-default
         py-4
         position-relative
       "
@@ -30,14 +29,21 @@
             >.
           </p>
 
-          <p class="fs-18">
-            You can view payment receipt from Manage team > Team Setting >
-            Subscription details,
-          </p>
-          <p class="fs-18">
-            also we sent payment confirmation email to your Matrimony assist
-            account email.
-          </p>
+          <div class="col-12 text-center mt-4 btn-border-radius">
+            <a href="/manageteam" class="btn btn-primary fs-18 team-btn-primary btn-lg px-5"
+            >Manage Team
+              <span class="fs-20">&#8594;</span>
+            </a>
+          </div>
+
+<!--          <p class="fs-18">-->
+<!--            You can view payment receipt from Manage team > Team Setting >-->
+<!--            Subscription details,-->
+<!--          </p>-->
+<!--          <p class="fs-18">-->
+<!--            also we sent payment confirmation email to your Matrimony assist-->
+<!--            account email.-->
+<!--          </p>-->
         </div>
         <div class="col-12 col-md-6 offset-md-3 text-center mt-5">
           For more information visit Our
@@ -45,18 +51,18 @@
           Any other queries? Please contact out
           <a href="" class="text-blue fs-14">Customer support</a>
         </div>
-        <div class="col-12 text-center mt-4 mobile-btn-block">
-          <a href="/manageteam" class="btn btn-primary fs-18 team-btn-primary"
-            >Manage Team
-            <span class="fs-20">&#8594;</span>
-          </a>
-        </div>
-        <div class="position-absolute team-btn desktop-btn-block">
-          <a href="/manageteam" class="btn btn-primary fs-18 team-btn-primary"
-            >Manage Team
-            <span class="fs-20">&#8594;</span>
-          </a>
-        </div>
+<!--        <div class="col-12 text-center mt-4 mobile-btn-block">-->
+<!--          <a href="/manageteam" class="btn btn-primary fs-18 team-btn-primary"-->
+<!--            >Manage Team-->
+<!--            <span class="fs-20">&#8594;</span>-->
+<!--          </a>-->
+<!--        </div>-->
+<!--        <div class="position-absolute team-btn desktop-btn-block">-->
+<!--          <a href="/manageteam" class="btn btn-primary fs-18 team-btn-primary"-->
+<!--            >Manage Team-->
+<!--            <span class="fs-20">&#8594;</span>-->
+<!--          </a>-->
+<!--        </div>-->
       </div>
     </div>
   </div>
@@ -116,7 +122,7 @@ export default {
   border: 2px solid $color-white;
   outline-style: solid;
   outline-color: #cfcece;
-  border-radius: 30px;
+  border-radius: 30px !important;
 }
 .check-icon {
   width: 100px;
