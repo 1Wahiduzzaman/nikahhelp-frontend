@@ -21,6 +21,7 @@ export default {
           const user = JSON.parse(localStorage.getItem("user"));
           user.is_verified = 1;
           user.data_input_status = 0;
+          user.status = "1";
           localStorage.setItem("user", JSON.stringify(user));
           this.$router.push("/email-verification-success");
         }
