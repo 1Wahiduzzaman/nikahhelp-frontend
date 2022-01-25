@@ -131,7 +131,6 @@
                       <v-select
                         :clearable="false"
                         class="style-chooser"
-                        @input="onValueChange"
                         id="ver_city_id"
                         placeholder="City"
                         :reduce="(option) => option.id"
@@ -212,7 +211,6 @@
                 <v-select
                   :clearable="false"
                   class="style-chooser"
-                  @input="onValueChange"
                   id="ver_document_type"
                   placeholder="Document type"
                   :reduce="(option) => option.value"
@@ -283,7 +281,8 @@
                       v-if="verification.ver_image_front"
                       ><img src="@/assets/icon/close.svg" alt="img"
                     /></span>
-                    <img    v-viewer
+                    <img
+                      v-viewer
                       :src="
                         imageFont ? imageFont : verification.ver_image_front
                       "
@@ -367,7 +366,8 @@
                       v-if="verification.ver_image_back"
                       ><img src="@/assets/icon/close.svg" alt="img"
                     /></span>
-                    <img    v-viewer
+                    <img
+                      v-viewer
                       :src="imageBack ? imageBack : verification.ver_image_back"
                       width="180"
                       height="200"
@@ -451,7 +451,6 @@
                     v-model="verification.ver_recommences_title"
                     class="w-100"
                     placeholder="Title"
-                    @blur="onValueChange"
                   />
                 </a-form-model-item>
 
@@ -466,7 +465,6 @@
                         v-model="verification.ver_recommences_first_name"
                         class="w-100 rounded-right"
                         placeholder="First Name"
-                        @blur="onValueChange"
                       />
                     </a-form-model-item>
                   </div>
@@ -480,7 +478,6 @@
                         class="w-100 rounded-left"
                         :maxLength="10"
                         placeholder="Last Name"
-                        @blur="onValueChange"
                       />
                     </a-form-model-item>
                   </div>
@@ -494,7 +491,6 @@
                   <v-select
                     :clearable="false"
                     class="style-chooser"
-                    @input="onValueChange"
                     id="ver_recommences_occupation"
                     placeholder="Occupation"
                     v-model="verification.ver_recommences_occupation"
@@ -511,7 +507,6 @@
                   class="mt-2"
                 >
                   <a-textarea
-                    @blur="onValueChange"
                     :rows="3"
                     :maxLength="200"
                     autocomplete="off"
@@ -532,10 +527,9 @@
                   <a-input
                     class="w-100"
                     id="inputNumber"
-                      :maxLength="10"
+                    :maxLength="10"
                     placeholder="Mobile number"
                     v-model="verification.ver_recommences_mobile_no"
-                    @blur="onValueChange"
                   />
                 </a-form-model-item>
               </div>
@@ -577,11 +571,20 @@
               <a-button
                 shape="round"
                 type="primary"
+                style="float: right; margin-right: 10px"
+                class="mt-5"
+                @click="cancel"
+              >
+                Cancel
+              </a-button>
+              <a-button
+                shape="round"
+                type="primary"
                 style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
                 class="mt-5"
                 @click="handleSubmitFormOne"
               >
-                Save & Continue
+                Submit
               </a-button>
             </div>
           </a-form-model>
@@ -598,7 +601,7 @@
 import FileUploadOne from "@/components/shared/FileUploadOne.vue";
 import ApiService from "@/services/api.service";
 import vSelect from "vue-select";
-import {VERIFICATION } from "./models/candidate";
+import { VERIFICATION } from "./models/candidate";
 export default {
   name: "Verification",
   props: {
@@ -651,6 +654,9 @@ export default {
   },
 
   methods: {
+    cancel() {
+      this.$emit("cancel", false);
+    },
     changeActivekey(key) {
       this.activeKey = key;
     },
@@ -658,6 +664,8 @@ export default {
       this.$refs.verification.validate((valid) => {
         if (valid) {
           this.activeKey = null;
+          this.saveImageVerificationInfo();
+          this.saveVerificationInfo();
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
@@ -712,7 +720,11 @@ export default {
         })
         .catch((error) => {});
     },
-    saveImageVerificationInfo(image) {
+    saveImageVerificationInfo() {
+      const image = {
+        ver_image_front: this.verification.ver_image_front,
+        ver_image_back: this.verification.ver_image_back,
+      };
       this.$store
         .dispatch("saveImageVerificationInfo", image)
         .then((data) => {
@@ -746,9 +758,9 @@ export default {
       }
 
       this.verification.ver_image_front = e.target.files[0];
-      this.saveImageVerificationInfo({
-        ver_image_front: this.verification.ver_image_front,
-      });
+      // this.saveImageVerificationInfo({
+      //   ver_image_front: this.verification.ver_image_front,
+      // });
 
       let reader = new FileReader();
       reader.readAsDataURL(file);
@@ -763,9 +775,9 @@ export default {
         return;
       }
       this.verification.ver_image_back = e.target.files[0];
-      this.saveImageVerificationInfo({
-        ver_image_back: this.verification.ver_image_back,
-      });
+      // this.saveImageVerificationInfo({
+      //   ver_image_back: this.verification.ver_image_back,
+      // });
 
       let reader = new FileReader();
       reader.readAsDataURL(file);
@@ -780,7 +792,7 @@ export default {
         this.verification.cities = [];
         this.verification.cities.push(...res.data.data);
       }
-      this.saveVerificationInfo();
+      //this.saveVerificationInfo();
     },
     clearImg(action) {
       switch (action) {

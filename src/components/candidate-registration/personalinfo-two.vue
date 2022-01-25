@@ -2804,7 +2804,7 @@ export default {
         .catch((error) => {});
     },
     imageSizeCheck(file) {
-      if (file["size"] > 5,279,437.5) {
+      if (file["size"] > 5279437.5) {
         this.$error({
           title: "Validation Error",
           content: "Image size can't be more than 5 mb",

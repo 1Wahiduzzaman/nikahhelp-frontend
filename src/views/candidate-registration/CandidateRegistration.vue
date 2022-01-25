@@ -90,6 +90,7 @@
       <div class="steps-content" v-if="current == 4">
         <Verification
           v-if="showAgreement"
+          @cancel="cancelVerification"
           @valueChange="onDataChange($event)"
           :verification="candidateDetails.verification"
           :candidateDetails="candidateDetails"
@@ -265,6 +266,9 @@ export default {
 
     updateFixedStatus(next) {
       this.fixedStatus.headerIsFixed = next;
+    },
+    cancelVerification(e) {
+      this.showAgreement = false;
     },
     onAgree(value) {
       this.showAgreement = value;
