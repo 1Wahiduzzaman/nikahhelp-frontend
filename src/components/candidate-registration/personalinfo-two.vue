@@ -1387,7 +1387,7 @@
                   :rows="3"
                   :maxLength="200"
                   v-model="personalInformation.contact.per_permanent_address"
-                  placeholder="Sample Text"
+                  placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
                 ></a-textarea>
               </a-form-model-item>
             </div>
@@ -1452,7 +1452,13 @@
                     >
                       <a-select-option value="">Select</a-select-option>
                       <a-select-option value="+44">+44</a-select-option>
-                        <a-select-option value="+88">+88</a-select-option>
+                       <a-select-option value="+88">+88</a-select-option>
+                        <a-select-option value="+46">+46</a-select-option>
+                         <a-select-option value="+31	">+31	</a-select-option>
+                        <a-select-option value="+39">+39</a-select-option>
+<a-select-option value="+33">+33</a-select-option>
+<a-select-option value="+353">+353</a-select-option>
+<a-select-option value="+011">+011</a-select-option>
 
                     </a-select>
                   </a-form-model-item>
@@ -2136,6 +2142,69 @@
             </div>
           </div>
 
+ <!-- Things I enjoy -->
+          <div class="row pt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                  v-if="
+                    personalInformation.more_about.per_things_enjoy &&
+                    personalInformation.more_about.per_things_enjoy.length > 0
+                  "
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
+                />What types of other things do you enjoy?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <v-select
+                id="per_things_enjoy"
+                :clearable="false"
+                :multiple="true"
+                class="nationality-select"
+                @input="
+                  onMultiValueChange($event, 'per_things_enjoy', 'more_about')
+                "
+                placeholder="you may select up to three"
+                v-model="personalInformation.more_about.per_things_enjoy"
+                label="name"
+                :options="candidateDetails.hobbies"
+                ><template #open-indicator>
+                  <a-icon type="down" />
+                </template>
+              </v-select>
+            </div>
+            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoEnjoyfullThings"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  <span
+                    v-if="arr[2].first"
+                    @click="arr[2].first = !arr[2].first"
+                  >
+                    Need Help?
+                  </span>
+                  <span v-else @click="arr[2].first = !arr[2].first">
+                    Hide Help?
+                  </span>
+                </a>
+              </p>
+              <div
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoEnjoyfullThings"
+              >
+                <div class="card card-body bubble">Things you enjoy</div>
+              </div>
+            </div>
+          </div>
+
           <!-- Food and cuisine -->
           <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
@@ -2246,69 +2315,7 @@
             </div>
           </div>
 
-          <!-- Things I enjoy -->
-          <div class="row pt-3 pb-2 border-bottom">
-            <div class="col-12 col-md-6 none-padding">
-              <div class="mb-2 font-weight-bold">
-                <a-icon
-                  v-if="
-                    personalInformation.more_about.per_things_enjoy &&
-                    personalInformation.more_about.per_things_enjoy.length > 0
-                  "
-                  class="color-success mr-2 fs-18 fw-500"
-                  type="check"
-                />What types of things do you enjoy?
-              </div>
-            </div>
-            <div class="col-12 col-md-6 mobile-margin">
-              <v-select
-                id="per_things_enjoy"
-                :clearable="false"
-                :multiple="true"
-                class="nationality-select"
-                @input="
-                  onMultiValueChange($event, 'per_things_enjoy', 'more_about')
-                "
-                placeholder="you may select up to three"
-                v-model="personalInformation.more_about.per_things_enjoy"
-                label="name"
-                :options="candidateDetails.hobbies"
-                ><template #open-indicator>
-                  <a-icon type="down" />
-                </template>
-              </v-select>
-            </div>
-            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
-              <p>
-                <a
-                  class="color-blue fw-700 fs-14"
-                  data-toggle="collapse"
-                  href="#collapsePersonalInfoEnjoyfullThings"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
-                >
-                  <span
-                    v-if="arr[2].first"
-                    @click="arr[2].first = !arr[2].first"
-                  >
-                    Need Help?
-                  </span>
-                  <span v-else @click="arr[2].first = !arr[2].first">
-                    Hide Help?
-                  </span>
-                </a>
-              </p>
-              <div
-                class="collapse"
-                data-parent="#personalInfoAccordian"
-                id="collapsePersonalInfoEnjoyfullThings"
-              >
-                <div class="card card-body bubble">Things you enjoy</div>
-              </div>
-            </div>
-          </div>
-
+         
           <!-- Thankful for-->
           <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
@@ -2538,7 +2545,7 @@
                   id="per_about"
                   placeholder="maximum 500 characters"
                   :rows="3"
-                  :maxLength="200"
+                  :maxLength="500"
                   v-model="personalInformation.more_about.per_about"
                 />
               </a-form-model-item>

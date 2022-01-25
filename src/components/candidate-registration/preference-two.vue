@@ -200,7 +200,7 @@
                       id="preferred_cities0"
                       class="style-chooser"
                       label="name"
-                      placeholder="Select City"
+                      placeholder="any city"
                       v-model.lazy="preferenceData.preferred_cities[0]"
                       :options="preferenceData.allowedCity.listOne"
                       @input="onValueChange"
@@ -403,7 +403,7 @@
                       :loading="loadingDisallowed"
                       id="blocked_cities0"
                       class="style-chooser"
-                      placeholder="Select City"
+                      placeholder="any city"
                       v-model.lazy="preferenceData.blocked_cities[0]"
                       label="name"
                       :options="preferenceData.disAllowedCity.listOne"
@@ -463,11 +463,11 @@
             <div class="col-12 col-md-6 mobile-margin">
               <v-select
                 :clearable="false"
-                :multiple="true"
+                :multiple="false"
                 id="pre_partner_religion_id"
                 :reduce="(option) => option.id"
                 class="nationality-select form-right-content w-full"
-                placeholder="you may select up to three"
+                placeholder="please select"
                 @input="onMultiValueChange($event, 'pre_partner_religion_id')"
                 v-model.lazy="preferenceData.pre_partner_religion_id"
                 label="name"
@@ -522,13 +522,14 @@
                   v-if="preferenceData.pre_ethnicities"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Which ethnic background do you prefer your prospective
+                />Which ethnic background(s) do you prefer your prospective
                 companion to be from?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <v-select
                 :clearable="false"
+                 :multiple="true"
                 id="pre_ethnicities"
                 class="style-chooser w-full form-right-content"
                 placeholder="you may select up to three"
@@ -655,7 +656,7 @@
                   v-if="preferenceData.pre_study_level_id"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Which is the minimum education level you prefer your
+                />What is the minimum education level you prefer your
                 prospective companion to have?
               </div>
             </div>
@@ -992,7 +993,7 @@
                   v-if="preferenceData.pre_description"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Describe your requirements about your preferred companion
+                />What are you looking for in your preferred companion? (please need help for guidance)
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">

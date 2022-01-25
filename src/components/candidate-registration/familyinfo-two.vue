@@ -15,7 +15,7 @@
         <a-icon type="caret-down" :rotate="props.isActive ? 180 : 0" />
       </template>
       <!-- 1. Family Details  -->
-      <a-collapse-panel key="1" header="1. Family Details">
+      <a-collapse-panel key="1" header="3.1 Family Details">
         <a-form-model
           ref="familyInformationForm"
           v-if="familyInformation"
@@ -31,7 +31,7 @@
                   v-if="familyInformation.father_profession"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What is your father's Profession?
+                />What is your father's profession?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -45,7 +45,7 @@
                   @input="onValueChange"
                   id="father_profession"
                   :reduce="(option) => option.name"
-                  placeholder="Please select Father's Profession"
+                  placeholder="please select "
                   v-model="familyInformation.father_profession"
                   label="name"
                   :options="candidateDetails.occupations"
@@ -94,7 +94,7 @@
                   v-if="familyInformation.mother_profession"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What is your mother's Profession?
+                />What is your mother's profession?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -107,7 +107,7 @@
                   class="style-chooser"
                   @input="onValueChange"
                   id="mother_profession"
-                  placeholder="Please select Mother's Profession"
+                  placeholder="please select"
                   v-model="familyInformation.mother_profession"
                   label="name"
                   :reduce="(option) => option.name"
@@ -157,7 +157,7 @@
                   v-if="familyInformation.siblings_desc"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Do you have any siblings?
+                />Please give details about your siblings.
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -165,7 +165,8 @@
                 <a-textarea
                   @blur="onValueChange"
                   id="siblings_desc"
-                  placeholder="2 Brothers, 2 Sisters"
+                  placeholder="e.g. 1 sister, married, with 2 children
+2 brothers, unmarried"
                   :rows="3"
                   :maxLength="200"
                   v-model="familyInformation.siblings_desc"
@@ -211,8 +212,8 @@
                   v-if="familyInformation.family_info"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Would you like to share any other information about your
-                family?
+                />You may use this space to share more information about your
+                family.
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -220,7 +221,7 @@
                 <a-textarea
                   @blur="onValueChange"
                   id="family_info"
-                  placeholder="Would you like to share any other information about your family"
+                  placeholder="e.g. elder brother is a teacher etc. or We are a traditional family. "
                   :rows="3"
                   :maxLength="200"
                   v-model="familyInformation.family_info"
@@ -284,7 +285,7 @@
                   @input="onValueChange"
                   id="country_of_origin"
                   :reduce="(option) => option.name"
-                  placeholder="Please select country of origin"
+                  placeholder="please select "
                   v-model="familyInformation.country_of_origin"
                   label="name"
                   :options="[

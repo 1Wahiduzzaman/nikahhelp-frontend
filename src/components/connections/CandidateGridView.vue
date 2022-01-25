@@ -134,28 +134,28 @@
         </v-card>
 
       </div>
-      <div class="flip-card-back">
+      <div class="flip-card-back text-center">
         <v-card class="mx-auto shadow-default shortlist-card flipped position-relative">
           <h6 class="pt-4">This Profile Connection Overview</h6>
 
           <div class="">
-            <h6 class="fs-14">Connection Status</h6>
-            <h6 class="text-capitalize fs-16 ml-4">{{ connection.connection }}</h6>
+            <h6 class="fs-14 fw-300">Connection Status</h6>
+            <h6 class="text-capitalize fs-16">{{ connection.connection }}</h6>
           </div>
 
           <div>
-            <h6 class="fs-14">Connected date</h6>
-            <h6 class="text-capitalize fs-16 ml-4">{{ dateFromDateTime(connection.responded_at) }}</h6>
+            <h6 class="fs-14 fw-300">Connected date</h6>
+            <h6 class="text-capitalize fs-16">{{ dateFromDateTime(connection.responded_at) }}</h6>
           </div>
 
           <div>
-            <h6 class="fs-14">Connection requested by</h6>
-            <h6 class="text-capitalize fs-16 ml-4">{{ connection.requested_by.full_name }}</h6>
+            <h6 class="fs-14 fw-300">Connection requested by</h6>
+            <h6 class="text-capitalize fs-16">{{ connection.requested_by.full_name }}</h6>
           </div>
 
           <div>
-            <h6 class="fs-14">Request Date</h6>
-            <h6 class="text-capitalize fs-16 ml-4">{{ dateFromDateTime(connection.requested_at) }}</h6>
+            <h6 class="fs-14 fw-300">Request Date</h6>
+            <h6 class="text-capitalize fs-16">{{ dateFromDateTime(connection.requested_at) }}</h6>
           </div>
 
 <!--          <table class="table table-borderless overview-table">-->
@@ -184,23 +184,23 @@
           <h6 class="pt-3">This Profile Team Overview</h6>
 
           <div>
-            <h6 class="fs-14">Team name</h6>
-            <h6 class="text-capitalize fs-16 ml-4">{{ connection.to_team_name }}</h6>
+            <h6 class="fs-14 fw-300">Team name</h6>
+            <h6 class="text-capitalize fs-16">{{ connection.to_team_name }}</h6>
           </div>
 
           <div>
-            <h6 class="fs-14">Team members</h6>
-            <h6 class="text-capitalize fs-16 ml-4">{{ connection.total_teamMember }}</h6>
+            <h6 class="fs-14 fw-300">Team members</h6>
+            <h6 class="text-capitalize fs-16">{{ connection.total_teamMember }}</h6>
           </div>
 
           <div>
-            <h6 class="fs-14">Team creation date</h6>
-            <h6 class="text-capitalize fs-16 ml-4">{{ dateFromTimeStamp(connection.team_created_date) }}</h6>
+            <h6 class="fs-14 fw-300">Team creation date</h6>
+            <h6 class="text-capitalize fs-16">{{ dateFromTimeStamp(connection.team_created_date) }}</h6>
           </div>
 
           <div>
-            <h6 class="fs-14">Team created by</h6>
-            <h6 class="text-capitalize fs-16 ml-4">{{ connection.team_created_by }}</h6>
+            <h6 class="fs-14 fw-300">Team created by</h6>
+            <h6 class="text-capitalize fs-16">{{ connection.team_created_by }}</h6>
           </div>
 
 <!--          <table class="table table-borderless overview-table">-->
@@ -336,6 +336,7 @@ export default {
       }
     },
     block() {
+      console.log(this.connection)
       this.$emit(
           "block-candidate",
           this.connection.candidateInfo.candidate_userid

@@ -81,12 +81,12 @@
             <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Occupation</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1"> 
+                <td class="text--secondary text-subtitle-1">
                     <span
                         v-for="(occupation, i) in preference.pre_occupation"
                         :key="i"
                     >
-                        {{ occupation }}
+                        {{ occupation.name }}
                         <span v-if="i+1 < preference.pre_occupation">,</span>
                     </span>
                 </td>

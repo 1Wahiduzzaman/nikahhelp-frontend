@@ -1,24 +1,20 @@
 <template>
   <div>
     <Loader v-if="isLoading" :isLoading="isLoading" />
-    <v-container fluid v-else>
-      <v-row no-gutters>
-        <v-col cols="12">
-            <div v-if="user.account_type == 1">
-              <!-- Opposite Candidate Profile Component goes here -->
-              <candidate-profile
-                :candidateData="candidateProfileInfo"
-              ></candidate-profile>
-            </div>
-            <div v-else>
-              <!-- Opposite Representative profile component goes here -->
-              <representative-profile
-                :representativeData="representativeProfileInfo"
-              ></representative-profile>
-            </div>
-        </v-col>
-      </v-row>
-    </v-container>
+    <div fluid v-else>
+      <div v-if="user.account_type == 1">
+        <!-- Opposite Candidate Profile Component goes here -->
+        <candidate-profile
+          :candidateData="candidateProfileInfo"
+        ></candidate-profile>
+      </div>
+      <div v-else>
+        <!-- Opposite Representative profile component goes here -->
+        <representative-profile
+          :representativeData="representativeProfileInfo"
+        ></representative-profile>
+      </div>
+    </div>
   </div>
 </template>
 
