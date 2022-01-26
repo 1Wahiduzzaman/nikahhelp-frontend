@@ -38,9 +38,9 @@
               >
                 <h3 class="text-white">Choose Plan</h3>
               </div>
-              <div class="div-2 position-relative pt-4 bg-white">
+              <div class="div-2 position-relative bg-white">
                 <div
-                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center"
+                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom border-top"
                   :class="{ 'bg-brand-gradient': isSelected1 }"
                   @click="firstOption"
                 >
@@ -58,7 +58,7 @@
                   </h4>
                 </div>
                 <div
-                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center"
+                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom"
                   :class="{ 'bg-brand-gradient': isSelected2 }"
                   @click="secondOption"
                 >
@@ -76,7 +76,7 @@
                   </h4>
                 </div>
                 <div
-                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center"
+                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom"
                   :class="{ 'bg-brand-gradient': isSelected3 }"
                   @click="thirdOption"
                 >
@@ -874,7 +874,7 @@ export default {
   height: 450px;
 }
 .height-2 {
-  height: 406px;
+  height: 510px;
 }
 .btn-back {
   width: 50%;
@@ -920,10 +920,10 @@ export default {
     display: none;
   }
   .height-1 {
-    height: 550px;
+    height: 665px;
   }
   .height-2 {
-    height: 485px;
+    height: 600px;
   }
   .heading-text {
     margin-top: 2rem;
@@ -941,12 +941,25 @@ export default {
     margin-top: 0.5rem;
   }
   .height-1 {
-    height: 450px;
+    height: 555px;
   }
   .height-2 {
-    height: 406px;
+    height: 510px;
   }
 }
+
+@media (min-width: 1300px) {
+  .btn-payment {
+    margin-top: 0.5rem;
+  }
+  .height-1 {
+    height: 520px;
+  }
+  .height-2 {
+    height: 475px;
+  }
+}
+
 .duration {
   margin-bottom: 0 !important;
 }
@@ -954,5 +967,11 @@ export default {
   height: 50px;
   font-weight: bolder;
   text-align: center;
+  border: none !important;
+}
+.custom-select:focus {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none;
 }
 </style>
