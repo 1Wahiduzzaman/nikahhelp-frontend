@@ -113,7 +113,7 @@
 												<v-col class="pt-1" cols="12">
 													<CardInfo
 														title="More about me"
-														:detail="candidateData.personal.per_about" height="149px" class="mt-2"
+														:detail="candidateData.personal.per_about" class="mt-2"
 													/>
 												</v-col>
 												<v-col class="pt-1" cols="12">
@@ -178,7 +178,6 @@
 													<v-card class="px-3 py-5">
 													<h5>More about preferred partner</h5>
 													<p>How Important following characters are to me</p>
-													<hr />
 													<!-- Character -->
 													<rating-component
 														title="Strength of character from a moral point of view"
