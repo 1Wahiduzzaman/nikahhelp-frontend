@@ -340,5 +340,8 @@ export default {
 }
 .hide-sidebar {
   display: none !important;
+  @media (min-width: 768px) {
+    display: flex !important;
+  }
 }
 </style>

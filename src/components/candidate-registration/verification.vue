@@ -3,7 +3,7 @@
     <div class="verification-content" style="margin-top: 40px">
       <div class="section-heading heading-text">
         <h5>Verification Information</h5>
-        <p>Your Verification Information</p>
+        <!-- <p>Your Verification Information</p> -->
       </div>
       <a-collapse
         default-active-key="1"
@@ -15,7 +15,7 @@
         <template #expandIcon="props">
           <a-icon type="caret-down" :rotate="props.isActive ? 180 : 0" />
         </template>
-        <a-collapse-panel key="1" header="1. Essential Information">
+        <a-collapse-panel key="1" header="6. ID Verification Information">
           <a-form-model
             v-if="verification"
             ref="verification"
@@ -27,19 +27,15 @@
               <div class="col-12 border-bottom pb-3">
                 <div class="verification-header mt-2">
                   <p class="instruction-title">
-                    To keep your account safe, we need to verify your identity.
-                    This is a legal requirement that help us to keep your
-                    account secure.
+                   To help us ensure a transparent and trusting experience we request your co-operation and consent in submitting a government approved valid ID for approval by the MatrimonyAssist Team. We are bound by and respect your privacy as detailed in our terms and conditions.
                   </p>
                   <p class="instruction-title">
                     We accept photo/scans of a driving license, passport,
-                    national ID card or residence permit issued in European
-                    Economic Are (EEA)
+                    national ID card and residence permit In European Economic Area (EEA) or Switzerland. Please remember the following when submitting: 
+  
                   </p>
 
-                  <p class="instruction-title">
-                    Follow these tips to make sure your document is accepted:
-                  </p>
+                <p class="instruction-title">Do’s </p>
                   <ul>
                     <li class="flex-start-center">
                       <img
@@ -47,7 +43,7 @@
                         alt="icon"
                         id="checkIcon"
                       />
-                      Submit a valid, current photo ID with an expiry date
+                    Make sure the document has an expiry data and a photo
                     </li>
                     <li class="flex-start-center mt-2">
                       <img
@@ -55,8 +51,7 @@
                         alt="icon"
                         id="checkIcon"
                       />
-                      Show the full document (all four corners should be
-                      visible)
+                      Show the full document (all 4 corners should be visible) 
                     </li>
                     <li class="flex-start-center mt-2">
                       <img
@@ -64,9 +59,30 @@
                         alt="icon"
                         id="checkIcon"
                       />
-                      Use a colour image that a is clear and easy to read
+                    Provide a document that is in colour 
                     </li>
                   </ul>
+<br/>
+                  <!-- <p class="instruction-title">Don’ts </p>
+                  <ul>
+                    <li class="flex-start-center">
+                      <img
+                        src="@/assets/Icons/tick 2.svg"
+                        alt="icon"
+                        id="checkIcon"
+                      />
+                   Do not submit an expired document 
+                    </li>
+                    <li class="flex-start-center mt-2">
+                      <img
+                        src="@/assets/Icons/tick 2.svg"
+                        alt="icon"
+                        id="checkIcon"
+                      />
+                     Don’t submit a blurry image 
+                    </li>
+                    
+                  </ul> -->
                 </div>
               </div>
             </div>
@@ -79,7 +95,7 @@
                     v-if="verification.ver_country_id"
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
-                  />Country
+                  />Document issueing country
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
@@ -94,7 +110,7 @@
                         class="style-chooser"
                         @input="onChangeCountry"
                         id="ver_country_id"
-                        placeholder="Country"
+                        placeholder="please select"
                         v-model="verification.ver_country_id"
                         label="name"
                         :reduce="(option) => option.id"
@@ -126,14 +142,15 @@
                       </a-select> -->
                     </a-form-model-item>
                   </div>
+
+
                   <div class="col-12 col-md-6 mobile-margin">
                     <a-form-model-item ref="ver_city_id" prop="ver_city_id">
                       <v-select
                         :clearable="false"
                         class="style-chooser"
-                        @input="onValueChange"
                         id="ver_city_id"
-                        placeholder="City"
+                        placeholder="please select"
                         :reduce="(option) => option.id"
                         v-model="verification.ver_city_id"
                         label="name"
@@ -141,6 +158,7 @@
                         ><template #open-indicator>
                           <a-icon type="down" /> </template
                       ></v-select>
+                      
                       <!-- <a-select
                         id="ver_city"
                         :showSearch="true"
@@ -162,6 +180,7 @@
                       </a-select> -->
                     </a-form-model-item>
                   </div>
+
                 </div>
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">
@@ -205,14 +224,13 @@
                     v-if="verification.ver_document_type"
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
-                  />Document type?
+                  />Type of document
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
                 <v-select
                   :clearable="false"
                   class="style-chooser"
-                  @input="onValueChange"
                   id="ver_document_type"
                   placeholder="Document type"
                   :reduce="(option) => option.value"
@@ -220,7 +238,9 @@
                   label="name"
                   :options="[
                     { name: 'Passport', value: 'Passport' },
-                    { name: 'Nation ID', value: 'Nation ID' },
+                    { name: 'National ID', value: 'National ID' },
+                     { name: 'Driving licence ', value: 'Driving licence ' },
+
                   ]"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
@@ -283,7 +303,8 @@
                       v-if="verification.ver_image_front"
                       ><img src="@/assets/icon/close.svg" alt="img"
                     /></span>
-                    <img    v-viewer
+                    <img
+                      v-viewer
                       :src="
                         imageFont ? imageFont : verification.ver_image_front
                       "
@@ -350,7 +371,7 @@
                     v-if="verification.ver_image_back"
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
-                  />Upload back side?
+                  />Upload reverse side
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
@@ -367,7 +388,8 @@
                       v-if="verification.ver_image_back"
                       ><img src="@/assets/icon/close.svg" alt="img"
                     /></span>
-                    <img    v-viewer
+                    <img
+                      v-viewer
                       :src="imageBack ? imageBack : verification.ver_image_back"
                       width="180"
                       height="200"
@@ -424,7 +446,7 @@
             </div>
 
             <!--Community standing-->
-            <div class="row pt-3 border-bottom">
+            <!-- <div class="row pt-3 border-bottom">
               <div class="col-12 col-md-6 none-padding">
                 <div class="mb-2 font-weight-bold">
                   <a-icon
@@ -451,7 +473,6 @@
                     v-model="verification.ver_recommences_title"
                     class="w-100"
                     placeholder="Title"
-                    @blur="onValueChange"
                   />
                 </a-form-model-item>
 
@@ -466,7 +487,6 @@
                         v-model="verification.ver_recommences_first_name"
                         class="w-100 rounded-right"
                         placeholder="First Name"
-                        @blur="onValueChange"
                       />
                     </a-form-model-item>
                   </div>
@@ -480,7 +500,6 @@
                         class="w-100 rounded-left"
                         :maxLength="10"
                         placeholder="Last Name"
-                        @blur="onValueChange"
                       />
                     </a-form-model-item>
                   </div>
@@ -494,7 +513,6 @@
                   <v-select
                     :clearable="false"
                     class="style-chooser"
-                    @input="onValueChange"
                     id="ver_recommences_occupation"
                     placeholder="Occupation"
                     v-model="verification.ver_recommences_occupation"
@@ -511,7 +529,6 @@
                   class="mt-2"
                 >
                   <a-textarea
-                    @blur="onValueChange"
                     :rows="3"
                     :maxLength="200"
                     autocomplete="off"
@@ -532,10 +549,9 @@
                   <a-input
                     class="w-100"
                     id="inputNumber"
-                      :maxLength="10"
+                    :maxLength="10"
                     placeholder="Mobile number"
                     v-model="verification.ver_recommences_mobile_no"
-                    @blur="onValueChange"
                   />
                 </a-form-model-item>
               </div>
@@ -572,8 +588,19 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
+
+
             <div class="d-flex justify-content-end">
+              <a-button
+                shape="round"
+                type="primary"
+                style="float: right; margin-right: 10px"
+                class="mt-5"
+                @click="cancel"
+              >
+                Cancel
+              </a-button>
               <a-button
                 shape="round"
                 type="primary"
@@ -581,7 +608,7 @@
                 class="mt-5"
                 @click="handleSubmitFormOne"
               >
-                Save & Continue
+                Submit
               </a-button>
             </div>
           </a-form-model>
@@ -598,7 +625,7 @@
 import FileUploadOne from "@/components/shared/FileUploadOne.vue";
 import ApiService from "@/services/api.service";
 import vSelect from "vue-select";
-import {VERIFICATION } from "./models/candidate";
+import { VERIFICATION } from "./models/candidate";
 export default {
   name: "Verification",
   props: {
@@ -651,6 +678,9 @@ export default {
   },
 
   methods: {
+    cancel() {
+      this.$emit("cancel", false);
+    },
     changeActivekey(key) {
       this.activeKey = key;
     },
@@ -658,6 +688,8 @@ export default {
       this.$refs.verification.validate((valid) => {
         if (valid) {
           this.activeKey = null;
+          this.saveImageVerificationInfo();
+          this.saveVerificationInfo();
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
@@ -712,7 +744,11 @@ export default {
         })
         .catch((error) => {});
     },
-    saveImageVerificationInfo(image) {
+    saveImageVerificationInfo() {
+      const image = {
+        ver_image_front: this.verification.ver_image_front,
+        ver_image_back: this.verification.ver_image_back,
+      };
       this.$store
         .dispatch("saveImageVerificationInfo", image)
         .then((data) => {
@@ -746,9 +782,9 @@ export default {
       }
 
       this.verification.ver_image_front = e.target.files[0];
-      this.saveImageVerificationInfo({
-        ver_image_front: this.verification.ver_image_front,
-      });
+      // this.saveImageVerificationInfo({
+      //   ver_image_front: this.verification.ver_image_front,
+      // });
 
       let reader = new FileReader();
       reader.readAsDataURL(file);
@@ -763,9 +799,9 @@ export default {
         return;
       }
       this.verification.ver_image_back = e.target.files[0];
-      this.saveImageVerificationInfo({
-        ver_image_back: this.verification.ver_image_back,
-      });
+      // this.saveImageVerificationInfo({
+      //   ver_image_back: this.verification.ver_image_back,
+      // });
 
       let reader = new FileReader();
       reader.readAsDataURL(file);
@@ -780,7 +816,7 @@ export default {
         this.verification.cities = [];
         this.verification.cities.push(...res.data.data);
       }
-      this.saveVerificationInfo();
+      //this.saveVerificationInfo();
     },
     clearImg(action) {
       switch (action) {

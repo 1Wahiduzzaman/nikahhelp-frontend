@@ -443,12 +443,12 @@ export default {
   }
 }
 .from-data-card {
-  width: 93%;
+  width: 97%;
   top: 12px;
   left: -1px;
   height: 650px;
   border-radius: 10px;
-  margin-left: 16px;
+  margin-left: 8px;
   background: $bg-primary;
 }
 .details-suggestion-card {

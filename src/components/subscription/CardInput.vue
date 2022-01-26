@@ -1,12 +1,12 @@
 <template>
 	<div class="card-input">
 		<div v-if="!this.payment_method" class="card-input form-group">
-			<div class="form-group mt-2">
+			<div class="form-group mt-3">
 				<label for="name" class="text-white ml-2">Name on Card</label>
 				<input
 					type="text"
 					id="name"
-					class="w-100 py-2 px-4 bg-white"
+					class="w-100 py-2 px-4 bg-white form-control input-round"
 					v-model="name"
 					placeholder="Your name on card"
 				/>
@@ -20,7 +20,7 @@
 					v-model="country"
 					placeholder="Example: US, CA, BD"
 				/> -->
-				<select class="custom-select px-4" v-model="country">
+				<select class="custom-select px-4 form-control input-round" v-model="country">
 					<option value="" disabled>Select Country</option>
 					<option
 						v-for="c in $store.state.candidateInfo.countries"
@@ -37,7 +37,7 @@
 					<input
 						type="text"
 						id="postCode"
-						class="w-100 py-2 px-4 bg-white"
+						class="w-100 py-2 px-4 bg-white form-control input-round"
 						v-model="postCode"
 						placeholder="Example: 1234"
 					/>
@@ -47,7 +47,7 @@
 					<input
 						type="text"
 						id="country"
-						class="w-100 py-2 px-4 bg-white"
+						class="w-100 py-2 px-4 bg-white form-control input-round"
 						v-model="city"
 						placeholder="New York"
 					/>
@@ -162,6 +162,13 @@ export default {
 	.custom-select {
 		border-radius: 25px;
 		font-size: 12px;
+    height: 38px;
+    border: none !important;
+    &:focus {
+      box-shadow: none !important;
+      outline: none !important;
+      border: none !important;
+    }
 	}
 }
 
@@ -182,5 +189,23 @@ export default {
 }
 .cspt-9 {
   padding-top: 9px;
+}
+input {
+  border: none !important;
+}
+input:focus{
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: none !important;
+}
+input:active{
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: none !important;
+}
+.input-round {
+  border-radius: 40px;
 }
 </style>
