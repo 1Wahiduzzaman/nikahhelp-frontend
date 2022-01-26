@@ -260,7 +260,7 @@ export const HEIGHTS = [
   },
   {
     value: 4,
-    name: '4 ft 3 inches or 121.92 cm',
+    name: '4 ft 3 inches or 129.54 cm',
     label:
       '<p class="m-0"><strong>4</strong>ft <strong>3</strong> inches or <strong>129.54</strong> cm</p>',
 
@@ -268,14 +268,14 @@ export const HEIGHTS = [
   },
   {
     value: 5,
-    value: '4 ft 4 inches or 121.92 cm',
+    value: '4 ft 4 inches or 132.08 cm',
     label:
       '<p class="m-0"><strong>4</strong>ft <strong>4</strong> inches or <strong>132.08</strong> cm</p>',
     serialNo: 5
   },
   {
     value: 6,
-    name: '4 ft 5 inches or 121.92 cm',
+    name: '4 ft 5 inches or 134.62 cm',
     label:
       '<p class="m-0"><strong>4</strong>ft <strong>5</strong> inches or <strong>134.62</strong> cm</p>',
     serialNo: 6
@@ -283,161 +283,161 @@ export const HEIGHTS = [
 
   {
     value: 7,
-    name: '4 ft 6 inches or 121.92 cm',
+    name: '4 ft 6 inches or 137.16 cm',
     label:
       '<p class="m-0"><strong>4</strong>ft <strong>6</strong> inches or <strong>137.16</strong> cm</p>',
     serialNo: 7
   },
   {
     value: 8,
-    name: '4 ft 7 inches or 121.92 cm',
+    name: '4 ft 7 inches or 139.70 cm',
     label:
       '<p class="m-0"><strong>4</strong>ft <strong>7</strong> inches or <strong>139.70</strong> cm</p>',
     serialNo: 8
   },
   {
     value: 9,
-    value: '4 ft 8 inches or 121.92 cm',
+    value: '4 ft 8 inches or 142.24 cm',
     label:
       '<p class="m-0"><strong>4</strong>ft <strong>8</strong> inches or <strong>142.24</strong> cm</p>',
     serialNo: 9
   },
   {
     value: 10,
-    name: '4 ft 9 inches or 121.92 cm',
+    name: '4 ft 9 inches or 144.78 cm',
     label:
       '<p class="m-0"><strong>4</strong>ft <strong>9</strong> inches or <strong>144.78</strong> cm</p>',
     serialNo: 10
   },
   {
     value: 11,
-    name: '4 ft 10 inches or 121.92 cm',
+    name: '4 ft 10 inches or 147.32 cm',
     label:
       '<p class="m-0"><strong>4</strong>ft <strong>10</strong> inches or <strong>147.32</strong> cm</p>',
     serialNo: 11
   },
   {
     value: 12,
-    name: '4 ft 11 inches or 121.92 cm',
+    name: '4 ft 11 inches or 149.86 cm',
     label:
       '<p class="m-0"><strong>4</strong>ft <strong>11</strong> inches or <strong>149.86</strong> cm</p>',
     serialNo: 12
   },
   {
     value: 13,
-    name: '5 ft 0 inches or 121.92 cm',
+    name: '5 ft 0 inches or 152.40 cm',
     label:
       '<p class="m-0"><strong>5</strong>ft <strong>0</strong> inches or <strong>152.40</strong> cm</p>',
     serialNo: 13
   },
   {
     value: 14,
-    name: '5 ft 1 inches or 121.92 cm',
+    name: '5 ft 1 inches or 154.94 cm',
     label:
       '<p class="m-0"><strong>5</strong>ft <strong>1</strong> inches or <strong>154.94</strong> cm</p>',
     serialNo: 14
   },
   {
     value: 15,
-    name: '5 ft 2 inches or 121.92 cm',
+    name: '5 ft 2 inches or 157.48 cm',
     label:
       '<p class="m-0"><strong>5</strong>ft <strong>2</strong> inches or <strong>157.48</strong> cm</p>',
     serialNo: 15
   },
   {
     value: 16,
-    name: '5 ft 3 inches or 121.92 cm',
+    name: '5 ft 3 inches or 160.02 cm',
     label:
       '<p class="m-0"><strong>5</strong>ft <strong>3</strong> inches or <strong>160.02</strong> cm</p>',
     serialNo: 16
   },
   {
     value: 17,
-    name: '5 ft 4 inches or 121.92 cm',
+    name: '5 ft 4 inches or 162.56 cm',
     label:
       '<p class="m-0"><strong>5</strong>ft <strong>4</strong> inches or <strong>162.56</strong> cm</p>',
     serialNo: 17
   },
   {
     value: 18,
-    name: '5 ft 6 inches or 121.92 cm',
+    name: '5 ft 6 inches or 165.10 cm',
     label:
       '<p class="m-0"><strong>5</strong>ft <strong>5</strong> inches or <strong>165.10</strong> cm</p>',
     serialNo: 18
   },
   {
     value: 19,
-    name: '5 ft 6 inches or 121.92 cm',
+    name: '5 ft 6 inches or 167.64 cm',
     label:
       '<p class="m-0"><strong>5</strong>ft <strong>6</strong> inches or <strong>167.64</strong> cm</p>',
     serialNo: 19
   },
   {
     value: 20,
-    name: '5 ft 7 inches or 121.92 cm',
+    name: '5 ft 7 inches or 170.18 cm',
     label:
       '<p class="m-0"><strong>5</strong>ft <strong>7</strong> inches or <strong>170.18</strong> cm</p>',
     serialNo: 20
   },
   {
     value: 21,
-    name: '5 ft 6 inches or 121.92 cm',
+    name: '5 ft 6 inches or 172.72 cm',
     label:
       '<p class="m-0"><strong>5</strong>ft <strong>8</strong> inches or <strong>172.72</strong> cm</p>',
     serialNo: 21
   },
   {
     value: 22,
-    name: '5 ft 9 inches or 121.92 cm',
+    name: '5 ft 9 inches or 175.26 cm',
     label:
       '<p class="m-0"><strong>5</strong>ft <strong>9</strong> ininchesch or <strong>175.26</strong> cm</p>',
     serialNo: 22
   },
   {
     value: 23,
-    name: '5 ft 10 inches or 121.92 cm',
+    name: '5 ft 10 inches or 177.80 cm',
     label:
       '<p class="m-0"><strong>5</strong>ft <strong>10</strong> inches or <strong>177.80</strong> cm</p>',
     serialNo: 23
   },
   {
     value: 24,
-    name: '5 ft 11  inches or 121.92 cm',
+    name: '5 ft 11  inches or 180.34 cm',
     label:
       '<p class="m-0"><strong>5</strong>ft <strong>11</strong> inches or <strong>180.34</strong> cm</p>',
     serialNo: 24
   },
   {
     value: 25,
-    name: '4 ft 0 inches or 121.92 cm',
+    name: '6 ft 0 inches or 182.88 cm',
     label:
       '<p class="m-0"><strong>6</strong>ft <strong>0</strong> inches or <strong>182.88</strong> cm</p>',
     serialNo: 25
   },
   {
     value: 26,
-    name: '4 ft 0 inches or 121.92 cm',
+    name: '6 ft 1 inches or 185.42 cm',
     label:
       '<p class="m-0"><strong>6</strong>ft <strong>1</strong> inches or <strong>185.42</strong> cm</p>',
     serialNo: 26
   },
   {
     value: 27,
-    name: '4 ft 0 inches or 121.92 cm',
+    name: '6 ft 2 inches or 187.96 cm',
     label:
       '<p class="m-0"><strong>6</strong>ft <strong>2</strong> inches or <strong>187.96</strong> cm</p>',
     serialNo: 27
   },
   {
     value: 28,
-    name: '4 ft 0 inches or 121.92 cm',
+    name: '6 ft 3 inches or 190.50 cm',
     label:
       '<p class="m-0"><strong>6</strong>ft <strong>3</strong> inches or <strong>190.50</strong> cm</p>',
     serialNo: 28
   },
   {
     value: 29,
-    name: '4 ft 0 inches or 121.92 cm',
+    name: '6 ft 4 inches or 193.04 cm',
     label:
       '<p class="m-0"><strong>6</strong>ft <strong>4</strong> inches or <strong>193.04</strong> cm</p>',
 
@@ -445,28 +445,28 @@ export const HEIGHTS = [
   },
   {
     value: 30,
-    name: '4 ft 0 inches or 121.92 cm',
+    name: '6 ft 5 inches or 195.58 cm',
     label:
       '<p class="m-0"><strong>6</strong>ft <strong>5</strong> inches or <strong>195.58</strong> cm</p>',
     serialNo: 30
   },
   {
     value: 31,
-    name: '4 ft 0 inches or 121.92 cm',
+    name: '6 ft 6 inches or 198.12 cm',
     label:
       '<p class="m-0"><strong>6</strong>ft <strong>6</strong> inches or <strong>198.12</strong> cm</p>',
     serialNo: 31
   },
   {
     value: 32,
-    name: '4 ft 0 inches or 121.92 cm',
+    name: '6 ft 7 inches or 200.66 cm',
     label:
       '<p class="m-0"><strong>6</strong>ft <strong>7</strong> inches or <strong>200.66</strong> cm</p>',
     serialNo: 32
   },
   {
     value: 33,
-    name: '4 ft 0 inches or 121.92 cm',
+    name: '6 ft 8 inches or 203.20 cm',
     label:
       '<p class="m-0"><strong>6</strong>ft <strong>8</strong> inches or <strong>203.20</strong> cm</p>',
     serialNo: 33

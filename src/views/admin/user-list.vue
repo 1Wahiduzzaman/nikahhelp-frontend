@@ -102,19 +102,39 @@
               />
             </td>
             <td class="id">{{ item["id"] }}</td>
-            <td class="email_verified_at">
-              {{ item["email_verified_at"] | formatDate }}
+            <td class="created_at">
+              {{ item["created_at"] | formatDate }}
             </td>
             <td class="full_name">{{ item["full_name"] }}</td>
             <td class="account_type">
               {{
                 item["account_type"] == 1
                   ? "Candidate"
-                  : item["account_type"] == 1
+                  : item["account_type"] == 2
                   ? "Representative"
                   : ""
               }}
             </td>
+            <td class="account_type">
+              {{
+                item["account_type"] == 1 &&
+                item.candidate_info
+                  ? item.candidate_info.data_input_status == 0
+                    ? "In-completed"
+                    : item.candidate_info.data_input_status > 5
+                    ? "Completed"
+                    : "Partially Completed"
+                  : item["account_type"] == 2 &&
+                    item.representative_info
+                  ? item.representative_info.data_input_status == 0
+                    ? "In-completed"
+                    : item.representative_info.data_input_status > 2
+                    ? "Completed"
+                    : "Partially Completed"
+                  : "In-completed"
+              }}
+            </td>
+
             <td class="email">
               {{ item["email"] }}
             </td>
@@ -199,6 +219,7 @@ export default {
         { text: "Created", value: "calories" },
         { text: "Name", value: "fat" },
         { text: "Type", value: "carbs" },
+        { text: "Form", value: "carbs" },
         { text: "Email", value: "email" },
         { text: "Documents", value: "protein" },
         { text: "Images", value: "protein" },

@@ -182,6 +182,7 @@ import languages from "@/common/languages.js";
 import hobbies from "@/common/hobbies.js";
 import foods from "@/common/foods.js";
 import thankfulThings from "@/common/thankfulThings.js";
+import improveMyselfThings from "@/common/improveMyselfThings.js";
 import VueFixedHeader from "vue-fixed-header";
 import jwtService from "../../services/jwt.service";
 import Header from "../../components/header/header";
@@ -321,6 +322,7 @@ export default {
           religions: response.data.data.religions,
           ethnicities: ethnicities,
           languages: languages,
+          improveMyselfThings:improveMyselfThings,
           hobbies: hobbies,
           foods: foods,
           thankfulThings: thankfulThings,
@@ -441,6 +443,9 @@ export default {
                   return parseInt(v, 10);
                 }
               ),
+            pre_ethnicities: !response.data.data.user.preference.pre_ethnicities
+              ? undefined
+              : response.data.data.user.preference.pre_ethnicities.split(","),
             pre_preferred_divorcee:
               response.data.data.user.preference.pre_preferred_divorcee == 0
                 ? false

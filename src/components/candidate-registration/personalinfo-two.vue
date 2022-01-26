@@ -178,7 +178,7 @@
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_height" prop="per_height">
-                <a-select
+                <!-- <a-select
                   @change="onValueChange($event, 'essential')"
                   id="per_height"
                   :showSearch="true"
@@ -201,7 +201,21 @@
                   >
                     <div v-html="item.label"></div>
                   </a-select-option>
-                </a-select>
+                </a-select> -->
+                <v-select
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange($event, 'essential')"
+                  id="per_height"
+                  :reduce="(option) => option.value"
+                  placeholder="please select"
+                  v-model="personalInformation.essential.per_height"
+                  label="name"
+                  :options="heightTV"
+                  ><template #open-indicator> <a-icon type="down" /> </template>
+                  <template v-slot:option="option">
+                    <div v-html="option.label"></div> </template
+                ></v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -931,7 +945,8 @@
                   v-if="personalInformation.general.per_health_condition"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />How would you describe your general health and wellbeing?(optional) 
+                />How would you describe your general health and
+                wellbeing?(optional)
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -976,7 +991,11 @@
                 id="collapsePersonalInfoHealthCondition"
               >
                 <div class="card card-body bubble">
-                  Please do not include very sensitive information. General indication is expected only.Your may wish to use a  description like cannot complain, in good health, no chronic illness, fair, good, very good, or excellent. You do not have to give a response if you do not wish to at this stage. 
+                  Please do not include very sensitive information. General
+                  indication is expected only.Your may wish to use a description
+                  like cannot complain, in good health, no chronic illness,
+                  fair, good, very good, or excellent. You do not have to give a
+                  response if you do not wish to at this stage.
                 </div>
               </div>
             </div>
@@ -1452,14 +1471,13 @@
                     >
                       <a-select-option value="">Select</a-select-option>
                       <a-select-option value="+44">+44</a-select-option>
-                       <a-select-option value="+88">+88</a-select-option>
-                        <a-select-option value="+46">+46</a-select-option>
-                         <a-select-option value="+31	">+31	</a-select-option>
-                        <a-select-option value="+39">+39</a-select-option>
-<a-select-option value="+33">+33</a-select-option>
-<a-select-option value="+353">+353</a-select-option>
-<a-select-option value="+011">+011</a-select-option>
-
+                      <a-select-option value="+88">+88</a-select-option>
+                      <a-select-option value="+46">+46</a-select-option>
+                      <a-select-option value="+31	">+31 </a-select-option>
+                      <a-select-option value="+39">+39</a-select-option>
+                      <a-select-option value="+33">+33</a-select-option>
+                      <a-select-option value="+353">+353</a-select-option>
+                      <a-select-option value="+011">+011</a-select-option>
                     </a-select>
                   </a-form-model-item>
                 </div>
@@ -2142,7 +2160,7 @@
             </div>
           </div>
 
- <!-- Things I enjoy -->
+          <!-- Things I enjoy -->
           <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
@@ -2315,7 +2333,6 @@
             </div>
           </div>
 
-         
           <!-- Thankful for-->
           <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
@@ -2354,6 +2371,12 @@
                   :options="candidateDetails.thankfulThings"
                   ><template #open-indicator>
                     <a-icon type="down" />
+                  </template>
+                  <template v-slot:option="option">
+                    <div class="json-format">
+                      <span>{{ option.value }}</span>
+                      <span class="span2">{{ option.description }}</span>
+                    </div>
                   </template>
                 </v-select>
                 <!-- <a-select
@@ -2457,9 +2480,15 @@
                   :reduce="(option) => option.value"
                   v-model="personalInformation.more_about.per_improve_myself"
                   label="label"
-                  :options="[]"
+                  :options="candidateDetails.improveMyselfThings"
                   ><template #open-indicator>
                     <a-icon type="down" />
+                  </template>
+                  <template v-slot:option="option">
+                    <div class="json-format">
+                      <span>{{ option.label }}</span>
+                      <span class="span2">{{ option.description }}</span>
+                    </div>
                   </template>
                 </v-select>
                 <!-- <a-select
@@ -2536,7 +2565,6 @@
                   type="check"
                 />A little bit about me
               </div>
-              
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_about" prop="per_about">
@@ -2713,6 +2741,12 @@ export default {
   },
   data() {
     return {
+      // dropdownShouldOpen: {
+      //   type: Function,
+      //   default({ noDrop, open, mutableLoading }) {
+      //     return open;
+      //   },
+      // },
       activeKey: 1,
       default_date: null,
       rules: RULESPERSONALINFO,
@@ -3218,6 +3252,19 @@ input[type="file"]::-webkit-file-upload-button {
   }
   .mobile-switch {
     margin-top: 0;
+  }
+  .json-format {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow: hidden;
+    .span2 {
+      font-style:italic;
+      font-size: 11px;
+      white-space: pre-line;
+      padding:5px 0px;
+    }
   }
 }
 </style>
