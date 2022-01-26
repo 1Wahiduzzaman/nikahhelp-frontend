@@ -120,9 +120,100 @@
           </p>
         </div>
       </div>
-      <h3 v-if="!showMemberTypeForm" class="mt-6 text-header-black font-weight-bolder text-center">
+
+<!--      <div class="type-selection" v-if="showMemberFormType && !errorMessage">-->
+<!--        <div class="content mb-5">-->
+<!--          <h3 class="mt-3 text-header-black font-weight-bolder">-->
+<!--            Welcome To <span class="logo-text">Matrimony Assist</span> Signup-->
+<!--          </h3>-->
+<!--          <div class="type mx-auto">-->
+<!--            <p class="text-center py-2">Let's get started. Please select your form type</p>-->
+
+<!--            <a-row :gutter="16" class="mobile-view">-->
+<!--              <a-col :span="24">-->
+<!--                <a-card class="br-card shadow">-->
+<!--                  <button-->
+<!--                      @click="signupModel.form_type = 'short'"-->
+<!--                      class="btn no-shadow p-2 fs-20 br-30 btn-type"-->
+<!--                      :class="{ active: signupModel.form_type == 'short' }"-->
+<!--                  >-->
+<!--                    Short Form-->
+<!--                  </button>-->
+<!--                  <button-->
+<!--                      @click="signupModel.form_type = 'long'"-->
+<!--                      class="btn no-shadow p-2 fs-20 br-30 btn-type mt-5"-->
+<!--                      :class="{ active: signupModel.form_type == 'long' }"-->
+<!--                  >-->
+<!--                    Long Form-->
+<!--                  </button>-->
+<!--                  <p class="fs-12 mt-5">-->
+<!--                    <a-icon type="check" class="text-success" /> You have to complete a {{ signupModel.form_type == 'short' ? 'short form' : 'full form' }} of candidate-->
+<!--                  </p>-->
+<!--                </a-card>-->
+<!--              </a-col>-->
+<!--            </a-row>-->
+
+<!--            <a-row :gutter="16" class="desktop-view">-->
+<!--              <a-col :span="12">-->
+<!--                <a-card class="br-card shadow type-card">-->
+<!--                  <button-->
+<!--                      @click="signupModel.form_type = 'short'"-->
+<!--                      class="btn no-shadow p-2 fs-20 br-30 btn-type"-->
+<!--                      :class="{ active: signupModel.form_type == 'short' }"-->
+<!--                  >-->
+<!--                    Short Form-->
+<!--                  </button>-->
+<!--                  <p class="fs-12 mt-5">-->
+<!--                    <a-icon type="check" class="text-success" /> You have to complete a short form of candidate-->
+<!--                  </p>-->
+<!--                </a-card>-->
+<!--              </a-col>-->
+<!--              <a-col :span="12">-->
+<!--                <a-card class="br-card shadow type-card">-->
+<!--                  <button-->
+<!--                      @click="signupModel.form_type = 'long'"-->
+<!--                      class="btn no-shadow p-2 fs-20 br-30 btn-type"-->
+<!--                      :class="{ active: signupModel.form_type == 'long' }"-->
+<!--                  >-->
+<!--                    Long Form-->
+<!--                  </button>-->
+<!--                  <p class="fs-12 mt-5">-->
+<!--                    <a-icon type="check" class="text-success" /> You have to complete a full form of candidate-->
+<!--                  </p>-->
+<!--                </a-card>-->
+<!--              </a-col>-->
+<!--            </a-row>-->
+<!--            <div class="mt-5 footer" v-if="signupModel.account_type > 0">-->
+<!--              <button-->
+<!--                  class="btn btn-continue w-50 fs-20 mt-4"-->
+<!--                  @click="selectNexStepAfterFormType"-->
+<!--              >-->
+<!--                Continue-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <p class="flex-center-center mt-3 bottom-text font-poppins">-->
+<!--            Already on <span class="logo-text ml-2"> Matrimony Assist? </span>-->
+
+<!--            <router-link-->
+<!--                to="/login"-->
+<!--                class="-->
+<!--              btn btn-sm-sign btn-outline-primary btn-round-sm-->
+<!--              ms-2-->
+<!--              text-nowrap-->
+<!--              join-now-btn-->
+<!--            "-->
+<!--            >-->
+<!--              Sign in-->
+<!--            </router-link>-->
+<!--          </p>-->
+<!--        </div>-->
+<!--      </div>-->
+
+      <h3 v-if="!showMemberTypeForm && !showMemberFormType" class="mt-6 text-header-black font-weight-bolder text-center">
         Welcome To <span class="logo-text">Matrimony Assist</span> Signup
       </h3>
+
       <div v-if="showMemberForm && !errorMessage" class="signup-inner">
         <a-form-model
           ref="signupFormTwo"
@@ -211,6 +302,7 @@
           </router-link>
         </p>
       </div>
+
       <div v-if="showSignupForm && !errorMessage" class="signup-inner">
 <!--        <a href="/" class="logo"-->
 <!--          ><img src="@/assets/logo.png" alt="logo" class="mat-logo"-->
@@ -305,7 +397,6 @@
         </p>
       </div>
 
-      
       <div v-if="errorMessage" class="signup-inner mt-5">
         <div class="error pt-2">
           <p class="mb-0">
@@ -386,6 +477,7 @@ export default {
         password: "",
         confirmPassword: "",
         account_type: 0,
+        form_type: 'long'
       },
       instructions: [
         { title: 'candidiate',
@@ -416,6 +508,7 @@ export default {
       showMemberForm: false,
       showMemberTypeForm: true,
       showSignupForm: false,
+      showMemberFormType: false,
       isLoading: false,
       isConfirm: false,
       rules: {
@@ -537,9 +630,22 @@ export default {
       this.showSignupForm = false;
       this.showMemberForm = false;
     },
+    selectNexStepAfterFormType() {
+      this.showMemberTypeForm = false;
+      this.showMemberFormType = false;
+      this.showSignupForm = false;
+      this.showMemberForm = true;
+    },
     onHandleContinue() {
       if(this.isConfirm) {
         this.showMemberTypeForm = false;
+
+        // new
+        // this.showMemberFormType = true;
+        // this.showSignupForm = false;
+        // this.showMemberForm = false;
+
+        // old
         this.showSignupForm = false;
         this.showMemberForm = true;
       } else {
