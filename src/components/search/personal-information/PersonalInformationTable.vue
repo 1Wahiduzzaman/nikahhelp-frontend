@@ -1,95 +1,87 @@
 <template>
     <v-card class="p-3" style="height: 100%">
         <table>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 160px">Name</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">{{ data.first_name }}  {{ data.last_name }}</td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 160px">Screen Name</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">{{ data.screen_name }}</td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 160px">Gender</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">{{  personal.per_gender == 0 ? 'Female' : 'Male'}}</td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 160px">Age</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">{{ getAge(personal.dob) }}</td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Height</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">{{ getPersonalHeight }}</td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Employment Status</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">{{ personal.per_employment_status }}</td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Occupation</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">{{ essential.per_occupation }}</td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Education</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">{{ essential.per_education_level }}</td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Religion</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">{{ essential.per_religion }}</td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Ethnicity</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">{{ personal.per_ethnicity }}</td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Mother Tongue</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">{{personal.per_mother_tongue}}</td>
-            </tr>
-            <tr>
-            <td class="text--disabled text-subtitle-1" style="width: 50px">Nationality</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">
-                    {{
-                        $store.state.candidateInfo.countries[
+            <TableRow 
+                title="Name"
+                textClass="text-subtitle-1"
+                :value="data.first_name + ' ' + data.last_name"
+            />
+            <TableRow 
+                title="Screen Name"
+                textClass="text-subtitle-1"
+                :value="data.screen_name"
+            />
+            <TableRow 
+                title="Gender"
+                textClass="text-subtitle-1"
+                :value="personal.per_gender == 0 ? 'Female' : 'Male'"
+            />
+            <TableRow 
+                title="Age"
+                textClass="text-subtitle-1"
+                :value="getAge(personal.dob)"
+            />
+            <TableRow 
+                title="Height"
+                textClass="text-subtitle-1"
+                :value="getPersonalHeight"
+            />
+            <TableRow 
+                title="Employment Status"
+                textClass="text-subtitle-1"
+                :value="personal.per_employment_status"
+            />
+            <TableRow 
+                title="Occupation"
+                textClass="text-subtitle-1"
+                :value="essential.per_occupation"
+            />
+            <TableRow 
+                title="Education"
+                textClass="text-subtitle-1"
+                :value="essential.per_education_level"
+            />
+            <TableRow 
+                title="Religion"
+                textClass="text-subtitle-1"
+                :value="essential.per_religion"
+            />
+            <TableRow 
+                title="Ethnicity"
+                textClass="text-subtitle-1"
+                :value="personal.per_ethnicity"
+            />
+            <TableRow 
+                title="Mother Tongue"
+                textClass="text-subtitle-1"
+                :value="personal.per_mother_tongue"
+            />
+            <TableRow 
+                title="Nationality"
+                textClass="text-subtitle-1"
+                :value="$store.state.candidateInfo.countries[
                             personal.per_nationality
                         ]
                         ? $store.state.candidateInfo.countries[
                            personal.per_nationality
                         ].name
-                        : ""
-                    }}
-                </td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Country of Birth</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">
-                    {{ personal.per_country_of_birth }}
-                </td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Current Residence</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">
-                    {{ personal.per_current_residence }}
-                </td>
-            </tr>
-             <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 160px">Willing to Relocate</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">{{ personal.per_willing_to_relocate == 1 ? 'Yes' : 'No' }}</td>
-            </tr>
+                        : '' "
+            />
+            <TableRow 
+                title="Country of Birth"
+                textClass="text-subtitle-1"
+                :value="personal.per_country_of_birth"
+            />
+            <TableRow 
+                title="Current Residence"
+                textClass="text-subtitle-1"
+                :value="personal.per_current_residence"
+            />
+            <TableRow 
+                title="Willing to Relocate"
+                textClass="text-subtitle-1"
+                :value="personal.per_willing_to_relocate == 1 ? 'Yes' : 'No'"
+            />
            <!-- <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 160px">Mobile No</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
@@ -112,9 +104,13 @@
 
 <script>
 import { HEIGHTS } from "@/models/data";
+import TableRow from '@/components/atom/TableRow'
 
 export default {
     name:'PersonalInfoTable',
+    components: {
+      TableRow  
+    },
     data: () => ({
         HEIGHTS
     }),
@@ -213,6 +209,10 @@ export default {
 </script>
 
 <style scoped>
+table {
+    table-layout: fixed;
+    width: 100%;
+}
 td {
     vertical-align: top;
 }

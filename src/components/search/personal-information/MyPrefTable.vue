@@ -1,96 +1,51 @@
 <template>
     <v-card class="p-3">
         <table>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 160px">Age</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">
-                    {{ preference.pre_partner_age_min }}
-                    to
-                    {{ preference.pre_partner_age_max }}
-                </td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Height</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">
-                    {{ getMinHeight }}
-                        to
-                    {{ getMaxHeight }}
-                </td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Country & Cities Preferred</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">
-                    <span
-                        v-for="(occupation, i) in (preference.preferred_cities)"
-                        :key="i"
-                    >
-                        {{ occupation.name }}<span v-if="i+1 < preference.preferred_cities.length">,&nbsp</span>
-                    </span>
-                    <span
-                        v-for="(occupation, i) in (preference.preferred_countries)"
-                        :key="i"
-                    >
-                        , {{ occupation.name }}<span v-if="i+1 < preference.preferred_cities.length">,&nbsp</span>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Religion</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">
-                    <span
-                        v-for="(nationality, i) in preference.pre_partner_religion_id"
-                        :key="i"
-                    >
-                        {{ nationality }}<span v-if="i+1 < preference.pre_partner_religion_id.length">,&nbsp</span>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Ethnicity</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">
-                    {{ preference.pre_ethnicities }}
-                </td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Nationality</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">
-                        <span
-                            v-for="(nationality, i) in preference.preferred_nationality"
-                            :key="i"
-                        >
-                            {{ nationality.name }}<span v-if="i+1 < preference.preferred_nationality.length">,&nbsp</span>
-                        </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Education</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">{{preference.pre_study_level}}</td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Employment Status</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">{{preference.pre_employment_status}}</td>
-            </tr>
-            <tr>
-                <td class="text--disabled text-subtitle-1" style="width: 50px">Occupation</td>
-                <td class="text-subtitle-1" style="width: 20px ">:</td>
-                <td class="text--secondary text-subtitle-1">
-                    <span
-                        v-for="(occupation, i) in preference.pre_occupation"
-                        :key="i"
-                    >
-                        {{ occupation.name }}
-                        <span v-if="i+1 < preference.pre_occupation">,</span>
-                    </span>
-                </td>
-            </tr>
+            <TableRow 
+                title="Age"
+                textClass="text-subtitle-1"
+                :value="preference.pre_partner_age_min + ' to ' + preference.pre_partner_age_max"
+            />
+            <TableRow 
+                title="Height"
+                textClass="text-subtitle-1"
+                :value="getMinHeight + ' to ' + getMaxHeight"
+            />
+            <TableRow 
+                title="Country & Cities Preferred"
+                textClass="text-subtitle-1"
+                :value="getCountry()"
+            />
+            <TableRow 
+                title="Religion"
+                textClass="text-subtitle-1"
+                :value="getReligion()"
+            />
+            <TableRow 
+                title="Ethnicity"
+                textClass="text-subtitle-1"
+                :value="preference.pre_ethnicities"
+            />
+            <TableRow 
+                title="Nationality"
+                textClass="text-subtitle-1"
+                :value="getNationality()"
+            />
+            <TableRow 
+                title="Education"
+                textClass="text-subtitle-1"
+                :value="preference.pre_study_level"
+            />
+            <TableRow 
+                title="Employment Status"
+                textClass="text-subtitle-1"
+                :value="preference.pre_employment_status"
+            />
+            <TableRow 
+                title="Occupation"
+                textClass="text-subtitle-1"
+                :value="getProfession()"
+            />
             <!-- <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 50px">Willing to Relocate</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
@@ -102,11 +57,15 @@
 
 <script>
 import { HEIGHTS } from "@/models/data";
+import TableRow from '@/components/atom/TableRow'
 export default {
     name:'MyPrefTable',
     data: () => ({
       HEIGHTS  
     }),
+    components: {
+      TableRow  
+    },
     computed: {
         getMaxHeight() {
             return this.preference.pre_height_max ? this.HEIGHTS[this.preference.pre_height_max - 1].name : ''
@@ -114,6 +73,39 @@ export default {
         getMinHeight() {
             return this.preference.pre_height_min ? this.HEIGHTS[this.preference.pre_height_min - 1].name : ''
         }
+    },
+    methods: {
+         getProfession() {
+             let arr = [];
+            if(this.preference.pre_occupation.length) {
+                arr = this.preference.pre_occupation.map(i => i.name)
+            }
+            return arr.join(', ')
+        },
+        getCountry() {
+            let cityArr = [];
+            if(this.preference.preferred_cities.length) {
+                this.preference.preferred_cities.map(city => {
+                    cityArr.push(city.name)
+                })
+            }
+            return cityArr.join(', ')
+        },
+        getReligion() {
+            if(this.preference.pre_partner_religion.length) {
+                return this.preference.pre_partner_religion.join(', ')
+            }
+            return ''
+        },
+        getNationality() {
+            let cityArr = [];
+            if(this.preference.preferred_nationality.length) {
+                this.preference.preferred_nationality.map(city => {
+                    cityArr.push(city.name)
+                })
+            }
+            return cityArr.join(', ')
+        },
     },
     props: {
         countries: {
