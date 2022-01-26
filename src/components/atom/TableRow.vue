@@ -1,8 +1,27 @@
 <template>
     <tr>
-        <td class="text--disabled text-caption" :style="{width: titleWidth}">{{ title }}</td>
-        <td class="text-subtitle-1" :style="{width: colonWidth}">:</td>
-        <td class="text--secondary text-caption">{{ value }} </td>
+        <td
+            :class="textClass"
+            class="text--disabled d-none d-sm-table-cell" 
+            :style="{width: titleWidth}"
+        >
+            {{ title }}
+        </td>
+        <td class="text-subtitle-1 d-none d-sm-table-cell" :style="{width: colonWidth}">:</td>
+        <td
+            :class="textClass"
+            class="text--secondary d-none d-sm-table-cell"
+        >
+            {{ value }} 
+        </td>
+        <div class="d-block d-sm-none">
+            <v-list-item class="pl-0" two-line>
+                <v-list-item-content>
+                    <v-list-item-subtitle>{{title}}</v-list-item-subtitle>
+                    <v-list-item-title>{{value}}</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+        </div>
     </tr>
 </template>
 
@@ -13,6 +32,10 @@ export default {
         title: {
             type: String,
             default: 'title'
+        },
+        textClass: {
+            type: String,
+            default: 'text-caption'
         },
         titleWidth: {
             type: String,
@@ -30,6 +53,12 @@ export default {
 </script>
 
 <style scoped>
+.v-list-item__subtitle, .v-list-item__title {
+    text-overflow: initial !important;
+    word-break: break-word !important;
+    overflow: visible;
+    white-space: normal;
+}
 td {
     vertical-align: baseline;
 }
