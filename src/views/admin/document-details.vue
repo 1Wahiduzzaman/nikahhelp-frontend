@@ -242,16 +242,20 @@
             </ul>
           </div>
           <div>
-            <v-btn
-              style="
-                background-color: #522e8e;
-                color: #fff;
-                border-radius: 20px;
-              "
-              small
+            <router-link
+              :to="'/admin/user_candidate_details/' + documentInfo.id"
             >
-              Profile Completion Status
-            </v-btn>
+              <v-btn
+                style="
+                  background-color: #522e8e;
+                  color: #fff;
+                  border-radius: 20px;
+                "
+                small
+              >
+                Profile View
+              </v-btn>
+            </router-link>
           </div>
           <div class="partner-details">
             <h4>This Profile Partner Preferences</h4>

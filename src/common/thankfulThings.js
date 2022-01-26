@@ -114,11 +114,11 @@ const thankfulThings = [
     description:
       "A bed is one of those things that�s easy to take for granted, until you don�t have one.",
   },
-  {
-    label: "Laughter",
-    value: "Laughter",
-    description: "Without laughter, the world would be a sad place.",
-  },
+  // {
+  //   label: "Laughter",
+  //   value: "Laughter",
+  //   description: "Without laughter, the world would be a sad place.",
+  // },
   {
     label: "Safety and Security",
     value: "Safety and Security",
@@ -151,11 +151,11 @@ const thankfulThings = [
     value: "Love",
     description: "The world sure would be a different place if we lacked the ability to love.",
   },
-  {
-    label: "Time",
-    value: "Time",
-    description: "Although we often don�t think there�s enough of it, time is something we shouldn�t take for granted.",
-  },
+  // {
+  //   label: "Time",
+  //   value: "Time",
+  //   description: "Although we often don�t think there�s enough of it, time is something we shouldn�t take for granted.",
+  // },
   {
     label: "Books",
     value: "Books",

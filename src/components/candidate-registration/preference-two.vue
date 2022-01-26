@@ -463,12 +463,11 @@
             <div class="col-12 col-md-6 mobile-margin">
               <v-select
                 :clearable="false"
-                :multiple="false"
                 id="pre_partner_religion_id"
                 :reduce="(option) => option.id"
-                class="nationality-select form-right-content w-full"
+                class="style-chooser"
                 placeholder="please select"
-                @input="onMultiValueChange($event, 'pre_partner_religion_id')"
+                @input="onValueChange"
                 v-model.lazy="preferenceData.pre_partner_religion_id"
                 label="name"
                 :options="[
@@ -529,9 +528,9 @@
             <div class="col-12 col-md-6 mobile-margin">
               <v-select
                 :clearable="false"
-                 :multiple="true"
+                :multiple="true"
                 id="pre_ethnicities"
-                class="style-chooser w-full form-right-content"
+                class="nationality-select form-right-content w-full"
                 placeholder="you may select up to three"
                 @input="onValueChange"
                 v-model.lazy="preferenceData.pre_ethnicities"
@@ -993,7 +992,8 @@
                   v-if="preferenceData.pre_description"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What are you looking for in your preferred companion? (please need help for guidance)
+                />What are you looking for in your preferred companion? (please
+                need help for guidance)
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -1930,8 +1930,12 @@ export default {
           this.preferenceData.preferred_nationality.length > 0
             ? this.preferenceData.preferred_nationality.map((n) => n.id)
             : null,
-        pre_partner_religions:
-          this.preferenceData.pre_partner_religion_id.join(","),
+        pre_partner_religions: this.preferenceData.pre_partner_religion_id
+          ? this.preferenceData.pre_partner_religion_id.toString()
+          : null,
+        pre_ethnicities: this.preferenceData.pre_ethnicities
+          ? this.preferenceData.pre_ethnicities.join(",")
+          : null,
         pre_partner_comes_from: this.preferenceData.preferred_countries.map(
           (c, index) => {
             return {
