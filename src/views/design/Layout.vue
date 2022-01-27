@@ -81,7 +81,6 @@ export default {
     checkTurnedOnSwitch() {
       this.activeTeamId = JwtService.getTeamIDAppWide();
     },
-    
   },
 };
 </script>

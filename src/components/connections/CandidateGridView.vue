@@ -325,7 +325,16 @@ export default {
       this.$emit("disconnect-team", this.connection);
     },
     declineRequest() {
-      this.$emit("decline-request", this.connection.connection_id);
+      let payload = {
+        request_id: this.connection.connection_id
+      };
+      if(this.connection.from_team_id == this.active_team_id) {
+        payload.connection_status = '10';
+      } else {
+        payload.connection_status = '2';
+      }
+
+      this.$emit("decline-request", payload);
     },
     connectRequest() {
       let teamId = JwtService.getTeamIDAppWide();
