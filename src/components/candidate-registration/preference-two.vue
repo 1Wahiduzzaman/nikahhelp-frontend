@@ -1275,7 +1275,7 @@
                   v-if="preferenceData.pre_manners_socialskill_ethics_rate"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Manners, Social skills, etiquettes & consideration for others
+                />Manners, social skills, etiquettes & consideration for others
               </div>
             </div>
             <div class="col-12 col-md-6">
@@ -1454,7 +1454,7 @@
                   v-if="preferenceData.pre_good_talker_rate"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Good communicator and great to have two way converstations
+                />Good communicator & great to have two way converstations
                 with
               </div>
             </div>
@@ -1514,7 +1514,7 @@
                   v-if="preferenceData.pre_wiling_to_learn_rate"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Willing to learnfrom feedback and constructive criticism
+                />Willing to learn from feedback and constructive criticism
               </div>
             </div>
             <div class="col-12 col-md-6">

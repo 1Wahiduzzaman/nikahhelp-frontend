@@ -192,7 +192,7 @@
                 <!-- Character -->
                 <rating-component
                   title="Strength of character from a moral point of view"
-                  :value="
+                  :valueString="
                     candidateData.preference.pre_strength_of_character_rate
                   "
                   
@@ -216,7 +216,7 @@
                 ></rating-component>
                 <!-- Manners, Social skills and ethics -->
                 <rating-component
-                  title="Manners, Social skills and ethics"
+                  title="Manners, social skills and ethics"
                   :value="
                     candidateData.preference.pre_manners_socialskill_ethics_rate
                   "
@@ -227,7 +227,7 @@
                 ></rating-component>
                 <!-- Emotional Maturity and compatibility -->
                 <rating-component
-                  title="Emotional Maturity and compatibility"
+                  title="Emotional maturity and compatibility"
                   :value="candidateData.preference.pre_emotional_maturity_rate"
                   :valueString="
                     candidateData.preference.pre_emotional_maturity_rate_string
@@ -235,7 +235,7 @@
                 ></rating-component>
                 <!-- Good Listener -->
                 <rating-component
-                  title="Good Listener"
+                  title="Good listener"
                   :value="candidateData.preference.pre_good_listener_rate"
                   :valueString="
                     candidateData.preference.pre_good_listener_rate_string
@@ -943,11 +943,11 @@ export default {
 }
 .label-text {
   //font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
 }
 .flex-50 > .ml-3 {
   //font-size: 14px;
-  font-weight: 900;
+  font-weight: 500;
 }
 .inner {
   font-weight: 600;

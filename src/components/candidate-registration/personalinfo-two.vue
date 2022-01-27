@@ -1468,7 +1468,7 @@
                       id="mobile_country_code"
                       ref="select"
                       v-model="personalInformation.contact.mobile_country_code"
-                      placeholder="Country Code"
+                      placeholder="Code"
                     >
                       <a-select-option value="">Select</a-select-option>
                       <a-select-option value="+44">+44</a-select-option>
