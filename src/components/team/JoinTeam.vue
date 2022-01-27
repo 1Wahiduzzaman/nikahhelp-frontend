@@ -89,9 +89,9 @@
           <h6 class="text-danger" v-if="invalidCode">Code is not valid. Please try again</h6>
         </div>
       </div>
-      <div v-else class="flex justify-content-center align-items-center">
+      <div v-else class="flex justify-content-center align-items-center mt-5">
 <!--        <a-icon type="loading" v-if="isLoading" />-->
-        <loading-spinner />
+        <loading-spinner class="mt-5" />
       </div>
       <div class="position-absolute footer-cancel-btn">
         <a-button class="back-button cancel-button float-left" v-on:click="$emit('cancel_button')">Back</a-button>

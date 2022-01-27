@@ -16,6 +16,7 @@
                 placeholder="Role"
                 class="fs-14"
                 v-model="invitationObject.role"
+                :disabled="invitationObject.add_as_a == 'Candidate'"
             >
 <!--              <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>-->
               <a-select-option value="Admin"> Admin </a-select-option>
@@ -31,6 +32,7 @@
                 placeholder="Add as a"
                 class="fs-14 mt-2"
                 v-model="invitationObject.add_as_a"
+                @change="changedAddAs()"
             >
               <a-select-option value="Candidate" :disabled="ifHasCandidate()"> Candidate </a-select-option>
               <a-select-option value="Representative"> Representative </a-select-option>
@@ -156,6 +158,11 @@ export default {
           return item.toString();
         });
         this.$socket.emit('notification', payload);
+      }
+    },
+    changedAddAs() {
+      if(this.invitationObject.add_as_a == 'Candidate') {
+        this.invitationObject.role = 'Admin';
       }
     },
     async searchMember() {

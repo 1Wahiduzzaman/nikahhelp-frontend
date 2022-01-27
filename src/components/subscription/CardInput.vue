@@ -6,7 +6,7 @@
 				<input
 					type="text"
 					id="name"
-					class="w-100 py-2 px-4 bg-white form-control input-round"
+					class="w-100 py-2 px-4 bg-white form-control input-round fs-14"
 					v-model="name"
 					placeholder="Your name on card"
 				/>
@@ -20,7 +20,7 @@
 					v-model="country"
 					placeholder="Example: US, CA, BD"
 				/> -->
-				<select class="custom-select px-4 form-control input-round" v-model="country">
+				<select class="custom-select px-4 form-control input-round fs-14" v-model="country">
 					<option value="" disabled>Select Country</option>
 					<option
 						v-for="c in $store.state.candidateInfo.countries"
@@ -37,7 +37,7 @@
 					<input
 						type="text"
 						id="postCode"
-						class="w-100 py-2 px-4 bg-white form-control input-round"
+						class="w-100 py-2 px-4 bg-white form-control input-round fs-14"
 						v-model="postCode"
 						placeholder="Example: 1234"
 					/>
@@ -108,9 +108,13 @@ export default {
 		this.card.mount(this.$refs.card);
 	},
 	beforeDestroy() {
-		this.card.destroy(this.$refs.card);
+		// this.card.destroy(this.$refs.card);
 	},
 	methods: {
+    setValidationFalse() {
+      this.payment_method = false;
+      // this.card.mount(this.$refs.card);
+    },
 		submitPayment() {
       this.loading = true;
 			stripe
@@ -145,7 +149,7 @@ export default {
 							console.log(this.payment_method);
 							this.$emit("get-payment-method", this.payment_method);
 							this.$store.state.user.payment_method = this.payment_method;
-							this.card.clear();
+							// this.card.clear();
 						}
 					}.bind(this)
 				);
@@ -174,7 +178,7 @@ export default {
 
 .validate-button {
 	padding: 1px 60px;
-	font-size: 20px;
+	font-size: 16px;
 	margin-top: 30px;
   height: 40px;
   align-items: center;
@@ -183,6 +187,9 @@ export default {
   border: 1px solid #747373;
   outline-style: solid;
   outline-color: #cfcece;
+  @media (min-width: 768px) {
+    font-size: 20px;
+  }
 }
 .br-30 {
   border-radius: 30px;
