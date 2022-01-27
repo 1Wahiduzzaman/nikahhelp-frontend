@@ -37,7 +37,7 @@ const foods = [
     "Bulgarian",
     "Bulgogi",
     "Burger",
-    "Burger",
+
     "Burritos",
     "Cajun",
     "Calzone",
@@ -161,7 +161,7 @@ const foods = [
     "Muffins",
     "Mughal",
     "Naan",
-    "Nachos",
+   
     "Nachos",
     "Native American",
     "Nepalese",
@@ -186,7 +186,7 @@ const foods = [
     "Persian",
     "Peruvian",
     "Pizza",
-    "Pizza",
+
     "Pizza Margherita",
     "Polish",
     "Pommes frites",

@@ -100,11 +100,19 @@ const AppRouter = new VueRouter({
             beforeEnter: InitRoute,
 
         },
+
         {
             path: "/candidate-registration",
             name: "CandidateRegistration",
             component: lazyLoadView('candidate-registration', 'CandidateRegistration'),
             beforeEnter: InitRoute,
+
+        },
+        {
+            path: "/candidate-short-registration",
+            name: "CandidateShortRegistration",
+            component: lazyLoadView('candidate-registration', 'Candidate-Short-registration'),
+            //beforeEnter: InitRoute,
 
         },
 

@@ -136,6 +136,18 @@ export default {
         });
     });
   },
+  async getCountCanOrRep() {
+    return new Promise((resolve, reject) => {
+      ApiService.get(`v1/admin/count-can-rep`)
+        .then((data) => {
+          resolve(data.data.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
+
 
 
 };
