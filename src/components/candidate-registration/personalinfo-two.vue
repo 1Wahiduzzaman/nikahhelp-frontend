@@ -54,6 +54,7 @@
                   v-model="personalInformation.essential.per_gender"
                   label="name"
                   :options="[
+                    { name: 'please select', value: '' },
                     { name: 'Male', value: 1 },
                     { name: 'Female', value: 2 },
                   ]"
