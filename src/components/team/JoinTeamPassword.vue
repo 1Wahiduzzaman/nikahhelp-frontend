@@ -101,15 +101,28 @@ export default {
                 title: `joined ${this.team.name} team as ${this.team.role}`,
                 team_temp_name: this.team.name
               };
-              this.$emit("socketNotification", socketData);
+              self.$emit("socketNotification", socketData);
               self.success = true;
-              this.$emit("loadTeams");
+              self.$success({
+                title: "Success",
+                content: "Successfully joined to the team",
+                onOk() {
+                  // setTimeout(() => self.$emit("loadTeams"), 100);
+                  setTimeout(() => {
+                    self.$emit("loadTeams");
+                    self.$emit("cancel_button");
+                  }, 1000);
+                },
+              });
             }
           }).catch((e) => {
             console.log(e);
           });
         } else {
-          alert("Password does not match");
+          this.$error({
+            title: "Password does not match",
+            center: true,
+          });
         }
 			}
 		},
