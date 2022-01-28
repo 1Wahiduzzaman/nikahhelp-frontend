@@ -758,8 +758,7 @@
                     type="check"
                   />
                   <span class="fs-16"
-                    >I would like to share my all picture with anyone on this
-                    plarform</span
+                    > I don't want to share my images with anyone at this moment</span
                   >
                 </div>
                 <div class="d-flex">
@@ -774,7 +773,7 @@
                     type="check"
                   />
                   <span class="fs-16"
-                    >I would like to share all my images with my team</span
+                    > I would like to share all my images with my team</span
                   >
                 </div>
                 <div class="d-flex">
