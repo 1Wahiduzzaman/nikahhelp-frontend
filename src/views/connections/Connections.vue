@@ -50,7 +50,7 @@
                 <v-tab href="#tab-6" @click="tab = 'tab-6', connection_type_choosed = 'they declined'" class="font-weight-bold">They declined </v-tab>
               </v-tabs>
 
-              <v-tabs-items v-model="tab">
+              <v-tabs-items v-model="tab" class="mt-4">
                 <v-tab-item value="tab-1">
                   <div class="row px-3">
                     <div
