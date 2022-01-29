@@ -13,7 +13,7 @@
         <div style="padding: 5px 15px 5px 5px">
           <ul class="sidebar-list" v-show="!collapsed">
             <li @click.prevent="showMenu = true" class="list-item">
-              <router-link to="/search/advance"
+              <router-link to="/search"
                 ><img
                   class="mr-3"
                   src="@/assets/icon/search-love-secondary.svg"

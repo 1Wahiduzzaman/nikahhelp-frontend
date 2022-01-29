@@ -57,6 +57,14 @@
       </a-layout>
     </div>
     <Loader :isLoading="isFetching" />
+    <ModalContainer
+      :modalKey="'manageTeamRedirect'"
+      :width="'wide'"
+      :fullscreen="false"
+      :hideOverlay="false"
+    >
+      <ManageTeamRedirect />
+    </ModalContainer>
   </div>
 </template>
 
@@ -65,11 +73,16 @@ import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import Observer from "@/components/atom/Observer"
 import Loader from "@/plugins/loader/loader.vue";
 import CandidateProfiles from "@/components/search/CandidateProfiles.vue";
+import ModalContainer from "@/plugins/modal/modal-container";
+import ManageTeamRedirect from "@/views/design/ManageTeamRedirect.vue";
 import AddComponent from "@/components/add/addComponent";
+import JwtService from "@/services/jwt.service";
+import { createModalMixin, openModalRoute } from "@/plugins/modal/modal.mixin";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   name: "AdvanceSearch",
+  mixins: [createModalMixin("manageTeamRedirect")],
   components: {
     ProfileDetail: () => import("@/components/search/CandidateProfileDetails"),
     RightSideCandidateDetail: () =>
@@ -77,6 +90,8 @@ export default {
     RightSidebar: () => import("@/components/search/ProfileDetailRight"),
     SimpleSearch: () => import("@/components/search/SimpleSearch.vue"),
     Sidebar,
+    ModalContainer,
+    ManageTeamRedirect,
     Loader,
     //SimpleSearch,
     // Footer,
@@ -142,7 +157,7 @@ export default {
       }
     },
     onIntersect() {
-      this.$refs.simpleSearch.handlePaginate();
+      //this.$refs.simpleSearch.handlePaginate();
     },
     showError(message) {
       this.$error({
@@ -267,6 +282,14 @@ export default {
     }
   },
   created() {
+    if (!JwtService.getTeamIDAppWide()) {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+        openModalRoute(this, "manage_team_redirect");
+      }, 2000);
+      return
+    }
     this.handleCandidateInfo();
   },
 };

@@ -138,7 +138,7 @@ const AppRouter = new VueRouter({
 
         },
         {
-            path: "/search/advance",
+            path: "/search",
             name: "AdvanceSearch",
             component: lazyLoadView('search', 'AdvanceSearch'),
             beforeEnter: InitRoute,
@@ -386,12 +386,12 @@ const AppRouter = new VueRouter({
 
                 },
 
-                {
-                    path: "/search",
-                    name: "Search",
-                    component: Search,
+                // {
+                //     path: "/search",
+                //     name: "Search",
+                //     component: Search,
 
-                },
+                // },
                 {
                     path: "/settings",
                     name: "Settings",

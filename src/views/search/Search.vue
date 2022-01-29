@@ -403,7 +403,7 @@ export default {
 			//window.open(routeData.href);
 		},
 		goToAdvanceSearch() {
-			this.$router.push("/search/advance");
+			this.$router.push("/search");
 		},
 		setSearchModalVisible() {
 			this.searchModalVisible = true;
