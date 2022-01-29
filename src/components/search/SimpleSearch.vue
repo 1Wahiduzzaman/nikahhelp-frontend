@@ -35,87 +35,145 @@
 					</div>
 					<!-- Select Religion -->
 					<div class="">
-						<div class="select-box">
-							<select class="custom-select" v-model="religion">
-								<option value="">Select Religion</option>
-								<option
-									v-for="r in $store.state.candidateInfo.religion_options"
-									:value="r.id"
-									:key="r.id"
-								>
-									{{ r.name }}
-								</option>
-							</select>
-						</div>
+						<a-select
+							id="religion"
+							v-model="religion"
+							show-search
+							size="large"
+							:placeholder="'Select Religion'"
+							option-filter-prop="children"
+							style="width: 100%"
+							notFoundContent="Religion not found"
+						>
+							<a-select-option
+								v-for="r in $store.state.candidateInfo.religion_options"
+								:value="r.id"
+								:key="r.id"
+							>
+								{{ r.name }}
+							</a-select-option>
+							<template #suffixIcon>
+								<img src="@/assets/select-arrow-big.png" alt="icon" />
+							</template>
+						</a-select>
 					</div>
 					<!-- Select County -->
 					<div class=" mt-4">
-						<div class="select-box">
-							<select class="custom-select" v-model="country">
-								<option value="">Select Country</option>
-								<option
-									v-for="c in $store.state.candidateInfo.countries"
-									:value="c.id"
-									:key="c.id"
-								>
-									{{ c.name }}
-								</option>
-							</select>
-						</div>
+						<a-select
+							id="country"
+							v-model="country"
+							show-search
+							size="large"
+							:placeholder="'Select country'"
+							option-filter-prop="children"
+							style="width: 100%"
+							notFoundContent="Country not found"
+						>
+							<a-select-option
+								v-for="c in $store.state.candidateInfo.countries"
+								:value="c.id"
+								:key="c.id"
+							>
+								{{ c.name }}
+							</a-select-option>
+							<template #suffixIcon>
+								<img src="@/assets/select-arrow-big.png" alt="icon" />
+							</template>
+						</a-select>
 					</div>
 					<!-- Select Ethnicity -->
 					<div class=" mt-4">
-						<div class="select-box">
-							<select class="custom-select" v-model="ethnicity">
-								<option value="">Select Ethnicity</option>
-								<option v-for="e in ethnicities" :value="e" :key="e">
-									{{ e }}
-								</option>
-							</select>
-						</div>
+						<a-select
+							id="ethnicity"
+							v-model="ethnicity"
+							show-search
+							size="large"
+							:placeholder="'Select Ethnicity'"
+							option-filter-prop="children"
+							style="width: 100%"
+							notFoundContent="ethnicity not found"
+						>
+							<a-select-option
+								v-for="e in ethnicities"
+								:value="e"
+								:key="e"
+							>
+								{{ e }}
+							</a-select-option>
+							<template #suffixIcon>
+								<img src="@/assets/select-arrow-big.png" alt="icon" />
+							</template>
+						</a-select>
 					</div>
 					<!-- Select Maritial Status -->
 					<div class="mt-4">
-						<div class="select-box">
-							<select class="custom-select" v-model="maritalStatus">
-								<option value="">Select Maritial Status</option>
-								<option value="single">Single</option>
-								<option value="married">Married</option>
-								<option value="divorced">Divorced</option>
-							</select>
-						</div>
+						<a-select
+							id="ethnicity"
+							v-model="maritalStatus"
+							show-search
+							size="large"
+							:placeholder="'Select Marital Status'"
+							option-filter-prop="children"
+							style="width: 100%"
+							notFoundContent="Marital Status not found"
+						>
+							<a-select-option value="single">Single</a-select-option>
+							<a-select-option value="married">Married</a-select-option>
+							<a-select-option value="divorced">Divorced</a-select-option>
+							<template #suffixIcon>
+								<img src="@/assets/select-arrow-big.png" alt="icon" />
+							</template>
+						</a-select>
 					</div>
 					<div class="mt-4">
-						<div class="select-box">
-							<select class="custom-select" v-model="employmentStatus">
-								<option value="" disabled>Select Employment Status</option>
-								<option value="Don't Mind">Don't Mind</option>
-								<option value="Unemployed">Employed full-time</option>
-								<option value="Employed part-time">Employed part-time</option>
-								<option value="Self-employed">Self-employed</option>
-								<option value="Homemaker">Homemaker</option>
-								<option value="Student">Student</option>
-								<option value="Retired">Retired</option>
-								<option value="On professional training">On professional training</option>
-								<option value="On apprenticeship training">On apprenticeship training</option>
-								<option value="Own a business">Own a business</option>
-								<option value="Other">Other</option>
-							</select>
-						</div>
+						<a-select
+							id="ethnicity"
+							v-model="employmentStatus"
+							show-search
+							size="large"
+							:placeholder="'Select Employment Status'"
+							option-filter-prop="children"
+							style="width: 100%"
+							notFoundContent="Employment Status not found"
+						>
+							<a-select-option value="Don't Mind">Don't Mind</a-select-option>
+							<a-select-option value="Unemployed">Employed full-time</a-select-option>
+							<a-select-option value="Employed part-time">Employed part-time</a-select-option>
+							<a-select-option value="Self-employed">Self-employed</a-select-option>
+							<a-select-option value="Homemaker">Homemaker</a-select-option>
+							<a-select-option value="Student">Student</a-select-option>
+							<a-select-option value="Retired">Retired</a-select-option>
+							<a-select-option value="On professional training">On professional training</a-select-option>
+							<a-select-option value="On apprenticeship training">On apprenticeship training</a-select-option>
+							<a-select-option value="Own a business">Own a business</a-select-option>
+							<a-select-option value="Other">Other</a-select-option>
+							<template #suffixIcon>
+								<img src="@/assets/select-arrow-big.png" alt="icon" />
+							</template>
+						</a-select>
 					</div>
 					<div class="mt-4">
-						<div class="select-box">
-							<select class="custom-select" v-model="nationality">
-								<option value="">Select Nationality</option>
-								<option
-									v-for="c in $store.state.candidateInfo.countries"
-									:value="c.id"
-									:key="c.id"
-								>
-									{{ c.name }}
-								</option>
-							</select>
-						</div>
+						<a-select
+							id="country"
+							v-model="nationality"
+							show-search
+							size="large"
+							:placeholder="'Select nationality'"
+							option-filter-prop="children"
+							style="width: 100%"
+							notFoundContent="Nationality not found"
+						>
+							<a-select-option
+								v-for="c in $store.state.candidateInfo.countries"
+								:value="c.id"
+								:key="c.id"
+							>
+								{{ c.name }}
+							</a-select-option>
+							<template #suffixIcon>
+								<img src="@/assets/select-arrow-big.png" alt="icon" />
+							</template>
+						</a-select>
 					</div>
 					<template v-if="showMoreSearch">
 						<!-- <div class="mt-4">
@@ -332,21 +390,21 @@ export default {
 			age: [20, 40],
 			heightMin: undefined,
 			heightMax: undefined,
-			country: "",
-			religion: "",
+			country: undefined,
+			religion: undefined,
 			heightUnit: false,
 			minHeightFt: null,
 			maxHeightFt: null,
-			ethnicities,
-			ethnicity: "",
-			maritalStatus: "",
-			employmentStatus: "",
+			ethnicities: ethnicities,
+			ethnicity: undefined,
+			maritalStatus: undefined,
+			employmentStatus: undefined,
 			occupations: null,
-			occupation: "",
+			occupation: undefined,
 			education: "",
 			languages: languages,
 			motherTongue: "",
-			nationality: "",
+			nationality: undefined,
 			countryOfBirth: "",
 			currentResidence: "",
 			currentlyLivingWith: "",
@@ -440,26 +498,26 @@ export default {
 				}
 				_payload += `&max_height=${this.heightMax}`;
 			}
-			if (this.country != "") {
+			if (this.country != undefined) {
 				_payload += `&country=${this.country}`;
 			}
-			if (this.religion != "") {
+			if (this.religion != undefined) {
 				_payload += `&religion=${this.religion}`;
 				this.pushQuery(this.religion)
 			}
-			if (this.ethnicity != "") {
+			if (this.ethnicity != undefined) {
 				_payload += `&ethnicity=${this.ethnicity}`;
 				this.pushQuery(this.ethnicity)
 			}
-			if (this.maritalStatus != "") {
+			if (this.maritalStatus != undefined) {
 				_payload += `&marital_status=${this.maritalStatus}`;
 				this.pushQuery(this.maritalStatus)
 			}
-			if (this.employmentStatus != "") {
+			if (this.employmentStatus != undefined) {
 				_payload += `&employment_status=${this.employmentStatus}`;
 				this.pushQuery(this.employmentStatus)
 			}
-			if (this.occupation != "") {
+			if (this.occupation != undefined) {
 				_payload += `&per_occupation=${this.occupation}`;
 				this.pushQuery(this.occupation)
 			}
@@ -470,7 +528,7 @@ export default {
 			if (this.motherTongue != "") {
 				_payload += `&mother_tongue=${this.motherTongue}`;
 			}
-			if (this.nationality != "") {
+			if (this.nationality != undefined) {
 				_payload += `&nationality=${this.nationality}`;
 				this.pushQuery(this.nationality)
 			}
