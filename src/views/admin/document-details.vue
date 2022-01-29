@@ -1,8 +1,8 @@
 <template>
   <div>
     <Loader v-if="isLoading" :isLoading="isLoading" />
-    <div v-else class="document-container">
-      <div class="document-content">
+    <div  v-else class="document-container">
+      <div  v-if="documentInfo && documentInfo.candidate_info" class="document-content">
         <div class="document-header">
           <v-btn style="background-color: #522e8e; color: #fff" medium>
             {{ userData.account_type == 1 ? "Candidate" : "Representative" }}
@@ -135,12 +135,12 @@
           </div>
         </div>
       </div>
-      <div class="document-content border-content">
+      <div  v-if="documentInfo && documentInfo.candidate_info" class="document-content border-content">
         <div class="document-header">
           <div class="right-header">
             <v-btn
               v-if="documentInfo.status == 2"
-              @click="updateUserVerifyOrReject(item, 'verified')"
+              @click="updateUserVerifyOrReject(documentInfo, 'verified')"
               style="background-color: rgb(61 185 156); color: #fff"
               small
             >
@@ -158,7 +158,7 @@
             </v-btn>
             <v-btn
               v-if="documentInfo.status == 4"
-              @click="updateUserVerifyOrReject(item, 'completed')"
+              @click="updateUserVerifyOrReject(documentInfo, 'completed')"
               style="background-color: rgb(61 185 156); color: #fff"
               small
             >
@@ -257,7 +257,10 @@
               </v-btn>
             </router-link>
           </div>
-          <div class="partner-details">
+          <div
+           
+            class="partner-details"
+          >
             <h4>This Profile Partner Preferences</h4>
             <ul style="padding: 0%">
               <li class="flex-between-start">

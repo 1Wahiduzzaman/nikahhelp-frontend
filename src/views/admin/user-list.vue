@@ -17,10 +17,14 @@
               ></v-tab
             >
             <v-tab value="1"
-              ><v-badge color="red" content="0">Candidate</v-badge></v-tab
+              ><v-badge color="red" :content="totalNumberOfCandidateItems"
+                >Candidate</v-badge
+              ></v-tab
             >
             <v-tab value="2"
-              ><v-badge color="red" content="0">Representative</v-badge></v-tab
+              ><v-badge color="red" :content="totalNumberOfRepItems"
+                >Representative</v-badge
+              ></v-tab
             >
           </v-tabs>
         </div>
@@ -117,15 +121,13 @@
             </td>
             <td class="account_type">
               {{
-                item["account_type"] == 1 &&
-                item.candidate_info
+                item["account_type"] == 1 && item.candidate_info
                   ? item.candidate_info.data_input_status == 0
                     ? "In-completed"
                     : item.candidate_info.data_input_status > 5
                     ? "Completed"
                     : "Partially Completed"
-                  : item["account_type"] == 2 &&
-                    item.representative_info
+                  : item["account_type"] == 2 && item.representative_info
                   ? item.representative_info.data_input_status == 0
                     ? "In-completed"
                     : item.representative_info.data_input_status > 2
@@ -228,6 +230,8 @@ export default {
       ],
       items: [],
       totalNumberOfItems: 0,
+      totalNumberOfCandidateItems: 0,
+      totalNumberOfRepItems: 0,
       options: {
         rowsPerPage: 8,
         page: 1,
@@ -237,6 +241,7 @@ export default {
   },
   mounted() {
     this.getUserReports();
+    this.getCanOrRepCount();
   },
   methods: {
     onItemClick(e) {},
@@ -281,6 +286,15 @@ export default {
         .catch((error) => {
           this.loading = false;
         });
+    },
+    async getCanOrRepCount() {
+      await this.$store
+        .dispatch("getCountCanOrRep")
+        .then((data) => {
+          this.totalNumberOfCandidateItems = data.no_of_candidate;
+          this.totalNumberOfRepItems = data.no_of_rep;
+        })
+        .catch((error) => {});
     },
     async updateUserVerifyOrReject(user) {
       const data = {

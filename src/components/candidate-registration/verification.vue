@@ -1,6 +1,10 @@
 <template>
   <div id="accordion" class="verificationInfo p-3 rounded">
-    <div class="verification-content" style="margin-top: 40px">
+    <div
+      v-if="userData && userData.status == '1'"
+      class="verification-content"
+      style="margin-top: 40px"
+    >
       <div class="section-heading heading-text">
         <h5>Verification Information</h5>
         <!-- <p>Your Verification Information</p> -->
@@ -27,15 +31,20 @@
               <div class="col-12 border-bottom pb-3">
                 <div class="verification-header mt-2">
                   <p class="instruction-title">
-                   To help us ensure a transparent and trusting experience we request your co-operation and consent in submitting a government approved valid ID for approval by the MatrimonyAssist Team. We are bound by and respect your privacy as detailed in our terms and conditions.
+                    To help us ensure a transparent and trusting experience we
+                    request your co-operation and consent in submitting a
+                    government approved valid ID for approval by the
+                    MatrimonyAssist Team. We are bound by and respect your
+                    privacy as detailed in our terms and conditions.
                   </p>
                   <p class="instruction-title">
                     We accept photo/scans of a driving license, passport,
-                    national ID card and residence permit In European Economic Area (EEA) or Switzerland. Please remember the following when submitting: 
-  
+                    national ID card and residence permit In European Economic
+                    Area (EEA) or Switzerland. Please remember the following
+                    when submitting:
                   </p>
 
-                <p class="instruction-title">Do’s </p>
+                  <p class="instruction-title">Do’s</p>
                   <ul>
                     <li class="flex-start-center">
                       <img
@@ -43,7 +52,7 @@
                         alt="icon"
                         id="checkIcon"
                       />
-                    Make sure the document has an expiry data and a photo
+                      Make sure the document has an expiry data and a photo
                     </li>
                     <li class="flex-start-center mt-2">
                       <img
@@ -51,7 +60,7 @@
                         alt="icon"
                         id="checkIcon"
                       />
-                      Show the full document (all 4 corners should be visible) 
+                      Show the full document (all 4 corners should be visible)
                     </li>
                     <li class="flex-start-center mt-2">
                       <img
@@ -59,10 +68,10 @@
                         alt="icon"
                         id="checkIcon"
                       />
-                    Provide a document that is in colour 
+                      Provide a document that is in colour
                     </li>
                   </ul>
-<br/>
+                  <br />
                   <!-- <p class="instruction-title">Don’ts </p>
                   <ul>
                     <li class="flex-start-center">
@@ -143,7 +152,6 @@
                     </a-form-model-item>
                   </div>
 
-
                   <div class="col-12 col-md-6 mobile-margin">
                     <a-form-model-item ref="ver_city_id" prop="ver_city_id">
                       <v-select
@@ -158,7 +166,7 @@
                         ><template #open-indicator>
                           <a-icon type="down" /> </template
                       ></v-select>
-                      
+
                       <!-- <a-select
                         id="ver_city"
                         :showSearch="true"
@@ -180,7 +188,6 @@
                       </a-select> -->
                     </a-form-model-item>
                   </div>
-
                 </div>
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">
@@ -239,8 +246,7 @@
                   :options="[
                     { name: 'Passport', value: 'Passport' },
                     { name: 'National ID', value: 'National ID' },
-                     { name: 'Driving licence ', value: 'Driving licence ' },
-
+                    { name: 'Driving licence ', value: 'Driving licence ' },
                   ]"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
@@ -446,7 +452,7 @@
             </div>
 
             <!--Community standing-->
-            <!-- <div class="row pt-3 border-bottom">
+            <div class="row pt-3 border-bottom">
               <div class="col-12 col-md-6 none-padding">
                 <div class="mb-2 font-weight-bold">
                   <a-icon
@@ -588,8 +594,7 @@
                   </div>
                 </div>
               </div>
-            </div> -->
-
+            </div>
 
             <div class="d-flex justify-content-end">
               <a-button
@@ -614,6 +619,26 @@
           </a-form-model>
         </a-collapse-panel>
       </a-collapse>
+    </div>
+    <div class="verification-msg" v-if="userData && userData.status == '2'">
+      <div class="identity">
+        <img
+          src="@/assets/icon/dots-horizontal-circle.svg"
+          alt="icon"
+          style="width: 200px; height: 230px"
+        />
+        <span>In Review</span>
+      </div>
+      <div class="identity-footer">
+        <span
+          >To keep your account safe, we need to verify your identity. This is a
+          legal requirement that help us to keep your account secure.
+        </span>
+        <span
+          >We accept photo/scans of a driving license, passport, national ID
+          card or residence permit issued in European Economic Are (EEA).</span
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -640,18 +665,9 @@ export default {
     FileUploadOne,
     vSelect,
   },
-
-  created() {
-    // console.log(this.handleChangeFromProp)
-    console.log(this.repData);
-  },
-  mounted() {
-    // this.setPersonalInfoRepData();
-    // this.getCountries();
-    // this.getOccupations();
-  },
   data() {
     return {
+      userData: null,
       arr: [
         {
           first: true,
@@ -676,8 +692,25 @@ export default {
       activeKey: 1,
     };
   },
+  created() {
+    this.userData = JSON.parse(localStorage.getItem("user"));
+  },
+  mounted() {},
 
   methods: {
+    async updateUserVerifyOrReject() {
+      const data = {
+        id: this.userData.id,
+        status: "completed",
+      };
+      await this.$store
+        .dispatch("updateUserVerifyOrReject", data)
+        .then((data) => {
+          this.userData.status = "2";
+          localStorage.setItem("user", JSON.stringify(this.userData));
+        })
+        .catch((error) => {});
+    },
     cancel() {
       this.$emit("cancel", false);
     },
@@ -690,6 +723,7 @@ export default {
           this.activeKey = null;
           this.saveImageVerificationInfo();
           this.saveVerificationInfo();
+          this.updateUserVerifyOrReject();
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
@@ -739,7 +773,7 @@ export default {
         .then((data) => {
           this.$emit("valueChange", {
             value: this.verification,
-            current: 2,
+            current: 4,
           });
         })
         .catch((error) => {});
@@ -758,7 +792,7 @@ export default {
             data.data.data.verification.ver_image_front;
           this.$emit("valueChange", {
             value: this.verification,
-            current: 2,
+            current: 4,
           });
         })
         .catch((error) => {});
@@ -837,6 +871,12 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+.verification-msg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .section-heading {
   text-align: center;
   color: $color-brand;

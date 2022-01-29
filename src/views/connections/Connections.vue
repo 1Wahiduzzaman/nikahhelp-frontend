@@ -46,11 +46,11 @@
                 <v-tab href="#tab-2" @click="tab = 'tab-2', connection_type_choosed = 'connected'" class="font-weight-bold">Connected </v-tab>
                 <v-tab href="#tab-3" @click="tab = 'tab-3', connection_type_choosed = 'Request received'" class="font-weight-bold">Received </v-tab>
                 <v-tab href="#tab-4" @click="tab = 'tab-4', connection_type_choosed = 'Request send'" class="font-weight-bold">Sent </v-tab>
-                <v-tab href="#tab-5" @click="tab = 'tab-5', connection_type_choosed = 'We declined'" class="font-weight-bold">We declined </v-tab>
-                <v-tab href="#tab-6" @click="tab = 'tab-6', connection_type_choosed = 'They declined'" class="font-weight-bold">They declined </v-tab>
+                <v-tab href="#tab-5" @click="tab = 'tab-5', connection_type_choosed = 'we declined'" class="font-weight-bold">We declined </v-tab>
+                <v-tab href="#tab-6" @click="tab = 'tab-6', connection_type_choosed = 'they declined'" class="font-weight-bold">They declined </v-tab>
               </v-tabs>
 
-              <v-tabs-items v-model="tab">
+              <v-tabs-items v-model="tab" class="mt-4">
                 <v-tab-item value="tab-1">
                   <div class="row px-3">
                     <div
@@ -793,14 +793,9 @@ export default {
           this.innerLoading = false;
         });
     },
-    declineRequest(connectionId) {
-      const payload = {
-        request_id: connectionId,
-        connection_status: "2",
-      };
-
+    declineRequest(data) {
       this.innerLoading = true;
-      const response = this.$store.dispatch("respondToRequest", payload);
+      const response = this.$store.dispatch("respondToRequest", data);
       response
         .then((data) => {
           this.innerLoading = false;

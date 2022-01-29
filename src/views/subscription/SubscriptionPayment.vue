@@ -19,15 +19,18 @@
                 <h6 class="text-center validate-text">Validate Your Card</h6>
                 <div class="card-info-form">
                   <card-input
+                      ref="card_input"
                       :clientSecret="clientSecret"
                       @get-payment-method="setPaymentMethod"
                   ></card-input>
                 </div>
               </div>
+              <button class="btn btn-block next-payemnt-screen btn-success py-2 br-30 only-mobile" v-if="agree" @click="cartScreen()">Next </button>
+              <button class="btn btn-danger next-payemnt-screen btn-block py-2 br-30 only-mobile mt-3" v-if="agree" @click="paymentScreen()">Back </button>
             </div>
           </div>
           <div class="w-d-50 desktop-non-margin col-flex shadow-default border-right position-relative"
-               :class="{'mobile-block': activeStep !== 2 && !agree, 'mobile-mode': activeStep === 2}">
+               :class="{'mobile-block': activeStep !== 2, 'mobile-mode': activeStep === 2}">
             <div class="div-2 desktop-pl">
               <div class="section-heading"
                    v-if="subscriptionName == 'Free 1 day Subscription Plan'"
@@ -92,7 +95,7 @@
                   You also agree to the Terms of Use and the Subscription
                   and Cancellation Terms.
                 </p>
-                <div class="text-center">
+                <div class="text-center pb-4">
 <!--                  <spinner v-if="isLoading"></spinner>-->
                   <button
                       v-if="agree"
@@ -159,12 +162,28 @@ export default {
   methods: {
     nextStep(step) {
       this.activeStep = step;
+      if(this.activeStep == 1) {
+        this.cardStat = false;
+        this.agree = false;
+        this.$refs.card_input.setValidationFalse();
+      }
     },
     setPaymentMethod(paymentMethod) {
-      console.log(paymentMethod);
       this.agree = true;
-      this.activeStep = 2;
       this.cardStat = paymentMethod;
+      let myDeviceWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+      if(myDeviceWidth >= 768) {
+        this.activeStep = 2;
+      }
+    },
+    cartScreen() {
+      this.activeStep = 2;
+    },
+    paymentScreen() {
+      this.activeStep = 1;
+      this.agree = false;
+      this.cardStat = false;
+      this.$refs.card_input.setValidationFalse();
     },
     async subscribe() {
       console.log(this.$store.state.user.payment_method);
@@ -724,6 +743,26 @@ export default {
 .custom-height {
   @media (min-width: 1200px) {
     height: 638px;
+  }
+}
+.next-payemnt-screen {
+  padding: 1px 60px;
+  font-size: 16px;
+  margin-top: 30px;
+  height: 40px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #747373;
+  outline-style: solid;
+  outline-color: #cfcece;
+}
+.br-30 {
+  border-radius: 30px;
+}
+.only-mobile {
+  @media (min-width: 768px) {
+    display: none;
   }
 }
 </style>

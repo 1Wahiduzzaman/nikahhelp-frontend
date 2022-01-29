@@ -42,7 +42,7 @@
                   />
                 </a>
                 <template v-slot:overlay>
-                  <NotificationPopup :items="teams" :use-for="'team'" />
+                  <NotificationPopup :items="sortedTeams" :use-for="'team'" />
                 </template>
               </a-dropdown>
             </li>
@@ -262,7 +262,9 @@
                     </ul>
                   </template>
                 </a-dropdown>
-                <img src="@/assets/icon/verified_icon.svg" alt="icon" class="verify-icon ml-1" width="14px" v-if="loggedUser && parseInt(loggedUser.status) === 3" />
+                <a-tooltip v-if="loggedUser && parseInt(loggedUser.status) === 3" title="Verified" placement="top">
+                  <img src="@/assets/icon/verified_icon.svg" alt="icon" class="verify-icon ml-1" width="14px" />
+                </a-tooltip>
                 <img src="@/assets/icon/non_verified_icon.svg" alt="icon" class="verify-icon ml-1 animate-flicker cursor-pointer" width="14px" v-else @click="verifyPopup" />
 <!--                <span class="role px-2 ml-1 shrink-none">-->
 <!--&lt;!&ndash;                  {{ loggedUser && parseInt(loggedUser.status) === 3 ? 'V' : 'Not verified' }}&ndash;&gt;-->
@@ -315,7 +317,7 @@
                   <template v-slot:overlay>
                     <NotificationPopup
                         count="29"
-                        :items="teams"
+                        :items="teamsForHeader"
                         :use-for="'team'"
                     />
                   </template>
@@ -444,9 +446,10 @@ export default {
   data() {
     return {
       activeTeamId: null,
+      teamsForHeader: [],
+      teamsOriginal: []
     };
   },
-
   computed: {
     loggedUser() {
       let loggedUser = JSON.parse(localStorage.getItem("user"));
@@ -456,10 +459,10 @@ export default {
       return null;
     },
     activeTeamInfo() {
-      return this.teams.find((item) => item.team_id == this.activeTeamId);
+      return this.teamsOriginal.find((item) => item.team_id == this.activeTeamId);
     },
     activeTeamIndex() {
-      return this.teams.findIndex((item) => item.team_id == this.activeTeamId);
+      return this.teamsOriginal.findIndex((item) => item.team_id == this.activeTeamId);
     },
     teamRole() {
       let team = this.activeTeamInfo;
@@ -489,13 +492,24 @@ export default {
       return this.$store.state.notification.notifications.filter(item => item.seen == 0);
     },
     teams() {
-      let teams = this.$store.state.team.team_list;
-      let activeIndex = teams.findIndex(
+      // let teams = this.$store.state.team.team_list;
+      let activeIndex = this.teamsForHeader.findIndex(
         (item) => item.team_id == this.activeTeamId
       );
       if (activeIndex >= 0) {
-        teams.unshift(teams[activeIndex]);
+        this.teamsForHeader.unshift(this.teamsForHeader[activeIndex]);
+        this.teamsForHeader.splice(activeIndex, 1);
+      }
+      return this.teamsForHeader;
+    },
+    sortedTeams() {
+      const teams = [...this.teamsForHeader];
+      let activeIndex = teams.findIndex((item) => item.team_id == this.activeTeamId);
+
+      if (activeIndex >= 0) {
+        let firstOne = teams[activeIndex];
         teams.splice(activeIndex, 1);
+        teams.unshift(firstOne);
       }
       return teams;
     },
@@ -539,20 +553,26 @@ export default {
         });
     },
     async loadTeams() {
-      const self = this;
-      try {
-        await this.$store
-          .dispatch("getTeams")
-          .then((data) => {
-            console.log(data.data.data);
-            self.checkTurnedOnSwitch();
-          })
-          .catch((error) => {
-            console.log(error.response);
-          });
-      } catch (error) {
-        this.error = error.message || "Something went wrong";
-      }
+      let {data} = await ApiService.get("v1/team-list").then(res => res.data);
+      this.teamsForHeader = data;
+      this.teamsOriginal = data;
+      this.checkTurnedOnSwitch();
+      // const self = this;
+      // try {
+      //   self.$store.state.team.team_list = [];
+      //   await this.$store
+      //     .dispatch("getTeams")
+      //     .then((data) => {
+      //       // console.log(data.data.data);
+      //       self.teamsForHeader = data.data.data;
+      //       self.checkTurnedOnSwitch();
+      //     })
+      //     .catch((error) => {
+      //       console.log(error.response);
+      //     });
+      // } catch (error) {
+      //   this.error = error.message || "Something went wrong";
+      // }
     },
     checkTurnedOnSwitch() {
       this.activeTeamId = JwtService.getTeamIDAppWide();
