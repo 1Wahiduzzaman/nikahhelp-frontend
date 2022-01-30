@@ -1,5 +1,5 @@
 <template>
-    <v-card class="p-3">
+    <v-card style="height: 100%" class="p-3">
         <p class="text-h6 text--secondary">More about me</p>
         <div>
             <FieldsetCard

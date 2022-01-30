@@ -165,8 +165,6 @@
 							<div class="select-box">
 								<select class="custom-select" v-model="employmentStatus">
 									<option value="">Select Employment Status</option>
-
-									<option value="" disabled>Select Employment Status</option>
 									<option value="Employed">Employed</option>
 									<option value="Unemployed">Unemployed</option>
 									<option value="Don't Mind">Don't Mind</option>

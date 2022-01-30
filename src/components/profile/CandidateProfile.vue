@@ -28,11 +28,21 @@
                       @onClickButton="onClickButton"
                     />
                     <ButtonComponent
+                      class="mr-2"
                       iconHeight="14px"
                       :isSmall="true"
                       title="EditProfile"
                       icon="/assets/icon/edit_step.svg"
                       customEvent="editProfile"
+                      :isBlock="false"
+                      @onClickButton="onClickButton"
+                    />
+                    <ButtonComponent
+                      iconHeight="14px"
+                      :isSmall="true"
+                      title="View as public"
+                      icon="/assets/icon/edit_step.svg"
+                      customEvent="viewAsPublic"
                       :isBlock="false"
                       @onClickButton="onClickButton"
                     />
@@ -93,7 +103,9 @@
                     <v-container fluid class="pt-0 px-5">
                         <v-row dense>
                             <v-col class="pt-1" cols="12" md="8">
-                              <PersonalInformationTable :data="candidateData"/>
+                              <PersonalInformationTable 
+                                :data="candidateData"
+                              />
                             </v-col>
                             <v-col ref="family-information" class="pt-1" cols="12" md="4">
                                 <MoreAbout 
@@ -107,7 +119,9 @@
                               <CardInfo
                                 :showDownloadBtn="true"
                                 title="Additional Information"
+                                :detail="candidateData.more_about.per_additional_info_text"
                                 class="mt-2"
+                                @onClickDownload="onClickDownload"
                               />
                             </v-col>
                             <v-col class="pt-1 mb-5" cols="12" md="6">
@@ -367,9 +381,23 @@ export default {
       this.$refs.advDiag.openDiag()
       // alert('coming soon')
     },
+    onClickDownload() {
+      //location.href=`${this.candidateData.more_about?.per_additional_info_doc}`
+      if(this.candidateData.more_about?.per_additional_info_doc == null) {
+        this.$error({
+          title: 'Link not available!',
+          center: true,
+        });
+      }
+
+      if(this.candidateData.more_about?.per_additional_info_doc) {
+        window.open(this.candidateData.more_about?.per_additional_info_doc, '_blank')
+      }
+    },
     onClickButton(data) {
       if(data.event == 'editProfile') this.$router.push('/edit_candidate')
       if(data.event == 'openGallery') this.openGallery()
+      if(data.event == 'viewAsPublic') this.viewAsPublic()
       console.log(data, '>>>>>>>>>>>')
     },
     openGallery() {
@@ -384,6 +412,9 @@ export default {
           center: true,
         });
       }
+    },
+    viewAsPublic() {
+      this.$router.push(`/user/profile/${this.candidateData.user_id}`)
     },
     show() {
       this.$viewerApi({

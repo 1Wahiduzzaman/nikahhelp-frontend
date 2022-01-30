@@ -52,10 +52,10 @@
                     </span>
                 </li>
                 <li class="flex-between-start">
-                    <span class="flex-30 label-text">Hobby</span>
-                    <span class="flex-70">:
-                        <span class="ml-1">  </span>
-                    </span>
+                    <span class="flex-30 label-text">Education</span>
+                    <span class="flex-70">:<span class="ml-1"> </span>{{ candidate.personal.per_education_level }} </span>
+                        
+                    
                 </li>
             </template>
         </ul>

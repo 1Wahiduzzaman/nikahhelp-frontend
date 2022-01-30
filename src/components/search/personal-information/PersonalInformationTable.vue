@@ -20,7 +20,7 @@
                 <TableRow 
                     title="Address"
                     textClass="text-subtitle-1"
-                    :value="personal.per_address"
+                    :value="contact.per_permanent_address"
                 />
             </template>
 
@@ -90,11 +90,13 @@
                 textClass="text-subtitle-1"
                 :value="personal.per_current_residence"
             />
-            <TableRow 
-                title="Permanent Country and City"
-                textClass="text-subtitle-1"
-                value=""
-            />
+            <template v-if="routeName === 'Profile'">
+                <TableRow 
+                    title="Permanent Country and City"
+                    textClass="text-subtitle-1"
+                    :value="contact.per_permanent_country_name + ', ' + contact.per_permanent_city"
+                />
+            </template>
            <!-- <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 160px">Mobile No</td>
                 <td class="text-subtitle-1" style="width: 20px ">:</td>
@@ -138,6 +140,9 @@ export default {
         },
         personal() {
             return this.data?.personal ? this.data.personal : {}
+        },
+        contact() {
+            return this.data?.contact ? this.data.contact : {}
         },
         essential() {
             return this.data?.essential  ? this.data.essential    : {}
