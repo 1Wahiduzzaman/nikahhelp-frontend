@@ -31,15 +31,26 @@
                 textClass="text-subtitle-1"
                 :value="getNationality()"
             />
-             <TableRow 
+            <TableRow 
                 title="Education"
                 textClass="text-subtitle-1"
                 :value="preference.pre_study_level"
             />
             <TableRow 
+                title="Accept a divorcee?"
+                textClass="text-subtitle-1"
+                :value="preference.pre_preferred_divorcee == 1 ? 'Yes' : 'NO'"
+            />
+            <TableRow 
+                title="Accept a divorcee with children?"
+                textClass="text-subtitle-1"
+                :value="preference.pre_preferred_divorcee == 1 ? 'Yes' : 'NO'"
+            />
+            <TableRow
+                v-if="preference.pre_preferred_divorcee == 1"
                 title="Employment Status"
                 textClass="text-subtitle-1"
-                :value="preference.pre_employment_status"
+                :value="preference.pre_preferred_divorcee_child"
             />
             <TableRow 
                 title="Occupation"

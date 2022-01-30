@@ -11,6 +11,19 @@
                 textClass="text-subtitle-1"
                 :value="data.screen_name"
             />
+            <template v-if="routeName === 'Profile'">
+                <TableRow 
+                    title="Mobile"
+                    textClass="text-subtitle-1"
+                    :value="personal.mobile_country_code + personal.mobile_number"
+                />
+                <TableRow 
+                    title="Address"
+                    textClass="text-subtitle-1"
+                    :value="personal.per_address"
+                />
+            </template>
+
             <TableRow 
                 title="Gender"
                 textClass="text-subtitle-1"
@@ -78,9 +91,9 @@
                 :value="personal.per_current_residence"
             />
             <TableRow 
-                title="Willing to Relocate"
+                title="Permanent Country and City"
                 textClass="text-subtitle-1"
-                :value="personal.per_willing_to_relocate == 1 ? 'Yes' : 'No'"
+                value=""
             />
            <!-- <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 160px">Mobile No</td>
@@ -120,6 +133,9 @@ export default {
         }
     },
     computed: {
+        routeName() {
+            return this.$route.name
+        },
         personal() {
             return this.data?.personal ? this.data.personal : {}
         },

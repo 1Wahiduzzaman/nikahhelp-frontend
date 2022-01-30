@@ -166,7 +166,7 @@
                                 <h5>More about preferred partner</h5>
                                 <p>How Important following characters are to me</p>
                                 <!-- Character -->
-                                <rating-component
+                                <!-- <rating-component
                                   title="Strength of character from a moral point of view"
                                   :value="
                                     candidateData.preference.pre_strength_of_character_rate
@@ -175,10 +175,10 @@
                                     candidateData.preference
                                       .pre_strength_of_character_rate_string
                                   "
-                                ></rating-component>
+                                ></rating-component> -->
                                 <!-- Looks and Appearance -->
                                 <rating-component
-                                  title="Looks and appearance"
+                                  title="Looks, appearance & attractiveness"
                                   :value="
                                     candidateData.preference.pre_look_and_appearance_rate
                                   "
@@ -189,7 +189,7 @@
                                 ></rating-component>
                                 <!-- Religiosity/Faith -->
                                 <rating-component
-                                  title="Religiosity/ Faith"
+                                  title="Religiosity / Faith"
                                   :value="
                                     candidateData.preference.pre_religiosity_or_faith_rate
                                   "
@@ -198,7 +198,6 @@
                                       .pre_religiosity_or_faith_rate_string
                                   "
                                 ></rating-component>
-                                Manners, Social skills and ethics
                                 <rating-component
                                   title="Manners, Social skills and ethics"
                                   :value="
@@ -212,7 +211,7 @@
                                 ></rating-component>
                                 <!-- Emotional Maturity and compatibility -->
                                 <rating-component
-                                  title="Emotional Maturity and compatibility"
+                                  title="Emotional Maturity and general intelligence"
                                   :value="
                                     candidateData.preference.pre_emotional_maturity_rate
                                   "
@@ -231,7 +230,7 @@
                                 ></rating-component>
                                 <!-- Good talker -->
                                 <rating-component
-                                  title="Good talker"
+                                  title="Good communicator"
                                   :value="candidateData.preference.pre_good_talker_rate"
                                   :valueString="
                                     candidateData.preference.pre_good_talker_rate_string
@@ -258,7 +257,7 @@
                                 ></rating-component>
                                 <!-- Employment or Wealth-->
                                 <rating-component
-                                  title="Employment or Wealth"
+                                  title="Employment and financial stability"
                                   :value="
                                     candidateData.preference.pre_employment_wealth_rate
                                   "
@@ -269,7 +268,7 @@
                                 ></rating-component>
                                 <!-- Education -->
                                 <rating-component
-                                  title="Education"
+                                  title="Education and academic accomplishments"
                                   :value="candidateData.preference.pre_education_rate"
                                   :valueString="
                                     candidateData.preference.pre_education_rate_string

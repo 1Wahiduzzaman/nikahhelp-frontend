@@ -37,6 +37,17 @@
                 :value="preference.pre_study_level"
             />
             <TableRow 
+                title="Accept divorcee?"
+                textClass="text-subtitle-1"
+                :value="preference.pre_preferred_divorcee == 1 ? 'Yes' : 'NO'"
+            />
+            <TableRow
+                v-if="preference.pre_preferred_divorcee == 1"
+                title="Accept a divorcee with children?"
+                textClass="text-subtitle-1"
+                :value="preference.pre_preferred_divorcee_child == 1 ? 'Yes' : 'NO'"
+            />
+            <TableRow 
                 title="Employment Status"
                 textClass="text-subtitle-1"
                 :value="preference.pre_employment_status"
