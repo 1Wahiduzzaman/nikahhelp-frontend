@@ -28,11 +28,21 @@
                       @onClickButton="onClickButton"
                     />
                     <ButtonComponent
+                      class="mr-2"
                       iconHeight="14px"
                       :isSmall="true"
                       title="EditProfile"
                       icon="/assets/icon/edit_step.svg"
                       customEvent="editProfile"
+                      :isBlock="false"
+                      @onClickButton="onClickButton"
+                    />
+                    <ButtonComponent
+                      iconHeight="14px"
+                      :isSmall="true"
+                      title="View as public"
+                      icon="/assets/icon/edit_step.svg"
+                      customEvent="viewAsPublic"
                       :isBlock="false"
                       @onClickButton="onClickButton"
                     />
@@ -93,7 +103,9 @@
                     <v-container fluid class="pt-0 px-5">
                         <v-row dense>
                             <v-col class="pt-1" cols="12" md="8">
-                              <PersonalInformationTable :data="candidateData"/>
+                              <PersonalInformationTable 
+                                :data="candidateData"
+                              />
                             </v-col>
                             <v-col ref="family-information" class="pt-1" cols="12" md="4">
                                 <MoreAbout 
@@ -107,7 +119,9 @@
                               <CardInfo
                                 :showDownloadBtn="true"
                                 title="Additional Information"
+                                :detail="candidateData.more_about.per_additional_info_text"
                                 class="mt-2"
+                                @onClickDownload="onClickDownload"
                               />
                             </v-col>
                             <v-col class="pt-1 mb-5" cols="12" md="6">
@@ -166,7 +180,7 @@
                                 <h5>More about preferred partner</h5>
                                 <p>How Important following characters are to me</p>
                                 <!-- Character -->
-                                <rating-component
+                                <!-- <rating-component
                                   title="Strength of character from a moral point of view"
                                   :value="
                                     candidateData.preference.pre_strength_of_character_rate
@@ -175,10 +189,10 @@
                                     candidateData.preference
                                       .pre_strength_of_character_rate_string
                                   "
-                                ></rating-component>
+                                ></rating-component> -->
                                 <!-- Looks and Appearance -->
                                 <rating-component
-                                  title="Looks and appearance"
+                                  title="Looks, appearance & attractiveness"
                                   :value="
                                     candidateData.preference.pre_look_and_appearance_rate
                                   "
@@ -189,7 +203,7 @@
                                 ></rating-component>
                                 <!-- Religiosity/Faith -->
                                 <rating-component
-                                  title="Religiosity/ Faith"
+                                  title="Religiosity / Faith"
                                   :value="
                                     candidateData.preference.pre_religiosity_or_faith_rate
                                   "
@@ -198,7 +212,6 @@
                                       .pre_religiosity_or_faith_rate_string
                                   "
                                 ></rating-component>
-                                Manners, Social skills and ethics
                                 <rating-component
                                   title="Manners, Social skills and ethics"
                                   :value="
@@ -212,7 +225,7 @@
                                 ></rating-component>
                                 <!-- Emotional Maturity and compatibility -->
                                 <rating-component
-                                  title="Emotional Maturity and compatibility"
+                                  title="Emotional Maturity and general intelligence"
                                   :value="
                                     candidateData.preference.pre_emotional_maturity_rate
                                   "
@@ -231,7 +244,7 @@
                                 ></rating-component>
                                 <!-- Good talker -->
                                 <rating-component
-                                  title="Good talker"
+                                  title="Good communicator"
                                   :value="candidateData.preference.pre_good_talker_rate"
                                   :valueString="
                                     candidateData.preference.pre_good_talker_rate_string
@@ -258,7 +271,7 @@
                                 ></rating-component>
                                 <!-- Employment or Wealth-->
                                 <rating-component
-                                  title="Employment or Wealth"
+                                  title="Employment and financial stability"
                                   :value="
                                     candidateData.preference.pre_employment_wealth_rate
                                   "
@@ -269,7 +282,7 @@
                                 ></rating-component>
                                 <!-- Education -->
                                 <rating-component
-                                  title="Education"
+                                  title="Education and academic accomplishments"
                                   :value="candidateData.preference.pre_education_rate"
                                   :valueString="
                                     candidateData.preference.pre_education_rate_string
@@ -368,9 +381,23 @@ export default {
       this.$refs.advDiag.openDiag()
       // alert('coming soon')
     },
+    onClickDownload() {
+      //location.href=`${this.candidateData.more_about?.per_additional_info_doc}`
+      if(this.candidateData.more_about?.per_additional_info_doc == null) {
+        this.$error({
+          title: 'Link not available!',
+          center: true,
+        });
+      }
+
+      if(this.candidateData.more_about?.per_additional_info_doc) {
+        window.open(this.candidateData.more_about?.per_additional_info_doc, '_blank')
+      }
+    },
     onClickButton(data) {
       if(data.event == 'editProfile') this.$router.push('/edit_candidate')
       if(data.event == 'openGallery') this.openGallery()
+      if(data.event == 'viewAsPublic') this.viewAsPublic()
       console.log(data, '>>>>>>>>>>>')
     },
     openGallery() {
@@ -385,6 +412,9 @@ export default {
           center: true,
         });
       }
+    },
+    viewAsPublic() {
+      this.$router.push(`/user/profile/${this.candidateData.user_id}`)
     },
     show() {
       this.$viewerApi({

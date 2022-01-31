@@ -37,6 +37,17 @@
                 :value="preference.pre_study_level"
             />
             <TableRow 
+                title="Accept divorcee?"
+                textClass="text-subtitle-1"
+                :value="preference.pre_preferred_divorcee == 1 ? 'Yes' : 'NO'"
+            />
+            <TableRow
+                v-if="preference.pre_preferred_divorcee == 1"
+                title="Accept a divorcee with children?"
+                textClass="text-subtitle-1"
+                :value="preference.pre_preferred_divorcee_child == 1 ? 'Yes' : 'NO'"
+            />
+            <TableRow 
                 title="Employment Status"
                 textClass="text-subtitle-1"
                 :value="preference.pre_employment_status"
@@ -76,10 +87,17 @@ export default {
     },
     methods: {
          getProfession() {
-             let arr = [];
+            let arr = []; 
             if(this.preference.pre_occupation.length) {
-                arr = this.preference.pre_occupation.map(i => i.name)
+                if(typeof this.preference.pre_occupation == 'string') {
+                    arr = JSON.parse(this.preference.pre_occupation).map(i => i)
+                }
+                if(typeof this.preference.pre_occupation == 'object') {
+                    arr = this.preference.pre_occupation.map(i => i)
+                }
+                
             }
+            
             return arr.join(', ')
         },
         getCountry() {

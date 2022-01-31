@@ -42,7 +42,7 @@
 						<ButtonComponent
 							iconHeight="14px"
 							:isSmall="true"
-							:title="profile.is_teamListed ? 'TeamUnlist' : 'TeamList'"
+							:title="profile.is_teamListed ? 'Unlist Team' : 'TeamList'"
 							icon="/assets/icon/team.svg"
 							:customEvent="profile.is_teamListed ? 'removeTeam' : 'addTeam'"
 							@onClickButton="onClickButton"
@@ -388,7 +388,7 @@ export default {
 		},
 		isOwnProfile() {
 			let loggedInUserId = JSON.parse(localStorage.getItem('userId'))
-			return this.candidateData.id == loggedInUserId
+			return this.candidateData.user_id == loggedInUserId
 		}
 	},
 	methods: {

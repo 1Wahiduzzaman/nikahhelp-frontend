@@ -28,7 +28,7 @@
             @collapseSideBar="collapsed = !collapsed"
           >
             <template v-slot:search>
-              <SimpleSearch 
+              <SimpleSearch
                 ref="simpleSearch"
                 @switchComponent="switchComponent"
               />
@@ -40,6 +40,7 @@
             <div id="top" class="main-content-wrapper">
               <div class="main-content-1">
                 <component
+                  :role="teamRole"
                   @switchComponent="switchComponent"
                   @navigateProfile="navigateProfile"
                   @socketNotification="socketNotification"
@@ -111,6 +112,7 @@ export default {
   },
   data() {
     return {
+      activeTeamId: null,
       query: 'v1/home-searches?page=0&parpage=10',
       isLoading: false,
       user: {},
@@ -128,6 +130,32 @@ export default {
     currentTabComponent() {
       return this.componentName;
     },
+    loggedUser() {
+      let loggedUser = JSON.parse(localStorage.getItem("user"));
+      if (loggedUser) {
+        return loggedUser;
+      }
+      return null;
+    },
+    activeTeamInfo() {
+      return this.teamsOriginal.find((item) => item.team_id == this.activeTeamId);
+    },
+    teamRole() {
+      let team = this.activeTeamInfo;
+      let loggedUser = this.loggedUser;
+      if (team && loggedUser && team.team_members) {
+        let member = team.team_members.find(
+          (item) => item.user_id == loggedUser.id
+        );
+        if (member) {
+          return member.role.replace("+", " & ");
+        }
+      }
+      return "N/A";
+    },
+    teamsOriginal() {
+      return this.$store.state.team?.team_list
+    }
   },
   methods: {
     ...mapActions({
@@ -142,6 +170,9 @@ export default {
       setProfiles: "search/setProfiles",
       setLoading: "search/setLoading",
     }),
+    checkTurnedOnSwitch() {
+      this.activeTeamId = JwtService.getTeamIDAppWide();
+    },
     socketNotification(payload) {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       payload.sender = loggedUser.id;
@@ -157,7 +188,7 @@ export default {
       }
     },
     onIntersect() {
-      //this.$refs.simpleSearch.handlePaginate();
+      this.$refs.simpleSearch.handlePaginate();
     },
     showError(message) {
       this.$error({
@@ -248,11 +279,9 @@ export default {
           this.query += `&max_height=${data.pre_height_max}`
           this.$refs.simpleSearch.setAttr('heightMax', data.pre_height_max);
         }
-        
-        // this.$refs.simpleSearch.setAttr('employmentStatus', data.pre_employment_status);
-          // if(data.pre_partner_religion_id.length) {
-          //   this.$refs.simpleSearch.setAttr('religion', data.pre_partner_religion_id[0]);
-          // }
+        if(data.pre_employment_status) {
+          this.$refs.simpleSearch.setAttr('employmentStatus', data.pre_employment_status);
+        }
         if(data.preferred_countries.length) {
           this.query += `&country=${data.preferred_countries[0].id}`
           this.$refs.simpleSearch.setAttr('country', data.preferred_countries[0].id);
@@ -260,9 +289,12 @@ export default {
         if(data.preferred_nationality.length) {
           this.$refs.simpleSearch.setAttr('nationality', data.preferred_nationality[0].id);
         }
-        let genderObj = {1:2, 2:1};
+        if(data.pre_partner_religion_id.length) {
+          this.$refs.simpleSearch.setAttr('religion', parseInt(data.pre_partner_religion_id[0]));
+        }
+        let genderObj = {1:2, 2:1, 0:1};
         this.query += `&gender=${genderObj[1]}`
-        this.$refs.simpleSearch.setAttr('gender', 1); //have to set depending on candidate
+        this.$refs.simpleSearch.setAttr('gender', personal.per_gender_id); //have to set depending on candidate
         this.fetchInitialCandidate();
       },1000)
     },
@@ -290,6 +322,7 @@ export default {
       }, 2000);
       return
     }
+    this.checkTurnedOnSwitch();
     this.handleCandidateInfo();
   },
 };
