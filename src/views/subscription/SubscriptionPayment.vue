@@ -153,10 +153,12 @@ export default {
     };
   },
   created() {
-
     this.getSubscriptionId();
     this.getClientSecret();
     this.$store.dispatch("getCountries");
+    if(this.$route.query && this.$route.query.name) {
+      this.subscriptionName = this.$route.query.name;
+    }
   },
 
   methods: {
@@ -195,27 +197,20 @@ export default {
       };
       console.log(_payload);
 
-      if(!this.$route.query.cupon || (this.$route.query.cupon && this.$route.query.cupon === '123456')) {
-        this.isLoading = true;
-        try {
-          await this.$store.dispatch("createSubscription", _payload); // Action in the User module in store
-          this.isLoading = false;
-          this.$router.push(
-              `/subscription/complete/success/${this.subscriptionName}/${this.teamName}`
-          );
-        } catch (error) {
-          this.$error({
-            title: "Subscription Payment Error!",
-            content: error.response.data.message,
-            centered: true,
-          });
-          this.isLoading = false;
-        }
-      } else {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("createSubscription", _payload); // Action in the User module in store
+        this.isLoading = false;
+        this.$router.push(
+            `/subscription/complete/success/${this.subscriptionName}/${this.teamName}`
+        );
+      } catch (error) {
         this.$error({
-          title: "You are trying to do something illegal!",
+          title: "Subscription Payment Error!",
+          content: error.response.data.message,
           centered: true,
         });
+        this.isLoading = false;
       }
     },
     getPaymentMethod(data) {
@@ -234,20 +229,21 @@ export default {
       this.teamId = teamId;
       this.teamName = team;
       this.subscriptionId = parseInt(subId);
-      if (this.subscriptionId == 1) {
-        this.subscriptionName = "1 Month Subscription Plan";
-        this.subscriptionAmount = 10.0;
-      } else if (this.subscriptionId == 2) {
-        this.subscriptionName = "3 Month Subscription Plan";
-        this.subscriptionAmount = 24.0;
-      } else if (this.subscriptionId == 3) {
-        this.subscriptionName = "6 Month Subscription Plan";
-        this.subscriptionAmount = 42.0;
-      } else if (this.subscriptionId == 0) {
-        this.subscriptionName = "Free 1 day Subscription Plan";
-        this.subscriptionAmount = 0.0;
-      }
-      console.log(this.subscriptionName);
+      this.subscriptionAmount = this.$store.state.team.subscriptionAmount;
+      // if (this.subscriptionId == 1) {
+      //   this.subscriptionName = "1 Month Subscription Plan";
+      //   this.subscriptionAmount = 10.0;
+      // } else if (this.subscriptionId == 2) {
+      //   this.subscriptionName = "3 Month Subscription Plan";
+      //   this.subscriptionAmount = 24.0;
+      // } else if (this.subscriptionId == 3) {
+      //   this.subscriptionName = "6 Month Subscription Plan";
+      //   this.subscriptionAmount = 42.0;
+      // } else if (this.subscriptionId == 0) {
+      //   this.subscriptionName = "Free 1 day Subscription Plan";
+      //   this.subscriptionAmount = 0.0;
+      // }
+      // console.log(this.subscriptionName);
     },
   },
 };

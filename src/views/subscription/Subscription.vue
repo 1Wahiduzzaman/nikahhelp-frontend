@@ -40,25 +40,27 @@
               </div>
               <div class="div-2 position-relative bg-white">
                 <div
-                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom border-top"
-                  :class="{ 'bg-brand-gradient': isSelected1 }"
-                  @click="firstOption"
+                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom"
+                  :class="{'bg-brand-gradient': choosedPlan && choosedPlan.id == plan.id, 'border-top': pIndex === 0 }"
+                  @click="setPlan(plan)"
+                  v-for="(plan, pIndex) in getPlans"
+                  :key="pIndex"
                 >
 <!--                  <a-icon-->
 <!--                    type="check"-->
 <!--                    class="text-transparent icon-check"-->
 <!--                    :class="{ 'text-white': isSelected1 }"-->
 <!--                  />-->
-                  <img src="@/assets/icon/subscription_check.svg" alt="icon" v-if="isSelected1" class="mr-4" />
+                  <img src="@/assets/icon/subscription_check.svg" alt="icon" v-if="choosedPlan && choosedPlan.id == plan.id" class="mr-4" />
                   <h4
                     class="duration"
-                    :class="{ selected: isSelected1 }"
+                    :class="{ selected: choosedPlan && choosedPlan.id == plan.id }"
                   >
-                    1 Month
+                    {{ plan.title }}
                   </h4>
                 </div>
                 <div
-                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom"
+                  class="d-flexx d-none cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom"
                   :class="{ 'bg-brand-gradient': isSelected2 }"
                   @click="secondOption"
                 >
@@ -76,7 +78,7 @@
                   </h4>
                 </div>
                 <div
-                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom"
+                  class="d-flexx d-none cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom"
                   :class="{ 'bg-brand-gradient': isSelected3 }"
                   @click="thirdOption"
                 >
@@ -94,7 +96,7 @@
                   </h4>
                 </div>
                 <div
-                  class="d-flex cursor-pointer py-4 px-5 free-duration align-items-center justify-content-center"
+                  class="d-flexx d-none cursor-pointer py-4 px-5 free-duration align-items-center justify-content-center"
                   :class="{ 'bg-brand-gradient': isSelected4 }"
                   @click="fourthOption"
                 >
@@ -154,7 +156,8 @@
                   £ {{ amount.toFixed(2) }}
                 </h3>
                 <p class="price-text text-white font-weight-bolder">
-                  Saved {{ savedAmount }} £
+<!--                  Saved {{ savedAmount }} £-->
+                  Save {{ savedAmount }} £ by using cupon
                 </p>
               </div>
               <div class="">
@@ -311,8 +314,7 @@
                     Subscribed <b>6 month Plan</b> by - <b>Shirin Malik</b>
                   </h4>
                   <small class="text-white"
-                    >Team Expire period extended to the date of - Dec 31,
-                    2022</small
+                    >Team Expire period extended to the date of - {{ teamSelected.subscription_expire_at }}</small
                   >
                 </div>
               </div>
@@ -350,15 +352,15 @@
       </div>
     </div>
 
-    <a-modal v-model="freeModal" title="Free Coupon">
+    <a-modal v-model="freeModal" title="Dou you have any cupon?">
       <a-input v-model="cupon" placeholder="Coupon" />
 
       <template slot="footer">
         <a-button key="back" @click="handleCancel">
-          Back
+          Cancel
         </a-button>
         <a-button key="submit" type="primary" @click="handleOkFreeModal">
-          Submit
+          {{ cupon ? 'Submit' : 'Skip' }}
         </a-button>
       </template>
     </a-modal>
@@ -369,6 +371,7 @@
 import Header from "@/components/dashboard/layout/Header.vue";
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import Footer from "@/components/auth/Footer.vue";
+import ApiService from "../../services/api.service";
 
 export default {
   name: "Subscription",
@@ -397,6 +400,8 @@ export default {
       activeStep: 1,
       freeModal: false,
       activeStepIndex: 0,
+      plans: [],
+      choosedPlan: null,
       descriptions: [
           'Plan 1',
           'Plan 2',
@@ -407,6 +412,7 @@ export default {
   },
   created() {
     //this.loadUser();
+    this.loadPlans();
     this.loadTeams();
     this.getSelectedTeam();
   },
@@ -416,6 +422,12 @@ export default {
         const date = this.teamSelected.created_at.split("T");
         return date[0];
       } else return "N/A";
+    },
+    getPlans() {
+      if(this.plans && this.plans.plan_data && this.plans.plan_data.length > 0) {
+        return this.plans.plan_data;
+      }
+      return [];
     },
     teamCreatedBy() {
       // const teamMembers = this.teamSelected.team_members;
@@ -489,6 +501,12 @@ export default {
     // 	}
     // 	this.isLoading = false;
     // },
+    async loadPlans() {
+      let {data} = await ApiService.get('/v1/package-list');
+      if(data && data.data) {
+        this.plans = data.data;
+      }
+    },
     async loadTeams() {
       await this.$store.dispatch("getTeams");
       this.teams = this.$store.getters["userTeamList"];
@@ -554,6 +572,13 @@ export default {
       this.nextStep(2);
       this.activeStepIndex = 3;
     },
+    setPlan(item) {
+      this.choosedPlan = item;
+      this.amount = item.price;
+      this.savedAmount = item.discount;
+      this.$store.state.team.subscriptionAmount = this.amount;
+      this.nextStep(2);
+    },
     handleContinue() {
       if (this.teamSelected == null) {
         //alert("You have to select a team");
@@ -564,19 +589,13 @@ export default {
         });
         return;
       }
-      var subId;
-      if (this.isSelected1) {
-        subId = 1;
-      } else if (this.isSelected2) {
-        subId = 2;
-      } else if (this.isSelected3) {
-        subId = 3;
-      } else if (this.isSelected4) {
-        subId = 0;
+
+      if(this.choosedPlan && this.choosedPlan.id) {
         this.freeModal = true;
-        return;
+        // this.$router.push(
+        //     `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
+        // );
       } else {
-        //alert("You have to select a subscription plan");
         this.$error({
           title: "No Subscription Plan is Selected!",
           content: "You have to select a subscription plan",
@@ -584,19 +603,40 @@ export default {
         });
         return;
       }
-      if(subId !== 0) {
-        this.$router.push(
-            `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${subId}`
-        );
-      }
+      // var subId;
+      // if (this.isSelected1) {
+      //   subId = 1;
+      // } else if (this.isSelected2) {
+      //   subId = 2;
+      // } else if (this.isSelected3) {
+      //   subId = 3;
+      // } else if (this.isSelected4) {
+      //   subId = 0;
+      //   this.freeModal = true;
+      //   return;
+      // } else {
+      //   //alert("You have to select a subscription plan");
+      //   this.$error({
+      //     title: "No Subscription Plan is Selected!",
+      //     content: "You have to select a subscription plan",
+      //     centered: true,
+      //   });
+      //   return;
+      // }
+      // if(subId !== 0) {
+      //   this.$router.push(
+      //       `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${subId}`
+      //   );
+      // }
     },
     handleCancel() {
       this.freeModal = false;
     },
     handleOkFreeModal() {
       if(this.cupon === this.fixedCupon) {
+        this.$store.state.team.subscriptionAmount = (this.amount - this.savedAmount);
         this.$router.push(
-            `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/0?cupon=${this.cupon}`
+            `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
         );
       } else {
         this.$error({
