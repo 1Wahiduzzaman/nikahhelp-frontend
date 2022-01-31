@@ -20,7 +20,7 @@
     <v-card-title>{{ candidate.first_name }} {{ candidate.last_name }}</v-card-title>
 
     <div class="px-4">
-        <ul class="desc-list">
+        <ul class="pl-0">
             <!-- Location -->
             <li class="flex-between-start">
                 <span class="flex-30 label-text">Location</span>
@@ -53,9 +53,7 @@
                 </li>
                 <li class="flex-between-start">
                     <span class="flex-30 label-text">Education</span>
-                    <span class="flex-70">:<span class="ml-1"> </span>{{ candidate.personal.per_education_level }} </span>
-                        
-                    
+                    <span class="flex-70 truncate">:<span class="ml-1"> </span>{{ candidate.personal.per_education_level }} </span>
                 </li>
             </template>
         </ul>
@@ -90,7 +88,7 @@
         iconHeight="14px"
         :isSmall="true"
         :responsive="false"
-        :title="candidate.is_teamListed ? 'TeamUnlist' : 'TeamList'"
+        :title="candidate.is_teamListed ? 'Unlist Team' : 'TeamList'"
         icon="/assets/icon/team.svg"
         :customEvent="candidate.is_teamListed ? 'removeTeam' : 'addTeam'"
         @onClickButton="onClickButton"
@@ -136,7 +134,7 @@ import ApiService from '@/services/api.service';
 import ButtonComponent from '@/components/atom/ButtonComponent'
   export default {
     name: 'CandidateListCard',
-    props: ["candidate"],
+    props: ["candidate", "role"],
     components: {
       ButtonComponent
     },
@@ -235,11 +233,15 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         console.log('short list')
       },
       async connectCandidate() {
+        if(this.role != 'admidn') {
+          this.showError("You don't have a permission.")
+          return
+        }
         let myTeamId = JwtService.getTeamIDAppWide();
         console.log(myTeamId, '>>>>>>>')
         if(!myTeamId) {
           this.showError("You don't have a team")
-           return;
+          return;
         }
         if(!this.candidate.team_id) {
           this.showError("This candidate has no team")
@@ -403,10 +405,10 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
       ViewProfileDetail() {
         this.fetchCandidate()
         this.$emit('switchComponent')
-        document.getElementById('topper').click()
         setTimeout(() => {
           this.setComponent('RightSidebar')
         }, 10)
+        document.getElementById('topper').click()
       },
       async loadShortListedCandidates() {
         let {data} = await ApiService.get('/v1/short-listed-candidates').then(res => res.data);
@@ -419,3 +421,12 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
     },
   }
 </script>
+
+<style scoped>
+.truncate {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100px;
+    overflow: hidden;
+}
+</style>

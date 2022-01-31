@@ -87,7 +87,7 @@ export default {
     },
     methods: {
          getProfession() {
-             let arr = [];
+            let arr = [];
             if(this.preference.pre_occupation.length) {
                 arr = JSON.parse(this.preference.pre_occupation).map(i => i.name)
             }

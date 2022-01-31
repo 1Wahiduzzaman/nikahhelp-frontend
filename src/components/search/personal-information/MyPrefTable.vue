@@ -87,10 +87,17 @@ export default {
     },
     methods: {
          getProfession() {
-             let arr = [];
+            let arr = []; 
             if(this.preference.pre_occupation.length) {
-                arr = this.preference.pre_occupation.map(i => i.name)
+                if(typeof this.preference.pre_occupation == 'string') {
+                    arr = JSON.parse(this.preference.pre_occupation).map(i => i)
+                }
+                if(typeof this.preference.pre_occupation == 'object') {
+                    arr = this.preference.pre_occupation.map(i => i)
+                }
+                
             }
+            
             return arr.join(', ')
         },
         getCountry() {

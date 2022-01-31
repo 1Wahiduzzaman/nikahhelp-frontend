@@ -23,7 +23,8 @@
 					<div v-for="(profile, n) in  profiles" :key="n" class="col-sm-12 col-md-6 col-lg-4">
 						<CandidateGrid
 							:candidate="profile"
-              @socketNotification="socketNotification"
+							:role="role"
+              				@socketNotification="socketNotification"
 							@switchComponent="()=>$emit('switchComponent', 'ProfileDetail')"
 						/>
 					</div>
@@ -48,6 +49,7 @@ export default {
 	data: () => ({
 		showAllQuery: false
 	}),
+	props: ['role'],
 	computed: {
 		...mapGetters({
 			profiles: 'search/getProfiles',
