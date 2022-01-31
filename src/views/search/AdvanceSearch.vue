@@ -260,6 +260,9 @@ export default {
         if(data.preferred_nationality.length) {
           this.$refs.simpleSearch.setAttr('nationality', data.preferred_nationality[0].id);
         }
+        if(data.pre_partner_religion_id.length) {
+          this.$refs.simpleSearch.setAttr('religion', parseInt(data.pre_partner_religion_id[0]));
+        }
         let genderObj = {1:2, 2:1};
         this.query += `&gender=${genderObj[1]}`
         this.$refs.simpleSearch.setAttr('gender', 1); //have to set depending on candidate
