@@ -153,11 +153,15 @@ export default {
     };
   },
   created() {
-    this.getSubscriptionId();
-    this.getClientSecret();
-    this.$store.dispatch("getCountries");
-    if(this.$route.query && this.$route.query.name) {
-      this.subscriptionName = this.$route.query.name;
+    if(this.$store.state.team.legalSubscription) {
+      this.getSubscriptionId();
+      this.getClientSecret();
+      this.$store.dispatch("getCountries");
+      if(this.$route.query && this.$route.query.name) {
+        this.subscriptionName = this.$route.query.name;
+      }
+    } else {
+      this.$router.push({ name: 'Subscription' });
     }
   },
 
@@ -204,6 +208,7 @@ export default {
         this.$router.push(
             `/subscription/complete/success/${this.subscriptionName}/${this.teamName}`
         );
+        this.$store.state.team.legalSubscription = false;
       } catch (error) {
         this.$error({
           title: "Subscription Payment Error!",

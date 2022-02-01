@@ -598,6 +598,7 @@ export default {
       this.amount = item.price;
       this.savedAmount = item.discount;
       this.$store.state.team.subscriptionAmount = this.amount;
+      this.$store.state.team.legalSubscription = true;
       this.nextStep(2);
     },
     handleContinue() {
@@ -612,18 +613,35 @@ export default {
       }
 
       if(this.choosedPlan && this.choosedPlan.id) {
-        if(this.choosedPlan.id == this.plans[0].id) {
+        if(this.choosedPlan.promo_code && this.choosedPlan.id == this.plans[0].id) {
           let usedAlready = this.choosedPlan.team_ids.findIndex(item => parseInt(item) === parseInt(this.teamSelected.id));
           if(usedAlready >= 0) {
             this.$store.state.team.subscriptionAmount = (this.amount - this.savedAmount);
+            this.$store.state.team.legalSubscription = true;
             this.$router.push(
                 `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
             );
           } else {
-            this.freeModal = true;
+            if(this.choosedPlan.promo_code) {
+              this.freeModal = true;
+            } else {
+              this.$store.state.team.legalSubscription = true;
+              this.$router.push(
+                  `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
+              );
+            }
           }
         } else {
-          this.freeModal = true;
+          if(this.choosedPlan.promo_code) {
+            this.freeModal = true;
+          } else {
+            this.freeModal = true;
+            this.$store.state.team.subscriptionAmount = (this.amount - this.savedAmount);
+            this.$store.state.team.legalSubscription = true;
+            this.$router.push(
+                `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
+            );
+          }
         }
         // this.$router.push(
         //     `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
@@ -666,7 +684,7 @@ export default {
       this.freeModal = false;
     },
     handleOkFreeModal() {
-      if(this.cupon == this.choosedPlan.promo_code) {
+      if(this.choosedPlan.promo_code && this.cupon == this.choosedPlan.promo_code) {
         this.$store.state.team.subscriptionAmount = (this.amount - this.savedAmount);
         this.$router.push(
             `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
@@ -681,6 +699,7 @@ export default {
     },
     nextWithoutCupon() {
       this.$store.state.team.subscriptionAmount = (this.amount - this.savedAmount);
+      this.$store.state.team.legalSubscription = true;
       this.$router.push(
           `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
       );

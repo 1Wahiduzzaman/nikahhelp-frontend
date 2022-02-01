@@ -15,7 +15,8 @@ export default {
       team_list: [],
       newTeamInfo: null,
       teamInfo: null,
-      subscriptionAmount: 0
+      subscriptionAmount: 0,
+      legalSubscription: false
     };
   },
   mutations,
