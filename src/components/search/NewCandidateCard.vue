@@ -233,8 +233,8 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         console.log('short list')
       },
       async connectCandidate() {
-        if(this.role != 'admidn') {
-          this.showError("You don't have a permission.")
+        if(this.role != 'Admin' && this.role != 'owner admin') {
+          this.showError("You don't have permission.")
           return
         }
         let myTeamId = JwtService.getTeamIDAppWide();
@@ -373,6 +373,10 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         this.showError('Disconnection is ongoing')
       },
       async handleBlockCandidate(actionType, value, url) {
+        if(this.role != 'Admin' && this.role != 'owner admin') {
+          this.showError("You don't have permission.")
+          return
+        }
         let data = {
           url: url,
           actionType: actionType,

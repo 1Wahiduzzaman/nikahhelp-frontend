@@ -286,6 +286,10 @@ export default {
           this.query += `&country=${data.preferred_countries[0].id}`
           this.$refs.simpleSearch.setAttr('country', data.preferred_countries[0].id);
         }
+        if(data.per_current_residence_country.length) {
+          this.query += `&residence_country=${data.per_current_residence_country[0].id}`
+          this.$refs.simpleSearch.setAttr('residence_country', data.per_current_residence_country[0].id);
+        }
         if(data.preferred_nationality.length) {
           this.$refs.simpleSearch.setAttr('nationality', data.preferred_nationality[0].id);
         }
