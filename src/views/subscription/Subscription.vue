@@ -311,7 +311,7 @@
                 >
                   <small class="text-white">{{ teamSelected && teamSelected.last_subscription && teamSelected.last_subscription.created_at ? messageCreatedAt(teamSelected.last_subscription.created_at) : '' }}</small>
                   <h4 class="fs-12 text-white mt-2">
-                    Subscribed <b>6 month Plan</b> by - <b>{{ teamSelected && teamSelected.last_subscription && teamSelected.last_subscription.user ? teamSelected.last_subscription.user.full_name : '' }}</b>
+                    Subscribed <b>{{ teamSelected && teamSelected.last_subscription && teamSelected.last_subscription.plans ? teamSelected.last_subscription.plans.title : '' }} Plan</b> by - <b>{{ teamSelected && teamSelected.last_subscription && teamSelected.last_subscription.user ? teamSelected.last_subscription.user.full_name : '' }}</b>
                   </h4>
                   <small class="text-white"
                     >Team Expire period extended to the date of -
