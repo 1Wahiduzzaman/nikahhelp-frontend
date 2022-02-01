@@ -43,7 +43,7 @@
                   class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom"
                   :class="{'bg-brand-gradient': choosedPlan && choosedPlan.id == plan.id, 'border-top': pIndex === 0 }"
                   @click="setPlan(plan)"
-                  v-for="(plan, pIndex) in getPlans"
+                  v-for="(plan, pIndex) in plans"
                   :key="pIndex"
                 >
 <!--                  <a-icon-->
@@ -309,12 +309,13 @@
                 <div
                   class="px-4 d-block mt-1"
                 >
-                  <small class="text-white">Today, 6m ago</small>
+                  <small class="text-white">{{ teamSelected && teamSelected.last_subscription && teamSelected.last_subscription.created_at ? messageCreatedAt(teamSelected.last_subscription.created_at) : '' }}</small>
                   <h4 class="fs-12 text-white mt-2">
-                    Subscribed <b>6 month Plan</b> by - <b>Shirin Malik</b>
+                    Subscribed <b>6 month Plan</b> by - <b>{{ teamSelected && teamSelected.last_subscription && teamSelected.last_subscription.user ? teamSelected.last_subscription.user.full_name : '' }}</b>
                   </h4>
                   <small class="text-white"
-                    >Team Expire period extended to the date of - {{ teamSelected.subscription_expire_at }}</small
+                    >Team Expire period extended to the date of -
+                    {{ teamSelected && teamSelected.last_subscription && teamSelected.last_subscription.subscription_expire_at ? formateDate(teamSelected.last_subscription.subscription_expire_at) : '' }}</small
                   >
                 </div>
               </div>
@@ -356,11 +357,11 @@
       <a-input v-model="cupon" placeholder="Coupon" />
 
       <template slot="footer">
-        <a-button key="back" @click="handleCancel">
-          Cancel
+        <a-button key="back" @click="nextWithoutCupon">
+          Skip
         </a-button>
         <a-button key="submit" type="primary" @click="handleOkFreeModal">
-          {{ cupon ? 'Submit' : 'Skip' }}
+          Submit
         </a-button>
       </template>
     </a-modal>
@@ -372,6 +373,7 @@ import Header from "@/components/dashboard/layout/Header.vue";
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import Footer from "@/components/auth/Footer.vue";
 import ApiService from "../../services/api.service";
+import {format} from "timeago.js";
 
 export default {
   name: "Subscription",
@@ -382,7 +384,6 @@ export default {
   },
   data() {
     return {
-      fixedCupon: '123456',
       cupon: '',
       isLoading: false,
       user: {},
@@ -447,6 +448,26 @@ export default {
     }
   },
   methods: {
+    formateDate(date) {
+      if (date == null || date == undefined) {
+        return "  Not Exist";
+      }
+      let d = new Date(date),
+          month = "" + (d.getMonth() + 1),
+          day = "" + d.getDate(),
+          year = d.getFullYear();
+
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+
+      return [year, month, day].join("-");
+    },
+    messageCreatedAt(time) {
+      if (time) {
+        return format(time);
+      }
+      return '';
+    },
     setContentType(type) {
       this.contentShow = type;
     },
@@ -502,9 +523,9 @@ export default {
     // 	this.isLoading = false;
     // },
     async loadPlans() {
-      let {data} = await ApiService.get('/v1/package-list');
-      if(data && data.data) {
-        this.plans = data.data;
+      let {data} = await ApiService.get('/v1/package-list').then(res => res.data);
+      if(data) {
+        this.plans = data;
       }
     },
     async loadTeams() {
@@ -591,7 +612,19 @@ export default {
       }
 
       if(this.choosedPlan && this.choosedPlan.id) {
-        this.freeModal = true;
+        if(this.choosedPlan.id == this.plans[0].id) {
+          let usedAlready = this.choosedPlan.team_ids.findIndex(item => parseInt(item) === parseInt(this.teamSelected.id));
+          if(usedAlready >= 0) {
+            this.$store.state.team.subscriptionAmount = (this.amount - this.savedAmount);
+            this.$router.push(
+                `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
+            );
+          } else {
+            this.freeModal = true;
+          }
+        } else {
+          this.freeModal = true;
+        }
         // this.$router.push(
         //     `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
         // );
@@ -633,7 +666,7 @@ export default {
       this.freeModal = false;
     },
     handleOkFreeModal() {
-      if(this.cupon === this.fixedCupon) {
+      if(this.cupon == this.choosedPlan.promo_code) {
         this.$store.state.team.subscriptionAmount = (this.amount - this.savedAmount);
         this.$router.push(
             `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
@@ -645,6 +678,12 @@ export default {
           centered: true,
         });
       }
+    },
+    nextWithoutCupon() {
+      this.$store.state.team.subscriptionAmount = (this.amount - this.savedAmount);
+      this.$router.push(
+          `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
+      );
     }
   },
 };
