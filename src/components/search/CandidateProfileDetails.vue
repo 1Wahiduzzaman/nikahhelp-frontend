@@ -103,7 +103,7 @@
             <ButtonComponent
                 iconHeight="14px"
                 :isSmall="true"
-                :title="profile.is_connect ? 'Disconnect' : 'Connect'"
+                :title="profile.is_connect ? 'Cancel' : 'Connect'"
                 icon="/assets/icon/connect-s.svg"
                 :customEvent="profile.is_connect ? 'removeConnection' : 'addConnection'"
                 @onClickButton="onClickButton"
@@ -214,6 +214,10 @@ export default {
         },
 
         async connectCandidate() {
+            if(this.role != 'Admin' && this.role != 'owner admin') {
+                this.showError("You don't have permission.")
+                return
+            }
             let myTeamId = JwtService.getTeamIDAppWide();
             console.log(myTeamId, '>>>>>>>')
             if(!myTeamId) {
@@ -224,6 +228,7 @@ export default {
                 this.showError("This candidate has no team")
                 return;
             }
+            
             let data = {
                 userId: this.profile.user_id,
                 url: 'v1/send-connection-request',
@@ -344,6 +349,10 @@ export default {
             }
         },
         async handleBlockCandidate(actionType, value, url) {
+            if(this.role != 'Admin' && this.role != 'owner admin') {
+                this.showError("You don't have permission.")
+                return
+            }
             let data = {
                 url: url,
                 actionType: actionType,
