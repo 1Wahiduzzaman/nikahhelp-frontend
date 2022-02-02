@@ -286,10 +286,12 @@ export default {
           this.query += `&country=${data.preferred_countries[0].id}`
           this.$refs.simpleSearch.setAttr('country', data.preferred_countries[0].id);
         }
-        if(data.per_current_residence_country.length) {
-          this.query += `&residence_country=${data.per_current_residence_country[0].id}`
-          this.$refs.simpleSearch.setAttr('residence_country', data.per_current_residence_country[0].id);
-        }
+        // if(data.per_current_residence_country) {
+        //   if(data.per_current_residence_country.length){
+        //     this.query += `&residence_country=${data.per_current_residence_country[0].id}`
+        //     this.$refs.simpleSearch.setAttr('residence_country', data.per_current_residence_country[0].id);
+        //   }
+        // }
         if(data.preferred_nationality.length) {
           this.$refs.simpleSearch.setAttr('nationality', data.preferred_nationality[0].id);
         }
@@ -297,8 +299,8 @@ export default {
           this.$refs.simpleSearch.setAttr('religion', parseInt(data.pre_partner_religion_id[0]));
         }
         let genderObj = {1:2, 2:1, 0:1};
-        this.query += `&gender=${genderObj[1]}`
-        this.$refs.simpleSearch.setAttr('gender', personal.per_gender_id); //have to set depending on candidate
+        this.query += `&gender=${genderObj[personal.per_gender_id]}`
+        this.$refs.simpleSearch.setAttr('gender', genderObj[personal.per_gender_id]); //have to set depending on candidate
         this.fetchInitialCandidate();
       },1000)
     },
@@ -318,6 +320,7 @@ export default {
     }
   },
   created() {
+    console.log(JwtService.getTeamIDAppWide(), '>>>>>>>>>>>>>>>>>>>>..')
     if (!JwtService.getTeamIDAppWide()) {
       this.isLoading = true;
       setTimeout(() => {

@@ -45,6 +45,9 @@
 							style="width: 100%"
 							notFoundContent="Religion not found"
 						>
+							<a-select-option :value="undefined">
+								Select Religion
+							</a-select-option>
 							<a-select-option
 								v-for="r in $store.state.candidateInfo.religion_options"
 								:value="r.id"
@@ -69,6 +72,9 @@
 							style="width: 100%"
 							notFoundContent="Country not found"
 						>
+							<a-select-option :value="undefined">
+								Select Country
+							</a-select-option>
 							<a-select-option
 								v-for="c in $store.state.candidateInfo.countries"
 								:value="c.id"
@@ -93,6 +99,9 @@
 							style="width: 100%"
 							notFoundContent="ethnicity not found"
 						>
+							<a-select-option :value="undefined">
+								Select Ethnicity
+							</a-select-option>
 							<a-select-option
 								v-for="e in ethnicities"
 								:value="e"
@@ -117,6 +126,7 @@
 							style="width: 100%"
 							notFoundContent="Marital Status not found"
 						>
+							<a-select-option :value="undefined">Select Marital Status</a-select-option>
 							<a-select-option value="single">Single</a-select-option>
 							<a-select-option value="married">Married</a-select-option>
 							<a-select-option value="divorced">Divorced</a-select-option>
@@ -136,6 +146,7 @@
 							style="width: 100%"
 							notFoundContent="Employment Status not found"
 						>
+							<a-select-option :value="undefined">Select Employment Status</a-select-option>
 							<a-select-option value="Don't Mind">Don't Mind</a-select-option>
 							<a-select-option value="Unemployed">Employed full-time</a-select-option>
 							<a-select-option value="Employed part-time">Employed part-time</a-select-option>
@@ -163,6 +174,9 @@
 							style="width: 100%"
 							notFoundContent="Nationality not found"
 						>
+							<a-select-option :value="undefined">
+								Select Nationality
+							</a-select-option>
 							<a-select-option
 								v-for="c in $store.state.candidateInfo.countries"
 								:value="c.id"
@@ -179,7 +193,7 @@
 						<!-- <div class="mt-4">
 							<div class="select-box">
 								<select class="custom-select" v-model="motherTongue">
-									<option value="">Select Mother Tongue</option>
+									<option :value="undefined">Select Mother Tongue</option>
 									<option
 										v-for="(spoken_language, key) in languages"
 										:value="spoken_language"
@@ -193,9 +207,9 @@
 						<div class="mt-4">
 							<div class="select-box">
 								<select class="custom-select" v-model="employmentStatus">
-									<option value="">Select Employment Status</option>
+									<option :value="undefined">Select Employment Status</option>
 
-									<option value="" disabled>Select Employment Status</option>
+									<!-- <option :value="undefined" disabled>Select Employment Status</option> -->
 									<option value="Employed">Employed</option>
 									<option value="Unemployed">Unemployed</option>
 									<option value="Don't Mind">Don't Mind</option>
@@ -205,7 +219,7 @@
 						<!-- <div class="mt-4">
 							<div class="select-box">
 								<select class="custom-select" v-model="occupation">
-									<option value="">Select Occupation</option>
+									<option :value="undefined">Select Occupation</option>
 									<option
 										:value="value"
 										:key="key"
@@ -219,7 +233,7 @@
 						<div class="mt-4">
 							<div class="select-box">
 								<select class="custom-select" v-model="nationality">
-									<option value="">Select Nationality</option>
+									<option :value="undefined">Select Nationality</option>
 									<option
 										v-for="c in $store.state.candidateInfo.countries"
 										:value="c.id"
@@ -233,7 +247,7 @@
 						<!-- <div class="mt-4">
 							<div class="select-box">
 								<select class="custom-select" v-model="countryOfBirth">
-									<option value="">Select Country of Birth</option>
+									<option :value="undefined">Select Country of Birth</option>
 									<option
 										v-for="c in $store.state.candidateInfo.countries"
 										:value="c.id"
@@ -247,7 +261,7 @@
 						<!-- <div class="mt-4">
 							<div class="select-box">
 								<select class="custom-select" v-model="currentResidence">
-									<option value="">Select Current Residence</option>
+									<option :value="undefined">Select Current Residence</option>
 									<option
 										v-for="c in $store.state.candidateInfo.countries"
 										:value="c.id"
@@ -261,7 +275,7 @@
 						<div class="mt-4">
 							<div class="select-box">
 								<select class="custom-select" v-model="currentlyLivingWith">
-									<option value="">Select Currently Living With</option>
+									<option :value="undefined">Select Currently Living With</option>
 									<option value="parents">Parents</option>
 
 									<option value="live in my own home">
@@ -277,7 +291,7 @@
 						<div class="mt-4">
 							<div class="select-box">
 								<select class="custom-select" v-model="hobbiesAndInterest">
-									<option value="">Select Hobbies & interests</option>
+									<option :value="undefined">Select Hobbies & interests</option>
 									<option
 										v-for="(hobby, key) in hobbies"
 										:key="key"
