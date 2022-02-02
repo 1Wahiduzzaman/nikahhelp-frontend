@@ -1258,6 +1258,11 @@ export default {
               this.socketNotification(payload);
             }
 
+            let _team_id = JwtService.getTeamIDAppWide();
+            if(this.teamData.team_id == _team_id) {
+              JwtService.destroyTeamIDAppWide();
+            }
+
 						await ApiService.post("v1/delete-reason-submit", {
 							team_id: this.teamData.team_id,
 							reason_type: deletionReasonType,

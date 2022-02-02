@@ -102,18 +102,30 @@ export default {
       loading: false
 		};
 	},
-	mounted() {
+  created() {
+    const self = this;
+    setTimeout(() => {
+      self.card = elements?.create("card", style);
+      self.card.mount(self.$refs.card);
+    }, 1000);
+  },
+  mounted() {
 		//location.reload();
-		this.card = elements.create("card", style);
-		this.card.mount(this.$refs.card);
+    // this.card = elements?.create("card", style);
+    // this.card.mount(this.$refs.card);
 	},
-	beforeDestroy() {
-		// this.card.destroy(this.$refs.card);
-	},
+	// beforeDestroy() {
+	// 	// this.card.destroy(this.$refs.card);
+	// },
 	methods: {
     setValidationFalse() {
       this.payment_method = false;
-      // this.card.mount(this.$refs.card);
+      const self = this;
+      setTimeout(() => {
+        self.card = "";
+        self.card = elements.getElement('card');
+        self.card.mount(self.$refs.card);
+      }, 1000);
     },
 		submitPayment() {
       this.loading = true;
@@ -149,7 +161,8 @@ export default {
 							console.log(this.payment_method);
 							this.$emit("get-payment-method", this.payment_method);
 							this.$store.state.user.payment_method = this.payment_method;
-							// this.card.clear();
+							this.card.clear();
+              // this.card.destroy(this.$refs.card);
 						}
 					}.bind(this)
 				);
