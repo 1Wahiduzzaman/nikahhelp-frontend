@@ -133,7 +133,7 @@
                             </v-col>
                             <v-col class="pt-1 mb-5" cols="12" md="6">
                               <CardInfo
-                                title="I improve myself"
+                                title="How I improve myself?"
                                 class="mt-2"
                               />
                             </v-col>
