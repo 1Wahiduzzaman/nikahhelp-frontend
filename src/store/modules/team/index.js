@@ -16,6 +16,8 @@ export default {
       newTeamInfo: null,
       teamInfo: null,
       subscriptionAmount: 0,
+      discountedAmount: 0,
+      originalAmount: 0,
       legalSubscription: false
     };
   },
