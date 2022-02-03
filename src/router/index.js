@@ -151,6 +151,7 @@ const AppRouter = new VueRouter({
             children: [{
                 path: "",
                 component: AdminDashboard,
+                name: "Admin",
 
             },
             {
