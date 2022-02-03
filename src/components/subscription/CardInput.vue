@@ -105,9 +105,16 @@ export default {
   created() {
     const self = this;
     setTimeout(() => {
-      self.card = elements?.create("card", style);
-      self.card.mount(self.$refs.card);
-    }, 1000);
+      let cardElement = elements.getElement('card');
+      if(cardElement) {
+        self.card = "";
+        self.card = elements.getElement('card');
+        self.card.mount(self.$refs.card);
+      } else {
+        self.card = elements.create("card", style);
+        self.card.mount(self.$refs.card);
+      }
+    }, 500);
   },
   mounted() {
 		//location.reload();

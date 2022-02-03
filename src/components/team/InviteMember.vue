@@ -289,9 +289,10 @@ export default {
                 center: true,
               });
 
-              if(self.userObj && self.userObj.id && self.userObj.email) {
+              console.log(self.userObj.user)
+              if(self.userObj && self.userObj.user && self.userObj.user.id && self.userObj.user.email) {
                 let notifyObj = {
-                  receivers: [self.userObj.id.toString()],
+                  receivers: [self.userObj.user.id.toString()],
                   title: `invited you to join ${self.team.name} team as ${self.invitationObject.role}`,
                   team_id: self.team.id,
                   team_temp_name: self.team.name

@@ -54,7 +54,6 @@
                   v-model="personalInformation.essential.per_gender"
                   label="name"
                   :options="[
-                    { name: 'please select', value: '' },
                     { name: 'Male', value: 1 },
                     { name: 'Female', value: 2 },
                   ]"
@@ -2974,6 +2973,10 @@ export default {
       ) {
         this.personalInformation.essential.dob = `${this.dateOfbirth.year}/${this.dateOfbirth.month}/${this.dateOfbirth.day}`;
         this.saveEssentialInfo();
+      }
+      else{
+         this.personalInformation.essential.dob=null;
+          this.saveEssentialInfo();
       }
     },
     onMultiValueChange(e, name, action) {

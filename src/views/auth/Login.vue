@@ -1,41 +1,41 @@
 <template>
   <div class="signin login-main-container">
     <div class="signin-inner desktop-padding login-header-container">
-      <a class="logo" href="/"><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo" /></a>
-      <h3 id="welcome-back-tag" class="welcome-back-tag"><b>Welcome Back</b></h3>
+      <a class="logo" href="/"
+        ><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo"
+      /></a>
+      <h3 id="welcome-back-tag" class="welcome-back-tag">
+        <b>Welcome Back</b>
+      </h3>
     </div>
 
     <div class="signin-inner login-body-container">
       <a-form-model
-          ref="signinForm"
-          :model="signinModel"
-          :rules="rules"
-          class="form-signin pb-1px shadow"
+        ref="signinForm"
+        :model="signinModel"
+        :rules="rules"
+        class="form-signin pb-1px shadow"
       >
         <!-- <Spinner v-if="isLoading" /> -->
         <p v-if="error">
           {{ error }}
           <router-link
-              to="/login"
-              class="
-                btn btn-sm btn-outline-primary btn-round-sm
-                ms-2
-                text-nowrap
-              "
+            to="/login"
+            class="btn btn-sm btn-outline-primary btn-round-sm ms-2 text-nowrap"
           >
             Sign in
           </router-link>
         </p>
         <div v-else>
           <div class="">
-            <h4 class="fs-16 text-black-50">Type your email & password </h4>
+            <h4 class="fs-16 text-black-50">Type your email & password</h4>
             <a-form-model-item ref="email" prop="email">
               <a-input
-                  type="email"
-                  id="email"
-                  v-model="signinModel.email"
-                  placeholder="Enter email"
-                  class="fs-14"
+                type="email"
+                id="email"
+                v-model="signinModel.email"
+                placeholder="Enter email"
+                class="fs-14"
               />
             </a-form-model-item>
           </div>
@@ -43,30 +43,24 @@
           <div class="">
             <a-form-model-item ref="password" prop="password">
               <a-input-password
-                  type="password"
-                  class="form-control fs-14"
-                  id="password"
-                  v-model="signinModel.password"
-                  placeholder="Password"
+                type="password"
+                class="form-control fs-14"
+                id="password"
+                v-model="signinModel.password"
+                placeholder="Password"
               />
             </a-form-model-item>
           </div>
           <button
-              type="button"
-              @click="handleSubmit"
-              class="btn signin-btn h-32 w-100 pt-1 mt-1"
+            type="button"
+            @click="handleSubmit"
+            class="btn signin-btn h-32 w-100 pt-1 mt-1"
           >
             <a-icon type="loading" class="mr-2 fs-20" v-if="isLoading" />
             Sign in
           </button>
 
-          <p
-              class="
-                ms-2
-                text-nowrap
-                mt-3
-              "
-          >
+          <p class="ms-2 text-nowrap mt-3">
             <router-link to="/forgot-password" class="forgot-password">
               Forgot Password?
             </router-link>
@@ -75,20 +69,13 @@
       </a-form-model>
 
       <div class="join-now pb-4">
-        <p
-            class="flex-center-center mt-3 text-white bottom-link-text"
-        >
+        <p class="flex-center-center mt-3 text-white bottom-link-text">
           New to <span class="logo-text"> Matrimony Assist? </span>
 
           <router-link
-              to="/signup"
-              class="
-                btn
-                ms-2
-                text-nowrap
-                join-now-btn
-              "
-              style="margin-left: 5px;"
+            to="/signup"
+            class="btn ms-2 text-nowrap join-now-btn"
+            style="margin-left: 5px"
           >
             Join Now
           </router-link>
@@ -132,6 +119,10 @@ export default {
             required: true,
             message: "Please input your email address",
           },
+          {
+            type: "email",
+            message: "Please input a valid email",
+          },
         ],
 
         password: [{ required: true, message: "Please input your password" }],
@@ -144,10 +135,10 @@ export default {
         if (valid) {
           try {
             this.isLoading = true;
-            this.$store.dispatch("login", this.signinModel).then(response => {
-              console.log(response)
+            this.$store.dispatch("login", this.signinModel).then((response) => {
+              console.log(response);
               this.isLoading = false;
-              if(this.$store.state.auth.errorMessage) {
+              if (this.$store.state.auth.errorMessage) {
                 this.$error({
                   title: this.$store.state.auth.errorMessage,
                   centered: true,
@@ -176,116 +167,116 @@ export default {
 @import "@/styles/base/_variables.scss";
 @import "@/styles/components/_inputs.scss";
 //.login-container {
-  //display: flex;
-  //flex-direction: column;
-  //overflow: auto;
-  //height: calc(100vh);
+//display: flex;
+//flex-direction: column;
+//overflow: auto;
+//height: calc(100vh);
 
-  .signin {
-    //height: 100vh;
-    background-color: #522e8e;
-    background-image: linear-gradient(
-      0deg,
-      #522e8e 0%,
-      #932784 46%,
-      #e02076 100%
-    );
+.signin {
+  //height: 100vh;
+  background-color: #522e8e;
+  background-image: linear-gradient(
+    0deg,
+    #522e8e 0%,
+    #932784 46%,
+    #e02076 100%
+  );
 
-    .signin-inner {
-      max-width: 400px;
-      padding: 20px 15px;
-      margin: 0 auto;
-      text-align: center;
-      @media (min-width: 768px) {
-        padding: 30px 15px;
-      }
-      .logo {
-        max-width: 250px;
-        display: inline-block;
-        margin-bottom: 8px;
-        .mat-logo {
-          width: 120px;
-          height: 80px;
-          @media (min-width: 768px) {
-            width: 170px;
-            height: 110px;
-          }
-        }
-      }
-      .form-signin {
-        background: $bg-white;
-        padding: 20px;
-        border-radius: 5px;
-
-        .forgot {
-          font-size: 14px;
-          font-weight: bold;
-          margin-top: 5px;
-          text-decoration: none;
-          color: #b30d7e;
-          padding: 5px 15px 5px 15px;
-          border-color: #b30d7e;
-        }
-        .forgot:hover {
-          box-shadow: 2px 2px 2px #989597;
-          background-color: white;
-        }
-        .warning {
-          color: red;
-          font-size: 14px;
-          margin-top: 5px;
+  .signin-inner {
+    max-width: 400px;
+    padding: 20px 15px;
+    margin: 0 auto;
+    text-align: center;
+    @media (min-width: 768px) {
+      padding: 30px 15px;
+    }
+    .logo {
+      max-width: 250px;
+      display: inline-block;
+      margin-bottom: 8px;
+      .mat-logo {
+        width: 120px;
+        height: 80px;
+        @media (min-width: 768px) {
+          width: 170px;
+          height: 110px;
         }
       }
     }
-  }
+    .form-signin {
+      background: $bg-white;
+      padding: 20px;
+      border-radius: 5px;
 
-  #name {
-    font-family: Rochester, cursive;
-    font-size: 20px;
-    color: white;
-    padding-left: 7px;
-  }
-
-  .welcome-back {
-    .welcome-back-text {
-      padding-top: 0px;
-      padding-bottom: 10px;
-      text-align: center;
-      margin-top: -20px;
-      margin-bottom: 0px;
-      color: #c2f0fd;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      @media (min-width: 768px) {
-        margin-top: 0;
+      .forgot {
+        font-size: 14px;
+        font-weight: bold;
+        margin-top: 5px;
+        text-decoration: none;
+        color: #b30d7e;
+        padding: 5px 15px 5px 15px;
+        border-color: #b30d7e;
+      }
+      .forgot:hover {
+        box-shadow: 2px 2px 2px #989597;
+        background-color: white;
+      }
+      .warning {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
       }
     }
   }
+}
 
-  #join-now {
-    background-color: #43e3e6fd;
-    color: white;
-    border: white;
-    margin: 5px;
-  }
+#name {
+  font-family: Rochester, cursive;
+  font-size: 20px;
+  color: white;
+  padding-left: 7px;
+}
 
-  #join-now:hover {
-    color: #f5e6f4;
-    box-shadow: 2px 2px 2px #383332;
-  }
-
-  #welcome-back-tag {
-    background: -webkit-linear-gradient(white, pink, white, #8debf2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .btn-primary {
-    box-shadow: 0px 0px;
-    &:hover,
-    &:not(:disabled):not(.disabled):active {
-      box-shadow: 2px 2px 2px #999;
+.welcome-back {
+  .welcome-back-text {
+    padding-top: 0px;
+    padding-bottom: 10px;
+    text-align: center;
+    margin-top: -20px;
+    margin-bottom: 0px;
+    color: #c2f0fd;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    @media (min-width: 768px) {
+      margin-top: 0;
     }
   }
+}
+
+#join-now {
+  background-color: #43e3e6fd;
+  color: white;
+  border: white;
+  margin: 5px;
+}
+
+#join-now:hover {
+  color: #f5e6f4;
+  box-shadow: 2px 2px 2px #383332;
+}
+
+#welcome-back-tag {
+  background: -webkit-linear-gradient(white, pink, white, #8debf2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn-primary {
+  box-shadow: 0px 0px;
+  &:hover,
+  &:not(:disabled):not(.disabled):active {
+    box-shadow: 2px 2px 2px #999;
+  }
+}
 //}
 
 .ant-form-item {
@@ -302,8 +293,8 @@ export default {
   padding-bottom: 1px !important;
 }
 .join-now-btn {
-  color: #FFFFFF;
-  border: 1px solid #FFFFFF;
+  color: #ffffff;
+  border: 1px solid #ffffff;
   padding: 0 6px;
   border-radius: 20px;
   font-size: 12px;
@@ -350,14 +341,14 @@ export default {
   }
 }
 .signin-btn {
-  border: 1px solid #3A3092;
-  color: #3A3092;
+  border: 1px solid #3a3092;
+  color: #3a3092;
   border-radius: 20px;
   font-size: 16px;
 }
 .signin-btn:hover {
-  background: #3A3092;
-  color: #FFFFFF;
+  background: #3a3092;
+  color: #ffffff;
   box-shadow: 2px 2px 2px #999;
 }
 .signin-btn:focus {
@@ -377,12 +368,12 @@ export default {
 .login-header-container {
   flex-shrink: 0;
 }
-.login-body-container{
+.login-body-container {
   flex-grow: 1;
   overflow: auto;
   min-height: 2em;
 }
-.login-footer-container{
+.login-footer-container {
   flex-shrink: 0;
 }
 </style>

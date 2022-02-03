@@ -1224,15 +1224,27 @@ export default {
 				deletionReasonType,
 			} = bundle;
 			if (password.length == 0) {
-				this.$message.error("Please Enter Password");
+				// this.$message.error("Please Enter Password");
+        this.$error({
+          title: "Error",
+          content: "Please Enter Password",
+        });
 				return;
 			}
 			if (deletionReasonDetail.length == 0 && deletionReasonType.length == 0) {
-				this.$message.error("Please Enter Deletion Reason and Type Properly");
+				// this.$message.error("Please Enter Deletion Reason and Type Properly");
+        this.$error({
+          title: "Error",
+          content: "Please Enter Deletion Reason and Type Properly",
+        });
 				return;
 			}
 			if (!this.isOwnerAdmin) {
-				this.$message.error("You don't have rights to delete this team");
+				// this.$message.error("You don't have rights to delete this team");
+        this.$error({
+          title: "Error",
+          content: "You don't have rights to delete this team",
+        });
 				return;
 			}
 			await ApiService.delete("v1/delete-team", {
@@ -1244,7 +1256,7 @@ export default {
 					console.log(data);
 
 					if (data.data.status != "FAIL" && data.data.status_code == 200) {
-						this.$message.success("Team Deleted Succesfully");
+						this.$message.success("Team Deleted Successfully");
 
             if(this.teamData && this.teamData.team_members && this.teamData.team_members.length > 1) {
               let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -1273,10 +1285,18 @@ export default {
               }).catch((error) => console.log(error));
 
 						this.showModalDeletion = false;
+            this.$success({
+              title: "Success",
+              content: "Team Deleted Successfully",
+            });
 						this.$emit("teamListUpdated");
             location.reload();
 					} else {
-						this.$message.error("Something went wrong");
+						// this.$message.error("Something went wrong");
+            this.$error({
+              title: "Error",
+              content: "Something went wrong",
+            });
 
 						this.showModalDeletion = false;
 					}
@@ -1284,9 +1304,13 @@ export default {
 				.catch((error) => {
 					console.log(error);
 					console.log(error.response);
-					this.$message.error("Something went wrong");
+					// this.$message.error("Something went wrong");
 
 					this.showModalDeletion = false;
+          this.$error({
+            title: "Error",
+            content: "Something went wrong",
+          });
 				});
 		},
 		deleteTeam() {

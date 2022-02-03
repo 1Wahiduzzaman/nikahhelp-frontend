@@ -4,6 +4,7 @@
       <div style="margin-bottom: 5px; padding-right: 1000px"></div>   <!--plz ignore this div -->
       <Loader v-if="isLoading" :isLoading="isLoading" />
       <div class="row" v-else>
+        <TeamOffRedirection v-if="redirection" />
         <div class="col-12">
           <div class="chat-wrapper my-2">
             <div class="chat-left" :class="{'chat-hide': conversationTitle}">
@@ -424,6 +425,7 @@ import {openModalRoute} from "@/plugins/modal/modal.mixin";
 import ConnectedTeamChat from "../../components/chat/ConnectedTeamChat";
 import PrivateRequestChat from "../../components/chat/PrivateRequestChat";
 import Notification from "@/common/notification.js";
+import TeamOffRedirection from "../../components/redirection/TeamOffRedirection";
 
 const messageKeys = ['id', 'user_id', 'chat_id', 'team_id', 'from_team_id', 'to_team_id', 'private_receiver_id', 'private_team_chat_id', 'body', 'seen', 'created_at'];
 
@@ -439,6 +441,7 @@ export default {
   },
   data() {
     return {
+      redirection: false,
       conversationTitle: '',
       type: 'team chat',
       msg_text: '',
@@ -469,6 +472,7 @@ export default {
     }
   },
   components: {
+    TeamOffRedirection,
     PrivateRequestChat,
     ConnectedTeamChat,
     ChatListItem
@@ -767,11 +771,12 @@ export default {
     },
     getActiveTeamId() {
       if (!JwtService.getTeamIDAppWide()) {
-        this.isLoading = true;
-        setTimeout(() => {
-          this.isLoading = false;
-          openModalRoute(this, "manage_team_redirect");
-        }, 2000);
+        // this.isLoading = true;
+        // setTimeout(() => {
+        //   this.isLoading = false;
+        //   openModalRoute(this, "manage_team_redirect");
+        // }, 2000);
+        this.redirection = true;
       } else {
         this.active_team_id = JwtService.getTeamIDAppWide();
         this.loadPageData();

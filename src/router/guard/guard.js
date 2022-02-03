@@ -7,6 +7,7 @@ export const InitRoute = (to, from, next) => {
     /**please explain how this home route works 
      * You can only navigate to home page If you aren't logged in.
     */
+
     else if (!user && to.name == 'Home') {
         return next();
     }
@@ -15,6 +16,12 @@ export const InitRoute = (to, from, next) => {
     }
     else if (user.is_verified == 0) {
         return to.name == 'EmailVerification' ? next() : next({ name: 'EmailVerification' });
+    }
+    else if (user && user.email === 'superadmin@gmail.com' && to.name == 'DHome') {
+        return next({ name: 'AdminUsers' });
+    }
+    else if (user && user.email !== 'superadmin@gmail.com' && to.name == 'Admin') {
+        return next({ name: 'DHome' });
     }
     else if (user.account_type === 1 && user.data_input_status <= 5) {
 
