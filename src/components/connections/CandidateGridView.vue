@@ -85,6 +85,14 @@
 
           <v-card-title>
             {{ connection.candidateInfo ? connection.candidateInfo.candidate_fname : 'Not found' }} {{ connection.candidateInfo ? connection.candidateInfo.candidate_lname : '' }}
+            <v-chip
+                class="ma-2"
+                :color="getTypeColor"
+                text-color="white"
+                small
+            >
+              {{ type }}
+            </v-chip>
           </v-card-title>
 
           <div class="px-4">
@@ -302,6 +310,19 @@ export default {
         };
       }
     },
+    getTypeColor() {
+      if (this.type == "connected") {
+        return 'green';
+      } else if (this.type == "Request received") {
+        return 'info';
+      } else if (this.type == "Request send") {
+        return 'warning';
+      } else if (this.type == "we declined") {
+        return 'error';
+      } else {
+        return 'indigo';
+      }
+    }
   },
   methods: {
     getAge,
@@ -785,7 +806,8 @@ export default {
 .flip-card {
   background-color: #FFFFFF;
   width: 100%;
-  height: 510px;
+  height: 580px;
+  //height: 510px;
   perspective: 1000px;
 }
 .flip-card-inner {
@@ -808,8 +830,14 @@ export default {
   transform: rotateY(180deg);
 }
 .icon-rotate-box {
-  left: 35px;
-  top: 10px;
+  left: 12px;
+  top: 6px;
+  @media (min-width: 1600px) {
+    left: 16px;
+  }
+  @media (min-width: 1800px) {
+    left: 28px;
+  }
 }
 .invert-filter {
   filter: invert(1);

@@ -2,6 +2,7 @@
   <div>
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else>
+      <TeamOffRedirection v-if="redirection" />
       <MainHeader @toggleCollapse="toggleCollapse" />
       <a-layout
         id="layout"
@@ -28,7 +29,7 @@
             @collapseSideBar="collapsed = !collapsed"
           >
             <template v-slot:search>
-              <SimpleSearch 
+              <SimpleSearch
                 ref="simpleSearch"
                 @switchComponent="switchComponent"
               />
@@ -40,6 +41,7 @@
             <div id="top" class="main-content-wrapper">
               <div class="main-content-1">
                 <component
+                  :role="teamRole"
                   @switchComponent="switchComponent"
                   @navigateProfile="navigateProfile"
                   @socketNotification="socketNotification"
@@ -57,6 +59,14 @@
       </a-layout>
     </div>
     <Loader :isLoading="isFetching" />
+<!--    <ModalContainer-->
+<!--      :modalKey="'manageTeamRedirect'"-->
+<!--      :width="'wide'"-->
+<!--      :fullscreen="false"-->
+<!--      :hideOverlay="false"-->
+<!--    >-->
+<!--      <ManageTeamRedirect />-->
+<!--    </ModalContainer>-->
   </div>
 </template>
 
@@ -65,18 +75,27 @@ import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import Observer from "@/components/atom/Observer"
 import Loader from "@/plugins/loader/loader.vue";
 import CandidateProfiles from "@/components/search/CandidateProfiles.vue";
+import ModalContainer from "@/plugins/modal/modal-container";
+import ManageTeamRedirect from "@/views/design/ManageTeamRedirect.vue";
 import AddComponent from "@/components/add/addComponent";
+import JwtService from "@/services/jwt.service";
+import { createModalMixin, openModalRoute } from "@/plugins/modal/modal.mixin";
 import { mapGetters, mapMutations, mapActions } from "vuex";
+import TeamOffRedirection from "../../components/redirection/TeamOffRedirection";
 
 export default {
   name: "AdvanceSearch",
+  mixins: [createModalMixin("manageTeamRedirect")],
   components: {
+    TeamOffRedirection,
     ProfileDetail: () => import("@/components/search/CandidateProfileDetails"),
     RightSideCandidateDetail: () =>
       import("@/components/search/RightSideCandidateDetail"),
     RightSidebar: () => import("@/components/search/ProfileDetailRight"),
     SimpleSearch: () => import("@/components/search/SimpleSearch.vue"),
     Sidebar,
+    // ModalContainer,
+    // ManageTeamRedirect,
     Loader,
     //SimpleSearch,
     // Footer,
@@ -96,6 +115,7 @@ export default {
   },
   data() {
     return {
+      activeTeamId: null,
       query: 'v1/home-searches?page=0&parpage=10',
       isLoading: false,
       user: {},
@@ -113,6 +133,32 @@ export default {
     currentTabComponent() {
       return this.componentName;
     },
+    loggedUser() {
+      let loggedUser = JSON.parse(localStorage.getItem("user"));
+      if (loggedUser) {
+        return loggedUser;
+      }
+      return null;
+    },
+    activeTeamInfo() {
+      return this.teamsOriginal.find((item) => item.team_id == this.activeTeamId);
+    },
+    teamRole() {
+      let team = this.activeTeamInfo;
+      let loggedUser = this.loggedUser;
+      if (team && loggedUser && team.team_members) {
+        let member = team.team_members.find(
+          (item) => item.user_id == loggedUser.id
+        );
+        if (member) {
+          return member.role.replace("+", " & ");
+        }
+      }
+      return "N/A";
+    },
+    teamsOriginal() {
+      return this.$store.state.team?.team_list
+    }
   },
   methods: {
     ...mapActions({
@@ -127,6 +173,9 @@ export default {
       setProfiles: "search/setProfiles",
       setLoading: "search/setLoading",
     }),
+    checkTurnedOnSwitch() {
+      this.activeTeamId = JwtService.getTeamIDAppWide();
+    },
     socketNotification(payload) {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       payload.sender = loggedUser.id;
@@ -233,21 +282,28 @@ export default {
           this.query += `&max_height=${data.pre_height_max}`
           this.$refs.simpleSearch.setAttr('heightMax', data.pre_height_max);
         }
-        
-        // this.$refs.simpleSearch.setAttr('employmentStatus', data.pre_employment_status);
-          // if(data.pre_partner_religion_id.length) {
-          //   this.$refs.simpleSearch.setAttr('religion', data.pre_partner_religion_id[0]);
-          // }
+        if(data.pre_employment_status) {
+          this.$refs.simpleSearch.setAttr('employmentStatus', data.pre_employment_status);
+        }
         if(data.preferred_countries.length) {
           this.query += `&country=${data.preferred_countries[0].id}`
           this.$refs.simpleSearch.setAttr('country', data.preferred_countries[0].id);
         }
+        // if(data.per_current_residence_country) {
+        //   if(data.per_current_residence_country.length){
+        //     this.query += `&residence_country=${data.per_current_residence_country[0].id}`
+        //     this.$refs.simpleSearch.setAttr('residence_country', data.per_current_residence_country[0].id);
+        //   }
+        // }
         if(data.preferred_nationality.length) {
           this.$refs.simpleSearch.setAttr('nationality', data.preferred_nationality[0].id);
         }
-        let genderObj = {1:2, 2:1};
-        this.query += `&gender=${genderObj[1]}`
-        this.$refs.simpleSearch.setAttr('gender', 1); //have to set depending on candidate
+        if(data.pre_partner_religion_id.length) {
+          this.$refs.simpleSearch.setAttr('religion', parseInt(data.pre_partner_religion_id[0]));
+        }
+        let genderObj = {1:2, 2:1, 0:1};
+        this.query += `&gender=${genderObj[personal.per_gender_id]}`
+        this.$refs.simpleSearch.setAttr('gender', genderObj[personal.per_gender_id]); //have to set depending on candidate
         this.fetchInitialCandidate();
       },1000)
     },
@@ -267,6 +323,17 @@ export default {
     }
   },
   created() {
+    console.log(JwtService.getTeamIDAppWide(), '>>>>>>>>>>>>>>>>>>>>..')
+    if (!JwtService.getTeamIDAppWide()) {
+      // this.isLoading = true;
+      // setTimeout(() => {
+      //   this.isLoading = false;
+      //   openModalRoute(this, "manage_team_redirect");
+      // }, 2000);
+      this.redirection = true;
+      return
+    }
+    this.checkTurnedOnSwitch();
     this.handleCandidateInfo();
   },
 };

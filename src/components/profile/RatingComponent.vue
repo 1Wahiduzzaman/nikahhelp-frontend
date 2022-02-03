@@ -12,13 +12,12 @@
         </div>
         <div class="d-none d-sm-flex d-md-block justify-space-between text-right">
           <a-rate disabled class="pl-0" :value="value" />
-          <v-chip
-          class="ml-5"
-          style="background: #6159a7; width: 115px; text-align:center"
-          text-color="white"
-          small
-          >{{ rate[value] }}</v-chip
-        >
+          <div
+            class="ml-5 text-center"
+            style="background: #6159a7; width: 115px; text-align:center; display: inline-block; width: 135px; padding: 3px 0; font-size: 13px; color: #fff; border-radius: 20px"
+            text-color="white"
+            small
+          >{{ rate[value] }}</div>
         </div>
       </v-col>
     </v-row>
@@ -47,12 +46,12 @@ export default {
   data() {
     return {
       rate: {
-        0: "----",
+        0: "Not Rated",
         1: "Not Important",
         2: "Quite Important",
         3: "Important",
         4: "Very Important",
-        5: "Extremly Important",
+        5: "Extremely Important",
       },
     };
   },

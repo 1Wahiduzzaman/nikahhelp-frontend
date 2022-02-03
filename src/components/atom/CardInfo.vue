@@ -5,13 +5,13 @@
                 <p class="text--secondary text-subtitle-1">{{ title }}</p>
                 <ButtonComponent
                     v-if="showDownloadBtn"
-                  iconHeight="14px"
-                  :isSmall="true"
-                  title="Download PDF"
-                  icon="/assets/icon/download-secondary.svg"
-                  customEvent="editProfile"
-                  :isBlock="false"
-                  @onClickButton="onClickButton"
+                    iconHeight="14px"
+                    :isSmall="true"
+                    title="Download PDF"
+                    icon="/assets/icon/download-secondary.svg"
+                    customEvent="editProfile"
+                    :isBlock="false"
+                    @onClickButton="$emit('onClickDownload')"
                 />
             </div>
             <p class="text--primary text-subtitle-2">

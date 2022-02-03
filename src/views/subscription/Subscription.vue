@@ -40,25 +40,27 @@
               </div>
               <div class="div-2 position-relative bg-white">
                 <div
-                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom border-top"
-                  :class="{ 'bg-brand-gradient': isSelected1 }"
-                  @click="firstOption"
+                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom"
+                  :class="{'bg-brand-gradient': choosedPlan && choosedPlan.id == plan.id, 'border-top': pIndex === 0 }"
+                  @click="setPlan(plan)"
+                  v-for="(plan, pIndex) in plans"
+                  :key="pIndex"
                 >
 <!--                  <a-icon-->
 <!--                    type="check"-->
 <!--                    class="text-transparent icon-check"-->
 <!--                    :class="{ 'text-white': isSelected1 }"-->
 <!--                  />-->
-                  <img src="@/assets/icon/subscription_check.svg" alt="icon" v-if="isSelected1" class="mr-4" />
+                  <img src="@/assets/icon/subscription_check.svg" alt="icon" v-if="choosedPlan && choosedPlan.id == plan.id" class="mr-4" />
                   <h4
                     class="duration"
-                    :class="{ selected: isSelected1 }"
+                    :class="{ selected: choosedPlan && choosedPlan.id == plan.id }"
                   >
-                    1 Month
+                    {{ plan.title }}
                   </h4>
                 </div>
                 <div
-                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom"
+                  class="d-flexx d-none cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom"
                   :class="{ 'bg-brand-gradient': isSelected2 }"
                   @click="secondOption"
                 >
@@ -76,7 +78,7 @@
                   </h4>
                 </div>
                 <div
-                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom"
+                  class="d-flexx d-none cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom"
                   :class="{ 'bg-brand-gradient': isSelected3 }"
                   @click="thirdOption"
                 >
@@ -94,7 +96,7 @@
                   </h4>
                 </div>
                 <div
-                  class="d-flex cursor-pointer py-4 px-5 free-duration align-items-center justify-content-center"
+                  class="d-flexx d-none cursor-pointer py-4 px-5 free-duration align-items-center justify-content-center"
                   :class="{ 'bg-brand-gradient': isSelected4 }"
                   @click="fourthOption"
                 >
@@ -154,7 +156,8 @@
                   £ {{ amount.toFixed(2) }}
                 </h3>
                 <p class="price-text text-white font-weight-bolder">
-                  Saved {{ savedAmount }} £
+<!--                  Saved {{ savedAmount }} £-->
+                  Save {{ savedAmount }} £ by using cupon
                 </p>
               </div>
               <div class="">
@@ -306,13 +309,13 @@
                 <div
                   class="px-4 d-block mt-1"
                 >
-                  <small class="text-white">Today, 6m ago</small>
+                  <small class="text-white">{{ teamSelected && teamSelected.last_subscription && teamSelected.last_subscription.created_at ? messageCreatedAt(teamSelected.last_subscription.created_at) : '' }}</small>
                   <h4 class="fs-12 text-white mt-2">
-                    Subscribed <b>6 month Plan</b> by - <b>Shirin Malik</b>
+                    Subscribed <b>{{ teamSelected && teamSelected.last_subscription && teamSelected.last_subscription.plans ? teamSelected.last_subscription.plans.title : '' }} Plan</b> by - <b>{{ teamSelected && teamSelected.last_subscription && teamSelected.last_subscription.user ? teamSelected.last_subscription.user.full_name : '' }}</b>
                   </h4>
                   <small class="text-white"
-                    >Team Expire period extended to the date of - Dec 31,
-                    2022</small
+                    >Team Expire period extended to the date of -
+                    {{ teamSelected && teamSelected.last_subscription && teamSelected.last_subscription.subscription_expire_at ? formateDate(teamSelected.last_subscription.subscription_expire_at) : '' }}</small
                   >
                 </div>
               </div>
@@ -350,12 +353,12 @@
       </div>
     </div>
 
-    <a-modal v-model="freeModal" title="Free Coupon">
+    <a-modal v-model="freeModal" title="Dou you have any cupon?">
       <a-input v-model="cupon" placeholder="Coupon" />
 
       <template slot="footer">
-        <a-button key="back" @click="handleCancel">
-          Back
+        <a-button key="back" @click="nextWithoutCupon">
+          Skip
         </a-button>
         <a-button key="submit" type="primary" @click="handleOkFreeModal">
           Submit
@@ -369,6 +372,8 @@
 import Header from "@/components/dashboard/layout/Header.vue";
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import Footer from "@/components/auth/Footer.vue";
+import ApiService from "../../services/api.service";
+import {format} from "timeago.js";
 
 export default {
   name: "Subscription",
@@ -379,7 +384,6 @@ export default {
   },
   data() {
     return {
-      fixedCupon: '123456',
       cupon: '',
       isLoading: false,
       user: {},
@@ -397,6 +401,8 @@ export default {
       activeStep: 1,
       freeModal: false,
       activeStepIndex: 0,
+      plans: [],
+      choosedPlan: null,
       descriptions: [
           'Plan 1',
           'Plan 2',
@@ -407,6 +413,7 @@ export default {
   },
   created() {
     //this.loadUser();
+    this.loadPlans();
     this.loadTeams();
     this.getSelectedTeam();
   },
@@ -416,6 +423,12 @@ export default {
         const date = this.teamSelected.created_at.split("T");
         return date[0];
       } else return "N/A";
+    },
+    getPlans() {
+      if(this.plans && this.plans.plan_data && this.plans.plan_data.length > 0) {
+        return this.plans.plan_data;
+      }
+      return [];
     },
     teamCreatedBy() {
       // const teamMembers = this.teamSelected.team_members;
@@ -435,6 +448,26 @@ export default {
     }
   },
   methods: {
+    formateDate(date) {
+      if (date == null || date == undefined) {
+        return "  Not Exist";
+      }
+      let d = new Date(date),
+          month = "" + (d.getMonth() + 1),
+          day = "" + d.getDate(),
+          year = d.getFullYear();
+
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+
+      return [year, month, day].join("-");
+    },
+    messageCreatedAt(time) {
+      if (time) {
+        return format(time);
+      }
+      return '';
+    },
     setContentType(type) {
       this.contentShow = type;
     },
@@ -489,6 +522,12 @@ export default {
     // 	}
     // 	this.isLoading = false;
     // },
+    async loadPlans() {
+      let {data} = await ApiService.get('/v1/package-list').then(res => res.data);
+      if(data) {
+        this.plans = data;
+      }
+    },
     async loadTeams() {
       await this.$store.dispatch("getTeams");
       this.teams = this.$store.getters["userTeamList"];
@@ -554,6 +593,14 @@ export default {
       this.nextStep(2);
       this.activeStepIndex = 3;
     },
+    setPlan(item) {
+      this.choosedPlan = item;
+      this.amount = item.price;
+      this.savedAmount = item.discount;
+      this.$store.state.team.subscriptionAmount = this.amount;
+      this.$store.state.team.legalSubscription = true;
+      this.nextStep(2);
+    },
     handleContinue() {
       if (this.teamSelected == null) {
         //alert("You have to select a team");
@@ -564,19 +611,47 @@ export default {
         });
         return;
       }
-      var subId;
-      if (this.isSelected1) {
-        subId = 1;
-      } else if (this.isSelected2) {
-        subId = 2;
-      } else if (this.isSelected3) {
-        subId = 3;
-      } else if (this.isSelected4) {
-        subId = 0;
-        this.freeModal = true;
-        return;
+
+      if(this.choosedPlan && this.choosedPlan.id) {
+        if(this.choosedPlan.promo_code && this.choosedPlan.id == this.plans[0].id) {
+          let usedAlready = this.choosedPlan.team_ids.findIndex(item => parseInt(item) === parseInt(this.teamSelected.id));
+          if(usedAlready >= 0) {
+            this.$store.state.team.subscriptionAmount = this.amount;
+            this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
+            this.$store.state.team.discountedAmount = parseFloat(this.choosedPlan.discount);
+            this.$store.state.team.legalSubscription = true;
+            this.$router.push(
+                `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
+            );
+          } else {
+            this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
+            if(this.choosedPlan.promo_code) {
+              this.freeModal = true;
+            } else {
+              this.$store.state.team.legalSubscription = true;
+              this.$router.push(
+                  `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
+              );
+            }
+          }
+        } else {
+          if(this.choosedPlan.promo_code) {
+            this.freeModal = true;
+          } else {
+            this.freeModal = true;
+            this.$store.state.team.subscriptionAmount = (this.amount - this.savedAmount);
+            this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
+            this.$store.state.team.discountedAmount = parseFloat(this.choosedPlan.discount);
+            this.$store.state.team.legalSubscription = true;
+            this.$router.push(
+                `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
+            );
+          }
+        }
+        // this.$router.push(
+        //     `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
+        // );
       } else {
-        //alert("You have to select a subscription plan");
         this.$error({
           title: "No Subscription Plan is Selected!",
           content: "You have to select a subscription plan",
@@ -584,19 +659,42 @@ export default {
         });
         return;
       }
-      if(subId !== 0) {
-        this.$router.push(
-            `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${subId}`
-        );
-      }
+      // var subId;
+      // if (this.isSelected1) {
+      //   subId = 1;
+      // } else if (this.isSelected2) {
+      //   subId = 2;
+      // } else if (this.isSelected3) {
+      //   subId = 3;
+      // } else if (this.isSelected4) {
+      //   subId = 0;
+      //   this.freeModal = true;
+      //   return;
+      // } else {
+      //   //alert("You have to select a subscription plan");
+      //   this.$error({
+      //     title: "No Subscription Plan is Selected!",
+      //     content: "You have to select a subscription plan",
+      //     centered: true,
+      //   });
+      //   return;
+      // }
+      // if(subId !== 0) {
+      //   this.$router.push(
+      //       `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${subId}`
+      //   );
+      // }
     },
     handleCancel() {
       this.freeModal = false;
     },
     handleOkFreeModal() {
-      if(this.cupon === this.fixedCupon) {
+      if(this.choosedPlan.promo_code && this.cupon == this.choosedPlan.promo_code) {
+        this.$store.state.team.subscriptionAmount = (this.amount - this.savedAmount);
+        this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
+        this.$store.state.team.discountedAmount = parseFloat(this.choosedPlan.discount);
         this.$router.push(
-            `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/0?cupon=${this.cupon}`
+            `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
         );
       } else {
         this.$error({
@@ -605,6 +703,15 @@ export default {
           centered: true,
         });
       }
+    },
+    nextWithoutCupon() {
+      this.$store.state.team.subscriptionAmount = (this.amount - this.savedAmount);
+      this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
+      this.$store.state.team.discountedAmount = parseFloat(this.choosedPlan.discount);
+      this.$store.state.team.legalSubscription = true;
+      this.$router.push(
+          `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
+      );
     }
   },
 };

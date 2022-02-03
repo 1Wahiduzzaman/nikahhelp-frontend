@@ -57,9 +57,13 @@
                 </div>
                 <div class="cart-description">
                   <div class="d-flex justify-content-between fs-18">
-                    <h6 class="text-white">{{ subscriptionName }}</h6>
-                    <h6 class="text-white">£ {{ subscriptionAmount }}</h6>
+                    <h6 class="text-white border-bottom pb-2">{{ subscriptionName }} Subscription Plan</h6>
+                    <h6 class="text-white">£ {{ $store.state.team.originalAmount.toFixed(2) }}</h6>
                   </div>
+                  <p class="pt-2 fs-16 pl-4">
+                    Discount
+                    <span style="float: right">£ {{ $store.state.team.discountedAmount.toFixed(2) }}</span>
+                  </p>
                   <!--
                   <p>
                     Discount 0%
@@ -69,7 +73,7 @@
                   <p class="fs-18">
 												<span style="float: right">
 													Total Pay
-													<span class="ml-5">£ {{ subscriptionAmount }} </span>
+													<span class="ml-5">£ {{ subscriptionAmount.toFixed(2) }} </span>
 												</span>
                   </p>
                   <br/>
@@ -77,7 +81,7 @@
                   <p class="details fs-18">Details:</p>
                   <br/>
                   <div class="d-flex justify-content-between fs-18">
-                    <h6 class="text-white">{{ subscriptionName }} Team -<b> {{ teamName }}</b></h6>
+                    <h6 class="text-white">{{ subscriptionName }} Subscription Plan for Team -<b> {{ teamName }}</b></h6>
                     <h6 class="text-white"></h6>
                   </div>
                 </div>
@@ -86,14 +90,14 @@
                 <p class="mt-1 agreement-text">
                   By clicking "Agree and Subscribe", you agree:
                   <b
-                  >You will be charged UK £0.00 daily and at the end of
+                  >You will be charged UK £{{ $store.state.team.originalAmount.toFixed(2) }} daily and at the end of
                     your plan, your subscription will automatically renew
                     monthly until cancel(price subject to change). Cancel
                     anytime via Manage team > Team Setting > Subscription
-                    details or Customer Support.
+                    details or <router-link to="/support">Customer Support</router-link>.
                   </b>
-                  You also agree to the Terms of Use and the Subscription
-                  and Cancellation Terms.
+                  You also agree to the <span class="link-color">Terms of Use</span> and the <span class="link-color">Subscription
+                  and Cancellation Terms</span>.
                 </p>
                 <div class="text-center pb-4">
 <!--                  <spinner v-if="isLoading"></spinner>-->
@@ -153,10 +157,16 @@ export default {
     };
   },
   created() {
-
-    this.getSubscriptionId();
-    this.getClientSecret();
-    this.$store.dispatch("getCountries");
+    if(this.$store.state.team.legalSubscription) {
+      this.getSubscriptionId();
+      this.getClientSecret();
+      this.$store.dispatch("getCountries");
+      if(this.$route.query && this.$route.query.name) {
+        this.subscriptionName = this.$route.query.name;
+      }
+    } else {
+      this.$router.push({ name: 'Subscription' });
+    }
   },
 
   methods: {
@@ -195,27 +205,21 @@ export default {
       };
       console.log(_payload);
 
-      if(!this.$route.query.cupon || (this.$route.query.cupon && this.$route.query.cupon === '123456')) {
-        this.isLoading = true;
-        try {
-          await this.$store.dispatch("createSubscription", _payload); // Action in the User module in store
-          this.isLoading = false;
-          this.$router.push(
-              `/subscription/complete/success/${this.subscriptionName}/${this.teamName}`
-          );
-        } catch (error) {
-          this.$error({
-            title: "Subscription Payment Error!",
-            content: error.response.data.message,
-            centered: true,
-          });
-          this.isLoading = false;
-        }
-      } else {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("createSubscription", _payload); // Action in the User module in store
+        this.isLoading = false;
+        this.$router.push(
+            `/subscription/complete/success/${this.subscriptionName}/${this.teamName}`
+        );
+        this.$store.state.team.legalSubscription = false;
+      } catch (error) {
         this.$error({
-          title: "You are trying to do something illegal!",
+          title: "Subscription Payment Error!",
+          content: error.response.data.message,
           centered: true,
         });
+        this.isLoading = false;
       }
     },
     getPaymentMethod(data) {
@@ -234,20 +238,21 @@ export default {
       this.teamId = teamId;
       this.teamName = team;
       this.subscriptionId = parseInt(subId);
-      if (this.subscriptionId == 1) {
-        this.subscriptionName = "1 Month Subscription Plan";
-        this.subscriptionAmount = 10.0;
-      } else if (this.subscriptionId == 2) {
-        this.subscriptionName = "3 Month Subscription Plan";
-        this.subscriptionAmount = 24.0;
-      } else if (this.subscriptionId == 3) {
-        this.subscriptionName = "6 Month Subscription Plan";
-        this.subscriptionAmount = 42.0;
-      } else if (this.subscriptionId == 0) {
-        this.subscriptionName = "Free 1 day Subscription Plan";
-        this.subscriptionAmount = 0.0;
-      }
-      console.log(this.subscriptionName);
+      this.subscriptionAmount = this.$store.state.team.subscriptionAmount;
+      // if (this.subscriptionId == 1) {
+      //   this.subscriptionName = "1 Month Subscription Plan";
+      //   this.subscriptionAmount = 10.0;
+      // } else if (this.subscriptionId == 2) {
+      //   this.subscriptionName = "3 Month Subscription Plan";
+      //   this.subscriptionAmount = 24.0;
+      // } else if (this.subscriptionId == 3) {
+      //   this.subscriptionName = "6 Month Subscription Plan";
+      //   this.subscriptionAmount = 42.0;
+      // } else if (this.subscriptionId == 0) {
+      //   this.subscriptionName = "Free 1 day Subscription Plan";
+      //   this.subscriptionAmount = 0.0;
+      // }
+      // console.log(this.subscriptionName);
     },
   },
 };
@@ -722,7 +727,7 @@ export default {
     flex-direction: row;
   }
   .agreement-text {
-    font-size: 16px;
+    font-size: 14px;
   }
   .mobile-block {
     display: block;
@@ -764,5 +769,9 @@ export default {
   @media (min-width: 768px) {
     display: none;
   }
+}
+.link-color {
+  color: #1976d2;
+  font-weight: bold;
 }
 </style>

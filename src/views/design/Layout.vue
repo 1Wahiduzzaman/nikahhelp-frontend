@@ -33,21 +33,21 @@
         </a-layout-content>
       </a-layout>
     </a-layout>
-    <ModalContainer
-      :modalKey="'manageTeamRedirect'"
-      :width="'wide'"
-      :fullscreen="false"
-      :hideOverlay="false"
-    >
-      <ManageTeamRedirect />
-    </ModalContainer>
+<!--    <ModalContainer-->
+<!--      :modalKey="'manageTeamRedirect'"-->
+<!--      :width="'wide'"-->
+<!--      :fullscreen="false"-->
+<!--      :hideOverlay="false"-->
+<!--    >-->
+<!--      <ManageTeamRedirect />-->
+<!--    </ModalContainer>-->
   </div>
 </template>
 
 <script>
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import ModalContainer from "@/plugins/modal/modal-container";
-import ManageTeamRedirect from "@/views/design/ManageTeamRedirect.vue";
+// import ManageTeamRedirect from "@/views/design/ManageTeamRedirect.vue";
 import { createModalMixin, openModalRoute } from "@/plugins/modal/modal.mixin";
 import JwtService from "@/services/jwt.service";
 
@@ -56,7 +56,7 @@ export default {
   components: {
     Sidebar,
     ModalContainer,
-    ManageTeamRedirect,
+    // ManageTeamRedirect,
   },
   created() {
     

@@ -655,7 +655,7 @@
                   v-if="preferenceData.pre_study_level_id"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What is the minimum education level you prefer your
+                />What is the minimum level you prefer your
                 prospective companion to have?
               </div>
             </div>
