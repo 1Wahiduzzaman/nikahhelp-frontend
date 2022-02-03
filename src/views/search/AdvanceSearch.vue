@@ -2,6 +2,7 @@
   <div>
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else>
+      <TeamOffRedirection v-if="redirection" />
       <MainHeader @toggleCollapse="toggleCollapse" />
       <a-layout
         id="layout"
@@ -58,14 +59,14 @@
       </a-layout>
     </div>
     <Loader :isLoading="isFetching" />
-    <ModalContainer
-      :modalKey="'manageTeamRedirect'"
-      :width="'wide'"
-      :fullscreen="false"
-      :hideOverlay="false"
-    >
-      <ManageTeamRedirect />
-    </ModalContainer>
+<!--    <ModalContainer-->
+<!--      :modalKey="'manageTeamRedirect'"-->
+<!--      :width="'wide'"-->
+<!--      :fullscreen="false"-->
+<!--      :hideOverlay="false"-->
+<!--    >-->
+<!--      <ManageTeamRedirect />-->
+<!--    </ModalContainer>-->
   </div>
 </template>
 
@@ -80,19 +81,21 @@ import AddComponent from "@/components/add/addComponent";
 import JwtService from "@/services/jwt.service";
 import { createModalMixin, openModalRoute } from "@/plugins/modal/modal.mixin";
 import { mapGetters, mapMutations, mapActions } from "vuex";
+import TeamOffRedirection from "../../components/redirection/TeamOffRedirection";
 
 export default {
   name: "AdvanceSearch",
   mixins: [createModalMixin("manageTeamRedirect")],
   components: {
+    TeamOffRedirection,
     ProfileDetail: () => import("@/components/search/CandidateProfileDetails"),
     RightSideCandidateDetail: () =>
       import("@/components/search/RightSideCandidateDetail"),
     RightSidebar: () => import("@/components/search/ProfileDetailRight"),
     SimpleSearch: () => import("@/components/search/SimpleSearch.vue"),
     Sidebar,
-    ModalContainer,
-    ManageTeamRedirect,
+    // ModalContainer,
+    // ManageTeamRedirect,
     Loader,
     //SimpleSearch,
     // Footer,
@@ -322,11 +325,12 @@ export default {
   created() {
     console.log(JwtService.getTeamIDAppWide(), '>>>>>>>>>>>>>>>>>>>>..')
     if (!JwtService.getTeamIDAppWide()) {
-      this.isLoading = true;
-      setTimeout(() => {
-        this.isLoading = false;
-        openModalRoute(this, "manage_team_redirect");
-      }, 2000);
+      // this.isLoading = true;
+      // setTimeout(() => {
+      //   this.isLoading = false;
+      //   openModalRoute(this, "manage_team_redirect");
+      // }, 2000);
+      this.redirection = true;
       return
     }
     this.checkTurnedOnSwitch();

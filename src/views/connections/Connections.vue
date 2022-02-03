@@ -3,6 +3,7 @@
     <div>
       <Loader v-if="isLoading" :isLoading="isLoading" />
       <div v-else>
+        <TeamOffRedirection v-if="redirection" />
         <div class="row" :class="{'loader-opacity pointer-events-none': innerLoading}">
           <div class="col-12">
             <div class="main-content-1">
@@ -509,10 +510,12 @@ import { dateFromDateTime, dateFromTimeStamp } from "@/common/helpers.js";
 import CandidateGridView from "../../components/connections/CandidateGridView";
 import Notification from "@/common/notification.js";
 import { openModalRoute } from "@/plugins/modal/modal.mixin";
+import TeamOffRedirection from "../../components/redirection/TeamOffRedirection";
 // import ApiService from "../../services/api.service";
 export default {
   name: "Connections",
   components: {
+    TeamOffRedirection,
     CandidateGridView,
     Candidate,
   },
@@ -529,6 +532,7 @@ export default {
   data() {
     return {
       tab: 'tab-1',
+      redirection: false,
       isLoading: false,
       user: {},
       is_verified: 1,
@@ -636,11 +640,12 @@ export default {
     },
     getActiveTeamId() {
       if (!JwtService.getTeamIDAppWide()) {
-        this.isLoading = true;
-        setTimeout(() => {
-          this.isLoading = false;
-          openModalRoute(this, "manage_team_redirect");
-        }, 2000);
+        // this.isLoading = true;
+        // setTimeout(() => {
+        //   this.isLoading = false;
+        //   openModalRoute(this, "manage_team_redirect");
+        // }, 2000);
+        this.redirection = true;
       } else {
         this.active_team_id = JwtService.getTeamIDAppWide();
         this.loadConnectionReports();

@@ -1,8 +1,11 @@
 <template>
-  <Modal :id="'manageteam-item'">
-    <template slot="header"></template>
-
-    <template slot="body">
+  <v-dialog
+      transition="dialog-bottom-transition"
+      persistent
+      :value="dialog"
+      max-width="1200"
+  >
+    <div class="manageteam-item">
       <div class="dt-modal-content">
         <div class="container-fluid">
           <div class="flex mobile-column">
@@ -35,7 +38,7 @@
                   <span class="link-text ml-2 text-decoration-underline italic"><router-link to="/manageteam" class="manage-team-link"> join </router-link></span>
                   <span class="link-text ml-2"> a team</span>
                 </div>
-                <h4 class="info-text">
+                <h4 class="info-text color-white">
                   * The information of this page relates to team that you turned ON. <span class="text-decoration-underline font-weight-bold cursor-pointer learn-text italic">learn more...</span>
                 </h4>
               </div>
@@ -51,19 +54,13 @@
           </div>
         </div>
       </div>
-    </template>
-
-    <template slot="options"> </template>
-  </Modal>
+    </div>
+  </v-dialog>
 </template>
 
 <script>
-import Modal from "@/plugins/modal/modal";
 export default {
-  name: "Layout",
-  components: {
-    Modal,
-  },
+  name: "TeamOffRedirection",
   created() {
     const self = this;
     setInterval(() => {
@@ -77,7 +74,7 @@ export default {
       turnOn: false,
     };
   },
-};
+}
 </script>
 
 <style lang="scss">
@@ -185,7 +182,19 @@ export default {
     }
   }
 }
-
+.dt-modal-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: unset;
+  margin-top: 2rem;
+  //margin-left: 8rem;
+  padding: 0;
+  @media (min-width: 768px) {
+    padding: 0 2rem;
+  }
+}
 .dt-div1 {
   background: #fff;
   padding: 5px 15px 5px 15px;
@@ -392,7 +401,7 @@ h3 {
   opacity: 1 !important;
 }
 .info-text {
-  color: #0d5cebd1;
+  color: #FFFFFF;
   margin-top: 16px;
   font-size: 14px;
   margin-bottom: 20px;

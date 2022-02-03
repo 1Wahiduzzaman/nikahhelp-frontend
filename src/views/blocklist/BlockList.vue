@@ -2,6 +2,7 @@
   <div>
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else>
+      <TeamOffRedirection v-if="redirection" />
       <div class="main-content-wrapper">
         <div class="block-main-content">
           <div class="row mb-4">
@@ -78,10 +79,12 @@ import JwtService from "@/services/jwt.service";
 import { openModalRoute } from "@/plugins/modal/modal.mixin";
 import BlockedCandidateGrid from "../../components/blocklist/BlockedCandidateGrid";
 import ApiService from '@/services/api.service';
+import TeamOffRedirection from "../../components/redirection/TeamOffRedirection";
 
 export default {
   name: "BlockList",
   components: {
+    TeamOffRedirection,
     BlockedCandidateGrid,
     Header,
     Sidebar,
@@ -102,6 +105,7 @@ export default {
   data() {
     return {
       isLoading: true,
+      redirection: false,
       user: {},
       is_verified: 1,
       tab: 'tab-1',
@@ -155,11 +159,12 @@ export default {
     },
     getActiveTeamId() {
       if (!JwtService.getTeamIDAppWide()) {
-        this.isLoading = true;
-        setTimeout(() => {
-          this.isLoading = false;
-          openModalRoute(this, "manage_team_redirect");
-        }, 2000);
+        // this.isLoading = true;
+        // setTimeout(() => {
+        //   this.isLoading = false;
+        //   openModalRoute(this, "manage_team_redirect");
+        // }, 2000);
+        this.redirection = true;
       } else {
         this.candidateBlock = [];
         this.teamListedBlock = [];

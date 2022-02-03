@@ -4,6 +4,7 @@
 <!--    Short list candidate-->
 <!--    team listed candidate-->
     <div v-else>
+      <TeamOffRedirection v-if="redirection" />
       <div class="shortlist-content-wrapper">
         <div class="main-content-1">
           <v-tabs color="indigo accent-4" class="w-full d-flex justify-content-between support-tab">
@@ -350,9 +351,11 @@ import { openModalRoute } from "@/plugins/modal/modal.mixin";
 import Candidate from "@/components/shortlist/Candidate.vue";
 import CandidateGrid from "../../components/shortlist/CandidateGrid";
 import ApiService from '@/services/api.service';
+import TeamOffRedirection from "../../components/redirection/TeamOffRedirection";
 export default {
   name: "Shortlist",
   components: {
+    TeamOffRedirection,
     CandidateGrid,
     Header,
     Sidebar,
@@ -376,6 +379,7 @@ export default {
   data() {
     return {
       tab: 'tab-1',
+      redirection: false,
       isLoading: false,
       loadingSpinner: false,
       user: {},
@@ -468,11 +472,12 @@ export default {
     },
     getActiveTeamId() {
       if (!JwtService.getTeamIDAppWide()) {
-        this.isLoading = true;
-        setTimeout(() => {
-          this.isLoading = false;
-          openModalRoute(this, "manage_team_redirect");
-        }, 2000);
+        // this.isLoading = true;
+        // setTimeout(() => {
+        //   this.isLoading = false;
+        //   openModalRoute(this, "manage_team_redirect");
+        // }, 2000);
+        this.redirection = true;
       } else {
         this.fullData = [];
         this.shortlistedData = [];
