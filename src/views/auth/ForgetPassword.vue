@@ -3,10 +3,16 @@
     <div class="forget-password pb-4 font-poppins">
       <div class="inner">
         <div class="signin-inner desktop-padding">
-          <a class="logo" href="/"><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo" /></a>
-          <h3 id="welcome-back-tag" class="welcome-back-tag"><b>{{ message ? 'Reset password link sent' : 'Forget your password?' }}</b></h3>
+          <a class="logo" href="/"
+            ><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo"
+          /></a>
+          <h3 id="welcome-back-tag" class="welcome-back-tag">
+            <b>{{
+              message ? "Reset password link sent" : "Forget your password?"
+            }}</b>
+          </h3>
         </div>
-        <form class="form" @submit.prevent="handleSubmit">
+        <form class="form">
           <Spinner v-if="isLoading" />
           <div v-else-if="error" class="text-black-50">
             <p>{{ error }}</p>
@@ -14,13 +20,13 @@
               <button class="">
                 Back to
                 <router-link
-                    to="/login"
-                    class="
-                btn btn-sm btn-outline-primary btn-round-sm btn-signinup
-                ms-2
-                text-nowrap
-                join-now-btn
-              "
+                  to="/login"
+                  class="
+                    btn btn-sm btn-outline-primary btn-round-sm btn-signinup
+                    ms-2
+                    text-nowrap
+                    join-now-btn
+                  "
                 >
                   Sign in
                 </router-link>
@@ -28,13 +34,13 @@
               <h4 class="fs-16 pt-1 pl-2 pr-1 text-white text-black-50">or</h4>
               <button class="">
                 <router-link
-                    to="/signup"
-                    class="
-                btn btn-sm btn-outline-primary btn-round-sm btn-signinup
-                ms-2
-                text-nowrap
-                join-now-btn
-              "
+                  to="/signup"
+                  class="
+                    btn btn-sm btn-outline-primary btn-round-sm btn-signinup
+                    ms-2
+                    text-nowrap
+                    join-now-btn
+                  "
                 >
                   Join now
                 </router-link>
@@ -44,32 +50,46 @@
           <div v-else>
             <div class="mb-3" v-if="!message">
               <h5 class="fs-18 text-black-50">Retrieve your password here</h5>
-              <p class="fs-14 text-black-50">Please enter your email address below. You will receive a link to reset your password.</p>
-
-              <a-input
-                type="email"
-                class="form-control rounded-input"
-                id="email"
-                v-model="email"
-                placeholder="Enter email"
-              />
-              <p v-if="!formIsValid" class="text-danger fs-14">
-                Please enter a valid email address
+              <p class="fs-14 text-black-50">
+                Please enter your email address below. You will receive a link
+                to reset your password.
               </p>
+              <a-form-model
+                ref="forgetPasswordForm"
+                :model="forgetPassword"
+                :rules="rules"
+              >
+                <a-form-model-item ref="email" prop="email">
+                  <a-input
+                    type="email"
+                    class="form-control rounded-input"
+                    id="email"
+                    v-model="forgetPassword.email"
+                    placeholder="Enter email"
+                  />
+                </a-form-model-item>
+              </a-form-model>
             </div>
             <p v-if="message" class="message">
               {{ message }}
             </p>
             <div class="button-container">
               <button
+                :disabled="disabled"
+                v-if="!message"
                 type="submit"
                 class="btn btn-primary w-100"
-                v-if="!message"
+                @click="handleSubmit"
               >
                 Get Verification Link
               </button>
 
-              <router-link role="button" class="btn btn-primary w-50 text-white" to="/login" :class="{'flex justify-content-center': message}">
+              <router-link
+                role="button"
+                class="btn btn-primary w-50 text-white"
+                to="/login"
+                :class="{ 'flex justify-content-center': message }"
+              >
                 &#xab; Sign in
               </router-link>
             </div>
@@ -92,34 +112,49 @@ export default {
   },
   data() {
     return {
-      email: "",
+      forgetPassword: {
+        email: "",
+      },
       isLoading: false,
       error: null,
       formIsValid: true,
       message: null,
+      disabled: false,
+      rules: {
+        email: [
+          {
+            required: true,
+            message: "Please input your email address",
+          },
+          {
+            type: "email",
+            message: "Please input a valid email",
+          },
+        ],
+      },
     };
   },
   methods: {
     async handleSubmit() {
-      // Todo -- form validation. and success message
-      this.formIsValid = true;
-      if (this.email === "" || !this.email.includes("@")) {
-        this.formIsValid = false;
-        return;
-      }
-      this.isLoading = true;
-      const actionPayload = {
-        email: this.email,
-      };
       try {
-        await this.$store.dispatch("forgetPassword", actionPayload);
-        this.message =
-          "We have sent you a link to reset your password. This link is valid for 24 hours.";
-        //this.$router.go("/dashboard");
+        this.$refs.forgetPasswordForm.validate((valid) => {
+          if (valid) {
+            this.disabled = true;
+            this.$store
+              .dispatch("forgetPassword", this.forgetPassword)
+              .then((re) => {
+                this.disabled = false;
+                this.message =
+                  "We have sent you a link to reset your password. This link is valid for 24 hours.";
+              })
+              .catch((r) => {
+                this.error = "Invalid email, email is not registerd";
+              });
+          } else {
+          }
+        });
       } catch (error) {
         this.error = "Invalid email, email is not registerd";
-        // this.message =
-        //   "We have sent you a link to reset your password. This link is valid for 24 hours.";
       }
       this.isLoading = false;
     },
@@ -130,7 +165,7 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .forget-password {
-  min-height:  calc(100vh - 118px);;
+  min-height: calc(100vh - 118px);
   background-color: #522e8e;
   background-image: linear-gradient(
     0deg,
@@ -224,7 +259,7 @@ export default {
 .join-now-btn:hover {
   background: $bg-primary;
   box-shadow: 0 2px 2px #999;
-  color: #FFFFFF;
+  color: #ffffff;
   border: none;
 }
 </style>

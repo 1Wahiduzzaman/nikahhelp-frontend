@@ -3,8 +3,10 @@
     <fieldset v-if="candidateDetails && candidateData.personal" class="review">
       <h4 class="fw-700 px-2">Review and Publish Profile</h4>
       <p class="mb-5 px-2">
-        Please check the information and details that you have provided, if you are happy with it please submit for approval by MatrimonyAssist Team. 
-        If anything needs to be changed, then you can access relavant sections by pressing previous button. 
+        Please check the information and details that you have provided, if you
+        are happy with it please submit for approval by MatrimonyAssist Team. If
+        anything needs to be changed, then you can access relavant sections by
+        pressing previous button.
       </p>
       <div class="text-start">
         <!-- Preference -->
@@ -190,18 +192,17 @@
                 <p>How Important following characters are to me</p>
                 <hr />
                 <!-- Character -->
-                <rating-component
+                <!-- <rating-component
                   title="Strength of character from a moral point of view"
                   :valueString="
                     candidateData.preference.pre_strength_of_character_rate
                   "
                   
-                ></rating-component>
+                ></rating-component> -->
                 <!-- Looks and Apperance -->
                 <rating-component
                   title="Looks and apperance"
                   :value="candidateData.preference.pre_look_and_appearance_rate"
-                  
                 ></rating-component>
                 <!-- Religiosity/Faith -->
                 <rating-component
@@ -611,29 +612,37 @@
               class="ms-2 edit-step"
               src="@/assets/icon/edit_step.svg"
               alt="icon"
-              @click="$emit('toggleStep', 3)"
+              @click="$emit('toggleStep', 2)"
             />
           </div>
           <div class="row">
             <div class="col-md-8 mb-3">
               <div class="card-custom h-100 shadow-default">
-                <ul style="line-height: 160%">
-                  <!-- <li class="flex-between-start">
-										<span class="flex-50 px-2 label-text">Father's Name</span
-										><span class="flex-50 px-2"
-											>:<span class="ml-3">
-												{{ candidateData.family.father_name }}</span
-											></span
-										>
-									</li>
-									<li class="flex-between-start">
-										<span class="flex-50 px-2 label-text">Mother's Name</span
-										><span class="flex-50 px-2"
-											>:<span class="ml-3">{{
-												candidateData.family.mother_name
-											}}</span></span
-										>
-									</li> -->
+                <table>
+                  <TableRow
+                    title="Father's Profession"
+                    textClass="text-subtitle-1"
+                    :value="candidateData.family.father_profession"
+                  />
+                  <TableRow
+                    title="Mother's Profession"
+                    textClass="text-subtitle-1"
+                    :value="candidateData.family.mother_profession"
+                  />
+                  <TableRow
+                    title="Siblings"
+                    textClass="text-subtitle-1"
+                    :value="candidateData.family.siblings_desc"
+                  />
+                  <TableRow
+                    title="Ancestral home same as country of birth?"
+                    textClass="text-subtitle-1"
+                    :value="candidateData.family.country_of_origin"
+                  />
+                </table>
+                <!-- <ul style="line-height: 160%">
+                  
+
                   <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text"
                       >Father's Profession</span
@@ -653,18 +662,12 @@
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Siblings</span
-                    ><span class="flex-50 px-2 d-inherit"
-                      >:<span
-                        style="
-                          white-space: nowrap;
-                          overflow: hidden;
-                          text-overflow: ellipsis;
-                        "
-                        class="ml-3"
-                        >{{ candidateData.family.siblings_desc }}</span
-                      ></span
-                    >
+          
+                    <TableRow
+                      title="Siblings"
+                      textClass="text-subtitle-1"
+                      :value="candidateData.family.siblings_desc"
+                    />
                   </li>
                   <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text"
@@ -675,7 +678,7 @@
                       }}</span></span
                     >
                   </li>
-                </ul>
+                </ul> -->
               </div>
             </div>
             <div class="col-md-4 mb-3">
@@ -701,13 +704,14 @@
               class="ms-2 edit-step"
               src="@/assets/icon/edit_step.svg"
               alt="icon"
-              @click="$emit('toggleStep', 5)"
+              @click="$emit('toggleStep', 3)"
             />
           </div>
           <div class="row">
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
-                <img    v-viewer
+                <img
+                  v-viewer
                   :src="candidateData.personal.per_avatar_url"
                   class="user-image"
                   alt="img"
@@ -719,7 +723,8 @@
             </div>
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
-                <img    v-viewer
+                <img
+                  v-viewer
                   :src="candidateData.personal.per_main_image_url"
                   class="user-image"
                   alt="img"
@@ -732,7 +737,8 @@
 
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
-                <img    v-viewer
+                <img
+                  v-viewer
                   :src="candidateData.personal.per_main_image_url"
                   class="user-image"
                   alt="img"
@@ -757,8 +763,9 @@
                     class="color-success mt-2 mr-2 fs-16 fw-500"
                     type="check"
                   />
-                  <span class="fs-16"
-                    > I don't want to share my images with anyone at this moment</span
+                  <span class="fs-16">
+                    I don't want to share my images with anyone at this
+                    moment</span
                   >
                 </div>
                 <div class="d-flex">
@@ -772,8 +779,8 @@
                     class="color-success mt-2 mr-2 fs-16 fw-500"
                     type="check"
                   />
-                  <span class="fs-16"
-                    > I would like to share all my images with my team</span
+                  <span class="fs-16">
+                    I would like to share all my images with my team</span
                   >
                 </div>
                 <div class="d-flex">
@@ -802,12 +809,13 @@
 <script>
 import RatingComponent from "../profile/RatingComponent.vue";
 import ApiService from "@/services/api.service";
-import JwtService from "@/services/jwt.service";
+import TableRow from "@/components/atom/TableRow";
 import { AGES, HEIGHTS, Employment_Statuses } from "@/models/data";
 export default {
   name: "Review",
   components: {
     RatingComponent,
+    TableRow,
   },
   props: {
     candidateDetails: {
@@ -818,7 +826,6 @@ export default {
     return {
       candidateData: {},
       heightTV: HEIGHTS,
-    
     };
   },
   mounted() {
