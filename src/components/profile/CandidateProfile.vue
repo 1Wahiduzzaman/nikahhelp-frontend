@@ -113,7 +113,10 @@
                                 />
                             </v-col>
                             <v-col class="pt-1" cols="12">
-                              <CardInfo title="More about me" :detail="candidateData.personal.per_about" class="mt-2"/>
+                              <CardInfo title="More about me" 
+                                :detail="candidateData.personal.per_about" 
+                                class="mt-2"
+                              />
                             </v-col>
                             <v-col class="pt-1" cols="12">
                               <CardInfo

@@ -156,10 +156,10 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
           1= accepted
           2= rejected
         */
+        if(this.candidate.teamConnectType == 1) return 'Cancel'
         if(this.candidate.teamConnectStatus == 0) return 'Cancel'
         if(this.candidate.teamConnectStatus == 1) return 'Disconnect'
         if(this.candidate.teamConnectStatus == 2) return 'Connect'
-        if(this.candidate.teamConnectType == 1) return 'Cancel'
         if(this.candidate.teamConnectType == 2) return 'Accept'
         return 'Connect'
       }
@@ -233,12 +233,11 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         console.log('short list')
       },
       async connectCandidate() {
-        if(this.role != 'Admin' && this.role != 'owner admin') {
+        if(this.role != 'Admin' && this.role != 'Owner & Admin') {
           this.showError("You don't have permission.")
           return
         }
         let myTeamId = JwtService.getTeamIDAppWide();
-        console.log(myTeamId, '>>>>>>>')
         if(!myTeamId) {
           this.showError("You don't have a team")
           return;
@@ -301,6 +300,14 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         }
       },
       async addTeamList() {
+        if(this.role != 'Admin' && this.role != 'Owner & Admin') {
+          this.showError("You don't have permission.")
+          return
+        }
+        if(!this.candidate.team_id) {
+          this.showError("This candidate has no team")
+          return;
+        }
         let loggedUser = JSON.parse(localStorage.getItem('user'));
         let data = {
           url: `v1/team-short-listed-candidates/store`,
@@ -373,9 +380,13 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         this.showError('Disconnection is ongoing')
       },
       async handleBlockCandidate(actionType, value, url) {
-        if(this.role != 'Admin' && this.role != 'owner admin') {
+        if(this.role != 'Admin' && this.role != 'Owner & Admin') {
           this.showError("You don't have permission.")
           return
+        }
+        if(!this.candidate.team_id) {
+          this.showError("This candidate has no team")
+           return;
         }
         let data = {
           url: url,

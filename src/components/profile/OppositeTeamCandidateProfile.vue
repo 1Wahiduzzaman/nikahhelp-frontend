@@ -12,8 +12,7 @@
 							: avatarSrc
 						"
 					/>
-
-					<div v-if="!isOwnProfile" class="flex justify-space-between flex-wrap mt-10">
+					<div class="flex justify-space-between flex-wrap mt-10">
 						<ButtonComponent
 							class="mb-3"
 							iconHeight="14px"
@@ -23,41 +22,43 @@
 							icon="/assets/icon/gallery.svg"
 							@onClickButton="onClickButton"
 						/>
-						<ButtonComponent
-							iconHeight="14px"
-							:isSmall="true"
-							:title="profile.is_connect ? 'Disconnect' : 'Connect'"
-							icon="/assets/icon/connect-s.svg"
-							:customEvent="profile.is_connect ? 'removeConnection' : 'addConnection'"
-							@onClickButton="onClickButton"
-						/>
-						<ButtonComponent
-							iconHeight="14px"
-							:isSmall="true"
-							:title="profile.is_short_listed ? 'Unlist' : 'ShortList'"
-							icon="/assets/icon/star-fill-secondary.svg"
-							:customEvent="profile.is_short_listed ? 'removeShortList' : 'addShortList'"
-							@onClickButton="onClickButton"
-						/>
-						<ButtonComponent
-							iconHeight="14px"
-							:isSmall="true"
-							:title="profile.is_teamListed ? 'Unlist Team' : 'TeamList'"
-							icon="/assets/icon/team.svg"
-							:customEvent="profile.is_teamListed ? 'removeTeam' : 'addTeam'"
-							@onClickButton="onClickButton"
-						/>
-						<ButtonComponent
-							iconHeight="14px"
-							:isSmall="true"
-							:responsive="true"
-							:title="profile.is_block_listed ? 'Unblock' : 'Block'"
-							:icon="profile.is_block_listed ? '/assets/icon/block-secondary.svg' : '/assets/icon/block.svg'"
-							:customEvent="profile.is_block_listed ? 'removeBlock' : 'block'"
-							:backgroundColor="profile.is_block_listed ? '' : '#d81b60'"
-							:titleColor="profile.is_block_listed ? '' : 'white'"
-							@onClickButton="onClickButton"
-						/>
+						<template v-if="!isOwnProfile">
+							<ButtonComponent
+								iconHeight="14px"
+								:isSmall="true"
+								:title="profile.is_connect ? 'Disconnect' : 'Connect'"
+								icon="/assets/icon/connect-s.svg"
+								:customEvent="profile.is_connect ? 'removeConnection' : 'addConnection'"
+								@onClickButton="onClickButton"
+							/>
+							<ButtonComponent
+								iconHeight="14px"
+								:isSmall="true"
+								:title="profile.is_short_listed ? 'Unlist' : 'ShortList'"
+								icon="/assets/icon/star-fill-secondary.svg"
+								:customEvent="profile.is_short_listed ? 'removeShortList' : 'addShortList'"
+								@onClickButton="onClickButton"
+							/>
+							<ButtonComponent
+								iconHeight="14px"
+								:isSmall="true"
+								:title="profile.is_teamListed ? 'Unlist Team' : 'TeamList'"
+								icon="/assets/icon/team.svg"
+								:customEvent="profile.is_teamListed ? 'removeTeam' : 'addTeam'"
+								@onClickButton="onClickButton"
+							/>
+							<ButtonComponent
+								iconHeight="14px"
+								:isSmall="true"
+								:responsive="true"
+								:title="profile.is_block_listed ? 'Unblock' : 'Block'"
+								:icon="profile.is_block_listed ? '/assets/icon/block-secondary.svg' : '/assets/icon/block.svg'"
+								:customEvent="profile.is_block_listed ? 'removeBlock' : 'block'"
+								:backgroundColor="profile.is_block_listed ? '' : '#d81b60'"
+								:titleColor="profile.is_block_listed ? '' : 'white'"
+								@onClickButton="onClickButton"
+							/>
+						</template>
 					</div>
 
 					<div>
@@ -118,9 +119,10 @@
 												</v-col>
 												<v-col class="pt-1" cols="12">
 													<CardInfo
-													:showDownloadBtn="true"
-													title="Additional Information"
-													class="mt-2"
+														:showDownloadBtn="true"
+														title="Additional Information"
+														class="mt-2"
+                            							@onClickDownload="onClickDownload"
 													/>
 												</v-col>
 												<v-col class="pt-1 mb-5" cols="12" md="6">
@@ -132,7 +134,7 @@
 												</v-col>
 												<v-col class="pt-1 mb-5" cols="12" md="6">
 													<CardInfo
-													title="I improve myself dddd"
+													title="How I improve myself?"
 													class="mt-2"
 													/>
 												</v-col>
@@ -179,7 +181,7 @@
 													<h5>More about preferred partner</h5>
 													<p>How Important following characters are to me</p>
 													<!-- Character -->
-													<rating-component
+													<!-- <rating-component
 														title="Strength of character from a moral point of view"
 														:value="
 														candidateData.preference.pre_strength_of_character_rate
@@ -188,10 +190,10 @@
 														candidateData.preference
 															.pre_strength_of_character_rate_string
 														"
-													></rating-component>
+													></rating-component> -->
 													<!-- Looks and Apperance -->
 													<rating-component
-														title="Looks and apperance"
+														title="Looks, appearance & attractiveness"
 														:value="
 														candidateData.preference.pre_look_and_appearance_rate
 														"
@@ -211,7 +213,6 @@
 															.pre_religiosity_or_faith_rate_string
 														"
 													></rating-component>
-													Manners, Social skills and ethics
 													<rating-component
 														title="Manners, Social skills and ethics"
 														:value="
@@ -225,7 +226,7 @@
 													></rating-component>
 													<!-- Emotional Maturity and compatibility -->
 													<rating-component
-														title="Emotional Maturity and compatibility"
+														title="Emotional Maturity and general intelligence"
 														:value="
 														candidateData.preference.pre_emotional_maturity_rate
 														"
@@ -244,7 +245,7 @@
 													></rating-component>
 													<!-- Good talker -->
 													<rating-component
-														title="Good talker"
+														title="Good communicator"
 														:value="candidateData.preference.pre_good_talker_rate"
 														:valueString="
 														candidateData.preference.pre_good_talker_rate_string
@@ -271,7 +272,7 @@
 													></rating-component>
 													<!-- Employment or Wealth-->
 													<rating-component
-														title="Employment or Wealth"
+														title="Employment and financial stability"
 														:value="
 														candidateData.preference.pre_employment_wealth_rate
 														"
@@ -282,7 +283,7 @@
 													></rating-component>
 													<!-- Education -->
 													<rating-component
-														title="Education"
+														title="Education and academic accomplishments"
 														:value="candidateData.preference.pre_education_rate"
 														:valueString="
 														candidateData.preference.pre_education_rate_string
@@ -687,8 +688,8 @@ export default {
         },
         openGallery() {
             this.images= [];
-            let images = this.profileDetails.other_images
-            if(images.length > 0) {
+            let images = this.candidateData.other_images
+            if(images && images.length > 0) {
                 images.map(i => this.images.push(i.image_path));
                 this.show();
             } else {

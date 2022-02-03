@@ -2,7 +2,7 @@
     <!-- <div> -->
         <v-card :style="{height: height}" class="p-3">
             <div class="flex justify-space-between">
-                <p class="text--secondary text-subtitle-1">{{ title }}</p>
+                <p class="text--disabled text-subtitle-1">{{ title }}</p>
                 <ButtonComponent
                     v-if="showDownloadBtn"
                     iconHeight="14px"
@@ -14,7 +14,7 @@
                     @onClickButton="$emit('onClickDownload')"
                 />
             </div>
-            <p class="text--primary text-subtitle-2">
+            <p class="text--secondary text-subtitle-1">
                 {{ detail }}
             </p>
         </v-card>

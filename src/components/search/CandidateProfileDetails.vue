@@ -214,7 +214,7 @@ export default {
         },
 
         async connectCandidate() {
-            if(this.role != 'Admin' && this.role != 'owner admin') {
+            if(this.role != 'Admin' && this.role != 'Owner & Admin') {
                 this.showError("You don't have permission.")
                 return
             }
@@ -296,6 +296,10 @@ export default {
             }
         },
         async addTeamList() {
+            if(this.role != 'Admin' && this.role != 'Owner & Admin') {
+                this.showError("You don't have permission.")
+                return
+            }
             let data = {
                 url: `v1/team-short-listed-candidates/store`,
                 value: true,
@@ -349,7 +353,7 @@ export default {
             }
         },
         async handleBlockCandidate(actionType, value, url) {
-            if(this.role != 'Admin' && this.role != 'owner admin') {
+            if(this.role != 'Admin' && this.role != 'Owner & Admin') {
                 this.showError("You don't have permission.")
                 return
             }

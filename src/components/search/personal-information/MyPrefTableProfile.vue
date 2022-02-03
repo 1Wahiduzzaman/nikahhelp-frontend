@@ -50,7 +50,7 @@
                 v-if="preference.pre_preferred_divorcee == 1"
                 title="Employment Status"
                 textClass="text-subtitle-1"
-                :value="preference.pre_preferred_divorcee_child"
+                :value="preference.pre_employment_status"
             />
             <TableRow 
                 title="Occupation"

@@ -1,8 +1,8 @@
 <template>
     <div>
         <fieldset>
-            <legend class="text--secondary text-subtitle-2 px-1">{{ title }}</legend>
-            <div style="text-transform: capitalize" class="text-center text-subtitle-1">{{ info }}</div>
+            <legend class="text--disabled text-subtitle-2 px-1">{{ title }}</legend>
+            <div style="text-transform: capitalize" class="text-center text--secondary text-subtitle-1">{{ info }}</div>
         </fieldset>
     </div>
 </template>
