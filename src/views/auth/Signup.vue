@@ -1,7 +1,9 @@
 <template>
   <div class="signup-container font-poppins main-container">
     <div class="signin-inner desktop-padding header-container text-center">
-      <a class="logo" href="/"><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo" /></a>
+      <a class="logo" href="/"
+        ><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo"
+      /></a>
     </div>
     <div class="signup body-container">
       <div class="type-selection" v-if="showMemberTypeForm && !errorMessage">
@@ -10,29 +12,38 @@
             Welcome To <span class="logo-text">Matrimony Assist</span> Signup
           </h3>
           <div class="type mx-auto">
-            <p class="text-center py-2">Let's get started. Please select your account type, you are registering as a</p>
+            <p class="text-center py-2">
+              Let's get started. Please select your account type, you are
+              registering as a
+            </p>
 
             <a-row :gutter="16" class="mobile-view">
               <a-col :span="24">
                 <a-card class="br-card shadow">
                   <button
-                      @click="onSelectAccountType(1)"
-                      class="btn no-shadow p-2 fs-20 br-30 btn-type"
-                      :class="{ active: signupModel.account_type == 1 }"
+                    @click="onSelectAccountType(1)"
+                    class="btn no-shadow p-2 fs-20 br-30 btn-type"
+                    :class="{ active: signupModel.account_type == 1 }"
                   >
                     Candidate
                   </button>
                   <button
-                      @click="onSelectAccountType(2)"
-                      class="btn no-shadow p-2 fs-20 br-30 btn-type mt-5"
-                      :class="{ active: signupModel.account_type == 2 }"
+                    @click="onSelectAccountType(2)"
+                    class="btn no-shadow p-2 fs-20 br-30 btn-type mt-5"
+                    :class="{ active: signupModel.account_type == 2 }"
                   >
                     Representative
                   </button>
-                  <button class="btn no-shadow disabled p-2 fs-20 br-30 btn-type mt-5">
+                  <button
+                    class="btn no-shadow disabled p-2 fs-20 br-30 btn-type mt-5"
+                  >
                     Match Maker
                   </button>
-                  <p class="fs-12 mt-5" v-for="(info, iIndex) in getInstruction" :key="iIndex">
+                  <p
+                    class="fs-12 mt-5"
+                    v-for="(info, iIndex) in getInstruction"
+                    :key="iIndex"
+                  >
                     <a-icon type="check" class="text-success" /> {{ info }}
                   </p>
                 </a-card>
@@ -49,7 +60,11 @@
                   >
                     Candidate
                   </button>
-                  <p class="fs-12 mt-5" v-for="(info, iIndex) in instructions[0].data" :key="iIndex">
+                  <p
+                    class="fs-12 mt-5"
+                    v-for="(info, iIndex) in instructions[0].data"
+                    :key="iIndex"
+                  >
                     <a-icon type="check" class="text-success" /> {{ info }}
                   </p>
                 </a-card>
@@ -63,17 +78,27 @@
                   >
                     Representative
                   </button>
-                  <p class="fs-12 mt-5" v-for="(info, iIndex) in instructions[1].data" :key="iIndex">
+                  <p
+                    class="fs-12 mt-5"
+                    v-for="(info, iIndex) in instructions[1].data"
+                    :key="iIndex"
+                  >
                     <a-icon type="check" class="text-success" /> {{ info }}
                   </p>
                 </a-card>
               </a-col>
               <a-col :span="8">
                 <a-card class="br-card shadow type-card">
-                  <button class="btn no-shadow disabled p-2 fs-20 br-30 btn-type">
+                  <button
+                    class="btn no-shadow disabled p-2 fs-20 br-30 btn-type"
+                  >
                     Match Maker
                   </button>
-                  <p class="fs-12 mt-5" v-for="(info, iIndex) in instructions[2].data" :key="iIndex">
+                  <p
+                    class="fs-12 mt-5"
+                    v-for="(info, iIndex) in instructions[2].data"
+                    :key="iIndex"
+                  >
                     <a-icon type="check" class="text-success" /> {{ info }}
                   </p>
                 </a-card>
@@ -107,13 +132,13 @@
             Already on <span class="logo-text ml-2"> Matrimony Assist? </span>
 
             <router-link
-                to="/login"
-                class="
-              btn btn-sm-sign btn-outline-primary btn-round-sm
-              ms-2
-              text-nowrap
-              join-now-btn
-            "
+              to="/login"
+              class="
+                btn btn-sm-sign btn-outline-primary btn-round-sm
+                ms-2
+                text-nowrap
+                join-now-btn
+              "
             >
               Sign in
             </router-link>
@@ -121,96 +146,99 @@
         </div>
       </div>
 
-<!--      <div class="type-selection" v-if="showMemberFormType && !errorMessage">-->
-<!--        <div class="content mb-5">-->
-<!--          <h3 class="mt-3 text-header-black font-weight-bolder">-->
-<!--            Welcome To <span class="logo-text">Matrimony Assist</span> Signup-->
-<!--          </h3>-->
-<!--          <div class="type mx-auto">-->
-<!--            <p class="text-center py-2">Let's get started. Please select your form type</p>-->
+      <!--      <div class="type-selection" v-if="showMemberFormType && !errorMessage">-->
+      <!--        <div class="content mb-5">-->
+      <!--          <h3 class="mt-3 text-header-black font-weight-bolder">-->
+      <!--            Welcome To <span class="logo-text">Matrimony Assist</span> Signup-->
+      <!--          </h3>-->
+      <!--          <div class="type mx-auto">-->
+      <!--            <p class="text-center py-2">Let's get started. Please select your form type</p>-->
 
-<!--            <a-row :gutter="16" class="mobile-view">-->
-<!--              <a-col :span="24">-->
-<!--                <a-card class="br-card shadow">-->
-<!--                  <button-->
-<!--                      @click="signupModel.form_type = 'short'"-->
-<!--                      class="btn no-shadow p-2 fs-20 br-30 btn-type"-->
-<!--                      :class="{ active: signupModel.form_type == 'short' }"-->
-<!--                  >-->
-<!--                    Short Form-->
-<!--                  </button>-->
-<!--                  <button-->
-<!--                      @click="signupModel.form_type = 'long'"-->
-<!--                      class="btn no-shadow p-2 fs-20 br-30 btn-type mt-5"-->
-<!--                      :class="{ active: signupModel.form_type == 'long' }"-->
-<!--                  >-->
-<!--                    Long Form-->
-<!--                  </button>-->
-<!--                  <p class="fs-12 mt-5">-->
-<!--                    <a-icon type="check" class="text-success" /> You have to complete a {{ signupModel.form_type == 'short' ? 'short form' : 'full form' }} of candidate-->
-<!--                  </p>-->
-<!--                </a-card>-->
-<!--              </a-col>-->
-<!--            </a-row>-->
+      <!--            <a-row :gutter="16" class="mobile-view">-->
+      <!--              <a-col :span="24">-->
+      <!--                <a-card class="br-card shadow">-->
+      <!--                  <button-->
+      <!--                      @click="signupModel.form_type = 'short'"-->
+      <!--                      class="btn no-shadow p-2 fs-20 br-30 btn-type"-->
+      <!--                      :class="{ active: signupModel.form_type == 'short' }"-->
+      <!--                  >-->
+      <!--                    Short Form-->
+      <!--                  </button>-->
+      <!--                  <button-->
+      <!--                      @click="signupModel.form_type = 'long'"-->
+      <!--                      class="btn no-shadow p-2 fs-20 br-30 btn-type mt-5"-->
+      <!--                      :class="{ active: signupModel.form_type == 'long' }"-->
+      <!--                  >-->
+      <!--                    Long Form-->
+      <!--                  </button>-->
+      <!--                  <p class="fs-12 mt-5">-->
+      <!--                    <a-icon type="check" class="text-success" /> You have to complete a {{ signupModel.form_type == 'short' ? 'short form' : 'full form' }} of candidate-->
+      <!--                  </p>-->
+      <!--                </a-card>-->
+      <!--              </a-col>-->
+      <!--            </a-row>-->
 
-<!--            <a-row :gutter="16" class="desktop-view">-->
-<!--              <a-col :span="12">-->
-<!--                <a-card class="br-card shadow type-card">-->
-<!--                  <button-->
-<!--                      @click="signupModel.form_type = 'short'"-->
-<!--                      class="btn no-shadow p-2 fs-20 br-30 btn-type"-->
-<!--                      :class="{ active: signupModel.form_type == 'short' }"-->
-<!--                  >-->
-<!--                    Short Form-->
-<!--                  </button>-->
-<!--                  <p class="fs-12 mt-5">-->
-<!--                    <a-icon type="check" class="text-success" /> You have to complete a short form of candidate-->
-<!--                  </p>-->
-<!--                </a-card>-->
-<!--              </a-col>-->
-<!--              <a-col :span="12">-->
-<!--                <a-card class="br-card shadow type-card">-->
-<!--                  <button-->
-<!--                      @click="signupModel.form_type = 'long'"-->
-<!--                      class="btn no-shadow p-2 fs-20 br-30 btn-type"-->
-<!--                      :class="{ active: signupModel.form_type == 'long' }"-->
-<!--                  >-->
-<!--                    Long Form-->
-<!--                  </button>-->
-<!--                  <p class="fs-12 mt-5">-->
-<!--                    <a-icon type="check" class="text-success" /> You have to complete a full form of candidate-->
-<!--                  </p>-->
-<!--                </a-card>-->
-<!--              </a-col>-->
-<!--            </a-row>-->
-<!--            <div class="mt-5 footer" v-if="signupModel.account_type > 0">-->
-<!--              <button-->
-<!--                  class="btn btn-continue w-50 fs-20 mt-4"-->
-<!--                  @click="selectNexStepAfterFormType"-->
-<!--              >-->
-<!--                Continue-->
-<!--              </button>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <p class="flex-center-center mt-3 bottom-text font-poppins">-->
-<!--            Already on <span class="logo-text ml-2"> Matrimony Assist? </span>-->
+      <!--            <a-row :gutter="16" class="desktop-view">-->
+      <!--              <a-col :span="12">-->
+      <!--                <a-card class="br-card shadow type-card">-->
+      <!--                  <button-->
+      <!--                      @click="signupModel.form_type = 'short'"-->
+      <!--                      class="btn no-shadow p-2 fs-20 br-30 btn-type"-->
+      <!--                      :class="{ active: signupModel.form_type == 'short' }"-->
+      <!--                  >-->
+      <!--                    Short Form-->
+      <!--                  </button>-->
+      <!--                  <p class="fs-12 mt-5">-->
+      <!--                    <a-icon type="check" class="text-success" /> You have to complete a short form of candidate-->
+      <!--                  </p>-->
+      <!--                </a-card>-->
+      <!--              </a-col>-->
+      <!--              <a-col :span="12">-->
+      <!--                <a-card class="br-card shadow type-card">-->
+      <!--                  <button-->
+      <!--                      @click="signupModel.form_type = 'long'"-->
+      <!--                      class="btn no-shadow p-2 fs-20 br-30 btn-type"-->
+      <!--                      :class="{ active: signupModel.form_type == 'long' }"-->
+      <!--                  >-->
+      <!--                    Long Form-->
+      <!--                  </button>-->
+      <!--                  <p class="fs-12 mt-5">-->
+      <!--                    <a-icon type="check" class="text-success" /> You have to complete a full form of candidate-->
+      <!--                  </p>-->
+      <!--                </a-card>-->
+      <!--              </a-col>-->
+      <!--            </a-row>-->
+      <!--            <div class="mt-5 footer" v-if="signupModel.account_type > 0">-->
+      <!--              <button-->
+      <!--                  class="btn btn-continue w-50 fs-20 mt-4"-->
+      <!--                  @click="selectNexStepAfterFormType"-->
+      <!--              >-->
+      <!--                Continue-->
+      <!--              </button>-->
+      <!--            </div>-->
+      <!--          </div>-->
+      <!--          <p class="flex-center-center mt-3 bottom-text font-poppins">-->
+      <!--            Already on <span class="logo-text ml-2"> Matrimony Assist? </span>-->
 
-<!--            <router-link-->
-<!--                to="/login"-->
-<!--                class="-->
-<!--              btn btn-sm-sign btn-outline-primary btn-round-sm-->
-<!--              ms-2-->
-<!--              text-nowrap-->
-<!--              join-now-btn-->
-<!--            "-->
-<!--            >-->
-<!--              Sign in-->
-<!--            </router-link>-->
-<!--          </p>-->
-<!--        </div>-->
-<!--      </div>-->
+      <!--            <router-link-->
+      <!--                to="/login"-->
+      <!--                class="-->
+      <!--              btn btn-sm-sign btn-outline-primary btn-round-sm-->
+      <!--              ms-2-->
+      <!--              text-nowrap-->
+      <!--              join-now-btn-->
+      <!--            "-->
+      <!--            >-->
+      <!--              Sign in-->
+      <!--            </router-link>-->
+      <!--          </p>-->
+      <!--        </div>-->
+      <!--      </div>-->
 
-      <h3 v-if="!showMemberTypeForm && !showMemberFormType" class="mt-6 text-header-black font-weight-bolder text-center">
+      <h3
+        v-if="!showMemberTypeForm && !showMemberFormType"
+        class="mt-6 text-header-black font-weight-bolder text-center"
+      >
         Welcome To <span class="logo-text">Matrimony Assist</span> Signup
       </h3>
 
@@ -267,8 +295,10 @@
                 something suitable. Please make sure you choose a screen name
                 wisely as it communicates something about yourself.
               </template>
-              <span class="text-white">* Please choose a sensible screen name, if you don't wish your
-              real name to appear on search result.</span>
+              <span class="text-white"
+                >* Please choose a sensible screen name, if you don't wish your
+                real name to appear on search result.</span
+              >
             </a-tooltip>
             <a-button
               @click="backToMemberType"
@@ -290,8 +320,8 @@
           Already on <span class="logo-text ml-2"> Matrimony Assist? </span>
 
           <router-link
-              to="/login"
-              class="
+            to="/login"
+            class="
               btn btn-sm-sign btn-outline-primary btn-round-sm
               ms-2
               text-nowrap
@@ -304,9 +334,9 @@
       </div>
 
       <div v-if="showSignupForm && !errorMessage" class="signup-inner">
-<!--        <a href="/" class="logo"-->
-<!--          ><img src="@/assets/logo.png" alt="logo" class="mat-logo"-->
-<!--        /></a>-->
+        <!--        <a href="/" class="logo"-->
+        <!--          ><img src="@/assets/logo.png" alt="logo" class="mat-logo"-->
+        <!--        /></a>-->
         <a-form-model
           ref="signupFormOne"
           :model="signupModel"
@@ -360,23 +390,25 @@
               <a-icon type="loading" class="text-white" v-if="isLoading" />
               Agree & Join
             </button>
-<!--            <div class="loading-dock position-relative mt-1 h-32 pt-1">-->
-<!--              <svg id="load-b" x="0px" y="0px" viewBox="0 0 150 150">-->
-<!--                <circle class="loading-inner" cx="75" cy="75" r="60"/>-->
-<!--              </svg>-->
-<!--              <svg id="load" x="0px" y="0px" viewBox="0 0 150 150">-->
-<!--                <circle class="loading-inner" cx="75" cy="75" r="60"/>-->
-<!--              </svg>-->
-<!--              <button class="btn btn-block submit h-32" @click="handleSubmitSignUp">Agree & join</button>-->
-<!--              <svg id="check" style="width:24px; height:24px" viewBox="0 0 24 24">-->
-<!--                <path fill="#FFFFFF" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />-->
-<!--              </svg>-->
-<!--            </div>-->
+            <!--            <div class="loading-dock position-relative mt-1 h-32 pt-1">-->
+            <!--              <svg id="load-b" x="0px" y="0px" viewBox="0 0 150 150">-->
+            <!--                <circle class="loading-inner" cx="75" cy="75" r="60"/>-->
+            <!--              </svg>-->
+            <!--              <svg id="load" x="0px" y="0px" viewBox="0 0 150 150">-->
+            <!--                <circle class="loading-inner" cx="75" cy="75" r="60"/>-->
+            <!--              </svg>-->
+            <!--              <button class="btn btn-block submit h-32" @click="handleSubmitSignUp">Agree & join</button>-->
+            <!--              <svg id="check" style="width:24px; height:24px" viewBox="0 0 24 24">-->
+            <!--                <path fill="#FFFFFF" d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z" />-->
+            <!--              </svg>-->
+            <!--            </div>-->
 
             <span class="fs-12 mt-2 text-white"
               >By clicking Agree & Join, you agree to Matrimony Assist
               <a class="link" href="/user-agreement">User Agreement, </a>
-              <a class="link" href="/privacy-cookie-policy">Privacy and Cookie Policy</a>
+              <a class="link" href="/privacy-cookie-policy"
+                >Privacy and Cookie Policy</a
+              >
             </span>
           </div>
         </a-form-model>
@@ -405,13 +437,13 @@
           <div class="flex justify-content-center align-items-center">
             <button @click="resetData" class="mt-2">
               <router-link
-                  to="/login"
-                  class="
-                btn btn-sm btn-outline-primary btn-round-sm btn-signinup
-                ms-2
-                text-nowrap
-                join-now-btn
-              "
+                to="/login"
+                class="
+                  btn btn-sm btn-outline-primary btn-round-sm btn-signinup
+                  ms-2
+                  text-nowrap
+                  join-now-btn
+                "
               >
                 Sign in
               </router-link>
@@ -419,13 +451,13 @@
             <h4 class="fs-16 pt-3 pl-2 pr-1 text-white">or</h4>
             <button @click="resetData" class="mt-2">
               <router-link
-                  to="/signup"
-                  class="
-                btn btn-sm btn-outline-primary btn-round-sm btn-signinup
-                ms-2
-                text-nowrap
-                join-now-btn
-              "
+                to="/signup"
+                class="
+                  btn btn-sm btn-outline-primary btn-round-sm btn-signinup
+                  ms-2
+                  text-nowrap
+                  join-now-btn
+                "
               >
                 Join now with another email
               </router-link>
@@ -434,7 +466,7 @@
         </div>
       </div>
     </div>
-    <Footer class="footer-container" :class="{'footer-pos': errorMessage}" />
+    <Footer class="footer-container" :class="{ 'footer-pos': errorMessage }" />
   </div>
 </template>
 
@@ -453,8 +485,16 @@ export default {
   },
   data() {
     let validatePass = (rule, value, callback) => {
+      var regex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
       if (value === "") {
         callback(new Error("Enter a password"));
+      }
+      if (!regex.test(value)) {
+        callback(
+          new Error(
+            "Your password must contain at least 8 characters, a symbol, upper and lower case letters and a number"
+          )
+        );
       } else {
         callback();
       }
@@ -477,33 +517,36 @@ export default {
         password: "",
         confirmPassword: "",
         account_type: 0,
-        form_type: 'long'
+        form_type: "long",
       },
       instructions: [
-        { title: 'candidiate',
+        {
+          title: "candidiate",
           data: [
-              'Candidate is either the bride or groom looking to get married',
-              'Create your own team or join a team',
-              'Represented by only ONE team',
-              'Be a representative for another 4 candidates'
-          ]
+            "Candidate is either the bride or groom looking to get married",
+            "Create your own team or join a team",
+            "Represented by only ONE team",
+            "Be a representative for another 4 candidates",
+          ],
         },
-        { title: 'representative',
+        {
+          title: "representative",
           data: [
-            'Anyone can be a representative, they simply help and guide the candidate to find suitable match',
-            'Create your own team or join a team',
-            'Can switch account to candidate',
-            'Can create or join upto 5 teams',
-          ]
+            "Anyone can be a representative, they simply help and guide the candidate to find suitable match",
+            "Create your own team or join a team",
+            "Can switch account to candidate",
+            "Can create or join upto 5 teams",
+          ],
         },
-        { title: 'match-maker',
+        {
+          title: "match-maker",
           data: [
-            'Matchmaker is a professional who helps the candidate to find prospects ',
-            'Matchmaker role is same as representative',
-            'Can not switch membership to candidate',
-            'Can create or join upto 100+ teams',
-          ]
-        }
+            "Matchmaker is a professional who helps the candidate to find prospects ",
+            "Matchmaker role is same as representative",
+            "Can not switch membership to candidate",
+            "Can create or join upto 100+ teams",
+          ],
+        },
       ],
       showMemberForm: false,
       showMemberTypeForm: true,
@@ -518,6 +561,10 @@ export default {
             message: "Choose a email address",
             trigger: "change",
           },
+          {
+            type: "email",
+            message: "Please input a valid email",
+          },
         ],
         first_name: [
           { required: true, message: "Enter first name", trigger: "change" },
@@ -528,33 +575,21 @@ export default {
           },
         ],
         last_name: [
-          { required: true, message: "Enter last name", trigger: "change", color: '#FFFFFFF' },
+          {
+            required: true,
+            message: "Enter last name",
+            trigger: "change",
+            color: "#FFFFFFF",
+          },
           {
             min: 3,
             message: "Use 3 characters or more for your last name",
             trigger: "blur",
           },
         ],
-        // screen_name: [
-        //   { required: true, message: "Enter screen name", trigger: "blur" },
-        // ],
-        password: [
-          { validator: validatePass, trigger: "blur" },
-          {
-            min: 8,
-            message: "Use 8 characters or more for your password",
-            trigger: "change",
-          },
-        ],
-        confirmPassword: [
-          { validator: validatePass2, trigger: "blur" },
-          ,
-          {
-            min: 8,
-            message: "Use 8 characters or more for your password",
-            trigger: "change",
-          },
-        ],
+
+        password: [{ validator: validatePass, trigger: "change" }],
+        confirmPassword: [{ validator: validatePass2, trigger: "blur" }, ,],
       },
     };
   },
@@ -564,20 +599,22 @@ export default {
     },
     getInstruction() {
       let index = 0;
-      if(this.signupModel && this.signupModel.account_type) {
-        return this.instructions[this.signupModel.account_type - 1].data
+      if (this.signupModel && this.signupModel.account_type) {
+        return this.instructions[this.signupModel.account_type - 1].data;
       }
-      return this.instructions[index].data
-    }
+      return this.instructions[index].data;
+    },
   },
   methods: {
     trimTheScreenName() {
-      this.signupModel.screen_name = this.signupModel.screen_name.replace(/[^A-Z0-9]/ig, "");
+      this.signupModel.screen_name = this.signupModel.screen_name.replace(
+        /[^A-Z0-9]/gi,
+        ""
+      );
     },
     handleSubmitSignUp() {
       this.$refs.signupFormOne.validate((valid) => {
-       
-         if (valid) {
+        if (valid) {
           const {
             email,
             password,
@@ -602,7 +639,7 @@ export default {
             this.errorMessage = "The email has already been taken.";
           }
         } else {
-           return false;
+          return false;
         }
       });
     },
@@ -637,7 +674,7 @@ export default {
       this.showMemberForm = true;
     },
     onHandleContinue() {
-      if(this.isConfirm) {
+      if (this.isConfirm) {
         this.showMemberTypeForm = false;
 
         // new
@@ -681,30 +718,30 @@ export default {
       });
     },
     addLoader() {
-      let submit = document.querySelector('.submit');
+      let submit = document.querySelector(".submit");
       submit.classList.remove("return");
       submit.blur();
-      document.querySelector('.loading-dock').classList.add('loaded');
-      document.getElementById('load').style.display= 'initial';
-      document.getElementById('load-b').style.display= 'initial';
-      setTimeout(function(){
-        document.getElementById('load').style.opacity = 1;
+      document.querySelector(".loading-dock").classList.add("loaded");
+      document.getElementById("load").style.display = "initial";
+      document.getElementById("load-b").style.display = "initial";
+      setTimeout(function () {
+        document.getElementById("load").style.opacity = 1;
       }, 750);
-      setTimeout(function(){
-        document.getElementById('load-b').style.opacity = 1;
+      setTimeout(function () {
+        document.getElementById("load-b").style.opacity = 1;
       }, 1400);
     },
     removeLoader() {
-      let submit = document.querySelector('.submit');
-      document.querySelector('.loading-dock').classList.remove('loaded');
-      document.getElementById('load').style.display = 'none';
-      document.getElementById('load-b').style.display = 'none';
-      document.getElementById('load').style.opacity = 0;
-      document.getElementById('load-b').style.opacity = 0;
+      let submit = document.querySelector(".submit");
+      document.querySelector(".loading-dock").classList.remove("loaded");
+      document.getElementById("load").style.display = "none";
+      document.getElementById("load-b").style.display = "none";
+      document.getElementById("load").style.opacity = 0;
+      document.getElementById("load-b").style.opacity = 0;
       submit.classList.add("return");
       submit.innerHTML = "Submit";
-      document.getElementById('check').style.display = "none";
-    }
+      document.getElementById("check").style.display = "none";
+    },
   },
 };
 </script>
@@ -780,7 +817,7 @@ $border-width: 2px;
         padding: 16px 15px;
       }
       .error {
-        color: #FFFFFF;
+        color: #ffffff;
         height: 90px;
         display: flex;
         flex-direction: column;
@@ -802,10 +839,10 @@ $border-width: 2px;
       }
       .form-signup {
         background-image: linear-gradient(
-                0deg,
-                #e02076 0%,
-                #932784 50%,
-                #522e8e 100%
+          0deg,
+          #e02076 0%,
+          #932784 50%,
+          #522e8e 100%
         );
         //background: $bg-white;
         padding: 20px;
@@ -890,17 +927,17 @@ $border-width: 2px;
       //height: 400px;
       //background-color: #e02076;
       background-image: linear-gradient(
-              180deg,
-              #e02076 0%,
-              #932784 50%,
-              #522e8e 100%
+        180deg,
+        #e02076 0%,
+        #932784 50%,
+        #522e8e 100%
       );
       @media (min-width: 768px) {
         background-image: linear-gradient(
-                0deg,
-                #e02076 0%,
-                #932784 50%,
-                #522e8e 100%
+          0deg,
+          #e02076 0%,
+          #932784 50%,
+          #522e8e 100%
         );
       }
       padding: 20px;
@@ -957,7 +994,7 @@ $border-width: 2px;
 }
 .signup-head {
   font-size: 16px;
-  color: #FFFFFF;
+  color: #ffffff;
   margin-top: -12px;
   background: -webkit-linear-gradient(white, pink, white, #8debf2);
   -webkit-background-clip: text;
@@ -1031,10 +1068,10 @@ h3 {
   border-radius: 30px;
   border: 2px solid $color-white;
   //color: $turquoise;
-  color: #FFFFFF;
+  color: #ffffff;
   &:hover {
     background: $turquoise;
-    color: #FFFFFF;
+    color: #ffffff;
   }
 }
 .btn-secondary {
@@ -1053,16 +1090,16 @@ h3 {
   padding: 1px 8px;
   border: 1px solid #522e8e;
   color: $color-primary;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   &:hover {
-    color: #FFFFFF;
+    color: #ffffff;
   }
 }
 .ant-form-explain {
-  color: #FFFFFF !important;
+  color: #ffffff !important;
 }
 //agree button css
-.loading-dock{
+.loading-dock {
   //width: 330px;
   //height: 54px;
   display: flex;
@@ -1070,44 +1107,44 @@ h3 {
   align-items: center;
 }
 
-button.submit{
+button.submit {
   cursor: pointer;
   width: 100%;
   color: white;
   border-radius: 40px;
   border: 1px solid $border-white;
-  transition: all .2s;
+  transition: all 0.2s;
   font-size: 16px;
   padding-top: 3px;
-  &:hover{
+  &:hover {
     background: $turquoise;
     color: white;
   }
-  &:active{
+  &:active {
     transform: scale(0.95);
   }
 
-  &:focus{
+  &:focus {
     outline: none;
     //background: $turquoise;
     color: white;
     box-shadow: none;
   }
 
-  &.popout{
-    animation: circle-to-button .5s linear forwards;
+  &.popout {
+    animation: circle-to-button 0.5s linear forwards;
   }
-  &.return{
-    animation: fade-to-original .3s linear;
-    &:hover{
+  &.return {
+    animation: fade-to-original 0.3s linear;
+    &:hover {
       background: $turquoise;
       color: white;
     }
   }
 }
 .btn-signinup {
-  color: #FFFFFF;
-  border: 1px solid #FFFFFF;
+  color: #ffffff;
+  border: 1px solid #ffffff;
   font-size: 10px;
   @media (min-width: 576px) {
     font-size: 12px;
@@ -1118,19 +1155,20 @@ button.submit{
   width: 100%;
   bottom: 0;
 }
-.loaded{
-  button.submit{
+.loaded {
+  button.submit {
     background-color: $turquoise;
-    animation: button-to-circle .5s linear forwards;
-    animation-delay: .3s;
+    animation: button-to-circle 0.5s linear forwards;
+    animation-delay: 0.3s;
   }
-  #load{
+  #load {
     animation: loading-circle 3s linear forwards;
     animation-delay: 1s;
   }
 }
 
-#load, #load-b {
+#load,
+#load-b {
   display: none;
   position: absolute;
   width: 58px;
@@ -1148,26 +1186,26 @@ button.submit{
     fill: transparent;
   }
 }
-#load-b{
+#load-b {
   opacity: 0;
-  .loading-inner{
+  .loading-inner {
     stroke: $turquoise;
   }
 }
 
-svg{
+svg {
   position: absolute;
-  display: none
+  display: none;
 }
 
 @keyframes loading-circle {
   0% {
     opacity: 1;
-    stroke-dashoffset: 0
+    stroke-dashoffset: 0;
   }
-  50%{
+  50% {
     opacity: 1;
-    stroke-dashoffset: -100
+    stroke-dashoffset: -100;
   }
   100% {
     opacity: 1;
@@ -1175,41 +1213,41 @@ svg{
   }
 }
 
-@keyframes button-to-circle{
-  0%{
+@keyframes button-to-circle {
+  0% {
     width: 160px;
     color: $turquoise;
     border-color: $turquoise;
     background-color: $turquoise;
   }
-  50%{
+  50% {
     color: rgba(255, 255, 255, 0);
   }
-  90%{
+  90% {
     width: 50px;
     color: rgba(255, 255, 255, 0);
     border-color: #c3c3c3;
   }
-  100%{
+  100% {
     width: 50px;
     border-color: rgba(255, 255, 255, 0);
     color: rgba(255, 255, 255, 0);
-    background-color:  rgba(255, 255, 255, 0);
+    background-color: rgba(255, 255, 255, 0);
   }
 }
 
-@keyframes circle-to-button{
-  0%{
+@keyframes circle-to-button {
+  0% {
     border-color: $turquoise;
     background-color: $turquoise;
     height: 50px;
     width: 50px;
   }
-  50%{
+  50% {
     height: 50px;
     width: 50px;
   }
-  100%{
+  100% {
     height: 50px;
     width: 160px;
     border-color: $turquoise;
@@ -1217,11 +1255,11 @@ svg{
   }
 }
 
-@keyframes fade-to-original{
-  0%{
+@keyframes fade-to-original {
+  0% {
     background-color: $turquoise;
   }
-  100%{
+  100% {
     background-color: white;
   }
 }
@@ -1235,12 +1273,12 @@ svg{
 .header-container {
   flex-shrink: 0;
 }
-.body-container{
+.body-container {
   flex-grow: 1;
   overflow: auto;
   min-height: 2em;
 }
-.footer-container{
+.footer-container {
   flex-shrink: 0;
 }
 </style>

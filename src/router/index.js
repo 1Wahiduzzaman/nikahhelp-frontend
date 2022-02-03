@@ -161,6 +161,7 @@ const AppRouter = new VueRouter({
             {
                 path: "users",
                 component: AdminUsers,
+                name:'AdminUsers'
 
             },
             {

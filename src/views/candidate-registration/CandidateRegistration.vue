@@ -551,7 +551,7 @@ export default {
         //   );
         // }
         this.current = response.data.data.user.data_input_status;
-        this.showAgreement = user.status == "2" ? true : false;
+        this.showAgreement = user.status == "2" || user.status == "3" ? true : false;
         this.checkExistData();
       } else {
         this.isLoading = false;
@@ -776,6 +776,7 @@ export default {
     },
     toggleStep(step) {
       this.current = step;
+      this.checkExistData();
     },
     async updateUserVerifyOrReject() {
       let user = JSON.parse(localStorage.getItem("user"));
