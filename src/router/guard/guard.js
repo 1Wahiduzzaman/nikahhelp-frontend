@@ -20,6 +20,9 @@ export const InitRoute = (to, from, next) => {
     else if (user && user.email === 'superadmin@gmail.com' && to.name == 'DHome') {
         return next({ name: 'AdminUsers' });
     }
+    else if (user && user.email !== 'superadmin@gmail.com' && to.name == 'Admin') {
+        return next({ name: 'DHome' });
+    }
     else if (user.account_type === 1 && user.data_input_status <= 5) {
 
         return to.name == 'CandidateRegistration' ? next() : next({ name: 'CandidateRegistration' });
