@@ -4,6 +4,7 @@
 		<DeletionModal
 			:showModalProp="showModalDeletion"
 			:teamData="teamData"
+      :deleteTeamLoading="deleteTeamLoading"
 			@handleCancel="showModalDeletion = false"
 			@handleOk="handleOkDeletion"
 		/>
@@ -616,6 +617,7 @@ export default {
   },
 	data() {
 		return {
+      deleteTeamLoading: false,
 			invitation_link: [],
 			invitation_link_show: [],
       relationships: ['Father', 'Mother', 'Brother', 'Sister', 'Grand Father', 'Grand Mother', 'Brother-in-law', 'Sister-in-paw'],
@@ -1247,6 +1249,7 @@ export default {
         });
 				return;
 			}
+      this.deleteTeamLoading = true;
 			await ApiService.delete("v1/delete-team", {
 				team_id: this.teamData.team_id,
 				team_password: password,
@@ -1284,6 +1287,7 @@ export default {
                 console.log(data)
               }).catch((error) => console.log(error));
 
+            this.deleteTeamLoading = false;
 						this.showModalDeletion = false;
             this.$success({
               title: "Success",

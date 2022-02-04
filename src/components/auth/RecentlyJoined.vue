@@ -12,6 +12,7 @@
               [1280, 3],
             ]"
           :autoplay="true"
+          :loop="true"
           :paginationEnabled="false"
           :navigationEnabled="false"
       >
