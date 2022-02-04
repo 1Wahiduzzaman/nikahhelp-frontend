@@ -87,11 +87,11 @@ export default {
     },
     methods: {
          getProfession() {
-            let arr = [];
-            if(this.preference.pre_occupation.length) {
-                arr = JSON.parse(this.preference.pre_occupation).map(i => i.name)
-            }
-            return arr.join(', ')
+            // let arr = [];
+            // if(this.preference.pre_occupation_list.length) {
+            //     arr = JSON.parse(this.preference.pre_occupation).map(i => i.name)
+            // }
+            return this.preference.pre_occupation_list.join(', ')
         },
         getCountry() {
             let cityArr = [];

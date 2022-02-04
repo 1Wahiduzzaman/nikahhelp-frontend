@@ -77,7 +77,8 @@
                     </v-col>
                     <v-col class="pt-1 mb-5" cols="12" md="6">
                         <CardInfo
-                            title="I improve myself"
+                            title="How I improve myself?"
+                            :detail="getHowIImprove()"
                         />
                     </v-col>
                 </v-row>
@@ -91,7 +92,7 @@
                     <FamilyInfoTable :data="profileDetails"/>
                 </v-col>
                 <v-col class="pt-1 mb-5" cols="12" md="5">
-                    <CardInfo :detail="profileDetails.personal.per_about"/>
+                    <CardInfo :detail="profileDetails.family.family_info"/>
                 </v-col>
             </v-row>
         </v-container>
@@ -256,10 +257,12 @@ import {mapGetters} from 'vuex'
 import Scroller from  '@/components/atom/Scroller'
 import RatingComponent from "@/components/profile/RatingComponent.vue";
 import ComingSoonModal from "@/components/search/ComingSoonModal"
+import improveMyselfThings from '@/common/improveMyselfThings'
 export default {
     name: 'PersonalInformation',
     data: () => ({
-        copyProfileText: 'Copy Profile URL'
+        copyProfileText: 'Copy Profile URL',
+        improveMyselfThings
     }),
     components: {
         PersonalInformationTable,
@@ -282,6 +285,21 @@ export default {
         
     },
     methods: {
+        getHowIImprove() {
+            let text = [];
+            let items = [];
+            if(this.profileDetails.more_about?.per_improve_myself?.length) {
+                this.profileDetails.more_about.per_improve_myself.map(i => {
+                items.push(this.improveMyselfThings.find(im => im.value === i))
+                })
+            }
+            if(items && items.length) {
+                items.map(i => {
+                text.push(i.label)
+                })
+            }
+            return text.join(' \n ');
+        },
         onClickTeamDetail() {
             this.$refs.advDiag.openDiag()
         },

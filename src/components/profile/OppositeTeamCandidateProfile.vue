@@ -122,6 +122,7 @@
 														:showDownloadBtn="true"
 														title="Additional Information"
 														class="mt-2"
+														:detail="candidateData.more_about.per_additional_info_text"
                             							@onClickDownload="onClickDownload"
 													/>
 												</v-col>
@@ -134,8 +135,9 @@
 												</v-col>
 												<v-col class="pt-1 mb-5" cols="12" md="6">
 													<CardInfo
-													title="How I improve myself?"
-													class="mt-2"
+														title="How I improve myself?"
+														class="mt-2"
+														:detail="getHowIImprove()"
 													/>
 												</v-col>
 											</v-row>
@@ -149,7 +151,7 @@
 												<FamilyInfoTable :data="candidateData"/>
 											</v-col>
 											<v-col class="pt-1 mb-5" cols="12" md="5">
-												<CardInfo />
+												<CardInfo :detail="candidateData.family.family_info"/>
 											</v-col>
 										</v-row>
 									</v-container>
@@ -315,6 +317,7 @@
 <script>
 import RatingComponent from "./RatingComponent.vue";
 import firebase from "../../configs/firebase";
+import improveMyselfThings from '@/common/improveMyselfThings'
 // import Footer from "@/components/auth/Footer.vue";
 
 import ProfileBanner from "@/components/atom/ProfileBanner";
@@ -352,7 +355,8 @@ export default {
 			copyProfileText: 'Copy Profile URL',
 			avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
 			conversations: [],
-			profile: ''
+			profile: '',
+			improveMyselfThings
 		};
 	},
 	created() {
@@ -399,6 +403,18 @@ export default {
             shortListCandidate: 'search/shortListCandidate',
             teamListCandidate: 'search/teamListCandidate',
         }),
+		onClickDownload() {
+            if(this.candidateData.more_about?.per_additional_info_doc == null) {
+                this.$error({
+                title: 'Link not available!',
+                center: true,
+                });
+            }
+
+            if(this.candidateData.more_about?.per_additional_info_doc) {
+                window.open(this.candidateData.more_about?.per_additional_info_doc, '_blank')
+            }
+        },
 		onClickTeamDetail() {
             this.$refs.advDiag.openDiag()
         },
@@ -410,6 +426,21 @@ export default {
                 this.copyProfileText = 'Copy Profile URL';
             }, 3000);
         },
+		getHowIImprove() {
+			let text = [];
+			let items = [];
+			if(this.candidateData.more_about?.per_improve_myself?.length) {
+				this.candidateData.more_about.per_improve_myself.map(i => {
+				items.push(this.improveMyselfThings.find(im => im.value === i))
+				})
+			}
+			if(items && items.length) {
+				items.map(i => {
+				text.push(i.label)
+				})
+			}
+			return text.join(' \n ');
+		},
 		startConversation() {
 			var res_userid = this.candidateData.user_id;
 			var my_user_id = this.$store.state.user.user.id;
