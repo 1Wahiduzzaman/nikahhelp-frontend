@@ -45,6 +45,15 @@
         :auto-size="{ minRows: 2, maxRows: 6 }"
         v-model="deletionReasonDetail"
       />
+
+      <template slot="footer">
+        <a-button key="back" @click="handleCancel">
+          Cancel
+        </a-button>
+        <a-button key="submit" type="primary" :loading="deleteTeamLoading" @click="handleOk">
+          Ok
+        </a-button>
+      </template>
     </a-modal>
   </div>
 </template>
@@ -52,7 +61,7 @@
 <script>
   export default {
     name: 'DeletionModal',
-    props: ['showModalProp'],
+    props: ['showModalProp', 'deleteTeamLoading'],
     data() {
       return {
         ModalText: 'Content of the modal',
