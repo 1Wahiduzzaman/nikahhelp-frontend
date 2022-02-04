@@ -65,6 +65,8 @@
                             :showDownloadBtn="true"
                             title="Additional Information"
                             class="mt-2"
+                            :detail="profileDetails.more_about.per_additional_info_text"
+                            @onClickDownload="onClickDownload"
                         />
                     </v-col>
                     <v-col class="pt-1 mb-5" cols="12" md="6">
@@ -75,7 +77,8 @@
                     </v-col>
                     <v-col class="pt-1 mb-5" cols="12" md="6">
                         <CardInfo
-                            title="I improve myself"
+                            title="How I improve myself?"
+                            :detail="getHowIImprove()"
                         />
                     </v-col>
                 </v-row>
@@ -89,7 +92,7 @@
                     <FamilyInfoTable :data="profileDetails"/>
                 </v-col>
                 <v-col class="pt-1 mb-5" cols="12" md="5">
-                    <CardInfo :detail="profileDetails.personal.per_about"/>
+                    <CardInfo :detail="profileDetails.family.family_info"/>
                 </v-col>
             </v-row>
         </v-container>
@@ -121,7 +124,7 @@
                         <h5>More about preferred partner</h5>
                         <p>How Important following characters are to me</p>
                         <!-- Character -->
-                        <rating-component
+                        <!-- <rating-component
                         title="Strength of character from a moral point of view"
                         :value="
                             profileDetails.preference.pre_strength_of_character_rate
@@ -130,10 +133,10 @@
                             profileDetails.preference
                             .pre_strength_of_character_rate_string
                         "
-                        ></rating-component>
+                        ></rating-component> -->
                         <!-- Looks and Apperance -->
                         <rating-component
-                        title="Looks and apperance"
+                        title="Looks, appearance & attractiveness"
                         :value="
                             profileDetails.preference.pre_look_and_appearance_rate
                         "
@@ -144,7 +147,7 @@
                         ></rating-component>
                         <!-- Religiosity/Faith -->
                         <rating-component
-                        title="Religiosity/ Faith"
+                        title="Religiosity / Faith"
                         :value="
                             profileDetails.preference.pre_religiosity_or_faith_rate
                         "
@@ -167,7 +170,7 @@
                         ></rating-component>
                         <!-- Emotional Maturity and compatibility -->
                         <rating-component
-                        title="Emotional Maturity and compatibility"
+                        title="Emotional Maturity and general intelligence"
                         :value="
                             profileDetails.preference.pre_emotional_maturity_rate
                         "
@@ -186,7 +189,7 @@
                         ></rating-component>
                         <!-- Good talker -->
                         <rating-component
-                        title="Good talker"
+                        title="Good communicator"
                         :value="profileDetails.preference.pre_good_talker_rate"
                         :valueString="
                             profileDetails.preference.pre_good_talker_rate_string
@@ -213,7 +216,7 @@
                         ></rating-component>
                         <!-- Employment or Wealth-->
                         <rating-component
-                        title="Employment or Wealth"
+                        title="Employment and financial stability"
                         :value="
                             profileDetails.preference.pre_employment_wealth_rate
                         "
@@ -224,7 +227,7 @@
                         ></rating-component>
                         <!-- Education -->
                         <rating-component
-                        title="Education"
+                        title="Education and academic accomplishments"
                         :value="profileDetails.preference.pre_education_rate"
                         :valueString="
                             profileDetails.preference.pre_education_rate_string
@@ -254,10 +257,12 @@ import {mapGetters} from 'vuex'
 import Scroller from  '@/components/atom/Scroller'
 import RatingComponent from "@/components/profile/RatingComponent.vue";
 import ComingSoonModal from "@/components/search/ComingSoonModal"
+import improveMyselfThings from '@/common/improveMyselfThings'
 export default {
     name: 'PersonalInformation',
     data: () => ({
-        copyProfileText: 'Copy Profile URL'
+        copyProfileText: 'Copy Profile URL',
+        improveMyselfThings
     }),
     components: {
         PersonalInformationTable,
@@ -280,8 +285,35 @@ export default {
         
     },
     methods: {
+        getHowIImprove() {
+            let text = [];
+            let items = [];
+            if(this.profileDetails.more_about?.per_improve_myself?.length) {
+                this.profileDetails.more_about.per_improve_myself.map(i => {
+                items.push(this.improveMyselfThings.find(im => im.value === i))
+                })
+            }
+            if(items && items.length) {
+                items.map(i => {
+                text.push(i.label)
+                })
+            }
+            return text.join(' \n ');
+        },
         onClickTeamDetail() {
             this.$refs.advDiag.openDiag()
+        },
+        onClickDownload() {
+            if(this.profileDetails.more_about?.per_additional_info_doc == null) {
+                this.$error({
+                title: 'Link not available!',
+                center: true,
+                });
+            }
+
+            if(this.profileDetails.more_about?.per_additional_info_doc) {
+                window.open(this.profileDetails.more_about?.per_additional_info_doc, '_blank')
+            }
         },
         onClickCopyText() {
             this.copyProfileText = 'Copy successful'

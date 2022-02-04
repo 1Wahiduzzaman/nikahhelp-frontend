@@ -3,7 +3,7 @@
       <v-divider class="d-md-none"></v-divider>
     <v-row>
       <v-col class="pt-1" cols="12" md="6">
-          {{ title }}
+          <span class="text--secondary">{{ title }}</span>
       </v-col>
       <v-col class="pt-1" cols="12" md="6">
         <div class="d-sm-none flex justify-space-between align-center">

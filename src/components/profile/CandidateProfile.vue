@@ -113,7 +113,10 @@
                                 />
                             </v-col>
                             <v-col class="pt-1" cols="12">
-                              <CardInfo title="More about me" :detail="candidateData.personal.per_about" class="mt-2"/>
+                              <CardInfo title="More about me" 
+                                :detail="candidateData.personal.per_about" 
+                                class="mt-2"
+                              />
                             </v-col>
                             <v-col class="pt-1" cols="12">
                               <CardInfo
@@ -135,6 +138,7 @@
                               <CardInfo
                                 title="How I improve myself?"
                                 class="mt-2"
+                                :detail="getHowIImprove()"
                               />
                             </v-col>
                         </v-row>
@@ -323,6 +327,7 @@ import Footer from "@/components/auth/Footer.vue";
 import ApiService from "@/services/api.service";
 import OutlinedButton from '@/components/atom/OutlinedButton'
 import ComingSoonModal from "@/components/search/ComingSoonModal"
+import improveMyselfThings from '@/common/improveMyselfThings'
 
 export default {
   name: "CandidateProfile",
@@ -342,6 +347,7 @@ export default {
   },
   data() {
     return {
+      improveMyselfThings,
       copyProfileText: 'Copy Profile URL',
       images: [],
       copyIcon: '/assets/icon/copy-secondary.svg',
@@ -393,6 +399,21 @@ export default {
       if(this.candidateData.more_about?.per_additional_info_doc) {
         window.open(this.candidateData.more_about?.per_additional_info_doc, '_blank')
       }
+    },
+    getHowIImprove() {
+      let text = [];
+      let items = [];
+      if(this.candidateData.more_about?.per_improve_myself?.length) {
+        this.candidateData.more_about.per_improve_myself.map(i => {
+          items.push(this.improveMyselfThings.find(im => im.value === i))
+        })
+      }
+      if(items && items.length) {
+        items.map(i => {
+          text.push(i.label)
+        })
+      }
+      return text.join(' \n ');
     },
     onClickButton(data) {
       if(data.event == 'editProfile') this.$router.push('/edit_candidate')
