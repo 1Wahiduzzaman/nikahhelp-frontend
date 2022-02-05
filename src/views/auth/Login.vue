@@ -48,6 +48,7 @@
                 id="password"
                 v-model="signinModel.password"
                 placeholder="Password"
+                @keyup.enter="entered()"
               />
             </a-form-model-item>
           </div>
@@ -130,6 +131,11 @@ export default {
     };
   },
   methods: {
+    entered() {
+      if(this.signinModel && this.signinModel.email && this.signinModel.password) {
+        this.handleSubmit();
+      }
+    },
     async handleSubmit() {
       this.$refs.signinForm.validate((valid) => {
         if (valid) {
