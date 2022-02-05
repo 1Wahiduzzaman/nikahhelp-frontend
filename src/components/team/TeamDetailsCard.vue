@@ -1493,7 +1493,7 @@ export default {
 								const vm = this;
 								this.$success({
 									title: "Success",
-									content: "Selected Team Activated",
+									content: "Selected Team Activated. Please note all the feature related information (chat, search, connection etc) will changed to this team is that you just activated. ",
 									onOk() {
 										vm.$emit("customLoad");
 										setTimeout(() => vm.$router.go(), 100);

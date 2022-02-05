@@ -66,7 +66,7 @@ export default {
 .v-dialog {
   transition: none;
 }
-.v-dialog:not(.v-dialog--fullscreen) {
-  height: 90%;
-}
+//.v-dialog:not(.v-dialog--fullscreen) {
+//  height: 90%;
+//}
 </style>
