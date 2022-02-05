@@ -3,7 +3,7 @@
     <Header />
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else class="steps ma-steps">
-      <div class="steper-header text-center heading-text px-3">
+      <div class="steper-header text-center heading-text px-3 d-mb-none">
         <h4>About you and the companion you are looking for</h4>
         <p>To get the best results please complete the questions fully</p>
       </div>
@@ -115,8 +115,7 @@
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
-          :style="{ marginRight: current == 0 ? '-15px' : '-5px' }"
-          style="float: right"
+          style="float: right; margin-right: -15px"
           class="mt-3"
           @click="next"
         >
@@ -923,6 +922,7 @@ export default {
   background: #d4e0eb;
   border-radius: 14px;
   padding-bottom: 8px !important;
+  margin-top: 20px;
 }
 .bottom-padding {
   padding: 0 2rem;
@@ -967,6 +967,18 @@ export default {
 @media (min-width: 992px) {
   .step-bar.vue-fixed-header--isFixed {
     width: 800px;
+  }
+}
+.ma-steps {
+  margin-top: 30px;
+  @media (min-width: 992px) {
+    margin-top: 0;
+  }
+}
+.d-mb-none {
+  display: none;
+  @media (min-width: 992px) {
+    display: block;
   }
 }
 </style>

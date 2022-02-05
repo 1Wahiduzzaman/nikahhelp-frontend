@@ -689,6 +689,18 @@ div[data-unique="second_one"] >  .ant-select-selection{
 .d-mb-none {
     display: none;
 }
+.section-heading {
+    margin-top: 16px;
+    @media (min-width: 992px) {
+        margin-top: 0;
+    }
+}
+.steps-action {
+    margin-top: 30px;
+    @media (min-width: 992px) {
+        margin-top: 0;
+    }
+}
 .ant-select-dropdown {
     min-width: 140px !important;
 }
