@@ -35,7 +35,7 @@
                 id="email"
                 v-model="signinModel.email"
                 placeholder="Enter email"
-                class="fs-14"
+                class="fs-16"
               />
             </a-form-model-item>
           </div>
@@ -44,7 +44,7 @@
             <a-form-model-item ref="password" prop="password">
               <a-input-password
                 type="password"
-                class="form-control fs-14"
+                class="form-control fs-16"
                 id="password"
                 v-model="signinModel.password"
                 placeholder="Password"
@@ -160,6 +160,9 @@ export default {
       this.error = "";
     },
   },
+  beforeDestroy() {
+    this.$store.auth.state.errorMessage = null;
+  }
 };
 </script>
 

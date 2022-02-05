@@ -1,5 +1,5 @@
 <template>
-  <div class="candidate-registration">
+  <div class="candidate-registration font-poppins">
     <Header />
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else class="steps ma-steps">
@@ -115,7 +115,8 @@
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
-          style="float: right; margin-right: -15px"
+          style="float: right;"
+          :style="{'margin-right': current === 0 ? '-15px' : '0'}"
           class="mt-3"
           @click="next"
         >
@@ -144,7 +145,8 @@
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
-          style="float: left; margin-left: -15px"
+          :style="{'margin-left': current === 0 ? '-15px' : '0'}"
+          style="float: left;"
           class="mt-3"
           @click="saveExit"
         >
