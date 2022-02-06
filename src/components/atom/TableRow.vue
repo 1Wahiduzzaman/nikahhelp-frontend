@@ -1,8 +1,18 @@
 <template>
-    <tr>
+    <tr style="position: relative">
         <td
+            v-if="title.length > 20"
+            :data-title="title"
             :class="textClass"
-            class="text--disabled d-none d-sm-table-cell" 
+            class="text--disabled d-none d-sm-table-cell truncate" 
+            :style="{width: titleWidth}"
+        >
+            {{ title }}
+        </td>
+        <td
+            v-else
+            :class="textClass"
+            class="text--disabled d-none d-sm-table-cell truncate" 
             :style="{width: titleWidth}"
         >
             {{ title }}
@@ -39,7 +49,7 @@ export default {
         },
         titleWidth: {
             type: String,
-            default: '140px'
+            default: '170px'
         },
         colonWidth: {
             type: String,
@@ -53,6 +63,24 @@ export default {
 </script>
 
 <style scoped>
+[data-title]:hover::before {
+	content: attr(data-title);
+	position: absolute;
+    border-radius: 8px;
+	bottom: -40px;
+	padding: 5px 8px;
+	background: #522e8ec2;
+	color: #fff !important;
+	font-size: 14px;
+	white-space: nowrap;
+    z-index: 9999;
+}
+.truncate {
+    transition: .3s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .v-list-item__subtitle, .v-list-item__title {
     text-overflow: initial !important;
     word-break: break-word !important;
