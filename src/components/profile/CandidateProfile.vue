@@ -477,7 +477,7 @@ export default {
         }
       } catch (error) {
         this.isLoading = false;
-        alert(this.error);
+        //alert(this.error);
       }
     },
     startConversation() {
