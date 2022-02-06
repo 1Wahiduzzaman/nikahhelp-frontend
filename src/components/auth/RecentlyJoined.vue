@@ -22,7 +22,7 @@
               <img class="item-img" @error="imgLoad(index, user)" :ref="`avatar-${index}`" :src="user.image" alt="img" style="border: 1px solid white;"/>
             </div>
             <div class="item-content">
-              <div>{{ getUserGender(user) }}, {{ user.age ? getAge(user.age) : 'N/A' }}</div>
+              <div>{{ getUserGender(user) }}, {{ user.age ? getAge(user.age) + ' years' : 'N/A' }}</div>
               <!--							<div>{{ user.name }}</div>-->
               <div>{{  user.ethnicity ? user.ethnicity : 'N/A' }}, {{ user.religion ? user.religion : 'N/A' }}</div>
               <div>{{ user.study_level ? user.study_level : 'N/A' }}</div>

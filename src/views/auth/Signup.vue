@@ -158,22 +158,22 @@
               <a-col :span="24">
                 <a-card class="br-card shadow">
                   <button
-                      @click="signupModel.form_type = 2"
-                      class="btn no-shadow p-2 fs-20 br-30 btn-type"
-                      :class="{ active: signupModel.form_type == 2 }"
-                  >
-                    Short Form
-                  </button>
-                  <button
                       @click="signupModel.form_type = 1"
-                      class="btn no-shadow p-2 fs-20 br-30 btn-type mt-5"
+                      class="btn no-shadow p-2 fs-20 br-30 btn-type"
                       :class="{ active: signupModel.form_type == 1 }"
                   >
                     Long Form
                   </button>
+                  <button
+                      @click="signupModel.form_type = 2"
+                      class="btn no-shadow p-2 fs-20 br-30 btn-type mt-5"
+                      :class="{ active: signupModel.form_type == 2 }"
+                  >
+                    Short Form
+                  </button>
                   <p class="fs-12 mt-5">
                     <a-icon type="check" class="text-success"/>
-                    You have to complete a {{ signupModel.form_type == 2 ? 'short form' : 'full form' }} of
+                    You have to complete the {{ signupModel.form_type == 2 ? 'short form' : 'full form' }} of
                     candidate
                   </p>
                 </a-card>
@@ -184,21 +184,6 @@
               <a-col :span="12">
                 <a-card class="br-card shadow type-card">
                   <button
-                      @click="signupModel.form_type = 2"
-                      class="btn no-shadow p-2 fs-20 br-30 btn-type"
-                      :class="{ active: signupModel.form_type == 2 }"
-                  >
-                    Short Form
-                  </button>
-                  <p class="fs-12 mt-5">
-                    <a-icon type="check" class="text-success"/>
-                    You have to complete a short form of candidate
-                  </p>
-                </a-card>
-              </a-col>
-              <a-col :span="12">
-                <a-card class="br-card shadow type-card">
-                  <button
                       @click="signupModel.form_type = 1"
                       class="btn no-shadow p-2 fs-20 br-30 btn-type"
                       :class="{ active: signupModel.form_type == 1 }"
@@ -207,7 +192,22 @@
                   </button>
                   <p class="fs-12 mt-5">
                     <a-icon type="check" class="text-success"/>
-                    You have to complete a full form of candidate
+                    You have to complete the full form of candidate
+                  </p>
+                </a-card>
+              </a-col>
+              <a-col :span="12">
+                <a-card class="br-card shadow type-card">
+                  <button
+                      @click="signupModel.form_type = 2"
+                      class="btn no-shadow p-2 fs-20 br-30 btn-type"
+                      :class="{ active: signupModel.form_type == 2 }"
+                  >
+                    Short Form
+                  </button>
+                  <p class="fs-12 mt-5">
+                    <a-icon type="check" class="text-success"/>
+                    You have to complete the short form of candidate
                   </p>
                 </a-card>
               </a-col>
