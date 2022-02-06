@@ -1,4 +1,4 @@
-export const RULES_RATE={
+export const RULES_RATE = {
     pre_employment_wealth_rate: [
         {
             required: true,
@@ -86,136 +86,143 @@ export const RULES = {
         {
             required: true,
             message: "Select your employment status",
-            trigger: "blur",
+
         },
     ],
     pre_study_level_id: [
         {
             required: true,
             message: "Select your education status",
-            trigger: "blur",
+
         },
     ],
     preferred_nationality: [
         {
             required: true,
             message: "Select a nationality",
-            trigger: "blur",
+
         },
     ],
     pre_ethnicities: [
         {
             required: true,
             message: "Select a ethnicities",
-            trigger: "blur",
+
         },
     ],
     prefReligions: [
         {
             required: true,
             message: "Select a religion",
-            trigger: "blur",
+
         },
     ],
     preferred_nationality: [
         {
             required: true,
             message: "Select a nationality",
-            trigger: "blur",
+
         },
     ],
     pre_occupation: [
         {
             required: true,
             message: "Select a occupation",
-            trigger: "blur",
+
+        },
+    ],
+    pre_partner_religion_id: [
+        {
+            required: true,
+            message: "Select a religion",
+
         },
     ],
     // pre_other_preference: [
     //     {
     //         required: true,
-    //         message: "Write something",
-    //         trigger: "blur",
+    //         message: "Write your other preference",
+    //         trigger: "change",
     //     },
     // ],
     // pre_description: [
     //     {
     //         required: true,
     //         message: "Write something",
-    //         trigger: "blur",
+    //         trigger: "change",
     //     },
     // ],
 };
 
-export const RULES_FAMILY_INFO={
-    father_profession:[{
+export const RULES_FAMILY_INFO = {
+    father_profession: [{
         required: true,
         message: "Select your father's profession",
         trigger: "blur",
     }],
-    mother_profession:[{
+    mother_profession: [{
         required: true,
         message: "Select your mother's profession",
         trigger: "blur",
     }],
-    siblings_desc:[{
+    siblings_desc: [{
         required: true,
         message: "Write about your siblings",
         trigger: "blur",
     }],
-    family_info:[{
+    family_info: [{
         required: true,
         message: "Write about your other family info",
         trigger: "blur",
     }],
-    country_of_origin:[{
+    country_of_origin: [{
         required: true,
         message: "Select your country of origin",
         trigger: "blur",
     }],
 }
-export const VERIFICATION={
-    ver_city_id:[{
+export const VERIFICATION = {
+    ver_city_id: [{
         required: true,
         message: "Select city",
         trigger: "blur",
     }],
-    ver_country_id:[{
+    ver_country_id: [{
         required: true,
         message: "Select country",
         trigger: "blur",
     }],
-    ver_document_type:[{
+    ver_document_type: [{
         required: true,
         message: "Select document type",
         trigger: "blur",
     }],
-    ver_recommences_address:[{
+    ver_recommences_address: [{
         required: true,
         message: "Write your address",
         trigger: "blur",
     }],
-    ver_recommences_first_name:[{
+    ver_recommences_first_name: [{
         required: true,
         message: "Write your first name",
         trigger: "blur",
     }],
-    ver_recommences_last_name:[{
+    ver_recommences_last_name: [{
         required: true,
         message: "Write your last name",
         trigger: "blur",
     }],
-    ver_recommences_mobile_no:[{
+    ver_recommences_mobile_no: [{
         required: true,
         message: "Write your mobile no",
         trigger: "blur",
     }],
-    ver_recommences_occupation:[{
+    ver_recommences_occupation: [{
         required: true,
         message: "Select your occupation",
         trigger: "blur",
     }],
-    ver_recommences_title:[{
+    ver_recommences_title: [{
         required: true,
         message: "Write your title",
         trigger: "blur",
@@ -237,10 +244,10 @@ export const RULESPERSONALINFO = {
         message: "Select your mother tongue",
         trigger: "blur",
     },],
-    height:[
+    per_height: [
         {
             required: true,
-            message: "Write about your height",
+            message: "Select your height",
             trigger: "blur",
         }
     ],
@@ -356,7 +363,7 @@ export const RULESPERSONALINFO = {
         {
             required: true,
             message: "Select your education level",
-            trigger: "blur",
+           
         },
     ],
     per_religion_id: [
@@ -370,6 +377,13 @@ export const RULESPERSONALINFO = {
         {
             required: true,
             message: "Select your currently resident country",
+            trigger: "blur",
+        },
+    ],
+    per_permanent_post_code: [
+        {
+            required: true,
+            message: "Write your post code",
             trigger: "blur",
         },
     ],
@@ -581,7 +595,7 @@ export const ARR_PersonalInfo = [
     }
 ]
 
-export const ARR_FAMILY_INFO= [
+export const ARR_FAMILY_INFO = [
     {
         first: true,
     },
@@ -605,7 +619,7 @@ export const ARR_FAMILY_INFO= [
     }
 ];
 
-export const _PROFESSIONS= [
+export const _PROFESSIONS = [
     "Academic Librarian",
     "Academic Researcher",
     "Accommodation Manager",

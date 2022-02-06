@@ -42,7 +42,7 @@
                 <v-select
                   :clearable="false"
                   class="style-chooser"
-                  @input="onValueChange"
+                  @input="onValueChange($event,'father_profession')"
                   id="father_profession"
                   :reduce="(option) => option.name"
                   placeholder="please select "
@@ -105,7 +105,7 @@
                 <v-select
                   :clearable="false"
                   class="style-chooser"
-                  @input="onValueChange"
+                  @input="onValueChange($event,'mother_profession')"
                   id="mother_profession"
                   placeholder="please select"
                   v-model="familyInformation.mother_profession"
@@ -163,7 +163,7 @@
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="siblings_desc" prop="siblings_desc">
                 <a-textarea
-                  @blur="onValueChange"
+                  @blur="onValueChange($event,'siblings_desc')"
                   id="siblings_desc"
                   placeholder="e.g. 1 sister, married, with 2 children
 2 brothers, unmarried"
@@ -219,7 +219,7 @@
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="family_info" prop="family_info">
                 <a-textarea
-                  @blur="onValueChange"
+                  @blur="onValueChange($event,'family_info')"
                   id="family_info"
                   placeholder="e.g. elder brother is a teacher etc. or We are a traditional family. "
                   :rows="3"
@@ -282,7 +282,7 @@
                   append-to-body
                   :clearable="false"
                   class="style-chooser"
-                  @input="onValueChange"
+                  @input="onValueChange($event,'country_of_origin')"
                   id="country_of_origin"
                   :reduce="(option) => option.name"
                   placeholder="please select "
@@ -435,8 +435,12 @@ export default {
         .toLowerCase()
         .startsWith(input.toLowerCase());
     },
-    onValueChange(e) {
-      console.log(this.familyInformation);
+    onValueChange(e,name) {
+      this.$refs.familyInformationForm.fields.forEach((f) => {
+            if (f.prop == name) {
+              f.onFieldBlur();
+            }
+          });
       this.checkDisabled();
       this.saveFamilyInfo();
     },

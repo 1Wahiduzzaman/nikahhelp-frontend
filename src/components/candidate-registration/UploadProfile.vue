@@ -20,12 +20,12 @@
           <div class="col-12">
             <div class="instruction">
               <p>
-              You are required to upload at least one avatar and a main
-                image. All together you can upload up to 3 images.
+                You are required to upload at least one avatar and a main image.
+                All together you can upload up to 3 images.
               </p>
               <p>
-                Select images from your devices. Supported file formats are
-                JPG, JPEG, PNG. Maximum file size 2 MB.
+                Select images from your devices. Supported file formats are JPG,
+                JPEG, PNG. Maximum file size 2 MB.
               </p>
             </div>
           </div>
@@ -443,6 +443,12 @@ export default {
     async saveImage(data) {
       await this.$store.dispatch("uploadImages", data).then((data) => {
         if (data.data.status && data.data.status !== "FAIL") {
+          let user = JSON.parse(localStorage.getItem("user"));
+          if (user) {
+            user.per_main_image_url = data.data.data.main_image_url;
+            localStorage.removeItem("user");
+            localStorage.setItem("user", JSON.stringify(user));
+          }
           this.$emit("valueChange", {
             value: {
               avatar_image_url: data.data.data.avatar_image_url,
