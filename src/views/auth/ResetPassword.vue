@@ -27,6 +27,7 @@
                 id="email"
                 v-model="email"
                 placeholder="Enter email"
+                class="fs-16"
               />
               <!--              <span class="text-white fs-12">Email is required</span>-->
             </div>
@@ -36,6 +37,7 @@
                 id="password"
                 v-model="password"
                 placeholder="New password"
+                class="fs-16"
               />
               <!--              <span class="text-white fs-12">Password is required</span>-->
             </div>
@@ -45,6 +47,7 @@
                 id="passwordConfirm"
                 v-model="passwordConfirm"
                 placeholder="Confirm password"
+                class="fs-16"
               />
               <!--              <span class="text-white fs-12">Confirm password is required</span>-->
             </div>
