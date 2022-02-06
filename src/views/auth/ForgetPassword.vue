@@ -62,7 +62,7 @@
                 <a-form-model-item ref="email" prop="email">
                   <a-input
                     type="email"
-                    class="form-control rounded-input"
+                    class="form-control rounded-input fs-16"
                     id="email"
                     v-model="forgetPassword.email"
                     placeholder="Enter email"

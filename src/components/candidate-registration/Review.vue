@@ -22,8 +22,8 @@
           </div>
           <div class="row">
             <div class="col-md-8 mb-3">
-              <div class="card-custom h-100 shadow-default">
-                <ul style="line-height: 160%">
+              <div class="card-custom h-100 shadow-default card-personal">
+                <ul class="personal-ul">
                   <!-- Age -->
                   <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text">Age</span
@@ -79,9 +79,11 @@
 
                   <!-- Preferred countries and cities -->
                   <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">
-                      Country and city preferred
+                    <a-tooltip title="Country and city preferred">
+                      <span class="flex-50 px-2 label-text">
+                      Preferred Country
                     </span>
+                    </a-tooltip>
                     <span class="flex-50 px-2 d-inherit">
                       :
                       <span class="ml-3">
@@ -304,8 +306,8 @@
           </div>
           <div class="row h-100">
             <div class="col-md-8 mb-3">
-              <div class="card-custom shadow-default personal-height">
-                <ul style="line-height: 160%">
+              <div class="card-custom shadow-default personal-height card-personal">
+                <ul class="personal-ul">
                   <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text">Name</span
                     ><span class="flex-50 px-2"
@@ -634,11 +636,13 @@
                     textClass="text-subtitle-1"
                     :value="candidateData.family.siblings_desc"
                   />
-                  <TableRow
-                    title="Ancestral home same as country of birth?"
-                    textClass="text-subtitle-1"
-                    :value="candidateData.family.country_of_origin"
-                  />
+                  <a-tooltip title="Ancestral home same as country of birth?">
+                    <TableRow
+                        title="Ancestral home"
+                        textClass="text-subtitle-1"
+                        :value="candidateData.family.country_of_origin"
+                    />
+                  </a-tooltip>
                 </table>
                 <!-- <ul style="line-height: 160%">
                   
@@ -895,6 +899,11 @@ export default {
     .profile-img {
       border-radius: 5px;
       overflow: hidden;
+      p {
+        font-size: 16px;
+        margin-top: 10px;
+        font-weight: bolder;
+      }
     }
   }
   .ant-input {
@@ -968,8 +977,14 @@ export default {
   height: auto;
 }
 .user-image {
-  width: 100%;
-  height: 300px;
+  //width: 100%;
+  //height: 300px;
+  display: block;
+  max-width: 260px;
+  max-height: 170px;
+  width: auto;
+  height: auto;
+  border-radius: 6px;
 }
 .edit-step {
   width: 20px;
@@ -982,5 +997,12 @@ export default {
   .personal-height {
     height: 360px;
   }
+}
+.card-personal {
+  padding: 15px 8px;
+}
+.personal-ul {
+  line-height: 160%;
+  padding-left: 0;
 }
 </style>

@@ -23,5 +23,13 @@ export default {
     updateCandidateAfterTeamtlisted: (state, data) => {
         let candidate = state.profiles.find(i => i.user_id == data.userId);
         if(candidate) candidate.is_teamListed = data.value
+    },
+    updateCandidateAfterConnect: (state, data) => {
+        let candidate = state.profiles.find(i => i.user_id == data.userId);
+        console.log(candidate, 'mutation')
+        if(candidate) {
+            candidate.is_connect = data.value
+            candidate.teamConnectType = 1
+        }
     }
 }

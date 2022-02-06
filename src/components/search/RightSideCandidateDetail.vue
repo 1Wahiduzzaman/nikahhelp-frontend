@@ -6,6 +6,7 @@
     >
         <div class="pt-3 px-5">
             <p class="text-subtitle-1 mb-2 text--secondary">This Profile Overview</p>
+            <hr>
             <table>
                 <TableRow 
                     title="Name"
@@ -53,6 +54,7 @@
             </table>
 
              <p class="text-subtitle-1 mb-2 text--secondary mt-4">This Profile Partner Preference</p>
+             <hr>
              <table> 
                 <TableRow 
                     title="Age"
@@ -109,14 +111,13 @@
                     <td class="text--secondary text-subtitle-1"></td>
                 </tr> -->
             </table>
-            <hr>
         </div>
     </v-card>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
-import TableRow from '@/components/atom/TableRow'
+import TableRow from '@/components/atom/ListItem'
 import { HEIGHTS } from "@/models/data";
 export default {
     name: 'RightSideCandidateDetail',

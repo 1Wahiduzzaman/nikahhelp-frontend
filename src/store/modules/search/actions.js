@@ -120,12 +120,13 @@ export default {
         });
     });
   },
-  async connectCandidate(context, data) {
+  async connectCandidate(context, payload) {
     return new Promise((resolve, reject) => {
       context.commit('setLoading', true)
-      ApiService.post(data.url, data.payload)
+      ApiService.post(payload.url, payload.payload)
         .then((data) => {
           context.commit('setLoading', false)
+          context.commit('updateCandidateAfterConnect', {userId: payload.userId, value: true})
           resolve(data.data);
         })
         .catch((err) => {

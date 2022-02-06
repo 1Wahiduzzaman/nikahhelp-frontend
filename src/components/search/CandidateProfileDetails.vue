@@ -153,11 +153,12 @@ import {mapMutations, mapActions, mapGetters} from 'vuex'
 import JwtService from "@/services/jwt.service";
 
 export default {
-    name: 'CandidateProfileDetails',
+    name: 'CandidateProfileDetails1',
     data: () => ({
         btnData,
         images: []
     }),
+    props: ['role'],
     components: {
         ProfileBanner,
         ButtonComponent,
@@ -214,7 +215,7 @@ export default {
         },
 
         async connectCandidate() {
-            if(this.role != 'Admin' && this.role != 'owner admin') {
+            if(this.role != 'Admin' && this.role != 'Owner & Admin') {
                 this.showError("You don't have permission.")
                 return
             }
@@ -296,6 +297,14 @@ export default {
             }
         },
         async addTeamList() {
+            console.log(this.role)
+            console.log(this.role != 'Admin' && this.role != 'Owner & Admin')
+            console.log(this.role != 'Admin')
+            console.log(this.role != 'Owner & Admin')
+            if(this.role != 'Admin' && this.role != 'Owner & Admin') {
+                this.showError("You don't have permission.")
+                return
+            }
             let data = {
                 url: `v1/team-short-listed-candidates/store`,
                 value: true,
@@ -349,7 +358,7 @@ export default {
             }
         },
         async handleBlockCandidate(actionType, value, url) {
-            if(this.role != 'Admin' && this.role != 'owner admin') {
+            if(this.role != 'Admin' && this.role != 'Owner & Admin') {
                 this.showError("You don't have permission.")
                 return
             }

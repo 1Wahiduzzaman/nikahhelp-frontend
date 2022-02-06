@@ -3,7 +3,7 @@
       <v-divider class="d-md-none"></v-divider>
     <v-row>
       <v-col class="pt-1" cols="12" md="6">
-          {{ title }}
+          <span class="text--secondary">{{ title }}</span>
       </v-col>
       <v-col class="pt-1" cols="12" md="6">
         <div class="d-sm-none flex justify-space-between align-center">
@@ -13,8 +13,7 @@
         <div class="d-none d-sm-flex d-md-block justify-space-between text-right">
           <a-rate disabled class="pl-0" :value="value" />
           <div
-            class="ml-5 text-center"
-            style="background: #6159a7; width: 115px; text-align:center; display: inline-block; width: 135px; padding: 3px 0; font-size: 13px; color: #fff; border-radius: 20px"
+            class="ml-5 text-center rating-hints"
             text-color="white"
             small
           >{{ rate[value] }}</div>
@@ -73,5 +72,15 @@ export default {
 }
 .label-text {
   font-weight: 600;
+}
+.rating-hints {
+  background: #6159a7;
+  width: 150px;
+  text-align:center;
+  display: inline-block;
+  padding: 3px 0;
+  font-size: 13px;
+  color: #fff;
+  border-radius: 20px
 }
 </style>

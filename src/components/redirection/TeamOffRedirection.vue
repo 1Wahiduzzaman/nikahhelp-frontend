@@ -5,52 +5,58 @@
       :value="dialog"
       max-width="1200"
   >
-    <div class="manageteam-item">
+    <div class="manageteam-item font-poppins">
       <div class="dt-modal-content">
         <div class="container-fluid">
           <div class="flex mobile-column">
             <div class="column-margin">
               <div class="flex flex-column">
-                <div class="dt-div1 color-primary ml-1 d-mb-none"><span>Opps. This menu feature are inactive</span></div>
+                <div class="dt-div1 color-primary ml-1"><span>Oops. This feature is currently inactive.</span></div>
                 <div class="dt-div2">
-                  <span class="span1">Turn</span> <span class="span2">ON</span>
+                  <span class="span1">Turn</span> <span class="span2">ON</span> <span class="span3">a team</span>
                 </div>
-                <div class="ml-2">
-                  <h3 class="text-white request-text">To use this feature, please turn a team on first.</h3>
+                <div class="ml-2 mt-2">
+                  <h3 class="text-white request-text">- To activate this feature, please turn on a team first.</h3>
                   <h3 class="text-white request-text">
-                    You can easily do this from header icon
+                    - You can quickly turn a team ON from header icon
                     <router-link to="/manageteam">
                       <img
                           width="30"
-                          src="@/assets/icon/group-fill-white.svg"
+                          src="@/assets/icon/team_white.svg"
                           alt="img"
                           class="manage-team-icon"
                       /></router-link>
                   </h3>
                 </div>
                 <div class="dt-div3 ml-2">
-                  <div class="text-white"><span class="ortext">or</span> &nbsp; <router-link to="/manageteam" class="manage-team-link button-link"> <span>&#8592;</span> Manage Team </router-link></div>
+                  <div class="text-white"><span class="ortext">or</span> &nbsp; <router-link to="/manageteam" class="manage-team-link-button button-link">
+                    <img
+                        width="30"
+                        src="@/assets/icon/team_purple.svg"
+                        alt="img"
+                        class="manage-team-icon"
+                    /> Manage Team </router-link></div>
                 </div>
-                <div class="ml-2">
+                <div class="ml-2 mt-10">
                   <span class="link-text">Don't have a team? please</span>
                   <span class="link-text ml-2 text-decoration-underline italic"><router-link to="/manageteam" class="manage-team-link"> create </router-link></span>
                   <span class="link-text ml-2"> or</span>
                   <span class="link-text ml-2 text-decoration-underline italic"><router-link to="/manageteam" class="manage-team-link"> join </router-link></span>
                   <span class="link-text ml-2"> a team</span>
                 </div>
-                <h4 class="info-text color-white">
-                  * The information of this page relates to team that you turned ON. <span class="text-decoration-underline font-weight-bold cursor-pointer learn-text italic">learn more...</span>
+                <h4 class="info-text color-white font-poppins ml-2 mt-10">
+                  * To learn more about the  ‘ Turn ON a team ‘  <span class="text-decoration-underline font-weight-bold cursor-pointer learn-text italic">click here</span>
                 </h4>
               </div>
             </div>
-            <div class="position-relative column-margin">
+            <div class="position-relative column-margin d-mb-none">
               <img src="@/assets/team_off.png" alt="img" class="team-img-pos" v-if="!turnOn" />
               <img src="@/assets/team_on.png" alt="img" class="team-img-pos" v-if="turnOn" />
               <div class="switch-box">
                 <a-switch class="position-absolute switch-icon" v-model="turnOn" disabled />
               </div>
             </div>
-            <div class="dt-div1 color-primary ml-1 mb-4 d-dk-none"><span>Opps. This menu feature are inactive</span></div>
+<!--            <div class="dt-div1 color-primary ml-1 mb-4 d-dk-none"><span>Oops. This feature is currently inactive.</span></div>-->
           </div>
         </div>
       </div>
@@ -80,9 +86,10 @@ export default {
 <style lang="scss">
 @import "@/styles/base/_variables.scss";
 .manageteam-item {
-  background: #826ae5;
-  height: 100vh;
+  background: #522e8e;
+  height: auto !important;
   overflow: hidden;
+  padding-bottom: 30px;
   .dt-modal--body {
     display: flex;
     flex-direction: column;
@@ -198,25 +205,27 @@ export default {
 .dt-div1 {
   background: #fff;
   padding: 5px 15px 5px 15px;
-  font-size: 1rem;
+  font-size: 0.75rem;
   border-radius: 12px;
   font-weight: bold;
   @media (min-width: 992px) {
-    font-size: 2rem;
+    font-size: 1.9rem;
     width: fit-content;
   }
 }
 .dt-div2 {
-  font-size: 3rem;
+  font-size: 2.1rem;
   text-align: center;
-  margin-top: 30px;
+  margin-top: 10px;
+  margin-bottom: 20px;
   @media (min-width: 768px) {
     text-align: left;
   }
   @media (min-width: 992px) {
-    font-size: 7rem;
+    font-size: 5rem;
     text-align: left;
     margin-top: -10px;
+    margin-bottom: 0;
   }
   .span1 {
     color: #fff;
@@ -225,9 +234,17 @@ export default {
   .span2 {
     font-weight: 700;
     color: #35cf65;
-    font-size: 3rem;
+    font-size: 2.1rem;
     @media (min-width: 992px) {
-      font-size: 7rem;
+      font-size: 5rem;
+    }
+  }
+  .span3 {
+    font-weight: 700;
+    color: #fff;
+    font-size: 2.1rem;
+    @media (min-width: 992px) {
+      font-size: 5rem;
     }
   }
 }
@@ -278,6 +295,7 @@ h3 {
 }
 .manage-team-icon {
   margin-top: -6px;
+  width: 20px;
 }
 .request-text {
   padding-bottom: 1rem;
@@ -344,8 +362,8 @@ h3 {
     top: 18px;
   }
   @media (min-width: 1200px) {
-    top: 20px;
-    right: -8px;
+    top: 26px;
+    right: 36px;
   }
 }
 .name-hover:hover {
@@ -407,10 +425,10 @@ h3 {
   margin-bottom: 20px;
   font-weight: 300;
   @media (min-width: 768px) {
-    font-size: 18px;
+    font-size: 14px;
   }
   @media (min-width: 1200px) {
-    font-size: 24px;
+    font-size: 16px;
   }
 }
 .learn-text:hover {
@@ -429,5 +447,20 @@ h3 {
 }
 .italic {
   font-style: italic;
+}
+.manage-team-link-button {
+  padding-top: 2px;
+  padding-bottom: 5px;
+  background: #FFFFFF;
+  color: #522e8e !important;
+  border: none !important;
+  &:hover {
+    background: transparent;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+    img {
+      filter: brightness(0) invert(1);
+    }
+  }
 }
 </style>

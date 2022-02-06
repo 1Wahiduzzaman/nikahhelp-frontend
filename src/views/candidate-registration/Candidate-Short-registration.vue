@@ -747,6 +747,7 @@ export default {
   background: #d4e0eb;
   border-radius: 14px;
   padding-bottom: 8px !important;
+  margin-top: 20px;
 }
 .bottom-padding {
   padding: 0 2rem;
