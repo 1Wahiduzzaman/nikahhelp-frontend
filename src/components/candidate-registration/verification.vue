@@ -117,7 +117,7 @@
                       <v-select
                         :clearable="false"
                         class="style-chooser"
-                        @input="onChangeCountry"
+                        @input="onChangeCountry($event, 'ver_country_id')"
                         id="ver_country_id"
                         placeholder="please select"
                         v-model="verification.ver_country_id"
@@ -159,6 +159,7 @@
                         class="style-chooser"
                         id="ver_city_id"
                         placeholder="please select"
+                        @input="onValueChange($event, 'ver_city_id')"
                         :reduce="(option) => option.id"
                         v-model="verification.ver_city_id"
                         label="name"
@@ -235,21 +236,28 @@
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
-                <v-select
-                  :clearable="false"
-                  class="style-chooser"
-                  id="ver_document_type"
-                  placeholder="Document type"
-                  :reduce="(option) => option.value"
-                  v-model="verification.ver_document_type"
-                  label="name"
-                  :options="[
-                    { name: 'Passport', value: 'Passport' },
-                    { name: 'National ID', value: 'National ID' },
-                    { name: 'Driving licence ', value: 'Driving licence ' },
-                  ]"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                <a-form-model-item
+                  ref="ver_document_type"
+                  prop="ver_document_type"
+                >
+                  <v-select
+                    :clearable="false"
+                    class="style-chooser"
+                    id="ver_document_type"
+                    placeholder="Document type"
+                    @input="onValueChange($event, 'ver_document_type')"
+                    :reduce="(option) => option.value"
+                    v-model="verification.ver_document_type"
+                    label="name"
+                    :options="[
+                      { name: 'Passport', value: 'Passport' },
+                      { name: 'National ID', value: 'National ID' },
+                      { name: 'Driving licence ', value: 'Driving licence ' },
+                    ]"
+                    ><template #open-indicator>
+                      <a-icon type="down" /> </template
+                  ></v-select>
+                </a-form-model-item>
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">
                 <p>
@@ -479,6 +487,7 @@
                     v-model="verification.ver_recommences_title"
                     class="w-100"
                     placeholder="Title"
+                     @blur="onValueChange($event, 'ver_recommences_title')"
                   />
                 </a-form-model-item>
 
@@ -493,6 +502,7 @@
                         v-model="verification.ver_recommences_first_name"
                         class="w-100 rounded-right"
                         placeholder="First Name"
+                         @blur="onValueChange($event, 'ver_recommences_first_name')"
                       />
                     </a-form-model-item>
                   </div>
@@ -506,6 +516,7 @@
                         class="w-100 rounded-left"
                         :maxLength="10"
                         placeholder="Last Name"
+                         @blur="onValueChange($event, 'ver_recommences_last_name')"
                       />
                     </a-form-model-item>
                   </div>
@@ -521,6 +532,7 @@
                     class="style-chooser"
                     id="ver_recommences_occupation"
                     placeholder="Occupation"
+                     @input="onValueChange($event, 'ver_recommences_occupation')"
                     v-model="verification.ver_recommences_occupation"
                     label="name"
                     :reduce="(option) => option.name"
@@ -542,6 +554,7 @@
                     autocapitalize="off"
                     spellcheck="false"
                     id="ver_recommences_address"
+                     @blur="onValueChange($event, 'ver_recommences_address')"
                     v-model.lazy="verification.ver_recommences_address"
                     placeholder="Address"
                     class="w-full form-right-content"
@@ -557,6 +570,7 @@
                     id="inputNumber"
                     :maxLength="10"
                     placeholder="Mobile number"
+                     @blur="onValueChange($event, 'ver_recommences_mobile_no')"
                     v-model="verification.ver_recommences_mobile_no"
                   />
                 </a-form-model-item>
@@ -760,8 +774,16 @@ export default {
         .toLowerCase()
         .startsWith(input.toLowerCase());
     },
-    onValueChange(e) {
-      this.saveVerificationInfo();
+    onValueChange(e, name) {
+      this.checkValidation(name);
+      //this.saveVerificationInfo();
+    },
+    checkValidation(name) {
+      this.$refs.verification.fields.forEach((f) => {
+        if (f.prop == name) {
+          f.onFieldBlur();
+        }
+      });
     },
     saveVerificationInfo() {
       const {
@@ -865,7 +887,8 @@ export default {
       };
     },
 
-    async onChangeCountry(e) {
+    async onChangeCountry(e, name) {
+      this.checkValidation(name);
       const res = await ApiService.get(`v1/utilities/cities/${e}`);
       if (res.status === 200) {
         this.verification.cities = [];

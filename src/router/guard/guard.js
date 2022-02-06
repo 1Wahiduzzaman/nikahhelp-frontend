@@ -29,13 +29,13 @@ export const InitRoute = (to, from, next) => {
     }
     else if (user.account_type === 1 && user.data_input_status > 5 && to.name === 'CandidateRegistration') {
 
-        return next({ name: 'root' });
+        return next({ name: 'DHome' });
     }
     else if (user.account_type === 2 && user.data_input_status <= 2) {
         return to.name == 'RepresentativeRegistration' ? next() : next({ name: 'RepresentativeRegistration' });
     }
     else if (user.account_type === 2 && user.data_input_status > 2 && to.name === 'RepresentativeRegistration') {
-        return next({ name: 'root' });
+        return next({ name: 'DHome' });
     }
     else if (user && (to.name == 'Signup' || to.name == 'Login' || user && to.name == 'Home')) {
         return to.name == 'root' ? next() : next({ name: 'root' });

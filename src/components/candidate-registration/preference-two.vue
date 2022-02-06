@@ -203,7 +203,7 @@
                       placeholder="any city"
                       v-model.lazy="preferenceData.preferred_cities[0]"
                       :options="preferenceData.allowedCity.listOne"
-                      @input="onValueChange"
+                      @input="onValueChange($event, 'preferred_cities')"
                       ><template #open-indicator>
                         <a-icon type="down" />
                       </template>
@@ -407,7 +407,7 @@
                       v-model.lazy="preferenceData.blocked_cities[0]"
                       label="name"
                       :options="preferenceData.disAllowedCity.listOne"
-                      @input="onValueChange"
+                      @input="onValueChange($event, 'blocked_cities')"
                       ><template #open-indicator>
                         <a-icon type="down" /> </template
                     ></v-select>
@@ -461,24 +461,29 @@
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
-              <v-select
-                :clearable="false"
-                id="pre_partner_religion_id"
-                :reduce="(option) => option.id"
-                class="style-chooser"
-                placeholder="please select"
-                @input="onValueChange"
-                v-model.lazy="preferenceData.pre_partner_religion_id"
-                label="name"
-                :options="[
-                  { id: -1, name: `Don't Mind` },
-                  ...candidateDetails.religions,
-                ]"
+              <a-form-model-item
+                ref="pre_partner_religion_id"
+                prop="pre_partner_religion_id"
               >
-                <template #open-indicator>
-                  <a-icon type="down" />
-                </template>
-              </v-select>
+                <v-select
+                  :clearable="false"
+                  id="pre_partner_religion_id"
+                  :reduce="(option) => option.id"
+                  class="style-chooser"
+                  placeholder="please select"
+                  @input="onValueChange($event, 'pre_partner_religion_id')"
+                  v-model.lazy="preferenceData.pre_partner_religion_id"
+                  label="name"
+                  :options="[
+                    { id: -1, name: `Don't Mind` },
+                    ...candidateDetails.religions,
+                  ]"
+                >
+                  <template #open-indicator>
+                    <a-icon type="down" />
+                  </template>
+                </v-select>
+              </a-form-model-item>
             </div>
             <div class="col-12 mobile-margin mobile-help none-padding">
               <p>
@@ -526,19 +531,21 @@
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
-              <v-select
-                :clearable="false"
-                :multiple="true"
-                id="pre_ethnicities"
-                class="nationality-select form-right-content w-full"
-                placeholder="you may select up to three"
-                @input="onValueChange"
-                v-model.lazy="preferenceData.pre_ethnicities"
-                label="name"
-                :options="[`Don't Mind`, ...ethnicityList]"
-              >
-                <template #open-indicator> <a-icon type="down" /> </template
-              ></v-select>
+              <a-form-model-item ref="pre_ethnicities" prop="pre_ethnicities">
+                <v-select
+                  :clearable="false"
+                  :multiple="true"
+                  id="pre_ethnicities"
+                  class="nationality-select form-right-content w-full"
+                  placeholder="you may select up to three"
+                  @input="onMultiNameChange($event, 'pre_ethnicities')"
+                  v-model.lazy="preferenceData.pre_ethnicities"
+                  label="name"
+                  :options="[`Don't Mind`, ...ethnicityList]"
+                >
+                  <template #open-indicator> <a-icon type="down" /> </template
+                ></v-select>
+              </a-form-model-item>
             </div>
             <div class="col-12 mobile-margin mobile-help none-padding">
               <p>
@@ -655,8 +662,8 @@
                   v-if="preferenceData.pre_study_level_id"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What is the minimum level you prefer your
-                prospective companion to have?
+                />What is the minimum level you prefer your prospective
+                companion to have?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -667,7 +674,7 @@
                 <v-select
                   :clearable="false"
                   class="style-chooser w-full form-right-content"
-                  @input="onValueChange"
+                  @input="onValueChange($event, 'pre_study_level_id')"
                   :reduce="(option) => option.id"
                   placeholder="please select"
                   v-model.lazy="preferenceData.pre_study_level_id"
@@ -732,10 +739,11 @@
                 prop="pre_employment_status"
               >
                 <v-select
+                  id="pre_employment_status"
                   :clearable="false"
                   class="style-chooser w-full form-right-content"
                   :reduce="(option) => option.value"
-                  @input="onValueChange"
+                  @input="onValueChange($event, 'pre_employment_status')"
                   placeholder="please select"
                   v-model.lazy="preferenceData.pre_employment_status"
                   label="name"
@@ -801,6 +809,7 @@
                 <v-select
                   :clearable="false"
                   :multiple="true"
+                  id="pre_occupation"
                   @input="onMultiNameChange($event, 'pre_occupation')"
                   :reduce="(option) => option.name"
                   class="nationality-select form-right-content w-full"
@@ -878,7 +887,9 @@
               <div v-if="preferenceData.pre_preferred_divorcee">
                 <span class="mr-1">No</span>
                 <a-switch
-                  @change="onValueChange"
+                  @change="
+                    onValueChange($event, 'pre_preferred_divorcee_child')
+                  "
                   v-model.lazy="preferenceData.pre_preferred_divorcee_child"
                 >
                   <a-icon slot="checkedChildren" type="check" />
@@ -935,7 +946,7 @@
                 prop="pre_other_preference"
               >
                 <a-textarea
-                  @blur="onValueChange"
+                  @blur="onValueChange($event, 'pre_other_preference')"
                   :rows="3"
                   showCount
                   :maxLength="200"
@@ -999,7 +1010,7 @@
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="pre_description" prop="pre_description">
                 <a-textarea
-                  @blur="onValueChange"
+                  @blur="onValueChange($event, 'pre_description')"
                   :rows="3"
                   :maxLength="1000"
                   autocomplete="off"
@@ -1454,8 +1465,7 @@
                   v-if="preferenceData.pre_good_talker_rate"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Good communicator & great to have two way converstations
-                with
+                />Good communicator & great to have two way converstations with
               </div>
             </div>
             <div class="col-12 col-md-6">
@@ -1854,6 +1864,7 @@ export default {
       });
     },
     onNationalityValueChange(e, name) {
+      this.checkValidation(name);
       if (
         this.preferenceData[name][this.preferenceData[name].length - 1].name !=
           `Don't Mind` &&
@@ -1873,6 +1884,7 @@ export default {
       this.savePreference();
     },
     onMultiValueChange(e, name) {
+      this.checkValidation(name);
       if (
         this.preferenceData[name][this.preferenceData[name].length - 1] != -1 &&
         this.preferenceData[name].length > 3
@@ -1888,6 +1900,7 @@ export default {
       this.savePreference();
     },
     onMultiNameChange(e, name) {
+      this.checkValidation(name);
       if (
         this.preferenceData[name][this.preferenceData[name].length - 1] !=
           `Don't Mind` &&
@@ -1904,7 +1917,15 @@ export default {
 
       this.savePreference();
     },
+    checkValidation(name) {
+      this.$refs.preferenceFormOne.fields.forEach((f) => {
+        if (f.prop == name) {
+          f.onFieldBlur();
+        }
+      });
+    },
     onValueChange(e, name) {
+      this.checkValidation(name);
       this.savePreference();
     },
     onRateChange(e, name) {
