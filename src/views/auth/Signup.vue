@@ -152,7 +152,7 @@
             Welcome To <span class="logo-text">Matrimony Assist</span> Signup
           </h3>
           <div class="type mx-auto">
-            <p class="text-center py-2">Let's get started. Please select your form type</p>
+            <p class="text-center py-2">How would you like to complete the registration form?</p>
 
             <a-row :gutter="16" class="mobile-view">
               <a-col :span="24">
@@ -498,7 +498,7 @@ export default {
       if (!regex.test(value)) {
         callback(
           new Error(
-            "Your password must contain at least 8 characters, a symbol, upper and lower case letters and a number"
+            "Your password must contain at least 8 characters include at least a symbol, upper and lower case letters and a number"
           )
         );
       } else {
