@@ -209,6 +209,18 @@ export default {
       try {
         await this.$store.dispatch("createSubscription", _payload); // Action in the User module in store
         this.isLoading = false;
+        let subscribedTeam = this.$store.state.team.teamSelected;
+        if(subscribedTeam && subscribedTeam.team_members && subscribedTeam.team_members.length > 1) {
+          let loggedUser = JSON.parse(localStorage.getItem('user'));
+          let receivers = subscribedTeam.team_members.filter(item => item.user_id != loggedUser.id).map(opt => opt.user_id);
+          let payload = {
+            receivers: receivers,
+            title: `${loggedUser.full_name} subscribed ${subscribedTeam.name} team`,
+            team_temp_name: subscribedTeam.name,
+            team_id: subscribedTeam.id
+          };
+          self.socketNotification(payload);
+        }
         this.$router.push(
             `/subscription/complete/success/${this.subscriptionName}/${this.teamName}`
         );
