@@ -17,7 +17,7 @@
       </template>
       <a-collapse-panel
         key="1"
-        header="1.1 Preferences about your prospective companion"
+        header="A. Preferences about your prospective companion"
       >
         <a-form-model
           v-if="preferenceData && activeKey == 1"
@@ -33,7 +33,8 @@
                 <a-icon
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What should be the age range of your prospective companion?
+                />Preferred age range
+                
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -47,6 +48,7 @@
                 :size="'default'"
                 :options="ageTV"
                 :placeholder="'Age'"
+                            
                 class="form-right-content w-full ant-dropdown-half"
               />
             </div>
@@ -77,7 +79,7 @@
                 id="collapseExampleAge"
               >
                 <div class="card card-body bubble">
-                  Provide your preferred age range
+                 Please define here the minimum and maximum age range of your prospective companion. 
                 </div>
               </div>
             </div>
@@ -94,8 +96,7 @@
                   "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What is your preferred height range for your prospective
-                companion?
+                />Preferred height range
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -139,7 +140,7 @@
                 id="collapseExample"
               >
                 <div class="card card-body bubble">
-                  Provide your preferred height range in 'cm'
+                Please define here the minimum and maximum height range of your prospective companion.
                 </div>
               </div>
             </div>
