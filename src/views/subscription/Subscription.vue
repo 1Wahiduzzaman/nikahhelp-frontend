@@ -460,9 +460,9 @@ export default {
         if(this.choosedPlan.promo_code && this.choosedPlan.id == this.plans[0].id) {
           let usedAlready = this.choosedPlan.team_ids.findIndex(item => parseInt(item) === parseInt(this.teamSelected.id));
           if(usedAlready >= 0) {
-            this.$store.state.team.subscriptionAmount = this.amount;
+            this.$store.state.team.subscriptionAmount = parseFloat(this.choosedPlan.price);
             this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
-            this.$store.state.team.discountedAmount = parseFloat(this.choosedPlan.discount);
+            this.$store.state.team.discountedAmount = 0;
             this.$store.state.team.legalSubscription = true;
             this.$router.push(
                 `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
@@ -472,8 +472,11 @@ export default {
             if(this.choosedPlan.promo_code) {
               this.freeModal = true;
             } else {
+              this.$store.state.team.subscriptionAmount = parseFloat(this.choosedPlan.price);
+              this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
               this.$store.state.team.legalSubscription = true;
               this.$store.state.team.teamSelected = this.teamSelected;
+              this.$store.state.team.discountedAmount = 0;
               this.$router.push(
                   `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
               );
@@ -483,10 +486,10 @@ export default {
           if(this.choosedPlan.promo_code) {
             this.freeModal = true;
           } else {
-            this.freeModal = true;
-            this.$store.state.team.subscriptionAmount = (this.amount - this.savedAmount);
+            this.freeModal = false;
+            this.$store.state.team.subscriptionAmount = parseFloat(this.choosedPlan.price);
             this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
-            this.$store.state.team.discountedAmount = parseFloat(this.choosedPlan.discount);
+            this.$store.state.team.discountedAmount = 0;
             this.$store.state.team.legalSubscription = true;
             this.$store.state.team.teamSelected = this.teamSelected;
             this.$router.push(
@@ -525,9 +528,9 @@ export default {
       }
     },
     nextWithoutCupon() {
-      this.$store.state.team.subscriptionAmount = (this.amount - this.savedAmount);
+      this.$store.state.team.subscriptionAmount = parseFloat(this.choosedPlan.price);
       this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
-      this.$store.state.team.discountedAmount = parseFloat(this.choosedPlan.discount);
+      this.$store.state.team.discountedAmount = 0;
       this.$store.state.team.legalSubscription = true;
       this.$store.state.team.teamSelected = this.teamSelected;
       this.$router.push(
