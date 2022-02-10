@@ -261,7 +261,7 @@
                   </h4>
                   <small class="text-white"
                     >Team Expire period extended to the date of -
-                    {{ teamSelected && teamSelected.last_subscription && teamSelected.last_subscription.subscription_expire_at ? formateDate(teamSelected.last_subscription.subscription_expire_at) : '' }}</small
+                    {{ teamSelected && teamSelected.subscription_expire_at ? formateDate(teamSelected.subscription_expire_at) : '' }}</small
                   >
                 </div>
               </div>
