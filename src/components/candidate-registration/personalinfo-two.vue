@@ -101,7 +101,7 @@
                 class="collapse"
                 id="collapsePersonalInfoGender"
               >
-                <div class="card card-body bubble">Select Your Gender</div>
+                <div class="card card-body bubble">Once a gender is selected and the completed form is submitted for approval, if a mistake is made then it can only be changed by contacting the MatrimonyAssist Team.</div>
               </div>
             </div>
           </div>
@@ -160,7 +160,7 @@
                 class="collapse"
                 id="collapsePersonalInfoDateOfBirth"
               >
-                <div class="card card-body bubble">Choose DOB</div>
+                <div class="card card-body bubble">Once date of birth is provided and the completed form is submitted for approval, if a mistake is made then it can only be changed by contacting the MatrimonyAssist Team.</div>
               </div>
             </div>
           </div>
@@ -221,7 +221,7 @@
                 id="collapsePersonalInfoHeight"
               >
                 <div class="card card-body bubble">
-                  Please provide height in cm
+                  Please select a height option that is closest to your actual height measured without shoes on from your feet to the top of your head. 
                 </div>
               </div>
             </div>
