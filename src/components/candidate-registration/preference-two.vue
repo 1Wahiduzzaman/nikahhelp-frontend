@@ -17,7 +17,7 @@
       </template>
       <a-collapse-panel
         key="1"
-        header="A. Preferences about your prospective companion"
+        header="1.1 Preferences about your prospective companion"
       >
         <a-form-model
           v-if="preferenceData && activeKey == 1"
@@ -579,7 +579,7 @@
             </div>
           </div>
 
-          <div class="row pt-3 pb-2 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom"> 
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -645,7 +645,7 @@
                 id="collapseExamplePartnerNationality"
               >
                 <div class="card card-body bubble">
-                  Preferred Partner's Nationality. You can select multiple
+               If you select more than one (max. 3), it will increase your chances of more matches. 
                   values
                 </div>
               </div>
@@ -660,7 +660,7 @@
                   v-if="preferenceData.pre_study_level_id"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Expected level of education of your prospective companion?
+                />Minimum expected level of education of your prospective companion?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -712,7 +712,7 @@
                 id="collapseMinimumEducation"
               >
                 <div class="card card-body bubble">
-                  Minimum Education Level of Partner
+                  Make sure there is compatibility in your expectation between what you are offering and looking for.
                 </div>
               </div>
             </div>
@@ -779,7 +779,7 @@
                 id="collapsePartnerEmploymentStatus"
               >
                 <div class="card card-body bubble">
-                  Partner's Employment Status
+                  You may have more than one preferences, please select the most preferred option.
                 </div>
               </div>
             </div>
@@ -847,7 +847,7 @@
                 class="collapse"
                 id="partner-occupation"
               >
-                <div class="card card-body bubble">Partner's occupuation</div>
+                <div class="card card-body bubble">You may have more than one preferences, please select the most preferred option.</div>
               </div>
             </div>
           </div>
@@ -920,7 +920,7 @@
                 class="collapse"
                 id="divorceePartnerAcceptance"
               >
-                <div class="card card-body bubble">This field is optional</div>
+                <div class="card card-body bubble">This site has been designed for people who are divorced for a variety of reasons. Sometimes divorce happens due to reasons outside someone's control. </div>
               </div>
             </div>
           </div>
@@ -1062,7 +1062,7 @@
                 id="anyotherRequirementOnPartner"
               >
                 <div class="card card-body bubble">
-                  Any other requirements for companion
+                  You might want to consider getting guidance and advice from those with experience and wisdom on which prospects are likely to be compatible with you given what you have to offer and the kind of person you are, or can become, with the right companion to compliment you. 
                 </div>
               </div>
             </div>
@@ -1083,7 +1083,7 @@
       <!-- Important things for you (Ratings) -->
       <a-collapse-panel
         key="2"
-        header="1.2 Think of the people who know you well. Now, how would they rate the following aspects in their search for a prospective companion for you?"
+        header="1.2 How would someone who knows you very well rate the following aspects on your behalf in searching for a compatibale companion?"
         style="margin-top: 5px"
       >
         <a-form-model
