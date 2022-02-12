@@ -1012,7 +1012,18 @@ export default {
 							return false;
 						}
 						if (data.data.status !== "FAIL") {
-							//this.$message.success("Successfully Left Team");
+              if(this.teamData && this.teamData.team_members && this.teamData.team_members.length > 1) {
+                let loggedUser = JSON.parse(localStorage.getItem('user'));
+                let receivers = this.teamData.team_members.filter(item => item.user_id != loggedUser.id).map(opt => opt.user_id);
+                let payload = {
+                  receivers: receivers,
+                  title: `deleted ${this.teamData.name} team`,
+                  team_temp_name: this.teamData.name,
+                  team_id: this.teamData.id
+                };
+                this.socketNotification(payload);
+              }
+
 							this.$success({
 								title: "Success!",
 								content: "Successfully left team",

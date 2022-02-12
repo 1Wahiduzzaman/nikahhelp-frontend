@@ -110,23 +110,23 @@
         <!-- :class="{ disabled: !enabledNextBtn }"
           :disabled="!enabledNextBtn" -->
         <a-button
-          :class="{ disabled: !enabledNextBtn }"
+          :class="{'disabled': !enabledNextBtn, 'next-btn-pos': current !== 0, 'first-next-btn-pos':  current === 0 }"
           :disabled="!enabledNextBtn"
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
           style="float: right;"
-          :style="{'margin-right': current === 0 ? '-15px' : '0'}"
-          class="mt-3"
+          class="mt-3 next-btn-pos"
           @click="next"
         >
+<!--          :style="{'margin-right': current === 0 ? '-15px' : '0'}"-->
           Next
         </a-button>
         <a-button
           v-if="current == steps.length - 1"
           type="primary"
           shape="round"
-          style="float: right; margin-top: 15px"
+          style="float: right; margin-top: 12px; margin-right: -10px"
           @click="openDialog"
         >
           Review and Publish
@@ -145,9 +145,9 @@
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
-          :style="{'margin-left': current === 0 ? '-15px' : '0'}"
           style="float: left;"
           class="mt-3"
+          :class="{'first-save-btn': current === 0, 'save-btn': current !== 0}"
           @click="saveExit"
         >
           Save & Exit
@@ -981,6 +981,24 @@ export default {
   display: none;
   @media (min-width: 992px) {
     display: block;
+  }
+}
+.next-btn-pos {
+  margin-right: -16px;
+  @media (min-width: 992px) {
+    margin-right: 0;
+  }
+}
+.first-next-btn-pos {
+  margin-right: -16px;
+}
+.first-save-btn {
+  margin-left: -15px;
+}
+.save-btn {
+  margin-left: -16px;
+  @media (min-width: 992px) {
+    margin-left: 0;
   }
 }
 </style>

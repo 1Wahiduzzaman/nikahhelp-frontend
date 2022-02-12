@@ -1,5 +1,5 @@
 <template>
-    <div class="notification-list pr-2 position-relative w-full">
+    <div class="notification-list pr-2 position-relative w-full" @click="clickOnNotification()">
         <div class="d-flex align-items-center">
             <img class="avatar" width="45" height="45" :src="avatarSrc" alt="icon">
             <div class="content pr-3">
@@ -36,6 +36,9 @@ export default {
         }
         return '';
       },
+      clickOnNotification() {
+        this.item.seen = 1;
+      }
     }
 }
 </script>

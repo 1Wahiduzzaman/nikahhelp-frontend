@@ -3,7 +3,7 @@
     <Header />
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else class="steps ma-steps">
-      <div class="steper-header text-center heading-text px-3">
+      <div class="steper-header text-center heading-text px-3 d-mb-none">
         <h4>About you and the companion you are looking for</h4>
         <p>To get the best results please complete the questions fully</p>
       </div>
@@ -32,7 +32,7 @@
             <h4 class="mobile-step-text color-primary text-center fw-bold">
               {{ mobileSteps[current] }}
             </h4>
-            <div class="mobile-block px-3">
+            <div class="mobile-block px-3 justify-content-center">
               <div
                 @click="onStep(0)"
                 class="mobile-step"
@@ -48,10 +48,10 @@
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 2 }"
               ></div>
-              <!-- <div
+              <div
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 3 }"
-              ></div> -->
+              ></div>
             </div>
           </div>
         </div>
@@ -97,12 +97,11 @@
 
       <div class="steps-action text-right pb-5 clearfix bottom-padding">
         <a-button
-          :class="{ disabled: !enabledNextBtn }"
           :disabled="!enabledNextBtn"
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
-          :style="{ marginRight: current == 0 ? '-15px' : '-5px' }"
+          :class="{'disabled': !enabledNextBtn, 'next-btn-pos': current !== 0, 'first-next-btn-pos':  current === 0 }"
           style="float: right"
           class="mt-3"
           @click="next"
@@ -113,8 +112,9 @@
         <a-button
           v-if="current > 0"
           shape="round"
-          style="float: right; margin-right: 10px"
+          style="float: right;"
           class="mt-3"
+          :class="{'prev-btn': current !== 3, 'last-prev-btn': current === 3}"
           @click="prev"
         >
           Previous
@@ -123,7 +123,8 @@
         <a-button
           shape="round"
           type="primary"
-          style="float: left; margin-left: -15px"
+          style="float: left;"
+          :class="{'first-save-btn': current === 0, 'save-btn': current !== 0}"
           class="mt-3"
           @click="saveExit"
         >
@@ -851,6 +852,7 @@ export default {
 .mobile-header {
   display: block;
   padding: 10px 0;
+  margin-top: 30px;
 }
 .mobile-step-text {
   font-size: 18px;
@@ -867,6 +869,7 @@ export default {
   }
   .mobile-header {
     display: none;
+    margin-top: 0;
   }
   .step-bar.vue-fixed-header--isFixed {
     top: 15px;
@@ -877,5 +880,38 @@ export default {
   .step-bar.vue-fixed-header--isFixed {
     width: 800px;
   }
+}
+.d-mb-none {
+  display: none;
+  @media (min-width: 992px) {
+    display: block;
+  }
+}
+.next-btn-pos {
+  margin-right: -16px;
+  @media (min-width: 992px) {
+    margin-right: 0;
+  }
+}
+.first-next-btn-pos {
+  margin-right: -16px;
+}
+.first-save-btn {
+  margin-left: -15px;
+}
+.save-btn {
+  margin-left: -16px;
+  @media (min-width: 992px) {
+    margin-left: 0;
+  }
+}
+.last-prev-btn {
+  margin-right: -15px;
+  @media (min-width: 992px) {
+    margin-right: 0;
+  }
+}
+.prev-btn {
+  margin-right: 10px;
 }
 </style>

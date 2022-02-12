@@ -143,6 +143,35 @@
                       }}</span></span
                     >
                   </li>
+                  
+                  <li class="flex-between-start">
+                    <span class="flex-50 px-2 label-text"
+                      >Accept a divorcee</span
+                    ><span class="flex-50 px-2 d-inherit"
+                      >:<span class="ml-3">{{
+                        candidateData.preference.pre_preferred_divorcee == 1 ? 'Yes' : 'NO'
+                      }}</span></span
+                    >
+                  </li>
+                  <li v-if="candidateData.preference.pre_preferred_divorcee == 1" class="flex-between-start">
+                    <span class="flex-50 px-2 label-text"
+                      >Accept a divorcee with children?</span
+                    ><span class="flex-50 px-2 d-inherit"
+                      >:<span class="ml-3">{{
+                        candidateData.preference.pre_preferred_divorcee_child == 1 ? 'Yes' : 'NO'
+                      }}</span></span
+                    >
+                  </li>
+
+                  <li v-if="candidateData.preference.pre_preferred_divorcee == 1" class="flex-between-start">
+                    <span class="flex-50 px-2 label-text"
+                      >Education</span
+                    ><span class="flex-50 px-2 d-inherit"
+                      >:<span class="ml-3">{{
+                        candidateData.preference.pre_study_level
+                      }}</span></span
+                    >
+                  </li>
 
                   <!-- Occupation -->
                   <li class="flex-between-start">
@@ -154,7 +183,7 @@
                             .pre_occupation"
                           :key="occupuation.id"
                         >
-                          {{ occupuation.name }}
+                          {{ occupuation }}
                         </div></span
                       ></span
                     >
@@ -203,7 +232,7 @@
                 ></rating-component> -->
                 <!-- Looks and Apperance -->
                 <rating-component
-                  title="Looks and apperance"
+                  title="Looks, appearance & attractiveness"
                   :value="candidateData.preference.pre_look_and_appearance_rate"
                 ></rating-component>
                 <!-- Religiosity/Faith -->
@@ -230,7 +259,7 @@
                 ></rating-component>
                 <!-- Emotional Maturity and compatibility -->
                 <rating-component
-                  title="Emotional maturity and compatibility"
+                  title="Emotional Maturity and general intelligence"
                   :value="candidateData.preference.pre_emotional_maturity_rate"
                   :valueString="
                     candidateData.preference.pre_emotional_maturity_rate_string
@@ -246,7 +275,7 @@
                 ></rating-component>
                 <!-- Good talker -->
                 <rating-component
-                  title="Good talker"
+                  title="Good communicator"
                   :value="candidateData.preference.pre_good_talker_rate"
                   :valueString="
                     candidateData.preference.pre_good_talker_rate_string
@@ -273,7 +302,7 @@
                 ></rating-component>
                 <!-- Employment or Wealth-->
                 <rating-component
-                  title="Employment or Wealth"
+                  title="Employment and financial stability"
                   :value="candidateData.preference.pre_employment_wealth_rate"
                   :valueString="
                     candidateData.preference.pre_employment_wealth_rate_string
@@ -281,7 +310,7 @@
                 ></rating-component>
                 <!-- Education -->
                 <rating-component
-                  title="Education"
+                  title="Education and academic accomplishments"
                   :value="candidateData.preference.pre_education_rate"
                   :valueString="
                     candidateData.preference.pre_education_rate_string
@@ -306,7 +335,7 @@
           </div>
           <div class="row h-100">
             <div class="col-md-8 mb-3">
-              <div class="card-custom shadow-default personal-height card-personal">
+              <div class="card-custom shadow-default card-personal">
                 <ul class="personal-ul">
                   <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text">Name</span
@@ -347,6 +376,29 @@
                     ><span class="flex-50 px-2 d-inherit"
                       >:<span class="ml-3">
                         {{ candidateData.personal.dob }}
+                      </span>
+                    </span>
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-50 px-2 label-text">Height</span
+                    ><span class="flex-50 px-2 d-inherit"
+                      >:<span class="ml-3">
+                        <span
+                        v-html="
+                          `${
+                            heightTV.find(
+                              (x) =>
+                                x.value ===
+                                candidateData.personal.per_height
+                            )
+                              ? heightTV.find(
+                                  (x) =>
+                                    x.value ===
+                                    candidateData.personal.per_height
+                                ).label
+                              : ''
+                          }`">
+                          </span>
                       </span>
                     </span>
                   </li>
@@ -417,13 +469,7 @@
                     <span class="flex-50 px-2 label-text">Country of Birth</span
                     ><span class="flex-50 px-2 d-inherit"
                       >:<span class="ml-3">{{
-                        candidateDetails.countries[
-                          candidateData.personal.per_country_of_birth
-                        ]
-                          ? candidateDetails.countries[
-                              candidateData.personal.per_country_of_birth
-                            ].name
-                          : ""
+                        candidateData.personal.per_country_of_birth
                       }}</span></span
                     >
                   </li>
@@ -432,13 +478,7 @@
                       >Current Residance</span
                     ><span class="flex-50 px-2 d-inherit"
                       >:<span class="ml-3">{{
-                        candidateDetails.countries[
                           candidateData.personal.per_current_residence
-                        ]
-                          ? candidateDetails.countries[
-                              candidateData.personal.per_current_residence
-                            ].name
-                          : ""
                       }}</span></span
                     >
                   </li>
@@ -446,7 +486,7 @@
                     <span class="flex-50 px-2 label-text">Address</span
                     ><span class="flex-50 px-2 d-inherit"
                       >:<span class="ml-3">{{
-                        candidateData.personal.per_address
+                        candidateData.contact.per_permanent_address
                       }}</span></span
                     >
                   </li>
@@ -466,19 +506,25 @@
                       }}</span></span
                     >
                   </li>
+                  <li class="flex-between-start">
+                    <span class="flex-50 px-2 label-text">Email</span
+                    ><span class="flex-50 px-2 d-inherit"
+                      >:<span class="ml-3">{{
+                        candidateData.contact.per_email
+                      }}</span></span
+                    >
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-50 px-2 label-text">Permanent city & country</span
+                    ><span class="flex-50 px-2 d-inherit"
+                      >:<span class="ml-3">{{
+                        candidateData.contact.per_permanent_city + ', ' + candidateData.contact.per_permanent_country_name
+                      }}</span></span
+                    >
+                  </li>
                 </ul>
               </div>
-              <div class="card-custom h-33 shadow-default">
-                <h4>A little bit about me</h4>
-                <div class="mb-0">
-                  <a-textarea
-                    id="per_about"
-                    :rows="4"
-                    :maxLength="200"
-                    v-model="candidateData.personal.per_about"
-                  />
-                </div>
-              </div>
+              
             </div>
             <div class="col-md-4 mb-3 mobile-margin-top">
               <div class="card-custom shadow-default">
@@ -590,6 +636,21 @@
 								</p>
 							</div>
 						</div> -->
+            
+            <div class="col-md-12 mb-3 mt-16px">
+              <div class="card-custom shadow-default">
+                <h4>A little bit about me</h4>
+                <p class="mb-0">
+                  <a-textarea
+                    id="per_about"
+                    :rows="4"
+                    :maxLength="200"
+                    v-model="candidateData.personal.per_about"
+                  />
+                </p>
+              </div>
+            </div>
+            
             <div class="col-md-12 mb-3 mt-16px">
               <div class="card-custom shadow-default">
                 <h4>Additional Information</h4>
@@ -598,7 +659,7 @@
                     id="per_about"
                     :rows="4"
                     :maxLength="200"
-                    v-model="candidateData.personal.per_additional_info_text"
+                    v-model="candidateData.more_about.per_additional_info_text"
                   />
                 </p>
               </div>

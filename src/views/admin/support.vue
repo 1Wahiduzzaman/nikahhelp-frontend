@@ -70,7 +70,7 @@
                      v-if="(parseInt(item.senderId) == parseInt(getAuthUserId))"
                      :class="{'conv-mb': chats.length !== cIndex + 1}" >
                   <div class="text-right">
-                    <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
+                    <img src="@/assets/icon/support-secondary.svg" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
                   </div>
                   <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 white-space-pre" v-html="item.body"></div>
                   <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">{{ messageCreatedAt(item.created_at) }}</div>
@@ -80,7 +80,7 @@
                      v-else
                      :class="{'conv-mb': chats.length !== cIndex + 1}">
                   <div class="text-left">
-                    <img src="../../assets/info-img.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+                    <img :src="getAuthUser && getAuthUser.per_main_image_url ? getAuthUser.per_main_image_url : avatarSrc" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
                   </div>
                   <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 white-space-pre" v-html="item.body"></div>
                   <div class="text-muted small text-nowrap mt-2 position-absolute msg-left-created-at">{{ messageCreatedAt(item.created_at) }}</div>
@@ -167,6 +167,7 @@ export default {
       histories: [],
       chats: [],
       chatheadopen: null,
+      avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
       message: '',
       online_users: []
     };
@@ -176,6 +177,13 @@ export default {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       if (loggedUser) {
         return loggedUser.id;
+      }
+      return null;
+    },
+    getAuthUser() {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      if (loggedUser) {
+        return loggedUser;
       }
       return null;
     },

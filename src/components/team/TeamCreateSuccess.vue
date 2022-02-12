@@ -66,7 +66,7 @@ export default {
   props: ['team'],
   computed: {
     link() {
-      return `/subscription/${this.team.id}`;
+      return `/subscription/${this.team.team_id}`;
     },
   },
 }
@@ -86,7 +86,7 @@ export default {
 .create-team-message {
   color: #666666;
   font-weight: 100;
-  font-size: 12px;
+  font-size: 16px;
 }
 
 .bottom-half {

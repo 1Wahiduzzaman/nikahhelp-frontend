@@ -623,9 +623,17 @@ export default {
 
           let teamPersonalChat = this.teamChat.find(item => item.user_id == res.senderId);
           if(teamPersonalChat) {
-            teamPersonalChat.message.body = res.body;
-            teamPersonalChat.message.created_at = res.created_at;
-            teamPersonalChat.message.seen = 0;
+            if(teamPersonalChat.message) {
+              teamPersonalChat.message.body = res.body;
+              teamPersonalChat.message.created_at = res.created_at;
+              teamPersonalChat.message.seen = 0;
+            } else {
+              teamPersonalChat.message = {
+                body: res.body,
+                created_at: res.created_at,
+                seen: 0,
+              };
+            }
 
             this.teamChat.unshift(
                 this.teamChat.splice(
@@ -1289,6 +1297,14 @@ export default {
         this.chatheadopen.message.senderInfo = loggedUser;
         this.chatheadopen.message.sender = loggedUser;
         this.$socket.emit('send_message_in_group', payload);
+      }
+
+      if(!this.chatheadopen.message || this.chatheadopen.message == null) {
+        this.chatheadopen.message = {
+          body: this.msg_text,
+          created_at: new Date(),
+          seen: 1
+        };
       }
 
       this.findOneAndPushToFirst();

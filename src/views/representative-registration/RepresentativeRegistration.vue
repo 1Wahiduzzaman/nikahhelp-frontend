@@ -33,7 +33,7 @@
             <h4 class="mobile-step-text color-primary text-center fw-bold">
               {{ mobileSteps[current] }}
             </h4>
-            <div class="mobile-block px-3">
+            <div class="mobile-block px-3 justify-content-center">
               <div
                 class="mobile-step"
                 :class="{ 'bg-primary': current >= 0 }"
@@ -103,8 +103,8 @@
       </div>
       <div class="steps-action text-right pb-5 clearfix bottom-padding">
         <a-button
-          :class="{ disabled: !enabledNextBtn }"
           :disabled="!enabledNextBtn"
+          :class="{'disabled': !enabledNextBtn, 'next-btn-pos': current !== 0, 'first-next-btn-pos':  current === 0 }"
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
@@ -137,7 +137,8 @@
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
-          style="float: left; margin-left: -15px"
+          style="float: left;"
+          :class="{'first-save-btn': current === 0, 'save-btn': current !== 0}"
           class="mt-3"
           @click="saveExit"
         >
@@ -672,6 +673,25 @@ export default {
 @media (min-width: 992px) {
   .step-bar.vue-fixed-header--isFixed {
     width: 800px;
+  }
+}
+
+.next-btn-pos {
+  margin-right: -12px;
+  @media (min-width: 992px) {
+    margin-right: -6px;
+  }
+}
+.first-next-btn-pos {
+  margin-right: -8px;
+}
+.first-save-btn {
+  margin-left: -10px;
+}
+.save-btn {
+  margin-left: -14px;
+  @media (min-width: 992px) {
+    margin-left: -6px;
   }
 }
 </style>

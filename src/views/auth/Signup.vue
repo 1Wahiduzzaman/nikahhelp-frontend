@@ -152,28 +152,28 @@
             Welcome To <span class="logo-text">Matrimony Assist</span> Signup
           </h3>
           <div class="type mx-auto">
-            <p class="text-center py-2">Let's get started. Please select your form type</p>
+            <p class="text-center py-2">How would you like to complete the registration form?</p>
 
             <a-row :gutter="16" class="mobile-view">
               <a-col :span="24">
                 <a-card class="br-card shadow">
                   <button
-                      @click="signupModel.form_type = 2"
-                      class="btn no-shadow p-2 fs-20 br-30 btn-type"
-                      :class="{ active: signupModel.form_type == 2 }"
-                  >
-                    Short Form
-                  </button>
-                  <button
                       @click="signupModel.form_type = 1"
-                      class="btn no-shadow p-2 fs-20 br-30 btn-type mt-5"
+                      class="btn no-shadow p-2 fs-20 br-30 btn-type"
                       :class="{ active: signupModel.form_type == 1 }"
                   >
                     Long Form
                   </button>
+                  <button
+                      @click="signupModel.form_type = 2"
+                      class="btn no-shadow p-2 fs-20 br-30 btn-type mt-5"
+                      :class="{ active: signupModel.form_type == 2 }"
+                  >
+                    Short Form
+                  </button>
                   <p class="fs-12 mt-5">
                     <a-icon type="check" class="text-success"/>
-                    You have to complete a {{ signupModel.form_type == 2 ? 'short form' : 'full form' }} of
+                    You have to complete the {{ signupModel.form_type == 2 ? 'short form' : 'full form' }} of
                     candidate
                   </p>
                 </a-card>
@@ -184,21 +184,6 @@
               <a-col :span="12">
                 <a-card class="br-card shadow type-card">
                   <button
-                      @click="signupModel.form_type = 2"
-                      class="btn no-shadow p-2 fs-20 br-30 btn-type"
-                      :class="{ active: signupModel.form_type == 2 }"
-                  >
-                    Short Form
-                  </button>
-                  <p class="fs-12 mt-5">
-                    <a-icon type="check" class="text-success"/>
-                    You have to complete a short form of candidate
-                  </p>
-                </a-card>
-              </a-col>
-              <a-col :span="12">
-                <a-card class="br-card shadow type-card">
-                  <button
                       @click="signupModel.form_type = 1"
                       class="btn no-shadow p-2 fs-20 br-30 btn-type"
                       :class="{ active: signupModel.form_type == 1 }"
@@ -207,7 +192,22 @@
                   </button>
                   <p class="fs-12 mt-5">
                     <a-icon type="check" class="text-success"/>
-                    You have to complete a full form of candidate
+                    You have to complete the full form of candidate
+                  </p>
+                </a-card>
+              </a-col>
+              <a-col :span="12">
+                <a-card class="br-card shadow type-card">
+                  <button
+                      @click="signupModel.form_type = 2"
+                      class="btn no-shadow p-2 fs-20 br-30 btn-type"
+                      :class="{ active: signupModel.form_type == 2 }"
+                  >
+                    Short Form
+                  </button>
+                  <p class="fs-12 mt-5">
+                    <a-icon type="check" class="text-success"/>
+                    You have to complete the short form of candidate
                   </p>
                 </a-card>
               </a-col>
@@ -498,7 +498,7 @@ export default {
       if (!regex.test(value)) {
         callback(
           new Error(
-            "Your password must contain at least 8 characters, a symbol, upper and lower case letters and a number"
+            "Your password must contain at least 8 characters include at least a symbol, upper and lower case letters and a number"
           )
         );
       } else {

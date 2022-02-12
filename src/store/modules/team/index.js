@@ -18,7 +18,8 @@ export default {
       subscriptionAmount: 0,
       discountedAmount: 0,
       originalAmount: 0,
-      legalSubscription: false
+      legalSubscription: false,
+      teamSelected: null
     };
   },
   mutations,

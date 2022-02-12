@@ -59,60 +59,6 @@
                     {{ plan.title }}
                   </h4>
                 </div>
-                <div
-                  class="d-flexx d-none cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom"
-                  :class="{ 'bg-brand-gradient': isSelected2 }"
-                  @click="secondOption"
-                >
-<!--                  <a-icon-->
-<!--                    type="check"-->
-<!--                    class="text-transparent fs-24 icon-check"-->
-<!--                    :class="{ 'text-white': isSelected2 }"-->
-<!--                  />-->
-                  <img src="@/assets/icon/subscription_check.svg" alt="icon" v-if="isSelected2" class="mr-4" />
-                  <h4
-                    class="duration"
-                    :class="{ selected: isSelected2 }"
-                  >
-                    3 month
-                  </h4>
-                </div>
-                <div
-                  class="d-flexx d-none cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom"
-                  :class="{ 'bg-brand-gradient': isSelected3 }"
-                  @click="thirdOption"
-                >
-<!--                  <a-icon-->
-<!--                    type="check"-->
-<!--                    class="text-transparent fs-24 icon-check"-->
-<!--                    :class="{ 'text-white': isSelected3 }"-->
-<!--                  />-->
-                  <img src="@/assets/icon/subscription_check.svg" alt="icon" v-if="isSelected3" class="mr-4" />
-                  <h4
-                    class="duration"
-                    :class="{ selected: isSelected3 }"
-                  >
-                    6 month
-                  </h4>
-                </div>
-                <div
-                  class="d-flexx d-none cursor-pointer py-4 px-5 free-duration align-items-center justify-content-center"
-                  :class="{ 'bg-brand-gradient': isSelected4 }"
-                  @click="fourthOption"
-                >
-<!--                  <a-icon-->
-<!--                    type="check"-->
-<!--                    class="text-transparent fs-24 icon-check"-->
-<!--                    :class="{ 'text-white': isSelected4 }"-->
-<!--                  />-->
-                  <img src="@/assets/icon/subscription_check.svg" alt="icon" v-if="isSelected4" class="mr-4" />
-                  <h4
-                    class="duration"
-                    :class="{ selected: isSelected4 }"
-                  >
-                    Free 1 Day
-                  </h4>
-                </div>
               </div>
               <div class="div-3 bg-primary-gradient">
                 <p class="text-center fs-12 text-white">
@@ -315,7 +261,7 @@
                   </h4>
                   <small class="text-white"
                     >Team Expire period extended to the date of -
-                    {{ teamSelected && teamSelected.last_subscription && teamSelected.last_subscription.subscription_expire_at ? formateDate(teamSelected.last_subscription.subscription_expire_at) : '' }}</small
+                    {{ teamSelected && teamSelected.subscription_expire_at ? formateDate(teamSelected.subscription_expire_at) : '' }}</small
                   >
                 </div>
               </div>
@@ -389,10 +335,6 @@ export default {
       user: {},
       is_verified: 1,
       error: null,
-      isSelected1: false,
-      isSelected2: false,
-      isSelected3: false,
-      isSelected4: false,
       amount: 0.0,
       savedAmount: 0.0,
       teams: [],
@@ -431,12 +373,6 @@ export default {
       return [];
     },
     teamCreatedBy() {
-      // const teamMembers = this.teamSelected.team_members;
-
-      // var member = teamMembers.find((member) => {
-      // 	return member.user_id == this.teamSelected.created_by;
-      // });
-      // return member.user.full_name;
       return this.teamSelected && this.teamSelected.created_by ? this.teamSelected.created_by.full_name : '';
     },
     selfMember() {
@@ -471,57 +407,6 @@ export default {
     setContentType(type) {
       this.contentShow = type;
     },
-    // async loadUser() {
-    // 	this.isLoading = true;
-    // 	try {
-    // 		await this.$store.dispatch("getUser");
-    // 		this.user = this.$store.getters["userInfo"];
-    // 		this.candidateInfo = this.$store.getters["candidateInfo"];
-    // 		this.representativeInfo = this.$store.getters["representativeInfo"];
-    // 		this.is_verified = this.user.is_verified;
-    // 		if (this.is_verified == 0) {
-    // 			this.$router.push("/email-verification");
-    // 		}
-    // 		if (this.user.account_type === 0) {
-    // 			this.$router.push("/member-type");
-    // 		}
-
-    // 		if (this.user.account_type === 4) {
-    // 			this.$router.push("/admin");
-    // 		}
-    // 		let data_input_status = this.$store.getters["userDataInputStatus"];
-    // 		console.log("data input status", data_input_status);
-    // 		if (data_input_status == 10) {
-    // 			this.$router.push("/member-name/candidate");
-    // 		}
-
-    // 		if (data_input_status == 20) {
-    // 			this.$router.push("/member-name/representative");
-    // 		}
-
-    // 		if (data_input_status == 11) {
-    // 			this.$router.push("/candidate-registration");
-    // 		}
-    // 		if (data_input_status == 21) {
-    // 			this.$router.push("/representative-registration");
-    // 		}
-
-    // 		// if (data_input_status == 12) {
-    // 		// 	this.$router.push("/candidate-registration");
-    // 		// }
-    // 		// if (data_input_status == 22) {
-    // 		// 	this.$router.push("/representative-registration");
-    // 		// }
-    // 	} catch (error) {
-    // 		this.error = error.message || "Something went wrong";
-    // 		//alert(this.error);
-    // 		this.$error({
-    // 			title: "Error!",
-    // 			content: this.error,
-    // 		});
-    // 	}
-    // 	this.isLoading = false;
-    // },
     async loadPlans() {
       let {data} = await ApiService.get('/v1/package-list').then(res => res.data);
       if(data) {
@@ -553,46 +438,6 @@ export default {
     nextStep(step) {
       this.activeStep = step;
     },
-    firstOption() {
-      this.isSelected1 = !this.isSelected1;
-      this.isSelected2 = false;
-      this.isSelected3 = false;
-      this.isSelected4 = false;
-      this.amount = 10.0;
-      this.savedAmount = 0.0;
-      this.nextStep(2);
-      this.activeStepIndex = 0;
-    },
-    secondOption() {
-      this.isSelected2 = !this.isSelected2;
-      this.isSelected1 = false;
-      this.isSelected3 = false;
-      this.isSelected4 = false;
-      this.amount = 24.0;
-      this.savedAmount = 6.0;
-      this.nextStep(2);
-      this.activeStepIndex = 1;
-    },
-    thirdOption() {
-      this.isSelected3 = !this.isSelected3;
-      this.isSelected2 = false;
-      this.isSelected1 = false;
-      this.isSelected4 = false;
-      this.amount = 42.0;
-      this.savedAmount = 18.0;
-      this.nextStep(2);
-      this.activeStepIndex = 2;
-    },
-    fourthOption() {
-      this.isSelected4 = !this.isSelected4;
-      this.isSelected2 = false;
-      this.isSelected1 = false;
-      this.isSelected3 = false;
-      this.amount = 0.0;
-      this.savedAmount = 0.0;
-      this.nextStep(2);
-      this.activeStepIndex = 3;
-    },
     setPlan(item) {
       this.choosedPlan = item;
       this.amount = item.price;
@@ -603,7 +448,6 @@ export default {
     },
     handleContinue() {
       if (this.teamSelected == null) {
-        //alert("You have to select a team");
         this.$error({
           title: "No Team is Selected!",
           content: "You have to select a team",
@@ -616,9 +460,9 @@ export default {
         if(this.choosedPlan.promo_code && this.choosedPlan.id == this.plans[0].id) {
           let usedAlready = this.choosedPlan.team_ids.findIndex(item => parseInt(item) === parseInt(this.teamSelected.id));
           if(usedAlready >= 0) {
-            this.$store.state.team.subscriptionAmount = this.amount;
+            this.$store.state.team.subscriptionAmount = parseFloat(this.choosedPlan.price);
             this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
-            this.$store.state.team.discountedAmount = parseFloat(this.choosedPlan.discount);
+            this.$store.state.team.discountedAmount = 0;
             this.$store.state.team.legalSubscription = true;
             this.$router.push(
                 `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
@@ -628,7 +472,11 @@ export default {
             if(this.choosedPlan.promo_code) {
               this.freeModal = true;
             } else {
+              this.$store.state.team.subscriptionAmount = parseFloat(this.choosedPlan.price);
+              this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
               this.$store.state.team.legalSubscription = true;
+              this.$store.state.team.teamSelected = this.teamSelected;
+              this.$store.state.team.discountedAmount = 0;
               this.$router.push(
                   `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
               );
@@ -638,19 +486,17 @@ export default {
           if(this.choosedPlan.promo_code) {
             this.freeModal = true;
           } else {
-            this.freeModal = true;
-            this.$store.state.team.subscriptionAmount = (this.amount - this.savedAmount);
+            this.freeModal = false;
+            this.$store.state.team.subscriptionAmount = parseFloat(this.choosedPlan.price);
             this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
-            this.$store.state.team.discountedAmount = parseFloat(this.choosedPlan.discount);
+            this.$store.state.team.discountedAmount = 0;
             this.$store.state.team.legalSubscription = true;
+            this.$store.state.team.teamSelected = this.teamSelected;
             this.$router.push(
                 `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
             );
           }
         }
-        // this.$router.push(
-        //     `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
-        // );
       } else {
         this.$error({
           title: "No Subscription Plan is Selected!",
@@ -659,31 +505,6 @@ export default {
         });
         return;
       }
-      // var subId;
-      // if (this.isSelected1) {
-      //   subId = 1;
-      // } else if (this.isSelected2) {
-      //   subId = 2;
-      // } else if (this.isSelected3) {
-      //   subId = 3;
-      // } else if (this.isSelected4) {
-      //   subId = 0;
-      //   this.freeModal = true;
-      //   return;
-      // } else {
-      //   //alert("You have to select a subscription plan");
-      //   this.$error({
-      //     title: "No Subscription Plan is Selected!",
-      //     content: "You have to select a subscription plan",
-      //     centered: true,
-      //   });
-      //   return;
-      // }
-      // if(subId !== 0) {
-      //   this.$router.push(
-      //       `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${subId}`
-      //   );
-      // }
     },
     handleCancel() {
       this.freeModal = false;
@@ -693,6 +514,8 @@ export default {
         this.$store.state.team.subscriptionAmount = (this.amount - this.savedAmount);
         this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
         this.$store.state.team.discountedAmount = parseFloat(this.choosedPlan.discount);
+        this.$store.state.team.legalSubscription = true;
+        this.$store.state.team.teamSelected = this.teamSelected;
         this.$router.push(
             `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
         );
@@ -705,10 +528,11 @@ export default {
       }
     },
     nextWithoutCupon() {
-      this.$store.state.team.subscriptionAmount = (this.amount - this.savedAmount);
+      this.$store.state.team.subscriptionAmount = parseFloat(this.choosedPlan.price);
       this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
-      this.$store.state.team.discountedAmount = parseFloat(this.choosedPlan.discount);
+      this.$store.state.team.discountedAmount = 0;
       this.$store.state.team.legalSubscription = true;
+      this.$store.state.team.teamSelected = this.teamSelected;
       this.$router.push(
           `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
       );

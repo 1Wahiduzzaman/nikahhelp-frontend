@@ -5,6 +5,24 @@
 			<ProfileBanner
 				class="px-2 mt-2"
 			/>
+			<v-container fluid>
+                <v-row>
+                  <v-col cols="12">
+                    <div class="flex justify-center">
+						<ButtonComponent
+							class="mr-2"
+							iconHeight="14px"
+							:isSmall="true"
+							title="EditProfile"
+							icon="/assets/icon/edit_step.svg"
+							customEvent="editProfile"
+							:isBlock="false"
+							@onClickButton="onClickButton"
+						/>
+                    </div>
+                  </v-col>
+				</v-row>
+			</v-container>
 			<!-- Avatar and cover images -->
 			<!-- <div class="text-center">
 				<img
@@ -55,50 +73,55 @@
 			</div> -->
 		</div>
 		<!-- Representative Info -->
-		<fieldset class="review">
-			<div class="text-start">
-				<div class="review-edit">
-					<div class="review-edit-label">
-						Essential Information
-						<img
-							class="ms-2"
-							src="@/assets/icon/pencil-square.svg"
-							alt="icon"
-						/>
-					</div>
-					<div class="row">
-						<div class="col">
-							<div class="card-custom h-100">
-								<TableRow 
-									title="Full Name"
-									:value="representativeData.first_name + ' ' + representativeData.last_name"
-								/>
-								<TableRow 
-									title="Screen Name"
-									:value="representativeData.screen_name"
-								/>
-								<TableRow 
-									title="Gender"
-									:value="representativeData.per_gender == 1 ? 'Male' : 'Female'"
-								/>
-								<TableRow 
-									title="Age"
-									:value="representativeData.dob"
-								/>
-								<TableRow 
-									title="Occupation"
-									:value="representativeData.per_occupation"
-								/>
-								<TableRow 
-									title="Current Residence"
-									:value="representativeData.per_current_residence_city + ', ' +representativeData.per_current_residence_country"
-								/>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</fieldset>
+		<v-container fluid>
+			<v-row>
+				<v-col cols="12">
+					<fieldset class="">
+						<legend class="ml-8 px-1"><span>Personal Information</span></legend>
+						<v-container fluid class="pt-0 px-5">
+							<v-row dense>
+								<v-col class="pt-1" cols="12">
+									<v-card class="p-3" style="height: 100%">
+        								<table>
+											<TableRow 
+												title="Full Name"
+												textClass="text-subtitle-1"
+												:value="representativeData.first_name + ' ' + representativeData.last_name"
+											/>
+											<TableRow 
+												title="Screen Name"
+												textClass="text-subtitle-1"
+												:value="representativeData.screen_name"
+											/>
+											<TableRow 
+												title="Gender"
+												textClass="text-subtitle-1"
+												:value="representativeData.per_gender == 1 ? 'Male' : 'Female'"
+											/>
+											<TableRow 
+												title="Age"
+												textClass="text-subtitle-1"
+												:value="representativeData.dob"
+											/>
+											<TableRow 
+												title="Occupation"
+												textClass="text-subtitle-1"
+												:value="representativeData.per_occupation"
+											/>
+											<TableRow 
+												title="Current Residence"
+												textClass="text-subtitle-1"
+												:value="representativeData.per_current_residence_city + ', ' +representativeData.per_current_residence_country"
+											/>
+										</table>
+									</v-card>
+								</v-col>
+							</v-row>
+						</v-container>
+					</fieldset>
+				</v-col>
+			</v-row>
+		</v-container>
 	</div>
 </template>
 
@@ -107,14 +130,18 @@ import firebase from "../../configs/firebase";
 import ApiService from "@/services/api.service";
 import ProfileBanner from "@/components/atom/ProfileBanner";
 import TableRow from '@/components/atom/TableRow'
+import ButtonComponent from '@/components/atom/ButtonComponent'
 
 export default {
 	name: "RepresentativeProfile",
 	props: ["representativeData"],
+
 	components: {
 		ProfileBanner,
-		TableRow
+		TableRow,
+		ButtonComponent
 	},
+
 	data() {
 		return {
 			avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
@@ -123,10 +150,15 @@ export default {
 			isLoading: false,
 		};
 	},
+
 	created() {
 		this.getCandidateData();
 	},
+
 	methods: {
+		onClickButton(data) {
+			if(data.event == 'editProfile') this.$router.push('/edit_candidate')
+		},
 		async getCandidateData() {
 			console.log(JSON.parse(localStorage.getItem("user")), '>>>>>>>>>>>>')
 			try {
@@ -250,6 +282,33 @@ export default {
 </script>
 
 <style scoped lang="scss">
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+td {
+    vertical-align: top;
+}
+.container--fluid {
+    max-width: 100% !important;
+}
+fieldset {
+    border: 1px solid #d3d0e4;
+    border-radius: 10px;
+}
+legend {
+    display: inline;
+    width: inherit;
+    color: #6259a8;
+    font-size: 18px;
+    font-weight: 600;
+}
+.-mt-15 {
+    margin-top: -13px;
+}
+.bg-white {
+    background: white;
+}
 @import "@/styles/base/_variables.scss";
 .rep-profile {
 	padding: 10px;
