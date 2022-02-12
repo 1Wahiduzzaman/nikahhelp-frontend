@@ -1,13 +1,18 @@
 <template>
-		<DHomeContent />
+  <div>
+    <DHomeContent v-if="1 != 1" />
+    <Dashboard />
+  </div>
 </template>
 
 <script>
 import DHomeContent from "@/components/dashboard/DHomeContent.vue";
+import Dashboard from "@/components/dashboard/Dashboard.vue";
 export default {
 	name: "DHome",
 	components: {
-		DHomeContent
+		DHomeContent,
+    Dashboard
 	},
 	data() {
 		return {
