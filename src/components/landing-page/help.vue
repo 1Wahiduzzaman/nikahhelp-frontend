@@ -3,15 +3,24 @@
     <LandingPageHeader />
 
     <div class="main-content">
-      <br>
-      <h5>Have a question? We are happy to help.</h5>
-      <h3 class="text-header-black">Contact the MatrimonyAssist team</h3>
-      <h5>Please use the form below to get in touch. Please provide as much detail as you can.
-We aim to get back to you within two working days. However, at busy times this may take a little longer.</h5><br><br>
-     
 
+          <h3 class="text-header-black">Help & support</h3>
+      <br>
+      <h5>Have a question? We are happy to help. You may check our quick links first before contacting us.</h5>
+    
+     <br>
      <h4>Quick links</h4>
+     <div class= "quick-links">
      <div class="flex-container">
+           
+  <div> <a href="#">I can't login</a>
+    </div>
+  <div>How do I sign up?</div>
+ <div>I need help with subscription plan </div>
+  <div>My account is blocked</div>
+   <div>How do I invite a team member? </div>
+</div>
+    <div class="flex-container">
            
   <div> <a href="#">I can't login</a>
     </div>
@@ -21,13 +30,20 @@ We aim to get back to you within two working days. However, at busy times this m
    <div>How do I invite a team member? </div>
 
 </div>
+</div>
      <br>
-     <h4>Still need help? Can't find what you're looking for?</h4><br>
 
+     <h5>Still need help? Can't find what you're looking for?</h5><br>
+
+
+ <h4>Contact the MatrimonyAssist team</h4>
+  <p>Please use the form below to get in touch. Please provide as much detail as you can.
+We aim to get back to you within two working days. However, at busy times this may take a little longer.</p><br>
+   <!-- Contact form  -->
      <h4>SEND US AN EMAIL</h4>
 
 <div class="container">
-  <form action="action_page.php">
+  <form action="">
 
   <label for="query">What is your enquiry regarding?</label>
       <select id="query" name="query">
@@ -101,6 +117,10 @@ export default {
     padding: 0 20px;
   }
 }
+
+.quick-links{
+  background-color: #f1f1f1;
+}
 //Flex container
 * {
   box-sizing: border-box;
@@ -110,7 +130,7 @@ export default {
   flex-direction: row;
   font-size: 18px;
   background-color: #f1f1f1;
-  padding: 20px;
+  padding: 15px;
   justify-content: space-between;
   
 
@@ -124,8 +144,9 @@ export default {
   justify-content: center;
   align-items: center;
   text-align: center;
-   margin: 10px;
+  margin: 10px;
   }
+
 
 /* Responsive layout - makes a one column-layout instead of two-column layout */
 @media (max-width: 800px) {
