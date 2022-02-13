@@ -31,6 +31,8 @@
 
 </div>
 </div>
+
+
      <br>
 
      <h5>Still need help? Can't find what you're looking for?</h5><br>
@@ -120,6 +122,7 @@ export default {
 
 .quick-links{
   background-color: #f1f1f1;
+  padding: 15px;
 }
 //Flex container
 * {
@@ -129,21 +132,18 @@ export default {
   display: flex;
   flex-direction: row;
   font-size: 18px;
-  background-color: #f1f1f1;
-  padding: 15px;
+  padding: 5px;
   justify-content: space-between;
-  
+  }
 
-}
 .flex-container > div {
-
   padding: 20px;
   background-color: #fffefe;
   border-radius: 6px;
   flex: 1;
-  justify-content: center;
   align-items: center;
   text-align: center;
+  justify-content: center;
   margin: 10px;
   }
 
@@ -152,8 +152,8 @@ export default {
 @media (max-width: 800px) {
   .flex-container {
     flex-direction: column;
-  }
-}
+    }
+   }
 
 
 //contact form
