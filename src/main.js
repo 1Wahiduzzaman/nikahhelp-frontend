@@ -13,6 +13,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store/index.js";
 import moment from 'moment'
+import HighchartsVue from 'highcharts-vue';
 // import axios from "axios";
 // * This is the vue-web-storage package
 import Storage from "vue-web-storage";
@@ -24,6 +25,7 @@ import 'viewerjs/dist/viewer.css';
 import VueViewer from 'v-viewer';
 Vue.use(VueViewer);
 Vue.use(Vuetify);
+Vue.use(HighchartsVue);
 Vue.use(Storage, {
   prefix: "",
   drivers: ["local"],
