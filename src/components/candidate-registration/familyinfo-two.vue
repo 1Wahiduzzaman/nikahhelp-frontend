@@ -80,7 +80,7 @@
                 id="collapseCandidateFatherProfession"
               >
                 <div class="card card-body bubble">
-                  Select your father's profession
+                 Some people are interested in knowing parental professions to assess inter-family compatibility. For other people it is not that an important consideration.   
                 </div>
               </div>
             </div>
@@ -143,7 +143,7 @@
                 id="collapseCandidateMotherProfession"
               >
                 <div class="card card-body bubble">
-                  Select your mothers' profession
+                 Some people are interested in knowing parental professions to assess inter-family compatibility. For other people it is not that an important consideration. 
                 </div>
               </div>
             </div>
@@ -199,7 +199,7 @@
                 data-parent="#familyInfoAccordian"
                 id="collapseSiblingsInfomation"
               >
-                <div class="card card-body bubble">Siblings information</div>
+                <div class="card card-body bubble">If you do not have any siblings, please enter 'no siblings'. As marriage involves union of two families, it helps people to get an idea of the kind of family they will have relationship with. </div>
               </div>
             </div>
           </div>
@@ -255,7 +255,7 @@
                 id="collapseAnyotherFamilyLike"
               >
                 <div class="card card-body bubble">
-                  Any other family info you would like to share
+                 As marriage involves union of two families, it helps people to get an idea of the kind of family they will have relationship with. Don't worry, there is no ideal or perfect family in the real world.
                 </div>
               </div>
             </div>
@@ -323,7 +323,7 @@
                 id="collapseSelectCountryOfBirth"
               >
                 <div class="card card-body bubble">
-                  Select your country of birth
+                  We ask this question as people are interested in knowing people have originated in terms of roots, migration and heritage. 
                 </div>
               </div>
             </div>

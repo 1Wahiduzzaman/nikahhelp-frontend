@@ -1549,7 +1549,7 @@
                   :reduce="(option) => option.value"
                   label="name"
                   :options="[
-                    { name: 'Single never married', value: 'single never married' },
+                    { name: 'Single, never married', value: 'single never married' },
                     { name: 'Widow', value: 'widow' },
                     { name: 'Widow with children', value: 'widow with children' },
                     { name: 'Widower', value: 'widower' },
@@ -1720,7 +1720,7 @@
                 id="collapsePersonalInfoCuurentlyLivingWith"
               >
                 <div class="card card-body bubble">
-                  We ask this question to provide additional information that may help them in their decision making. You can expand on your response and future in the in the additional information text field.</div>
+                  We ask this question to provide additional information that may help in their decision making. You can expand on your response and future plans in the additional information text field.</div>
               </div>
             </div>
           </div>
@@ -1817,7 +1817,7 @@
                 id="collapsePersonalInfoWillingToRelocate"
               >
                 <div class="card card-body bubble">
-                  Willing To change your location of living
+                 In a fast changing world, people tend to move for work and other reasons. Sometimes relocating is not possible due to rights and responsibilty considerations.
                 </div>
               </div>
             </div>
@@ -1846,15 +1846,11 @@
                   :reduce="(option) => option.value"
                   label="name"
                   :options="[
+                    {
+                      name: 'No', value: 2},
                     { name: 'Yes', value: 1 },
-                    {
-                      name: 'No',
-                      value: 2,
-                    },
-                    {
-                      name: `Former smoker`,
-                      value: 3,
-                    },
+                    
+                    { name: `Former smoker`, value: 3 },
                   ]"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
@@ -1904,7 +1900,7 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoSmokerOrNot"
               >
-                <div class="card card-body bubble">Smoker or not</div>
+                <div class="card card-body bubble">Habits like smoking is not easy to give up. To non-smokers the impact of smoking can be quite adverse.</div>
               </div>
             </div>
           </div>
@@ -1920,7 +1916,7 @@
                   "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What language do you speak?
+                />What language(s) do you speak?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -1941,7 +1937,7 @@
                       'more_about'
                     )
                   "
-                  placeholder="please select"
+                  placeholder="you may select up to three"
                   v-model="personalInformation.more_about.per_language_speak"
                   label="name"
                   :options="[...candidateDetails.languages]"
@@ -2013,7 +2009,7 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoSpeakingLanguages"
               >
-                <div class="card card-body bubble">Language you speak</div>
+                <div class="card card-body bubble">List up to three languages that you have converstional fluency in.</div>
               </div>
             </div>
           </div>
@@ -2086,7 +2082,7 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoHobbies"
               >
-                <div class="card card-body bubble">Your hobbies</div>
+                <div class="card card-body bubble">List up to three hobbies and interests that you engage in regularly (e.g. walking, cycling, gardening, games etc.)</div>
               </div>
             </div>
           </div>
@@ -2151,7 +2147,7 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoEnjoyfullThings"
               >
-                <div class="card card-body bubble">Things you enjoy</div>
+                <div class="card card-body bubble">List up to three things you really enjoy for pleasure (e.g. book reading, charity work, jogging, befriending etc.)</div>
               </div>
             </div>
           </div>
@@ -2260,7 +2256,7 @@
                 id="collapsePersonalInfoFavoriteFood"
               >
                 <div class="card card-body bubble">
-                  Favorite Food and cuisine.
+                  Apart from tasting exquisite food, different cusines allow one to learn and appreciate other people and their cultures. 
                 </div>
               </div>
             </div>
@@ -2376,7 +2372,7 @@
                 id="collapsePersonalInfoThankulFor"
               >
                 <div class="card card-body bubble">
-                  kind of things are you thankful for
+                  What we are thankful for can sometime reveal an interesting aspect of our personality. 
                 </div>
               </div>
             </div>
@@ -2487,7 +2483,7 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoImproveMyself"
               >
-                <div class="card card-body bubble">Improve myself</div>
+                <div class="card card-body bubble">As human being we will always have some shortcomings even after acheving great things. This helps us to recognise our room for improvement and accept evidenced-based feedback. </div>
               </div>
             </div>
           </div>
@@ -2541,7 +2537,7 @@
                 id="collapsePersonalInfoMoreAboutMe"
               >
                 <div class="card card-body bubble">
-                  A little bit about yourself
+               The things  you may wish to consider could include: your outstanding qualities that people often notice, your family background and values, your future aspirations, ambition for growth and self development, and other consideration like flexibilty, grit, empathy and willingness forget and forgive when facing challenging situations together. 
                 </div>
               </div>
             </div>
@@ -2635,7 +2631,7 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoMoreAdditionaInfo"
               >
-                <div class="card card-body bubble">Additional Information</div>
+                <div class="card card-body bubble">Here you can say anything else about your requirements. Also you have the opportunity to attach a document (max. 2 pages). You may already have prepared a marrige cv outlining specific requirements.</div>
               </div>
             </div>
           </div>
