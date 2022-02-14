@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid pt-5 font-poppins dashboard">
     <div class="row">
-      <div class="col-md-4 col-12">
+      <div class="col-md-4 col-12 col-padding">
        <div class="team-info-div">
          <div class="user-info-div">
            <div class="flex align-items-center">
@@ -15,13 +15,13 @@
            <div class="status-div mt-3">
              <p class="fs-14 color-primary status">
                Profile Status:
-               <span class="font-weight-bolder">Partially Completed</span>
-               <router-link to="/profile" class="btn px-2 bg-primary ml-3 color-white profile-btn cursor-pointer fs-12 btn-hover btn-border">Update Profile</router-link>
+               <span class="font-weight-bolder">Not Completed</span>
+               <router-link to="/edit_candidate" class="btn px-2 bg-primary ml-3 color-white profile-btn cursor-pointer fs-12 btn-hover btn-border">Update</router-link>
              </p>
              <p class="fs-14 color-primary status">
                Verification Status:
                <span class="font-weight-bolder">{{ getAuthUser && getAuthUser.status == 3 ? 'Verified' : 'Not Verified' }}</span>
-               <button class="btn px-2 bg-primary ml-3 color-white profile-btn cursor-pointer fs-12 btn-hover btn-border">Upload ID Now</button>
+               <router-link to="/settings" class="btn px-2 bg-primary ml-3 color-white profile-btn cursor-pointer fs-12 btn-hover btn-border">Upload ID</router-link>
              </p>
            </div>
          </div>
@@ -59,20 +59,20 @@
                </a-tooltip>
              </div>
            </div>
-           <div class="team-members-div mt-8">
+           <div class="team-members-div mt-8" v-if="activeTeam && activeTeam.team_members && activeTeam.team_members.length > 0">
              <h4 class="fs-18 text-black-50 text-center">Team members</h4>
              <div class="flex justify-content-center align-items-center members">
-               <a-tooltip title="Title will go here" v-for="item in 4" :key="item" class="mr-2">
+               <a-tooltip v-for="(member, index) in activeTeam.team_members.filter(item => item.user_id != getAuthUser.id && item.user)" :key="index" class="mr-2" :title="getMemberName(member.user)">
                  <img src="https://www.w3schools.com/w3images/avatar2.png" alt="member" class="team-member-img" />
                </a-tooltip>
              </div>
-             <div class="btn-div flex justify-content-center mt-5">
-               <v-btn class="profile-btn text-capitalize btn-hover" small>View this team's candidate profile</v-btn>
+             <div class="btn-div flex justify-content-center mt-5" v-if="getCandidate">
+               <v-btn class="profile-btn text-capitalize btn-hover" small :to="{name: 'ProfileView', params: {id: getCandidate}}">View this team's candidate profile</v-btn>
              </div>
            </div>
-           <div class="subscription-div mt-8">
+           <div class="subscription-div mt-8" v-if="activeTeam">
              <h4 class="fs-18 text-black-50 text-center">Subscription info</h4>
-             <h4 class="fs-14 text-black-50 mt-5">Last subscription plan: <span class="text-black font-weight-bolder">1 month plan</span></h4>
+             <h4 class="fs-14 text-black-50 mt-5">Last subscription plan: <span class="text-black font-weight-bolder">{{ activeTeam && activeTeam.last_subscription && activeTeam.last_subscription.plans ? activeTeam.last_subscription.plans.title : 'N/A' }} plan</span></h4>
              <h4 class="fs-14 text-black-50 mt-3">Subscription expire date: <span class="text-black font-weight-bolder">{{ formateDate(activeTeam.subscription_expire_at) }}</span></h4>
              <div class="btn-div flex justify-content-center mt-5">
                <v-btn class="renew-btn text-capitalize" :to="{name: 'SubscriptionTeam', params: {id: activeTeam.team_id}}" small>Renew subscription now</v-btn>
@@ -81,17 +81,17 @@
          </div>
        </div>
       </div>
-      <div class="col-md-8 col-12">
+      <div class="col-md-8 col-12 none-l-padding">
         <div class="chart-div" id="chart">
           <highcharts :options="chartOptions"></highcharts>
         </div>
-        <div class="tips-div mt-5">
+        <div class="tips-div mt-4">
           <carousel
               perPage="1"
               paginationActiveColor="#522e8e"
               paginationColor="#b7b7b7"
           >
-            <slide>
+            <slide v-for="(tip, index) in maTips" :key="index">
               <div class="flex justify-content-between tips-direction">
                 <div class="w-slide-1">
                   <h5 class="text-black-50 font-weight-bold">Matrimony Assist Tips</h5>
@@ -136,6 +136,10 @@ export default {
       avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
       teams: [],
       activeTeam: null,
+      maTips: [
+        { id: 1, title: '', image: '' },
+        { id: 2, title: '', image: '' },
+      ],
       chartOptions: {
         chart: {
           type: 'area'
@@ -146,7 +150,7 @@ export default {
         },
         yAxis: {
           title: {
-            text: 'Views'
+            text: ''
           },
           // labels: {
           //   formatter: function () {
@@ -179,7 +183,7 @@ export default {
         series: [{
           name: 'Profile View',
           data: [
-            6, 11, 32, 45, 57, 66, 13, 3, 70, 21, 30, 45
+            6, 11, 32, 45, 57, 66, 13, 3, 70, 21, 30, 20
           ]
         }],
         rangeSelector:{
@@ -195,6 +199,15 @@ export default {
         return loggedUser;
       }
       return null;
+    },
+    getCandidate() {
+      if(this.activeTeam && this.activeTeam.team_members && this.activeTeam.team_members.length > 0) {
+        let candidate = this.activeTeam.team_members.find(item => item.user_type == 'Candidate');
+        if(candidate) {
+          return candidate.user_id;
+        }
+      }
+      return null;
     }
   },
   methods: {
@@ -203,6 +216,12 @@ export default {
       let {data} = await ApiService.get("v1/team-list").then(res => res.data);
       this.teams = data;
       this.activeTeam = this.teams.find((item) => item.team_id == activeTeamId);
+    },
+    getMemberName(user) {
+      if(user && user.full_name) {
+        return user.full_name;
+      }
+      return 'N/A';
     },
     formateDate(date) {
       if (date == null || date == undefined) {
@@ -230,7 +249,7 @@ export default {
   padding-bottom: 20px;
   .user-info-div {
     background: rgba(97, 89, 167, 0.2);
-    padding: 10px 10px;
+    padding: 5px 5px 5px 10px;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
     .flex {
@@ -294,12 +313,12 @@ export default {
 .chart-div {
   border: 1px solid #c9c9c9;
   border-radius: 12px;
-  padding: 20px;
+  padding: 5px 15px 15px 0;
 }
 .tips-div {
   border: 1px solid #c9c9c9;
   border-radius: 12px;
-  padding: 20px;
+  padding: 5px 15px 15px 15px;
 }
 .w33 {
   width: 33.33%;
@@ -338,5 +357,15 @@ export default {
   @media (min-width: 768px) {
     flex-direction: row;
   }
+}
+.col-padding {
+  padding-top: 5px !important;
+  padding-left: 15px !important;
+  padding-right: 0 !important;
+}
+.none-l-padding {
+  padding-top: 5px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
 }
 </style>
