@@ -28,7 +28,7 @@
          <div class="active-team mt-3 mx-3 flex align-items-center justify-content-center">
            <h4 class="fs-16 text-center pt-1 text-black-50">Active Team: <span class="text-success">{{ activeTeam && activeTeam.name ? activeTeam.name : 'N/A' }}</span></h4>
          </div>
-         <div class="team-short-info">
+         <div class="team-short-info" v-if="activeTeam">
            <div class="profile-overview mt-5">
              <div class="profile-section flex justify-content-between">
                <a-tooltip title="Title will go here" class="w33">
@@ -73,9 +73,9 @@
            <div class="subscription-div mt-8">
              <h4 class="fs-18 text-black-50 text-center">Subscription info</h4>
              <h4 class="fs-14 text-black-50 mt-5">Last subscription plan: <span class="text-black font-weight-bolder">1 month plan</span></h4>
-             <h4 class="fs-14 text-black-50 mt-3">Subscription expire date: <span class="text-black font-weight-bolder">22 March 2022, 14:00</span></h4>
+             <h4 class="fs-14 text-black-50 mt-3">Subscription expire date: <span class="text-black font-weight-bolder">{{ formateDate(activeTeam.subscription_expire_at) }}</span></h4>
              <div class="btn-div flex justify-content-center mt-5">
-               <v-btn class="renew-btn text-capitalize" small>Renew subscription now</v-btn>
+               <v-btn class="renew-btn text-capitalize" :to="{name: 'SubscriptionTeam', params: {id: activeTeam.team_id}}" small>Renew subscription now</v-btn>
              </div>
            </div>
          </div>
@@ -129,7 +129,7 @@ export default {
     Slide,
   },
   created() {
-    // this.loadTeams();
+    this.loadTeams();
   },
   data() {
     return {
@@ -141,25 +141,18 @@ export default {
           type: 'area'
         },
         xAxis: {
-          // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-          // labels: {
-          //   formatter: function () {
-          //     return this.value;
-          //   }
-          // },
-          // accessibility: {
-          //   rangeDescription: 'Range: 1940 to 2017.'
-          // }
+          type: 'month',
+          categories: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
         },
         yAxis: {
           title: {
             text: 'Views'
           },
-          labels: {
-            formatter: function () {
-              return this.value;
-            }
-          }
+          // labels: {
+          //   formatter: function () {
+          //     return this.value;
+          //   }
+          // }
         },
         tooltip: {
           pointFormat: '{point.y} views <b>{point.y:,.0f}</b><br/> in {point.x}'
@@ -169,7 +162,7 @@ export default {
         },
         plotOptions: {
           area: {
-            pointStart: 1940,
+            pointStart: 0,
             color: "#6159A733",
             marker: {
               enabled: false,
@@ -184,15 +177,15 @@ export default {
           }
         },
         series: [{
-          name: 'USA',
+          name: 'Profile View',
           data: [
-            6, 11, 32, 110, 235,
+            6, 11, 32, 45, 57, 66, 13, 3, 70, 21, 30, 45
           ]
         }],
         rangeSelector:{
           enabled: true
         },
-      }
+      },
     }
   },
   computed: {
@@ -210,8 +203,22 @@ export default {
       let {data} = await ApiService.get("v1/team-list").then(res => res.data);
       this.teams = data;
       this.activeTeam = this.teams.find((item) => item.team_id == activeTeamId);
-    }
-  }
+    },
+    formateDate(date) {
+      if (date == null || date == undefined) {
+        return "  Not Exist";
+      }
+      let d = new Date(date),
+          month = "" + (d.getMonth() + 1),
+          day = "" + d.getDate(),
+          year = d.getFullYear();
+
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+
+      return [year, month, day].join("-");
+    },
+  },
 }
 </script>
 
