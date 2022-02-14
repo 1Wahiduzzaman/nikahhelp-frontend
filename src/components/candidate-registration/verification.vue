@@ -104,7 +104,7 @@
                     v-if="verification.ver_country_id"
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
-                  />Document issueing country
+                  />Document issuing country
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
@@ -286,7 +286,7 @@
                   id="Needver_document_type"
                 >
                   <div class="card card-body bubble">
-                    Please provide tooltip texts so we can place it here
+                   Unfortunately, if you do not have one of the required IDs, you will not be able to continue your full registration. You do have the option to skip ID upload now and this can be done later through account settings. Please select cancel to return to the previous section to select skip ID upload.  
                   </div>
                 </div>
               </div>
