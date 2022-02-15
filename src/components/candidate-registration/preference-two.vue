@@ -17,7 +17,7 @@
       </template>
       <a-collapse-panel
         key="1"
-        header="A. Preferences about your prospective companion"
+        header="1.1 Preferences about your prospective companion"
       >
         <a-form-model
           v-if="preferenceData && activeKey == 1"
@@ -79,7 +79,7 @@
                 id="collapseExampleAge"
               >
                 <div class="card card-body bubble">
-                 Please define here the minimum and maximum age range of your prospective companion. 
+                 Please try to be flexible and not too restrictive, e.g. 23 -27, rather than 23-24.  
                 </div>
               </div>
             </div>
@@ -140,7 +140,7 @@
                 id="collapseExample"
               >
                 <div class="card card-body bubble">
-                Please define here the minimum and maximum height range of your prospective companion.
+             Please try not to be too restrictive. Flexibilty will increase your chances of more matches.   
                 </div>
               </div>
             </div>
@@ -157,7 +157,7 @@
                   "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Do you have a preference about where your companion comes
+                />Any preference where your companion comes
                 from?
               </div>
             </div>
@@ -344,8 +344,7 @@
               </p>
               <div data-parent="#accordion" class="collapse" id="countryCity">
                 <div class="card card-body bubble">
-                  Provide your preferred countries and cities. You can choose
-                  upto 3 pairs
+                  You can choose one country(and city too) that your companion comes from. If this choice is available, it will appear first on your search result. 
                 </div>
               </div>
             </div>
@@ -362,7 +361,7 @@
                   "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Is there any country and city that you do not wish to be
+                />Any country & city you do not wish to be
                 contacted from?
               </div>
             </div>
@@ -443,8 +442,7 @@
                 id="forbiddenCountryCity"
               >
                 <div class="card card-body bubble">
-                  Are there countries or cities that you do not wish to be
-                  contacted from?
+                  You can choose one country(and city too) that you do not want your companion to come from. The search result will reflect your choice.  
                 </div>
               </div>
             </div>
@@ -458,7 +456,7 @@
                   v-if="preferenceData.pre_partner_religion_id.length > 0"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What is the preferred religion of your prospective companion?
+                />Preferred religion of your prospective companion?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -513,7 +511,7 @@
                 id="collapseExampleReligion"
               >
                 <div class="card card-body bubble">
-                  Preferred Religions for partner.
+                  MatrimonyAssit is for everyone who believes in marriage as a family and social institution for goodness.
                 </div>
               </div>
             </div>
@@ -527,8 +525,8 @@
                   v-if="preferenceData.pre_ethnicities"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Which ethnic background(s) do you prefer your prospective
-                companion to be from?
+                />Preferred ethnic background(s) of your prospective
+                companion?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -575,13 +573,13 @@
                 id="collapseExampleEthnicity"
               >
                 <div class="card card-body bubble">
-                  Select Partner's Ethnicity
+                  If you select more than one (max. 3), it will increase your chances of more matches. 
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="row pt-3 pb-2 border-bottom">
+          <div class="row pt-3 pb-2 border-bottom"> 
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -592,8 +590,7 @@
                   "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What is the preferred nationality of your prospective
-                companion?
+                />Preferred nationality of your prospective companion?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -648,9 +645,8 @@
                 id="collapseExamplePartnerNationality"
               >
                 <div class="card card-body bubble">
-                  Preferred Partner's Nationality. You can select multiple
-                  values
-                </div>
+               If you select more than one (max. 3), it will increase your chances of more matches. 
+               </div>
               </div>
             </div>
           </div>
@@ -663,8 +659,7 @@
                   v-if="preferenceData.pre_study_level_id"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What is the minimum level you prefer your prospective
-                companion to have?
+                />Minimum expected level of education of your prospective companion?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -716,7 +711,7 @@
                 id="collapseMinimumEducation"
               >
                 <div class="card card-body bubble">
-                  Minimum Education Level of Partner
+                  Make sure there is compatibility in your expectation between what you are offering and looking for.
                 </div>
               </div>
             </div>
@@ -730,8 +725,7 @@
                   v-if="preferenceData.pre_employment_status"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What employment status do you prefer you prospective companion
-                to have?
+                />Preferred employment status of your prospective companion?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -784,7 +778,7 @@
                 id="collapsePartnerEmploymentStatus"
               >
                 <div class="card card-body bubble">
-                  Partner's Employment Status
+                  You may have more than one preferences, please select the most preferred option.
                 </div>
               </div>
             </div>
@@ -801,8 +795,8 @@
                   "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What occupation(s) do you prefer your prospective companion to
-                have?
+                />Preferred occupation(s) of your prospective companion?
+    
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -852,7 +846,7 @@
                 class="collapse"
                 id="partner-occupation"
               >
-                <div class="card card-body bubble">Partner's occupuation</div>
+                <div class="card card-body bubble">You may have more than one preferences, please select the most preferred option.</div>
               </div>
             </div>
           </div>
@@ -925,7 +919,7 @@
                 class="collapse"
                 id="divorceePartnerAcceptance"
               >
-                <div class="card card-body bubble">This field is optional</div>
+                <div class="card card-body bubble">This site has been designed for people who are divorced for a variety of reasons. Sometimes divorce happens due to reasons outside someone's control. </div>
               </div>
             </div>
           </div>
@@ -990,7 +984,7 @@
               >
                 <div class="card card-body bubble">
                   Here you can write other things that are important to you but
-                  could not provide elsewhere above
+                  could not say anywhere above
                 </div>
               </div>
             </div>
@@ -1004,8 +998,7 @@
                   v-if="preferenceData.pre_description"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What are you looking for in your preferred companion? (please
-                need help for guidance)
+                />Here you can describe the type of companion you are looking for? 
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -1068,7 +1061,7 @@
                 id="anyotherRequirementOnPartner"
               >
                 <div class="card card-body bubble">
-                  Any other requirements for companion
+                  You might want to consider getting guidance and advice from those with experience and wisdom on which prospects are likely to be compatible with you given what you have to offer and the kind of person you are, or can become, with the right companion to compliment you. 
                 </div>
               </div>
             </div>
@@ -1089,7 +1082,7 @@
       <!-- Important things for you (Ratings) -->
       <a-collapse-panel
         key="2"
-        header="1.2 Think of the people who know you well. Now, how would they rate the following aspects in their search for a prospective companion for you?"
+        header="1.2 How would someone who knows you very well rate the following aspects on your behalf in searching for a compatibale companion?"
         style="margin-top: 5px"
       >
         <a-form-model

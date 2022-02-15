@@ -338,12 +338,29 @@ export default {
           `/user/profile/${this.connection.candidateInfo.candidate_userid}`
       );
     },
+    prepareNotifyData() {
+      const teamId = JwtService.getTeamIDAppWide();
+      let teamMembers = [...this.connection.from_team_members, ...this.connection.to_team_members];
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      teamMembers = teamMembers.filter(item => item !== loggedUser.id);
+      let my_team = this.connection.from_team_id == teamId ? this.connection.from_team_name : this.connection.to_team_name;
+      let my_team_id = this.connection.from_team_id == teamId ? this.connection.from_team_table_id : this.connection.to_team_table_id;
+      let notifyObj = {
+        receivers: teamMembers,
+        team_id: my_team_id,
+        team_temp_name: my_team
+      };
+      return notifyObj;
+    },
     acceptRequest() {
-      this.$emit("accept-request", this.connection.connection_id);
+      let notifyObject = this.prepareNotifyData();
+      notifyObject.title = `accepted your connection request`;
+      this.$emit("accept-request", this.connection.connection_id, notifyObject);
     },
     disconnectTeam() {
-      console.log(this.connection.connection_id);
-      this.$emit("disconnect-team", this.connection);
+      let notifyObject = this.prepareNotifyData();
+      notifyObject.title = `disconnected team connection`;
+      this.$emit("disconnect-team", this.connection, notifyObject);
     },
     declineRequest() {
       let payload = {
@@ -355,21 +372,30 @@ export default {
         payload.connection_status = '2';
       }
 
-      this.$emit("decline-request", payload);
+      let notifyObject = this.prepareNotifyData();
+      notifyObject.title = `declined your connection request`;
+
+      this.$emit("decline-request", payload, notifyObject);
     },
     connectRequest() {
       let teamId = JwtService.getTeamIDAppWide();
+      let notifyObject = this.prepareNotifyData();
+      notifyObject.title = `sent you a connection request`;
+
       if (this.connection.from_team_id != teamId) {
         this.$emit("connect-request", this.connection.from_team_id);
       } else {
-        this.$emit("connect-request", this.connection.to_team_id);
+        this.$emit("connect-request", this.connection.to_team_id, notifyObject);
       }
     },
     block() {
-      console.log(this.connection)
+      let notifyObject = this.prepareNotifyData();
+      notifyObject.title = `block your connection request`;
+
       this.$emit(
           "block-candidate",
-          this.connection.candidateInfo.candidate_userid
+          this.connection.candidateInfo.candidate_userid,
+          notifyObject
       );
     },
     startConversation() {

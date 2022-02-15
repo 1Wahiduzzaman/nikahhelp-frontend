@@ -734,19 +734,19 @@ export default {
       console.log(data);
       this.teamId = data;
     },
-    acceptRequest(connectionId) {
+    acceptRequest(connectionId, notifyObj) {
       const payload = {
         request_id: connectionId,
         connection_status: "1",
       };
-      console.log(payload);
       //return;
       this.innerLoading = true;
       const response = this.$store.dispatch("respondToRequest", payload);
       response
         .then((data) => {
           this.innerLoading = false;
-          console.log(data);
+          this.socketNotification(notifyObj);
+
           const vm = this;
           this.$success({
             title: "Success",
@@ -768,7 +768,7 @@ export default {
           this.innerLoading = false;
         });
     },
-    disconnectTeam(connection) {
+    disconnectTeam(connection, notifyObj) {
       const payload = {
         connection_id: connection.connection_id,
       };
@@ -781,6 +781,8 @@ export default {
           console.log(data);
           this.innerLoading = false;
           const vm = this;
+
+          vm.socketNotification(notifyObj);
 
           this.$success({
             title: "Success",
@@ -798,13 +800,13 @@ export default {
           this.innerLoading = false;
         });
     },
-    declineRequest(data) {
+    declineRequest(data, notifyObj) {
       this.innerLoading = true;
       const response = this.$store.dispatch("respondToRequest", data);
       response
         .then((data) => {
           this.innerLoading = false;
-          console.log('here', data);
+          this.socketNotification(notifyObj);
           const vm = this;
           this.$success({
             title: "Success",
@@ -831,7 +833,7 @@ export default {
 
         });
     },
-    connectRequest(to_team_id) {
+    connectRequest(to_team_id, notifyObj) {
       let teamId = JwtService.getTeamIDAppWide();
       const payload = {
         to_team_id: to_team_id,
@@ -843,7 +845,7 @@ export default {
       response
         .then((data) => {
           this.innerLoading = false;
-          console.log(data);
+          this.socketNotification(notifyObj);
           const vm = this;
           this.$success({
             title: "Success",
@@ -865,7 +867,7 @@ export default {
           this.innerLoading = false;
         });
     },
-    blockCandidate(candidateId) {
+    blockCandidate(candidateId, notifyObj) {
       const vm = this;
       this.$confirm({
         title: "Are you sure?",
@@ -883,6 +885,9 @@ export default {
           await vm.$store.dispatch("blockCandidate", payload);
           //vm.$message.success("Candidate block listed successfully");
           vm.innerLoading = false;
+
+          vm.socketNotification(notifyObj);
+
           vm.$success({
             title: "Success",
             content: "Candidate block listed successfully",

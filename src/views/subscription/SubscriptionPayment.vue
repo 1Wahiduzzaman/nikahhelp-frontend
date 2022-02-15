@@ -211,6 +211,7 @@ export default {
         this.isLoading = false;
         let subscribedTeam = this.$store.state.team.teamSelected;
         if(subscribedTeam && subscribedTeam.team_members && subscribedTeam.team_members.length > 1) {
+          const self = this;
           let loggedUser = JSON.parse(localStorage.getItem('user'));
           let receivers = subscribedTeam.team_members.filter(item => item.user_id != loggedUser.id).map(opt => opt.user_id);
           let payload = {

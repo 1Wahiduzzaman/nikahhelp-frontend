@@ -164,6 +164,7 @@ export default {
         //   this.isLoading = false;
         //   openModalRoute(this, "manage_team_redirect");
         // }, 2000);
+        this.isLoading = false;
         this.redirection = true;
       } else {
         this.candidateBlock = [];
