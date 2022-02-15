@@ -34,7 +34,10 @@
                     To help us ensure a transparent and trusting experience we
                     request your co-operation and consent in submitting a
                     government approved valid ID for approval by the
-                    MatrimonyAssist Team. We are bound by and respect your
+                    MatrimonyAssist Team. 
+                  </p>
+                   <p class="instruction-title">
+                   We are bound by and respect your
                     privacy as detailed in our terms and conditions.
                   </p>
                   <p class="instruction-title">
@@ -531,7 +534,7 @@
                     :clearable="false"
                     class="style-chooser"
                     id="ver_recommences_occupation"
-                    placeholder="Occupation"
+                    placeholder="please select"
                      @input="onValueChange($event, 'ver_recommences_occupation')"
                     v-model="verification.ver_recommences_occupation"
                     label="name"

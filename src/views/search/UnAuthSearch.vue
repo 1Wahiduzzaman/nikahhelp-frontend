@@ -71,11 +71,11 @@
 					class="search-result"
 					style="margin-bottom: 100px"
 				>
-					<div v-if="updatedResult.length == 0 && !isLoading" class="text-center">
+					<div v-if="updatedResult.length == 0 && !isLoading" class="text-center mt-150"  >
 						<span
 							><a-icon
 								type="warning"
-								:style="{ fontSize: '50px', color: 'red' }"
+								:style="{ fontSize: '50px', color: 'red'}"
 						/></span>
 						<span class="fs-28 px-5"
 							>Sorry! There are no matching candidates matching your search
@@ -426,5 +426,9 @@ export default {
 }
 .advance-btn {
   font-size: 14px;
+}
+
+.mt-150 {
+  margin-top: 150px;
 }
 </style>
