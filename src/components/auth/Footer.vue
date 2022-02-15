@@ -50,7 +50,7 @@
         <li>
           <a href="javascript:void()"
             ><router-link to="/help" class="color-primary">
-              Help
+              Help & Support
             </router-link></a
           >
         </li>

@@ -221,12 +221,135 @@
                 id="collapsePersonalInfoHeight"
               >
                 <div class="card card-body bubble">
-                  Please select a height option that is closest to your actual height measured without shoes on from your feet to the top of your head. 
+                Please select a height option that is closest to your actual height measured without shoes on from your feet to the top of your head. 
                 </div>
               </div>
             </div>
           </div>
-
+ <!-- Religion -->
+          <div class="row mt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                  v-if="personalInformation.essential.per_religion_id"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
+                />What is your religion?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item ref="per_religion_id" prop="per_religion_id">
+                <v-select
+                  :calculate-position="withPopper"
+                  append-to-body
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange($event, 'essential', 'per_religion_id')"
+                  id="per_religion_id"
+                  :reduce="(option) => option.id"
+                  placeholder="please select"
+                  v-model="personalInformation.essential.per_religion_id"
+                  label="name"
+                  :options="candidateDetails.religions"
+                  ><template #open-indicator> <a-icon type="down" /> </template
+                ></v-select>
+              </a-form-model-item>
+            </div>
+            <div class="col-12 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoReligion"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  <span
+                    v-if="arr[21].first"
+                    @click="arr[21].first = !arr[21].first"
+                  >
+                    Need Help?
+                  </span>
+                  <span v-else @click="arr[21].first = !arr[21].first">
+                    Hide Help?
+                  </span>
+                </a>
+              </p>
+              <div
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoReligion"
+              >
+                <div class="card card-body bubble">MatrimonyAssit is for everyone who believes in marriage as a family and social institution for goodness.</div>
+              </div>
+            </div>
+          </div>
+          <!-- TODO - Practicing Religion Missing? -->
+         <!-- Education Level -->
+          <div class="row mt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                  v-if="personalInformation.essential.per_education_level_id"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
+                />What is your highest level of education?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item
+                ref="per_education_level_id"
+                prop="per_education_level_id"
+              >
+                <v-select
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="
+                    onValueChange($event, 'essential', 'per_education_level_id')
+                  "
+                  id="per_education_level_id"
+                  :reduce="(option) => option.id"
+                  placeholder="please select"
+                  v-model="personalInformation.essential.per_education_level_id"
+                  label="name"
+                  :options="candidateDetails.studylevels"
+                  ><template #open-indicator> <a-icon type="down" /> </template
+                ></v-select>
+              </a-form-model-item>
+            </div>
+            <div class="col-12 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoHighestLevelEducation"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  <span
+                    v-if="arr[22].first"
+                    @click="arr[22].first = !arr[22].first"
+                  >
+                    Need Help?
+                  </span>
+                  <span v-else @click="arr[22].first = !arr[22].first">
+                    Hide Help?
+                  </span>
+                </a>
+              </p>
+              <div
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoHighestLevelEducation"
+              >
+                <div class="card card-body bubble">
+                  Your highest level of education is the for which you have a official certificate of achievement. If you can't find your education level listed, please select 'other' and state your education level in the additional information text field. 
+                </div>
+              </div>
+            </div>
+          </div>
           <!-- Employment status -->
           <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
@@ -286,7 +409,7 @@
                 id="collapsePersonalInfoEmploymentSatus"
               >
                 <div class="card card-body bubble">
-                  Your current employment status
+                  If you have more than one employment status, please select the one that takes up most of your time. If you can't find your employment status listed, please select 'other' and state your employment status details in the additional information text field.
                 </div>
               </div>
             </div>
@@ -345,137 +468,14 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoOccupation"
               >
-                <div class="card card-body bubble">Your current profession</div>
+                <div class="card card-body bubble">If you have more than one occupation, please select the one that takes up most of your time. If you can't find your occupation listed, please select 'other' and state your occupation details in the additional information text field.</div>
               </div>
             </div>
           </div>
 
-          <!-- Education Level -->
-          <div class="row mt-3 pb-2 border-bottom">
-            <div class="col-12 col-md-6 none-padding">
-              <div class="mb-2 font-weight-bold">
-                <a-icon
-                  v-if="personalInformation.essential.per_education_level_id"
-                  class="color-success mr-2 fs-18 fw-500"
-                  type="check"
-                />What is your highest level of education?
-              </div>
-            </div>
-            <div class="col-12 col-md-6 mobile-margin">
-              <a-form-model-item
-                ref="per_education_level_id"
-                prop="per_education_level_id"
-              >
-                <v-select
-                  :clearable="false"
-                  class="style-chooser"
-                  @input="
-                    onValueChange($event, 'essential', 'per_education_level_id')
-                  "
-                  id="per_education_level_id"
-                  :reduce="(option) => option.id"
-                  placeholder="please select"
-                  v-model="personalInformation.essential.per_education_level_id"
-                  label="name"
-                  :options="candidateDetails.studylevels"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
-              </a-form-model-item>
-            </div>
-            <div class="col-12 none-padding mobile-margin mobile-help">
-              <p>
-                <a
-                  class="color-blue fw-700 fs-14"
-                  data-toggle="collapse"
-                  href="#collapsePersonalInfoHighestLevelEducation"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
-                >
-                  <span
-                    v-if="arr[22].first"
-                    @click="arr[22].first = !arr[22].first"
-                  >
-                    Need Help?
-                  </span>
-                  <span v-else @click="arr[22].first = !arr[22].first">
-                    Hide Help?
-                  </span>
-                </a>
-              </p>
-              <div
-                class="collapse"
-                data-parent="#personalInfoAccordian"
-                id="collapsePersonalInfoHighestLevelEducation"
-              >
-                <div class="card card-body bubble">
-                  Your highest level of education
-                </div>
-              </div>
-            </div>
-          </div>
+         
 
-          <!-- Religion -->
-          <div class="row mt-3 pb-2 border-bottom">
-            <div class="col-12 col-md-6 none-padding">
-              <div class="mb-2 font-weight-bold">
-                <a-icon
-                  v-if="personalInformation.essential.per_religion_id"
-                  class="color-success mr-2 fs-18 fw-500"
-                  type="check"
-                />What is your religion?
-              </div>
-            </div>
-            <div class="col-12 col-md-6 mobile-margin">
-              <a-form-model-item ref="per_religion_id" prop="per_religion_id">
-                <v-select
-                  :calculate-position="withPopper"
-                  append-to-body
-                  :clearable="false"
-                  class="style-chooser"
-                  @input="onValueChange($event, 'essential', 'per_religion_id')"
-                  id="per_religion_id"
-                  :reduce="(option) => option.id"
-                  placeholder="please select"
-                  v-model="personalInformation.essential.per_religion_id"
-                  label="name"
-                  :options="candidateDetails.religions"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
-              </a-form-model-item>
-            </div>
-            <div class="col-12 none-padding mobile-margin mobile-help">
-              <p>
-                <a
-                  class="color-blue fw-700 fs-14"
-                  data-toggle="collapse"
-                  href="#collapsePersonalInfoReligion"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
-                >
-                  <span
-                    v-if="arr[21].first"
-                    @click="arr[21].first = !arr[21].first"
-                  >
-                    Need Help?
-                  </span>
-                  <span v-else @click="arr[21].first = !arr[21].first">
-                    Hide Help?
-                  </span>
-                </a>
-              </p>
-              <div
-                class="collapse"
-                data-parent="#personalInfoAccordian"
-                id="collapsePersonalInfoReligion"
-              >
-                <div class="card card-body bubble">Your religion</div>
-              </div>
-            </div>
-          </div>
-          <!-- TODO - Practicing Religion Missing? -->
-          <!-- Essential Information End -->
+           <!-- Essential Information End -->
 
           <a-button
             shape="round"
@@ -581,7 +581,7 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoEthnicity"
               >
-                <div class="card card-body bubble">Your Ethnicity</div>
+                <div class="card card-body bubble">If you can't find your ethnicity listed, please select 'other' and state your ethnicity details in the additional information text field.</div>
               </div>
             </div>
           </div>
@@ -664,7 +664,7 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoSpeakingLanguage"
               >
-                <div class="card card-body bubble">Your Mother Language</div>
+                <div class="card card-body bubble">If you can't find your mother tongue listed, please select 'other' and state your mother tongue details in the additional information text field.</div>
               </div>
             </div>
           </div>
@@ -744,7 +744,7 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfonationality"
               >
-                <div class="card card-body bubble">Your Nationality</div>
+                <div class="card card-body bubble">You may have more than one nationality (by birth or acquired), please choose one here and you may provide futher details in the additional information text field.</div>
               </div>
             </div>
           </div>
@@ -825,7 +825,7 @@
                 </a>
               </p>
               <div class="collapse" id="collapsePersonalInfoCountryOfBirth">
-                <div class="card card-body bubble">Your country of birth</div>
+                <div class="card card-body bubble">If you can't find your country listed, please select 'other' and state your country details in the additional information text field.</div>
               </div>
             </div>
           </div>
@@ -1071,7 +1071,7 @@
                 id="collapsePersonalInfoCurrentResidenceCity"
               >
                 <div class="card card-body bubble">
-                  Provide current residence's country and city
+                  Your current place of residence is where you may be staying for work, study or any other purpose. 
                 </div>
               </div>
             </div>
@@ -1138,7 +1138,7 @@
                 id="collapsePersonalInfoPostCode"
               >
                 <div class="card card-body bubble">
-                  Post Code for permanent address
+                  Please provide a valid post code. We ask for this information to verify your ID details. 
                 </div>
               </div>
             </div>
@@ -1283,7 +1283,7 @@
                 id="personalInfoParmanentCountryCity"
               >
                 <div class="card card-body bubble">
-                  Permanent address Country and City
+                Please provide a valid permanent address. This may be the same as your current place of residence you provided earlier. We ask for this information to verify your ID details. 
                 </div>
               </div>
             </div>
@@ -1486,7 +1486,7 @@
                 id="collapsePersonalInfoEmailId"
               >
                 <div class="card card-body bubble">
-                  Your registered email address. Read only field.
+                  Your registered email address. This is what you provided at the time of registration. This is a read only field.
                 </div>
               </div>
             </div>
@@ -1549,9 +1549,11 @@
                   :reduce="(option) => option.value"
                   label="name"
                   :options="[
-                    { name: 'Single', value: 'single' },
+                    { name: 'Single, never married', value: 'single never married' },
                     { name: 'Widow', value: 'widow' },
+                    { name: 'Widow with children', value: 'widow with children' },
                     { name: 'Widower', value: 'widower' },
+                    { name: 'Widower with children', value: 'widower with children' },
                     { name: 'Divorcee', value: 'divorced' },
                     {
                       name: 'Divorcee with children',
@@ -1607,7 +1609,7 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoMaritalStatus"
               >
-                <div class="card card-body bubble">Current Marital Status</div>
+                <div class="card card-body bubble">Please select as appropriate</div>
               </div>
             </div>
           </div>
@@ -1718,8 +1720,7 @@
                 id="collapsePersonalInfoCuurentlyLivingWith"
               >
                 <div class="card card-body bubble">
-                  Current living situation
-                </div>
+                  We ask this question to provide additional information that may help in their decision making. You can expand on your response and future plans in the additional information text field.</div>
               </div>
             </div>
           </div>
@@ -1816,7 +1817,7 @@
                 id="collapsePersonalInfoWillingToRelocate"
               >
                 <div class="card card-body bubble">
-                  Willing To change your location of living
+                 In a fast changing world, people tend to move for work and other reasons. Sometimes relocating is not possible due to rights and responsibilty considerations.
                 </div>
               </div>
             </div>
@@ -1845,15 +1846,11 @@
                   :reduce="(option) => option.value"
                   label="name"
                   :options="[
+                    {
+                      name: 'No', value: 2},
                     { name: 'Yes', value: 1 },
-                    {
-                      name: 'No',
-                      value: 2,
-                    },
-                    {
-                      name: `Former smoker`,
-                      value: 3,
-                    },
+                    
+                    { name: `Former smoker`, value: 3 },
                   ]"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
@@ -1903,7 +1900,7 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoSmokerOrNot"
               >
-                <div class="card card-body bubble">Smoker or not</div>
+                <div class="card card-body bubble">Habits like smoking is not easy to give up. To non-smokers the impact of smoking can be quite adverse.</div>
               </div>
             </div>
           </div>
@@ -1919,7 +1916,7 @@
                   "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What language do you speak?
+                />What language(s) do you speak?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -1940,7 +1937,7 @@
                       'more_about'
                     )
                   "
-                  placeholder="please select"
+                  placeholder="you may select up to three"
                   v-model="personalInformation.more_about.per_language_speak"
                   label="name"
                   :options="[...candidateDetails.languages]"
@@ -2012,7 +2009,7 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoSpeakingLanguages"
               >
-                <div class="card card-body bubble">Language you speak</div>
+                <div class="card card-body bubble">List up to three languages that you have converstional fluency in.</div>
               </div>
             </div>
           </div>
@@ -2085,7 +2082,7 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoHobbies"
               >
-                <div class="card card-body bubble">Your hobbies</div>
+                <div class="card card-body bubble">List up to three hobbies and interests that you engage in regularly (e.g. walking, cycling, gardening, games etc.)</div>
               </div>
             </div>
           </div>
@@ -2150,7 +2147,7 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoEnjoyfullThings"
               >
-                <div class="card card-body bubble">Things you enjoy</div>
+                <div class="card card-body bubble">List up to three things you really enjoy for pleasure (e.g. book reading, charity work, jogging, befriending etc.)</div>
               </div>
             </div>
           </div>
@@ -2259,7 +2256,7 @@
                 id="collapsePersonalInfoFavoriteFood"
               >
                 <div class="card card-body bubble">
-                  Favorite Food and cuisine.
+                  Apart from tasting exquisite food, different cusines allow one to learn and appreciate other people and their cultures. 
                 </div>
               </div>
             </div>
@@ -2375,7 +2372,7 @@
                 id="collapsePersonalInfoThankulFor"
               >
                 <div class="card card-body bubble">
-                  kind of things are you thankful for
+                  What we are thankful for can sometime reveal an interesting aspect of our personality. 
                 </div>
               </div>
             </div>
@@ -2486,7 +2483,7 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoImproveMyself"
               >
-                <div class="card card-body bubble">Improve myself</div>
+                <div class="card card-body bubble">As human being we will always have some shortcomings even after acheving great things. This helps us to recognise our room for improvement and accept evidenced-based feedback. </div>
               </div>
             </div>
           </div>
@@ -2540,7 +2537,7 @@
                 id="collapsePersonalInfoMoreAboutMe"
               >
                 <div class="card card-body bubble">
-                  A little bit about yourself
+               The things  you may wish to consider could include: your outstanding qualities that people often notice, your family background and values, your future aspirations, ambition for growth and self development, and other consideration like flexibilty, grit, empathy and willingness forget and forgive when facing challenging situations together. 
                 </div>
               </div>
             </div>
@@ -2634,7 +2631,7 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoMoreAdditionaInfo"
               >
-                <div class="card card-body bubble">Additional Information</div>
+                <div class="card card-body bubble">Here you can say anything else about your requirements. Also you have the opportunity to attach a document (max. 2 pages). You may already have prepared a marrige cv outlining specific requirements.</div>
               </div>
             </div>
           </div>

@@ -225,7 +225,7 @@
                 <a-icon slot="unCheckedChildren" type="close" />
               </a-switch>
               <span class="ml-3 switch-text">
-                I don't want to share my images with anyone at this moment
+            Share my images with anyone who searches on MatrimonyAssist
               </span>
             </div>
             <div class="d-flex mt-4">
@@ -238,7 +238,7 @@
                 <a-icon slot="unCheckedChildren" type="close" />
               </a-switch>
               <span class="ml-3 switch-text">
-                I would like to share all my images with my team
+                   Share my images with no one at the moment
               </span>
             </div>
             <div class="d-flex mt-4">
@@ -251,9 +251,10 @@
                 <a-icon slot="unCheckedChildren" type="close" />
               </a-switch>
               <span class="ml-3 switch-text">
-                I would like to share all my images with connected team(s)
+                Share my images with the connected teams (only if they accept my connect request)
               </span>
-            </div>
+            </div><br>
+            <p>* please note in all these settings your own team members will be able to see the images that you upload.</p>
           </div>
         </div>
       </a-collapse-panel>

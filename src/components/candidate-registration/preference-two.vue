@@ -646,8 +646,7 @@
               >
                 <div class="card card-body bubble">
                If you select more than one (max. 3), it will increase your chances of more matches. 
-                  values
-                </div>
+               </div>
               </div>
             </div>
           </div>
