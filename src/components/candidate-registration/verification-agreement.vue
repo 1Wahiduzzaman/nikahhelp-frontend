@@ -11,7 +11,9 @@
 
 
   <p class="mt-4">
-        You can upload your ID now or later. If you choose to do this later, you can do it through your personal settings screen. By proceeding you agree to do this in line with your consent and agreement to the MatrimonyAssist terms and conditions.
+        You can upload your ID now or later. </p>
+          <p class="mt-4">
+        If you choose to do this later, you can do it through your personal settings screen. By proceeding you agree to do this in line with your consent and agreement to the MatrimonyAssist terms and conditions.
         </p>
       <p class="mt-5 verify-text fs-20">Do you wish to upload your ID now?</p>
 
