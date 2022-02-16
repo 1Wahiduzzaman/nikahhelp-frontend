@@ -25,7 +25,7 @@
       :show-search="true"
       :size="size"
       dropdownClassName="first_one"
-      :placeholder="placeholder"
+      :placeholder="placeholder[0]"
       :dropdownMatchSelectWidth="false"
       :data-unique="uniqueNames[0]"
     >
@@ -58,7 +58,7 @@
       :show-search="true"
       dropdownClassName="second_one"
       :dropdownMatchSelectWidth="false"
-      :placeholder="placeholder"
+      :placeholder="placeholder[1]"
       :data-unique="uniqueNames[1]"
       :id="uniqueNames[1]"
     >
@@ -87,7 +87,7 @@ export default {
 
   props: {
     placeholder: {
-      type: String,
+      type: Array,
     },
     options: {
       type: Array,

@@ -160,6 +160,7 @@
                         id="ver_city_id"
                         placeholder="please select"
                         @input="onValueChange($event, 'ver_city_id')"
+                        :loading="loading"
                         :reduce="(option) => option.id"
                         v-model="verification.ver_city_id"
                         label="name"
@@ -202,12 +203,12 @@
                     aria-controls="collapseExample"
                   >
                     <span
-                      v-if="arr[0].first"
-                      @click="arr[0].first = !arr[0].first"
+                      v-if="arr[3].first"
+                      @click="toggle(3)"
                     >
                       Need Help?
                     </span>
-                    <span v-else @click="arr[0].first = !arr[0].first">
+                    <span v-else @click="toggle(3)">
                       Hide Help?
                     </span>
                   </a>
@@ -270,12 +271,12 @@
                     aria-controls="collapseExample"
                   >
                     <span
-                      v-if="arr[1].first"
-                      @click="arr[1].first = !arr[1].first"
+                      v-if="arr[2].first"
+                      @click="toggle(2)"
                     >
                       Need Help?
                     </span>
-                    <span v-else @click="arr[1].first = !arr[1].first">
+                    <span v-else @click="toggle(2)">
                       Hide Help?
                     </span>
                   </a>
@@ -286,7 +287,11 @@
                   id="Needver_document_type"
                 >
                   <div class="card card-body bubble">
-                   Unfortunately, if you do not have one of the required IDs, you will not be able to continue your full registration. You do have the option to skip ID upload now and this can be done later through account settings. Please select cancel to return to the previous section to select skip ID upload.  
+                    Unfortunately, if you do not have one of the required IDs,
+                    you will not be able to continue your full registration. You
+                    do have the option to skip ID upload now and this can be
+                    done later through account settings. Please select cancel to
+                    return to the previous section to select skip ID upload.
                   </div>
                 </div>
               </div>
@@ -311,12 +316,12 @@
                   >
 
                   <div class="img-preview mb-2">
-                    <span
+                    <!-- <span
                       @click="clearImg('font')"
                       class="close-icon"
                       v-if="verification.ver_image_front"
                       ><img src="@/assets/icon/close.svg" alt="img"
-                    /></span>
+                    /></span> -->
                     <img
                       v-viewer
                       :src="
@@ -338,8 +343,17 @@
                     type="file"
                     class="input-image"
                     name="avatar"
+                     v-if="!verification.ver_image_front"
                     @change="getFrontPage"
                   />
+                   <a-button
+                    type="primary"
+                    style="width: 185px"
+                   v-if="verification.ver_image_front"
+                    @click="clearImg('font')"
+                  >
+                    Remove
+                  </a-button>
                 </div>
               </div>
               <div
@@ -355,12 +369,12 @@
                     aria-controls="collapseExample"
                   >
                     <span
-                      v-if="arr[2].first"
-                      @click="arr[2].first = !arr[2].first"
+                      v-if="arr[1].first"
+                      @click="toggle(1)"
                     >
                       Need Help?
                     </span>
-                    <span v-else @click="arr[2].first = !arr[2].first">
+                    <span v-else @click="toggle(1)">
                       Hide Help?
                     </span>
                   </a>
@@ -396,12 +410,12 @@
                   >
 
                   <div class="img-preview mb-2">
-                    <span
+                    <!-- <span
                       @click="clearImg('back')"
                       class="close-icon"
                       v-if="verification.ver_image_back"
                       ><img src="@/assets/icon/close.svg" alt="img"
-                    /></span>
+                    /></span> -->
                     <img
                       v-viewer
                       :src="imageBack ? imageBack : verification.ver_image_back"
@@ -421,9 +435,18 @@
                   <input
                     type="file"
                     class="input-image"
+                      v-if="!verification.ver_image_back"
                     name="avatar"
                     @change="getBackPage"
                   />
+                   <a-button
+                    type="primary"
+                    style="width: 185px"
+                   v-if="verification.ver_image_back"
+                    @click="clearImg('back')"
+                  >
+                    Remove
+                  </a-button>
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin mobile-help">
@@ -437,12 +460,12 @@
                     aria-controls="collapseExample"
                   >
                     <span
-                      v-if="arr[3].first"
-                      @click="arr[3].first = !arr[3].first"
+                      v-if="arr[0].first"
+                      @click="toggle(0)"
                     >
                       Need Help?
                     </span>
-                    <span v-else @click="arr[3].first = !arr[3].first">
+                    <span v-else @click="toggle(0)">
                       Hide Help?
                     </span>
                   </a>
@@ -487,7 +510,7 @@
                     v-model="verification.ver_recommences_title"
                     class="w-100"
                     placeholder="Title"
-                     @blur="onValueChange($event, 'ver_recommences_title')"
+                    @blur="onValueChange($event, 'ver_recommences_title')"
                   />
                 </a-form-model-item>
 
@@ -502,7 +525,9 @@
                         v-model="verification.ver_recommences_first_name"
                         class="w-100 rounded-right"
                         placeholder="First Name"
-                         @blur="onValueChange($event, 'ver_recommences_first_name')"
+                        @blur="
+                          onValueChange($event, 'ver_recommences_first_name')
+                        "
                       />
                     </a-form-model-item>
                   </div>
@@ -516,7 +541,9 @@
                         class="w-100 rounded-left"
                         :maxLength="10"
                         placeholder="Last Name"
-                         @blur="onValueChange($event, 'ver_recommences_last_name')"
+                        @blur="
+                          onValueChange($event, 'ver_recommences_last_name')
+                        "
                       />
                     </a-form-model-item>
                   </div>
@@ -532,7 +559,7 @@
                     class="style-chooser"
                     id="ver_recommences_occupation"
                     placeholder="Occupation"
-                     @input="onValueChange($event, 'ver_recommences_occupation')"
+                    @input="onValueChange($event, 'ver_recommences_occupation')"
                     v-model="verification.ver_recommences_occupation"
                     label="name"
                     :reduce="(option) => option.name"
@@ -554,7 +581,7 @@
                     autocapitalize="off"
                     spellcheck="false"
                     id="ver_recommences_address"
-                     @blur="onValueChange($event, 'ver_recommences_address')"
+                    @blur="onValueChange($event, 'ver_recommences_address')"
                     v-model.lazy="verification.ver_recommences_address"
                     placeholder="Address"
                     class="w-full form-right-content"
@@ -570,7 +597,7 @@
                     id="inputNumber"
                     :maxLength="10"
                     placeholder="Mobile number"
-                     @blur="onValueChange($event, 'ver_recommences_mobile_no')"
+                    @blur="onValueChange($event, 'ver_recommences_mobile_no')"
                     v-model="verification.ver_recommences_mobile_no"
                   />
                 </a-form-model-item>
@@ -589,11 +616,11 @@
                   >
                     <span
                       v-if="arr[4].first"
-                      @click="arr[4].first = !arr[4].first"
+                      @click="toggle(27)"
                     >
                       Need Help?
                     </span>
-                    <span v-else @click="arr[4].first = !arr[4].first">
+                    <span v-else @click="toggle(27)">
                       Hide Help?
                     </span>
                   </a>
@@ -725,6 +752,7 @@ export default {
       imageBack: null,
       imageFont: null,
       activeKey: 1,
+      loading: false,
     };
   },
   created() {
@@ -888,11 +916,13 @@ export default {
     },
 
     async onChangeCountry(e, name) {
+      this.loading = true;
       this.checkValidation(name);
       const res = await ApiService.get(`v1/utilities/cities/${e}`);
       if (res.status === 200) {
         this.verification.cities = [];
         this.verification.cities.push(...res.data.data);
+        this.loading = false;
       }
       //this.saveVerificationInfo();
     },

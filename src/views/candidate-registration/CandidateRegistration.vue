@@ -729,12 +729,12 @@ export default {
             ver_document_type,
             ver_image_back,
             ver_image_front,
-            ver_recommences_address,
-            ver_recommences_first_name,
-            ver_recommences_last_name,
-            ver_recommences_mobile_no,
-            ver_recommences_occupation,
-            ver_recommences_title,
+            // ver_recommences_address,
+            // ver_recommences_first_name,
+            // ver_recommences_last_name,
+            // ver_recommences_mobile_no,
+            // ver_recommences_occupation,
+            // ver_recommences_title,
           } = this.candidateDetails.verification;
           isEnabled = this.showAgreement
             ? Object.values({
@@ -742,12 +742,12 @@ export default {
                 ver_document_type,
                 ver_image_back,
                 ver_image_front,
-                ver_recommences_address,
-                ver_recommences_first_name,
-                ver_recommences_last_name,
-                ver_recommences_mobile_no,
-                ver_recommences_occupation,
-                ver_recommences_title,
+                // ver_recommences_address,
+                // ver_recommences_first_name,
+                // ver_recommences_last_name,
+                // ver_recommences_mobile_no,
+                // ver_recommences_occupation,
+                // ver_recommences_title,
               }).every((x) => x !== undefined && x !== null && x !== "")
             : true;
           break;
