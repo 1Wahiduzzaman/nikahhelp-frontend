@@ -40,11 +40,11 @@
 								<span
 									><a-icon
 										type="warning"
-										:style="{ fontSize: '50px', color: 'red' }"
+										:style="{ fontSize: '50px', color: 'red',}"
 								/></span>
 								<span class="fs-28 px-5"
 									>Sorry! There are no matching candidates matching your search
-									criteria.</span
+									criteria. ???</span
 								>
 							</div>
 							<candidate

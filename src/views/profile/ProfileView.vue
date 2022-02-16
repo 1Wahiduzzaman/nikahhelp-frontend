@@ -27,6 +27,8 @@ import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 // import OtherCandidate from "@/components/profile/OppositeTeamCandidateProfile.vue";
 import CandidateProfile from "@/components/profile/OppositeTeamCandidateProfile.vue";
 import RepresentativeProfile from "@/components/profile/OppositeTeamRepresentativeProfile.vue";
+import ApiService from "@/services/api.service";
+import JwtService from "../../services/jwt.service";
 
 export default {
   name: "ProfileView",
@@ -39,6 +41,7 @@ export default {
   },
   data() {
     return {
+      teams: [],
       isLoading: false,
       user: null,
       candidateInfo: {},
@@ -55,6 +58,7 @@ export default {
     this.user = JSON.parse(localStorage.getItem("user"));
   },
   created() {
+    this.loadTeams();
     this.loadUserProfile();
     this.$store.dispatch("getCountries");
     this.$store.dispatch("getStudyLevelOptions");
@@ -62,6 +66,23 @@ export default {
     this.$store.dispatch("getOccupations");
   },
   methods: {
+    async loadTeams() {
+      let {data} = await ApiService.get("v1/team-list").then(res => res.data);
+      this.teams = data;
+
+      let activeTeamId = JwtService.getTeamIDAppWide();
+      let from_team = null;
+      if(activeTeamId) {
+        let activeTeam = this.teams.find((item) => item.team_id == activeTeamId);
+        if(activeTeam) {
+          from_team = activeTeam.id;
+        }
+      }
+      let payload = {
+        from_team_id: from_team
+      };
+      await ApiService.post("v1/site-visit", payload).then(res => res.data);
+    },
     async loadUserProfile() {
       this.isLoading = true;
 
