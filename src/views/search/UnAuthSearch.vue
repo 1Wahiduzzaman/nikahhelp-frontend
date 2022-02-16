@@ -77,10 +77,9 @@
 								type="warning"
 								:style="{ fontSize: '50px', color: 'red'}"
 						/></span>
-						<span class="fs-28 px-5"
-							>Sorry! There are no matching candidates matching your search
-							criteria.</span
-						>
+						<span class="fs-28 px-5" >Sorry! We did not seem to find matches according to your search criteria. </span>
+						<span class="fs-28 px-5" >You may wish to modify your search criteria and try again.</span>
+
 					</div>
 
           <div class="row mt-2" v-else>
