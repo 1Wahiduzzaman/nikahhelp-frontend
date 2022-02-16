@@ -23,7 +23,7 @@
 					<a-col :span="24">
 						<span class="sub-msg"
 							>To activate this team, You have to choose a subscription
-							plan</span
+							plan?</span
 						>
 					</a-col>
 				</a-row>
