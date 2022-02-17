@@ -105,7 +105,7 @@
       <div class="col-md-8 col-12 none-l-padding">
         <div class="chart-div" id="chart">
           <div class="mobile-flex justify-content-between mx-6 pt-3">
-            <h6 class="chart-heading">Total <span class="color-primary">500</span> view(s) in last <span class="color-primary">7</span> days</h6>
+            <h6 class="chart-heading">Total <span class="color-primary">{{ totalCount }}</span> view(s) in last <span class="color-primary">{{ viewType === 0 ? 7 : 1 }}</span> {{ chartRangeText }}</h6>
             <div class="btn-flex">
               <button class="btn btn-chart-type" :class="{'active-btn': viewType === 0}" @click="toggleProfileViewType(0)">Week</button>
               <button class="btn btn-chart-type ml-2" :class="{'active-btn': viewType === 1}" @click="toggleProfileViewType(1)">Month</button>
@@ -167,6 +167,7 @@ export default {
       teams: [],
       activeTeam: null,
       viewType: 1,
+      totalCount: 0,
       maTips: [
         { id: 1, title: '', image: '' },
         { id: 2, title: '', image: '' },
@@ -230,6 +231,15 @@ export default {
     }
   },
   computed: {
+    chartRangeText() {
+      if(this.viewType === 0) {
+        return 'days';
+      } else if(this.viewType === 1) {
+        return 'month';
+      } else {
+        return 'year';
+      }
+    },
     getAuthUser() {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       if (loggedUser) {
@@ -259,6 +269,13 @@ export default {
       if(data) {
         this.chartOptions.xAxis.categories = data.date;
         let views = data.view.map(item => parseInt(item));
+
+        let dataCount = 0;
+        views.forEach(item => {
+          dataCount += item;
+        });
+        this.totalCount = dataCount;
+
         this.chartOptions.series = [
           {
             name: 'Month',
