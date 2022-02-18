@@ -1,5 +1,6 @@
 <template>
 	<div id="wrap-div">
+		<Loader v-if="$store.state.search.isLoading" :isLoading="isLoading" />
 		<v-container fluid>
 			<v-row >
 				<v-col cols="12">
@@ -26,36 +27,36 @@
 							<ButtonComponent
 								iconHeight="14px"
 								:isSmall="true"
-								:title="profile.is_connect ? 'Disconnect' : 'Connect'"
+								:title="candidateData.status.is_connect ? 'Disconnect' : 'Connect'"
 								icon="/assets/icon/connect-s.svg"
-								:customEvent="profile.is_connect ? 'removeConnection' : 'addConnection'"
+								:customEvent="candidateData.status.is_connect ? 'removeConnection' : 'addConnection'"
 								@onClickButton="onClickButton"
 							/>
 							<ButtonComponent
 								iconHeight="14px"
 								:isSmall="true"
-								:title="profile.is_short_listed ? 'Unlist' : 'ShortList'"
+								:title="candidateData.status.is_short_listed ? 'Unlist' : 'ShortList'"
 								icon="/assets/icon/star-fill-secondary.svg"
-								:customEvent="profile.is_short_listed ? 'removeShortList' : 'addShortList'"
+								:customEvent="candidateData.status.is_short_listed ? 'removeShortList' : 'addShortList'"
 								@onClickButton="onClickButton"
 							/>
 							<ButtonComponent
 								iconHeight="14px"
 								:isSmall="true"
-								:title="profile.is_teamListed ? 'Unlist Team' : 'TeamList'"
+								:title="candidateData.status.is_teamListed ? 'Unlist Team' : 'TeamList'"
 								icon="/assets/icon/team.svg"
-								:customEvent="profile.is_teamListed ? 'removeTeam' : 'addTeam'"
+								:customEvent="candidateData.status.is_teamListed ? 'removeTeam' : 'addTeam'"
 								@onClickButton="onClickButton"
 							/>
 							<ButtonComponent
 								iconHeight="14px"
 								:isSmall="true"
 								:responsive="true"
-								:title="profile.is_block_listed ? 'Unblock' : 'Block'"
-								:icon="profile.is_block_listed ? '/assets/icon/block-secondary.svg' : '/assets/icon/block.svg'"
-								:customEvent="profile.is_block_listed ? 'removeBlock' : 'block'"
-								:backgroundColor="profile.is_block_listed ? '' : '#d81b60'"
-								:titleColor="profile.is_block_listed ? '' : 'white'"
+								:title="candidateData.status.is_block_listed ? 'Unblock' : 'Block'"
+								:icon="candidateData.status.is_block_listed ? '/assets/icon/block-secondary.svg' : '/assets/icon/block.svg'"
+								:customEvent="candidateData.status.is_block_listed ? 'removeBlock' : 'block'"
+								:backgroundColor="candidateData.status.is_block_listed ? '' : '#d81b60'"
+								:titleColor="candidateData.status.is_block_listed ? '' : 'white'"
 								@onClickButton="onClickButton"
 							/>
 						</template>
@@ -328,6 +329,7 @@ import CardInfo from '@/components/atom/CardInfo'
 import MoreAbout from '@/components/search/personal-information/MoreAbout.vue'
 import Scroller from  '@/components/atom/Scroller'
 import ButtonComponent from '@/components/atom/ButtonComponent'
+import JwtService from "@/services/jwt.service";
 
 import OutlinedButton from '@/components/atom/OutlinedButton'
 import ComingSoonModal from "@/components/search/ComingSoonModal"
@@ -529,6 +531,7 @@ export default {
 
 		
         onClickButton(eventData) {
+			console.log(eventData)
             if(eventData.event == 'openGallery') this.openGallery();
 
 			let userInfo = JSON.parse(localStorage.getItem("userInfo"))
@@ -549,6 +552,7 @@ export default {
                 this.addShortList();
             }
             if(eventData.event == 'removeShortList') {
+				console.log('......s.....')
                 this.removeFroShortList();
             }
             if(eventData.event == 'addTeam') {
@@ -595,21 +599,26 @@ export default {
 
         async addShortList() {
             let data = {
-            url: `v1/short-listed-candidates/store?shortlisted_by=${JwtService.getUserId()}&user_id=${this.profile.user_id}`,
+            url: `v1/short-listed-candidates/store?shortlisted_by=${JwtService.getUserId()}&user_id=${this.candidateData.user_id}`,
                 value: true,
                 actionType: 'post',
-                user_id: this.profile.user_id,
+                user_id: this.candidateData.user_id,
                 params: {
                     shortlisted_by: JwtService.getUserId(),
-                    user_id: this.profile.user_id
+                    user_id: this.candidateData.user_id
                 },
                 payload: {
                     shortlisted_by: JwtService.getUserId(),
-                    user_id: this.profile.user_id
+                    user_id: this.candidateData.user_id
                 }
             }
             try {
-                await this.shortListCandidate(data)
+                let res = await this.shortListCandidate(data)
+				if(res.status == "SUCCESS") {
+					this.$emit('onFetchUserInfo')
+					// location.reload()
+				}
+				console.log(res, '>>>>>>>>>>>')
             } catch (e) {
                 if(e.response) {
                     this.showError(e.response.data.message)
@@ -629,7 +638,11 @@ export default {
                 }
             }
             try {
-                await this.shortListCandidate(data)
+                let res = await this.shortListCandidate(data)
+				if(res.status == "SUCCESS") {
+					this.$emit('onFetchUserInfo')
+					// location.reload()
+				}
             } catch (e) {
                 if(e.response) {
                     this.showError(e.response.data.message)
@@ -652,6 +665,10 @@ export default {
                 if(res.status_code == 422) {
                     this.showError('Something went wrong!')
                 }
+				if(res.status == "SUCCESS") {
+					this.$emit('onFetchUserInfo')
+					// location.reload()
+				}
             } catch (e) {
                 if(e.response) {
                     this.showError(e.response.data.message)

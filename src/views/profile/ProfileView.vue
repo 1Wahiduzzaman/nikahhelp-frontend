@@ -5,6 +5,7 @@
       <div v-if="user.account_type == 1">
         <!-- Opposite Candidate Profile Component goes here -->
         <candidate-profile
+          @onFetchUserInfo="loadUserProfile"
           :candidateData="candidateProfileInfo"
         ></candidate-profile>
       </div>
