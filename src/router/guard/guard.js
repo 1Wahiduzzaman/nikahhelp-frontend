@@ -23,11 +23,19 @@ export const InitRoute = (to, from, next) => {
     else if (user && user.email !== 'superadmin@gmail.com' && to.name == 'Admin') {
         return next({ name: 'DHome' });
     }
-    else if (user.account_type === 1 && user.data_input_status <= 5) {
+    else if (user.account_type === 1 && user.form_type === 2 && user.data_input_status <= 5) {
+
+        return to.name == 'CandidateShortRegistration' ? next() : next({ name: 'CandidateShortRegistration' });
+    }
+    else if (user.account_type === 1 && user.form_type === 2 && user.data_input_status > 5 && to.name === 'CandidateShortRegistration') {
+
+        return next({ name: 'DHome' });
+    }
+    else if (user.account_type === 1 && user.form_type === 1 && user.data_input_status <= 5) {
 
         return to.name == 'CandidateRegistration' ? next() : next({ name: 'CandidateRegistration' });
     }
-    else if (user.account_type === 1 && user.data_input_status > 5 && to.name === 'CandidateRegistration') {
+    else if (user.account_type === 1 && user.form_type === 1 && user.data_input_status > 5 && to.name === 'CandidateRegistration') {
 
         return next({ name: 'DHome' });
     }

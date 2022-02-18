@@ -1155,7 +1155,7 @@
                 id="collapsePartnerLookApperence"
               >
                 <div class="card card-body bubble">
-                  Provide ratings. This field is required.
+                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
                 </div>
               </div>
             </div>
@@ -1210,7 +1210,7 @@
                 id="collapsePartnerReligiousFaith"
               >
                 <div class="card card-body bubble">
-                  Provide ratings. This field is required.
+                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
                 </div>
               </div>
             </div>
@@ -1266,7 +1266,7 @@
                 id="collapsePartnerMannerSocialSkills"
               >
                 <div class="card card-body bubble">
-                  Provide ratings. This field is required.
+                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
                 </div>
               </div>
             </div>
@@ -1320,7 +1320,7 @@
                 id="collapsePartnerEmotionMaturityRating"
               >
                 <div class="card card-body bubble">
-                  Provide ratings. This field is required.
+                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
                 </div>
               </div>
             </div>
@@ -1374,7 +1374,7 @@
                 id="collapsePartnerGoodlistenerRating"
               >
                 <div class="card card-body bubble">
-                  Provide ratings. This field is required.
+                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
                 </div>
               </div>
             </div>
@@ -1428,7 +1428,7 @@
                 id="collapsePartnerGoodTalkerRating"
               >
                 <div class="card card-body bubble">
-                  Provide ratings. This field is required.
+                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
                 </div>
               </div>
             </div>
@@ -1482,7 +1482,7 @@
                 id="collapsePartnerWillingToLearnRating"
               >
                 <div class="card card-body bubble">
-                  Provide ratings. This field is required.
+                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
                 </div>
               </div>
             </div>
@@ -1536,7 +1536,7 @@
                 id="collapsePartnerFamilySocialStatusRating"
               >
                 <div class="card card-body bubble">
-                  Provide ratings. This field is required.
+                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
                 </div>
               </div>
             </div>
@@ -1590,7 +1590,7 @@
                 id="collapsePartnerEmploymentWealthrating"
               >
                 <div class="card card-body bubble">
-                  Provide ratings. This field is required.
+                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
                 </div>
               </div>
             </div>
@@ -1644,7 +1644,7 @@
                 id="collapsePartnerEducationRating"
               >
                 <div class="card card-body bubble">
-                  Provide ratings. This field is required.
+                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
                 </div>
               </div>
             </div>

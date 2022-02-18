@@ -498,7 +498,7 @@ export default {
       if (!regex.test(value)) {
         callback(
           new Error(
-            "Your password must contain at least 8 characters include at least a symbol, upper and lower case letters and a number"
+            "Your password must contain at least 8 characters including a symbol, upper and lower case letters and a number."
           )
         );
       } else {

@@ -35,7 +35,7 @@
                   class="style-chooser"
                   @input="onValueChange($event, 'per_gender', 'essential')"
                   id="per_gender"
-                  placeholder="Select gender"
+                  placeholder="please select"
                   :reduce="(option) => option.value"
                   v-model="personalInformation.essential.per_gender"
                   label="name"
@@ -74,7 +74,7 @@
                 id="Needper_gender"
               >
                 <div class="card card-body bubble">
-                  Please provide tooltip texts so we can place it here
+                 Please make sure your gender selection is correct. After submitting your profile form for approval, a mistake can only be changed by MatrimonyAssist Admin. This is because a representative can be a candidate also in another team.
                 </div>
               </div>
             </div>
@@ -127,7 +127,7 @@
               </p>
               <div data-parent="#accordion" class="collapse" id="Needdob">
                 <div class="card card-body bubble">
-                  Please provide tooltip texts so we can place it here
+                 Please make sure your DoB is correct. Once your profile is submitted for approval a mistake can only be changed by contacting MatrimonyAssist Admin Team with a valid proof of ID.  This is important because a representative can be a candidate in another team. 
                 </div>
               </div>
             </div>
@@ -150,7 +150,7 @@
                   class="style-chooser"
                   @input="onValueChange($event, 'per_occupation', 'essential')"
                   id="per_occupation"
-                  placeholder="Select Occupation"
+                  placeholder="please select"
                   :reduce="(option) => option.name"
                   v-model="personalInformation.essential.per_occupation"
                   label="name"
@@ -193,7 +193,7 @@
                 id="Needper_occupation"
               >
                 <div class="card card-body bubble">
-                  Please provide tooltip texts so we can place it here
+                We ask this question about your occupation for monitoring purposes to understand the different types of people who are happily giving their time to assist a loved one to find a marriage partner.
                 </div>
               </div>
             </div>
@@ -234,7 +234,7 @@
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />
-                Where is your current place of residance?
+                Where is your current place of residence?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -333,7 +333,7 @@
                 id="Needper_current_residence_country"
               >
                 <div class="card card-body bubble">
-                  Please provide tooltip texts so we can place it here
+             We ask this question as we may need to crosscheck this information with any future ID checks that may be necessary in case there are queries about the authenticity of individual registrations.
                 </div>
               </div>
             </div>

@@ -157,7 +157,7 @@ export default {
 
 	methods: {
 		onClickButton(data) {
-			if(data.event == 'editProfile') this.$router.push('/edit_candidate')
+			if(data.event == 'editProfile') this.$router.push('/edit_representative')
 		},
 		async getCandidateData() {
 			console.log(JSON.parse(localStorage.getItem("user")), '>>>>>>>>>>>>')
