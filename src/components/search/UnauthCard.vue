@@ -54,7 +54,9 @@
           <li class="flex-between-start">
             <span class="flex-30 label-text">Hobby</span>
             <span class="flex-70">:
-                        <span class="ml-1">  </span>
+                        <span class="ml-1"> <a-tooltip :title="candidate.personal ? candidate.personal.per_hobbies_interests : 'N/A'">
+                          <span class="hobby-custom">{{ candidate.personal ? candidate.personal.per_hobbies_interests : "N/A" }}</span>
+                        </a-tooltip> </span>
                     </span>
           </li>
         </template>
@@ -371,5 +373,11 @@ export default {
     color: #FFFFFF;
     background: #3A3092;
   }
+}
+.hobby-custom {
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

@@ -710,7 +710,6 @@ export default {
 		},
 	},
 	mounted() {
-		console.log(this.teamData);
 		this.entityNumberReducer();
 		this.subTextReducer();
 		this.checkTurnedOnSwitch();

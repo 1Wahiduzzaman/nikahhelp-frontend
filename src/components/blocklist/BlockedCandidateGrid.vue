@@ -121,7 +121,8 @@
 
 <script>
 import ApiService from '@/services/api.service';
-import JwtService from "@/services/jwt.service";
+import Notification from "@/common/notification.js";
+// import JwtService from "@/services/jwt.service";
 export default {
   name: "BlockedCandidateGrid",
   props: ['item', 'candidateBlockIds', 'teamBlockedIds'],
@@ -139,6 +140,32 @@ export default {
     }
   },
   methods: {
+    socketNotification(payload) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.sender = loggedUser.id;
+      Notification.storeNotification(payload);
+      payload.created_at = new Date();
+      payload.seen = 0;
+      payload.sender = loggedUser;
+      if(payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map(item => {
+          return item.toString();
+        });
+        this.$socket.emit('notification', payload);
+      }
+    },
+    prepareNotifyData() {
+      // const teamId = JwtService.getTeamIDAppWide();
+      let teamMembers = this.item.team_members_id;
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      teamMembers = teamMembers.filter(item => item !== loggedUser.id);
+      let notifyObj = {
+        receivers: teamMembers,
+        // team_id: my_team_id,
+        // team_temp_name: my_team
+      };
+      return notifyObj;
+    },
     viewProfile() {
       this.$router.push(
           `/user/profile/${this.item.user_id}`

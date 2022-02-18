@@ -68,11 +68,15 @@
 <script>
 import Footer from "@/components/auth/Footer.vue";
 import Spinner from "@/components/ui/Spinner.vue";
+import ApiService from "../../services/api.service";
 export default {
   name: "ResetPassword",
   components: {
     Footer,
     Spinner,
+  },
+  created() {
+    this.checkTokenValidity();
   },
   data() {
     return {
@@ -83,9 +87,14 @@ export default {
       error: null,
       formIsValid: true,
       message: null,
+      tokenValid: false,
     };
   },
   methods: {
+    async checkTokenValidity() {
+      let {data} = await ApiService.get(`/v1/password-reset/${this.$route.params.token}`).then(res => res.data);
+      console.log(data);
+    },
     async handleSubmit() {
       // Todo -- form validation. and success message
       this.formIsValid = true;

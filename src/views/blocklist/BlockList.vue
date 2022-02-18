@@ -5,13 +5,16 @@
       <TeamOffRedirection v-if="redirection" />
       <div class="main-content-wrapper">
         <div class="block-main-content">
-          <div class="row mb-4">
+          <div class="row mb-4" v-if="candidateBlock.length > 0">
             <div class="col-12 col-md-6 col-lg-3 mt-4" v-for="(block, cindex) in candidateBlock" :key="cindex">
               <blocked-candidate-grid :item="block"
                                       :candidateBlockIds="candidateBlockIds"
                                       :teamBlockedIds="teamBlockedIds"
                                       @loadList="loadList" />
             </div>
+          </div>
+          <div v-else class="flex justify-content-center align-items-center mt-10">
+            <h4 class="fs-24">No user in block list</h4>
           </div>
 
 <!--          <v-tabs color="indigo accent-4" class="w-full d-flex justify-content-between support-tab">-->

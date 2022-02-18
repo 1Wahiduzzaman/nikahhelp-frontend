@@ -153,6 +153,8 @@
           Save & Exit
         </a-button>
       </div>
+      <br>
+      <br><br><br><br>
     </div>
     <ReviewAndPublishModal
       @continue="continueToDashboard"

@@ -159,9 +159,18 @@
 <script>
 import ApiService from '@/services/api.service';
 import JwtService from "@/services/jwt.service";
+import Notification from "@/common/notification.js";
 
 export default {
   name: "CandidateGrid",
+  sockets: {
+    connect: function () {
+      console.log('socket connected')
+    },
+    ping: function (data) {
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
   props: ['item', 'shortListedIds', 'teamListedIds'],
   data() {
     return {
@@ -183,6 +192,31 @@ export default {
     }
   },
   methods: {
+    socketNotification(payload) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.sender = loggedUser.id;
+      Notification.storeNotification(payload);
+      payload.created_at = new Date();
+      payload.seen = 0;
+      payload.sender = loggedUser;
+      if(payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map(item => {
+          return item.toString();
+        });
+        this.$socket.emit('notification', payload);
+      }
+    },
+    prepareNotifyData(teamMembers) {
+      const teamId = JwtService.getTeamID();
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      teamMembers = teamMembers.filter(item => item !== loggedUser.id);
+      let notifyObj = {
+        receivers: teamMembers,
+        team_id: teamId,
+        // team_temp_name: my_team
+      };
+      return notifyObj;
+    },
     viewProfile() {
       this.$router.push(
           `/user/profile/${this.item.user_id}`
@@ -231,12 +265,20 @@ export default {
       if(this.teamListedIds.includes(this.item.user_id)) {
         ApiService.delete(`/v1/delete-team-short-listed-by-candidates?user_id=${this.item.user_id}`).then(res => {
           this.$emit("loadList");
+
+          let notifyObject = this.prepareNotifyData(this.item.team_members_id);
+          notifyObject.title = "deleted a candidate from teamlist";
+          this.socketNotification(notifyObject);
         }).catch(e => {
           console.log(e);
         })
       } else {
         ApiService.post(`/v1/team-short-listed-candidates/store`, { user_id: this.item.user_id, team_listed_by: this.loggedUser.id }).then(res => {
           this.$emit("loadList");
+
+          let notifyObject = this.prepareNotifyData(this.item.team_members_id);
+          notifyObject.title = "add a candidate to teamlist";
+          this.socketNotification(notifyObject);
         }).catch(e => {
           console.log(e);
         });
@@ -257,6 +299,10 @@ export default {
       ApiService.post(`/v1/store-block-list`, { user_id: this.item.user_id })
           .then(res => {
             this.$emit("loadList");
+
+            let notifyObject = this.prepareNotifyData(this.item.team_members_id);
+            notifyObject.title = "blocked a candidate";
+            this.socketNotification(notifyObject);
           }).catch(e => {
         console.log(e);
       });
