@@ -337,7 +337,7 @@ import {mapActions} from 'vuex'
 
 export default {
 	name: "CandidateProfile",
-	props: ["candidateData", "userId"],
+	props: ["candidateData", "userId", "role"],
 	components: { 
 		RatingComponent, 
 		// Footer,
@@ -618,7 +618,6 @@ export default {
 					this.$emit('onFetchUserInfo')
 					// location.reload()
 				}
-				console.log(res, '>>>>>>>>>>>')
             } catch (e) {
                 if(e.response) {
                     this.showError(e.response.data.message)
@@ -667,7 +666,6 @@ export default {
                 }
 				if(res.status == "SUCCESS") {
 					this.$emit('onFetchUserInfo')
-					// location.reload()
 				}
             } catch (e) {
                 if(e.response) {
@@ -677,17 +675,24 @@ export default {
             
         },
         async removeFromTeamList() {
+			if(this.role != 'Admin' && this.role != 'Owner & Admin') {
+                this.showError("You don't have permission.")
+                return
+            }
             let data = {
                 url: 'v1/delete-team-short-listed-by-candidates ',
                 value: false,
                 actionType: 'delete',
-                user_id: this.profile.user_id,
+                user_id: this.candidateData.user_id,
                 payload: {
-                    user_id: this.profile.user_id
+                    user_id: this.candidateData.user_id
                 }
             }
             try {
-                await this.teamListCandidate(data)
+                let res = await this.teamListCandidate(data)
+				if(res.status == "SUCCESS") {
+					this.$emit('onFetchUserInfo')
+				}
             } catch (e) {
                 if(e.response) {
                     this.showError(e.response.data.message)
@@ -707,17 +712,24 @@ export default {
             }
         },
         async handleBlockCandidate(actionType, value, url) {
+			 if(this.role != 'Admin' && this.role != 'Owner & Admin') {
+                this.showError("You don't have permission.")
+                return
+            }
             let data = {
                 url: url,
                 actionType: actionType,
                 value: value,
                 payload: {
                     //block_by: JwtService.getUserId(),
-                    user_id: this.profile.user_id
+                    user_id: this.candidateData.user_id
                 }
             }
             try {
-                await this.blockACandidate(data)
+                let res = await this.blockACandidate(data)
+				if(res.status == "SUCCESS") {
+					this.$emit('onFetchUserInfo')
+				}
             } catch (e) {
                 if(e.response) {
                     this.showError(e.response.data.message)

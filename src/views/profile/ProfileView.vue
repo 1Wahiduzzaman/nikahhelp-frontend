@@ -5,6 +5,7 @@
       <div v-if="user.account_type == 1">
         <!-- Opposite Candidate Profile Component goes here -->
         <candidate-profile
+          :role="teamRole"
           @onFetchUserInfo="loadUserProfile"
           :candidateData="candidateProfileInfo"
         ></candidate-profile>
@@ -40,8 +41,34 @@ export default {
     CandidateProfile,
     RepresentativeProfile,
   },
+  computed: {
+    loggedUser() {
+      let loggedUser = JSON.parse(localStorage.getItem("user"));
+      if (loggedUser) {
+        return loggedUser;
+      }
+      return null;
+    },
+    activeTeamInfo() {
+      return this.teams.find((item) => item.team_id == this.activeTeamId);
+    },
+    teamRole() {
+      let team = this.activeTeamInfo;
+      let loggedUser = this.loggedUser;
+      if (team && loggedUser && team.team_members) {
+        let member = team.team_members.find(
+          (item) => item.user_id == loggedUser.id
+        );
+        if (member) {
+          return member.role.replace("+", " & ");
+        }
+      }
+      return "N/A";
+    }
+  },
   data() {
     return {
+      activeTeamId: null,
       teams: [],
       isLoading: false,
       user: null,
@@ -65,8 +92,12 @@ export default {
     this.$store.dispatch("getStudyLevelOptions");
     this.$store.dispatch("getReligionOptions");
     this.$store.dispatch("getOccupations");
+    this.checkTurnedOnSwitch();
   },
   methods: {
+    checkTurnedOnSwitch() {
+      this.activeTeamId = JwtService.getTeamIDAppWide();
+    },
     async loadTeams() {
       let {data} = await ApiService.get("v1/team-list").then(res => res.data);
       this.teams = data;
