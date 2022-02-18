@@ -130,10 +130,19 @@
 <script>
 import {mapMutations, mapActions} from 'vuex'
 import JwtService from "@/services/jwt.service";
+import Notification from "@/common/notification.js";
 import ApiService from '@/services/api.service';
 import ButtonComponent from '@/components/atom/ButtonComponent'
   export default {
     name: 'CandidateListCard',
+    sockets: {
+      connect: function () {
+        //
+      },
+      ping: function (data) {
+        //
+      }
+    },
     props: ["candidate", "role"],
     components: {
       ButtonComponent
@@ -179,6 +188,36 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         teamListCandidate: 'search/teamListCandidate',
 
       }),
+      socketNotification(payload) {
+        let loggedUser = JSON.parse(localStorage.getItem('user'));
+        payload.sender = loggedUser.id;
+        Notification.storeNotification(payload);
+        payload.created_at = new Date();
+        payload.seen = 0;
+        payload.sender = loggedUser;
+        if(payload && payload.receivers.length > 0) {
+          payload.receivers = payload.receivers.map(item => {
+            return item.toString();
+          });
+          this.$socket.emit('notification', payload);
+        }
+      },
+      selfTeamNotifyData() {
+        const teamId = JwtService.getTeamIDAppWide();
+        let activeTeam = this.$store.state.team.team_list.find(team => team.team_id == teamId);
+        if(activeTeam) {
+          let loggedUser = JSON.parse(localStorage.getItem('user'));
+          let teamMembers = activeTeam.team_members.filter(item => item.user_id !== loggedUser.id);
+          let notifyObj = {
+            receivers: teamMembers.map(member => member.user_id),
+            team_id: activeTeam.id,
+            team_temp_name: activeTeam.name
+          };
+
+          return notifyObj;
+        }
+        return {};
+      },
       onClickButton(eventData) {
         if(eventData.event == 'viewProfileDetail') {
           this.ViewProfileDetail()
@@ -228,7 +267,6 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
           this.removeFromTeamList();
         }
       },
-
       shortList() {
         console.log('short list')
       },
@@ -321,6 +359,9 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         }
         try {
           await this.teamListedCandidate(data)
+          let notifyObject = this.selfTeamNotifyData();
+          notifyObject.title = "add a candidate to teamlist";
+          this.socketNotification(notifyObject);
         } catch (e) {
           if(e.response) {
             this.showError(e.response.data.message)
@@ -359,6 +400,9 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         }
         try {
           await this.teamListCandidate(data)
+          let notifyObject = this.selfTeamNotifyData();
+          notifyObject.title = "deleted a candidate from teamlist";
+          this.socketNotification(notifyObject);
         } catch (e) {
           if(e.response) {
             this.showError(e.response.data.message)
