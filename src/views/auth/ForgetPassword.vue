@@ -145,16 +145,16 @@ export default {
               .then((re) => {
                 this.disabled = false;
                 this.message =
-                  "We have sent you a link to reset your password. This link is valid for 24 hours.";
+                  "We have sent you a link to reset your password. This link is valid for 30 minutes.";
               })
               .catch((r) => {
-                this.error = "Invalid email, email is not registerd";
+                this.error = "Invalid email, email is not registered";
               });
           } else {
           }
         });
       } catch (error) {
-        this.error = "Invalid email, email is not registerd";
+        this.error = "Invalid email, email is not registered";
       }
       this.isLoading = false;
     },
