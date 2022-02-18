@@ -20,12 +20,12 @@
           <div class="col-12">
             <div class="instruction">
               <p>
-              You are required to upload at least one avatar and a main
-                image. All together you can upload up to 3 images.
+                You are required to upload at least one avatar and a main image.
+                All together you can upload up to 3 images.
               </p>
               <p>
-                Select images from your devices. Supported file formats are
-                JPG, JPEG, PNG. Maximum file size 2 MB.
+                Select images from your devices. Supported file formats are JPG,
+                JPEG, PNG. Maximum file size 2 MB.
               </p>
             </div>
           </div>
@@ -37,12 +37,12 @@
             <div class="row">
               <div class="col-12 col-md-4">
                 <div class="text-center">
-                  <span
+                  <!-- <span
                     @click="clearImg('avatar')"
                     class="close-icon"
                     v-if="imageModel.avatar_image_url"
                     ><img src="@/assets/icon/close.svg" alt="img"
-                  /></span>
+                  /></span> -->
                   <div class="img-preview mb-2">
                     <img
                       v-viewer
@@ -82,19 +82,28 @@
                   <input
                     type="file"
                     class="input-image"
+                    v-if="!imageModel.avatar_image_url"
                     name="avatar"
                     @change="getAvatar"
                   />
+                  <a-button
+                    type="primary"
+                    style="width: 185px"
+                    v-if="imageModel.avatar_image_url"
+                    @click="clearImg('avatar')"
+                  >
+                    Remove
+                  </a-button>
                 </div>
               </div>
               <div class="col-12 col-md-4 mobile-margin">
                 <div class="text-center">
-                  <span
+                  <!-- <span
                     @click="clearImg('main')"
                     class="close-icon"
                     v-if="imageModel.main_image_url"
                     ><img src="@/assets/icon/close.svg" alt="img"
-                  /></span>
+                  /></span> -->
                   <div class="img-preview mb-2">
                     <img
                       v-viewer
@@ -136,19 +145,28 @@
                   <input
                     type="file"
                     class="input-image"
+                    v-if="!imageModel.main_image_url"
                     name="mainImage"
                     @change="getMainImage"
                   />
+                  <a-button
+                    type="primary"
+                    style="width: 185px"
+                    v-if="imageModel.main_image_url"
+                    @click="clearImg('main')"
+                  >
+                    Remove
+                  </a-button>
                 </div>
               </div>
               <div class="col-12 col-md-4 mobile-margin">
                 <div class="text-center">
-                  <span
+                  <!-- <span
                     @click="clearImg('additional')"
                     class="close-icon"
                     v-if="imageModel.additionalImageSrc"
                     ><img src="@/assets/icon/close.svg" alt="img"
-                  /></span>
+                  /></span> -->
                   <div class="img-preview mb-2">
                     <img
                       v-viewer
@@ -193,8 +211,17 @@
                     type="file"
                     class="input-image"
                     name="image"
+                    v-if="!imageModel.additionalImageSrc"
                     @change="getAdditionalImage"
                   />
+                  <a-button
+                    type="primary"
+                    style="width: 185px"
+                    v-if="imageModel.additionalImageSrc"
+                    @click="clearImg('additional')"
+                  >
+                    Remove
+                  </a-button>
                 </div>
               </div>
             </div>
@@ -225,7 +252,7 @@
                 <a-icon slot="unCheckedChildren" type="close" />
               </a-switch>
               <span class="ml-3 switch-text">
-                I don't want to share my images with anyone at this moment
+                Share my images with anyone who searches on MatrimonyAssist
               </span>
             </div>
             <div class="d-flex mt-4">
@@ -238,7 +265,7 @@
                 <a-icon slot="unCheckedChildren" type="close" />
               </a-switch>
               <span class="ml-3 switch-text">
-                I would like to share all my images with my team
+                Share my images with no one at the moment
               </span>
             </div>
             <div class="d-flex mt-4">
@@ -251,9 +278,15 @@
                 <a-icon slot="unCheckedChildren" type="close" />
               </a-switch>
               <span class="ml-3 switch-text">
-                I would like to share all my images with connected team(s)
+                Share my images with the connected teams (only if they accept my
+                connect request)
               </span>
             </div>
+            <br />
+            <p>
+              * please note in all these settings your own team members will be
+              able to see the images that you upload.
+            </p>
           </div>
         </div>
       </a-collapse-panel>
@@ -452,7 +485,7 @@ export default {
                   ? data.data.data.other_images[0].image_path
                   : this.additionalImageSrc,
             },
-            current: 3,
+            current: 1,
           });
         }
       });
