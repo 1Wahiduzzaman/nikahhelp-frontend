@@ -604,9 +604,9 @@
         style="margin-top: 5px"
       >
         <a-form-model
-          ref="personalInfoFormThree"
+          ref="personalInfoFormTwo"
           v-if="
-            personalInformation && personalInformation.contact && activeKey == 3
+            personalInformation && personalInformation.contact && activeKey == 2
           "
           :model="personalInformation.contact"
           class="form-ma"
@@ -1172,7 +1172,7 @@
             type="primary"
             style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
             class="mt-5"
-            @click="handleSubmitFormThree"
+            @click="handleSubmitFormTwo"
           >
             Save & Continue
           </a-button>
@@ -1386,33 +1386,6 @@ export default {
       this.$refs.personalInfoFormTwo.validate((valid) => {
         if (valid) {
           window.scrollTo(0, 0);
-          this.activeKey = ["3"];
-        } else {
-          setTimeout(() => {
-            const el = document.querySelector(".has-error:first-of-type");
-            el.scrollIntoView();
-          }, 100);
-          return false;
-        }
-      });
-    },
-    handleSubmitFormThree() {
-      this.$refs.personalInfoFormThree.validate((valid) => {
-        if (valid) {
-          window.scrollTo(0, 0);
-          this.activeKey = ["4"];
-        } else {
-          setTimeout(() => {
-            const el = document.querySelector(".has-error:first-of-type");
-            el.scrollIntoView();
-          }, 100);
-          return false;
-        }
-      });
-    },
-    handleSubmitFormFour() {
-      this.$refs.personalInfoFormFour.validate((valid) => {
-        if (valid) {
           this.activeKey = null;
         } else {
           setTimeout(() => {
@@ -1423,6 +1396,8 @@ export default {
         }
       });
     },
+   
+   
     onDayChange(d) {
       this.dateOfbirth.day = d;
       this.onChangeDD();
@@ -1492,7 +1467,7 @@ export default {
         .then((data) => {
           this.$emit("valueChange", {
             value: this.personalInformation,
-            current: 1,
+            current: 0,
           });
         })
         .catch((error) => {});
@@ -1503,7 +1478,7 @@ export default {
         .then((data) => {
           this.$emit("valueChange", {
             value: this.personalInformation,
-            current: 1,
+            current: 0,
           });
         })
         .catch((error) => {});
@@ -1514,7 +1489,7 @@ export default {
         .then((data) => {
           this.$emit("valueChange", {
             value: this.personalInformation,
-            current: 1,
+            current: 0,
           });
         })
         .catch((error) => {});

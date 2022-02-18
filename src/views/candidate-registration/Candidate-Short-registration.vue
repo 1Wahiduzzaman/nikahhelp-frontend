@@ -76,6 +76,8 @@
         <!-- :class="{ disabled: !enabledNextBtn }"
           :disabled="!enabledNextBtn" -->
         <a-button
+          :class="{ disabled: !enabledNextBtn }"
+          :disabled="!enabledNextBtn"
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
@@ -234,7 +236,7 @@ export default {
           };
           break;
       }
-      //this.checkExistData();
+      this.checkExistData();
     },
     getCandidateInitialInfo: async function () {
       this.isLoading = true;
@@ -478,7 +480,7 @@ export default {
         //     ""
         //   );
         // }
-        //this.current = response.data.data.user.data_input_status;
+        this.current = response.data.data.user.data_input_status;
         this.checkExistData();
       } else {
         this.isLoading = false;
@@ -593,7 +595,7 @@ export default {
       this.$router.push("/login");
     },
     doneBtn() {
-      this.saveDataInputStatus(6);
+      this.saveDataInputStatus(3);
     },
     continueToDashboard() {
       this.dialog = false;
