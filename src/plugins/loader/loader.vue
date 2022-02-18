@@ -16,7 +16,7 @@ export default {
 <style lang="scss">
 .overlay-container {
   .v-overlay {
-    z-index: 0 !important;
+    // z-index: 0 !important;
     .v-overlay__scrim {
       background: none !important;
     }
