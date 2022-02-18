@@ -42,7 +42,7 @@
                 <v-select
                   :clearable="false"
                   class="style-chooser"
-                  @input="onValueChange($event,'father_profession')"
+                  @input="onValueChange($event, 'father_profession')"
                   id="father_profession"
                   :reduce="(option) => option.name"
                   placeholder="please select "
@@ -64,12 +64,12 @@
                   aria-controls="collapseExample"
                 >
                   <span
-                    v-if="arr[5].first"
-                    @click="arr[5].first = !arr[5].first"
+                    v-if="arr[0].first"
+                    @click="toggle(0)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[5].first = !arr[5].first">
+                  <span v-else @click="toggle(0)">
                     Hide Help?
                   </span>
                 </a>
@@ -80,7 +80,9 @@
                 id="collapseCandidateFatherProfession"
               >
                 <div class="card card-body bubble">
-                 Some people are interested in knowing parental professions to assess inter-family compatibility. For other people it is not that an important consideration.   
+                  Some people are interested in knowing parental professions to
+                  assess inter-family compatibility. For other people it is not
+                  that an important consideration.
                 </div>
               </div>
             </div>
@@ -105,7 +107,7 @@
                 <v-select
                   :clearable="false"
                   class="style-chooser"
-                  @input="onValueChange($event,'mother_profession')"
+                  @input="onValueChange($event, 'mother_profession')"
                   id="mother_profession"
                   placeholder="please select"
                   v-model="familyInformation.mother_profession"
@@ -127,12 +129,12 @@
                   aria-controls="collapseExample"
                 >
                   <span
-                    v-if="arr[3].first"
-                    @click="arr[3].first = !arr[3].first"
+                    v-if="arr[1].first"
+                    @click="toggle(1)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[3].first = !arr[3].first">
+                  <span v-else @click="toggle(1)">
                     Hide Help?
                   </span>
                 </a>
@@ -143,7 +145,9 @@
                 id="collapseCandidateMotherProfession"
               >
                 <div class="card card-body bubble">
-                 Some people are interested in knowing parental professions to assess inter-family compatibility. For other people it is not that an important consideration. 
+                  Some people are interested in knowing parental professions to
+                  assess inter-family compatibility. For other people it is not
+                  that an important consideration.
                 </div>
               </div>
             </div>
@@ -163,7 +167,7 @@
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="siblings_desc" prop="siblings_desc">
                 <a-textarea
-                  @blur="onValueChange($event,'siblings_desc')"
+                  @blur="onValueChange($event, 'siblings_desc')"
                   id="siblings_desc"
                   placeholder="e.g. 1 sister, married, with 2 children
 2 brothers, unmarried"
@@ -183,15 +187,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[2].first"
-                    @click="arr[2].first = !arr[2].first"
-                  >
+                  <span v-if="arr[2].first" @click="toggle(2)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[2].first = !arr[2].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(2)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -199,7 +198,12 @@
                 data-parent="#familyInfoAccordian"
                 id="collapseSiblingsInfomation"
               >
-                <div class="card card-body bubble">If you do not have any siblings, please enter 'no siblings'. As marriage involves union of two families, it helps people to get an idea of the kind of family they will have relationship with. </div>
+                <div class="card card-body bubble">
+                  If you do not have any siblings, please enter 'no siblings'.
+                  As marriage involves union of two families, it helps people to
+                  get an idea of the kind of family they will have relationship
+                  with.
+                </div>
               </div>
             </div>
           </div>
@@ -219,7 +223,7 @@
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="family_info" prop="family_info">
                 <a-textarea
-                  @blur="onValueChange($event,'family_info')"
+                  @blur="onValueChange($event, 'family_info')"
                   id="family_info"
                   placeholder="e.g. elder brother is a teacher etc. or We are a traditional family. "
                   :rows="3"
@@ -238,15 +242,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[1].first"
-                    @click="arr[1].first = !arr[1].first"
-                  >
+                  <span v-if="arr[3].first" @click="toggle(3)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[1].first = !arr[1].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(3)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -255,7 +254,10 @@
                 id="collapseAnyotherFamilyLike"
               >
                 <div class="card card-body bubble">
-                 As marriage involves union of two families, it helps people to get an idea of the kind of family they will have relationship with. Don't worry, there is no ideal or perfect family in the real world.
+                  As marriage involves union of two families, it helps people to
+                  get an idea of the kind of family they will have relationship
+                  with. Don't worry, there is no ideal or perfect family in the
+                  real world.
                 </div>
               </div>
             </div>
@@ -282,7 +284,7 @@
                   append-to-body
                   :clearable="false"
                   class="style-chooser"
-                  @input="onValueChange($event,'country_of_origin')"
+                  @input="onValueChange($event, 'country_of_origin')"
                   id="country_of_origin"
                   :reduce="(option) => option.name"
                   placeholder="please select "
@@ -306,15 +308,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[0].first"
-                    @click="arr[0].first = !arr[0].first"
-                  >
+                  <span v-if="arr[4].first" @click="toggle(4)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[0].first = !arr[0].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(4)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -323,7 +320,9 @@
                 id="collapseSelectCountryOfBirth"
               >
                 <div class="card card-body bubble">
-                  We ask this question as people are interested in knowing people have originated in terms of roots, migration and heritage. 
+                  We ask this question as people are interested in knowing
+                  people have originated in terms of roots, migration and
+                  heritage.
                 </div>
               </div>
             </div>
@@ -435,12 +434,12 @@ export default {
         .toLowerCase()
         .startsWith(input.toLowerCase());
     },
-    onValueChange(e,name) {
+    onValueChange(e, name) {
       this.$refs.familyInformationForm.fields.forEach((f) => {
-            if (f.prop == name) {
-              f.onFieldBlur();
-            }
-          });
+        if (f.prop == name) {
+          f.onFieldBlur();
+        }
+      });
       this.checkDisabled();
       this.saveFamilyInfo();
     },

@@ -197,36 +197,38 @@ export const VERIFICATION = {
         message: "Select document type",
         trigger: "blur",
     }],
-    ver_recommences_address: [{
-        required: true,
-        message: "Write your address",
-        trigger: "blur",
-    }],
-    ver_recommences_first_name: [{
-        required: true,
-        message: "Write your first name",
-        trigger: "blur",
-    }],
-    ver_recommences_last_name: [{
-        required: true,
-        message: "Write your last name",
-        trigger: "blur",
-    }],
-    ver_recommences_mobile_no: [{
-        required: true,
-        message: "Write your mobile no",
-        trigger: "blur",
-    }],
-    ver_recommences_occupation: [{
-        required: true,
-        message: "Select your occupation",
-        trigger: "blur",
-    }],
-    ver_recommences_title: [{
-        required: true,
-        message: "Write your title",
-        trigger: "blur",
-    }],
+    // ver_recommences_address: [{
+    //     required: true,
+    //     message: "Write your address",
+    //     trigger: "blur",
+    // }],
+    // ver_recommences_first_name: [{
+    //     required: true,
+    //     message: "Write your first name",
+    //     trigger: "blur",
+    // }],
+    // ver_recommences_last_name: [{
+    //     required: true,
+    //     message: "Write your last name",
+    //     trigger: "blur",
+    // }],
+    // ver_recommences_mobile_no: [{
+    //     required: true,
+    //     message: "Write your mobile no",
+    //     trigger: "blur",
+    // }],
+    // ver_recommences_occupation: [{
+    //     required: true,
+    //     message: "Select your occupation",
+    //     trigger: "blur",
+    // }],
+//     ver_recommences_title: [{
+//         required: true,
+//         message: "Write your title",
+//         trigger: "blur",
+//     }
+
+// ],
 }
 export const RULESPERSONALINFO = {
     per_smoker: [{

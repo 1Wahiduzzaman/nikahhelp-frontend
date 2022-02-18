@@ -31,10 +31,13 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
+                  v-if="
+                    preferenceData.pre_partner_age_min > 0 &&
+                    preferenceData.pre_partner_age_max > 0
+                  "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />Preferred age range
-                
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -47,8 +50,7 @@
                 ]"
                 :size="'default'"
                 :options="ageTV"
-                :placeholder="'Age'"
-                            
+                :placeholder="['Min Age', 'Max Age']"
                 class="form-right-content w-full ant-dropdown-half"
               />
             </div>
@@ -62,15 +64,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[23].first"
-                    @click="arr[23].first = !arr[23].first"
-                  >
+                  <span v-if="arr[23].first" @click="toggle(23)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[23].first = !arr[23].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(23)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -79,7 +76,8 @@
                 id="collapseExampleAge"
               >
                 <div class="card card-body bubble">
-                 Please try to be flexible and not too restrictive, e.g. 23 -27, rather than 23-24.  
+                  Please try to be flexible and not too restrictive, e.g. 23
+                  -27, rather than 23-24.
                 </div>
               </div>
             </div>
@@ -108,7 +106,7 @@
                 ]"
                 :uniqueNames="['pre_height_min', 'pre_height_max']"
                 :options="heightTV"
-                :placeholder="'Height'"
+                :placeholder="['Min Height', 'Max Height']"
                 :size="'default'"
                 class="form-right-content w-full height-select"
               />
@@ -123,15 +121,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[22].first"
-                    @click="arr[22].first = !arr[22].first"
-                  >
+                  <span v-if="arr[22].first" @click="toggle(22)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[22].first = !arr[22].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(22)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -140,7 +133,8 @@
                 id="collapseExample"
               >
                 <div class="card card-body bubble">
-             Please try not to be too restrictive. Flexibilty will increase your chances of more matches.   
+                  Please try not to be too restrictive. Flexibilty will increase
+                  your chances of more matches.
                 </div>
               </div>
             </div>
@@ -157,8 +151,7 @@
                   "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Any preference where your companion comes
-                from?
+                />Any preference where your companion comes from?
               </div>
             </div>
             <div class="col-12 col-md-6 non-padding-mobile-margin">
@@ -331,20 +324,17 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[21].first"
-                    @click="arr[21].first = !arr[21].first"
-                  >
+                  <span v-if="arr[21].first" @click="toggle(21)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[21].first = !arr[21].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(21)"> Hide Help? </span>
                 </a>
               </p>
               <div data-parent="#accordion" class="collapse" id="countryCity">
                 <div class="card card-body bubble">
-                  You can choose one country(and city too) that your companion comes from. If this choice is available, it will appear first on your search result. 
+                  You can choose one country(and city too) that your companion
+                  comes from. If this choice is available, it will appear first
+                  on your search result.
                 </div>
               </div>
             </div>
@@ -361,8 +351,7 @@
                   "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Any country & city you do not wish to be
-                contacted from?
+                />Any country & city you do not wish to be contacted from?
               </div>
             </div>
             <div class="col-12 col-md-6 non-padding-mobile-margin">
@@ -425,15 +414,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[20].first"
-                    @click="arr[20].first = !arr[20].first"
-                  >
+                  <span v-if="arr[20].first" @click="toggle(20)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[20].first = !arr[20].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(20)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -442,7 +426,9 @@
                 id="forbiddenCountryCity"
               >
                 <div class="card card-body bubble">
-                  You can choose one country(and city too) that you do not want your companion to come from. The search result will reflect your choice.  
+                  You can choose one country(and city too) that you do not want
+                  your companion to come from. The search result will reflect
+                  your choice.
                 </div>
               </div>
             </div>
@@ -494,15 +480,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[19].first"
-                    @click="arr[19].first = !arr[19].first"
-                  >
+                  <span v-if="arr[19].first" @click="toggle(19)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[19].first = !arr[19].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(19)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -511,7 +492,8 @@
                 id="collapseExampleReligion"
               >
                 <div class="card card-body bubble">
-                  MatrimonyAssit is for everyone who believes in marriage as a family and social institution for goodness.
+                  MatrimonyAssit is for everyone who believes in marriage as a
+                  family and social institution for goodness.
                 </div>
               </div>
             </div>
@@ -525,8 +507,7 @@
                   v-if="preferenceData.pre_ethnicities"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Preferred ethnic background(s) of your prospective
-                companion?
+                />Preferred ethnic background(s) of your prospective companion?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -556,15 +537,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[18].first"
-                    @click="arr[18].first = !arr[18].first"
-                  >
+                  <span v-if="arr[18].first" @click="toggle(18)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[18].first = !arr[18].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(18)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -573,13 +549,14 @@
                 id="collapseExampleEthnicity"
               >
                 <div class="card card-body bubble">
-                  If you select more than one (max. 3), it will increase your chances of more matches. 
+                  If you select more than one (max. 3), it will increase your
+                  chances of more matches.
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="row pt-3 pb-2 border-bottom"> 
+          <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -628,15 +605,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[17].first"
-                    @click="arr[17].first = !arr[17].first"
-                  >
+                  <span v-if="arr[17].first" @click="toggle(17)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[17].first = !arr[17].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(17)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -645,8 +617,9 @@
                 id="collapseExamplePartnerNationality"
               >
                 <div class="card card-body bubble">
-               If you select more than one (max. 3), it will increase your chances of more matches. 
-               </div>
+                  If you select more than one (max. 3), it will increase your
+                  chances of more matches.
+                </div>
               </div>
             </div>
           </div>
@@ -659,7 +632,8 @@
                   v-if="preferenceData.pre_study_level_id"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Minimum expected level of education of your prospective companion?
+                />Minimum expected level of education of your prospective
+                companion?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -675,10 +649,7 @@
                   placeholder="please select"
                   v-model.lazy="preferenceData.pre_study_level_id"
                   label="name"
-                  :options="[
-                    { id: -1, name: `Don't Mind` },
-                    ...candidateDetails.studylevels,
-                  ]"
+                  :options="[...candidateDetails.studylevels]"
                 >
                   <template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
@@ -694,15 +665,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[16].first"
-                    @click="arr[16].first = !arr[16].first"
-                  >
+                  <span v-if="arr[16].first" @click="toggle(16)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[16].first = !arr[16].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(16)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -711,7 +677,8 @@
                 id="collapseMinimumEducation"
               >
                 <div class="card card-body bubble">
-                  Make sure there is compatibility in your expectation between what you are offering and looking for.
+                  Make sure there is compatibility in your expectation between
+                  what you are offering and looking for.
                 </div>
               </div>
             </div>
@@ -761,15 +728,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[15].first"
-                    @click="arr[15].first = !arr[15].first"
-                  >
+                  <span v-if="arr[15].first" @click="toggle(15)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[15].first = !arr[15].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(15)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -778,7 +740,8 @@
                 id="collapsePartnerEmploymentStatus"
               >
                 <div class="card card-body bubble">
-                  You may have more than one preferences, please select the most preferred option.
+                  You may have more than one preferences, please select the most
+                  preferred option.
                 </div>
               </div>
             </div>
@@ -796,7 +759,6 @@
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />Preferred occupation(s) of your prospective companion?
-    
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -830,15 +792,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[14].first"
-                    @click="arr[14].first = !arr[14].first"
-                  >
+                  <span v-if="arr[14].first" @click="toggle(14)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[14].first = !arr[14].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(14)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -846,7 +803,10 @@
                 class="collapse"
                 id="partner-occupation"
               >
-                <div class="card card-body bubble">You may have more than one preferences, please select the most preferred option.</div>
+                <div class="card card-body bubble">
+                  You may have more than one preferences, please select the most
+                  preferred option.
+                </div>
               </div>
             </div>
           </div>
@@ -866,7 +826,7 @@
                 <span class="mr-1">No</span>
                 <a-switch
                   @change="onRateChange($event, 'pre_preferred_divorcee')"
-                  v-model.lazy="preferenceData.pre_preferred_divorcee"
+                  v-model="preferenceData.pre_preferred_divorcee"
                 >
                   <a-icon slot="checkedChildren" type="check" />
                   <a-icon slot="unCheckedChildren" type="close" />
@@ -885,7 +845,7 @@
                   @change="
                     onValueChange($event, 'pre_preferred_divorcee_child')
                   "
-                  v-model.lazy="preferenceData.pre_preferred_divorcee_child"
+                  v-model="preferenceData.pre_preferred_divorcee_child"
                 >
                   <a-icon slot="checkedChildren" type="check" />
                   <a-icon slot="unCheckedChildren" type="close" />
@@ -903,15 +863,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[13].first"
-                    @click="arr[13].first = !arr[13].first"
-                  >
+                  <span v-if="arr[13].first" @click="toggle(13)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[13].first = !arr[13].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(13)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -919,7 +874,11 @@
                 class="collapse"
                 id="divorceePartnerAcceptance"
               >
-                <div class="card card-body bubble">This site has been designed for people who are divorced for a variety of reasons. Sometimes divorce happens due to reasons outside someone's control. </div>
+                <div class="card card-body bubble">
+                  This site has been designed for people who are divorced for a
+                  variety of reasons. Sometimes divorce happens due to reasons
+                  outside someone's control.
+                </div>
               </div>
             </div>
           </div>
@@ -966,15 +925,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[12].first"
-                    @click="arr[12].first = !arr[12].first"
-                  >
+                  <span v-if="arr[12].first" @click="toggle(12)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[12].first = !arr[12].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(12)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -998,7 +952,8 @@
                   v-if="preferenceData.pre_description"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Here you can describe the type of companion you are looking for? 
+                />Here you can describe the type of companion you are looking
+                for?
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -1044,15 +999,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[11].first"
-                    @click="arr[11].first = !arr[11].first"
-                  >
+                  <span v-if="arr[11].first" @click="toggle(11)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[11].first = !arr[11].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(11)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1061,7 +1011,11 @@
                 id="anyotherRequirementOnPartner"
               >
                 <div class="card card-body bubble">
-                  You might want to consider getting guidance and advice from those with experience and wisdom on which prospects are likely to be compatible with you given what you have to offer and the kind of person you are, or can become, with the right companion to compliment you. 
+                  You might want to consider getting guidance and advice from
+                  those with experience and wisdom on which prospects are likely
+                  to be compatible with you given what you have to offer and the
+                  kind of person you are, or can become, with the right
+                  companion to compliment you.
                 </div>
               </div>
             </div>
@@ -1189,15 +1143,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[9].first"
-                    @click="arr[9].first = !arr[9].first"
-                  >
+                  <span v-if="arr[10].first" @click="toggle(10)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[9].first = !arr[9].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(10)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1249,15 +1198,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[8].first"
-                    @click="arr[8].first = !arr[8].first"
-                  >
+                  <span v-if="arr[9].first" @click="toggle(9)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[8].first = !arr[8].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(9)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1310,15 +1254,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[7].first"
-                    @click="arr[7].first = !arr[7].first"
-                  >
+                  <span v-if="arr[8].first" @click="toggle(8)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[7].first = !arr[7].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(8)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1369,15 +1308,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[6].first"
-                    @click="arr[6].first = !arr[6].first"
-                  >
+                  <span v-if="arr[7].first" @click="toggle(7)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[6].first = !arr[6].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(7)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1428,15 +1362,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[5].first"
-                    @click="arr[5].first = !arr[5].first"
-                  >
+                  <span v-if="arr[6].first" @click="toggle(6)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[5].first = !arr[5].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(6)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1487,15 +1416,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[4].first"
-                    @click="arr[4].first = !arr[4].first"
-                  >
+                  <span v-if="arr[5].first" @click="toggle(5)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[4].first = !arr[4].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(5)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1546,15 +1470,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[3].first"
-                    @click="arr[3].first = !arr[3].first"
-                  >
+                  <span v-if="arr[4].first" @click="toggle(4)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[3].first = !arr[3].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(4)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1605,15 +1524,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[2].first"
-                    @click="arr[2].first = !arr[2].first"
-                  >
+                  <span v-if="arr[3].first" @click="toggle(3)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[2].first = !arr[2].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(3)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1664,15 +1578,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[1].first"
-                    @click="arr[1].first = !arr[1].first"
-                  >
+                  <span v-if="arr[2].first" @click="toggle(2)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[1].first = !arr[1].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(2)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1723,15 +1632,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[0].first"
-                    @click="arr[0].first = !arr[0].first"
-                  >
+                  <span v-if="arr[1].first" @click="toggle(1)">
                     Need Help?
                   </span>
-                  <span v-else @click="arr[0].first = !arr[0].first">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(1)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1817,7 +1721,16 @@ export default {
     changeActivekey(key) {
       this.activeKey = key;
     },
-
+    toggle(index) {
+      this.arr = this.arr.map((a, ind) => {
+        if (ind === index) {
+          a.first = !a.first;
+        } else {
+          a.first = true;
+        }
+        return a;
+      });
+    },
     onDropdownChange({ name, value }) {
       this.preferenceData[name] = typeof value == "string" ? 0 : value;
       this.savePreference();
