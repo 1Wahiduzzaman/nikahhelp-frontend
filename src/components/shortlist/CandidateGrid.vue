@@ -206,16 +206,29 @@ export default {
         this.$socket.emit('notification', payload);
       }
     },
-    prepareNotifyData(teamMembers) {
-      const teamId = JwtService.getTeamID();
-      let loggedUser = JSON.parse(localStorage.getItem('user'));
-      teamMembers = teamMembers.filter(item => item !== loggedUser.id);
+    otherTeamNotifyData() {
       let notifyObj = {
-        receivers: teamMembers,
-        team_id: teamId,
+        receivers: this.item.team.members_id,
+        team_id: this.item.team.team_id,
         // team_temp_name: my_team
       };
       return notifyObj;
+    },
+    selfTeamNotifyData() {
+      const teamId = JwtService.getTeamIDAppWide();
+      let activeTeam = this.$store.state.team.team_list.find(team => team.team_id == teamId);
+      if(activeTeam) {
+        let loggedUser = JSON.parse(localStorage.getItem('user'));
+        let teamMembers = activeTeam.team_members.filter(item => item.user_id !== loggedUser.id);
+        let notifyObj = {
+          receivers: teamMembers.map(member => member.user_id),
+          team_id: activeTeam.id,
+          team_temp_name: activeTeam.name
+        };
+
+        return notifyObj;
+      }
+      return {};
     },
     viewProfile() {
       this.$router.push(
@@ -223,7 +236,7 @@ export default {
       );
     },
     actionShortlist() {
-      let loggedUser = JSON.parse(localStorage.getItem("user"));
+      // let loggedUser = JSON.parse(localStorage.getItem("user"));
       if(parseInt(loggedUser.status) !== 3) {
         this.showError("Your account is not verified");
         return;
@@ -266,7 +279,7 @@ export default {
         ApiService.delete(`/v1/delete-team-short-listed-by-candidates?user_id=${this.item.user_id}`).then(res => {
           this.$emit("loadList");
 
-          let notifyObject = this.prepareNotifyData(this.item.team_members_id);
+          let notifyObject = this.selfTeamNotifyData();
           notifyObject.title = "deleted a candidate from teamlist";
           this.socketNotification(notifyObject);
         }).catch(e => {
@@ -276,7 +289,7 @@ export default {
         ApiService.post(`/v1/team-short-listed-candidates/store`, { user_id: this.item.user_id, team_listed_by: this.loggedUser.id }).then(res => {
           this.$emit("loadList");
 
-          let notifyObject = this.prepareNotifyData(this.item.team_members_id);
+          let notifyObject = this.selfTeamNotifyData();
           notifyObject.title = "add a candidate to teamlist";
           this.socketNotification(notifyObject);
         }).catch(e => {
@@ -300,7 +313,7 @@ export default {
           .then(res => {
             this.$emit("loadList");
 
-            let notifyObject = this.prepareNotifyData(this.item.team_members_id);
+            let notifyObject = this.selfTeamNotifyData();
             notifyObject.title = "blocked a candidate";
             this.socketNotification(notifyObject);
           }).catch(e => {
@@ -332,7 +345,7 @@ export default {
 
         let payload = {
           from_team_id: myTeamId,
-          to_team_id: this.item.team_id
+          to_team_id: this.item.team.team_id
         }
         ApiService.post(`/v1/send-connection-request`, payload)
             .then(res => {
@@ -343,8 +356,8 @@ export default {
               let payload = {
                 receivers: [this.item.user_id],
                 title: `sent you a new team connection request`,
-                team_temp_name: null,
-                team_id: this.item.team_id
+                team_temp_name: this.item.team.name,
+                team_id: this.item.team.team_id
               };
               this.$emit("socketNotification", payload);
             }).catch(e => {

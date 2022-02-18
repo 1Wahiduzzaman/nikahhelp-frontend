@@ -65,7 +65,7 @@
         </div>
 
         <h3 class="welcome-back-tag text-center text-black-50" v-else>
-          <b>Link is not valid. Please try again</b>
+          <b>Link is not valid. Redirecting to login page</b>
         </h3>
       </div>
     </div>
@@ -105,6 +105,12 @@ export default {
       let {data} = await ApiService.get(`/v1/password-reset/${this.$route.params.token}`).then(res => res.data);
       this.pageLoading = false;
       this.tokenValid = !!(data && data.accepted);
+      if(!this.tokenValid) {
+        const self = this;
+        setTimeout(() => {
+          self.$router.push({ name: 'Login' });
+        }, 2000);
+      }
     },
     async handleSubmit() {
       if(this.tokenValid) {
