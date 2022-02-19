@@ -661,6 +661,7 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+
 .candidate-registration {
   display: flex;
   flex-direction: column;

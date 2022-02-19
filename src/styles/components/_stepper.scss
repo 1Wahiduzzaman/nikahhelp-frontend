@@ -1,12 +1,24 @@
+.ant-steps-item-icon { 
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  line-height: 27px;
+  font-weight: 600;
+}
 .ant-steps-item-process {
   .ant-steps-item-icon {
-    background: $bg-primary;
+    background: #fff;
+    border-color: #522e8e;
   }
 }
 
-.ant-steps-item-process {
+.ant-steps-item-process .ant-steps-item-icon > .ant-steps-icon {
+  // color: #fff;
+  color: #522e8e;
+}
+
+// have to find the source
+.ant-steps-item-finish {
   .ant-steps-item-icon {
-    border-color: $border-primary;
+    background-color: #522e8e;
   }
 }
 
@@ -38,11 +50,13 @@
     border-color: $border-primary;
   }
   .ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon {
-    color: $color-primary;
+    color:#fff;
+    // color: $color-primary;
   }
   .ant-steps-item-finish
     > .ant-steps-item-container
     > .ant-steps-item-tail::after {
+    // background-color: $bg-primary;
     background-color: $bg-primary;
    
   }
