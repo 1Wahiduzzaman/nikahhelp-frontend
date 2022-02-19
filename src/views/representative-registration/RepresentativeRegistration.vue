@@ -38,10 +38,6 @@
                 class="mobile-step"
                 :class="{ 'bg-primary': current >= 0 }"
               ></div>
-              <!-- <div
-                class="mobile-step ml-2"
-                :class="{ 'bg-primary': current >= 1 }"
-              ></div> -->
               <div
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 1 }"
@@ -49,6 +45,10 @@
               <div
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 2 }"
+              ></div>
+              <div
+                class="mobile-step ml-2"
+                :class="{ 'bg-primary': current >= 3 }"
               ></div>
             </div>
           </div>
@@ -60,17 +60,15 @@
         <p class="color-brand fs-18">Details about you</p>
       </div>
 
-      <!-- <div class="text-center mt-5" v-if="current == 1">
-        <h5 class="color-brand fs-20">Verification Information</h5>
-        <p class="color-brand fs-18">Details about you</p>
-      </div> -->
-
       <div class="text-center mt-5" v-if="current == 1">
         <h5 class="color-brand fs-20">Image Upload</h5>
         <p class="color-brand fs-18">Details about you</p>
       </div>
-
       <div class="text-center mt-5" v-if="current == 2">
+        <h5 class="color-brand fs-20">Verification Information</h5>
+        <p class="color-brand fs-18">Details about you</p>
+      </div>
+      <div class="text-center mt-5" v-if="current == 3">
         <h5 class="color-brand fs-20">Agree & Submit</h5>
         <p class="color-brand fs-18">Details about you</p>
       </div>
@@ -83,14 +81,7 @@
           ref="personInfoRefTwo"
         />
       </div>
-      <!-- <div class="steps-content px-2" v-if="current == 1">
-        <Verification
-          :representativeDetails="representativeDetails"
-          @valueChange="onDataChange($event)"
-          :verification="representativeDetails.verification"
-          ref="VerificationRef"
-        />
-      </div> -->
+
       <div class="steps-content px-2" v-if="current == 1">
         <ImageUpload
           @valueChange="onDataChange($event)"
@@ -98,13 +89,32 @@
           ref="imageUploadRef"
         />
       </div>
-      <div class="steps-content" v-if="current == 2">
+      <div class="steps-content px-2" v-if="current == 2">
+        <Verification
+         v-if="showAgreement"
+           @cancel="cancelVerification"
+          :representativeDetails="representativeDetails"
+          @valueChange="onDataChange($event)"
+          :verification="representativeDetails.verification"
+          ref="VerificationRef"
+        />
+        <VerificationAgreement
+          @agree="onAgree($event)"
+          v-if="!showAgreement"
+          ref="VerificationAgreement"
+        />
+      </div>
+      <div class="steps-content" v-if="current == 3">
         <AgreementSubmit />
       </div>
       <div class="steps-action text-right pb-5 clearfix bottom-padding">
         <a-button
           :disabled="!enabledNextBtn"
-          :class="{'disabled': !enabledNextBtn, 'next-btn-pos': current !== 0, 'first-next-btn-pos':  current === 0 }"
+          :class="{
+            disabled: !enabledNextBtn,
+            'next-btn-pos': current !== 0,
+            'first-next-btn-pos': current === 0,
+          }"
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
@@ -137,16 +147,19 @@
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
-          style="float: left;"
-          :class="{'first-save-btn': current === 0, 'save-btn': current !== 0}"
+          style="float: left"
+          :class="{
+            'first-save-btn': current === 0,
+            'save-btn': current !== 0,
+          }"
           class="mt-3"
           @click="saveExit"
         >
           Save & Exit
         </a-button>
       </div>
-      </div>
-      <br><br><br><br><br>
+    </div>
+    <br /><br /><br /><br /><br />
   </div>
 </template>
 <script>
@@ -156,8 +169,8 @@ const createData = () => ({
   fixedClass: "vue-fixed-header--isFixed",
   hideScrollUp: false,
 });
+import VerificationAgreement from "@/components/representative-registration/verification-agreement.vue";
 import PersonalInfoTwo from "@/components/representative-registration/personal-info-two.vue";
-import VerificationInfo from "@/components/representative-registration/VerificationInfo.vue";
 import Verification from "@/components/representative-registration/verification.vue";
 import ImageUpload from "@/components/representative-registration/ImageUpload.vue";
 import AgreementSubmit from "@/components/representative-registration/AgreementSubmit.vue";
@@ -172,10 +185,10 @@ export default {
 
   components: {
     PersonalInfoTwo,
-    VerificationInfo,
     Verification,
     ImageUpload,
     AgreementSubmit,
+    VerificationAgreement,
     Header,
     VueFixedHeader,
   },
@@ -183,6 +196,7 @@ export default {
   data() {
     return {
       isLoading: false,
+       showAgreement: false,
       fixedStatus: {
         headerIsFixed: false,
       },
@@ -196,11 +210,12 @@ export default {
         {
           title: "Personal Info",
         },
-        // {
-        //   title: "Verification",
-        // },
+
         {
           title: "Image Upload",
+        },
+        {
+          title: "Verification",
         },
         {
           title: "Agree & Submit",
@@ -208,8 +223,8 @@ export default {
       ],
       mobileSteps: [
         "Personal Info",
-        // "Verification",
         "Image Upload",
+        "Verification",
         "Agree & Submit",
       ],
 
@@ -223,6 +238,17 @@ export default {
     this.getRepresentativeInitialInfo();
   },
   methods: {
+        cancelVerification(e) {
+      this.showAgreement = false;
+    },
+    onAgree(value) {
+      this.showAgreement = value;
+      if (!this.showAgreement) {
+        this.current++;
+      } else {
+        this.checkExistData();
+      }
+    },
     onDataChange(e) {
       switch (e.current) {
         case 0:
@@ -230,16 +256,17 @@ export default {
             ...e.value,
           };
           break;
-          // case 1:
-          //   this.representativeDetails.verification = {
-          //     ...e.value,
-          //   };
+          
           break;
 
         case 1:
           this.representativeDetails.imageModel = {
             ...e.value,
           };
+          case 2:
+            this.representativeDetails.verification = {
+              ...e.value,
+            };
           break;
       }
       this.checkExistData();
@@ -378,7 +405,7 @@ export default {
       this.$router.push("/login");
     },
     doneBtn() {
-      this.saveDataInputStatus(3);
+      this.saveDataInputStatus(4);
     },
     async next() {
       switch (this.current) {
@@ -422,7 +449,7 @@ export default {
       user.data_input_status = satge;
       localStorage.removeItem("user");
       localStorage.setItem("user", JSON.stringify(user));
-      if (satge === 3) {
+      if (satge === 4) {
         this.$router.push("/dashboard");
       }
     },
@@ -454,31 +481,7 @@ export default {
           });
           break;
 
-        // case 1:
-        //   const {
-        //     ver_city,
-        //     ver_country,
-        //     ver_document_type,
-        //     ver_recommender_address,
-        //     ver_recommender_first_name,
-        //     ver_recommender_last_name,
-        //     ver_recommender_occupation,
-        //     ver_recommender_title,
-        //     ver_recommender_mobile_no,
-        //   } = this.representativeDetails.verification;
-        //   isEnabled = Object.values({
-        //     ver_city,
-        //     ver_country,
-        //     ver_document_type,
-        //     ver_recommender_address,
-        //     ver_recommender_first_name,
-        //     ver_recommender_last_name,
-        //     ver_recommender_occupation,
-        //     ver_recommender_title,
-        //     ver_recommender_mobile_no,
-        //   }).every((x) => x !== undefined && x !== null && x !== "");
-        //   break;
-
+        
         case 1:
           const { per_avatar_url, per_main_image_url } =
             this.representativeDetails.imageModel;
@@ -487,6 +490,35 @@ export default {
             per_main_image_url,
           }).every((x) => x !== undefined && x !== null && x !== "");
           break;
+          case 2:
+          const {
+            ver_city,
+            ver_country,
+            ver_document_type,
+            ver_document_frontside,
+            ver_document_backside
+            // ver_recommender_address,
+            // ver_recommender_first_name,
+            // ver_recommender_last_name,
+            // ver_recommender_occupation,
+            // ver_recommender_title,
+            // ver_recommender_mobile_no,
+          } = this.representativeDetails.verification;
+          isEnabled = Object.values({
+            ver_city,
+            ver_country,
+            ver_document_type,
+            ver_document_frontside,
+            ver_document_backside
+            // ver_recommender_address,
+            // ver_recommender_first_name,
+            // ver_recommender_last_name,
+            // ver_recommender_occupation,
+            // ver_recommender_title,
+            // ver_recommender_mobile_no,
+          }).every((x) => x !== undefined && x !== null && x !== "");
+          break;
+
       }
 
       this.enabledNextBtn = isEnabled;

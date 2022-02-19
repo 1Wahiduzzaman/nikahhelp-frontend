@@ -29,7 +29,8 @@
                     <div class="col-md-4 text-center">
                       <div>
                         <div class="img-preview mb-2">
-                          <img    v-viewer
+                          <img
+                            v-viewer
                             :src="avatarSrc"
                             width="180"
                             height="200"
@@ -44,11 +45,20 @@
                           </div>
                         </div>
                         <input
+                          v-if="!avatarSrc"
                           type="file"
                           class="input-image"
                           name="avatar"
                           @change="getAvatar"
                         />
+                        <a-button
+                          type="primary"
+                          style="width: 185px"
+                          v-if="avatarSrc"
+                          @click="clearImg('avatar')"
+                        >
+                          Remove
+                        </a-button>
                       </div>
                     </div>
                   </a-col>
@@ -57,7 +67,8 @@
                     <div class="col-md-4 text-center">
                       <div>
                         <div class="img-preview mb-2">
-                          <img    v-viewer
+                          <img
+                            v-viewer
                             :src="mainImageSrc"
                             width="180"
                             height="200"
@@ -72,11 +83,20 @@
                           </div>
                         </div>
                         <input
+                          v-if="!mainImageSrc"
                           type="file"
                           class="input-image"
                           name="mainImage"
                           @change="getMainImage"
                         />
+                        <a-button
+                          type="primary"
+                          style="width: 185px"
+                          v-if="mainImageSrc"
+                          @click="clearImg('main')"
+                        >
+                          Remove
+                        </a-button>
                       </div>
                     </div>
                   </a-col>
@@ -181,6 +201,23 @@ export default {
     this.mainImageSrc = this.imageModel.per_main_image_url;
   },
   methods: {
+        clearImg(action) {
+      let formData = new FormData();
+      switch (action) {
+        case "main":
+          this.mainImageSrc = "";
+          this.imageModel.main_image_url = "";
+          formData.append("per_avatar_url", "");
+          break;
+        case "avatar":
+          this.avatarSrc = "";
+          this.imageModel.per_avatar_url = "";
+          formData.append("per_main_image_url", "");
+          break;
+       
+      }
+      this.saveImage(formData);
+    },
     imageSizeCheck(file) {
       if (file["size"] > 2111775) {
         this.$error({
