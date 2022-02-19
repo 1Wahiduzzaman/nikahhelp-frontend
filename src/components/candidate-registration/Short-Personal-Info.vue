@@ -72,12 +72,12 @@
                   aria-controls="collapseExample"
                 >
                   <span
-                    v-if="arr[27].first"
-                    @click="arr[27].first = !arr[27].first"
+                    v-if="arr[0].first"
+                    @click="toggle(0)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[27].first = !arr[27].first">
+                  <span v-else @click="toggle(0)">
                     Hide Help?
                   </span>
                 </a>
@@ -131,12 +131,12 @@
                   aria-controls="collapseExample"
                 >
                   <span
-                    v-if="arr[26].first"
-                    @click="arr[26].first = !arr[26].first"
+                    v-if="arr[1].first"
+                    @click="toggle(1)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[26].first = !arr[26].first">
+                  <span v-else @click="toggle(1)">
                     Hide Help?
                   </span>
                 </a>
@@ -215,12 +215,12 @@
                   aria-controls="collapseExample"
                 >
                   <span
-                    v-if="arr[25].first"
-                    @click="arr[25].first = !arr[25].first"
+                    v-if="arr[2].first"
+                    @click="toggle(2)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[25].first = !arr[25].first">
+                  <span v-else @click="toggle(2)">
                     Hide Help?
                   </span>
                 </a>
@@ -298,12 +298,12 @@
                   aria-controls="collapseExample"
                 >
                   <span
-                    v-if="arr[21].first"
-                    @click="arr[21].first = !arr[21].first"
+                    v-if="arr[3].first"
+                    @click="toggle(3)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[21].first = !arr[21].first">
+                  <span v-else @click="toggle(3)">
                     Hide Help?
                   </span>
                 </a>
@@ -381,12 +381,12 @@
                   aria-controls="collapseExample"
                 >
                   <span
-                    v-if="arr[22].first"
-                    @click="arr[22].first = !arr[22].first"
+                    v-if="arr[4].first"
+                    @click="toggle(4)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[22].first = !arr[22].first">
+                  <span v-else @click="toggle(4)">
                     Hide Help?
                   </span>
                 </a>
@@ -463,12 +463,12 @@
                   aria-controls="collapseExample"
                 >
                   <span
-                    v-if="arr[24].first"
-                    @click="arr[24].first = !arr[24].first"
+                    v-if="arr[5].first"
+                    @click="toggle(5)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[24].first = !arr[24].first">
+                  <span v-else @click="toggle(5)">
                     Hide Help?
                   </span>
                 </a>
@@ -547,12 +547,12 @@
                   aria-controls="collapseExample"
                 >
                   <span
-                    v-if="arr[23].first"
-                    @click="arr[23].first = !arr[23].first"
+                    v-if="arr[6].first"
+                    @click="toggle(6)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[23].first = !arr[23].first">
+                  <span v-else @click="toggle(6)">
                     Hide Help?
                   </span>
                 </a>
@@ -726,12 +726,12 @@
                   aria-controls="collapseExample"
                 >
                   <span
-                    v-if="arr[15].first"
-                    @click="arr[15].first = !arr[15].first"
+                    v-if="arr[7].first"
+                    @click="toggle(7)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[15].first = !arr[15].first">
+                  <span v-else @click="toggle(7)">
                     Hide Help?
                   </span>
                 </a>
@@ -791,12 +791,12 @@
                   aria-controls="collapseExample"
                 >
                   <span
-                    v-if="arr[14].first"
-                    @click="arr[14].first = !arr[14].first"
+                    v-if="arr[8].first"
+                    @click="toggle(8)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[14].first = !arr[14].first">
+                  <span v-else @click="toggle(8)">
                     Hide Help?
                   </span>
                 </a>
@@ -934,12 +934,12 @@
                   aria-controls="collapseExample"
                 >
                   <span
-                    v-if="arr[13].first"
-                    @click="arr[13].first = !arr[13].first"
+                    v-if="arr[9].first"
+                    @click="toggle(9)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[13].first = !arr[13].first">
+                  <span v-else @click="toggle(9)">
                     Hide Help?
                   </span>
                 </a>
@@ -993,12 +993,12 @@
                   aria-controls="collapseExample"
                 >
                   <span
-                    v-if="arr[12].first"
-                    @click="arr[12].first = !arr[12].first"
+                    v-if="arr[10].first"
+                    @click="toggle(10)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[12].first = !arr[12].first">
+                  <span v-else @click="toggle(10)">
                     Hide Help?
                   </span>
                 </a>
@@ -1078,11 +1078,11 @@
                 >
                   <span
                     v-if="arr[11].first"
-                    @click="arr[11].first = !arr[11].first"
+                    @click="toggle(11)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[11].first = !arr[11].first">
+                  <span v-else @click="toggle(11)">
                     Hide Help?
                   </span>
                 </a>
@@ -1133,12 +1133,12 @@
                   aria-controls="collapseExample"
                 >
                   <span
-                    v-if="arr[10].first"
-                    @click="arr[10].first = !arr[10].first"
+                    v-if="arr[12].first"
+                    @click="toggle(12)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[10].first = !arr[10].first">
+                  <span v-else @click="toggle(12)">
                     Hide Help?
                   </span>
                 </a>
@@ -1355,7 +1355,16 @@ export default {
       console.log(this.personalInformation);
       this.save(action);
     },
-
+ toggle(index) {
+      this.arr = this.arr.map((a, ind) => {
+        if (ind === index) {
+          a.first = !a.first;
+        } else {
+          a.first = true;
+        }
+        return a;
+      });
+    },
     handleSubmitFormOne() {
       this.$refs.personalInfoFormOne.validate((valid) => {
         if (valid) {
