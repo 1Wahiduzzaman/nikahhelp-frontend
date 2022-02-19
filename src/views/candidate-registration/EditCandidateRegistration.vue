@@ -688,7 +688,7 @@ export default {
 
     nullToUndefined(object) {
       Object.keys(object).forEach(function (k) {
-        if (object[k] === null) {
+        if (object[k] === null|| object[k] === 0) {
           object[k] = undefined;
         }
       });
