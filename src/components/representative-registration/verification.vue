@@ -452,6 +452,7 @@
                     class="w-100"
                     id="inputNumber"
                     placeholder="Mobile number"
+                    :maxLength="10"
                     v-model="verification.ver_recommender_mobile_no"
                     @blur="onValueChange($event,'ver_recommender_mobile_no')"
                   />
