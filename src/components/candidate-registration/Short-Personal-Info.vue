@@ -29,7 +29,7 @@
         >
           <!-- Gender -->
           <div
-            v-if="activeRouteName == 'CandidateRegistration'"
+           
             class="row mt-3 pb-2 border-bottom"
           >
             <div class="col-12 col-md-6 none-padding">
@@ -58,20 +58,7 @@
                   ]"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
-                <!-- <a-select
-                  @change="onValueChange($event, 'essential')"
-                  id="per_gender"
-                  ref="select"
-                  placeholder="Select your gender"
-                  class="select-ma w-100"
-                  v-model="personalInformation.essential.per_gender"
-                >
-                  <a-select-option disabled :value="0"
-                    >Select your gender</a-select-option
-                  >
-                  <a-select-option :value="1">Male</a-select-option>
-                  <a-select-option :value="2">Female</a-select-option>
-                </a-select> -->
+               
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -249,7 +236,172 @@
               </div>
             </div>
           </div>
+ <!-- Religion -->
+          <div class="row mt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                  v-if="personalInformation.essential.per_religion_id"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
+                />What is your religion?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item ref="per_religion_id" prop="per_religion_id">
+                <v-select
+                  :calculate-position="withPopper"
+                  append-to-body
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange($event, 'essential')"
+                  id="per_religion_id"
+                  :reduce="(option) => option.id"
+                  placeholder="please select"
+                  v-model="personalInformation.essential.per_religion_id"
+                  label="name"
+                  :options="candidateDetails.religions"
+                  ><template #open-indicator> <a-icon type="down" /> </template
+                ></v-select>
+                <!-- <a-select
+                  @change="onValueChange($event, 'essential')"
+                  id="per_religion_id"
+                  :showSearch="true"
+                  :filter-option="filterOption"
+                  ref="select"
+                  placeholder="Select your religion"
+                  v-model="personalInformation.essential.per_religion_id"
+                  class="select-ma w-100"
+                >
+                  <a-select-option disabled :value="0"
+                    >Select your Religion</a-select-option
+                  >
+                  <a-select-option
+                    :value="item.id"
+                    v-bind:key="index"
+                    v-for="(item, index) in candidateDetails.religions"
+                    class="ma-select w-100"
+                  >
+                    {{ item.name }}
+                  </a-select-option>
+                </a-select> -->
+              </a-form-model-item>
+            </div>
+            <div class="col-12 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoReligion"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  <span
+                    v-if="arr[21].first"
+                    @click="arr[21].first = !arr[21].first"
+                  >
+                    Need Help?
+                  </span>
+                  <span v-else @click="arr[21].first = !arr[21].first">
+                    Hide Help?
+                  </span>
+                </a>
+              </p>
+              <div
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoReligion"
+              >
+                <div class="card card-body bubble">Your religion</div>
+              </div>
+            </div>
+          </div>
+            <!-- Education Level -->
+          <div class="row mt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                  v-if="personalInformation.essential.per_education_level_id"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
+                />What is your highest level of education?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item
+                ref="per_education_level_id"
+                prop="per_education_level_id"
+              >
+                <v-select
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="onValueChange($event, 'essential')"
+                  id="per_education_level_id"
+                  :reduce="(option) => option.id"
+                  placeholder="please select"
+                  v-model="personalInformation.essential.per_education_level_id"
+                  label="name"
+                  :options="candidateDetails.studylevels"
+                  ><template #open-indicator> <a-icon type="down" /> </template
+                ></v-select>
+                <!-- <a-select
+                  @change="onValueChange($event, 'essential')"
+                  id="per_education_level_id"
+                  :showSearch="true"
+                  :filter-option="filterOption"
+                  :showArrow="true"
+                  placeholder="Please select your education status"
+                  v-model="
+                    personalInformation.essential.per_education_level_id
+                  "
+                  class="select-ma w-100"
+                >
 
+                  <a-select-option disabled :value="0"
+                    >Select your education level</a-select-option
+                  >
+                  <a-select-option
+                    :value="item.id"
+                    v-bind:key="index"
+                    v-for="(item, index) in candidateDetails.studylevels"
+                    >{{ item.name }}</a-select-option
+                  >
+                </a-select> -->
+              </a-form-model-item>
+            </div>
+            <div class="col-12 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoHighestLevelEducation"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  <span
+                    v-if="arr[22].first"
+                    @click="arr[22].first = !arr[22].first"
+                  >
+                    Need Help?
+                  </span>
+                  <span v-else @click="arr[22].first = !arr[22].first">
+                    Hide Help?
+                  </span>
+                </a>
+              </p>
+              <div
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoHighestLevelEducation"
+              >
+                <div class="card card-body bubble">
+                  Your highest level of education
+                </div>
+              </div>
+            </div>
+          </div>
           <!-- Employment status -->
           <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
@@ -415,174 +567,10 @@
             </div>
           </div>
 
-          <!-- Education Level -->
-          <div class="row mt-3 pb-2 border-bottom">
-            <div class="col-12 col-md-6 none-padding">
-              <div class="mb-2 font-weight-bold">
-                <a-icon
-                  v-if="personalInformation.essential.per_education_level_id"
-                  class="color-success mr-2 fs-18 fw-500"
-                  type="check"
-                />What is your highest level of education?
-              </div>
-            </div>
-            <div class="col-12 col-md-6 mobile-margin">
-              <a-form-model-item
-                ref="per_education_level_id"
-                prop="per_education_level_id"
-              >
-                <v-select
-                  :clearable="false"
-                  class="style-chooser"
-                  @input="onValueChange($event, 'essential')"
-                  id="per_education_level_id"
-                  :reduce="(option) => option.id"
-                  placeholder="please select"
-                  v-model="personalInformation.essential.per_education_level_id"
-                  label="name"
-                  :options="candidateDetails.studylevels"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
-                <!-- <a-select
-                  @change="onValueChange($event, 'essential')"
-                  id="per_education_level_id"
-                  :showSearch="true"
-                  :filter-option="filterOption"
-                  :showArrow="true"
-                  placeholder="Please select your education status"
-                  v-model="
-                    personalInformation.essential.per_education_level_id
-                  "
-                  class="select-ma w-100"
-                >
+        
 
-                  <a-select-option disabled :value="0"
-                    >Select your education level</a-select-option
-                  >
-                  <a-select-option
-                    :value="item.id"
-                    v-bind:key="index"
-                    v-for="(item, index) in candidateDetails.studylevels"
-                    >{{ item.name }}</a-select-option
-                  >
-                </a-select> -->
-              </a-form-model-item>
-            </div>
-            <div class="col-12 none-padding mobile-margin mobile-help">
-              <p>
-                <a
-                  class="color-blue fw-700 fs-14"
-                  data-toggle="collapse"
-                  href="#collapsePersonalInfoHighestLevelEducation"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
-                >
-                  <span
-                    v-if="arr[22].first"
-                    @click="arr[22].first = !arr[22].first"
-                  >
-                    Need Help?
-                  </span>
-                  <span v-else @click="arr[22].first = !arr[22].first">
-                    Hide Help?
-                  </span>
-                </a>
-              </p>
-              <div
-                class="collapse"
-                data-parent="#personalInfoAccordian"
-                id="collapsePersonalInfoHighestLevelEducation"
-              >
-                <div class="card card-body bubble">
-                  Your highest level of education
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Religion -->
-          <div class="row mt-3 pb-2 border-bottom">
-            <div class="col-12 col-md-6 none-padding">
-              <div class="mb-2 font-weight-bold">
-                <a-icon
-                  v-if="personalInformation.essential.per_religion_id"
-                  class="color-success mr-2 fs-18 fw-500"
-                  type="check"
-                />What is your religion?
-              </div>
-            </div>
-            <div class="col-12 col-md-6 mobile-margin">
-              <a-form-model-item ref="per_religion_id" prop="per_religion_id">
-                <v-select
-                  :calculate-position="withPopper"
-                  append-to-body
-                  :clearable="false"
-                  class="style-chooser"
-                  @input="onValueChange($event, 'essential')"
-                  id="per_religion_id"
-                  :reduce="(option) => option.id"
-                  placeholder="please select"
-                  v-model="personalInformation.essential.per_religion_id"
-                  label="name"
-                  :options="candidateDetails.religions"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
-                <!-- <a-select
-                  @change="onValueChange($event, 'essential')"
-                  id="per_religion_id"
-                  :showSearch="true"
-                  :filter-option="filterOption"
-                  ref="select"
-                  placeholder="Select your religion"
-                  v-model="personalInformation.essential.per_religion_id"
-                  class="select-ma w-100"
-                >
-                  <a-select-option disabled :value="0"
-                    >Select your Religion</a-select-option
-                  >
-                  <a-select-option
-                    :value="item.id"
-                    v-bind:key="index"
-                    v-for="(item, index) in candidateDetails.religions"
-                    class="ma-select w-100"
-                  >
-                    {{ item.name }}
-                  </a-select-option>
-                </a-select> -->
-              </a-form-model-item>
-            </div>
-            <div class="col-12 none-padding mobile-margin mobile-help">
-              <p>
-                <a
-                  class="color-blue fw-700 fs-14"
-                  data-toggle="collapse"
-                  href="#collapsePersonalInfoReligion"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
-                >
-                  <span
-                    v-if="arr[21].first"
-                    @click="arr[21].first = !arr[21].first"
-                  >
-                    Need Help?
-                  </span>
-                  <span v-else @click="arr[21].first = !arr[21].first">
-                    Hide Help?
-                  </span>
-                </a>
-              </p>
-              <div
-                class="collapse"
-                data-parent="#personalInfoAccordian"
-                id="collapsePersonalInfoReligion"
-              >
-                <div class="card card-body bubble">Your religion</div>
-              </div>
-            </div>
-          </div>
-          <!-- TODO - Practicing Religion Missing? -->
+         
+         
           <!-- Essential Information End -->
 
           <a-button

@@ -230,7 +230,7 @@ export default {
           };
           break;
 
-        case 2:
+        case 1:
           this.candidateDetails.imageModel = {
             ...e.value,
           };
