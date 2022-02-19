@@ -25,8 +25,8 @@
               <div class="card-custom shadow-default personal-height">
                 <ul style="line-height: 160%">
                   <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Name</span
-                    ><span class="flex-50 px-2"
+                    <span class="flex-30 px-2 label-text">Name</span
+                    ><span class="flex-70 px-2"
                       >:<span class="ml-3">
                         {{ candidateData.first_name }}
                         {{ candidateData.last_name }}
@@ -34,32 +34,32 @@
                     </span>
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Screen Name</span
-                    ><span class="flex-50 px-2"
+                    <span class="flex-30 px-2 label-text">Screen Name</span
+                    ><span class="flex-70 px-2"
                       >:<span class="ml-3">{{
                         candidateData.screen_name
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Gender</span
-                    ><span class="flex-50 px-2 d-inherit"
+                    <span class="flex-30 px-2 label-text">Gender</span
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3">{{
                         candidateData.essential.per_gender
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Date of Birth</span
-                    ><span class="flex-50 px-2 d-inherit"
+                    <span class="flex-30 px-2 label-text">Date of Birth</span
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3">
                         {{ candidateData.personal.dob }}
                       </span>
                     </span>
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Height</span
-                    ><span class="flex-50 px-2 d-inherit"
+                    <span class="flex-30 px-2 label-text">Height</span
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3">
                         <span
                           v-html="
@@ -82,8 +82,8 @@
                     </span>
                   </li>
                    <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Religion</span
-                    ><span class="flex-50 px-2 d-inherit"
+                    <span class="flex-30 px-2 label-text">Religion</span
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3">
                         
                         {{
@@ -102,25 +102,25 @@
                     >
                   </li>
                          <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Education</span
-                    ><span class="flex-50 px-2 d-inherit"
+                    <span class="flex-30 px-2 label-text">Education</span
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3">{{
                         candidateData.essential.per_education_level
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text"
+                    <span class="flex-30 px-2 label-text"
                       >Employment Status</span
-                    ><span class="flex-50 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3">
                         {{ candidateData.personal.per_employment_status }}</span
                       ></span
                     >
                   </li>
                     <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Occupation</span
-                    ><span class="flex-50 px-2 d-inherit"
+                    <span class="flex-30 px-2 label-text">Occupation</span
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3">{{
                         candidateData.essential.per_occupation
                       }}</span></span
@@ -128,9 +128,9 @@
                   </li>
 
                   <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text"
+                    <span class="flex-30 px-2 label-text"
                       >Current Residance</span
-                    ><span class="flex-50 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3"
                         >{{
                           candidateData.contact
@@ -142,17 +142,17 @@
                     </span>
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Post Code</span
-                    ><span class="flex-50 px-2 d-inherit"
+                    <span class="flex-30 px-2 label-text">Post Code</span
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3">{{
                         candidateData.contact.per_permanent_post_code
                       }}</span></span
                     >
                   </li>
                         <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text"
+                    <span class="flex-30 px-2 label-text"
                       >Permanant Residance</span
-                    ><span class="flex-50 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3"
                         >{{
                           candidateData.contact
@@ -164,8 +164,8 @@
                     </span>
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Address</span
-                    ><span class="flex-50 px-2 d-inherit"
+                    <span class="flex-30 px-2 label-text">Address</span
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3">{{
                         candidateData.contact.per_permanent_address
                       }}</span></span
@@ -173,8 +173,8 @@
                   </li>
 
                          <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Mobile No</span
-                    ><span class="flex-50 px-2 d-inherit"
+                    <span class="flex-30 px-2 label-text">Mobile No</span
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3">{{
                         candidateData.contact.mobile_country_code
                       }} {{
@@ -183,8 +183,8 @@
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Email</span
-                    ><span class="flex-50 px-2 d-inherit"
+                    <span class="flex-30 px-2 label-text">Email</span
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3">{{
                         candidateData.contact.per_email
                       }}</span></span
@@ -452,7 +452,7 @@ export default {
   //font-size: 14px;
   font-weight: 600;
 }
-.flex-50 > .ml-3 {
+.flex-70 > .ml-3 {
   //font-size: 14px;
   font-weight: 900;
 }
