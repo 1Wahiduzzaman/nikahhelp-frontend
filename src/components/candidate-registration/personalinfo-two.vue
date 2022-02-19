@@ -2547,7 +2547,7 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                  v-if="personalInformation.more_about.per_about"
+                  v-if="personalInformation.more_about.per_additional_info_text"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />Additional Information (optional)
