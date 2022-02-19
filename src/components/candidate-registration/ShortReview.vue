@@ -3,12 +3,12 @@
     <fieldset v-if="candidateDetails && candidateData.personal" class="review">
       <h4 class="fw-700 px-2">Review and Publish Profile</h4>
       <p class="mb-5 px-2">
-        Please check the information and details that you have provided, if you are happy with it please submit for approval by MatrimonyAssist Team. 
-        If anything needs to be changed, then you can access relavant sections by pressing previous button. 
+        Please check the information and details that you have provided, if you
+        are happy with it please submit for approval by MatrimonyAssist Team. If
+        anything needs to be changed, then you can access relavant sections by
+        pressing previous button.
       </p>
       <div class="text-start">
-        
-
         <!-- Personal Information -->
         <div class="review-edit mt-5">
           <div class="review-edit-label">
@@ -21,7 +21,7 @@
             />
           </div>
           <div class="row h-100">
-            <div class="col-md-8 mb-3">
+            <div class="col-md-12 mb-3">
               <div class="card-custom shadow-default personal-height">
                 <ul style="line-height: 160%">
                   <li class="flex-between-start">
@@ -44,19 +44,10 @@
                   <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text">Gender</span
                     ><span class="flex-50 px-2 d-inherit"
-                      >:<span
-                        class="ml-3"
-                        v-if="candidateData.personal.per_gender == 1"
-                      >
-                        Male
-                      </span>
-                      <span
-                        class="ml-3"
-                        v-if="candidateData.personal.per_gender == 2"
-                      >
-                        Female
-                      </span>
-                    </span>
+                      >:<span class="ml-3">{{
+                        candidateData.essential.per_gender
+                      }}</span></span
+                    >
                   </li>
                   <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text">Date of Birth</span
@@ -67,23 +58,34 @@
                     </span>
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text"
-                      >Employment Status</span
+                    <span class="flex-50 px-2 label-text">Height</span
                     ><span class="flex-50 px-2 d-inherit"
                       >:<span class="ml-3">
-                        {{ candidateData.personal.per_employment_status }}</span
-                      ></span
-                    >
+                        <span
+                          v-html="
+                            `${
+                              heightTV.find(
+                                (x) =>
+                                  x.value === candidateData.personal.per_height
+                              )
+                                ? heightTV.find(
+                                    (x) =>
+                                      x.value ===
+                                      candidateData.personal.per_height
+                                  ).label
+                                : ''
+                            }`
+                          "
+                        >
+                        </span>
+                      </span>
+                    </span>
                   </li>
-                  <li class="flex-between-start">
+                   <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text">Religion</span
                     ><span class="flex-50 px-2 d-inherit"
                       >:<span class="ml-3">
-                        <!-- {{
-													$store.state.candidateInfo.religion_options[
-														candidateData.personal.per_religion_id
-													].name
-												}} -->
+                        
                         {{
                           candidateDetails.religions.find(
                             (x) =>
@@ -99,230 +101,102 @@
                       </span></span
                     >
                   </li>
-                  <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Ethnicity</span
+                         <li class="flex-between-start">
+                    <span class="flex-50 px-2 label-text">Education</span
                     ><span class="flex-50 px-2 d-inherit"
                       >:<span class="ml-3">{{
-                        candidateData.personal.per_ethnicity
-                      }}</span></span
-                    >
-                  </li>
-                  <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Mother Tongue</span
-                    ><span class="flex-50 px-2 d-inherit"
-                      >:<span class="ml-3">{{
-                        candidateData.personal.per_mother_tongue
-                      }}</span></span
-                    >
-                  </li>
-                  <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Nationality</span
-                    ><span class="flex-50 px-2 d-inherit"
-                      >:<span class="ml-3">{{
-                        candidateDetails.countries[
-                          candidateData.personal.per_nationality
-                        ]
-                          ? candidateDetails.countries[
-                              candidateData.personal.per_nationality
-                            ].name
-                          : ""
-                      }}</span></span
-                    >
-                  </li>
-                  <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Country of Birth</span
-                    ><span class="flex-50 px-2 d-inherit"
-                      >:<span class="ml-3">{{
-                        candidateDetails.countries[
-                          candidateData.personal.per_country_of_birth
-                        ]
-                          ? candidateDetails.countries[
-                              candidateData.personal.per_country_of_birth
-                            ].name
-                          : ""
+                        candidateData.essential.per_education_level
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text"
-                      >Current Residance</span
+                      >Employment Status</span
+                    ><span class="flex-50 px-2 d-inherit"
+                      >:<span class="ml-3">
+                        {{ candidateData.personal.per_employment_status }}</span
+                      ></span
+                    >
+                  </li>
+                    <li class="flex-between-start">
+                    <span class="flex-50 px-2 label-text">Occupation</span
                     ><span class="flex-50 px-2 d-inherit"
                       >:<span class="ml-3">{{
-                        candidateDetails.countries[
-                          candidateData.personal.per_current_residence
-                        ]
-                          ? candidateDetails.countries[
-                              candidateData.personal.per_current_residence
-                            ].name
-                          : ""
+                        candidateData.essential.per_occupation
                       }}</span></span
                     >
+                  </li>
+
+                  <li class="flex-between-start">
+                    <span class="flex-50 px-2 label-text"
+                      >Current Residance</span
+                    ><span class="flex-50 px-2 d-inherit"
+                      >:<span class="ml-3"
+                        >{{
+                          candidateData.contact
+                            .per_current_residence_country_name
+                        }},{{
+                          candidateData.contact.per_current_residence_city
+                        }}</span
+                      >
+                    </span>
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-50 px-2 label-text">Post Codeo</span
+                    ><span class="flex-50 px-2 d-inherit"
+                      >:<span class="ml-3">{{
+                        candidateData.contact.per_permanent_post_code
+                      }}</span></span
+                    >
+                  </li>
+                        <li class="flex-between-start">
+                    <span class="flex-50 px-2 label-text"
+                      >Permanant Residance</span
+                    ><span class="flex-50 px-2 d-inherit"
+                      >:<span class="ml-3"
+                        >{{
+                          candidateData.contact
+                            .per_permanent_country_name
+                        }},{{
+                          candidateData.contact.per_permanent_city
+                        }}</span
+                      >
+                    </span>
                   </li>
                   <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text">Address</span
                     ><span class="flex-50 px-2 d-inherit"
                       >:<span class="ml-3">{{
-                        candidateData.personal.per_address
+                        candidateData.contact.per_permanent_address
                       }}</span></span
                     >
                   </li>
-                  <!-- <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Telephone NO</span
-                    ><span class="flex-50 px-2 d-inherit"
-                      >:<span class="ml-3">{{
-                        candidateData.personal.per_telephone_no
-                      }}</span></span
-                    >
-                  </li> -->
-                  <li class="flex-between-start">
+
+                         <li class="flex-between-start">
                     <span class="flex-50 px-2 label-text">Mobile No</span
                     ><span class="flex-50 px-2 d-inherit"
                       >:<span class="ml-3">{{
-                        candidateData.personal.mobile_number
+                        candidateData.contact.mobile_country_code
+                      }} {{
+                        candidateData.contact.mobile_number
                       }}</span></span
                     >
                   </li>
+                  <li class="flex-between-start">
+                    <span class="flex-50 px-2 label-text">Email</span
+                    ><span class="flex-50 px-2 d-inherit"
+                      >:<span class="ml-3">{{
+                        candidateData.contact.per_email
+                      }}</span></span
+                    >
+                  </li>
+               
+           
                 </ul>
-              </div>
-              <div class="card-custom h-33 shadow-default">
-                <h4>A little bit about me</h4>
-                <div class="mb-0">
-                  <a-textarea
-                    id="per_about"
-                    :rows="4"
-                    :maxLength="200"
-                    v-model="candidateData.personal.per_about"
-                  />
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4 mb-3 mobile-margin-top">
-              <div class="card-custom shadow-default">
-                <div class="badge-info">
-                  <span class="badge-info-label"
-                    ><span class="inner">Marital Status</span></span
-                  >
-                  <span class="value-text">{{
-                    candidateData.personal.per_marital_status
-                  }}</span>
-                </div>
-                <div class="badge-info">
-                  <span class="badge-info-label"
-                    ><span class="inner">Currently living with</span></span
-                  >
-                  <span class="value-text">{{
-                    candidateData.personal.per_currently_living_with
-                  }}</span>
-                </div>
-                <div class="badge-info">
-                  <span class="badge-info-label"
-                    ><span class="inner">Willing to relocate</span></span
-                  >
-                  <span
-                    class="value-text"
-                    v-if="candidateData.personal.per_willing_to_relocate == 1"
-                  >
-                    Yes
-                  </span>
-                  <span
-                    class="value-text"
-                    v-else-if="
-                      candidateData.personal.per_willing_to_relocate == 2
-                    "
-                  >
-                    No
-                  </span>
-                  <span
-                    class="value-text"
-                    v-if="candidateData.personal.per_willing_to_relocate == 3"
-                  >
-                    Let's Discuss
-                  </span>
-                </div>
-                <div class="badge-info">
-                  <span class="badge-info-label"
-                    ><span class="inner">Smoker</span></span
-                  >
-                  <span
-                    class="value-text"
-                    v-if="candidateData.personal.per_smoker == true"
-                  >
-                    Yes
-                  </span>
-                  <span
-                    class="value-text"
-                    v-if="candidateData.personal.per_smoker == false"
-                  >
-                    No
-                  </span>
-                </div>
-                <div class="badge-info">
-                  <span class="badge-info-label"
-                    ><span class="inner">Language</span></span
-                  >
-                  <span class="value-text">{{
-                    candidateData.personal.per_language_speak
-                  }}</span>
-                </div>
-                <div class="badge-info">
-                  <span class="badge-info-label"
-                    ><span class="inner">My Hobbies & Interests</span></span
-                  >
-                  <span class="value-text">{{
-                    candidateData.personal.per_hobbies_interests
-                  }}</span>
-                </div>
-                <div class="badge-info">
-                  <span class="badge-info-label"
-                    ><span class="inner">Food & Cuisine I like</span></span
-                  >
-                  <span class="value-text">{{
-                    candidateData.personal.per_food_cuisine_like
-                  }}</span>
-                </div>
-                <div class="badge-info">
-                  <span class="badge-info-label"
-                    ><span class="inner">Things I Enjoy</span>
-                  </span>
-                  <span class="value-text">{{
-                    candidateData.personal.per_things_enjoy
-                  }}</span>
-                </div>
-                <div class="badge-info">
-                  <span class="badge-info-label">
-                    <span class="inner">I am Thankfull for</span>
-                  </span>
-                  <span class="value-text">{{
-                    candidateData.personal.per_thankfull_for
-                  }}</span>
-                </div>
-              </div>
-            </div>
-            <!-- <div class="col-md-12 mb-3">
-							<div class="card-custom shadow-default">
-								<h4>A little bit about me</h4>
-								<p class="mb-0">
-									{{ candidateData.personal.per_about }}
-								</p>
-							</div>
-						</div> -->
-            <div class="col-md-12 mb-3 mt-16px">
-              <div class="card-custom shadow-default">
-                <h4>Additional Information</h4>
-                <p class="mb-0">
-                  <a-textarea
-                    id="per_about"
-                    :rows="4"
-                    :maxLength="200"
-                    v-model="candidateData.personal.per_additional_info_text"
-                  />
-                </p>
               </div>
             </div>
           </div>
         </div>
-
-       
 
         <!-- Uploaded Image -->
         <div class="review-edit mt-5">
@@ -338,7 +212,8 @@
           <div class="row">
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
-                <img    v-viewer
+                <img
+                  v-viewer
                   :src="candidateData.personal.per_avatar_url"
                   class="user-image"
                   alt="img"
@@ -350,7 +225,8 @@
             </div>
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
-                <img    v-viewer
+                <img
+                  v-viewer
                   :src="candidateData.personal.per_main_image_url"
                   class="user-image"
                   alt="img"
@@ -363,7 +239,8 @@
 
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
-                <img    v-viewer
+                <img
+                  v-viewer
                   :src="candidateData.personal.per_main_image_url"
                   class="user-image"
                   alt="img"
@@ -450,7 +327,6 @@ export default {
     return {
       candidateData: {},
       heightTV: HEIGHTS,
-    
     };
   },
   mounted() {

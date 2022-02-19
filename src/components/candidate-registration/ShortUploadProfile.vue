@@ -308,9 +308,9 @@ export default {
   data() {
     return {
       activeKey: ["1"],
-      avatarSrc: "",
-      mainImageSrc: "",
-      additionalImageSrc: "",
+      avatarSrc:null,
+      mainImageSrc: null,
+      additionalImageSrc:null,
       anyoneFlag: false,
       onlyTeamFlag: false,
       onlyTeamConnectionsFlag: false,
