@@ -142,7 +142,7 @@
                     </span>
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-50 px-2 label-text">Post Codeo</span
+                    <span class="flex-50 px-2 label-text">Post Code</span
                     ><span class="flex-50 px-2 d-inherit"
                       >:<span class="ml-3">{{
                         candidateData.contact.per_permanent_post_code
