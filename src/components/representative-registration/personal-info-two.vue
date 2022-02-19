@@ -59,11 +59,11 @@
                 >
                   <span
                     v-if="arr[0].first"
-                    @click="arr[0].first = !arr[0].first"
+                    @click="toggle(0)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[0].first = !arr[0].first">
+                  <span v-else @click="toggle(0)">
                     Hide Help?
                   </span>
                 </a>
@@ -74,7 +74,10 @@
                 id="Needper_gender"
               >
                 <div class="card card-body bubble">
-                 Please make sure your gender selection is correct. After submitting your profile form for approval, a mistake can only be changed by MatrimonyAssist Admin. This is because a representative can be a candidate also in another team.
+                  Please make sure your gender selection is correct. After
+                  submitting your profile form for approval, a mistake can only
+                  be changed by MatrimonyAssist Admin. This is because a
+                  representative can be a candidate also in another team.
                 </div>
               </div>
             </div>
@@ -116,18 +119,22 @@
                 >
                   <span
                     v-if="arr[1].first"
-                    @click="arr[1].first = !arr[1].first"
+                    @click="toggle(1)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[1].first = !arr[1].first">
+                  <span v-else @click="toggle(1)">
                     Hide Help?
                   </span>
                 </a>
               </p>
               <div data-parent="#accordion" class="collapse" id="Needdob">
                 <div class="card card-body bubble">
-                 Please make sure your DoB is correct. Once your profile is submitted for approval a mistake can only be changed by contacting MatrimonyAssist Admin Team with a valid proof of ID.  This is important because a representative can be a candidate in another team. 
+                  Please make sure your DoB is correct. Once your profile is
+                  submitted for approval a mistake can only be changed by
+                  contacting MatrimonyAssist Admin Team with a valid proof of
+                  ID. This is important because a representative can be a
+                  candidate in another team.
                 </div>
               </div>
             </div>
@@ -178,11 +185,11 @@
                 >
                   <span
                     v-if="arr[2].first"
-                    @click="arr[2].first = !arr[2].first"
+                    @click="toggle(2)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[2].first = !arr[2].first">
+                  <span v-else @click="toggle(2)">
                     Hide Help?
                   </span>
                 </a>
@@ -193,7 +200,10 @@
                 id="Needper_occupation"
               >
                 <div class="card card-body bubble">
-                We ask this question about your occupation for monitoring purposes to understand the different types of people who are happily giving their time to assist a loved one to find a marriage partner.
+                  We ask this question about your occupation for monitoring
+                  purposes to understand the different types of people who are
+                  happily giving their time to assist a loved one to find a
+                  marriage partner.
                 </div>
               </div>
             </div>
@@ -247,7 +257,7 @@
                     <v-select
                       :clearable="false"
                       class="style-chooser"
-                      @input="onCountryChange($event, 'residence')"
+                      @input="onCountryChange($event, 'per_current_residence_country','contact')"
                       id="per_current_residence_country"
                       :placeholder="'Country'"
                       v-model="
@@ -269,7 +279,7 @@
                   >
                     <v-select
                       :clearable="false"
-                        :loading="loading"
+                      :loading="loading"
                       class="style-chooser"
                       @input="
                         onValueChange(
@@ -318,11 +328,11 @@
                 >
                   <span
                     v-if="arr[3].first"
-                    @click="arr[3].first = !arr[3].first"
+                    @click="toggle(3)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[3].first = !arr[3].first">
+                  <span v-else @click="toggle(3)">
                     Hide Help?
                   </span>
                 </a>
@@ -333,7 +343,10 @@
                 id="Needper_current_residence_country"
               >
                 <div class="card card-body bubble">
-             We ask this question as we may need to crosscheck this information with any future ID checks that may be necessary in case there are queries about the authenticity of individual registrations.
+                  We ask this question as we may need to crosscheck this
+                  information with any future ID checks that may be necessary in
+                  case there are queries about the authenticity of individual
+                  registrations.
                 </div>
               </div>
             </div>
@@ -372,11 +385,11 @@
                 >
                   <span
                     v-if="arr[4].first"
-                    @click="arr[4].first = !arr[4].first"
+                    @click="toggle(4)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[4].first = !arr[4].first">
+                  <span v-else @click="toggle(4)">
                     Hide Help?
                   </span>
                 </a>
@@ -422,11 +435,11 @@
                 >
                   <span
                     v-if="arr[5].first"
-                    @click="arr[5].first = !arr[5].first"
+                    @click="toggle(5)"
                   >
                     Need Help?
                   </span>
-                  <span v-else @click="arr[5].first = !arr[5].first">
+                  <span v-else @click="toggle(5)">
                     Hide Help?
                   </span>
                 </a>
@@ -498,6 +511,25 @@ export default {
 
   async mounted() {},
   methods: {
+       checkValidation(name,action) {
+      switch (action) {
+        case "essential":
+          this.$refs.personalInfoFormOne.fields.forEach((f) => {
+            if (f.prop == name) {
+              f.onFieldBlur();
+            }
+          });
+          break;
+        case "general":
+          this.$refs.personalInfoFormTwo.fields.forEach((f) => {
+            if (f.prop == name) {
+              f.onFieldBlur();
+            }
+          });
+          break;
+      
+      }
+    },
     handleSubmitFormOne() {
       this.$refs.repPersonalInfoFormOne.validate((valid) => {
         if (valid) {
@@ -525,11 +557,7 @@ export default {
       });
     },
     onValueChange(e, name, action) {
-      //   if (action === "essential") {
-      //     this.personalInformation.essential[name] = e;
-      //   } else {
-      //     this.personalInformation.personal[name] = e;
-      //   }
+      this.checkValidation(name, action);
       this.save(action);
     },
     async saveEssentialInfo() {
@@ -577,7 +605,16 @@ export default {
           .indexOf(input.toLowerCase()) >= 0
       );
     },
-
+    toggle(index) {
+      this.arr = this.arr.map((a, ind) => {
+        if (ind === index) {
+          a.first = !a.first;
+        } else {
+          a.first = true;
+        }
+        return a;
+      });
+    },
     onChangeDD(d, m, y) {
       this.save("essential");
     },
@@ -585,8 +622,9 @@ export default {
       this.activeKey = e;
       this.$emit("pannelChanged", e);
     },
-    async onCountryChange(e, action) {
-      if (action === "residence") {
+    async onCountryChange(e,name, action) {
+       this.checkValidation(name, action);
+      if (action === "per_current_residence_country") {
         this.loading = true;
       } else {
         this.loadingPermanant = true;

@@ -39,10 +39,10 @@ export const InitRoute = (to, from, next) => {
 
         return to.name == 'DHome' ? next() : next({ name: 'DHome' });
     }
-    else if (user.account_type === 2 && user.data_input_status <= 2) {
+    else if (user.account_type === 2 && user.data_input_status <= 3) {
         return to.name == 'RepresentativeRegistration' ? next() : next({ name: 'RepresentativeRegistration' });
     }
-    else if (user.account_type === 2 && user.data_input_status > 2 && to.name === 'RepresentativeRegistration') {
+    else if (user.account_type === 2 && user.data_input_status > 3 && to.name === 'RepresentativeRegistration') {
         return to.name == 'DHome' ? next() : next({ name: 'DHome' });
     }
     else if (user && (to.name == 'Signup' || to.name == 'Login' || user && to.name == 'Home')) {

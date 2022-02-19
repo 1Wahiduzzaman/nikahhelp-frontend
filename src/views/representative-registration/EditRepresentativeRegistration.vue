@@ -133,7 +133,6 @@ const createData = () => ({
 });
 
 import PersonalInfoTwo from "@/components/representative-registration/personal-info-two.vue";
-import VerificationInfo from "@/components/representative-registration/VerificationInfo.vue";
 import Verification from "@/components/representative-registration/verification.vue";
 import ImageUpload from "@/components/representative-registration/ImageUpload.vue";
 import AgreementSubmit from "@/components/representative-registration/AgreementSubmit.vue";
@@ -147,7 +146,6 @@ export default {
 
   components: {
     PersonalInfoTwo,
-    VerificationInfo,
     Verification,
     ImageUpload,
     AgreementSubmit,

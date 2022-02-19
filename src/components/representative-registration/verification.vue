@@ -1,6 +1,6 @@
 <template>
   <div id="accordion" class="verificationInfo rounded">
-    <div class="verification-content">
+    <div  v-if="userData && userData.status == '1'" class="verification-content">
       <a-collapse
         default-active-key="1"
         @change="changeActivekey"
@@ -94,7 +94,7 @@
                       <v-select
                         :clearable="false"
                         class="style-chooser"
-                        @input="onValueChange"
+                        @input="onValueChange($event, 'ver_city_id')"
                         id="ver_city"
                         placeholder="City"
                         :reduce="(option) => option.name"
@@ -118,15 +118,10 @@
                     aria-expanded="false"
                     aria-controls="collapseExample"
                   >
-                    <span
-                      v-if="arr[0].first"
-                      @click="arr[0].first = !arr[0].first"
-                    >
+                    <span v-if="arr[0].first" @click="toggle(0)">
                       Need Help?
                     </span>
-                    <span v-else @click="arr[0].first = !arr[0].first">
-                      Hide Help?
-                    </span>
+                    <span v-else @click="toggle(0)"> Hide Help? </span>
                   </a>
                 </p>
                 <div
@@ -155,7 +150,7 @@
                 <v-select
                   :clearable="false"
                   class="style-chooser"
-                  @input="onValueChange"
+                  @input="onValueChange($event, 'ver_city_id')"
                   id="ver_document_type"
                   placeholder="Document type"
                   :reduce="(option) => option.value"
@@ -178,15 +173,10 @@
                     aria-expanded="false"
                     aria-controls="collapseExample"
                   >
-                    <span
-                      v-if="arr[1].first"
-                      @click="arr[1].first = !arr[1].first"
-                    >
+                    <span v-if="arr[1].first" @click="toggle(1)">
                       Need Help?
                     </span>
-                    <span v-else @click="arr[1].first = !arr[1].first">
-                      Hide Help?
-                    </span>
+                    <span v-else @click="toggle(1)"> Hide Help? </span>
                   </a>
                 </p>
                 <div
@@ -217,12 +207,7 @@
                     >The format supported are JPEG, PNG, PDF. Maximum file size
                     2 mb</span
                   >
-                  <span
-                    @click="clearImg('font')"
-                    class="close-icon mt-2"
-                    v-if="verification.ver_document_frontside"
-                    ><img src="@/assets/icon/close.svg" alt="img"
-                  /></span>
+
                   <div class="img-preview mb-2">
                     <img
                       :src="
@@ -246,11 +231,20 @@
                     </div>
                   </div>
                   <input
+                    v-if="!verification.ver_document_frontside"
                     type="file"
                     class="input-image"
                     name="avatar"
                     @change="getFrontPage"
                   />
+                  <a-button
+                    type="primary"
+                    style="width: 185px"
+                    v-if="verification.ver_document_frontside"
+                    @click="clearImg('main')"
+                  >
+                    Remove
+                  </a-button>
                 </div>
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">
@@ -263,15 +257,10 @@
                     aria-expanded="false"
                     aria-controls="collapseExample"
                   >
-                    <span
-                      v-if="arr[2].first"
-                      @click="arr[2].first = !arr[2].first"
-                    >
+                    <span v-if="arr[2].first" @click="toggle(2)">
                       Need Help?
                     </span>
-                    <span v-else @click="arr[2].first = !arr[2].first">
-                      Hide Help?
-                    </span>
+                    <span v-else @click="toggle(2)"> Hide Help? </span>
                   </a>
                 </p>
                 <div
@@ -302,12 +291,7 @@
                     >The format supported are JPEG, PNG, PDF. Maximum file size
                     2 mb</span
                   >
-                  <span
-                    @click="clearImg('back')"
-                    class="close-icon mt-2"
-                    v-if="verification.ver_document_backside"
-                    ><img src="@/assets/icon/close.svg" alt="img"
-                  /></span>
+
                   <div class="img-preview mb-2">
                     <img
                       :src="
@@ -332,11 +316,20 @@
                     </div>
                   </div>
                   <input
+                    v-if="!verification.ver_document_backside"
                     type="file"
                     class="input-image"
                     name="avatar"
                     @change="getBackPage"
                   />
+                  <a-button
+                    type="primary"
+                    style="width: 185px"
+                    v-if="verification.ver_document_backside"
+                    @click="clearImg('main')"
+                  >
+                    Remove
+                  </a-button>
                 </div>
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">
@@ -349,15 +342,10 @@
                     aria-expanded="false"
                     aria-controls="collapseExample"
                   >
-                    <span
-                      v-if="arr[3].first"
-                      @click="arr[3].first = !arr[3].first"
-                    >
+                    <span v-if="arr[3].first" @click="toggle(3)">
                       Need Help?
                     </span>
-                    <span v-else @click="arr[3].first = !arr[3].first">
-                      Hide Help?
-                    </span>
+                    <span v-else @click="toggle(3)"> Hide Help? </span>
                   </a>
                 </p>
                 <div
@@ -391,7 +379,7 @@
                     v-model="verification.ver_recommender_title"
                     class="w-100"
                     placeholder="Title"
-                    @blur="onValueChange"
+                    @blur="onValueChange($event,'ver_recommender_title')"
                   />
                 </a-form-model-item>
 
@@ -405,7 +393,7 @@
                         v-model="verification.ver_recommender_first_name"
                         class="w-100 rounded-right"
                         placeholder="First Name"
-                        @blur="onValueChange"
+                        @blur="onValueChange($event,'ver_recommender_first_name')"
                       />
                     </a-form-model-item>
                   </div>
@@ -418,7 +406,7 @@
                         v-model="verification.ver_recommender_last_name"
                         class="w-100 rounded-left"
                         placeholder="Last Name"
-                        @blur="onValueChange"
+                        @blur="onValueChange($event,'ver_recommender_last_name')"
                       />
                     </a-form-model-item>
                   </div>
@@ -431,7 +419,7 @@
                   <v-select
                     :clearable="false"
                     class="style-chooser"
-                    @input="onValueChange"
+                    @input="onValueChange($event, 'ver_recommender_occupation')"
                     id="ver_recommender_occupation"
                     placeholder="Occupation"
                     v-model="verification.ver_recommender_occupation"
@@ -452,7 +440,7 @@
                     placeholder="Address"
                     :rows="4"
                     v-model="verification.ver_recommender_address"
-                    @blur="onValueChange"
+                    @blur="onValueChange($event,'ver_recommender_address')"
                   />
                 </a-form-model-item>
 
@@ -465,7 +453,7 @@
                     id="inputNumber"
                     placeholder="Mobile number"
                     v-model="verification.ver_recommender_mobile_no"
-                    @blur="onValueChange"
+                    @blur="onValueChange($event,'ver_recommender_mobile_no')"
                   />
                 </a-form-model-item>
               </div>
@@ -481,15 +469,10 @@
                     aria-expanded="false"
                     aria-controls="collapseExample"
                   >
-                    <span
-                      v-if="arr[4].first"
-                      @click="arr[4].first = !arr[4].first"
-                    >
+                    <span v-if="arr[4].first" @click="toggle(4)">
                       Need Help?
                     </span>
-                    <span v-else @click="arr[4].first = !arr[4].first">
-                      Hide Help?
-                    </span>
+                    <span v-else @click="toggle(4)"> Hide Help? </span>
                   </a>
                 </p>
                 <div
@@ -507,16 +490,66 @@
               <a-button
                 shape="round"
                 type="primary"
+                style="float: right; margin-right: 10px"
+                class="mt-5"
+                @click="cancel"
+              >
+                Cancel
+              </a-button>
+              <a-button
+                shape="round"
+                type="primary"
                 style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
                 class="mt-5"
                 @click="handleSubmitFormOne"
               >
-                Save & Continue
+                Submit
               </a-button>
             </div>
           </a-form-model>
         </a-collapse-panel>
       </a-collapse>
+    </div>
+        <div class="verification-msg" v-if="userData && userData.status == '2'">
+      <div class="identity">
+        <img
+          src="@/assets/icon/dots-horizontal-circle.svg"
+          alt="icon"
+          style="width: 200px; height: 230px"
+        />
+        <span>In Review</span>
+      </div>
+      <div class="identity-footer">
+        <span
+          >To keep your account safe, we need to verify your identity. This is a
+          legal requirement that help us to keep your account secure.
+        </span>
+        <span
+          >We accept photo/scans of a driving license, passport, national ID
+          card or residence permit issued in European Economic Are (EEA).</span
+        >
+      </div>
+    </div>
+    <div class="verification-msg" v-if="userData && userData.status == '3'">
+      <div class="identity">
+        <img
+          src="@/assets/icon/varified.svg"
+          alt="icon"
+          style="width: 200px; height: 230px"
+        />
+        &nbsp;
+        <span>Verified</span>
+      </div>
+      <div class="identity-footer">
+        <span
+          >To keep your account safe, we need to verify your identity. This is a
+          legal requirement that help us to keep your account secure.
+        </span>
+        <span
+          >We accept photo/scans of a driving license, passport, national ID
+          card or residence permit issued in European Economic Are (EEA).</span
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -545,8 +578,7 @@ export default {
   },
 
   created() {
-    // console.log(this.handleChangeFromProp)
-    console.log(this.repData);
+    this.userData = JSON.parse(localStorage.getItem("user"));
   },
   mounted() {
     // this.setPersonalInfoRepData();
@@ -575,6 +607,7 @@ export default {
       imageFont: null,
       rules: VERIFICATION_RULES,
       activeKey: 1,
+      userData: null,
     };
   },
 
@@ -582,10 +615,26 @@ export default {
     changeActivekey(key) {
       this.activeKey = key;
     },
+    async updateUserVerifyOrReject() {
+      const data = {
+        id: this.userData.id,
+        status: "completed",
+      };
+      await this.$store
+        .dispatch("updateUserVerifyOrReject", data)
+        .then((data) => {
+          this.userData.status = "2";
+          localStorage.setItem("user", JSON.stringify(this.userData));
+        })
+        .catch((error) => {});
+    },
     handleSubmitFormOne() {
       this.$refs.verification.validate((valid) => {
         if (valid) {
           this.activeKey = null;
+          this.saveImageVerificationInfo();
+          this.saveVerificationInfo();
+          this.updateUserVerifyOrReject();
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
@@ -601,8 +650,15 @@ export default {
         .toLowerCase()
         .startsWith(input.toLowerCase());
     },
-    onValueChange(e) {
-      this.saveVerificationInfo();
+    onValueChange(e,name) {
+     this.checkValidation(name)
+    },
+    checkValidation(name) {
+      this.$refs.verification.fields.forEach((f) => {
+        if (f.prop == name) {
+          f.onFieldBlur();
+        }
+      });
     },
     saveVerificationInfo() {
       const {
@@ -631,12 +687,16 @@ export default {
         .then((data) => {
           this.$emit("valueChange", {
             value: this.verification,
-            current: 1,
+            current: 2,
           });
         })
         .catch((error) => {});
     },
-    saveImageVerificationInfo(image) {
+    saveImageVerificationInfo() {
+       const image = {
+        ver_document_backside: this.verification.ver_document_backside,
+        ver_document_frontside: this.verification.ver_document_frontside,
+      };
       this.$store
         .dispatch("saveRepresentativeImageVerificationInfo", image)
         .then((data) => {
@@ -650,6 +710,9 @@ export default {
           });
         })
         .catch((error) => {});
+    },
+      cancel() {
+      this.$emit("cancel", false);
     },
     imageSizeCheck(file) {
       if (file["size"] > 2111775) {
@@ -670,9 +733,9 @@ export default {
       }
 
       this.verification.ver_document_frontside = e.target.files[0];
-      this.saveImageVerificationInfo({
-        ver_document_frontside: this.verification.ver_document_frontside,
-      });
+      // this.saveImageVerificationInfo({
+      //   ver_document_frontside: this.verification.ver_document_frontside,
+      // });
 
       let reader = new FileReader();
       reader.readAsDataURL(file);
@@ -687,9 +750,9 @@ export default {
         return;
       }
       this.verification.ver_document_backside = e.target.files[0];
-      this.saveImageVerificationInfo({
-        ver_document_backside: this.verification.ver_document_backside,
-      });
+      // this.saveImageVerificationInfo({
+      //   ver_document_backside: this.verification.ver_document_backside,
+      // });
 
       let reader = new FileReader();
       reader.readAsDataURL(file);
@@ -705,7 +768,17 @@ export default {
         this.verification.cities = [];
         this.verification.cities.push(...res.data.data);
       }
-      this.saveVerificationInfo();
+      //this.saveVerificationInfo();
+    },
+    toggle(index) {
+      this.arr = this.arr.map((a, ind) => {
+        if (ind === index) {
+          a.first = !a.first;
+        } else {
+          a.first = true;
+        }
+        return a;
+      });
     },
     clearImg(action) {
       switch (action) {

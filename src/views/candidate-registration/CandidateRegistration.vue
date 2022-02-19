@@ -543,16 +543,16 @@ export default {
             ""
           );
         }
-        // if (
-        //   this.candidateDetails.verification &&
-        //   this.candidateDetails.verification.ver_country_id > 0
-        // ) {
-        //   this.onChangeCountry(
-        //     { id: this.candidateDetails.verification.ver_country_id },
-        //     "verification",
-        //     ""
-        //   );
-        // }
+        if (
+          this.candidateDetails.verification &&
+          this.candidateDetails.verification.ver_country_id > 0
+        ) {
+          this.onChangeCountry(
+            { id: this.candidateDetails.verification.ver_country_id },
+            "verification",
+            ""
+          );
+        }
         this.current = response.data.data.user.data_input_status;
         this.showAgreement = user.status == "2" || user.status == "3" ? true : false;
         this.checkExistData();
