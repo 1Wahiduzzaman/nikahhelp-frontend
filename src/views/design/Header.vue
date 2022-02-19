@@ -556,6 +556,7 @@ export default {
       let {data} = await ApiService.get("v1/team-list").then(res => res.data);
       this.teamsForHeader = data;
       this.teamsOriginal = data;
+      this.$store.state.team.team_list = this.teamsOriginal;
       this.checkTurnedOnSwitch();
       // const self = this;
       // try {
