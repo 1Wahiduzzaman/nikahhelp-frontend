@@ -57,15 +57,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[0].first"
-                    @click="toggle(0)"
-                  >
+                  <span v-if="arr[0].first" @click="toggle(0)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(0)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(0)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -117,15 +112,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[1].first"
-                    @click="toggle(1)"
-                  >
+                  <span v-if="arr[1].first" @click="toggle(1)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(1)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(1)"> Hide Help? </span>
                 </a>
               </p>
               <div data-parent="#accordion" class="collapse" id="Needdob">
@@ -178,20 +168,15 @@
                 <a
                   class="color-blue fw-700 fs-14"
                   data-toggle="collapse"
-                  href="#Needper_occupation"
                   role="button"
                   aria-expanded="false"
                   aria-controls="collapseExample"
+                  href="#Needper_occupation"
                 >
-                  <span
-                    v-if="arr[2].first"
-                    @click="toggle(2)"
-                  >
+                  <span v-if="arr[2].first" @click="toggle(2)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(2)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(2)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -232,180 +217,418 @@
           :rules="rules_personal"
           class="form-ma"
         >
-          <div class="row mt-3 pb-2 border-bottom">
-            <div class="col-12 col-md-6 none-padding">
-              <div class="mb-2 font-weight-bold">
-                <a-icon
-                  v-if="
-                    personalInformation.personal
-                      .per_current_residence_country &&
-                    personalInformation.personal.per_current_residence_city
-                  "
-                  class="color-success mr-2 fs-18 fw-500"
-                  type="check"
-                />
-                Where is your current place of residence?
-              </div>
-            </div>
-            <div class="col-12 col-md-6 mobile-margin">
-              <div class="row">
-                <div class="col-12 col-md-6">
-                  <a-form-model-item
-                    ref="per_current_residence_country"
-                    prop="per_current_residence_country"
-                  >
-                    <v-select
-                      :clearable="false"
-                      class="style-chooser"
-                      @input="onCountryChange($event, 'per_current_residence_country','contact')"
-                      id="per_current_residence_country"
-                      :placeholder="'Country'"
-                      v-model="
-                        personalInformation.personal
-                          .per_current_residence_country
-                      "
-                      label="name"
-                      :reduce="(option) => option.id"
-                      :options="representativeDetails.countries"
-                      ><template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
-                  </a-form-model-item>
-                </div>
-                <div class="col-12 col-md-6">
-                  <a-form-model-item
-                    ref="per_current_residence_city"
-                    prop="per_current_residence_city"
-                  >
-                    <v-select
-                      :clearable="false"
-                      :loading="loading"
-                      class="style-chooser"
-                      @input="
-                        onValueChange(
-                          $event,
-                          'per_current_residence_city',
-                          'contact'
-                        )
-                      "
-                      id="per_current_residence_city"
-                      placeholder="Select City"
-                      :reduce="(option) => option.name"
-                      v-model="
-                        personalInformation.personal.per_current_residence_city
-                      "
-                      label="name"
-                      :options="personalInformation.personal.residenceCities"
-                      ><template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
-                  </a-form-model-item>
+          <div class="row mt-3 pb-2">
+            <!-- Current Residence -->
+            <div class="row mt-3 pb-2 border-bottom">
+              <div class="col-12 col-md-6 none-padding">
+                <div class="mb-2 font-weight-bold">
+                  <a-icon
+                    v-if="
+                      personalInformation.personal
+                        .per_current_residence_country &&
+                      personalInformation.personal.per_current_residence_city
+                    "
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                  />What is your current place of residence?
                 </div>
               </div>
-              <a-input
-                class="w-100 mt-2"
-                v-if="
-                  personalInformation.personal.per_current_residence_country ==
-                    'Other' ||
-                  personalInformation.personal.per_current_residence_city ==
-                    'Other'
-                "
-                placeholder="Please specify"
-                @change="
-                  onValueChange($event, 'per_current_residence_city', 'contact')
-                "
-              />
-            </div>
-            <div class="col-12 none-padding mobile-margin mobile-help">
-              <p>
-                <a
-                  class="color-blue fw-700 fs-14"
-                  data-toggle="collapse"
-                  href="#Needper_current_residence_country"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
+              <div class="col-12 col-md-6 mobile-margin">
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                    <a-form-model-item
+                      ref="per_current_residence_country"
+                      prop="per_current_residence_country"
+                    >
+                      <v-select
+                        :clearable="false"
+                        class="style-chooser"
+                        @input="
+                          onCountryChange(
+                            $event,
+                            'per_current_residence_country',
+                            'contact'
+                          )
+                        "
+                        id="per_current_residence_country"
+                        :placeholder="'Country'"
+                        v-model="
+                          personalInformation.personal
+                            .per_current_residence_country
+                        "
+                        label="name"
+                        :reduce="(option) => option.id"
+                        :options="representativeDetails.countries"
+                        ><template #open-indicator>
+                          <a-icon type="down" /> </template
+                      ></v-select>
+                    </a-form-model-item>
+                  </div>
+                  <div class="col-12 col-md-6 mobile-margin">
+                    <a-form-model-item
+                      ref="per_current_residence_city"
+                      prop="per_current_residence_city"
+                    >
+                      <v-select
+                        :clearable="false"
+                        :loading="loading"
+                        class="style-chooser"
+                        @input="
+                          onValueChange(
+                            $event,
+                            'per_current_residence_city',
+                            'contact'
+                          )
+                        "
+                        id="per_current_residence_city"
+                        placeholder="Select City"
+                        :reduce="(option) => option.name"
+                        v-model="
+                          personalInformation.personal
+                            .per_current_residence_city
+                        "
+                        label="name"
+                        :options="personalInformation.personal.residenceCities"
+                        ><template #open-indicator>
+                          <a-icon type="down" /> </template
+                      ></v-select>
+                    </a-form-model-item>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 none-padding mobile-margin mobile-help">
+                <p>
+                  <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapsePersonalInfoCurrentResidenceCity"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                  >
+                    <span v-if="arr[3].first" @click="toggle(3)">
+                      Need Help?
+                    </span>
+                    <span v-else @click="toggle(3)"> Hide Help? </span>
+                  </a>
+                </p>
+                <div
+                  class="collapse"
+                  data-parent="#accordion"
+                  id="collapsePersonalInfoCurrentResidenceCity"
                 >
-                  <span
-                    v-if="arr[3].first"
-                    @click="toggle(3)"
-                  >
-                    Need Help?
-                  </span>
-                  <span v-else @click="toggle(3)">
-                    Hide Help?
-                  </span>
-                </a>
-              </p>
-              <div
-                data-parent="#accordion"
-                class="collapse"
-                id="Needper_current_residence_country"
-              >
-                <div class="card card-body bubble">
-                  We ask this question as we may need to crosscheck this
-                  information with any future ID checks that may be necessary in
-                  case there are queries about the authenticity of individual
-                  registrations.
+                  <div class="card card-body bubble">
+                    Your current place of residence is where you may be staying
+                    for work, study or any other purpose.
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row pt-3 pb-2 border-bottom">
-            <div class="col-12 col-md-6 none-padding">
-              <div class="mb-2 font-weight-bold">
-                <a-icon
-                  v-if="personalInformation.personal.mobile_number"
-                  class="color-success mr-2 fs-18 fw-500"
-                  type="check"
-                />What is your Phone number?
+
+            <!-- Permanent Post Code  -->
+            <div class="row mt-3 pb-2 border-bottom">
+              <div class="col-12 col-md-6 none-padding">
+                <div class="mb-2 font-weight-bold">
+                  <a-icon
+                    v-if="personalInformation.personal.per_permanent_post_code"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                  />Post Code
+                </div>
               </div>
-            </div>
-            <div class="col-12 col-md-6 mobile-margin">
-              <a-form-model-item ref="mobile_number" prop="mobile_number">
-                <a-input
-                  class="w-100"
-                  placeholder="+8801685117737"
-                  id="inputNumber"
-                  :maxLength="10"
-                  v-model="personalInformation.personal.mobile_number"
-                  @blur="onValueChange($event, 'mobile_number', 'contact')"
-                />
-              </a-form-model-item>
-            </div>
-            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
-              <p>
-                <a
-                  class="color-blue fw-700 fs-14"
-                  data-toggle="collapse"
-                  href="#Needmobile_number"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
+              <div class="col-12 col-md-6 mobile-margin">
+                <a-form-model-item
+                  ref="per_permanent_post_code"
+                  prop="per_permanent_post_code"
                 >
-                  <span
-                    v-if="arr[4].first"
-                    @click="toggle(4)"
+                  <a-input
+                    @blur="
+                      onValueChange(
+                        $event,
+                        'contact',
+                        'per_permanent_post_code'
+                      )
+                    "
+                    id="per_permanent_post_code"
+                    :maxLength="10"
+                    placeholder="Post Code"
+                    v-model="
+                      personalInformation.personal.per_permanent_post_code
+                    "
+                  />
+                </a-form-model-item>
+              </div>
+              <div class="col-12 none-padding mobile-margin mobile-help">
+                <p>
+                  <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapsePersonalInfoPostCode"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
                   >
-                    Need Help?
-                  </span>
-                  <span v-else @click="toggle(4)">
-                    Hide Help?
-                  </span>
-                </a>
-              </p>
-              <div
-                data-parent="#accordion"
-                class="collapse"
-                id="Needmobile_number"
-              >
-                <div class="card card-body bubble">
-                  Please provide tooltip texts so we can place it here
+                    <span v-if="arr[4].first" @click="toggle(4)">
+                      Need Help?
+                    </span>
+                    <span v-else @click="toggle(4)"> Hide Help? </span>
+                  </a>
+                </p>
+                <div
+                  class="collapse"
+                  data-parent="#accordion"
+                  id="collapsePersonalInfoPostCode"
+                >
+                  <div class="card card-body bubble">
+                    Please provide a valid post code. We ask for this
+                    information to verify your ID details.
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="row pt-3 pb-2 border-bottom">
+
+            <!-- Permanent Residence -->
+            <div class="row pt-3 pb-2 border-bottom">
+              <div class="col-12 col-md-6 none-padding">
+                <div class="mb-2 font-weight-bold">
+                  <a-icon
+                    v-if="
+                      personalInformation.personal.per_permanent_country &&
+                      personalInformation.personal.per_permanent_city
+                    "
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                  />Permanent Country and City
+                </div>
+              </div>
+              <div class="col-12 col-md-6 mobile-margin">
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                    <a-form-model-item
+                      ref="per_permanent_country"
+                      prop="per_permanent_country"
+                    >
+                      <v-select
+                        :clearable="false"
+                        class="style-chooser"
+                        @input="onCountryChange($event, 'per_permanent_country', 'contact')"
+                        id="per_permanent_country"
+                        placeholder="Select Country"
+                        v-model="
+                          personalInformation.personal.per_permanent_country
+                        "
+                        :reduce="(option) => option.id"
+                        label="name"
+                        :options="representativeDetails.countries"
+                        ><template #open-indicator>
+                          <a-icon type="down" /> </template
+                      ></v-select>
+                    </a-form-model-item>
+                  </div>
+                  <div class="col-12 col-md-6 mobile-margin">
+                    <a-form-model-item
+                      ref="per_permanent_city"
+                      prop="per_permanent_city"
+                    >
+                      <v-select
+                        :clearable="false"
+                        :loading="loadingPermanant"
+                        class="style-chooser"
+                        @input="
+                          onValueChange($event, 'per_permanent_city','contact')
+                        "
+                        id="per_permanent_city"
+                        placeholder="Select City"
+                        v-model="
+                          personalInformation.personal.per_permanent_city
+                        "
+                        :reduce="(option) => option.name"
+                        label="name"
+                        :options="personalInformation.personal.permanantCities"
+                        ><template #open-indicator>
+                          <a-icon type="down" /> </template
+                      ></v-select>
+                    </a-form-model-item>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 none-padding mobile-margin mobile-help">
+                <p>
+                  <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#personalInfoParmanentCountryCity"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                  >
+                    <span v-if="arr[5].first" @click="toggle(5)">
+                      Need Help?
+                    </span>
+                    <span v-else @click="toggle(5)"> Hide Help? </span>
+                  </a>
+                </p>
+                <div
+                  class="collapse"
+                  data-parent="#accordion"
+                  id="personalInfoParmanentCountryCity"
+                >
+                  <div class="card card-body bubble">
+                    Please provide a valid permanent address. This may be the
+                    same as your current place of residence you provided
+                    earlier. We ask for this information to verify your ID
+                    details.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Home Permanent Address  -->
+            <div class="row mt-3 pb-2 border-bottom">
+              <div class="col-12 col-md-6 none-padding">
+                <div class="mb-2 font-weight-bold">
+                  <a-icon
+                    v-if="personalInformation.personal.per_permanent_address"
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                  />Home Address
+                </div>
+              </div>
+              <div class="col-12 col-md-6 mobile-margin">
+                <a-form-model-item
+                  ref="per_permanent_address"
+                  prop="per_permanent_address"
+                >
+                  <a-textarea
+                    @blur="
+                      onValueChange($event, 'per_permanent_address', 'contact')
+                    "
+                    id="per_permanent_address"
+                    :rows="3"
+                    :maxLength="200"
+                    v-model="personalInformation.personal.per_permanent_address"
+                    placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
+                  ></a-textarea>
+                </a-form-model-item>
+              </div>
+              <div class="col-12 none-padding mobile-margin mobile-help">
+                <p>
+                  <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapsePersonalInfoFullAddress"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                  >
+                    <span v-if="arr[6].first" @click="toggle(6)">
+                      Need Help?
+                    </span>
+                    <span v-else @click="toggle(6)"> Hide Help? </span>
+                  </a>
+                </p>
+                <div
+                  class="collapse"
+                  data-parent="#accordion"
+                  id="collapsePersonalInfoFullAddress"
+                >
+                  <div class="card card-body bubble">Full address</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mobile Number -->
+            <div class="row pt-3 pb-2 border-bottom">
+              <div class="col-12 col-md-6 none-padding">
+                <div class="mb-2 font-weight-bold">
+                  <a-icon
+                    v-if="
+                      personalInformation.personal.mobile_number &&
+                      personalInformation.personal.mobile_country_code
+                    "
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                  />What is your mobile number?
+                </div>
+              </div>
+              <div class="col-12 col-md-6 mobile-margin">
+                <div class="row">
+                  <div class="col-4">
+                    <a-form-model-item
+                      ref="mobile_country_code"
+                      prop="mobile_country_code"
+                    >
+                      <a-select
+                        @change="
+                          onValueChange(
+                            $event,
+                           
+                            'mobile_country_code', 'contact',
+                          )
+                        "
+                        id="mobile_country_code"
+                        ref="select"
+                        v-model="
+                          personalInformation.personal.mobile_country_code
+                        "
+                        placeholder="Code"
+                      >
+                        <a-select-option value="">Select</a-select-option>
+                        <a-select-option value="+44">+44</a-select-option>
+                        <a-select-option value="+88">+88</a-select-option>
+                        <a-select-option value="+46">+46</a-select-option>
+                        <a-select-option value="+31	">+31 </a-select-option>
+                        <a-select-option value="+39">+39</a-select-option>
+                        <a-select-option value="+33">+33</a-select-option>
+                        <a-select-option value="+353">+353</a-select-option>
+                        <a-select-option value="+011">+011</a-select-option>
+                      </a-select>
+                    </a-form-model-item>
+                  </div>
+                  <div class="col-8">
+                    <a-form-model-item ref="mobile_number" prop="mobile_number">
+                      <a-input
+                        class="w-100"
+                        placeholder="+8801685117737"
+                        id="inputNumber"
+                        :maxLength="10"
+                        v-model="personalInformation.personal.mobile_number"
+                        @blur="
+                          onValueChange($event, 'mobile_number', 'contact')
+                        "
+                      />
+                    </a-form-model-item>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 none-padding mobile-margin mobile-help">
+                <p>
+                  <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#collapsepersonalInfoContactNumber"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                  >
+                    <span v-if="arr[7].first" @click="toggle(7)">
+                      Need Help?
+                    </span>
+                    <span v-else @click="toggle(7)"> Hide Help? </span>
+                  </a>
+                </p>
+                <div
+                  class="collapse"
+                  data-parent="#accordion"
+                  id="collapsepersonalInfoContactNumber"
+                >
+                  <div class="card card-body bubble">
+                    Provide mobile number with country code
+                  </div>
+                </div>
+              </div>
+            </div>
+             <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -423,7 +646,7 @@
                 :disabled="true"
               />
             </div>
-            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
+            <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
                 <a
                   class="color-blue fw-700 fs-14"
@@ -433,15 +656,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[5].first"
-                    @click="toggle(5)"
-                  >
+                  <span v-if="arr[8].first" @click="toggle(8)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(5)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(8)"> Hide Help? </span>
                 </a>
               </p>
               <div data-parent="#accordion" class="collapse" id="Needemail">
@@ -451,6 +669,9 @@
               </div>
             </div>
           </div>
+          </div>
+
+         
           <a-button
             shape="round"
             type="primary"
@@ -487,6 +708,8 @@ export default {
   data() {
     return {
       rules: RULES,
+      loading: false,
+      loadingPermanant:false,
       rules_personal: RULES_PERSONAL,
       arr: [
         { first: true },
@@ -511,23 +734,22 @@ export default {
 
   async mounted() {},
   methods: {
-       checkValidation(name,action) {
+    checkValidation(name, action) {
       switch (action) {
         case "essential":
-          this.$refs.personalInfoFormOne.fields.forEach((f) => {
+          this.$refs.repPersonalInfoFormOne.fields.forEach((f) => {
             if (f.prop == name) {
               f.onFieldBlur();
             }
           });
           break;
         case "general":
-          this.$refs.personalInfoFormTwo.fields.forEach((f) => {
+          this.$refs.repPersonalInfoFormTwo.fields.forEach((f) => {
             if (f.prop == name) {
               f.onFieldBlur();
             }
           });
           break;
-      
       }
     },
     handleSubmitFormOne() {
@@ -622,9 +844,9 @@ export default {
       this.activeKey = e;
       this.$emit("pannelChanged", e);
     },
-    async onCountryChange(e,name, action) {
-       this.checkValidation(name, action);
-      if (action === "per_current_residence_country") {
+    async onCountryChange(e, name, action) {
+      this.checkValidation(name, action);
+      if (name == "per_current_residence_country") {
         this.loading = true;
       } else {
         this.loadingPermanant = true;
@@ -634,13 +856,13 @@ export default {
       this.loadingPermanant = false;
       if (res.status === 200) {
         switch (action) {
-          case "permanant":
+          case "per_permanent_country":
             this.personalInformation.personal.permanantCities = [];
             this.personalInformation.personal.permanantCities.push(
               ...res.data.data
             );
             break;
-          case "residence":
+          case "per_current_residence_country":
             this.personalInformation.personal.residenceCities = [];
             this.personalInformation.personal.residenceCities.push(
               ...res.data.data
