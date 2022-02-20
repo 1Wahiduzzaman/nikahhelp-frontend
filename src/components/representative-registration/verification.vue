@@ -1,6 +1,6 @@
 <template>
   <div id="accordion" class="verificationInfo rounded">
-    <div  v-if="userData && userData.status == '1'" class="verification-content">
+    <div v-if="userData && userData.status == '1'" class="verification-content">
       <a-collapse
         default-active-key="1"
         @change="changeActivekey"
@@ -147,21 +147,27 @@
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
-                <v-select
-                  :clearable="false"
-                  class="style-chooser"
-                  @input="onValueChange($event, 'ver_city_id')"
-                  id="ver_document_type"
-                  placeholder="Document type"
-                  :reduce="(option) => option.value"
-                  v-model="verification.ver_document_type"
-                  label="name"
-                  :options="[
-                    { name: 'Passport', value: 'Passport' },
-                    { name: 'Nation ID', value: 'Nation ID' },
-                  ]"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                <a-form-model-item
+                  ref="ver_document_type"
+                  prop="ver_document_type"
+                >
+                  <v-select
+                    :clearable="false"
+                    class="style-chooser"
+                    @input="onValueChange($event, 'ver_document_type')"
+                    id="ver_document_type"
+                    placeholder="Document type"
+                    :reduce="(option) => option.value"
+                    v-model="verification.ver_document_type"
+                    label="name"
+                    :options="[
+                      { name: 'Passport', value: 'Passport' },
+                      { name: 'Nation ID', value: 'Nation ID' },
+                    ]"
+                    ><template #open-indicator>
+                      <a-icon type="down" /> </template
+                  ></v-select>
+                </a-form-model-item>
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">
                 <p>
@@ -379,7 +385,7 @@
                     v-model="verification.ver_recommender_title"
                     class="w-100"
                     placeholder="Title"
-                    @blur="onValueChange($event,'ver_recommender_title')"
+                    @blur="onValueChange($event, 'ver_recommender_title')"
                   />
                 </a-form-model-item>
 
@@ -393,7 +399,9 @@
                         v-model="verification.ver_recommender_first_name"
                         class="w-100 rounded-right"
                         placeholder="First Name"
-                        @blur="onValueChange($event,'ver_recommender_first_name')"
+                        @blur="
+                          onValueChange($event, 'ver_recommender_first_name')
+                        "
                       />
                     </a-form-model-item>
                   </div>
@@ -406,7 +414,9 @@
                         v-model="verification.ver_recommender_last_name"
                         class="w-100 rounded-left"
                         placeholder="Last Name"
-                        @blur="onValueChange($event,'ver_recommender_last_name')"
+                        @blur="
+                          onValueChange($event, 'ver_recommender_last_name')
+                        "
                       />
                     </a-form-model-item>
                   </div>
@@ -440,7 +450,7 @@
                     placeholder="Address"
                     :rows="4"
                     v-model="verification.ver_recommender_address"
-                    @blur="onValueChange($event,'ver_recommender_address')"
+                    @blur="onValueChange($event, 'ver_recommender_address')"
                   />
                 </a-form-model-item>
 
@@ -454,7 +464,19 @@
                     placeholder="Mobile number"
                     :maxLength="10"
                     v-model="verification.ver_recommender_mobile_no"
-                    @blur="onValueChange($event,'ver_recommender_mobile_no')"
+                    @blur="onValueChange($event, 'ver_recommender_mobile_no')"
+                  />
+                </a-form-model-item>
+                <a-form-model-item
+                  ref="ver_recommender_email"
+                  prop="ver_recommender_email"
+                >
+                  <a-input
+                    class="w-100"
+                    id="inputNumber"
+                    placeholder="Email Address"
+                    v-model="verification.ver_recommender_email"
+                    @blur="onValueChange($event, 'ver_recommender_email')"
                   />
                 </a-form-model-item>
               </div>
@@ -511,7 +533,7 @@
         </a-collapse-panel>
       </a-collapse>
     </div>
-        <div class="verification-msg" v-if="userData && userData.status == '2'">
+    <div class="verification-msg" v-if="userData && userData.status == '2'">
       <div class="identity">
         <img
           src="@/assets/icon/dots-horizontal-circle.svg"
@@ -651,8 +673,8 @@ export default {
         .toLowerCase()
         .startsWith(input.toLowerCase());
     },
-    onValueChange(e,name) {
-     this.checkValidation(name)
+    onValueChange(e, name) {
+      this.checkValidation(name);
     },
     checkValidation(name) {
       this.$refs.verification.fields.forEach((f) => {
@@ -694,7 +716,7 @@ export default {
         .catch((error) => {});
     },
     saveImageVerificationInfo() {
-       const image = {
+      const image = {
         ver_document_backside: this.verification.ver_document_backside,
         ver_document_frontside: this.verification.ver_document_frontside,
       };
@@ -712,7 +734,7 @@ export default {
         })
         .catch((error) => {});
     },
-      cancel() {
+    cancel() {
       this.$emit("cancel", false);
     },
     imageSizeCheck(file) {
