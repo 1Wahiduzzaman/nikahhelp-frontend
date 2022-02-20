@@ -38,43 +38,16 @@
                     >
                   </li>
                   <!-- Height -->
-                  <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1">Height</span
-                    ><span class="flex-60 px-2 text--secondary text-subtitle-1"
-                      >:
 
-                      <span
-                        v-html="
-                          `${
-                            heightTV.find(
-                              (x) =>
-                                x.value ===
-                                candidateData.preference.pre_height_min
-                            )
-                              ? heightTV.find(
-                                  (x) =>
-                                    x.value ===
-                                    candidateData.preference.pre_height_min
-                                ).label
-                              : ''
-                          } to ${
-                            heightTV.find(
-                              (x) =>
-                                x.value ===
-                                candidateData.preference.pre_height_max
-                            )
-                              ? heightTV.find(
-                                  (x) =>
-                                    x.value ===
-                                    candidateData.preference.pre_height_max
-                                ).label
-                              : ''
-                          }`
-                        "
-                        class="ml-3"
-                      >
-                      </span
-                    ></span>
+                  <li class="flex-between-start">
+                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                      >Height</span
+                    ><span class="flex-60 px-2 d-inherit"
+                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                        {{ getHeight(candidateData.preference.pre_height_min) }} to
+                      {{ getHeight(candidateData.preference.pre_height_max) }}
+                      </span></span
+                    >
                   </li>
 
                   <!-- Preferred countries and cities -->
@@ -439,7 +412,7 @@
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-60 px-2 text--disabled text-subtitle-1">Mother Tongue</span
+                    <span class="flex-40 px-2 text--disabled text-subtitle-1">Mother Tongue</span
                     ><span class="flex-60 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.personal.per_mother_tongue
@@ -521,7 +494,7 @@
               </div>
               
             </div>
-            <div class="col-md-4 mb-3 mobile-margin-top">
+            <div class="col-md-4 mb-3">
               <div class="card-custom shadow-default h-100">
                 <FieldsetCard
                   title="Marital Status"
@@ -854,6 +827,13 @@ export default {
         alert(this.error);
       }
     },
+
+    getHeight(val) {
+       let h = this.heightTV.find(x => 
+          x.value === val
+        )
+      return h.name;
+    }
   },
   computed: {},
 };

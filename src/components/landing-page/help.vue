@@ -316,7 +316,7 @@ input[type=submit]:hover {
 
 .faq-section {
     background: #fdfdfd;
-    min-height: 100vh;
+    min-height: 85vh;
     padding: 5vh 0 0;
     width: 100%;
 }
