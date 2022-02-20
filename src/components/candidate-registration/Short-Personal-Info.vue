@@ -164,30 +164,6 @@
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_height" prop="per_height">
-                <!-- <a-select
-                  @change="onValueChange($event, 'essential')"
-                  id="per_height"
-                  :showSearch="true"
-                  option-filter-prop="children"
-                  :filter-option="filterOption"
-                  :showArrow="true"
-                  style="width: 150px"
-                  placeholder="please select"
-                  v-model.number="personalInformation.essential.per_height"
-                  class="select-ma w-100"
-                >
-                  <a-select-option :value="0" disabled
-                    >Select your height</a-select-option
-                  >
-                  <a-select-option
-                    :value="item.value"
-                    :key="key"
-                    style="width: 100px"
-                    v-for="(item, key) in heightTV"
-                  >
-                    <div v-html="item.label"></div>
-                  </a-select-option>
-                </a-select> -->
                 <v-select
                   :clearable="false"
                   class="style-chooser"
@@ -237,6 +213,7 @@
             </div>
           </div>
  <!-- Religion -->
+ 
           <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
@@ -263,28 +240,6 @@
                   :options="candidateDetails.religions"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
-                <!-- <a-select
-                  @change="onValueChange($event, 'essential')"
-                  id="per_religion_id"
-                  :showSearch="true"
-                  :filter-option="filterOption"
-                  ref="select"
-                  placeholder="Select your religion"
-                  v-model="personalInformation.essential.per_religion_id"
-                  class="select-ma w-100"
-                >
-                  <a-select-option disabled :value="0"
-                    >Select your Religion</a-select-option
-                  >
-                  <a-select-option
-                    :value="item.id"
-                    v-bind:key="index"
-                    v-for="(item, index) in candidateDetails.religions"
-                    class="ma-select w-100"
-                  >
-                    {{ item.name }}
-                  </a-select-option>
-                </a-select> -->
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -345,29 +300,6 @@
                   :options="candidateDetails.studylevels"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
-                <!-- <a-select
-                  @change="onValueChange($event, 'essential')"
-                  id="per_education_level_id"
-                  :showSearch="true"
-                  :filter-option="filterOption"
-                  :showArrow="true"
-                  placeholder="Please select your education status"
-                  v-model="
-                    personalInformation.essential.per_education_level_id
-                  "
-                  class="select-ma w-100"
-                >
-
-                  <a-select-option disabled :value="0"
-                    >Select your education level</a-select-option
-                  >
-                  <a-select-option
-                    :value="item.id"
-                    v-bind:key="index"
-                    v-for="(item, index) in candidateDetails.studylevels"
-                    >{{ item.name }}</a-select-option
-                  >
-                </a-select> -->
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -430,27 +362,7 @@
                   :options="employment_Statuses"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
-                <!-- <a-select
-                  @change="onValueChange($event, 'essential')"
-                  id="per_employment_status"
-                  ref="select"
-                  placeholder="Select your employment status"
-                  class="select-ma w-100"
-                  v-model="
-                    personalInformation.essential.per_employment_status
-                  "
-                >
-                  <a-select-option disabled :value="0"
-                    >Select your employment status</a-select-option
-                  >
-                  <a-select-option value="employed"
-                    >Employed</a-select-option
-                  >
-                  <a-select-option value="unemployed"
-                    >Unemploymed</a-select-option
-                  >
-                </a-select> -->
-              </a-form-model-item>
+             </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
@@ -510,31 +422,7 @@
                   :options="candidateDetails.occupations"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
-                <!-- <a-select
-                  @change="onValueChange($event, 'essential')"
-                  id="per_occupation"
-                  :showSearch="true"
-                  option-filter-prop="children"
-                  :filter-option="filterOption"
-                  :showArrow="true"
-                  style="width: 150px"
-                  placeholder="Please select your education status"
-                  v-model="personalInformation.essential.per_occupation"
-                  class="select-ma w-100"
-                >
-                  <a-select-option :value="0" disabled
-                    >Select your occupation</a-select-option
-                  >
-                  <a-select-option
-                    :value="value"
-                    :key="key"
-                    style="width: 100px"
-                    v-for="(value, key) in candidateDetails.occupations"
-                  >
-                    {{ value }}
-                  </a-select-option>
-                </a-select> -->
-              </a-form-model-item>
+             </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
@@ -637,33 +525,6 @@
                       ><template #open-indicator>
                         <a-icon type="down" /> </template
                     ></v-select>
-                    <!-- <a-select
-                      @change="
-                        onCountryChange($event, 'contact', 'residence')
-                      "
-                      id="per_current_residence_country"
-                      style="width: 150px"
-                      :filter-option="filterOption"
-                      :showSearch="true"
-                      placeholder="Country"
-                      v-model="
-                        personalInformation.contact
-                          .per_current_residence_country
-                      "
-                      class="select-ma w-100"
-                    >
-                      <a-select-option disabled :value="0"
-                        >Select Country</a-select-option
-                      >
-                      <a-select-option
-                        :value="item.id"
-                        v-bind:key="index"
-                        style="width: 100px"
-                        v-for="(item, index) in candidateDetails.countries"
-                      >
-                        {{ item.name }}
-                      </a-select-option>
-                    </a-select> -->
                   </a-form-model-item>
                 </div>
                 <div class="col-12 col-md-6 mobile-margin">
@@ -687,31 +548,7 @@
                       ><template #open-indicator>
                         <a-icon type="down" /> </template
                     ></v-select>
-                    <!-- <a-select
-                      @change="onValueChange($event, 'contact')"
-                      id="per_current_residence_city"
-                      style="width: 150px"
-                      placeholder="City"
-                      :filter-option="filterOption"
-                      :showSearch="true"
-                      v-model.number="
-                        personalInformation.contact
-                          .per_current_residence_city
-                      "
-                      class="select-ma w-100"
-                    >
-                      <a-select-option disabled :value="0"
-                        >Select City</a-select-option
-                      >
-                      <a-select-option
-                        v-for="city in personalInformation.contact
-                          .residenceCities"
-                        :key="city.id"
-                        :value="city.id"
-                        >{{ city.name }}</a-select-option
-                      >
-                    </a-select> -->
-                  </a-form-model-item>
+                   </a-form-model-item>
                 </div>
               </div>
             </div>
@@ -849,33 +686,7 @@
                       ><template #open-indicator>
                         <a-icon type="down" /> </template
                     ></v-select>
-                    <!-- <a-select
-                      @change="
-                        onCountryChange($event, 'contact', 'permanant')
-                      "
-                      id="per_permanent_country"
-                      style="width: 150px"
-                      placeholder="Country"
-                      :filter-option="filterOption"
-                      :showSearch="true"
-                      v-model="
-                        personalInformation.contact.per_permanent_country
-                      "
-                      class="select-ma w-100"
-                    >
-                      <a-select-option disabled :value="0"
-                        >Select Country</a-select-option
-                      >
-                      <a-select-option
-                        :value="item.id"
-                        v-bind:key="index"
-                        style="width: 100px"
-                        v-for="(item, index) in candidateDetails.countries"
-                      >
-                        {{ item.name }}
-                      </a-select-option>
-                    </a-select> -->
-                  </a-form-model-item>
+                 </a-form-model-item>
                 </div>
                 <div class="col-12 col-md-6 mobile-margin">
                   <a-form-model-item
@@ -896,30 +707,7 @@
                       ><template #open-indicator>
                         <a-icon type="down" /> </template
                     ></v-select>
-                    <!-- <a-select
-                      @change="onValueChange($event, 'contact')"
-                      id="per_permanent_city"
-                      style="width: 150px"
-                      placeholder="City"
-                      :filter-option="filterOption"
-                      :showSearch="true"
-                      v-model="
-                        personalInformation.contact.per_permanent_city
-                      "
-                      class="select-ma w-100"
-                    >
-                      <a-select-option disabled :value="0"
-                        >Select City</a-select-option
-                      >
-                      <a-select-option
-                        v-for="city in personalInformation.contact
-                          .permanantCities"
-                        :key="city.id"
-                        :value="city.id"
-                        >{{ city.name }}</a-select-option
-                      >
-                    </a-select> -->
-                  </a-form-model-item>
+                 </a-form-model-item>
                 </div>
               </div>
             </div>
@@ -1014,90 +802,9 @@
           </div>
 
           <!-- Mobile Number -->
-          <div class="row pt-3 pb-2 border-bottom">
-            <div class="col-12 col-md-6 none-padding">
-              <div class="mb-2 font-weight-bold">
-                <a-icon
-                  v-if="
-                    personalInformation.contact.mobile_number &&
-                    personalInformation.contact.mobile_country_code
-                  "
-                  class="color-success mr-2 fs-18 fw-500"
-                  type="check"
-                />What is your mobile number?
-              </div>
-            </div>
-            <div class="col-12 col-md-6 mobile-margin">
-              <div class="row">
-                <div class="col-4">
-                  <a-form-model-item
-                    ref="mobile_country_code"
-                    prop="mobile_country_code"
-                  >
-                    <a-select
-                      @change="onValueChange($event, 'contact')"
-                      id="mobile_country_code"
-                      ref="select"
-                      v-model="personalInformation.contact.mobile_country_code"
-                      placeholder="Country Code"
-                    >
-                      <a-select-option value="">Select</a-select-option>
-                      <a-select-option value="+44">+44</a-select-option>
-                      <a-select-option value="+88">+88</a-select-option>
-                      <a-select-option value="+46">+46</a-select-option>
-                      <a-select-option value="+31	">+31 </a-select-option>
-                      <a-select-option value="+39">+39</a-select-option>
-                      <a-select-option value="+33">+33</a-select-option>
-                      <a-select-option value="+353">+353</a-select-option>
-                      <a-select-option value="+011">+011</a-select-option>
-                    </a-select>
-                  </a-form-model-item>
-                </div>
-                <div class="col-8">
-                  <a-form-model-item ref="mobile_number" prop="mobile_number">
-                    <a-input
-                      @blur="onValueChange($event, 'contact')"
-                      id="mobile_number"
-                      :maxLength="10"
-                      v-model="personalInformation.contact.mobile_number"
-                      placeholder="Mobile Number"
-                    />
-                  </a-form-model-item>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 none-padding mobile-margin mobile-help">
-              <p>
-                <a
-                  class="color-blue fw-700 fs-14"
-                  data-toggle="collapse"
-                  href="#collapsepersonalInfoContactNumber"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
-                >
-                  <span
-                    v-if="arr[11].first"
-                    @click="toggle(11)"
-                  >
-                    Need Help?
-                  </span>
-                  <span v-else @click="toggle(11)">
-                    Hide Help?
-                  </span>
-                </a>
-              </p>
-              <div
-                class="collapse"
-                data-parent="#personalInfoAccordian"
-                id="collapsepersonalInfoContactNumber"
-              >
-                <div class="card card-body bubble">
-                  Provide mobile number with country code
-                </div>
-              </div>
-            </div>
-          </div>
+         <mobile-number
+						:hasNumber="hasPhoneNumber"
+		 ></mobile-number>
 
           <!-- Email Address -->
           <div class="row pt-3 pb-2 border-bottom">
@@ -1182,12 +889,20 @@ import { HEIGHTS, Employment_Statuses } from "@/models/data";
 import ApiService from "@/services/api.service";
 import vSelect from "vue-select";
 import { createPopper } from "@popperjs/core";
+import mobileNumber from './MobileNumber.vue';
 export default {
   name: "ShortPersonalInfo",
   components: {
     DropdownDatePicker,
     NeedHelp,
     vSelect,
+	mobileNumber,
+  },
+  computed: {
+	  hasPhoneNumber() {
+		  return this.personalInformation.contact.mobile_number && 
+				this.personalInformation.contact.mobile_country_code;
+	  }
   },
   props: {
     candidateDetails: {
@@ -1199,12 +914,6 @@ export default {
   },
   data() {
     return {
-      // dropdownShouldOpen: {
-      //   type: Function,
-      //   default({ noDrop, open, mutableLoading }) {
-      //     return open;
-      //   },
-      // },
       activeKey: 1,
       default_date: null,
       rules: RULESPERSONALINFO,
@@ -1224,6 +933,7 @@ export default {
         month: null,
         year: null,
       },
+      contact: '',
     };
   },
   watch: {
@@ -1482,7 +1192,7 @@ export default {
     },
     async saveContactInfo() {
       await this.$store
-        .dispatch("savePersonalContactInfo", this.personalInformation.contact)
+        .dispatch("savePersonalContactInfo", this.contact)
         .then((data) => {
           this.$emit("valueChange", {
             value: this.personalInformation,

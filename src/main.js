@@ -23,6 +23,10 @@ import ApiService from "./services/api.service";
 import Vuetify from 'vuetify';
 import 'viewerjs/dist/viewer.css';
 import VueViewer from 'v-viewer';
+import VueTelInput from 'vue-tel-input';
+import 'vue-tel-input/dist/vue-tel-input.css';
+
+Vue.use(VueTelInput); // Define default global options here (optional)
 Vue.use(VueViewer);
 Vue.use(Vuetify);
 Vue.use(HighchartsVue);
