@@ -129,6 +129,8 @@ import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import Footer from "@/components/auth/Footer.vue";
 import CardInput from "@/components/subscription/CardInput.vue";
 import Spinner from "@/components/ui/Spinner.vue";
+import ApiService from "../../services/api.service";
+import Notification from "@/common/notification.js";
 
 export default {
   name: "SubscriptionPayment",
@@ -170,6 +172,20 @@ export default {
   },
 
   methods: {
+    socketNotification(payload) {
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.sender = loggedUser.id;
+      Notification.storeNotification(payload);
+      payload.created_at = new Date();
+      payload.seen = 0;
+      payload.sender = loggedUser;
+      if(payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map(item => {
+          return item.toString();
+        });
+        this.$socket.emit('notification', payload);
+      }
+    },
     nextStep(step) {
       this.activeStep = step;
       if(this.activeStep == 1) {
@@ -196,40 +212,42 @@ export default {
       this.$refs.card_input.setValidationFalse();
     },
     async subscribe() {
-      console.log(this.$store.state.user.payment_method);
       const _payload = {
         stripeToken: this.$store.state.user.payment_method,
         team_id: this.teamId,
         auto_renewal: 1,
         plane: this.subscriptionId,
       };
-      console.log(_payload);
 
       this.isLoading = true;
       try {
-        await this.$store.dispatch("createSubscription", _payload); // Action in the User module in store
-        this.isLoading = false;
-        let subscribedTeam = this.$store.state.team.teamSelected;
-        if(subscribedTeam && subscribedTeam.team_members && subscribedTeam.team_members.length > 1) {
-          const self = this;
-          let loggedUser = JSON.parse(localStorage.getItem('user'));
-          let receivers = subscribedTeam.team_members.filter(item => item.user_id != loggedUser.id).map(opt => opt.user_id);
-          let payload = {
-            receivers: receivers,
-            title: `${loggedUser.full_name} subscribed ${subscribedTeam.name} team`,
-            team_temp_name: subscribedTeam.name,
-            team_id: subscribedTeam.id
-          };
-          self.socketNotification(payload);
+        let {data} = await ApiService.post("/v1/subscription/new_subscription", _payload).then(res => res.data);
+
+        // await this.$store.dispatch("createSubscription", _payload); // Action in the User module in store
+        if(data) {
+          this.isLoading = false;
+          let subscribedTeam = this.$store.state.team.teamSelected;
+          if(subscribedTeam && subscribedTeam.team_members && subscribedTeam.team_members.length > 1) {
+            const self = this;
+            let loggedUser = JSON.parse(localStorage.getItem('user'));
+            let receivers = subscribedTeam.team_members.filter(item => item.user_id != loggedUser.id).map(opt => opt.user_id);
+            let payload = {
+              receivers: receivers,
+              title: `buy a subscription`,
+              team_temp_name: subscribedTeam.name,
+              team_id: subscribedTeam.id
+            };
+            self.socketNotification(payload);
+          }
+          this.$router.push(
+              `/subscription/complete/success/${this.subscriptionName}/${this.teamName}`
+          );
+          this.$store.state.team.legalSubscription = false;
         }
-        this.$router.push(
-            `/subscription/complete/success/${this.subscriptionName}/${this.teamName}`
-        );
-        this.$store.state.team.legalSubscription = false;
       } catch (error) {
         this.$error({
           title: "Subscription Payment Error!",
-          content: error.response.data.message,
+          // content: error.response.data.message,
           centered: true,
         });
         this.isLoading = false;
