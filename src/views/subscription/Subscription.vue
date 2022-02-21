@@ -150,7 +150,7 @@
               </h1>
 
               <div class="form-group px-4">
-                <select class="w-100 custom-select fs-18" v-model="teamSelected">
+                <select class="w-100 custom-select fs-18" v-model="teamSelected" @change="setActiveTeam">
                   <option
                     v-for="(team, teamIndex) in teams"
                     :value="team"
@@ -423,17 +423,23 @@ export default {
     },
     async getSelectedTeam() {
       if (this.$route.params.id == null) {
-        console.log("Null");
         return;
       } else {
-        console.log(this.$route.params.id);
         await this.$store.dispatch("getTeams");
         this.teams = this.$store.getters["userTeamList"];
         var team = this.teams.find((team) => {
           return team.team_id == this.$route.params.id;
         });
         this.teamSelected = team;
+        this.$store.state.team.teamSelected = team;
       }
+    },
+    setActiveTeam() {
+      // let team = this.teams.find((team) => {
+      //   return team.team_id == this.$route.params.id;
+      // });
+      // this.teamSelected = team;
+      this.$store.state.team.teamSelected = this.teamSelected;
     },
     nextStep(step) {
       this.activeStep = step;
