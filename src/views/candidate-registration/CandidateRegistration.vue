@@ -110,16 +110,20 @@
         <!-- :class="{ disabled: !enabledNextBtn }"
           :disabled="!enabledNextBtn" -->
         <a-button
-          :class="{'disabled': !enabledNextBtn, 'next-btn-pos': current !== 0, 'first-next-btn-pos':  current === 0 }"
+          :class="{
+            disabled: !enabledNextBtn,
+            'next-btn-pos': current !== 0,
+            'first-next-btn-pos': current === 0,
+          }"
           :disabled="!enabledNextBtn"
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
-          style="float: right;"
+          style="float: right"
           class="mt-3 next-btn-pos"
           @click="next"
         >
-<!--          :style="{'margin-right': current === 0 ? '-15px' : '0'}"-->
+          <!--          :style="{'margin-right': current === 0 ? '-15px' : '0'}"-->
           Next
         </a-button>
         <a-button
@@ -145,16 +149,19 @@
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
-          style="float: left;"
+          style="float: left"
           class="mt-3"
-          :class="{'first-save-btn': current === 0, 'save-btn': current !== 0}"
+          :class="{
+            'first-save-btn': current === 0,
+            'save-btn': current !== 0,
+          }"
           @click="saveExit"
         >
           Save & Exit
         </a-button>
       </div>
-      <br>
-      <br><br><br><br>
+      <br />
+      <br /><br /><br /><br />
     </div>
     <ReviewAndPublishModal
       @continue="continueToDashboard"
@@ -428,20 +435,24 @@ export default {
                 ? JSON.parse(response.data.data.user.preference.pre_occupation)
                 : "",
             pre_height_min:
-              response.data.data.user.preference.pre_height_min == 0
+              response.data.data.user.preference.pre_height_min == 0 ||
+              !response.data.data.user.preference.pre_height_min
                 ? undefined
                 : response.data.data.user.preference.pre_height_min,
             pre_height_max:
-              response.data.data.user.preference.pre_height_max == 0
+              response.data.data.user.preference.pre_height_max == 0 ||
+              !response.data.data.user.preference.pre_height_max
                 ? undefined
                 : response.data.data.user.preference.pre_height_max,
 
             pre_partner_age_max:
-              response.data.data.user.preference.pre_partner_age_max == 0
+              response.data.data.user.preference.pre_partner_age_max == 0 ||
+              !response.data.data.user.preference.pre_partner_age_max
                 ? undefined
                 : response.data.data.user.preference.pre_partner_age_max,
             pre_partner_age_min:
-              response.data.data.user.preference.pre_partner_age_min == 0
+              response.data.data.user.preference.pre_partner_age_min == 0 ||
+              response.data.data.user.preference.pre_partner_age_min
                 ? undefined
                 : response.data.data.user.preference.pre_partner_age_min,
 
@@ -455,12 +466,14 @@ export default {
               ? undefined
               : response.data.data.user.preference.pre_ethnicities.split(","),
             pre_preferred_divorcee:
-              response.data.data.user.preference.pre_preferred_divorcee == 0
+              response.data.data.user.preference.pre_preferred_divorcee == 0 ||
+              !response.data.data.user.preference.pre_preferred_divorcee
                 ? false
                 : true,
             pre_preferred_divorcee_child:
               response.data.data.user.preference.pre_preferred_divorcee_child ==
-              0
+                0 ||
+              !response.data.data.user.preference.pre_preferred_divorcee_child
                 ? false
                 : true,
             pre_partner_comes_from: [],
@@ -554,7 +567,8 @@ export default {
           );
         }
         this.current = response.data.data.user.data_input_status;
-        this.showAgreement = user.status == "2" || user.status == "3" ? true : false;
+        this.showAgreement =
+          user.status == "2" || user.status == "3" ? true : false;
         this.checkExistData();
       } else {
         this.isLoading = false;

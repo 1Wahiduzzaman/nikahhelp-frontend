@@ -245,7 +245,7 @@
             </h3>
             <div class="d-flex">
               <a-switch
-                v-model="anyoneFlag"
+                v-model="anybody_can_see"
                 @change="onConfirmationSwitchChnaged1"
               >
                 <a-icon slot="checkedChildren" type="check" />
@@ -258,8 +258,7 @@
             <div class="d-flex mt-4">
               <a-switch
                 @change="onConfirmationSwitchChnaged2"
-                v-model="onlyTeamFlag"
-                :disabled="anyoneFlag"
+                v-model="only_team_can_see"
               >
                 <a-icon slot="checkedChildren" type="check" />
                 <a-icon slot="unCheckedChildren" type="close" />
@@ -271,8 +270,7 @@
             <div class="d-flex mt-4">
               <a-switch
                 @change="onConfirmationSwitchChnaged3"
-                v-model="onlyTeamConnectionsFlag"
-                :disabled="anyoneFlag"
+                v-model="team_connection_can_see"
               >
                 <a-icon slot="checkedChildren" type="check" />
                 <a-icon slot="unCheckedChildren" type="close" />
@@ -315,9 +313,9 @@ export default {
       onlyTeamFlag: false,
       onlyTeamConnectionsFlag: false,
       loadingButton: false,
-      anybody_can_see: 1,
-      only_team_can_see: 0,
-      team_connection_can_see: 0,
+      anybody_can_see: false,
+      only_team_can_see: false,
+      team_connection_can_see: false,
     };
   },
 
@@ -380,17 +378,12 @@ export default {
       const response = this.$store.dispatch("getImageSharingSettings");
       response
         .then((data) => {
-          console.log("personal", data);
-          this.anyoneFlag =
+          this.anybody_can_see =
             data.data.data.personal.anybody_can_see == 1 ? true : false;
-          this.onlyTeamFlag =
+          this.only_team_can_see =
             data.data.data.personal.only_team_can_see == 1 ? true : false;
-          this.onlyTeamConnectionsFlag =
-            data.data.data.personal.team_connection_can_see == 1 ? true : false;
-          this.anybody_can_see = data.data.data.personal.anybody_can_see;
-          this.only_team_can_see = data.data.data.personal.only_team_can_see;
           this.team_connection_can_see =
-            data.data.data.personal.team_connection_can_see;
+            data.data.data.personal.team_connection_can_see == 1 ? true : false;
         })
         .catch((error) => {
           console.log(error.message);
@@ -449,35 +442,44 @@ export default {
       };
     },
     onConfirmationSwitchChnaged1(checked) {
-      console.log(checked);
-      if (checked) {
-        this.onlyTeamFlag = false;
-        this.onlyTeamConnectionsFlag = false;
-        this.only_team_can_see = 0;
-        this.team_connection_can_see = 0;
+      if (this.anybody_can_see) {
+        this.only_team_can_see = false;
+        this.team_connection_can_see = false;
+      } else {
+        this.only_team_can_see = true;
+        this.team_connection_can_see = false;
       }
-      checked == true ? (this.anybody_can_see = 1) : (this.anybody_can_see = 0);
+
       this.onChangeCheckBox();
     },
     onConfirmationSwitchChnaged2(checked) {
-      console.log(checked);
-      checked == true
-        ? (this.only_team_can_see = 1)
-        : (this.only_team_can_see = 0);
+      if (this.only_team_can_see) {
+        this.anybody_can_see = false;
+        this.team_connection_can_see = false;
+      } else {
+        this.anybody_can_see = true;
+        this.team_connection_can_see = false;
+      }
       this.onChangeCheckBox();
     },
     onConfirmationSwitchChnaged3(checked) {
-      console.log(checked);
-      checked == true
-        ? (this.team_connection_can_see = 1)
-        : (this.team_connection_can_see = 0);
+      if (this.team_connection_can_see) {
+        this.anybody_can_see = false;
+        this.only_team_can_see = false;
+      } else {
+        this.only_team_can_see = false;
+        this.anybody_can_see = true;
+      }
       this.onChangeCheckBox();
     },
     onChangeCheckBox() {
       let formData = new FormData();
-      formData.append("anybody_can_see", this.anybody_can_see);
-      formData.append("only_team_can_see", this.only_team_can_see);
-      formData.append("team_connection_can_see", this.team_connection_can_see);
+      formData.append("anybody_can_see", this.anybody_can_see ? 1 : 0);
+      formData.append("only_team_can_see", this.only_team_can_see ? 1 : 0);
+      formData.append(
+        "team_connection_can_see",
+        this.team_connection_can_see ? 1 : 0
+      );
       this.saveImage(formData);
     },
     async saveImage(data) {
