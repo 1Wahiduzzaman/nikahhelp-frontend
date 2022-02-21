@@ -764,6 +764,16 @@ export default {
   mounted() {},
 
   methods: {
+     toggle(index) {
+      this.arr = this.arr.map((a, ind) => {
+        if (ind === index) {
+          a.first = !a.first;
+        } else {
+          a.first = true;
+        }
+        return a;
+      });
+    },
     async updateUserVerifyOrReject() {
       const data = {
         id: this.userData.id,

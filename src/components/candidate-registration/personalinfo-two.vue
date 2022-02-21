@@ -85,15 +85,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[29].first"
-                   @click="toggle(29)"
-                  >
+                  <span v-if="arr[29].first" @click="toggle(29)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(29)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(29)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -101,7 +96,11 @@
                 class="collapse"
                 id="collapsePersonalInfoGender"
               >
-                <div class="card card-body bubble">Once a gender is selected and the completed form is submitted for approval, if a mistake is made then it can only be changed by contacting the MatrimonyAssist Team.</div>
+                <div class="card card-body bubble">
+                  Once a gender is selected and the completed form is submitted
+                  for approval, if a mistake is made then it can only be changed
+                  by contacting the MatrimonyAssist Team.
+                </div>
               </div>
             </div>
           </div>
@@ -144,15 +143,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[28].first"
-                     @click="toggle(28)"
-                  >
+                  <span v-if="arr[28].first" @click="toggle(28)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(28)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(28)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -160,7 +154,11 @@
                 class="collapse"
                 id="collapsePersonalInfoDateOfBirth"
               >
-                <div class="card card-body bubble">Once date of birth is provided and the completed form is submitted for approval, if a mistake is made then it can only be changed by contacting the MatrimonyAssist Team.</div>
+                <div class="card card-body bubble">
+                  Once date of birth is provided and the completed form is
+                  submitted for approval, if a mistake is made then it can only
+                  be changed by contacting the MatrimonyAssist Team.
+                </div>
               </div>
             </div>
           </div>
@@ -204,15 +202,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[27].first"
-                    @click="toggle(27)"
-                  >
+                  <span v-if="arr[27].first" @click="toggle(27)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(27)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(27)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -221,12 +214,14 @@
                 id="collapsePersonalInfoHeight"
               >
                 <div class="card card-body bubble">
-                Please select a height option that is closest to your actual height measured without shoes on from your feet to the top of your head. 
+                  Please select a height option that is closest to your actual
+                  height measured without shoes on from your feet to the top of
+                  your head.
                 </div>
               </div>
             </div>
           </div>
- <!-- Religion -->
+          <!-- Religion -->
           <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
@@ -265,15 +260,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[26].first"
-                     @click="toggle(26)"
-                  >
+                  <span v-if="arr[26].first" @click="toggle(26)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(26)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(26)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -281,12 +271,15 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoReligion"
               >
-                <div class="card card-body bubble">MatrimonyAssit is for everyone who believes in marriage as a family and social institution for goodness.</div>
+                <div class="card card-body bubble">
+                  MatrimonyAssit is for everyone who believes in marriage as a
+                  family and social institution for goodness.
+                </div>
               </div>
             </div>
           </div>
           <!-- TODO - Practicing Religion Missing? -->
-         <!-- Education Level -->
+          <!-- Education Level -->
           <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
@@ -328,15 +321,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[25].first"
-                    @click="toggle(25)"
-                  >
+                  <span v-if="arr[25].first" @click="toggle(25)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(25)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(25)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -345,7 +333,10 @@
                 id="collapsePersonalInfoHighestLevelEducation"
               >
                 <div class="card card-body bubble">
-                  Your highest level of education is the for which you have a official certificate of achievement. If you can't find your education level listed, please select 'other' and state your education level in the additional information text field. 
+                  Your highest level of education is the for which you have a
+                  official certificate of achievement. If you can't find your
+                  education level listed, please select 'other' and state your
+                  education level in the additional information text field.
                 </div>
               </div>
             </div>
@@ -392,15 +383,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[24].first"
-                    @click="toggle(24)"
-                  >
+                  <span v-if="arr[24].first" @click="toggle(24)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(24)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(24)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -409,7 +395,11 @@
                 id="collapsePersonalInfoEmploymentSatus"
               >
                 <div class="card card-body bubble">
-                  If you have more than one employment status, please select the one that takes up most of your time. If you can't find your employment status listed, please select 'other' and state your employment status details in the additional information text field.
+                  If you have more than one employment status, please select the
+                  one that takes up most of your time. If you can't find your
+                  employment status listed, please select 'other' and state your
+                  employment status details in the additional information text
+                  field.
                 </div>
               </div>
             </div>
@@ -452,15 +442,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[23].first"
-                    @click="toggle(23)"
-                  >
+                  <span v-if="arr[23].first" @click="toggle(23)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(23)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(23)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -468,14 +453,17 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoOccupation"
               >
-                <div class="card card-body bubble">If you have more than one occupation, please select the one that takes up most of your time. If you can't find your occupation listed, please select 'other' and state your occupation details in the additional information text field.</div>
+                <div class="card card-body bubble">
+                  If you have more than one occupation, please select the one
+                  that takes up most of your time. If you can't find your
+                  occupation listed, please select 'other' and state your
+                  occupation details in the additional information text field.
+                </div>
               </div>
             </div>
           </div>
 
-         
-
-           <!-- Essential Information End -->
+          <!-- Essential Information End -->
 
           <a-button
             shape="round"
@@ -565,15 +553,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[22].first"
-                     @click="toggle(22)"
-                  >
+                  <span v-if="arr[22].first" @click="toggle(22)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(22)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(22)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -581,7 +564,11 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoEthnicity"
               >
-                <div class="card card-body bubble">If you can't find your ethnicity listed, please select 'other' and state your ethnicity details in the additional information text field.</div>
+                <div class="card card-body bubble">
+                  If you can't find your ethnicity listed, please select 'other'
+                  and state your ethnicity details in the additional information
+                  text field.
+                </div>
               </div>
             </div>
           </div>
@@ -648,15 +635,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[21].first"
-                     @click="toggle(21)"
-                  >
+                  <span v-if="arr[21].first" @click="toggle(21)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(21)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(21)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -664,7 +646,11 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoSpeakingLanguage"
               >
-                <div class="card card-body bubble">If you can't find your mother tongue listed, please select 'other' and state your mother tongue details in the additional information text field.</div>
+                <div class="card card-body bubble">
+                  If you can't find your mother tongue listed, please select
+                  'other' and state your mother tongue details in the additional
+                  information text field.
+                </div>
               </div>
             </div>
           </div>
@@ -728,15 +714,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[20].first"
-                     @click="toggle(20)"
-                  >
+                  <span v-if="arr[20].first" @click="toggle(20)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(20)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(20)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -744,7 +725,11 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfonationality"
               >
-                <div class="card card-body bubble">You may have more than one nationality (by birth or acquired), please choose one here and you may provide futher details in the additional information text field.</div>
+                <div class="card card-body bubble">
+                  You may have more than one nationality (by birth or acquired),
+                  please choose one here and you may provide futher details in
+                  the additional information text field.
+                </div>
               </div>
             </div>
           </div>
@@ -813,19 +798,18 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[19].first"
-                     @click="toggle(19)"
-                  >
+                  <span v-if="arr[19].first" @click="toggle(19)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(19)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(19)"> Hide Help? </span>
                 </a>
               </p>
               <div class="collapse" id="collapsePersonalInfoCountryOfBirth">
-                <div class="card card-body bubble">If you can't find your country listed, please select 'other' and state your country details in the additional information text field.</div>
+                <div class="card card-body bubble">
+                  If you can't find your country listed, please select 'other'
+                  and state your country details in the additional information
+                  text field.
+                </div>
               </div>
             </div>
           </div>
@@ -869,15 +853,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[18].first"
-                     @click="toggle(18)"
-                  >
+                  <span v-if="arr[18].first" @click="toggle(18)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(18)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(18)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1054,15 +1033,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[17].first"
-                     @click="toggle(17)"
-                  >
+                  <span v-if="arr[17].first" @click="toggle(17)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(17)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(17)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1071,7 +1045,8 @@
                 id="collapsePersonalInfoCurrentResidenceCity"
               >
                 <div class="card card-body bubble">
-                  Your current place of residence is where you may be staying for work, study or any other purpose. 
+                  Your current place of residence is where you may be staying
+                  for work, study or any other purpose.
                 </div>
               </div>
             </div>
@@ -1121,15 +1096,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[16].first"
-                     @click="toggle(16)"
-                  >
+                  <span v-if="arr[16].first" @click="toggle(16)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(16)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(16)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1138,7 +1108,8 @@
                 id="collapsePersonalInfoPostCode"
               >
                 <div class="card card-body bubble">
-                  Please provide a valid post code. We ask for this information to verify your ID details. 
+                  Please provide a valid post code. We ask for this information
+                  to verify your ID details.
                 </div>
               </div>
             </div>
@@ -1266,15 +1237,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[15].first"
-                     @click="toggle(15)"
-                  >
+                  <span v-if="arr[15].first" @click="toggle(15)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(15)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(15)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1283,7 +1249,9 @@
                 id="personalInfoParmanentCountryCity"
               >
                 <div class="card card-body bubble">
-                Please provide a valid permanent address. This may be the same as your current place of residence you provided earlier. We ask for this information to verify your ID details. 
+                  Please provide a valid permanent address. This may be the same
+                  as your current place of residence you provided earlier. We
+                  ask for this information to verify your ID details.
                 </div>
               </div>
             </div>
@@ -1327,15 +1295,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[14].first"
-                     @click="toggle(14)"
-                  >
+                  <span v-if="arr[14].first" @click="toggle(14)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(14)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(14)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1395,7 +1358,7 @@
                     <a-input
                       @blur="onValueChange($event, 'contact')"
                       id="mobile_number"
-                      :maxLength="10"
+                      maxLength="10"
                       v-model="personalInformation.contact.mobile_number"
                       placeholder="Mobile Number"
                     />
@@ -1413,15 +1376,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[13].first"
-                     @click="toggle(13)"
-                  >
+                  <span v-if="arr[13].first" @click="toggle(13)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(13)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(13)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1469,15 +1427,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[12].first"
-                     @click="toggle(12)"
-                  >
+                  <span v-if="arr[12].first" @click="toggle(12)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(12)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(12)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1486,7 +1439,8 @@
                 id="collapsePersonalInfoEmailId"
               >
                 <div class="card card-body bubble">
-                  Your registered email address. This is what you provided at the time of registration. This is a read only field.
+                  Your registered email address. This is what you provided at
+                  the time of registration. This is a read only field.
                 </div>
               </div>
             </div>
@@ -1549,11 +1503,20 @@
                   :reduce="(option) => option.value"
                   label="name"
                   :options="[
-                    { name: 'Single, never married', value: 'single never married' },
+                    {
+                      name: 'Single, never married',
+                      value: 'single never married',
+                    },
                     { name: 'Widow', value: 'widow' },
-                    { name: 'Widow with children', value: 'widow with children' },
+                    {
+                      name: 'Widow with children',
+                      value: 'widow with children',
+                    },
                     { name: 'Widower', value: 'widower' },
-                    { name: 'Widower with children', value: 'widower with children' },
+                    {
+                      name: 'Widower with children',
+                      value: 'widower with children',
+                    },
                     { name: 'Divorcee', value: 'divorced' },
                     {
                       name: 'Divorcee with children',
@@ -1593,15 +1556,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[11].first"
-                     @click="toggle(11)"
-                  >
+                  <span v-if="arr[11].first" @click="toggle(11)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(11)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(11)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1609,7 +1567,9 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoMaritalStatus"
               >
-                <div class="card card-body bubble">Please select as appropriate</div>
+                <div class="card card-body bubble">
+                  Please select as appropriate
+                </div>
               </div>
             </div>
           </div>
@@ -1703,15 +1663,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[10].first"
-                     @click="toggle(10)"
-                  >
+                  <span v-if="arr[10].first" @click="toggle(10)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(10)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(10)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1720,7 +1675,11 @@
                 id="collapsePersonalInfoCuurentlyLivingWith"
               >
                 <div class="card card-body bubble">
-                  We ask this question to provide additional information that may help in their decision making. You can expand on your response and future plans in the additional information text field.</div>
+                  We ask this question to provide additional information that
+                  may help in their decision making. You can expand on your
+                  response and future plans in the additional information text
+                  field.
+                </div>
               </div>
             </div>
           </div>
@@ -1800,15 +1759,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[9].first"
-                    @click="toggle(9)"
-                  >
+                  <span v-if="arr[9].first" @click="toggle(9)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(9)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(9)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1817,7 +1771,9 @@
                 id="collapsePersonalInfoWillingToRelocate"
               >
                 <div class="card card-body bubble">
-                 In a fast changing world, people tend to move for work and other reasons. Sometimes relocating is not possible due to rights and responsibilty considerations.
+                  In a fast changing world, people tend to move for work and
+                  other reasons. Sometimes relocating is not possible due to
+                  rights and responsibilty considerations.
                 </div>
               </div>
             </div>
@@ -1847,9 +1803,11 @@
                   label="name"
                   :options="[
                     {
-                      name: 'No', value: 2},
+                      name: 'No',
+                      value: 2,
+                    },
                     { name: 'Yes', value: 1 },
-                    
+
                     { name: `Former smoker`, value: 3 },
                   ]"
                   ><template #open-indicator> <a-icon type="down" /> </template
@@ -1884,15 +1842,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[8].first"
-                    @click="toggle(8)"
-                  >
+                  <span v-if="arr[8].first" @click="toggle(8)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(8)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(8)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -1900,7 +1853,10 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoSmokerOrNot"
               >
-                <div class="card card-body bubble">Habits like smoking is not easy to give up. To non-smokers the impact of smoking can be quite adverse.</div>
+                <div class="card card-body bubble">
+                  Habits like smoking is not easy to give up. To non-smokers the
+                  impact of smoking can be quite adverse.
+                </div>
               </div>
             </div>
           </div>
@@ -1993,15 +1949,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[7].first"
-                     @click="toggle(7)"
-                  >
+                  <span v-if="arr[7].first" @click="toggle(7)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(7)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(7)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -2009,7 +1960,10 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoSpeakingLanguages"
               >
-                <div class="card card-body bubble">List up to three languages that you have converstional fluency in.</div>
+                <div class="card card-body bubble">
+                  List up to three languages that you have converstional fluency
+                  in.
+                </div>
               </div>
             </div>
           </div>
@@ -2066,15 +2020,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[6].first"
-                    @click="toggle(6)"
-                  >
+                  <span v-if="arr[6].first" @click="toggle(6)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(6)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(6)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -2082,7 +2031,10 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoHobbies"
               >
-                <div class="card card-body bubble">List up to three hobbies and interests that you engage in regularly (e.g. walking, cycling, gardening, games etc.)</div>
+                <div class="card card-body bubble">
+                  List up to three hobbies and interests that you engage in
+                  regularly (e.g. walking, cycling, gardening, games etc.)
+                </div>
               </div>
             </div>
           </div>
@@ -2131,15 +2083,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[5].first"
-                    @click="toggle(5)"
-                  >
+                  <span v-if="arr[5].first" @click="toggle(5)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(5)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(5)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -2147,7 +2094,10 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoEnjoyfullThings"
               >
-                <div class="card card-body bubble">List up to three things you really enjoy for pleasure (e.g. book reading, charity work, jogging, befriending etc.)</div>
+                <div class="card card-body bubble">
+                  List up to three things you really enjoy for pleasure (e.g.
+                  book reading, charity work, jogging, befriending etc.)
+                </div>
               </div>
             </div>
           </div>
@@ -2239,15 +2189,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[4].first"
-                     @click="toggle(4)"
-                  >
+                  <span v-if="arr[4].first" @click="toggle(4)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(4)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(4)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -2256,7 +2201,8 @@
                 id="collapsePersonalInfoFavoriteFood"
               >
                 <div class="card card-body bubble">
-                  Apart from tasting exquisite food, different cusines allow one to learn and appreciate other people and their cultures. 
+                  Apart from tasting exquisite food, different cusines allow one
+                  to learn and appreciate other people and their cultures.
                 </div>
               </div>
             </div>
@@ -2355,15 +2301,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[3].first"
-                    @click="toggle(3)"
-                  >
+                  <span v-if="arr[3].first" @click="toggle(3)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(3)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(3)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -2372,7 +2313,8 @@
                 id="collapsePersonalInfoThankulFor"
               >
                 <div class="card card-body bubble">
-                  What we are thankful for can sometime reveal an interesting aspect of our personality. 
+                  What we are thankful for can sometime reveal an interesting
+                  aspect of our personality.
                 </div>
               </div>
             </div>
@@ -2467,15 +2409,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[2].first"
-                     @click="toggle(2)"
-                  >
+                  <span v-if="arr[2].first" @click="toggle(2)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(2)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(2)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -2483,7 +2420,11 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoImproveMyself"
               >
-                <div class="card card-body bubble">As human being we will always have some shortcomings even after acheving great things. This helps us to recognise our room for improvement and accept evidenced-based feedback. </div>
+                <div class="card card-body bubble">
+                  As human being we will always have some shortcomings even
+                  after acheving great things. This helps us to recognise our
+                  room for improvement and accept evidenced-based feedback.
+                </div>
               </div>
             </div>
           </div>
@@ -2520,15 +2461,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[1].first"
-                    @click="toggle(1)"
-                  >
+                  <span v-if="arr[1].first" @click="toggle(1)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(1)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(1)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -2537,7 +2473,12 @@
                 id="collapsePersonalInfoMoreAboutMe"
               >
                 <div class="card card-body bubble">
-               The things  you may wish to consider could include: your outstanding qualities that people often notice, your family background and values, your future aspirations, ambition for growth and self development, and other consideration like flexibilty, grit, empathy and willingness forget and forgive when facing challenging situations together. 
+                  The things you may wish to consider could include: your
+                  outstanding qualities that people often notice, your family
+                  background and values, your future aspirations, ambition for
+                  growth and self development, and other consideration like
+                  flexibilty, grit, empathy and willingness forget and forgive
+                  when facing challenging situations together.
                 </div>
               </div>
             </div>
@@ -2615,15 +2556,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[0].first"
-                    @click="toggle(0)"
-                  >
+                  <span v-if="arr[0].first" @click="toggle(0)">
                     Need Help?
                   </span>
-                  <span v-else  @click="toggle(0)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(0)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -2631,7 +2567,12 @@
                 data-parent="#personalInfoAccordian"
                 id="collapsePersonalInfoMoreAdditionaInfo"
               >
-                <div class="card card-body bubble">Here you can say anything else about your requirements. Also you have the opportunity to attach a document (max. 2 pages). You may already have prepared a marrige cv outlining specific requirements.</div>
+                <div class="card card-body bubble">
+                  Here you can say anything else about your requirements. Also
+                  you have the opportunity to attach a document (max. 2 pages).
+                  You may already have prepared a marrige cv outlining specific
+                  requirements.
+                </div>
               </div>
             </div>
           </div>
@@ -2716,7 +2657,7 @@ export default {
   },
 
   methods: {
-     toggle(index) {
+    toggle(index) {
       this.arr = this.arr.map((a, ind) => {
         if (ind === index) {
           a.first = !a.first;
@@ -2926,7 +2867,7 @@ export default {
         this.saveEssentialInfo();
       }
     },
-    checkValidation(name,action) {
+    checkValidation(name, action) {
       switch (action) {
         case "essential":
           this.$refs.personalInfoFormOne.fields.forEach((f) => {
