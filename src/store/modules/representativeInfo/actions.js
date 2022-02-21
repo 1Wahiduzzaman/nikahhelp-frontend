@@ -2,24 +2,7 @@ import ApiService from "../../../services/api.service";
 import moment from "moment";
 
 export default {
-  async createPersonalInfoForRepresentative(context, payload) {
-    let _payload = { ...payload };
-    if (
-      payload.per_occupation_other &&
-      payload.per_occupation_other.length > 0
-    ) {
-      // if occupationOther exists
-      payload.per_occupation = payload.per_occupation_other;
-    }
-    delete _payload.per_occupation_other;
-
-    // As I am using a newer Datepicker, we dont need to modify it at all.
-    // _payload.dob = moment(payload.dob).format('YYYY-MM-DD'); //formating date for API
-
-    payload.per_gender == "Male"
-      ? (_payload.per_gender = 1)
-      : (_payload.per_gender = 2);
-
+  async createPersonalInfoForRepresentative(context, _payload) {
     return new Promise((resolve, reject) => {
       ApiService.post("v1/representative/essentialInformation", _payload)
         .then((data) => {
@@ -56,34 +39,34 @@ export default {
   async saveRepresentativeImageVerificationInfo(_, payload) {
     return new Promise((resolve, reject) => {
       ApiService.image("v1/representative/verify/identity", payload)
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
     });
   },
   async saveRepresentativeImage(_, payload) {
     return new Promise((resolve, reject) => {
       ApiService.image("v1/representative/image/upload", payload)
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
     });
   },
   async saveRepresentativeImageCondition(_, payload) {
     return new Promise((resolve, reject) => {
       ApiService.post("v1/representative/image/upload", payload)
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
     });
   },
 
