@@ -150,6 +150,10 @@ export default {
           openModalRoute(this, "manage_team_redirect");
         }, 2000);
       } else {
+        this.$store.state.notification.notifications.forEach(item => {
+          item.seen = 1;
+        });
+
         this.markAllAsRead();
         this.$store.state.notification.instantNotifications = [];
       }
