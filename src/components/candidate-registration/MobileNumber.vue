@@ -10,13 +10,16 @@
 	    </div>
 	  </div>
 	  <div class="col-12 col-md-6 mobile-margin">
-	    <div class="row">
-	      <vue-tel-input @input="onValueChange($event, 'contact')"
+	      <vue-tel-input 
 	                    v-model="contact"
-	
-	      
+						class="col-12 rounded-pill"
+						@input="validPhone"
+						mode="international"
+						:invalidMsg="invalidMessage"
 	      />
-	    </div>
+		  <div v-if="contact" class="bg-danger">
+			  {{invalidMessage}}
+		  </div>
 	  </div>
 	  <div class="col-12 none-padding mobile-margin mobile-help">
 	    <p>
@@ -29,12 +32,12 @@
 	        aria-controls="collapseExample"
 	      >
 	        <span
-	          v-if="arr[11].first"
-	          @click="toggle(11)"
+	          v-if="!showHelp"
+	          @click="showHelp = true"
 	        >
 	          Need Help?
 	        </span>
-	        <span v-else @click="toggle(11)">
+	        <span v-else @click="showHelp = false">
 	          Hide Help?
 	        </span>
 	      </a>
@@ -55,22 +58,40 @@
 <script>
 	export default {
 		name: 'mobileNumber',
+		
 		props: {
 			hasNumber: {
 				type: Boolean
 			}
 		},
+		
+		computed: {
+			invalidMessage() {
+				return this.valid ?  '' : 'not valid';
+			}
+		},
+		
+		data() {
+			return {
+				contact: '',
+				showHelp: false,
+				valid: false,
+			}
+		},
+		
+		watch: {
+			contact() {
+				if (this.valid) {
+					this.$emit('input', this.contact);
+				}
+			}
+		},
+		
 		methods: {
-			toggle(index) {
-			     this.arr = this.arr.map((a, ind) => {
-			       if (ind === index) {
-			         a.first = !a.first;
-			       } else {
-			         a.first = true;
-			       }
-			       return a;
-			     });
-			   },
+			validPhone(_, phoneNumber) {
+				console.log(phoneNumber);
+				this.valid = phoneNumber.valid;
+			}
 		}
 	}
 </script>

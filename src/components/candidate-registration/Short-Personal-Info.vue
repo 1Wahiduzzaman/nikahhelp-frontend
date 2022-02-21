@@ -804,6 +804,7 @@
           <!-- Mobile Number -->
          <mobile-number
 						:hasNumber="hasPhoneNumber"
+						@input="contactNumberDetails"
 		 ></mobile-number>
 
           <!-- Email Address -->
@@ -1155,7 +1156,7 @@ export default {
           this.saveGeneralInfo();
           break;
         case "contact":
-          this.saveContactInfo();
+        //  this.saveContactInfo();
           break;
         case "more_about":
           this.saveMoreAboutInfo();
@@ -1302,6 +1303,11 @@ export default {
 
       this.saveContactInfo();
     },
+	
+	contactNumberDetails(payload) {
+		this.contact = payload;
+	},
+	
     filterOption(input, option) {
       return option.componentOptions.children[0].text
         .trim()
