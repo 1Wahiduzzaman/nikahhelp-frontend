@@ -470,7 +470,9 @@
                     <span class="flex-40 px-2 text--disabled text-subtitle-1">Mobile No</span
                     ><span class="flex-60 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
-                        candidateData.personal.mobile_number
+                        candidateData.contact.mobile_country_code
+                      }} {{
+                        candidateData.contact.mobile_number
                       }}</span></span
                     >
                   </li>
