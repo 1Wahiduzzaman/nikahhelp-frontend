@@ -22,45 +22,45 @@
           </div>
           <div class="row h-100">
             <div class="col-md-12 mb-3">
-              <div class="card-custom shadow-default personal-height">
+              <div class="card-custom shadow-default">
                 <ul style="line-height: 160%">
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Name</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1">Name</span
                     ><span class="flex-70 px-2"
-                      >:<span class="ml-3">
+                      >:<span class="ml-3 text--secondary text-subtitle-1">
                         {{ candidateData.first_name }}
                         {{ candidateData.last_name }}
                       </span>
                     </span>
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Screen Name</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1">Screen Name</span
                     ><span class="flex-70 px-2"
-                      >:<span class="ml-3">{{
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.screen_name
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Gender</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1">Gender</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3">{{
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.essential.per_gender
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Date of Birth</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1">Date of Birth</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3">
+                      >:<span class="ml-3 text--secondary text-subtitle-1">
                         {{ candidateData.personal.dob }}
                       </span>
                     </span>
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Height</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1">Height</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3">
+                      >:<span class="ml-3 text--secondary text-subtitle-1">
                         <span
                           v-html="
                             `${
@@ -82,9 +82,9 @@
                     </span>
                   </li>
                    <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Religion</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1">Religion</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3">
+                      >:<span class="ml-3 text--secondary text-subtitle-1">
                         
                         {{
                           candidateDetails.religions.find(
@@ -102,36 +102,36 @@
                     >
                   </li>
                          <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Education</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1">Education</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3">{{
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.essential.per_education_level
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Employment Status</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3">
+                      >:<span class="ml-3 text--secondary text-subtitle-1">
                         {{ candidateData.personal.per_employment_status }}</span
                       ></span
                     >
                   </li>
                     <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Occupation</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1">Occupation</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3">{{
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.essential.per_occupation
                       }}</span></span
                     >
                   </li>
 
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Current Residance</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3"
+                      >:<span class="ml-3 text--secondary text-subtitle-1"
                         >{{
                           candidateData.contact
                             .per_current_residence_country_name
@@ -142,18 +142,18 @@
                     </span>
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Post Code</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1">Post Code</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3">{{
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.contact.per_permanent_post_code
                       }}</span></span
                     >
                   </li>
                         <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Permanant Residance</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3"
+                      >:<span class="ml-3 text--secondary text-subtitle-1"
                         >{{
                           candidateData.contact
                             .per_permanent_country_name
@@ -164,18 +164,18 @@
                     </span>
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Address</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1">Address</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3">{{
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.contact.per_permanent_address
                       }}</span></span
                     >
                   </li>
 
                          <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Mobile No</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1">Mobile No</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3">{{
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.contact.mobile_country_code
                       }} {{
                         candidateData.contact.mobile_number
@@ -183,9 +183,9 @@
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Email</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1">Email</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3">{{
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.contact.per_email
                       }}</span></span
                     >
@@ -215,10 +215,9 @@
                 <img
                   v-viewer
                   :src="candidateData.personal.per_avatar_url"
-                  class="user-image"
+                  class="contain"
                   alt="img"
-                  height="250"
-                  width="200"
+                  :aspect-ratio="16/9"
                 />
                 <p class="text-center">Avatar</p>
               </div>
@@ -228,24 +227,20 @@
                 <img
                   v-viewer
                   :src="candidateData.personal.per_main_image_url"
-                  class="user-image"
+                  class="contain"
                   alt="img"
-                  height="250"
-                  width="200"
                 />
                 <p class="text-center">Main image</p>
               </div>
             </div>
 
             <div class="col-12 col-md-4 mb-3">
-              <div class="profile-img text-center">
+              <div class=" text-center">
                 <img
                   v-viewer
                   :src="candidateData.personal.per_main_image_url"
-                  class="user-image"
+                  class="contain"
                   alt="img"
-                  height="250"
-                  width="200"
                 />
                 <p class="text-center">Additional image</p>
               </div>
@@ -364,6 +359,11 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+.contain {
+  height: 123px;
+  width: 220px;
+  object-fit: cover;
+}
 .review-publish {
   .review {
     font-size: 14px;
@@ -389,7 +389,7 @@ export default {
       }
     }
     ul {
-      .label-text {
+      .text--disabled text-subtitle-1 {
         //opacity: 0.8;
       }
     }
@@ -448,13 +448,13 @@ export default {
 .mobile-margin-top {
   margin-top: 54px;
 }
-.label-text {
-  //font-size: 14px;
-  font-weight: 600;
-}
+// .text--disabled text-subtitle-1 {
+//   //font-size: 14px;
+//   font-weight: 600;
+// }
 .flex-70 > .ml-3 {
   //font-size: 14px;
-  font-weight: 900;
+  // font-weight: 900;
 }
 .inner {
   font-weight: 600;
