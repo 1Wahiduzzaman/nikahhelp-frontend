@@ -42,11 +42,7 @@ export default {
     context.commit("setPreference", response.data.data);
   },
   async savePreferenceInfoAbout(context, payload) {
-    // const response = await ApiService.post(
-    //   "v1/candidate/preference-about",
-    //   payload
-    // );
-    //console.log(response.data);
+    
     return new Promise((resolve, reject) => {
       ApiService.post(`v1/candidate/preference-about`, payload)
         .then((data) => {
@@ -60,11 +56,7 @@ export default {
     });
   },
   async savePreferenceRatingInfo(context, payload) {
-    // const response = await ApiService.post(
-    //   "v1/candidate/preference-rating",
-    //   payload
-    // );
-    // console.log(response.data);
+    
     return new Promise((resolve, reject) => {
       ApiService.post(`v1/candidate/preference-rating`, payload)
         .then((data) => {
@@ -207,11 +199,7 @@ export default {
     context.commit("setFamilyInfo", response.data.data);
   },
   async updateFamilyInfo(_, payload) {
-    // const response = await ApiService.post(
-    //   "v1/candidate/family-info?_method=PATCH",
-    //   payload
-    // );
-    // console.log(response.data);
+   
     return new Promise((resolve, reject) => {
       ApiService.post("v1/candidate/family-info?_method=PATCH", payload)
         .then((data) => {
@@ -226,10 +214,7 @@ export default {
     context.commit("toggleFIUpdateApiStatus");
   },
   async getImages(context, _) {
-    //const response = await ApiService.get("v1/candidate/image-upload");
-    //console.log("Image API", response.data.data);
-
-    //context.commit("setImages", response.data.data);
+   
     return new Promise((resolve, reject) => {
       ApiService.get("v1/candidate/image-upload")
         .then((data) => {

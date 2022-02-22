@@ -222,9 +222,11 @@
 					</div>
 					<!-- Team Description -->
 					<div class="member-desc">
-						<p class="break-long-words">
-							{{ teamData.description.substring(0, 80) }}
-						</p>
+						<a-tooltip :title="teamData.description">
+              <p class="break-long-words">
+                {{ teamData.description.substring(0, 80) }}
+              </p>
+            </a-tooltip>
 						<!-- Edit Button for team description -->
 						<!-- <button v-if="edit_button_flag">
 							<img
@@ -2405,6 +2407,33 @@ export default {
       color: #e51f76;
       text-decoration: underline;
     }
+  }
+}
+.break-long-words {
+  width: 190px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @media (min-width: 360px) {
+    width: 220px;
+  }
+  @media (min-width: 410px) {
+    width: 270px;
+  }
+  @media (min-width: 1200px) {
+    width: 130px;
+  }
+  @media (min-width: 1300px) {
+    width: 150px;
+  }
+  @media (min-width: 1500px) {
+    width: 200px;
+  }
+  @media (min-width: 1500px) {
+    width: 230px;
+  }
+  @media (min-width: 1920px) {
+    width: 290px;
   }
 }
 // end css for team-card

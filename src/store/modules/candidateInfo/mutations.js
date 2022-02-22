@@ -10,14 +10,7 @@ export default {
     state.familyinformation.otherFamilyInfo = payload.fi_family_info;
   },
   setPreference(state, payload) {
-    // state.preference.pre_partner_age_min =
-    //   payload.preference.pre_partner_age_min;
-    // state.preference.pre_partner_age_max =
-    //   payload.preference.pre_partner_age_max;
-    // state.preference.pre_height_min = payload.preference.pre_height_min;
-    // state.preference.pre_height_max = payload.preference.pre_height_max;
-    // state.preference.pre_manners_socialskill_ethics_rate =
-    //   payload.pre_manners_socialskill_ethics_rate;
+   
     state.preference = payload.preference;
   },
   toggleFIUpdateApiStatus(state) {
