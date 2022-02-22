@@ -215,10 +215,9 @@
                 <img
                   v-viewer
                   :src="candidateData.personal.per_avatar_url"
-                  class="user-image"
+                  class="contain"
                   alt="img"
-                  height="250"
-                  width="200"
+                  :aspect-ratio="16/9"
                 />
                 <p class="text-center">Avatar</p>
               </div>
@@ -228,24 +227,20 @@
                 <img
                   v-viewer
                   :src="candidateData.personal.per_main_image_url"
-                  class="user-image"
+                  class="contain"
                   alt="img"
-                  height="250"
-                  width="200"
                 />
                 <p class="text-center">Main image</p>
               </div>
             </div>
 
             <div class="col-12 col-md-4 mb-3">
-              <div class="profile-img text-center">
+              <div class=" text-center">
                 <img
                   v-viewer
                   :src="candidateData.personal.per_main_image_url"
-                  class="user-image"
+                  class="contain"
                   alt="img"
-                  height="250"
-                  width="200"
                 />
                 <p class="text-center">Additional image</p>
               </div>
@@ -364,6 +359,11 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+.contain {
+  height: 123px;
+  width: 220px;
+  object-fit: cover;
+}
 .review-publish {
   .review {
     font-size: 14px;
