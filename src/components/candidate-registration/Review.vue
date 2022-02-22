@@ -735,8 +735,7 @@
                     type="check"
                   />
                   <span class="fs-16">
-                    I don't want to share my images with anyone at this
-                    moment</span
+                    Share my images with anyone who searches on MatrimonyAssist</span
                   >
                 </div>
                 <div class="d-flex">
@@ -751,7 +750,7 @@
                     type="check"
                   />
                   <span class="fs-16">
-                    I would like to share all my images with my team</span
+                   Share my images with no one at the moment</span
                   >
                 </div>
                 <div class="d-flex">
@@ -766,7 +765,7 @@
                     type="check"
                   />
                   <span class="fs-16">
-                    I would like to share all my images with connected team(s)
+                   Share my images with the connected teams (only if they accept my connect request)
                   </span>
                 </div>
               </div>
