@@ -26,14 +26,13 @@
                 <a-row type="flex" align="top" class="justify-content-around">
                   <a-col>
                     <!-- Avatar Image -->
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-4 flex text-center">
                       <div>
                         <div class="img-preview mb-2">
                           <img
                             v-viewer
                             :src="avatarSrc"
-                            width="180"
-                            height="200"
+                            class="contain"
                             v-if="avatarSrc"
                           />
                           <div class="mt-3">Avatar Image</div>
@@ -64,14 +63,13 @@
                   </a-col>
                   <a-col>
                     <!-- Main Image -->
-                    <div class="col-md-4 text-center">
+                    <div class="col-md-4 flex text-center">
                       <div>
                         <div class="img-preview mb-2">
                           <img
                             v-viewer
                             :src="mainImageSrc"
-                            width="180"
-                            height="200"
+                            class="contain"
                             v-if="mainImageSrc"
                           />
                           <div class="mt-3">Main Profile Image</div>
@@ -337,6 +335,11 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+.contain {
+  height: 123px;
+  width: 220px;
+  object-fit: cover;
+}
 .upload-profile-image {
   .section-heading {
     text-align: center;
@@ -402,11 +405,11 @@ export default {
     border-radius: 5px;
   }
   .img-preview {
-    width: 180px;
+    width: 220px;
+    height: 123px;
     border: 1px solid $color-secondary;
     border-radius: 5px;
     margin: 0px auto;
-    height: 200px;
   }
   input[type="file"] {
     cursor: pointer;

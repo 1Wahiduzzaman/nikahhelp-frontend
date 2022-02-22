@@ -47,8 +47,7 @@
                     <img
                       v-viewer
                       :src="avatarSrc ? avatarSrc : imageModel.avatar_image_url"
-                      width="180"
-                      height="200"
+                      class="contain"
                       v-if="imageModel.avatar_image_url"
                     />
                     <div class="mt-3">Avatar Image</div>
@@ -110,8 +109,7 @@
                       :src="
                         mainImageSrc ? mainImageSrc : imageModel.main_image_url
                       "
-                      width="180"
-                      height="200"
+                      class="contain"
                       v-if="imageModel.main_image_url"
                     />
                     <div class="mt-3">Main Profile Image</div>
@@ -175,8 +173,7 @@
                           ? additionalImageSrc
                           : imageModel.additionalImageSrc
                       "
-                      width="180"
-                      height="200"
+                      class="contain"
                       v-if="imageModel.additionalImageSrc"
                     />
                     <div class="mt-3">Additional Image</div>
@@ -510,6 +507,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.contain {
+  height: 123px;
+  width: 220px;
+  object-fit: cover;
+}
 @import "@/styles/base/_variables.scss";
 .upload-profile-image {
   .section-heading {
@@ -569,11 +571,11 @@ export default {
     border-radius: 5px;
   }
   .img-preview {
-    width: 180px;
+    width: 220px;
     border: 1px solid $color-secondary;
     border-radius: 5px;
     margin: 0px auto;
-    height: 200px;
+    height: 123px;
   }
   input[type="file"] {
     cursor: pointer;
