@@ -53,7 +53,7 @@
                 </li>
                 <li class="flex-between-start">
                     <span class="flex-30 label-text">Education</span>
-                    <span class="flex-70 truncate">:<span class="ml-1"> </span>{{ candidate.personal.per_education_level }} </span>
+                    <span class="flex-70 truncate">:<span class="ml-2"> </span>{{ candidate.personal.per_education_level }} </span>
                 </li>
             </template>
         </ul>
