@@ -6,12 +6,7 @@
 				<div class="">
 					<div class="row mb-5">
 						<div class="w-full text-center mt-2">
-							<button
-								@click="resetSearch"
-								class="btn-adv-search"
-							>
-								Reset Search
-							</button>
+							
 						</div>
 
 						<!-- Age Slider -->
@@ -35,7 +30,7 @@
 								:uniqueNames="['heightMin', 'heightMax']"
 								size="default"
 								:options="heithtTV"
-								 :placeholder="['Min Height', 'Max Height']"
+								:placeholder="['Min Height', 'Max Height']"
 								width="98"
 								:suffixIcon="true"
 								:values="[heightMin, heightMax]"
@@ -358,6 +353,12 @@
 								</button> -->
 								<div>
 									<a id="topper" class="d-noe" ref="top" href="#top"></a>
+									<button
+										@click="resetSearch"
+										class="btn-adv-search"
+									>
+										Reset Search
+									</button>
 									<button @click="$refs.advDiag.openDiag()" class="btn-adv-search">Advanced Search</button>
 								</div>
 							</div>
