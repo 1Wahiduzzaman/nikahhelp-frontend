@@ -1,5 +1,5 @@
 <template>
-     <div class="bg-primary rounded-t-lg p-2 d-flex justify-space-between align-items-center px-3">
+     <div class="theme-clr p-2 d-flex justify-space-between align-items-center px-3">
         <button @click="goBack" class="back-button rounded-full bg-gray-100 px-2 py-1 border-2 border-primary-light">
             <div class="d-flex items-center">
                 <img src="@/assets/icon/left-arrow.png" class="h-5 mr-1" alt="">
@@ -24,6 +24,9 @@ export default {
 
 
 <style scoped lang="scss">
+.theme-clr {
+    background: #522e8e;
+}
 .rounded-full{
     border-radius: 9999px;
 }

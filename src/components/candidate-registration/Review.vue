@@ -684,10 +684,8 @@
                 <img
                   v-viewer
                   :src="candidateData.personal.per_avatar_url"
-                  class="user-image"
                   alt="img"
-                  height="250"
-                  width="200"
+                  class="contain"
                 />
                 <p class="text-center">Avatar</p>
               </div>
@@ -697,10 +695,8 @@
                 <img
                   v-viewer
                   :src="candidateData.personal.per_main_image_url"
-                  class="user-image"
                   alt="img"
-                  height="250"
-                  width="200"
+                  class="contain"
                 />
                 <p class="text-center">Main image</p>
               </div>
@@ -711,10 +707,8 @@
                 <img
                   v-viewer
                   :src="candidateData.personal.per_main_image_url"
-                  class="user-image"
                   alt="img"
-                  height="250"
-                  width="200"
+                  class="contain"
                 />
                 <p class="text-center">Additional image</p>
               </div>
@@ -735,8 +729,7 @@
                     type="check"
                   />
                   <span class="fs-16">
-                    I don't want to share my images with anyone at this
-                    moment</span
+                    Share my images with anyone who searches on MatrimonyAssist</span
                   >
                 </div>
                 <div class="d-flex">
@@ -751,7 +744,7 @@
                     type="check"
                   />
                   <span class="fs-16">
-                    I would like to share all my images with my team</span
+                   Share my images with no one at the moment</span
                   >
                 </div>
                 <div class="d-flex">
@@ -766,7 +759,7 @@
                     type="check"
                   />
                   <span class="fs-16">
-                    I would like to share all my images with connected team(s)
+                   Share my images with the connected teams (only if they accept my connect request)
                   </span>
                 </div>
               </div>
@@ -843,6 +836,11 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+.contain {
+  height: 123px;
+  width: 220px;
+  object-fit: cover;
+} 
 .review-publish {
   .review {
     font-size: 14px;

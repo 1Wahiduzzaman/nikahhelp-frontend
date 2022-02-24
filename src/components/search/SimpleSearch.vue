@@ -5,6 +5,10 @@
 			<div class="ml-1 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="">
 					<div class="row mb-5">
+						<div class="w-full text-center mt-2">
+							
+						</div>
+
 						<!-- Age Slider -->
 						<div class="mt-4 px-3">
 							<SelectGroup
@@ -26,7 +30,7 @@
 								:uniqueNames="['heightMin', 'heightMax']"
 								size="default"
 								:options="heithtTV"
-								 :placeholder="['Min Height', 'Max Height']"
+								:placeholder="['Min Height', 'Max Height']"
 								width="98"
 								:suffixIcon="true"
 								:values="[heightMin, heightMax]"
@@ -349,6 +353,12 @@
 								</button> -->
 								<div>
 									<a id="topper" class="d-noe" ref="top" href="#top"></a>
+									<button
+										@click="resetSearch"
+										class="btn-adv-search"
+									>
+										Reset Search
+									</button>
 									<button @click="$refs.advDiag.openDiag()" class="btn-adv-search">Advanced Search</button>
 								</div>
 							</div>
@@ -495,8 +505,14 @@ export default {
 
 			console.log('>>>>>>>>>>>>>>>>')
 			// let _payload = `?page=0&parpage=10&min_age=${params.age_min}&max_age=${params.age_max}&active_team_id=${this.activeTeamId}`;
-			let _payload = `?page=${this.currentPage}&parpage=10&min_age=${this.min_age}&max_age=${this.max_age}`;
+			let _payload = `?page=${this.currentPage}`;
 
+			if (this.min_age) {
+				_payload += `&min_age=${this.min_age}`;
+			}
+			if (this.max_age) {
+				_payload += `&max_age=${this.max_age}`;
+			}
 			if (this.gender != "") {
 				_payload += `&gender=${this.gender}`;
 			}
@@ -634,6 +650,21 @@ export default {
 		onAfterChangeSlider(value) {
 			this.age = value;
 		},
+		resetSearch () {
+			this.heightMin = undefined
+			this.heightMax = undefined
+			this.heightMax = undefined
+			this.min_age = undefined
+			this.max_age = undefined
+			this.religion = undefined
+			this.country = undefined
+			this.ethnicity = undefined
+			this.maritalStatus = undefined
+			this.employmentStatus = undefined
+			this.occupations = null
+			this.occupation = undefined
+			this.nationality = undefined
+		}
 	}
 };
 </script>

@@ -870,7 +870,7 @@ export default {
       try {
         this.isLoading = true;
         const response = await ApiService.get(
-          `v1/candidate/info/${this.user_id}`
+          `v1/admin/user-info/${this.user_id}`
         );
         this.isLoading = false;
         this.candidateData = {
