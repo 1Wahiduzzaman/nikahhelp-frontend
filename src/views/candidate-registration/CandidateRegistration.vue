@@ -452,7 +452,7 @@ export default {
                 : response.data.data.user.preference.pre_partner_age_max,
             pre_partner_age_min:
               response.data.data.user.preference.pre_partner_age_min == 0 ||
-              response.data.data.user.preference.pre_partner_age_min
+              !response.data.data.user.preference.pre_partner_age_min
                 ? undefined
                 : response.data.data.user.preference.pre_partner_age_min,
 

@@ -199,7 +199,7 @@ export default {
     this.mainImageSrc = this.imageModel.per_main_image_url;
   },
   methods: {
-        clearImg(action) {
+    clearImg(action) {
       let formData = new FormData();
       switch (action) {
         case "main":
@@ -212,15 +212,14 @@ export default {
           this.imageModel.per_avatar_url = "";
           formData.append("per_main_image_url", "");
           break;
-       
       }
-      this.saveImage(formData);
+      this.saveImages(formData);
     },
     imageSizeCheck(file) {
-      if (file["size"] > 2111775) {
+      if (file["size"] > 4223550) {
         this.$error({
           title: "Validation Error",
-          content: "Image size can't be more than 2 mb",
+          content: "Image size can't be more than 4 mb",
           center: true,
         });
         return false;
@@ -310,6 +309,13 @@ export default {
         .dispatch("saveRepresentativeImage", data)
         .then((data) => {
           if (data.data.status && data.data.status !== "FAIL") {
+            let user = JSON.parse(localStorage.getItem("user"));
+            if (user) {
+              user.per_main_image_url =
+                data.data.data.gallery.per_main_image_url;
+              localStorage.removeItem("user");
+              localStorage.setItem("user", JSON.stringify(user));
+            }
             this.$emit("valueChange", {
               value: {
                 per_avatar_url: data.data.data.gallery.per_avatar_url,

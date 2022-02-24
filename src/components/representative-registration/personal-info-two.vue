@@ -743,7 +743,7 @@ export default {
             }
           });
           break;
-        case "general":
+        case "contact":
           this.$refs.repPersonalInfoFormTwo.fields.forEach((f) => {
             if (f.prop == name) {
               f.onFieldBlur();
@@ -855,7 +855,7 @@ export default {
       this.loading = false;
       this.loadingPermanant = false;
       if (res.status === 200) {
-        switch (action) {
+        switch (name) {
           case "per_permanent_country":
             this.personalInformation.personal.permanantCities = [];
             this.personalInformation.personal.permanantCities.push(

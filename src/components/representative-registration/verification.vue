@@ -77,7 +77,7 @@
                       <v-select
                         :clearable="false"
                         class="style-chooser"
-                        @input="onChangeCountry"
+                        @input="onChangeCountry($event,'ver_country')"
                         id="ver_country"
                         placeholder="Country"
                         v-model="verification.ver_country"
@@ -510,7 +510,7 @@
               </div>
             </div>
             <div class="d-flex justify-content-end">
-              <a-button
+              <!-- <a-button
                 shape="round"
                 type="primary"
                 style="float: right; margin-right: 10px"
@@ -518,7 +518,7 @@
                 @click="cancel"
               >
                 Cancel
-              </a-button>
+              </a-button> -->
               <a-button
                 shape="round"
                 type="primary"
@@ -526,7 +526,7 @@
                 class="mt-5"
                 @click="handleSubmitFormOne"
               >
-                Submit
+               Save & Continue
               </a-button>
             </div>
           </a-form-model>
@@ -738,10 +738,10 @@ export default {
       this.$emit("cancel", false);
     },
     imageSizeCheck(file) {
-      if (file["size"] > 2111775) {
+      if (file["size"] > 4223550) {
         this.$error({
           title: "Validation Error",
-          content: "Image size can't be more than 2 mb",
+          content: "Image size can't be more than 4 mb",
           center: true,
         });
         return false;
@@ -773,10 +773,6 @@ export default {
         return;
       }
       this.verification.ver_document_backside = e.target.files[0];
-      // this.saveImageVerificationInfo({
-      //   ver_document_backside: this.verification.ver_document_backside,
-      // });
-
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
@@ -784,7 +780,8 @@ export default {
       };
     },
 
-    async onChangeCountry(e) {
+    async onChangeCountry(e,name) {
+      this.checkValidation(name)
       const res = await ApiService.get(`v1/utilities/cities/${e}`);
       if (res.status === 200) {
         console.log("this.verification", this.verification);
