@@ -69,7 +69,7 @@
         <p class="color-brand fs-18">Details about you</p>
       </div>
       <div class="text-center mt-5" v-if="current == 3">
-        <h5 class="color-brand fs-20">Agree & Submit</h5>
+        <h5 class="color-brand fs-20"> Review & Publish</h5>
         <p class="color-brand fs-18">Details about you</p>
       </div>
 
@@ -105,7 +105,7 @@
         />
       </div>
       <div class="steps-content" v-if="current == 3">
-        <AgreementSubmit />
+        <Review  :representativeDetails="representativeDetails" />
       </div>
       <div class="steps-action text-right pb-5 clearfix bottom-padding">
         <a-button
@@ -174,6 +174,7 @@ import PersonalInfoTwo from "@/components/representative-registration/personal-i
 import Verification from "@/components/representative-registration/verification.vue";
 import ImageUpload from "@/components/representative-registration/ImageUpload.vue";
 import AgreementSubmit from "@/components/representative-registration/AgreementSubmit.vue";
+import Review from "@/components/representative-registration/Review.vue";
 import ApiService from "../../services/api.service";
 import Header from "../../components/header/header";
 import { API_URL } from "../../configs/config";
@@ -191,6 +192,7 @@ export default {
     VerificationAgreement,
     Header,
     VueFixedHeader,
+    Review
   },
 
   data() {
@@ -218,14 +220,14 @@ export default {
           title: "Verification",
         },
         {
-          title: "Agree & Submit",
+          title:  "Review & Publish",
         },
       ],
       mobileSteps: [
         "Personal Info",
         "Image Upload",
         "Verification",
-        "Agree & Submit",
+        "Review & Publish",
       ],
 
       activeKey: 1,
@@ -362,15 +364,17 @@ export default {
             "permanat"
           );
         }
-        // if (
-        //   this.representativeDetails.verification &&
-        //   this.representativeDetails.verification.ver_country > 0
-        // ) {
-        //   this.onChangeCountry(
-        //     { id: this.representativeDetails.verification.ver_country },
-        //     "verification"
-        //   );
-        // }
+        if (
+          this.representativeDetails.verification &&
+          this.representativeDetails.verification.ver_country > 0
+        ) {
+          this.onChangeCountry(
+            { id: this.representativeDetails.verification.ver_country },
+            "verification"
+          );
+        }
+         this.showAgreement =
+          user.status == "2" || user.status == "3" ? true : false;
         this.current = response.data.data.data_input_status;
         this.checkExistData();
       } else {
