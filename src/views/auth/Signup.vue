@@ -146,98 +146,98 @@
         </div>
       </div>
 
-      <div class="type-selection" v-if="showMemberFormType && !errorMessage">
-        <div class="content mb-5">
-          <h3 class="mt-3 text-header-black font-weight-bolder">
-            Welcome To <span class="logo-text">Matrimony Assist</span> Signup
-          </h3>
-          <div class="type mx-auto">
-            <p class="text-center py-2">How would you like to complete the registration form?</p>
+<!--      <div class="type-selection" v-if="showMemberFormType && !errorMessage">-->
+<!--        <div class="content mb-5">-->
+<!--          <h3 class="mt-3 text-header-black font-weight-bolder">-->
+<!--            Welcome To <span class="logo-text">Matrimony Assist</span> Signup-->
+<!--          </h3>-->
+<!--          <div class="type mx-auto">-->
+<!--            <p class="text-center py-2">How would you like to complete the registration form?</p>-->
 
-            <a-row :gutter="16" class="mobile-view">
-              <a-col :span="24">
-                <a-card class="br-card shadow">
-                  <button
-                      @click="signupModel.form_type = 1"
-                      class="btn no-shadow p-2 fs-20 br-30 btn-type"
-                      :class="{ active: signupModel.form_type == 1 }"
-                  >
-                    Long Form
-                  </button>
-                  <button
-                      @click="signupModel.form_type = 2"
-                      class="btn no-shadow p-2 fs-20 br-30 btn-type mt-5"
-                      :class="{ active: signupModel.form_type == 2 }"
-                  >
-                    Short Form
-                  </button>
-                  <p class="fs-12 mt-5">
-                    <a-icon type="check" class="text-success"/>
-                    You have to complete the {{ signupModel.form_type == 2 ? 'short form' : 'full form' }} of
-                    candidate
-                  </p>
-                </a-card>
-              </a-col>
-            </a-row>
+<!--            <a-row :gutter="16" class="mobile-view">-->
+<!--              <a-col :span="24">-->
+<!--                <a-card class="br-card shadow">-->
+<!--                  <button-->
+<!--                      @click="signupModel.form_type = 1"-->
+<!--                      class="btn no-shadow p-2 fs-20 br-30 btn-type"-->
+<!--                      :class="{ active: signupModel.form_type == 1 }"-->
+<!--                  >-->
+<!--                    Long Form-->
+<!--                  </button>-->
+<!--                  <button-->
+<!--                      @click="signupModel.form_type = 2"-->
+<!--                      class="btn no-shadow p-2 fs-20 br-30 btn-type mt-5"-->
+<!--                      :class="{ active: signupModel.form_type == 2 }"-->
+<!--                  >-->
+<!--                    Short Form-->
+<!--                  </button>-->
+<!--                  <p class="fs-12 mt-5">-->
+<!--                    <a-icon type="check" class="text-success"/>-->
+<!--                    You have to complete the {{ signupModel.form_type == 2 ? 'short form' : 'full form' }} of-->
+<!--                    candidate-->
+<!--                  </p>-->
+<!--                </a-card>-->
+<!--              </a-col>-->
+<!--            </a-row>-->
 
-            <a-row :gutter="16" class="desktop-view">
-              <a-col :span="12">
-                <a-card class="br-card shadow type-card">
-                  <button
-                      @click="signupModel.form_type = 1"
-                      class="btn no-shadow p-2 fs-20 br-30 btn-type"
-                      :class="{ active: signupModel.form_type == 1 }"
-                  >
-                    Long Form
-                  </button>
-                  <p class="fs-12 mt-5">
-                    <a-icon type="check" class="text-success"/>
-                    You have to complete the full form of candidate
-                  </p>
-                </a-card>
-              </a-col>
-              <a-col :span="12">
-                <a-card class="br-card shadow type-card">
-                  <button
-                      @click="signupModel.form_type = 2"
-                      class="btn no-shadow p-2 fs-20 br-30 btn-type"
-                      :class="{ active: signupModel.form_type == 2 }"
-                  >
-                    Short Form
-                  </button>
-                  <p class="fs-12 mt-5">
-                    <a-icon type="check" class="text-success"/>
-                    You have to complete the short form of candidate
-                  </p>
-                </a-card>
-              </a-col>
-            </a-row>
-            <div class="mt-5 footer" v-if="signupModel.account_type > 0">
-              <button
-                  class="btn btn-continue w-50 fs-20 mt-4"
-                  @click="selectNexStepAfterFormType"
-              >
-                Continue
-              </button>
-            </div>
-          </div>
-          <p class="flex-center-center mt-3 bottom-text font-poppins">
-            Already on <span class="logo-text ml-2"> Matrimony Assist? </span>
+<!--            <a-row :gutter="16" class="desktop-view">-->
+<!--              <a-col :span="12">-->
+<!--                <a-card class="br-card shadow type-card">-->
+<!--                  <button-->
+<!--                      @click="signupModel.form_type = 1"-->
+<!--                      class="btn no-shadow p-2 fs-20 br-30 btn-type"-->
+<!--                      :class="{ active: signupModel.form_type == 1 }"-->
+<!--                  >-->
+<!--                    Long Form-->
+<!--                  </button>-->
+<!--                  <p class="fs-12 mt-5">-->
+<!--                    <a-icon type="check" class="text-success"/>-->
+<!--                    You have to complete the full form of candidate-->
+<!--                  </p>-->
+<!--                </a-card>-->
+<!--              </a-col>-->
+<!--              <a-col :span="12">-->
+<!--                <a-card class="br-card shadow type-card">-->
+<!--                  <button-->
+<!--                      @click="signupModel.form_type = 2"-->
+<!--                      class="btn no-shadow p-2 fs-20 br-30 btn-type"-->
+<!--                      :class="{ active: signupModel.form_type == 2 }"-->
+<!--                  >-->
+<!--                    Short Form-->
+<!--                  </button>-->
+<!--                  <p class="fs-12 mt-5">-->
+<!--                    <a-icon type="check" class="text-success"/>-->
+<!--                    You have to complete the short form of candidate-->
+<!--                  </p>-->
+<!--                </a-card>-->
+<!--              </a-col>-->
+<!--            </a-row>-->
+<!--            <div class="mt-5 footer" v-if="signupModel.account_type > 0">-->
+<!--              <button-->
+<!--                  class="btn btn-continue w-50 fs-20 mt-4"-->
+<!--                  @click="selectNexStepAfterFormType"-->
+<!--              >-->
+<!--                Continue-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <p class="flex-center-center mt-3 bottom-text font-poppins">-->
+<!--            Already on <span class="logo-text ml-2"> Matrimony Assist? </span>-->
 
-            <router-link
-                to="/login"
-                class="
-                    btn btn-sm-sign btn-outline-primary btn-round-sm
-                    ms-2
-                    text-nowrap
-                    join-now-btn
-                  "
-            >
-              Sign in
-            </router-link>
-          </p>
-        </div>
-      </div>
+<!--            <router-link-->
+<!--                to="/login"-->
+<!--                class="-->
+<!--                    btn btn-sm-sign btn-outline-primary btn-round-sm-->
+<!--                    ms-2-->
+<!--                    text-nowrap-->
+<!--                    join-now-btn-->
+<!--                  "-->
+<!--            >-->
+<!--              Sign in-->
+<!--            </router-link>-->
+<!--          </p>-->
+<!--        </div>-->
+<!--      </div>-->
 
       <h3
         v-if="!showMemberTypeForm && !showMemberFormType"
@@ -685,20 +685,21 @@ export default {
       if (this.isConfirm) {
         this.showMemberTypeForm = false;
 
-        if(this.signupModel.account_type == 1) {
-          this.showMemberFormType = true;
-          this.showSignupForm = false;
-          this.showMemberForm = false;
-
-        } else {
-          this.showSignupForm = false;
-          this.showMemberForm = true;
-          this.showMemberFormType = false;
-        }
+        // short & long form
+        // if(this.signupModel.account_type == 1) {
+        //   this.showMemberFormType = true;
+        //   this.showSignupForm = false;
+        //   this.showMemberForm = false;
+        //
+        // } else {
+        //   this.showSignupForm = false;
+        //   this.showMemberForm = true;
+        //   this.showMemberFormType = false;
+        // }
 
         // old
-        // this.showSignupForm = false;
-        // this.showMemberForm = true;
+        this.showSignupForm = false;
+        this.showMemberForm = true;
       } else {
         this.$error({
           title: "Please confirm your account type",
