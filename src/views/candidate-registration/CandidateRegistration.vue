@@ -842,9 +842,6 @@ export default {
           break;
         }
         case 4: {
-          if (this.showAgreement) {
-            this.updateUserVerifyOrReject();
-          }
           this.current++;
           break;
         }
