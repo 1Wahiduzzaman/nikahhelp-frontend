@@ -15,24 +15,27 @@
       </template>
       <!-- 1. Required Information -->
       <a-collapse-panel key="1" header="4.1 Image Required">
-        <h5 class="text-left ml-4 pl-3 mt-2">Upload your image</h5>
-        <div class="row">
-          <div class="col-12">
-            <div class="instruction">
-              <p>
-                You are required to upload at least one avatar and a main image.
-                All together you can upload up to 3 images.
-              </p>
-              <p>
-                Select images from your devices. Supported file formats are JPG,
-                JPEG, PNG. Maximum file size 2 MB.
-              </p>
-            </div>
-          </div>
-        </div>
-
         <!-- Image Upload Input -->
         <div class="image-and-settings">
+
+          <fieldset class="mb-10 mt-2">
+            <legend class="ml-8 px-1"><span>Upload your image</span></legend>
+            <div class="row">
+              <div class="col-12">
+                <div class="px-4">
+                  <p>
+                    You are required to upload at least one avatar and a main image.
+                    All together you can upload up to 3 images.
+                  </p>
+                  <p>
+                    Select images from your devices. Supported file formats are JPG,
+                    JPEG, PNG. Maximum file size 2 MB.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
           <form class="form-ma">
             <div class="row">
               <div class="col-12 col-md-4">
@@ -492,6 +495,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
+fieldset {
+    border: 1px solid #522e8e;
+    border-radius: 10px;
+}
+legend {
+    display: inline;
+    width: inherit;
+    color: #3b3194;
+    font-size: 18px;
+    font-weight: 600;
+}
 .contain {
   height: 123px;
   width: 220px;

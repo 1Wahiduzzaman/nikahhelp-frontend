@@ -12,9 +12,14 @@
                 :value="getMinHeight + ' to ' + getMaxHeight"
             />
             <TableRow 
-                title="Country & Cities Preferred"
+                title="Preferred country"
                 textClass="text-subtitle-1"
                 :value="getCountry()"
+            />
+            <TableRow 
+                title="Not Preferred country"
+                textClass="text-subtitle-1"
+                :value="getBlockedCityCountry()"
             />
             <TableRow 
                 title="Religion"
@@ -100,6 +105,21 @@ export default {
                     cityArr.push(city.name)
                 })
             }
+            return cityArr.join(', ')
+        },
+        getBlockedCityCountry() {
+            let cityArr = [];
+             if(this.preference.blocked_cities?.length) {
+                this.preference.blocked_cities.map(city => {
+                    cityArr.push(city.name)
+                })
+            }
+            if(this.preference.bloked_countries?.length) {
+                this.preference.bloked_countries.map(city => {
+                    cityArr.push(city.name)
+                })
+            }
+            if(!cityArr.length) return 'No'
             return cityArr.join(', ')
         },
         getReligion() {
