@@ -1,6 +1,9 @@
 <template>
   <div class="review-publish px-2">
-    <fieldset v-if="representativeDetails" class="review">
+    <fieldset
+      v-if="representativeDetails && representativeDetails.essential"
+      class="review"
+    >
       <h4 class="fw-700 px-2">Review and Publish Profile</h4>
       <p class="mb-5 px-2">
         Please check the information and details that you have provided, if you
@@ -17,7 +20,7 @@
               class="ms-2 edit-step"
               src="@/assets/icon/edit_step.svg"
               alt="icon"
-              @click="$emit('toggleStep', 1)"
+              @click="$emit('toggleStep', 0)"
             />
           </div>
           <div class="row h-100">
@@ -25,110 +28,129 @@
               <div class="card-custom shadow-default personal-height">
                 <ul style="line-height: 160%">
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Name</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Name</span
                     ><span class="flex-70 px-2"
-                      >:<span class="ml-3">
+                      >:<span class="ml-3 text--secondary text-subtitle-1">
                         {{ representativeDetails.first_name }}
                         {{ representativeDetails.last_name }}
                       </span>
                     </span>
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Screen Name</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Screen Name</span
                     ><span class="flex-70 px-2"
-                      >:<span class="ml-3">{{
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         representativeDetails.screen_name
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Gender</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Gender</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3">{{
-                        representativeDetails.essential.per_gender
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                        representativeDetails.essential.per_gender_text
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Date of Birth</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Date of Birth</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3">
-                        {{ representativeDetails.personal.dob }}
+                      >:<span
+                        class="
+                          ml-3
+                          text--secondary
+                          text-subtitle-1
+                          text--secondary
+                          text-subtitle-1
+                        "
+                      >
+                        {{ representativeDetails.essential.dob }}
                       </span>
                     </span>
                   </li>
 
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Occupation</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Occupation</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3">{{
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         representativeDetails.essential.per_occupation
                       }}</span></span
                     >
                   </li>
 
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Current Residance</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3"
+                      >:<span class="ml-3 text--secondary text-subtitle-1"
                         >{{
-                          representativeDetails.contact
-                            .per_current_residence_country_name
-                        }},{{
-                          representativeDetails.contact
+                          representativeDetails.personal
+                            .per_current_residence_country_text
+                        }},
+                        {{
+                          representativeDetails.personal
                             .per_current_residence_city
                         }}</span
                       >
                     </span>
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Post Code</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Post Code</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3">{{
-                        representativeDetails.contact.per_permanent_post_code
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                        representativeDetails.personal.per_permanent_post_code
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Permanant Residance</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3"
+                      >:<span class="ml-3 text--secondary text-subtitle-1"
                         >{{
-                          representativeDetails.contact
-                            .per_permanent_country_name
-                        }},{{
-                          representativeDetails.contact.per_permanent_city
+                          representativeDetails.personal
+                            .per_permanent_country_text
+                        }},
+                        {{
+                          representativeDetails.personal.per_permanent_city
                         }}</span
                       >
                     </span>
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Address</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Address</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3">{{
-                        representativeDetails.contact.per_permanent_address
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                        representativeDetails.personal.per_permanent_address
                       }}</span></span
                     >
                   </li>
 
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Mobile No</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Mobile No</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3"
+                      >:<span class="ml-3 text--secondary text-subtitle-1"
                         >{{
-                          representativeDetails.contact.mobile_country_code
+                          representativeDetails.personal.mobile_country_code
                         }}
-                        {{ representativeDetails.contact.mobile_number }}</span
+                        {{ representativeDetails.personal.mobile_number }}</span
                       ></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-30 px-2 label-text">Email</span
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Email</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3">{{
-                        representativeDetails.contact.per_email
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                        representativeDetails.personal.per_email
                       }}</span></span
                     >
                   </li>
@@ -146,15 +168,15 @@
               class="ms-2 edit-step"
               src="@/assets/icon/edit_step.svg"
               alt="icon"
-              @click="$emit('toggleStep', 5)"
+              @click="$emit('toggleStep', 1)"
             />
           </div>
           <div class="row">
-            <div class="col-12 col-md-4 mb-3">
+            <div class="col-12 col-md-6 mb-4">
               <div class="profile-img text-center">
                 <img
                   v-viewer
-                  :src="representativeDetails.imageModel.per_avatar_url"
+                  :src="representativeDetails.image_upload.per_avatar_url"
                   class="user-image"
                   alt="img"
                   height="250"
@@ -163,11 +185,11 @@
                 <p class="text-center">Avatar</p>
               </div>
             </div>
-            <div class="col-12 col-md-4 mb-3">
+            <div class="col-12 col-md-6 mb-4">
               <div class="profile-img text-center">
                 <img
                   v-viewer
-                  :src="representativeDetails.imageModel.per_main_image_url"
+                  :src="representativeDetails.image_upload.per_main_image_url"
                   class="user-image"
                   alt="img"
                   height="250"
@@ -192,26 +214,26 @@ export default {
   components: {
     RatingComponent,
   },
-  props: {
-    representativeDetails: {
-      type: Object,
-    },
-  },
+  props: {},
   data() {
-    return {  };
+    return { representativeDetails: null };
   },
-  mounted() {},
+  mounted() {
+    this.getRepresentativeInfo();
+  },
   methods: {
-    async getDocumentInfo() {
-      const user = JSON.parse(localStorage.getItem("user"));
+    async getRepresentativeInfo() {
       await this.$store
-        .dispatch("getDocumentInfo", user.id)
+        .dispatch("getRepresentativeInfo")
         .then((data) => {
+          let user = JSON.parse(localStorage.getItem("user"));
           this.representativeDetails = {
-            ...data,
-            ...data.representaive_info,
+            ...data.data.data,
+            personal: {
+              ...data.data.data.personal,
+              per_email: user.email,
+            },
           };
-          this.isLoading = false;
         })
         .catch((error) => {});
     },
@@ -247,7 +269,7 @@ export default {
       }
     }
     ul {
-      .label-text {
+      .text--disabled text-subtitle-1 {
         //opacity: 0.8;
       }
     }
@@ -306,11 +328,11 @@ export default {
 .mobile-margin-top {
   margin-top: 54px;
 }
-.label-text {
+.text--disabled text-subtitle-1 {
   //font-size: 14px;
   font-weight: 600;
 }
-.flex-70 > .ml-3 {
+.flex-70 > .ml-3 text--secondary text-subtitle-1 {
   //font-size: 14px;
   font-weight: 900;
 }

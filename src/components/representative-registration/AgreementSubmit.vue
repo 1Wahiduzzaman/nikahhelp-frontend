@@ -1,5 +1,5 @@
 <template>
-  <div class="agreement">
+<!-- <div class="agreement">
     <div class="text">
       <p>
         To keep your account safe, we need to verify your identiy. This is a
@@ -21,88 +21,164 @@
         >I have consent for the candidate to represent</span
       >
     </div>
+  </div> -->
+  <div class="text-center">
+    <v-dialog v-model="dialog" width="600">
+      <v-card v-if="!showConfirmation">
+        <v-card-title class="text-h5"> Review and publish </v-card-title>
 
-    <!--		<div class="confirm mt-3">-->
-    <!--			<a-checkbox v-model="agreementChecked" @change="onChange">-->
-    <!--				<span class="fs-16"-->
-    <!--					>I have consent for the candidate to represent-->
-    <!--				</span>-->
-    <!--			</a-checkbox>-->
-    <!--		</div>-->
+        <v-card-text>
+          Please check the information and details that you have provided. If
+          you are not happy, please edit. if you are happy, please submit the
+          form for approval by the MatrimonyAssist Team.
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="warning" @click="cancel"> Cancel </v-btn>
+          <v-btn color="primary" @click="save"> Yes </v-btn>
+        </v-card-actions>
+      </v-card>
+      <v-card class="message" v-if="showConfirmation">
+        <div class="container-fluid mb-3 body-container">
+          <div class="content-text">
+            <h3 class="mt-3 fw-700 text-black-50 header-text">
+              Representative Form Submitted.
+            </h3>
+            <h4 class="mt-3 font-weight-bolder congo-text">
+              CONGRATULATIONS !
+            </h4>
+            <img
+              src="@/assets/icon/check-circle-success.svg"
+              alt="icon"
+              class=""
+            />
+
+            <p class="mt-4">
+              Thank you for submitting your profile details. It will be reviewed
+              and approved by the MatrimonyAssist shortly. However, if there are
+              any compliance issues, MatrimonyAssist shall contact you through
+              notification and customer support/personal settings section.
+            </p>
+
+            <button @click="submit" class="btn btn-block ms-2 text-nowrap continue-button mb-4">
+              Continue
+            </button>
+          </div>
+        </div>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["repData"],
+  components: {},
+  props: ["dialog"],
   data() {
-    return {
-      agreementChecked: false,
-    };
+    return { showConfirmation: false };
   },
-  mounted() {
-    if (this.repData) {
-      this.agreementChecked = this.repData.is_agree;
-      this.$emit("checked", this.agreementChecked);
-    }
+  computed: {
+    dialogFlag: function () {
+      return this.dialog;
+    },
   },
   methods: {
-    onChange(e) {
-      this.agreementChecked = e.target.checked;
-      this.$emit("valueChange", {
-        value: { is_agree: this.agreementChecked },
-        current: 2,
-      });
+    save() {
+      this.$emit("submit", null);
+      setTimeout(() => {
+        this.showConfirmation = true;
+      }, 1000);
+    },
+    submit() {
+      this.$emit("continue", true);
+    },
+    cancel() {
+      this.$emit("cancel", false);
     },
   },
 };
 </script>
+<style lang="scss" scoped>
+@import "@/styles/base/_variables.scss";
+.message {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  .content-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  header {
+    height: 100px;
+    background-color: $bg-secondary;
+    img {
+      margin-top: 10px;
+      height: 80px;
+    }
+  }
+  h4 {
+    font-family: $body-font;
+  }
+  h4 {
+    color: #42bf28;
+  }
+  img {
+    height: 80px;
+  }
+  button {
+    background-color: $color-secondary;
+    padding: 0px 20px;
+    color: white;
+  }
+}
+.header-text {
+  font-family: $body-font;
+  font-size: 32px;
+  @media (min-width: 768px) {
+    padding: 40px 0;
+  }
+}
+.type-access {
+  color: $color-primary;
+  text-decoration: underline;
+  font-weight: 700;
+}
+.continue-button {
+  height: 36px;
+  border-radius: 60px;
+}
+.congo-text {
+  @media (min-width: 768px) {
+    padding-bottom: 16px;
+  }
+}
+.verify-text {
+  @media (min-width: 768px) {
+    padding-top: 12px;
+  }
+}
 
-<style scoped lang="scss">
-.agreement {
-  width: 90%;
-  margin: 0px auto;
-  .section-heading {
-    text-align: center;
-    color: rgb(218, 15, 140);
-    h4 {
-      color: rgb(218, 15, 140);
-    }
-  }
-  .text {
-    background-color: #f4f4f9;
-    border-radius: 5px;
-    padding: 30px;
-    p {
-      font-size: 16px;
-    }
-  }
+.header-container {
+  flex-shrink: 0;
 }
-.mobile-margin {
-  margin-top: 0.5rem;
+.body-container {
+  flex-grow: 1;
+  overflow: auto;
+  min-height: 2em;
 }
-.mobile-center {
-  text-align: center;
+.footer-container {
+  flex-shrink: 0;
 }
-.mobile-switch {
-  margin-top: 12px;
-}
-@media (min-width: 768px) {
-  .form-right-content {
-    float: right;
-    padding-right: 0;
-  }
-  .mobile-margin {
-    margin-top: 0;
-  }
-  .non-padding-mobile-margin {
-    margin-top: 0;
-  }
-  .mobile-center {
-    text-align: left;
-  }
-  .mobile-switch {
-    margin-top: 0;
-  }
+.body-container::-webkit-scrollbar {
+  display: none;
 }
 </style>
+

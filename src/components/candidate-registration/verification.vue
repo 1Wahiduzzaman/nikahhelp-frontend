@@ -657,7 +657,7 @@
                 class="mt-5"
                 @click="handleSubmitFormOne"
               >
-                Submit
+                Save & Continue
               </a-button>
             </div>
           </a-form-model>
@@ -774,19 +774,7 @@ export default {
         return a;
       });
     },
-    async updateUserVerifyOrReject() {
-      const data = {
-        id: this.userData.id,
-        status: "completed",
-      };
-      await this.$store
-        .dispatch("updateUserVerifyOrReject", data)
-        .then((data) => {
-          this.userData.status = "2";
-          localStorage.setItem("user", JSON.stringify(this.userData));
-        })
-        .catch((error) => {});
-    },
+   
     cancel() {
       this.$emit("cancel", false);
     },
@@ -799,7 +787,7 @@ export default {
           this.activeKey = null;
           this.saveImageVerificationInfo();
           this.saveVerificationInfo();
-          this.updateUserVerifyOrReject();
+        
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");

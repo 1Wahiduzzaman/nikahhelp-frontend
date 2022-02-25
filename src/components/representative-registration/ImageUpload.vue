@@ -52,7 +52,7 @@
                         />
                         <a-button
                           type="primary"
-                          style="width: 185px"
+                          style="width: 200px"
                           v-if="avatarSrc"
                           @click="clearImg('avatar')"
                         >
@@ -409,24 +409,25 @@ export default {
 
   img {
     border-radius: 5px;
+    height: 100%;
   }
   .img-preview {
-    width: 220px;
-    height: 123px;
+    width: 200px;
+    height: 200px;
     border: 1px solid $color-secondary;
     border-radius: 5px;
     margin: 0px auto;
   }
   input[type="file"] {
     cursor: pointer;
-    width: 180px;
+    width: 200px;
     height: 34px;
     overflow: hidden;
     border-radius: 5px !important;
   }
 
   input[type="file"]:before {
-    width: 180px;
+    width: 200px;
     height: 32px;
     font-size: 16px;
     line-height: 32px;

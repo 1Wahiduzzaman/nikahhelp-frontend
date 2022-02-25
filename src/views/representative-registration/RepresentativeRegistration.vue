@@ -69,7 +69,7 @@
         <p class="color-brand fs-18">Details about you</p>
       </div>
       <div class="text-center mt-5" v-if="current == 3">
-        <h5 class="color-brand fs-20"> Review & Publish</h5>
+        <h5 class="color-brand fs-20">Review & Publish</h5>
         <p class="color-brand fs-18">Details about you</p>
       </div>
 
@@ -91,8 +91,8 @@
       </div>
       <div class="steps-content px-2" v-if="current == 2">
         <Verification
-         v-if="showAgreement"
-           @cancel="cancelVerification"
+          v-if="showAgreement"
+          @cancel="cancelVerification"
           :representativeDetails="representativeDetails"
           @valueChange="onDataChange($event)"
           :verification="representativeDetails.verification"
@@ -105,7 +105,7 @@
         />
       </div>
       <div class="steps-content" v-if="current == 3">
-        <Review  :representativeDetails="representativeDetails" />
+        <Review @toggleStep="toggleStep" />
       </div>
       <div class="steps-action text-right pb-5 clearfix bottom-padding">
         <a-button
@@ -129,7 +129,7 @@
           type="primary"
           shape="round"
           style="float: right; margin-top: 15px"
-          @click="doneBtn"
+          @click="openDialog"
         >
           Review and Publish
         </a-button>
@@ -159,6 +159,12 @@
         </a-button>
       </div>
     </div>
+    <AgreementSubmit
+      @continue="continueToDashboard"
+      @submit="doneBtn"
+      @cancel="cancel"
+      :dialog="dialog"
+    />
     <br /><br /><br /><br /><br />
   </div>
 </template>
@@ -192,19 +198,20 @@ export default {
     VerificationAgreement,
     Header,
     VueFixedHeader,
-    Review
+    Review,
   },
 
   data() {
     return {
       isLoading: false,
-       showAgreement: false,
+      showAgreement: false,
       fixedStatus: {
         headerIsFixed: false,
       },
       propsData: { ...createData() },
       current: 0,
       enabledNextBtn: false,
+      dialog: false,
       representativeDetails: {
         imageModel: {},
       },
@@ -220,7 +227,7 @@ export default {
           title: "Verification",
         },
         {
-          title:  "Review & Publish",
+          title: "Review & Publish",
         },
       ],
       mobileSteps: [
@@ -240,7 +247,38 @@ export default {
     this.getRepresentativeInitialInfo();
   },
   methods: {
-        cancelVerification(e) {
+    openDialog() {
+      this.dialog = false;
+      setTimeout(() => {
+        this.dialog = true;
+      });
+    },
+    cancel(e) {
+      this.dialog = false;
+    },
+    async updateUserVerifyOrReject() {
+      let user = JSON.parse(localStorage.getItem("user"));
+      const data = {
+        id: user.id,
+        status: "completed",
+      };
+      await this.$store
+        .dispatch("updateUserVerifyOrReject", data)
+        .then((data) => {
+          user.status = "2";
+          localStorage.setItem("user", JSON.stringify(user));
+        })
+        .catch((error) => {});
+    },
+    continueToDashboard() {
+      this.dialog = false;
+      this.$router.push("/dashboard");
+    },
+    toggleStep(step) {
+      this.current = step;
+      this.checkExistData();
+    },
+    cancelVerification(e) {
       this.showAgreement = false;
     },
     onAgree(value) {
@@ -258,17 +296,17 @@ export default {
             ...e.value,
           };
           break;
-          
+
           break;
 
         case 1:
           this.representativeDetails.imageModel = {
             ...e.value,
           };
-          case 2:
-            this.representativeDetails.verification = {
-              ...e.value,
-            };
+        case 2:
+          this.representativeDetails.verification = {
+            ...e.value,
+          };
           break;
       }
       this.checkExistData();
@@ -373,7 +411,7 @@ export default {
             "verification"
           );
         }
-         this.showAgreement =
+        this.showAgreement =
           user.status == "2" || user.status == "3" ? true : false;
         this.current = response.data.data.data_input_status;
         this.checkExistData();
@@ -410,6 +448,7 @@ export default {
     },
     doneBtn() {
       this.saveDataInputStatus(4);
+      this.updateUserVerifyOrReject();
     },
     async next() {
       switch (this.current) {
@@ -425,10 +464,10 @@ export default {
           this.current++;
           break;
         }
-        // case 3: {
-        //   this.current++;
-        //   break;
-        // }
+        case 3: {
+          this.current++;
+          break;
+        }
 
         default: {
           this.current = 0;
@@ -453,9 +492,9 @@ export default {
       user.data_input_status = satge;
       localStorage.removeItem("user");
       localStorage.setItem("user", JSON.stringify(user));
-      if (satge === 4) {
-        this.$router.push("/dashboard");
-      }
+      // if (satge === 4) {
+      //   this.$router.push("/dashboard");
+      // }
     },
     checkExistData() {
       let isEnabled = false;
@@ -485,7 +524,6 @@ export default {
           });
           break;
 
-        
         case 1:
           const { per_avatar_url, per_main_image_url } =
             this.representativeDetails.imageModel;
@@ -494,13 +532,13 @@ export default {
             per_main_image_url,
           }).every((x) => x !== undefined && x !== null && x !== "");
           break;
-          case 2:
+        case 2:
           const {
             ver_city,
             ver_country,
             ver_document_type,
             ver_document_frontside,
-            ver_document_backside
+            ver_document_backside,
             // ver_recommender_address,
             // ver_recommender_first_name,
             // ver_recommender_last_name,
@@ -513,7 +551,7 @@ export default {
             ver_country,
             ver_document_type,
             ver_document_frontside,
-            ver_document_backside
+            ver_document_backside,
             // ver_recommender_address,
             // ver_recommender_first_name,
             // ver_recommender_last_name,
@@ -522,7 +560,6 @@ export default {
             // ver_recommender_mobile_no,
           }).every((x) => x !== undefined && x !== null && x !== "");
           break;
-
       }
 
       this.enabledNextBtn = isEnabled;

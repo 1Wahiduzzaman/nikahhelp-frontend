@@ -96,6 +96,7 @@
                         class="style-chooser"
                         @input="onValueChange($event, 'ver_city_id')"
                         id="ver_city"
+                        :loading="loading"
                         placeholder="City"
                         :reduce="(option) => option.name"
                         v-model="verification.ver_city"
@@ -510,7 +511,7 @@
               </div>
             </div>
             <div class="d-flex justify-content-end">
-              <!-- <a-button
+              <a-button
                 shape="round"
                 type="primary"
                 style="float: right; margin-right: 10px"
@@ -518,7 +519,7 @@
                 @click="cancel"
               >
                 Cancel
-              </a-button> -->
+              </a-button>
               <a-button
                 shape="round"
                 type="primary"
@@ -631,6 +632,7 @@ export default {
       rules: VERIFICATION_RULES,
       activeKey: 1,
       userData: null,
+      loading: false,
     };
   },
 
@@ -638,26 +640,14 @@ export default {
     changeActivekey(key) {
       this.activeKey = key;
     },
-    async updateUserVerifyOrReject() {
-      const data = {
-        id: this.userData.id,
-        status: "completed",
-      };
-      await this.$store
-        .dispatch("updateUserVerifyOrReject", data)
-        .then((data) => {
-          this.userData.status = "2";
-          localStorage.setItem("user", JSON.stringify(this.userData));
-        })
-        .catch((error) => {});
-    },
+   
     handleSubmitFormOne() {
       this.$refs.verification.validate((valid) => {
         if (valid) {
           this.activeKey = null;
           this.saveImageVerificationInfo();
           this.saveVerificationInfo();
-          this.updateUserVerifyOrReject();
+        
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
@@ -781,9 +771,11 @@ export default {
     },
 
     async onChangeCountry(e,name) {
-      this.checkValidation(name)
+       this.loading = true;
+      this.checkValidation(name);
       const res = await ApiService.get(`v1/utilities/cities/${e}`);
       if (res.status === 200) {
+          this.loading = false;
         console.log("this.verification", this.verification);
         this.verification.cities = [];
         this.verification.cities.push(...res.data.data);
