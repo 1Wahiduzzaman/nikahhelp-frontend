@@ -1358,7 +1358,7 @@
                     <a-input
                       @blur="onValueChange($event, 'contact')"
                       id="mobile_number"
-                      maxLength="10"
+                      :maxLength="10"
                       v-model="personalInformation.contact.mobile_number"
                       placeholder="Mobile Number"
                     />

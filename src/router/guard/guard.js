@@ -1,5 +1,5 @@
 export const InitRoute = (to, from, next) => {
-    next();
+    //next();
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user && to.name == 'Signup') {
         return next();
