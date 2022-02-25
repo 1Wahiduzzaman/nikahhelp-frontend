@@ -827,7 +827,7 @@ export default {
        let h = this.heightTV.find(x => 
           x.value === val
         )
-      return h.name;
+      return h? h.name:"";
     }
   },
   computed: {},
