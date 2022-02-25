@@ -34,7 +34,7 @@
                 </div>
               </div>
             </div>
-        </fieldset>
+          </fieldset>
 
           <form class="form-ma">
             <div class="row">
