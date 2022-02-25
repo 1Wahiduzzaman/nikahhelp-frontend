@@ -1,6 +1,6 @@
 import ApiService from "../../../services/api.service";
 import moment from "moment";
-
+import JwtService from "../../../services/jwt.service";
 export default {
   async createPersonalInfoForRepresentative(context, _payload) {
     return new Promise((resolve, reject) => {
@@ -92,7 +92,18 @@ export default {
         .catch((error) => reject(error));
     });
   },
+  async getRepresentativeInfo(context, _) {
+    return new Promise((resolve, reject) => {
+      ApiService.get(`v1/representative/info/${JwtService.getUser().id}`)
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
 
+  },
   async profilePercentage(context, payload) {
     let profileData;
     let percentage = 0;

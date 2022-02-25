@@ -87,7 +87,7 @@
                   />
                   <a-button
                     type="primary"
-                    style="width: 185px"
+                    style="width: 200px"
                     v-if="imageModel.avatar_image_url"
                     @click="clearImg('avatar')"
                   >
@@ -149,7 +149,7 @@
                   />
                   <a-button
                     type="primary"
-                    style="width: 185px"
+                    style="width: 200px"
                     v-if="imageModel.main_image_url"
                     @click="clearImg('main')"
                   >
@@ -213,7 +213,7 @@
                   />
                   <a-button
                     type="primary"
-                    style="width: 185px"
+                    style="width: 200px"
                     v-if="imageModel.additionalImageSrc"
                     @click="clearImg('additional')"
                   >
@@ -569,24 +569,25 @@ export default {
 
   img {
     border-radius: 5px;
+    height:  100%;
   }
   .img-preview {
-    width: 220px;
+    width: 200px;
+    height: 200px;
     border: 1px solid $color-secondary;
     border-radius: 5px;
     margin: 0px auto;
-    height: 123px;
   }
   input[type="file"] {
     cursor: pointer;
-    width: 180px;
+    width: 200px;
     height: 34px;
     overflow: hidden;
     border-radius: 5px !important;
   }
 
   input[type="file"]:before {
-    width: 180px;
+    width: 200px;
     height: 32px;
     font-size: 16px;
     line-height: 32px;

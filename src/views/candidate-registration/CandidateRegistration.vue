@@ -274,7 +274,19 @@ export default {
     cancel(e) {
       this.dialog = false;
     },
-
+ async updateUserVerifyOrReject() {
+      const data = {
+        id: this.userData.id,
+        status: "completed",
+      };
+      await this.$store
+        .dispatch("updateUserVerifyOrReject", data)
+        .then((data) => {
+          this.userData.status = "2";
+          localStorage.setItem("user", JSON.stringify(this.userData));
+        })
+        .catch((error) => {});
+    },
     updateFixedStatus(next) {
       this.fixedStatus.headerIsFixed = next;
     },
@@ -786,6 +798,7 @@ export default {
     },
     doneBtn() {
       this.saveDataInputStatus(6);
+      this.updateUserVerifyOrReject();
     },
     continueToDashboard() {
       this.dialog = false;
