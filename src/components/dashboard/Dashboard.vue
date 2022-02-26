@@ -32,29 +32,29 @@
            <div class="profile-overview mt-5">
              <div class="profile-section flex justify-content-between">
                <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">20+</h4>
+                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.suggestion }}</h4>
                  <h4 class="fs-14 text-black-50">Suggestions</h4>
                </a-tooltip>
                <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">22</h4>
+                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.teamlisted }}</h4>
                  <h4 class="fs-14 text-black-50">Teamlisted</h4>
                </a-tooltip>
                <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">6</h4>
+                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.shortlisetd }}</h4>
                  <h4 class="fs-14 text-black-50">Shortlisted</h4>
                </a-tooltip>
              </div>
              <div class="profile-section flex justify-content-between mt-4">
                <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">4</h4>
+                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.connected }}</h4>
                  <h4 class="fs-14 text-black-50">Connected</h4>
                </a-tooltip>
                <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">3</h4>
+                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.request_received }}</h4>
                  <h4 class="fs-14 text-black-50">Request received</h4>
                </a-tooltip>
                <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">2</h4>
+                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.request_sent }}</h4>
                  <h4 class="fs-14 text-black-50">Request sent</h4>
                </a-tooltip>
              </div>
@@ -160,6 +160,7 @@ export default {
   created() {
     this.loadTeams();
     this.loadProfileGraphApi();
+    this.getTeamActivity();
   },
   data() {
     return {
@@ -228,6 +229,14 @@ export default {
           enabled: false
         },
       },
+      teamActivity: {
+        suggestion: 20,
+        teamlisted: 10,
+        shortlisetd: 4,
+        connected: 5,
+        request_received: 2,
+        request_sent: 3
+      }
     }
   },
   computed: {
@@ -283,6 +292,10 @@ export default {
           }
         ];
       }
+    },
+    async getTeamActivity() {
+      let {data} = await ApiService.get("v1/team-activity").then(res => res.data);
+      this.teamActivity = data;
     },
     getMemberName(user) {
       if(user && user.full_name) {

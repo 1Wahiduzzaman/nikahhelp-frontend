@@ -112,10 +112,14 @@
                             <a class="fs-12 color-primary">Private chat request <a-badge :count="privateRequested.length"></a-badge></a>
                           </a-menu-item>
                           <a-menu-item class="border-bottom">
-                            <a class="fs-12 color-primary">Chat history</a>
+                            <a-tooltip title="Coming soon">
+                              <a class="fs-12 color-primary">Chat history</a>
+                            </a-tooltip>
                           </a-menu-item>
                           <a-menu-item class="border-bottom">
-                            <a class="fs-12 color-primary">Archived chat</a>
+                            <a-tooltip title="Coming soon">
+                              <a class="fs-12 color-primary">Archived chat</a>
+                            </a-tooltip>
                           </a-menu-item>
                         </a-menu>
                       </a-dropdown>
@@ -276,19 +280,29 @@
                     </a>
                     <a-menu slot="overlay" class="text-center px-2">
                       <a-menu-item class="border-bottom">
-                        <a class="fs-12 color-primary">Mute this chat</a>
+                        <a-tooltip title="Coming soon">
+                          <a class="fs-12 color-primary">Mute this chat</a>
+                        </a-tooltip>
                       </a-menu-item>
                       <a-menu-item class="border-bottom">
-                        <a class="fs-12 color-primary">Mark as read</a>
+                        <a-tooltip title="Coming soon">
+                          <a class="fs-12 color-primary">Mark as read</a>
+                        </a-tooltip>
                       </a-menu-item>
                       <a-menu-item class="border-bottom">
-                        <a class="fs-12 color-primary">Add to chat history</a>
+                        <a-tooltip title="Coming soon">
+                          <a class="fs-12 color-primary">Add to chat history</a>
+                        </a-tooltip>
                       </a-menu-item>
                       <a-menu-item class="border-bottom">
-                        <a class="fs-12 color-primary">Archive chat</a>
+                        <a-tooltip title="Coming soon">
+                          <a class="fs-12 color-primary">Archive chat</a>
+                        </a-tooltip>
                       </a-menu-item>
                       <a-menu-item>
-                        <a class="text-danger fs-12">Delete chat</a>
+                        <a-tooltip title="Coming soon">
+                          <a class="text-danger fs-12">Delete chat</a>
+                        </a-tooltip>
                       </a-menu-item>
                     </a-menu>
                   </a-dropdown>
@@ -627,20 +641,25 @@ export default {
               teamPersonalChat.message.body = res.body;
               teamPersonalChat.message.created_at = res.created_at;
               teamPersonalChat.message.seen = 0;
+
+              // this.loadPageData();
             } else {
               teamPersonalChat.message = {
                 body: res.body,
                 created_at: res.created_at,
                 seen: 0,
               };
+
+              // this.loadPageData();
             }
 
-            this.teamChat.unshift(
-                this.teamChat.splice(
-                    this.teamChat.findIndex(
-                        elt => elt.user_id == res.senderId),
-                    1)[0]
-            );
+            // ordering
+            // this.teamChat.unshift(
+            //     this.teamChat.splice(
+            //         this.teamChat.findIndex(
+            //             elt => elt.user_id == res.senderId),
+            //         1)[0]
+            // );
           }
 
           let teamChat = this.teamChat.find(item => item.team_id == res.target_opened_chat);
@@ -653,12 +672,13 @@ export default {
             teamChat.message.created_at = res.created_at;
             teamChat.message.seen = 0;
 
-            this.teamChat.unshift(
-                this.teamChat.splice(
-                    this.teamChat.findIndex(
-                        elt => elt.team_id == res.target_opened_chat),
-                    1)[0]
-            );
+            // ordering
+            // this.teamChat.unshift(
+            //     this.teamChat.splice(
+            //         this.teamChat.findIndex(
+            //             elt => elt.team_id == res.target_opened_chat),
+            //         1)[0]
+            // );
           }
 
           let recentTeamMemberChat = this.chatHistory.find(item => item.user_id == res.target_opened_chat);
@@ -667,12 +687,13 @@ export default {
             recentTeamMemberChat.message.created_at = res.created_at;
             recentTeamMemberChat.message.seen = 0;
 
-            this.chatHistory.unshift(
-                this.chatHistory.splice(
-                    this.chatHistory.findIndex(
-                        elt => elt.user_id == res.target_opened_chat),
-                    1)[0]
-            );
+            // ordering
+            // this.chatHistory.unshift(
+            //     this.chatHistory.splice(
+            //         this.chatHistory.findIndex(
+            //             elt => elt.user_id == res.target_opened_chat),
+            //         1)[0]
+            // );
           }
 
           let recentPrivateChat = this.chatHistory.find(item => res.target_opened_chat && item.private_team_chat_id == res.target_opened_chat.private_team_chat_id);
@@ -681,12 +702,13 @@ export default {
             recentPrivateChat.message.created_at = res.created_at;
             recentPrivateChat.message.seen = 0;
 
-            this.chatHistory.unshift(
-                this.chatHistory.splice(
-                    this.chatHistory.findIndex(
-                        elt => res.target_opened_chat && elt.private_team_chat_id == res.target_opened_chat.private_team_chat_id),
-                    1)[0]
-            );
+            // ordering
+            // this.chatHistory.unshift(
+            //     this.chatHistory.splice(
+            //         this.chatHistory.findIndex(
+            //             elt => res.target_opened_chat && elt.private_team_chat_id == res.target_opened_chat.private_team_chat_id),
+            //         1)[0]
+            // );
           }
 
           let connectedTeamChat = this.connectedTeam.find(item => item && item.team_private_chat && item.team_private_chat.team_connection_id == res.team_connection_id);
@@ -695,12 +717,13 @@ export default {
             connectedTeamChat.message.created_at = res.created_at;
             connectedTeamChat.message.seen = 0;
 
-            this.connectedTeam.unshift(
-                this.connectedTeam.splice(
-                    this.connectedTeam.findIndex(
-                        elt => elt && elt.team_private_chat && elt.team_private_chat.team_connection_id == res.team_connection_id),
-                    1)[0]
-            );
+            // ordering
+            // this.connectedTeam.unshift(
+            //     this.connectedTeam.splice(
+            //         this.connectedTeam.findIndex(
+            //             elt => elt && elt.team_private_chat && elt.team_private_chat.team_connection_id == res.team_connection_id),
+            //         1)[0]
+            // );
           }
 
           let connectHistory = this.chatHistory.find(item => item && item.team_connection_id == res.team_connection_id);
@@ -709,12 +732,13 @@ export default {
             connectHistory.message.created_at = res.created_at;
             connectHistory.message.seen = 0;
 
-            this.chatHistory.unshift(
-                this.chatHistory.splice(
-                    this.chatHistory.findIndex(
-                        elt => elt && elt.team_connection_id == res.team_connection_id),
-                    1)[0]
-            );
+            // ordering
+            // this.chatHistory.unshift(
+            //     this.chatHistory.splice(
+            //         this.chatHistory.findIndex(
+            //             elt => elt && elt.team_connection_id == res.team_connection_id),
+            //         1)[0]
+            // );
           }
         }
       });
@@ -1307,12 +1331,12 @@ export default {
         };
       }
 
-      this.findOneAndPushToFirst();
+      // this.findOneAndPushToFirst();
 
-      // this.chats.unshift(payload);
       this.chats.push(payload);
       payload.sender = loggedUser.id.toString();
       this.msg_text = '';
+      this.notifyKeyboardStatus();
       await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
     },
     async sendConnectedTeamMessage() {
@@ -1364,13 +1388,13 @@ export default {
       payload.target_opened_chat = payload.to_team_id;
       this.$socket.emit('send_message_in_group', payload);
 
-      this.findOneAndPushToFirst();
+      // this.findOneAndPushToFirst();
 
       this.chats.push(payload);
       teamMembers.splice(selfIndex, 1);
       this.msg_text = null;
-      await ApiService.post(`/v1/send-message-team-to-team`, payload).then(res => res.data);
       this.notifyKeyboardStatus();
+      await ApiService.post(`/v1/send-message-team-to-team`, payload).then(res => res.data);
       this.chatheadopen.message = {
         body: payload.body,
         created_at: payload.created_at,
@@ -1405,7 +1429,7 @@ export default {
       this.chatheadopen.message.senderInfo = loggedUser;
       this.$socket.emit('send_message', payload);
 
-      this.findOneAndPushToFirst();
+      // this.findOneAndPushToFirst();
 
       payload.from_team_id = this.activeTeam;
       if(parseInt(this.activeTeam) == parseInt(this.chatheadopen.from_team_id)) {
@@ -1414,8 +1438,10 @@ export default {
         payload.to_team_id = this.chatheadopen.from_team_id;
       }
 
-      await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
       this.msg_text = '';
+      this.notifyKeyboardStatus();
+
+      await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
     },
     notifyKeyboardStatus() {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
