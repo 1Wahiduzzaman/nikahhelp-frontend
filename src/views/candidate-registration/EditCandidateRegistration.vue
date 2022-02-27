@@ -699,7 +699,7 @@ export default {
     },
     doneBtn() {
       // this.saveDataInputStatus(6);
-      this.$router.push("/dashboard");
+      this.$router.push("/manageteam");
     },
     toggleStep(step) {
       this.current = step;

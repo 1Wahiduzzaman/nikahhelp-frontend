@@ -118,7 +118,7 @@ export const RULES_PERSONAL = {
     per_permanent_post_code: [
         {
             required: true,
-            message: "Write your post code",
+            message: "Please provide a valid postcode",
             trigger: "blur",
         },
     ],

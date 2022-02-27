@@ -10,12 +10,14 @@
       </template>
       <a-collapse-panel key="1" header="1. Upload Images">
         <h5 class="text-left mt-2">Upload your Image</h5>
-        <div class="instruction">
+        <div class="instruction text-black-70">
           <p>
-            * You are required to upload at least one Avatar and a Main Image.
-            All together you can upload 2 pictures.
+            * Please upload 2 images.. The first is for your avatar. The second
+            image is for identification purpose as necessary in line with
+            MatrimonyAsssit terms and conditions. The pictures need to be your
+            own current image and in colour.
           </p>
-          <p>* Select images from your devices, Maximum file size 2 MB</p>
+          <p>* The maximum size of each image is 4MB.</p>
         </div>
 
         <!-- Image Upload Input -->
@@ -215,11 +217,13 @@ export default {
       }
       this.saveImages(formData);
     },
+
     imageSizeCheck(file) {
       if (file["size"] > 4223550) {
         this.$error({
-          title: "Validation Error",
-          content: "Image size can't be more than 4 mb",
+          title: "Error!",
+          content: `The image you tried to upload is more than 4MB.
+          Please try uploading an image that is less than 4MB.`,
           center: true,
         });
         return false;

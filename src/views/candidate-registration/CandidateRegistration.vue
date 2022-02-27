@@ -803,7 +803,7 @@ export default {
     },
     continueToDashboard() {
       this.dialog = false;
-      this.$router.push("/dashboard");
+      this.$router.push("/manageteam");
     },
     toggleStep(step) {
       this.current = step;

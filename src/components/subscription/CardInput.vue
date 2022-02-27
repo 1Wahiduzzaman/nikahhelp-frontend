@@ -71,10 +71,10 @@
 </template>
 
 <script>
-let stripe = Stripe(
-	"pk_test_51IsaaMBGUmvLHtCrCZvd5unlKMW6StKdBGOZQi5nwmF1PMZgcVuNKLFlZtawZwhaMbNch0B3fFIYzWdR0jB8UX6I00OBk9xw8o"
-);
-let elements = stripe.elements();
+// let stripe = Stripe(
+// 	"pk_test_51IsaaMBGUmvLHtCrCZvd5unlKMW6StKdBGOZQi5nwmF1PMZgcVuNKLFlZtawZwhaMbNch0B3fFIYzWdR0jB8UX6I00OBk9xw8o"
+// );
+//let elements = stripe.elements();
 const style = {
 	base: {
 		border: "2px solid #aaa",
