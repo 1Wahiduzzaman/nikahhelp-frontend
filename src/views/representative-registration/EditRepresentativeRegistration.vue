@@ -316,7 +316,7 @@ export default {
       this.$router.push("/profile");
     },
     doneBtn() {
-      this.$router.push("/dashboard");
+      this.$router.push("/manageteam");
     },
     async next() {
       switch (this.current) {
@@ -377,7 +377,7 @@ export default {
           console.log(data);
           this.loading = false;
           this.getPercentage();
-          this.$router.push("/dashboard");
+          this.$router.push("/manageteam");
         })
         .catch((error) => {
           this.loading = false;

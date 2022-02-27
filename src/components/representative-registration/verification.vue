@@ -19,15 +19,30 @@
             :rules="rules"
             class="form-ma"
           >
-            <div class="verification-header my-2 text-black-50">
+            <div class="verification-header my-2 text-black-70">
               <p>
-                To keep your account safe, we need to verify your identity. This
-                is a legal requirement that help us to keep your account secure.
+                To provide you with an authentic experience we verify all
+                candidates (bride/groom) IDs as well as the ID of at least one
+                representative in each team.
               </p>
               <p>
-                We accept photo/scans of a driving lecense, passport, national
-                ID card or residense permit issued in European Economic Are
-                (EEA)
+                If you do not wish to upload your ID documents now, that's fine.
+                You can go back to the previous step by tapping the previous
+                button at the bottom of this section and select 'No'. You can
+                upload your ID documents later through your personal settings
+                screen.
+              </p>
+              <p>
+                We accept photos/scans of a driving license, passport, national
+                ID card or residence permit issued by governments.
+              </p>
+              <p>
+                Copies of your ID document will be deleted once your ID is
+                verified in the interest of security.
+              </p>
+              <p>
+                Our main goal is that real people connect with other real
+                people.
               </p>
 
               <p>Follow these tips to make sure your document is accepted:</p>
@@ -67,7 +82,7 @@
                     v-if="verification.ver_country"
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
-                  />Country
+                  />ID document issuing country & city
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
@@ -162,8 +177,15 @@
                     v-model="verification.ver_document_type"
                     label="name"
                     :options="[
-                      { name: 'Passport', value: 'Passport' },
-                      { name: 'Nation ID', value: 'Nation ID' },
+                      { name: 'Valid passport', value: 'Valid passport' },
+                      {
+                        name: 'Valid driving license',
+                        value: 'Valid driving license',
+                      },
+                      {
+                        name: 'Valid national ID document',
+                        value: 'Valid national ID document',
+                      },
                     ]"
                     ><template #open-indicator>
                       <a-icon type="down" /> </template
@@ -212,7 +234,7 @@
                 <div class="image-container text-center">
                   <span class="mb-2"
                     >The format supported are JPEG, PNG, PDF. Maximum file size
-                    2 mb</span
+                    4 mb</span
                   >
 
                   <div class="img-preview mb-2">
@@ -296,7 +318,7 @@
                 <div class="image-container text-center">
                   <span class="mb-2"
                     >The format supported are JPEG, PNG, PDF. Maximum file size
-                    2 mb</span
+                    4 mb</span
                   >
 
                   <div class="img-preview mb-2">
@@ -374,7 +396,9 @@
                     v-if="verification.ver_recommender_title"
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
-                  />Person of community standing who know you?
+                  />Person of community standing or professional who knows you
+                  well (this is an <b>optional</b> question - just leave blank,
+                  required for enhanced ID checks)?
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
@@ -757,8 +781,9 @@ export default {
     imageSizeCheck(file) {
       if (file["size"] > 4223550) {
         this.$error({
-          title: "Validation Error",
-          content: "Image size can't be more than 4 mb",
+          title: "Error!",
+          content: `The image you tried to upload is more than 4MB.
+          Please try uploading an image that is less than 4MB.`,
           center: true,
         });
         return false;

@@ -230,7 +230,7 @@
                     "
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
-                  />What is your current place of residence?
+                  />What is your current country and city of residence?
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
@@ -351,7 +351,7 @@
                     "
                     id="per_permanent_post_code"
                     :maxLength="10"
-                    placeholder="Post Code"
+                    placeholder="Post code, e.g. ME1 1BA"
                     v-model="
                       personalInformation.personal.per_permanent_post_code
                     "
@@ -589,7 +589,7 @@
                     <a-form-model-item ref="mobile_number" prop="mobile_number">
                       <a-input
                         class="w-100"
-                        placeholder="Please provide your mobile number excluding the first digit"
+                        placeholder="Please exclude the first digit."
                         id="inputNumber"
                         :maxLength="10"
                         v-model="personalInformation.personal.mobile_number"
@@ -639,6 +639,7 @@
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-input
+              style="color:#464343"
                 class="w-100"
                 placeholder="Email Address"
                 id="inputNumber"

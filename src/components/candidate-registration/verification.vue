@@ -29,25 +29,35 @@
           >
             <div class="row">
               <div class="col-12 border-bottom pb-3">
-                <div class="verification-header mt-2">
-                  <p class="instruction-title">
-                    To help us ensure a transparent and trusting experience we
-                    request your co-operation and consent in submitting a
-                    government approved valid ID for approval by the
-                    MatrimonyAssist Team. 
+                <div class="verification-header my-2 text-black-70">
+                  <p>
+                    To provide you with an authentic experience we verify all
+                    candidates (bride/groom) IDs as well as the ID of at least
+                    one representative in each team.
                   </p>
-                   <p class="instruction-title">
-                   We are bound by and respect your
-                    privacy as detailed in our terms and conditions.
+                  <p>
+                    If you do not wish to upload your ID documents now, that's
+                    fine. You can go back to the previous step by tapping the
+                    previous button at the bottom of this section and select
+                    'No'. You can upload your ID documents later through your
+                    personal settings screen.
                   </p>
-                  <p class="instruction-title">
-                    We accept photo/scans of a driving license, passport,
-                    national ID card and residence permit In European Economic
-                    Area (EEA) or Switzerland. Please remember the following
-                    when submitting:
+                  <p>
+                    We accept photos/scans of a driving license, passport,
+                    national ID card or residence permit issued by governments.
+                  </p>
+                  <p>
+                    Copies of your ID document will be deleted once your ID is
+                    verified in the interest of security.
+                  </p>
+                  <p>
+                    Our main goal is that real people connect with other real
+                    people.
                   </p>
 
-                  <p class="instruction-title">Do’s</p>
+                  <p>
+                    Follow these tips to make sure your document is accepted:
+                  </p>
                   <ul>
                     <li class="flex-start-center">
                       <img
@@ -55,46 +65,26 @@
                         alt="icon"
                         id="checkIcon"
                       />
-                      Make sure the document has an expiry data and a photo
+                      Submit a valid, current photo ID with an expiry date
                     </li>
-                    <li class="flex-start-center mt-2">
+                    <li class="flex-start-center py-2">
                       <img
                         src="@/assets/Icons/tick 2.svg"
                         alt="icon"
                         id="checkIcon"
                       />
-                      Show the full document (all 4 corners should be visible)
+                      Show the full document (all four corners should be
+                      visible)
                     </li>
-                    <li class="flex-start-center mt-2">
+                    <li class="flex-start-center">
                       <img
                         src="@/assets/Icons/tick 2.svg"
                         alt="icon"
                         id="checkIcon"
                       />
-                      Provide a document that is in colour
+                      Use a colour image that a is clear and easy to read
                     </li>
                   </ul>
-                  <br />
-                  <!-- <p class="instruction-title">Don’ts </p>
-                  <ul>
-                    <li class="flex-start-center">
-                      <img
-                        src="@/assets/Icons/tick 2.svg"
-                        alt="icon"
-                        id="checkIcon"
-                      />
-                   Do not submit an expired document 
-                    </li>
-                    <li class="flex-start-center mt-2">
-                      <img
-                        src="@/assets/Icons/tick 2.svg"
-                        alt="icon"
-                        id="checkIcon"
-                      />
-                     Don’t submit a blurry image 
-                    </li>
-                    
-                  </ul> -->
                 </div>
               </div>
             </div>
@@ -107,7 +97,7 @@
                     v-if="verification.ver_country_id"
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
-                  />Document issuing country
+                  />Document issuing country & city
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
@@ -205,15 +195,10 @@
                     aria-expanded="false"
                     aria-controls="collapseExample"
                   >
-                    <span
-                      v-if="arr[3].first"
-                      @click="toggle(3)"
-                    >
+                    <span v-if="arr[3].first" @click="toggle(3)">
                       Need Help?
                     </span>
-                    <span v-else @click="toggle(3)">
-                      Hide Help?
-                    </span>
+                    <span v-else @click="toggle(3)"> Hide Help? </span>
                   </a>
                 </p>
                 <div
@@ -273,15 +258,10 @@
                     aria-expanded="false"
                     aria-controls="collapseExample"
                   >
-                    <span
-                      v-if="arr[2].first"
-                      @click="toggle(2)"
-                    >
+                    <span v-if="arr[2].first" @click="toggle(2)">
                       Need Help?
                     </span>
-                    <span v-else @click="toggle(2)">
-                      Hide Help?
-                    </span>
+                    <span v-else @click="toggle(2)"> Hide Help? </span>
                   </a>
                 </p>
                 <div
@@ -315,7 +295,7 @@
                 <div class="image-container text-center">
                   <span class="mb-2"
                     >The format supported are JPEG, PNG, PDF. Maximum file size
-                    2 mb</span
+                    4 mb</span
                   >
 
                   <div class="img-preview mb-2">
@@ -346,13 +326,13 @@
                     type="file"
                     class="input-image"
                     name="avatar"
-                     v-if="!verification.ver_image_front"
+                    v-if="!verification.ver_image_front"
                     @change="getFrontPage"
                   />
-                   <a-button
+                  <a-button
                     type="primary"
                     style="width: 185px"
-                   v-if="verification.ver_image_front"
+                    v-if="verification.ver_image_front"
                     @click="clearImg('font')"
                   >
                     Remove
@@ -371,15 +351,10 @@
                     aria-expanded="false"
                     aria-controls="collapseExample"
                   >
-                    <span
-                      v-if="arr[1].first"
-                      @click="toggle(1)"
-                    >
+                    <span v-if="arr[1].first" @click="toggle(1)">
                       Need Help?
                     </span>
-                    <span v-else @click="toggle(1)">
-                      Hide Help?
-                    </span>
+                    <span v-else @click="toggle(1)"> Hide Help? </span>
                   </a>
                 </p>
                 <div
@@ -409,11 +384,10 @@
                 <div class="image-container text-center">
                   <span class="mb-2"
                     >The format supported are JPEG, PNG, PDF. Maximum file size
-                    2 mb</span
+                    4 mb</span
                   >
 
                   <div class="img-preview mb-2">
-                   
                     <img
                       v-viewer
                       :src="imageBack ? imageBack : verification.ver_image_back"
@@ -433,14 +407,14 @@
                   <input
                     type="file"
                     class="input-image"
-                      v-if="!verification.ver_image_back"
+                    v-if="!verification.ver_image_back"
                     name="avatar"
                     @change="getBackPage"
                   />
-                   <a-button
+                  <a-button
                     type="primary"
                     style="width: 185px"
-                   v-if="verification.ver_image_back"
+                    v-if="verification.ver_image_back"
                     @click="clearImg('back')"
                   >
                     Remove
@@ -457,15 +431,10 @@
                     aria-expanded="false"
                     aria-controls="collapseExample"
                   >
-                    <span
-                      v-if="arr[0].first"
-                      @click="toggle(0)"
-                    >
+                    <span v-if="arr[0].first" @click="toggle(0)">
                       Need Help?
                     </span>
-                    <span v-else @click="toggle(0)">
-                      Hide Help?
-                    </span>
+                    <span v-else @click="toggle(0)"> Hide Help? </span>
                   </a>
                 </p>
                 <div
@@ -495,7 +464,9 @@
                     "
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
-                  />Person of community standing who know you?
+                  />Person of community standing or professional who knows you
+                  well (this is an <b>optional</b> question - just leave blank,
+                  required for enhanced ID checks)?
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
@@ -612,15 +583,10 @@
                     aria-expanded="false"
                     aria-controls="collapseExample"
                   >
-                    <span
-                      v-if="arr[4].first"
-                      @click="toggle(27)"
-                    >
+                    <span v-if="arr[4].first" @click="toggle(27)">
                       Need Help?
                     </span>
-                    <span v-else @click="toggle(27)">
-                      Hide Help?
-                    </span>
+                    <span v-else @click="toggle(27)"> Hide Help? </span>
                   </a>
                 </p>
                 <div
@@ -759,7 +725,7 @@ export default {
   mounted() {},
 
   methods: {
-     toggle(index) {
+    toggle(index) {
       this.arr = this.arr.map((a, ind) => {
         if (ind === index) {
           a.first = !a.first;
@@ -769,7 +735,7 @@ export default {
         return a;
       });
     },
-   
+
     cancel() {
       this.$emit("cancel", false);
     },
@@ -780,8 +746,6 @@ export default {
       this.$refs.verification.validate((valid) => {
         if (valid) {
           this.activeKey = null;
-         
-        
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
@@ -845,7 +809,6 @@ export default {
         .catch((error) => {});
     },
     saveImageVerificationInfo(image) {
-      
       this.$store
         .dispatch("saveImageVerificationInfo", image)
         .then((data) => {
@@ -863,8 +826,9 @@ export default {
     imageSizeCheck(file) {
       if (file["size"] > 4223550) {
         this.$error({
-          title: "Validation Error",
-          content: "Image size can't be more than 4 mb",
+          title: "Error!",
+          content: `The image you tried to upload is more than 4MB.
+          Please try uploading an image that is less than 4MB.`,
           center: true,
         });
         return false;

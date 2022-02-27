@@ -17,19 +17,18 @@
       <a-collapse-panel key="1" header="4.1 Image Required">
         <!-- Image Upload Input -->
         <div class="image-and-settings">
-
           <fieldset class="mb-10 mt-2">
             <legend class="ml-8 px-1"><span>Upload your image</span></legend>
             <div class="row">
               <div class="col-12">
                 <div class="px-4">
                   <p>
-                    You are required to upload at least one avatar and a main image.
-                    All together you can upload up to 3 images.
+                    You are required to upload at least one avatar and a main
+                    image. All together you can upload up to 3 images.
                   </p>
                   <p>
-                    Select images from your devices. Supported file formats are JPG,
-                    JPEG, PNG. Maximum file size 2 MB.
+                    Select images from your devices. Supported file formats are
+                    JPG, JPEG, PNG. Maximum file size 2 MB.
                   </p>
                 </div>
               </div>
@@ -356,8 +355,9 @@ export default {
     imageSizeCheck(file) {
       if (file["size"] > 4223550) {
         this.$error({
-          title: "Validation Error",
-          content: "Image size can't be more than 4 mb",
+          title: "Error!",
+          content: `The image you tried to upload is more than 4MB.
+          Please try uploading an image that is less than 4MB.`,
           center: true,
         });
         return false;
@@ -511,18 +511,18 @@ export default {
 
 <style scoped lang="scss">
 fieldset {
-    border: 1px solid #522e8e;
-    border-radius: 10px;
+  border: 1px solid #522e8e;
+  border-radius: 10px;
 }
 legend {
-    display: inline;
-    width: inherit;
-    color: #3b3194;
-    font-size: 18px;
-    font-weight: 600;
+  display: inline;
+  width: inherit;
+  color: #3b3194;
+  font-size: 18px;
+  font-weight: 600;
 }
 .-mt-15 {
-    margin-top: -13px;
+  margin-top: -13px;
 }
 .contain {
   height: 123px;
@@ -586,7 +586,7 @@ legend {
 
   img {
     border-radius: 5px;
-    height:  100%;
+    height: 100%;
   }
   .img-preview {
     width: 200px;
