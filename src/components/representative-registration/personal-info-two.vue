@@ -589,7 +589,7 @@
                     <a-form-model-item ref="mobile_number" prop="mobile_number">
                       <a-input
                         class="w-100"
-                        placeholder="+8801685117737"
+                        placeholder="Please provide your mobile number excluding the first digit"
                         id="inputNumber"
                         :maxLength="10"
                         v-model="personalInformation.personal.mobile_number"

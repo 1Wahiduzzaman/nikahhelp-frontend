@@ -324,6 +324,7 @@ export default {
           break;
         case 4:
           this.candidateDetails.verification = {
+             ...this.representativeDetails.verification,
             ...e.value,
           };
           break;
