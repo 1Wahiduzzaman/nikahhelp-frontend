@@ -204,7 +204,6 @@ export default {
   data() {
     return {
       isLoading: false,
-      showAgreement: false,
       fixedStatus: {
         headerIsFixed: false,
       },
@@ -212,8 +211,10 @@ export default {
       current: 0,
       enabledNextBtn: false,
       dialog: false,
+      showAgreement: false,
       representativeDetails: {
         imageModel: {},
+        showAgreement: false,
       },
       steps: [
         {
@@ -280,6 +281,7 @@ export default {
     },
     cancelVerification(e) {
       this.showAgreement = false;
+       this.checkExistData();
     },
     onAgree(value) {
       this.showAgreement = value;
@@ -305,6 +307,7 @@ export default {
           };
         case 2:
           this.representativeDetails.verification = {
+            ...this.representativeDetails.verification,
             ...e.value,
           };
           break;
@@ -413,6 +416,27 @@ export default {
         }
         this.showAgreement =
           user.status == "2" || user.status == "3" ? true : false;
+        const {
+          ver_city,
+          ver_country,
+          ver_document_type,
+          ver_document_frontside,
+          ver_document_backside,
+        } = this.representativeDetails.verification;
+        this.showAgreement = Object.values({
+          ver_city,
+          ver_country,
+          ver_document_type,
+          ver_document_frontside,
+          ver_document_backside,
+        }).every((x) => x !== undefined && x !== null && x !== "");
+        if (!this.showAgreement && user.status == "1") {
+          this.representativeDetails.verification = {
+            ...this.representativeDetails.verification,
+            ver_document_frontside: "",
+            ver_document_backside: "",
+          };
+        }
         this.current = response.data.data.data_input_status;
         this.checkExistData();
       } else {
@@ -492,9 +516,6 @@ export default {
       user.data_input_status = satge;
       localStorage.removeItem("user");
       localStorage.setItem("user", JSON.stringify(user));
-      // if (satge === 4) {
-      //   this.$router.push("/dashboard");
-      // }
     },
     checkExistData() {
       let isEnabled = false;
@@ -533,32 +554,25 @@ export default {
           }).every((x) => x !== undefined && x !== null && x !== "");
           break;
         case 2:
-          const {
-            ver_city,
-            ver_country,
-            ver_document_type,
-            ver_document_frontside,
-            ver_document_backside,
-            // ver_recommender_address,
-            // ver_recommender_first_name,
-            // ver_recommender_last_name,
-            // ver_recommender_occupation,
-            // ver_recommender_title,
-            // ver_recommender_mobile_no,
-          } = this.representativeDetails.verification;
-          isEnabled = Object.values({
-            ver_city,
-            ver_country,
-            ver_document_type,
-            ver_document_frontside,
-            ver_document_backside,
-            // ver_recommender_address,
-            // ver_recommender_first_name,
-            // ver_recommender_last_name,
-            // ver_recommender_occupation,
-            // ver_recommender_title,
-            // ver_recommender_mobile_no,
-          }).every((x) => x !== undefined && x !== null && x !== "");
+          if (this.showAgreement) {
+            const {
+              ver_city,
+              ver_country,
+              ver_document_type,
+              ver_document_frontside,
+              ver_document_backside,
+            } = this.representativeDetails.verification;
+            isEnabled = Object.values({
+              ver_city,
+              ver_country,
+              ver_document_type,
+              ver_document_frontside,
+              ver_document_backside,
+            }).every((x) => x !== undefined && x !== null && x !== "");
+          } else {
+            isEnabled = true;
+          }
+
           break;
       }
 

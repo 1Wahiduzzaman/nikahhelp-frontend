@@ -89,7 +89,7 @@
                         />
                         <a-button
                           type="primary"
-                          style="width: 185px"
+                          style="width: 200px"
                           v-if="mainImageSrc"
                           @click="clearImg('main')"
                         >

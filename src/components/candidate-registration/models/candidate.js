@@ -1,3 +1,16 @@
+export const validateNumber = (rule, value, callback) => {
+    var regex = /^[0-9]+$/;
+    if (!regex.test(value)) {
+        callback(
+            new Error(
+                "Please input 10 digit (only numerals 1-9)."
+            )
+        );
+    } else {
+        callback();
+    }
+}
+
 export const RULES_RATE = {
     pre_employment_wealth_rate: [
         {
@@ -303,7 +316,11 @@ export const RULESPERSONALINFO = {
         required: true,
         message: "Write your mobile number",
         trigger: "blur",
-    },],
+    },
+    { validator: validateNumber, trigger: "change" },
+    { validator: validateNumber, trigger: "blur" },
+
+],
     per_marital_status: [
         {
             required: true,

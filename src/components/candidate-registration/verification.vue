@@ -413,12 +413,7 @@
                   >
 
                   <div class="img-preview mb-2">
-                    <!-- <span
-                      @click="clearImg('back')"
-                      class="close-icon"
-                      v-if="verification.ver_image_back"
-                      ><img src="@/assets/icon/close.svg" alt="img"
-                    /></span> -->
+                   
                     <img
                       v-viewer
                       :src="imageBack ? imageBack : verification.ver_image_back"
@@ -785,8 +780,7 @@ export default {
       this.$refs.verification.validate((valid) => {
         if (valid) {
           this.activeKey = null;
-          this.saveImageVerificationInfo();
-          this.saveVerificationInfo();
+         
         
         } else {
           setTimeout(() => {
@@ -805,7 +799,7 @@ export default {
     },
     onValueChange(e, name) {
       this.checkValidation(name);
-      //this.saveVerificationInfo();
+      this.saveVerificationInfo();
     },
     checkValidation(name) {
       this.$refs.verification.fields.forEach((f) => {
@@ -850,11 +844,8 @@ export default {
         })
         .catch((error) => {});
     },
-    saveImageVerificationInfo() {
-      const image = {
-        ver_image_front: this.verification.ver_image_front,
-        ver_image_back: this.verification.ver_image_back,
-      };
+    saveImageVerificationInfo(image) {
+      
       this.$store
         .dispatch("saveImageVerificationInfo", image)
         .then((data) => {
@@ -888,9 +879,9 @@ export default {
       }
 
       this.verification.ver_image_front = e.target.files[0];
-      // this.saveImageVerificationInfo({
-      //   ver_image_front: this.verification.ver_image_front,
-      // });
+      this.saveImageVerificationInfo({
+        ver_image_front: this.verification.ver_image_front,
+      });
 
       let reader = new FileReader();
       reader.readAsDataURL(file);
@@ -905,9 +896,9 @@ export default {
         return;
       }
       this.verification.ver_image_back = e.target.files[0];
-      // this.saveImageVerificationInfo({
-      //   ver_image_back: this.verification.ver_image_back,
-      // });
+      this.saveImageVerificationInfo({
+        ver_image_back: this.verification.ver_image_back,
+      });
 
       let reader = new FileReader();
       reader.readAsDataURL(file);
@@ -925,7 +916,7 @@ export default {
         this.verification.cities.push(...res.data.data);
         this.loading = false;
       }
-      //this.saveVerificationInfo();
+      this.saveVerificationInfo();
     },
     clearImg(action) {
       switch (action) {

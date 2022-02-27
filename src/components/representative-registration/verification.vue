@@ -77,7 +77,7 @@
                       <v-select
                         :clearable="false"
                         class="style-chooser"
-                        @input="onChangeCountry($event,'ver_country')"
+                        @input="onChangeCountry($event, 'ver_country')"
                         id="ver_country"
                         placeholder="Country"
                         v-model="verification.ver_country"
@@ -248,7 +248,7 @@
                     type="primary"
                     style="width: 185px"
                     v-if="verification.ver_document_frontside"
-                    @click="clearImg('main')"
+                    @click="clearImg('front')"
                   >
                     Remove
                   </a-button>
@@ -333,7 +333,7 @@
                     type="primary"
                     style="width: 185px"
                     v-if="verification.ver_document_backside"
-                    @click="clearImg('main')"
+                    @click="clearImg('back')"
                   >
                     Remove
                   </a-button>
@@ -527,7 +527,7 @@
                 class="mt-5"
                 @click="handleSubmitFormOne"
               >
-               Save & Continue
+                Save & Continue
               </a-button>
             </div>
           </a-form-model>
@@ -640,14 +640,11 @@ export default {
     changeActivekey(key) {
       this.activeKey = key;
     },
-   
+
     handleSubmitFormOne() {
       this.$refs.verification.validate((valid) => {
         if (valid) {
           this.activeKey = null;
-          this.saveImageVerificationInfo();
-          this.saveVerificationInfo();
-        
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
@@ -665,6 +662,7 @@ export default {
     },
     onValueChange(e, name) {
       this.checkValidation(name);
+      this.saveVerificationInfo();
     },
     checkValidation(name) {
       this.$refs.verification.fields.forEach((f) => {
@@ -705,11 +703,7 @@ export default {
         })
         .catch((error) => {});
     },
-    saveImageVerificationInfo() {
-      const image = {
-        ver_document_backside: this.verification.ver_document_backside,
-        ver_document_frontside: this.verification.ver_document_frontside,
-      };
+    saveImageVerificationInfo(image) {
       this.$store
         .dispatch("saveRepresentativeImageVerificationInfo", image)
         .then((data) => {
@@ -725,7 +719,40 @@ export default {
         .catch((error) => {});
     },
     cancel() {
-      this.$emit("cancel", false);
+      this.verification = {
+        ver_city: "",
+        ver_country: "",
+        ver_document_type: "",
+        ver_recommender_address: "",
+        ver_recommender_first_name: "",
+        ver_recommender_last_name: "",
+        ver_recommender_occupation: "",
+        ver_recommender_title: "",
+        ver_recommender_mobile_no: "",
+        ver_document_frontside: "",
+        ver_document_backside: "",
+      };
+
+      this.$store
+        .dispatch("saveRepresentativeVerificationInfo", {
+          ver_city: "",
+          ver_country: "",
+          ver_document_type: "",
+          ver_recommender_address: "",
+          ver_recommender_first_name: "",
+          ver_recommender_last_name: "",
+          ver_recommender_occupation: "",
+          ver_recommender_title: "",
+          ver_recommender_mobile_no: "",
+        })
+        .then((data) => {
+          this.$emit("valueChange", {
+            value: this.verification,
+            current: 2,
+          });
+          this.$emit("cancel", false);
+        })
+        .catch((error) => {});
     },
     imageSizeCheck(file) {
       if (file["size"] > 4223550) {
@@ -746,9 +773,9 @@ export default {
       }
 
       this.verification.ver_document_frontside = e.target.files[0];
-      // this.saveImageVerificationInfo({
-      //   ver_document_frontside: this.verification.ver_document_frontside,
-      // });
+      this.saveImageVerificationInfo({
+        ver_document_frontside: this.verification.ver_document_frontside,
+      });
 
       let reader = new FileReader();
       reader.readAsDataURL(file);
@@ -763,6 +790,9 @@ export default {
         return;
       }
       this.verification.ver_document_backside = e.target.files[0];
+      this.saveImageVerificationInfo({
+        ver_document_backside: this.verification.ver_document_backside,
+      });
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
@@ -770,17 +800,17 @@ export default {
       };
     },
 
-    async onChangeCountry(e,name) {
-       this.loading = true;
+    async onChangeCountry(e, name) {
+      this.loading = true;
       this.checkValidation(name);
       const res = await ApiService.get(`v1/utilities/cities/${e}`);
       if (res.status === 200) {
-          this.loading = false;
+        this.loading = false;
         console.log("this.verification", this.verification);
         this.verification.cities = [];
         this.verification.cities.push(...res.data.data);
       }
-      //this.saveVerificationInfo();
+      this.saveVerificationInfo();
     },
     toggle(index) {
       this.arr = this.arr.map((a, ind) => {
@@ -796,9 +826,11 @@ export default {
       switch (action) {
         case "back":
           this.backPageSrc = "";
+          this.verification.ver_document_backside = "";
           break;
-        case "font":
+        case "front":
           this.frontPageSrc = "";
+          this.verification.ver_document_frontside = "";
           break;
       }
     },

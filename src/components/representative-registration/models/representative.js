@@ -1,4 +1,15 @@
-
+export const validateNumber = (rule, value, callback) => {
+    var regex = /^[0-9]+$/;
+    if (!regex.test(value)) {
+        callback(
+            new Error(
+                "Please input 10 digit (only numerals 1-9)."
+            )
+        );
+    } else {
+        callback();
+    }
+}
 export const RULES = {
 
     per_gender: [
@@ -27,18 +38,18 @@ export const RULES = {
 
 };
 
-export const VERIFICATION_RULES={
-    ver_city:[{
+export const VERIFICATION_RULES = {
+    ver_city: [{
         required: true,
         message: "Select city",
         trigger: "blur",
     }],
-    ver_country:[{
+    ver_country: [{
         required: true,
         message: "Select country",
         trigger: "blur",
     }],
-    ver_document_type:[{
+    ver_document_type: [{
         required: true,
         message: "Select document type",
         trigger: "blur",
@@ -119,12 +130,17 @@ export const RULES_PERSONAL = {
         },
     ],
     mobile_number: [
+        { validator: validateNumber, trigger: "change" },
+        { validator: validateNumber, trigger: "blur" },
         {
             required: true,
             message: "Write your mobile number",
             trigger: "blur",
         },
+
+
     ],
 
 
 };
+
