@@ -13,7 +13,7 @@
 
 <script>
 import {format} from "timeago.js";
-// import ApiService from "../../services/api.service";
+import ApiService from "../../services/api.service";
 
 export default {
     name: 'NotificationListItem',
@@ -39,7 +39,7 @@ export default {
       },
       clickOnNotification() {
         this.item.seen = 1;
-        // ApiService.post(`/v1/seen-notification/${this.item.id}`);
+        ApiService.post(`/v1/seen-notification/${this.item.id}`);
       }
     }
 }
