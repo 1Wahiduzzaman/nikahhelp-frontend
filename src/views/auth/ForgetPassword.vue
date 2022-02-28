@@ -14,7 +14,7 @@
         </div>
         <form class="form">
           <Spinner v-if="isLoading" />
-          <div v-else-if="error" class="text-black-50">
+          <!-- <div v-else-if="error" class="text-black-50">
             <p>{{ error }}</p>
             <div class="flex justify-content-center align-items-center">
               <button class="">
@@ -46,7 +46,7 @@
                 </router-link>
               </button>
             </div>
-          </div>
+          </div> -->
           <div v-else>
             <div class="mb-3" v-if="!message">
               <h5 class="fs-18 text-black-50">Retrieve your password here</h5>
@@ -148,9 +148,14 @@ export default {
                   "We have sent you a link to reset your password. This link is valid for 15 minutes.";
               })
               .catch((r) => {
-                this.error = "Your email is either invalid or not registered. You may try sign in again with a valid email address. If you are not registered, you may Join now.";
+                this.disabled = false;
+                if(r.response?.status === 400) {
+                  this.$error({
+                    title: 'Your email is either invalid or not registered. You may try sign in again with a valid email address. If you are not registered, you may Join now.',
+                    center: true,
+                  });
+                }
               });
-          } else {
           }
         });
       } catch (error) {
