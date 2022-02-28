@@ -59,6 +59,7 @@ export default {
     })
   },
   async forgetPassword(_, payload) {
+    console.log(payload)
     const response = await axios.post("v1/forgot/password", payload);
     console.log(response);
   },
