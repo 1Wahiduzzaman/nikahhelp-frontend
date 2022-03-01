@@ -299,12 +299,6 @@
                   >
 
                   <div class="img-preview mb-2">
-                    <!-- <span
-                      @click="clearImg('font')"
-                      class="close-icon"
-                      v-if="verification.ver_image_front"
-                      ><img src="@/assets/icon/close.svg" alt="img"
-                    /></span> -->
                     <img
                       v-viewer
                       :src="
@@ -450,7 +444,7 @@
             </div>
 
             <!--Community standing-->
-            <div class="row pt-3 border-bottom">
+            <!-- <div class="row pt-3 border-bottom">
               <div class="col-12 col-md-6 none-padding">
                 <div class="mb-2 font-weight-bold">
                   <a-icon
@@ -599,7 +593,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="d-flex justify-content-end">
               <a-button
@@ -618,7 +612,7 @@
                 class="mt-5"
                 @click="handleSubmitFormOne"
               >
-                Save & Continue
+                Save
               </a-button>
             </div>
           </a-form-model>
@@ -737,7 +731,43 @@ export default {
     },
 
     cancel() {
-      this.$emit("cancel", false);
+      this.verification = {
+        ver_city_id: "",
+        ver_country: "",
+        ver_country_id: "",
+        ver_document_type: "",
+        // ver_recommences_address: "",
+        // ver_recommences_first_name: "",
+        // ver_recommences_last_name: "",
+        // ver_recommences_occupation: "",
+        // ver_recommences_title: "",
+        // ver_status: "",
+        // ver_recommences_mobile_no: "",
+        ver_image_back: "",
+        ver_image_front: "",
+      };
+      this.$store
+        .dispatch("saveVerificationInfo", {
+          ver_city_id: "",
+          ver_country: "",
+          ver_country_id: "",
+          ver_document_type: "",
+          // ver_recommences_address: "",
+          // ver_recommences_first_name: "",
+          // ver_recommences_last_name: "",
+          // ver_recommences_occupation: "",
+          // ver_recommences_title: "",
+          // ver_status: "",
+          // ver_recommences_mobile_no: "",
+        })
+        .then((data) => {
+          this.$emit("valueChange", {
+            value: this.verification,
+            current: 4,
+          });
+          this.$emit("cancel", false);
+        })
+        .catch((error) => {});
     },
     changeActivekey(key) {
       this.activeKey = key;
@@ -778,13 +808,13 @@ export default {
         ver_country,
         ver_country_id,
         ver_document_type,
-        ver_recommences_address,
-        ver_recommences_first_name,
-        ver_recommences_last_name,
-        ver_recommences_occupation,
-        ver_recommences_title,
-        ver_status,
-        ver_recommences_mobile_no,
+        // ver_recommences_address,
+        // ver_recommences_first_name,
+        // ver_recommences_last_name,
+        // ver_recommences_occupation,
+        // ver_recommences_title,
+        // ver_status,
+        // ver_recommences_mobile_no,
       } = this.verification;
       this.$store
         .dispatch("saveVerificationInfo", {
@@ -792,13 +822,13 @@ export default {
           ver_country,
           ver_country_id,
           ver_document_type,
-          ver_recommences_address,
-          ver_recommences_first_name,
-          ver_recommences_last_name,
-          ver_recommences_occupation,
-          ver_recommences_title,
-          ver_status,
-          ver_recommences_mobile_no,
+          // ver_recommences_address,
+          // ver_recommences_first_name,
+          // ver_recommences_last_name,
+          // ver_recommences_occupation,
+          // ver_recommences_title,
+          // ver_status,
+          // ver_recommences_mobile_no,
         })
         .then((data) => {
           this.$emit("valueChange", {

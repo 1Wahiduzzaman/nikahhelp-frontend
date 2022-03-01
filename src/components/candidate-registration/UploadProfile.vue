@@ -28,7 +28,7 @@
                   </p>
                   <p>
                     Select images from your devices. Supported file formats are
-                    JPG, JPEG, PNG. Maximum file size 2 MB.
+                    JPG, JPEG, PNG. Maximum file size 4 MB.
                   </p>
                 </div>
               </div>
@@ -263,7 +263,7 @@
                 <a-icon slot="unCheckedChildren" type="close" />
               </a-switch>
               <span class="ml-3 switch-text">
-                Share my images with no one at the moment
+                Do not share my images with anybody at the moment ( your own  team can see still)
               </span>
             </div>
             <div class="d-flex mt-4">

@@ -225,17 +225,17 @@ export default {
           title: "Image Upload",
         },
         {
-          title: "Verification",
+          title: "Verification & Reference",
         },
         {
-          title: "Review & Publish",
+          title: "Review & Submit",
         },
       ],
       mobileSteps: [
         "Personal Info",
         "Image Upload",
-        "Verification",
-        "Review & Publish",
+        "Verification & Reference",
+        "Review & Submit",
       ],
 
       activeKey: 1,

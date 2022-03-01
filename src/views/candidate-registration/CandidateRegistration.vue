@@ -246,11 +246,11 @@ export default {
           content: "Last-content",
         },
         {
-          title: "Verification",
+          title: "Verification & Reference",
           content: "Last-content",
         },
         {
-          title: "Review & Publish",
+          title: "Review & Submit",
           content: "Last-content",
         },
       ],
@@ -259,8 +259,8 @@ export default {
         "Personal Information",
         "Family Information",
         "Image Upload",
-        "Verification",
-        "Review & Publish",
+        "Verification & Reference",
+        "Review & Submit",
       ],
     };
   },
@@ -274,7 +274,7 @@ export default {
     cancel(e) {
       this.dialog = false;
     },
- async updateUserVerifyOrReject() {
+    async updateUserVerifyOrReject() {
       const data = {
         id: this.userData.id,
         status: "completed",
@@ -324,7 +324,7 @@ export default {
           break;
         case 4:
           this.candidateDetails.verification = {
-             ...this.representativeDetails.verification,
+            ...this.representativeDetails.verification,
             ...e.value,
           };
           break;
@@ -582,6 +582,25 @@ export default {
         this.current = response.data.data.user.data_input_status;
         this.showAgreement =
           user.status == "2" || user.status == "3" ? true : false;
+        const {
+          ver_country_id,
+          ver_document_type,
+          ver_image_back,
+          ver_image_front,
+        } = this.candidateDetails.verification;
+        this.showAgreement = Object.values({
+          ver_country_id,
+          ver_document_type,
+          ver_image_back,
+          ver_image_front,
+        }).every((x) => x !== undefined && x !== null && x !== "");
+        if (!this.showAgreement && user.status == "1") {
+          this.candidateDetails.verification = {
+            ...this.candidateDetails.verification,
+            ver_document_frontside: "",
+            ver_document_backside: "",
+          };
+        }
         this.checkExistData();
       } else {
         this.isLoading = false;
