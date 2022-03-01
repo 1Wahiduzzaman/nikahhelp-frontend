@@ -837,7 +837,7 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .contain {
-  height: 123px;
+  height: 100%;
   width: 220px;
   object-fit: cover;
 } 

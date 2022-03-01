@@ -95,7 +95,7 @@
           style="float: right; margin-top: 15px"
           @click="openDialog"
         >
-          Review and Publish
+          Review and Submit
         </a-button>
         <a-button
           v-if="current > 0"
@@ -190,11 +190,11 @@ export default {
         },
 
         {
-          title: "Review & Publish",
+          title: "Review & Submit",
           content: "Last-content",
         },
       ],
-      mobileSteps: ["Personal Information", "Image Upload", "Review & Publish"],
+      mobileSteps: ["Personal Information", "Image Upload", "Review & Submit"],
     };
   },
   methods: {

@@ -133,7 +133,7 @@
           style="float: right; margin-top: 12px; margin-right: -10px"
           @click="openDialog"
         >
-          Review and Publish
+          Review and Submit
         </a-button>
         <a-button
           v-if="current > 0"
