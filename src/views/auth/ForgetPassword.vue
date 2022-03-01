@@ -14,7 +14,7 @@
         </div>
         <form class="form">
           <Spinner v-if="isLoading" />
-          <div v-else-if="error" class="text-black-50">
+          <!-- <div v-else-if="error" class="text-black-50">
             <p>{{ error }}</p>
             <div class="flex justify-content-center align-items-center">
               <button class="">
@@ -46,12 +46,12 @@
                 </router-link>
               </button>
             </div>
-          </div>
+          </div> -->
           <div v-else>
             <div class="mb-3" v-if="!message">
               <h5 class="fs-18 text-black-50">Retrieve your password here</h5>
               <p class="fs-14 text-black-50">
-                Please enter your email address below. You will receive a link
+                Please enter your registered email address below. You will receive a link
                 to reset your password.
               </p>
               <a-form-model
@@ -81,7 +81,7 @@
                 class="btn btn-primary w-100"
                 @click="handleSubmit"
               >
-                Get Verification Link
+                Get Password Reset Link
               </button>
 
               <router-link
@@ -145,16 +145,21 @@ export default {
               .then((re) => {
                 this.disabled = false;
                 this.message =
-                  "We have sent you a link to reset your password. This link is valid for 30 minutes.";
+                  "We have sent you a link to reset your password. This link is valid for 15 minutes.";
               })
               .catch((r) => {
-                this.error = "Invalid email, email is not registered";
+                this.disabled = false;
+                if(r.response?.status === 400) {
+                  this.$error({
+                    title: 'Your email is either invalid or not registered. You may try sign in again with a valid email address. If you are not registered, you may Join now.',
+                    center: true,
+                  });
+                }
               });
-          } else {
           }
         });
       } catch (error) {
-        this.error = "Invalid email, email is not registered";
+        this.error = "Your email is either invalid or not registered. You may try sign in again with a valid email address.If you are not registered, you may Join now.";
       }
       this.isLoading = false;
     },
