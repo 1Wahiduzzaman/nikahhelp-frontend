@@ -225,23 +225,20 @@ export const VERIFICATION = {
     //     message: "Write your last name",
     //     trigger: "blur",
     // }],
-    // ver_recommences_mobile_no: [{
-    //     required: true,
-    //     message: "Write your mobile no",
-    //     trigger: "blur",
-    // }],
+    // ver_recommences_mobile_no: [{ validator: validateNumber, trigger: "change" },
+    // { validator: validateNumber, trigger: "blur" },],
     // ver_recommences_occupation: [{
     //     required: true,
     //     message: "Select your occupation",
     //     trigger: "blur",
     // }],
-//     ver_recommences_title: [{
-//         required: true,
-//         message: "Write your title",
-//         trigger: "blur",
-//     }
+    //     ver_recommences_title: [{
+    //         required: true,
+    //         message: "Write your title",
+    //         trigger: "blur",
+    //     }
 
-// ],
+    // ],
 }
 export const RULESPERSONALINFO = {
     per_smoker: [{
@@ -320,7 +317,7 @@ export const RULESPERSONALINFO = {
     { validator: validateNumber, trigger: "change" },
     { validator: validateNumber, trigger: "blur" },
 
-],
+    ],
     per_marital_status: [
         {
             required: true,
@@ -382,7 +379,7 @@ export const RULESPERSONALINFO = {
         {
             required: true,
             message: "Select your education level",
-           
+
         },
     ],
     per_religion_id: [

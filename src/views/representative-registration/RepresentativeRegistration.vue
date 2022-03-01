@@ -131,7 +131,7 @@
           style="float: right; margin-top: 15px"
           @click="openDialog"
         >
-          Review and Publish
+          Review and Submit
         </a-button>
         <a-button
           v-if="current > 0"
@@ -225,17 +225,17 @@ export default {
           title: "Image Upload",
         },
         {
-          title: "Verification",
+          title: "Verification & Reference",
         },
         {
-          title: "Review & Publish",
+          title: "Review & Submit",
         },
       ],
       mobileSteps: [
         "Personal Info",
         "Image Upload",
-        "Verification",
-        "Review & Publish",
+        "Verification & Reference",
+        "Review & Submit",
       ],
 
       activeKey: 1,
