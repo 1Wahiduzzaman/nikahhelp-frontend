@@ -13,7 +13,7 @@
 
         <router-link
        
-          :to="'/admin/document_details/' + candidateData.user_id"
+          :to="'/admin/document_details/' + modifiedInfo.user_id"
         >
           <v-btn style="background-color: #522e8e; color: #fff" small>
             Verify Document Info
@@ -26,6 +26,43 @@
           </v-btn>
         </router-link>
       </div>
+
+      <v-container fluid>
+        <v-row no-gutters>
+          <v-col cols="12">
+            <Loader v-if="isLoading" :isLoading="isLoading" />
+            <div v-else>
+              <ProfileBanner
+                class="px-2 mt-2"
+                :name="modifiedInfo.first_name + ' ' + modifiedInfo.last_name"
+                :image="
+                  modifiedInfo.image
+                    ? modifiedInfo.image
+                    : avatarSrc
+                "
+              />
+            </div>
+          </v-col>
+        </v-row>
+      </v-container>
+
+      <div class="px-5">
+        <fieldset class="">
+          <legend class="ml-8 px-1"><span>Personal Information</span></legend>
+          <v-container fluid class="pt-0 px-5">
+              <v-row dense>
+                <v-col class="pt-1" cols="12" md="8">
+                  <PersonalInformation :data="candidateInfo" />
+                </v-col>
+                <v-col ref="family-information" class="pt-1" cols="12" md="4">
+                  <MoreAbout />
+                </v-col>
+              </v-row>
+          </v-container>
+        </fieldset>
+      </div>
+
+        
 
       <div v-if="candidateData && candidateData.personal" class="text-start">
         <!-- Preference -->
@@ -839,10 +876,17 @@ import RatingComponent from "../../components/profile/RatingComponent.vue";
 import ApiService from "@/services/api.service";
 import JwtService from "@/services/jwt.service";
 import { AGES, HEIGHTS, Employment_Statuses } from "@/models/data";
+
+import ProfileBanner from "@/components/atom/ProfileBanner";
+import PersonalInformation from "@/views/admin/user-profile/PersonalInformation"
+import MoreAbout from "@/views/admin/user-profile/MoreAbout"
 export default {
   name: "Review",
   components: {
     RatingComponent,
+    ProfileBanner,
+    PersonalInformation,
+    MoreAbout
   },
   props: {
     candidateDetails: {
@@ -864,6 +908,14 @@ export default {
     user_id: function () {
       return this.$route.params.user_id;
     },
+  
+    candidateInfo () {
+      return this.getCandidateData?.candidate_info ? this.getCandidateData.candidate_info : {}
+    },
+
+    modifiedInfo () {
+      return this.candidateData.candidate_info_modified ? this.candidateData.candidate_info_modified : {}
+    }
   },
   methods: {
     async getCandidateData() {
@@ -875,12 +927,12 @@ export default {
         this.isLoading = false;
         this.candidateData = {
           ...response.data.data,
-          preference: {
-            ...response.data.data.preference,
-            pre_occupation: JSON.parse(
-              response.data.data.preference.pre_occupation
-            ),
-          },
+          // preference: {
+          //   ...response.data.data.preference,
+          //   pre_occupation: JSON.parse(
+          //     response.data.data.preference.pre_occupation
+          //   ),
+          // },
         };
       } catch (error) {
         console.log(error.response)
@@ -892,6 +944,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
+fieldset {
+    border: 1px solid #d3d0e4;
+    border-radius: 10px;
+}
+legend {
+    display: inline;
+    width: inherit;
+    color: #6259a8;
+    font-size: 18px;
+    font-weight: 600;
+}
+.-mt-15 {
+    margin-top: -13px;
+}
 @import "@/styles/base/_variables.scss";
 .review-publish {
   .header {
