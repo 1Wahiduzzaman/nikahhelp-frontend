@@ -384,7 +384,7 @@
             </div>
 
             <div class="row pt-3 pb-2">
-              <div class="col-12 col-md-6 none-padding">
+            <div class="col-12 col-md-6 none-padding">
                 <div class="mb-2 font-weight-bold">
                   <a-icon
                     v-if="verification.ver_recommender_title"
@@ -395,6 +395,7 @@
                   required for enhanced ID checks)?
                 </div>
               </div>
+
               <div class="col-12 col-md-6 mobile-margin">
                 <a-form-model-item
                   ref="ver_recommender_title"
