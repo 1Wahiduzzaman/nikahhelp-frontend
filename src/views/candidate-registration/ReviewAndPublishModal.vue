@@ -15,7 +15,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="warning" @click="cancel"> Cancel </v-btn>
-          <v-btn color="primary" @click="save"> Yes </v-btn>
+          <v-btn color="primary" @click="save"> Submit</v-btn>
         </v-card-actions>
       </v-card>
       <v-card class="message" v-if="showConfirmation">

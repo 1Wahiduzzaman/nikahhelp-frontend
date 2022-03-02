@@ -123,7 +123,7 @@
                   displayFormat="dmy"
                   dropdownClass="custom-select"
                   :key="default_date"
-                  :default-date="personalInformation.essential.default_date"
+                  :default-date="personalInformation.essential.dob"
                   v-model="personalInformation.essential.dob"
                   v-bind:on-day-change="onDayChange"
                   v-bind:on-month-change="onMonthChange"

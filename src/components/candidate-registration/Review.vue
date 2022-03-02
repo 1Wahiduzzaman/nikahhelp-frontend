@@ -744,7 +744,7 @@
                     type="check"
                   />
                   <span class="fs-16">
-                   Share my images with no one at the moment</span
+                   Do not share my images with anyone at the moment</span
                   >
                 </div>
                 <div class="d-flex">
@@ -759,7 +759,7 @@
                     type="check"
                   />
                   <span class="fs-16">
-                   Share my images with the connected teams (only if they accept my connect request)
+                   Share my images with the connected teams (only if I or they accept connect request)
                   </span>
                 </div>
               </div>
@@ -837,7 +837,7 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .contain {
-  height: 123px;
+  height: 100%;
   width: 220px;
   object-fit: cover;
 } 

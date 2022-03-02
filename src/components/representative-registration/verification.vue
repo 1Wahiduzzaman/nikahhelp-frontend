@@ -177,15 +177,9 @@
                     v-model="verification.ver_document_type"
                     label="name"
                     :options="[
-                      { name: 'Valid passport', value: 'Valid passport' },
-                      {
-                        name: 'Valid driving license',
-                        value: 'Valid driving license',
-                      },
-                      {
-                        name: 'Valid national ID document',
-                        value: 'Valid national ID document',
-                      },
+                      { name: 'Passport', value: 'Passport' },
+                      { name: 'National ID', value: 'National ID' },
+                      { name: 'Driving licence ', value: 'Driving licence ' },
                     ]"
                     ><template #open-indicator>
                       <a-icon type="down" /> </template

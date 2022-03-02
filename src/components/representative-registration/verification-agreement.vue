@@ -33,7 +33,7 @@
         </button>
         <button
           @click="handleClick(true)"
-          class="btn ms-2 text-nowrap disagree-button"
+          class="btn ms-2 text-nowrap agree-button"
         >
           Yes
         </button>
