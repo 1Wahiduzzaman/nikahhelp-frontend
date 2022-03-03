@@ -151,7 +151,7 @@ export default {
                 this.disabled = false;
                 if(r.response?.status === 400) {
                   this.$error({
-                    title: 'Your email is either invalid or not registered. You may try sign in again with a valid email address. If you are not registered, you may Join now.',
+                    title: 'There’s no account associated with this email address. Try another email address or create a new account.',
                     center: true,
                   });
                 }
@@ -159,7 +159,7 @@ export default {
           }
         });
       } catch (error) {
-        this.error = "Your email is either invalid or not registered. You may try sign in again with a valid email address.If you are not registered, you may Join now.";
+        this.error = "There’s no account associated with this email address. Try another email address or create a new account.";
       }
       this.isLoading = false;
     },
