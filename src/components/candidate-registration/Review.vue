@@ -574,8 +574,15 @@
               <div class="card-custom shadow-default">
                 <h4 class="text--disabled text-subtitle-1">Additional Information</h4>
                 <p class="mb-0 text--secondary text-subtitle-1"> {{ candidateData.more_about.per_additional_info_text }}</p>
+                <div class="mt-3 color-primary">
+                    {{
+                     candidateData.more_about.per_additional_info_doc_title
+                    }}
+                  </div>
               </div>
+               
             </div>
+       
           </div>
         </div>
 

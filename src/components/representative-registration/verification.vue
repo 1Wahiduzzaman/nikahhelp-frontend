@@ -384,15 +384,18 @@
             </div>
 
             <div class="row pt-3 pb-2">
-            <div class="col-12 col-md-6 none-padding">
-                <div class="mb-2 font-weight-bold">
+              <div class="col-12 col-md-6 none-padding">
+                <div style="display: flex; flex-direction: column">
                   <a-icon
                     v-if="verification.ver_recommender_title"
-                    class="color-success mr-2 fs-18 fw-500"
                     type="check"
-                  />Person of community standing or professional who knows you
-                  well (this is an <b>optional</b> question - just leave blank,
-                  required for enhanced ID checks)?
+                  />
+                  <span class="mr-2 fs-16 fw-700">Personal reference</span>
+                  <span class="mr-2 fw-500">This section is optional. </span>
+                  <span class="mr-2 fw-500"
+                    >We may request this information anytime in case we need to
+                    do enhanced ID checks. 48m 44s .
+                  </span>
                 </div>
               </div>
 
@@ -546,7 +549,7 @@
                 class="mt-5"
                 @click="handleSubmitFormOne"
               >
-                Save & Continue
+                Save
               </a-button>
             </div>
           </a-form-model>
