@@ -22,7 +22,8 @@
             labelPlacement="vertical"
           >
             <a-step
-              v-for="item in steps"
+              v-for="(item, index) in steps"
+              @click="onStep(index)"
               :key="item.title"
               :title="item.title"
             />
@@ -33,22 +34,27 @@
             </h4>
             <div class="mobile-block px-3">
               <div
+                @click="onStep(0)"
                 class="mobile-step"
                 :class="{ 'bg-primary': current >= 0 }"
               ></div>
               <div
+                @click="onStep(1)"
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 1 }"
               ></div>
               <div
+                @click="onStep(2)"
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 2 }"
               ></div>
               <div
+                @click="onStep(3)"
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 3 }"
               ></div>
               <div
+                @click="onStep(4)"
                 class="mobile-step ml-2"
                 :class="{ 'bg-primary': current >= 4 }"
               ></div>
@@ -292,6 +298,13 @@ export default {
     },
     cancelVerification(e) {
       this.showAgreement = false;
+    },
+    onStep(index) {
+      let user = JSON.parse(localStorage.getItem("user"));
+      if (index <= user.data_input_status) {
+        this.current = index;
+        this.checkExistData();
+      }
     },
     onAgree(value) {
       this.showAgreement = value;
@@ -607,17 +620,20 @@ export default {
       }
     },
     async saveDataInputStatus(satge) {
-      const res = await ApiService.post(
-        "v1/candidate/personal-info-status?_method=PATCH",
-        {
-          data_input_status: satge,
-        }
-      );
       let user = JSON.parse(localStorage.getItem("user"));
-      if (user) {
-        user.data_input_status = satge;
-        localStorage.removeItem("user");
-        localStorage.setItem("user", JSON.stringify(user));
+      if (stage > user.data_input_status) {
+        const res = await ApiService.post(
+          "v1/candidate/personal-info-status?_method=PATCH",
+          {
+            data_input_status: satge,
+          }
+        );
+        let user = JSON.parse(localStorage.getItem("user"));
+        if (user) {
+          user.data_input_status = satge;
+          localStorage.removeItem("user");
+          localStorage.setItem("user", JSON.stringify(user));
+        }
       }
     },
     async onChangeCountry(e, name, action, isDefault = false) {
