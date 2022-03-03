@@ -620,20 +620,17 @@ export default {
       }
     },
     async saveDataInputStatus(satge) {
-      let user = JSON.parse(localStorage.getItem("user"));
-      if (stage > user.data_input_status) {
-        const res = await ApiService.post(
-          "v1/candidate/personal-info-status?_method=PATCH",
-          {
-            data_input_status: satge,
-          }
-        );
-        let user = JSON.parse(localStorage.getItem("user"));
-        if (user) {
-          user.data_input_status = satge;
-          localStorage.removeItem("user");
-          localStorage.setItem("user", JSON.stringify(user));
+      const res = await ApiService.post(
+        "v1/candidate/personal-info-status?_method=PATCH",
+        {
+          data_input_status: satge,
         }
+      );
+      let user = JSON.parse(localStorage.getItem("user"));
+      if (user) {
+        user.data_input_status = satge;
+        localStorage.removeItem("user");
+        localStorage.setItem("user", JSON.stringify(user));
       }
     },
     async onChangeCountry(e, name, action, isDefault = false) {
@@ -886,7 +883,10 @@ export default {
         }
       }
       this.checkExistData();
-      this.saveDataInputStatus(this.current);
+      let user = JSON.parse(localStorage.getItem("user"));
+      if (stage > user.data_input_status) {
+        this.saveDataInputStatus(this.current);
+      }
     },
     prev() {
       this.current--;

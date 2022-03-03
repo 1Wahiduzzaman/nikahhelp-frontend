@@ -27,7 +27,7 @@ export const InitRoute = (to, from, next) => {
 
         return to.name == 'CandidateShortRegistration' ? next() : next({ name: 'CandidateShortRegistration' });
     }
-    else if (user.account_type === 1 && user.form_type === 2 && user.data_input_status == 3 && to.name === 'CandidateShortRegistration') {
+    else if (user.account_type === 1 && user.form_type === 2 && user.data_input_status == 3 && from.name === 'CandidateShortRegistration') {
 
         return to.name == 'ManageTeam' ? next() : next({ name: 'ManageTeam' });
     }
@@ -35,14 +35,14 @@ export const InitRoute = (to, from, next) => {
 
         return to.name == 'CandidateRegistration' ? next() : next({ name: 'CandidateRegistration' });
     }
-    else if (user.account_type === 1 && user.form_type === 1 && user.data_input_status > 5 && to.name === 'CandidateRegistration') {
+    else if (user.account_type === 1 && user.form_type === 1 && user.data_input_status > 5 && from.name === 'CandidateRegistration') {
 
         return to.name == 'ManageTeam' ? next() : next({ name: 'ManageTeam' });
     }
     else if (user.account_type === 2 && user.data_input_status <= 3) {
         return to.name == 'RepresentativeRegistration' ? next() : next({ name: 'RepresentativeRegistration' });
     }
-    else if (user.account_type === 2 && user.data_input_status > 3 && to.name === 'RepresentativeRegistration') {
+    else if (user.account_type === 2 && user.data_input_status > 3 && from.name === 'RepresentativeRegistration') {
         return to.name == 'ManageTeam' ? next() : next({ name: 'ManageTeam' });
     }
     else if (user && (to.name == 'Signup' || to.name == 'Login' || user && to.name == 'Home')) {
