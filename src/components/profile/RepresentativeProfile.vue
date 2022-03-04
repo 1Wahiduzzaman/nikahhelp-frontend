@@ -4,6 +4,8 @@
 		<div class="profile-heading" >
 			<ProfileBanner
 				class="px-2 mt-2"
+				:image="images.per_avatar_url ? images.per_avatar_url : ''"
+				:name="representativeData.first_name + ' ' + representativeData.last_name"
 			/>
 			<v-container fluid>
                 <v-row>
@@ -94,24 +96,29 @@
 												:value="representativeData.screen_name"
 											/>
 											<TableRow 
+												title="Mobile"
+												textClass="text-subtitle-1"
+												:value="personal.mobile_number"
+											/>
+											<TableRow 
 												title="Gender"
 												textClass="text-subtitle-1"
-												:value="representativeData.per_gender == 1 ? 'Male' : 'Female'"
+												:value="essential.per_gender == 1 ? 'Male' : 'Female'"
 											/>
 											<TableRow 
 												title="Age"
 												textClass="text-subtitle-1"
-												:value="representativeData.dob"
+												:value="getAge(essential.dob) + ' Years'"
 											/>
 											<TableRow 
 												title="Occupation"
 												textClass="text-subtitle-1"
-												:value="representativeData.per_occupation"
+												:value="essential.per_occupation ? essential.per_occupation : 'Not provide'"
 											/>
 											<TableRow 
 												title="Current Residence"
 												textClass="text-subtitle-1"
-												:value="representativeData.per_current_residence_city + ', ' +representativeData.per_current_residence_country"
+												:value="personal.per_current_residence_country_text + ', ' +personal.per_current_residence_city"
 											/>
 										</table>
 									</v-card>
@@ -126,7 +133,7 @@
 </template>
 
 <script>
-import firebase from "../../configs/firebase";
+import { getAge } from "@/common/helpers.js";
 import ApiService from "@/services/api.service";
 import ProfileBanner from "@/components/atom/ProfileBanner";
 import TableRow from '@/components/atom/TableRow'
@@ -134,7 +141,6 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
 
 export default {
 	name: "RepresentativeProfile",
-	props: ["representativeData"],
 
 	components: {
 		ProfileBanner,
@@ -144,11 +150,23 @@ export default {
 
 	data() {
 		return {
+			representativeData: {},
 			avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
 			conversations: [],
 			candidateData: null,
 			isLoading: false,
 		};
+	},
+	computed : {
+		personal () {
+			return this.representativeData?.personal ? this.representativeData.personal : {}
+		},
+		essential () {
+			return this.representativeData?.essential ? this.representativeData.essential : {}
+		},
+		images () {
+			return this.representativeData?.image_upload ? this.representativeData.image_upload : {}
+		}
 	},
 
 	created() {
@@ -156,127 +174,28 @@ export default {
 	},
 
 	methods: {
+		getAge,
 		onClickButton(data) {
 			if(data.event == 'editProfile') this.$router.push('/edit_representative')
 		},
 		async getCandidateData() {
-			console.log(JSON.parse(localStorage.getItem("user")), '>>>>>>>>>>>>')
+			// console.log(JSON.parse(localStorage.getItem("user")), '>>>>>>>>ddd>>>>')
 			try {
 				this.isLoading = true;
-				const user = JSON.parse(localStorage.getItem("user"));
+				// const user = JSON.parse(localStorage.getItem("user"));
 				console.log(ApiService, 'before call')
-				const response = await ApiService.get(`v1/candidate/info/${user.id}`);
+				const response = await ApiService.get('v1/representative/profile');
 				console.log('after api call')
 				if (response.status === 200) {
-				this.isLoading = false;
-				this.candidateData = {
-					...response.data.data,
-					preference: {
-					...response.data.data.preference,
-					pre_occupation: JSON.parse(
-						response.data.data.preference.pre_occupation
-					),
-					},
-				};
+					this.isLoading = false;
+					this.representativeData = {
+						...response.data.data
+					};
 				}
 			} catch (error) {
 				this.isLoading = false;
-				console.log(error, '>>>>>>>>>')
 			}
-		},
-		startConversation() {
-			var res_userid = this.representativeData.user_id;
-			var my_user_id = this.$store.state.user.user.id;
-			var chat_category = this.returnCategoryId(
-				"one2one",
-				res_userid,
-				my_user_id
-			);
-			var checkConvId = this.checkChatCategory(chat_category);
-			// check if same chat exists
-			if (checkConvId) {
-				console.log("chat found");
-				this.$store.dispatch("setCurrentConversation", checkConvId);
-			} else {
-				console.log("chat not found");
-				// else create chat
-				var res_fname = this.representativeData.first_name;
-				var my_fname = "";
-				if (this.$store.state.user.user.account_type == 1) {
-					my_fname = this.$store.state.user.candidate_information.first_name;
-				} else {
-					my_fname =
-						this.$store.state.user.representative_information.first_name;
-				}
-				var chatTitle = this.returnChatTitle(
-					res_userid,
-					my_user_id,
-					res_fname,
-					my_fname
-				);
-
-				var members = [res_userid, my_user_id];
-				var newConv = {
-					title: chatTitle,
-					type: "connected",
-					members: members,
-					last_msg: "",
-					category_id: chat_category,
-				};
-
-				var self = this;
-				var convCollection = firebase.collection("conversations");
-				convCollection.add(newConv)
-				.then(function(docRef) {
-					self.$store.dispatch('setCurrentConversation',docRef.id);
-					console.log("Document written with ID: ", docRef.id);
-				})
-				.catch(function(error) {
-					console.error("Error adding document: ", error);
-				});
-				alert("conv createed:" + chatTitle);
-				// console.log('conversation start clicked');
-				// console.log(res_userid);
-				// console.log(my_user_id);
-				// console.log(chat_category);
-				// console.log(res_fname);
-				// console.log(my_fname);
-				// console.log(chatTitle);
-			}
-			this.$router.push("/chat-window");
-		},
-		returnCategoryId(type, id1, id2) {
-			var category_id = "";
-			if (id1 > id2) {
-				category_id = type + "_" + id2.toString() + "_" + id1.toString();
-			} else {
-				category_id = type + "_" + id1.toString() + "_" + id2.toString();
-			}
-			return category_id;
-		},
-		returnChatTitle(id1, id2, name1, name2) {
-			var title = "";
-			if (id1 > id2) {
-				title = name1 + " & " + name2;
-			} else {
-				title = name1 + " & " + name2;
-			}
-			return title;
-		},
-		checkChatCategory(categoryId) {
-			console.log("inside");
-			console.log(this.conversations.length);
-			console.log(this.conversations);
-			for (var i = 0; i < this.conversations.length; i++) {
-				console.log("category given:", categoryId);
-				console.log("category item:", this.conversations[i].category_id);
-				if (this.conversations[i].category_id == categoryId) {
-					console.log(this.conversations[i].id);
-					return this.conversations[i].id;
-				}
-			}
-			return false;
-		},
+		}
 	},
 };
 </script>
