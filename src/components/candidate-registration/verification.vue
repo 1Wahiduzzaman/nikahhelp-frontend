@@ -736,13 +736,6 @@ export default {
         ver_country: "",
         ver_country_id: "",
         ver_document_type: "",
-        // ver_recommences_address: "",
-        // ver_recommences_first_name: "",
-        // ver_recommences_last_name: "",
-        // ver_recommences_occupation: "",
-        // ver_recommences_title: "",
-        // ver_status: "",
-        // ver_recommences_mobile_no: "",
         ver_image_back: "",
         ver_image_front: "",
       };
@@ -752,13 +745,6 @@ export default {
           ver_country: "",
           ver_country_id: "",
           ver_document_type: "",
-          // ver_recommences_address: "",
-          // ver_recommences_first_name: "",
-          // ver_recommences_last_name: "",
-          // ver_recommences_occupation: "",
-          // ver_recommences_title: "",
-          // ver_status: "",
-          // ver_recommences_mobile_no: "",
         })
         .then((data) => {
           this.$emit("valueChange", {
