@@ -45,9 +45,7 @@
                       >Height</span
                     ><span class="flex-60 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">
-                        {{
-                          getHeight(candidateData.preference.pre_height_min)
-                        }}
+                        {{ getHeight(candidateData.preference.pre_height_min) }}
                         to
                         {{ getHeight(candidateData.preference.pre_height_max) }}
                       </span></span
@@ -754,51 +752,6 @@
                     title="Document type"
                     textClass="text-subtitle-1"
                     :value="candidateDetails.verification.ver_document_type"
-                  />
-                  <TableRow
-                    title="Title"
-                    textClass="text-subtitle-1"
-                    :value="candidateDetails.verification.ver_recommences_title"
-                  />
-                  <TableRow
-                    title="First Name"
-                    textClass="text-subtitle-1"
-                    :value="
-                      candidateDetails.verification.ver_recommences_first_name
-                    "
-                  />
-
-                  <TableRow
-                    title="Last Name"
-                    textClass="text-subtitle-1"
-                    :value="
-                      candidateDetails.verification.ver_recommences_last_name
-                    "
-                  />
-                  <TableRow
-                    title="Occupation"
-                    textClass="text-subtitle-1"
-                    :value="
-                      candidateDetails.verification.ver_recommences_occupation
-                    "
-                  />
-
-                  <TableRow
-                    title="Address"
-                    textClass="text-subtitle-1"
-                    :value="candidateDetails.verification.ver_recommences_address"
-                  />
-                  <TableRow
-                    title="Mobile No"
-                    textClass="text-subtitle-1"
-                    :value="
-                      candidateDetails.verification.ver_recommences_mobile_no
-                    "
-                  />
-                  <TableRow
-                    title="Email"
-                    textClass="text-subtitle-1"
-                    :value="candidateDetails.verification.ver_recommences_email"
                   />
                 </table>
               </div>
