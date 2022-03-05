@@ -109,7 +109,11 @@
         />
       </div>
       <div class="steps-content" v-if="current == 5">
-        <Review :candidateDetails="candidateDetails" @toggleStep="toggleStep" />
+        <Review
+          :showAgreement="showAgreement"
+          :candidateDetails="candidateDetails"
+          @toggleStep="toggleStep"
+        />
       </div>
 
       <div class="steps-action text-right pb-5 clearfix bottom-padding">

@@ -207,15 +207,26 @@ export default {
         case "main":
           this.mainImageSrc = "";
           this.imageModel.main_image_url = "";
-          formData.append("per_avatar_url", "");
+          this.$emit("valueChange", {
+            value: {
+              per_avatar_url: null,
+              per_main_image_url: this.imageModel.per_main_image_url,
+            },
+            current: 1,
+          });
           break;
         case "avatar":
           this.avatarSrc = "";
           this.imageModel.per_avatar_url = "";
-          formData.append("per_main_image_url", "");
+          this.$emit("valueChange", {
+            value: {
+              per_avatar_url: this.imageModel.per_avatar_url,
+              per_main_image_url: null,
+            },
+            current: 1,
+          });
           break;
       }
-      this.saveImages(formData);
     },
 
     imageSizeCheck(file) {

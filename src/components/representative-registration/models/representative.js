@@ -1,4 +1,7 @@
 export const validateNumber = (rule, value, callback) => {
+    if (!value) {
+        callback();
+    }
     var regex = /^[0-9]+$/;
     if (!regex.test(value)) {
         callback(
@@ -69,11 +72,10 @@ export const VERIFICATION_RULES = {
     //     message: "Write your last name",
     //     trigger: "blur",
     // }],
-    // ver_recommender_mobile_no:[{
-    //     required: true,
-    //     message: "Write your mobile no",
-    //     trigger: "blur",
-    // }],
+    ver_recommender_mobile_no: [
+        
+        { validator: validateNumber, trigger: "change" },
+        { validator: validateNumber, trigger: "blur" },],
     // ver_recommender_occupation:[{
     //     required: true,
     //     message: "Select your occupation",
@@ -90,28 +92,28 @@ export const RULES_PERSONAL = {
     per_current_residence_country: [
         {
             required: true,
-            message: "Select your residence country",
+            message: "Select a country",
             trigger: "blur",
         },
     ],
     per_current_residence_city: [
         {
             required: true,
-            message: "Select your currently resident city",
+            message: "Select a city",
             trigger: "blur",
         },
     ],
     per_permanent_country: [
         {
             required: true,
-            message: "Select your permanant country",
+            message: "Select permanent country",
             trigger: "blur",
         },
     ],
     per_permanent_city: [
         {
             required: true,
-            message: "Select your permanant city",
+            message: "Select permanent city",
             trigger: "blur",
         },
     ],
@@ -125,7 +127,7 @@ export const RULES_PERSONAL = {
     per_permanent_address: [
         {
             required: true,
-            message: "Write your address",
+            message: "Enter your home address including country, city and post code",
             trigger: "blur",
         },
     ],
@@ -134,7 +136,7 @@ export const RULES_PERSONAL = {
         { validator: validateNumber, trigger: "blur" },
         {
             required: true,
-            message: "Write your mobile number",
+            message: "Enter your mobile number",
             trigger: "blur",
         },
 
