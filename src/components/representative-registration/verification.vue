@@ -869,10 +869,10 @@ export default {
           this.verification.ver_document_frontside = "";
           break;
       }
-       this.$emit("valueChange", {
-            value: this.verification,
-            current: 1,
-          });
+      this.$emit("valueChange", {
+        value: this.verification,
+        current: 1,
+      });
     },
   },
 };

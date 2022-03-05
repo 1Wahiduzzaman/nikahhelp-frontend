@@ -341,7 +341,7 @@ export default {
           break;
         case 4:
           this.candidateDetails.verification = {
-            ...this.representativeDetails.verification,
+            ...this.candidateDetails.verification,
             ...e.value,
           };
           break;
@@ -624,18 +624,18 @@ export default {
       }
     },
     async saveDataInputStatus(satge) {
-      const res = await ApiService.post(
-        "v1/candidate/personal-info-status?_method=PATCH",
-        {
-          data_input_status: satge,
-        }
-      );
       let user = JSON.parse(localStorage.getItem("user"));
       if (user) {
         user.data_input_status = satge;
         localStorage.removeItem("user");
         localStorage.setItem("user", JSON.stringify(user));
       }
+      const res = await ApiService.post(
+        "v1/candidate/personal-info-status?_method=PATCH",
+        {
+          data_input_status: satge,
+        }
+      );
     },
     async onChangeCountry(e, name, action, isDefault = false) {
       const res = await ApiService.get(`v1/utilities/cities/${e.id}`);
@@ -794,12 +794,6 @@ export default {
             ver_document_type,
             ver_image_back,
             ver_image_front,
-            // ver_recommences_address,
-            // ver_recommences_first_name,
-            // ver_recommences_last_name,
-            // ver_recommences_mobile_no,
-            // ver_recommences_occupation,
-            // ver_recommences_title,
           } = this.candidateDetails.verification;
           isEnabled = this.showAgreement
             ? Object.values({
@@ -807,12 +801,6 @@ export default {
                 ver_document_type,
                 ver_image_back,
                 ver_image_front,
-                // ver_recommences_address,
-                // ver_recommences_first_name,
-                // ver_recommences_last_name,
-                // ver_recommences_mobile_no,
-                // ver_recommences_occupation,
-                // ver_recommences_title,
               }).every((x) => x !== undefined && x !== null && x !== "")
             : true;
           break;
@@ -888,7 +876,7 @@ export default {
       }
       this.checkExistData();
       let user = JSON.parse(localStorage.getItem("user"));
-      if (stage > user.data_input_status) {
+      if (this.current > user.data_input_status) {
         this.saveDataInputStatus(this.current);
       }
     },

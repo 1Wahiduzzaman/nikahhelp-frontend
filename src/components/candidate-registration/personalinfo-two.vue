@@ -842,6 +842,13 @@
                   v-model="personalInformation.general.per_health_condition"
                 ></a-textarea>
               </a-form-model-item>
+              <span style="display: flex; justify-content: flex-end"
+                >{{
+                  personalInformation.general.per_health_condition
+                    ? personalInformation.general.per_health_condition.length
+                    : 0
+                }}/200</span
+              >
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
@@ -1284,6 +1291,13 @@
                   placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
                 ></a-textarea>
               </a-form-model-item>
+              <span style="display: flex; justify-content: flex-end"
+                >{{
+                  personalInformation.contact.per_permanent_address
+                    ? personalInformation.contact.per_permanent_address.length
+                    : 0
+                }}/200</span
+              >
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
@@ -2444,12 +2458,19 @@
                 <a-textarea
                   @blur="onValueChange($event, 'more_about', 'per_about')"
                   id="per_about"
-                  placeholder="maximum 500 characters"
+                  placeholder="maximum 2000 characters"
                   :rows="3"
-                  :maxLength="500"
+                  :maxLength="2000"
                   v-model="personalInformation.more_about.per_about"
                 />
               </a-form-model-item>
+            <span style="display: flex; justify-content: flex-end"
+                >{{
+                  personalInformation.more_about.per_about
+                    ? personalInformation.more_about.per_about.length
+                    : 0
+                }}/2000</span
+              >
             </div>
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
               <p>
@@ -2508,14 +2529,21 @@
                     )
                   "
                   id="per_additional_info_text"
-                  placeholder="Additional Information"
-                  :maxLength="200"
+                  placeholder="Additional Information maximum 2000 characters"
+                  :maxLength="2000"
                   :rows="3"
                   v-model="
                     personalInformation.more_about.per_additional_info_text
                   "
                 />
               </a-form-model-item>
+              <span style="display: flex; justify-content: flex-end"
+                >{{
+                  personalInformation.more_about.per_additional_info_text
+                    ? personalInformation.more_about.per_additional_info_text.length
+                    : 0
+                }}/2000</span
+              >
               <div class="image-container text-center">
                 <input
                   type="file"

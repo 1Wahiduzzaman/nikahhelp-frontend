@@ -760,8 +760,8 @@
               <div class="profile-img text-center">
                 <img
                   v-viewer
-                  :src="candidateDetails.verification.ver_document_frontside"
-                  class="user-image"
+                  :src="candidateDetails.verification.ver_image_front"
+                 
                   alt="img"
                   height="250"
                   width="200"
@@ -773,8 +773,8 @@
               <div class="profile-img text-center">
                 <img
                   v-viewer
-                  :src="candidateDetails.verification.ver_document_backside"
-                  class="user-image"
+                  :src="candidateDetails.verification.ver_image_back"
+                 
                   alt="img"
                   height="250"
                   width="200"
@@ -906,6 +906,9 @@ export default {
     candidateDetails: {
       type: Object,
     },
+    showAgreement:{
+      type:Boolean
+    }
   },
   data() {
     return {

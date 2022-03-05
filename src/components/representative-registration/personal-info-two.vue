@@ -411,7 +411,13 @@
                       <v-select
                         :clearable="false"
                         class="style-chooser"
-                        @input="onCountryChange($event, 'per_permanent_country', 'contact')"
+                        @input="
+                          onCountryChange(
+                            $event,
+                            'per_permanent_country',
+                            'contact'
+                          )
+                        "
                         id="per_permanent_country"
                         placeholder="Select Country"
                         v-model="
@@ -435,7 +441,7 @@
                         :loading="loadingPermanant"
                         class="style-chooser"
                         @input="
-                          onValueChange($event, 'per_permanent_city','contact')
+                          onValueChange($event, 'per_permanent_city', 'contact')
                         "
                         id="per_permanent_city"
                         placeholder="Select City"
@@ -510,6 +516,14 @@
                     placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
                   ></a-textarea>
                 </a-form-model-item>
+                <span style="display: flex; justify-content: flex-end"
+                  >{{
+                    personalInformation.personal.per_permanent_address
+                      ? personalInformation.personal.per_permanent_address
+                          .length
+                      : 0
+                  }}/200</span
+                >
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">
                 <p>
@@ -562,8 +576,9 @@
                         @change="
                           onValueChange(
                             $event,
-                           
-                            'mobile_country_code', 'contact',
+
+                            'mobile_country_code',
+                            'contact'
                           )
                         "
                         id="mobile_country_code"
@@ -628,51 +643,50 @@
                 </div>
               </div>
             </div>
-             <div class="row pt-3 pb-2 border-bottom">
-            <div class="col-12 col-md-6 none-padding">
-              <div class="mb-2 font-weight-bold">
-                <a-icon
-                  class="color-success mr-2 fs-18 fw-500"
-                  type="check"
-                />What is your Email address?
+            <div class="row pt-3 pb-2 border-bottom">
+              <div class="col-12 col-md-6 none-padding">
+                <div class="mb-2 font-weight-bold">
+                  <a-icon
+                    class="color-success mr-2 fs-18 fw-500"
+                    type="check"
+                  />What is your Email address?
+                </div>
               </div>
-            </div>
-            <div class="col-12 col-md-6 mobile-margin">
-              <a-input
-              style="color:#464343"
-                class="w-100"
-                placeholder="Email Address"
-                id="inputNumber"
-                :value="personalInformation.personal.email"
-                :disabled="true"
-              />
-            </div>
-            <div class="col-12 none-padding mobile-margin mobile-help">
-              <p>
-                <a
-                  class="color-blue fw-700 fs-14"
-                  data-toggle="collapse"
-                  href="#Needemail"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
-                >
-                  <span v-if="arr[8].first" @click="toggle(8)">
-                    Need Help?
-                  </span>
-                  <span v-else @click="toggle(8)"> Hide Help? </span>
-                </a>
-              </p>
-              <div data-parent="#accordion" class="collapse" id="Needemail">
-                <div class="card card-body bubble">
-                  Please provide tooltip texts so we can place it here
+              <div class="col-12 col-md-6 mobile-margin">
+                <a-input
+                  style="color: #464343"
+                  class="w-100"
+                  placeholder="Email Address"
+                  id="inputNumber"
+                  :value="personalInformation.personal.email"
+                  :disabled="true"
+                />
+              </div>
+              <div class="col-12 none-padding mobile-margin mobile-help">
+                <p>
+                  <a
+                    class="color-blue fw-700 fs-14"
+                    data-toggle="collapse"
+                    href="#Needemail"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                  >
+                    <span v-if="arr[8].first" @click="toggle(8)">
+                      Need Help?
+                    </span>
+                    <span v-else @click="toggle(8)"> Hide Help? </span>
+                  </a>
+                </p>
+                <div data-parent="#accordion" class="collapse" id="Needemail">
+                  <div class="card card-body bubble">
+                    Please provide tooltip texts so we can place it here
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          </div>
 
-         
           <a-button
             shape="round"
             type="primary"
@@ -710,7 +724,7 @@ export default {
     return {
       rules: RULES,
       loading: false,
-      loadingPermanant:false,
+      loadingPermanant: false,
       rules_personal: RULES_PERSONAL,
       arr: [
         { first: true },
