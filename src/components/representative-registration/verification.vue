@@ -385,17 +385,28 @@
 
             <div class="row pt-3 pb-2">
               <div class="col-12 col-md-6 none-padding">
-                <div style="display: flex; flex-direction: column">
+                <div style="display: flex">
                   <a-icon
-                    v-if="verification.ver_recommender_title"
+                    class="color-success mr-2 fs-18 fw-500"
+                    v-if="
+                      verification.ver_recommender_title &&
+                      verification.ver_recommender_first_name &&
+                      verification.ver_recommender_last_name &&
+                      verification.ver_recommender_occupation &&
+                      verification.ver_recommender_address &&
+                      verification.ver_recommender_mobile_no &&
+                      verification.ver_recommender_email
+                    "
                     type="check"
                   />
-                  <span class="mr-2 fs-16 fw-700">Personal reference</span>
-                  <span class="mr-2 fw-500">This section is optional. </span>
-                  <span class="mr-2 fw-500"
-                    >We may request this information anytime in case we need to
-                    do enhanced ID checks.
-                  </span>
+                  <div style="display: flex; flex-direction: column">
+                    <span class="mr-2 fs-16 fw-700">Personal reference</span>
+                    <span class="mr-2 fw-500">This section is optional. </span>
+                    <span class="mr-2 fw-500"
+                      >We may request this information anytime in case we need
+                      to do enhanced ID checks.
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -753,6 +764,7 @@ export default {
         ver_recommender_mobile_no: "",
         ver_document_frontside: "",
         ver_document_backside: "",
+        ver_recommender_email: "",
       };
 
       this.$store
@@ -766,6 +778,7 @@ export default {
           ver_recommender_occupation: "",
           ver_recommender_title: "",
           ver_recommender_mobile_no: "",
+          ver_recommender_email: "",
         })
         .then((data) => {
           this.$emit("valueChange", {
@@ -856,6 +869,10 @@ export default {
           this.verification.ver_document_frontside = "";
           break;
       }
+       this.$emit("valueChange", {
+            value: this.verification,
+            current: 1,
+          });
     },
   },
 };

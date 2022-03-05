@@ -105,7 +105,7 @@
         />
       </div>
       <div class="steps-content" v-if="current == 3">
-        <Review @toggleStep="toggleStep" />
+        <Review :showAgreement="showAgreement" @toggleStep="toggleStep" />
       </div>
       <div class="steps-action text-right pb-5 clearfix bottom-padding">
         <a-button
@@ -281,7 +281,7 @@ export default {
     },
     cancelVerification(e) {
       this.showAgreement = false;
-       this.checkExistData();
+      this.checkExistData();
     },
     onAgree(value) {
       this.showAgreement = value;
@@ -517,26 +517,35 @@ export default {
       localStorage.removeItem("user");
       localStorage.setItem("user", JSON.stringify(user));
     },
+
     checkExistData() {
       let isEnabled = false;
       switch (this.current) {
         case 0:
           let { dob, per_gender, per_occupation } =
             this.representativeDetails.personalInformation.essential;
-          const essential = { dob, per_gender, per_occupation };
+          let essential = { dob, per_gender, per_occupation };
           let {
+            per_permanent_address,
+            per_permanent_country,
+            per_permanent_post_code,
+            mobile_country_code,
             mobile_number,
             per_current_residence_city,
             per_current_residence_country,
           } = this.representativeDetails.personalInformation.personal;
-          const personal = {
+          let personal = {
             mobile_number,
             per_current_residence_city,
             per_current_residence_country,
+            per_permanent_address,
+            per_permanent_country,
+            per_permanent_post_code,
+            mobile_country_code,
           };
           Object.values({
-            personal,
             essential,
+            personal,
           }).forEach((ob) => {
             isEnabled = Object.values(ob).every(
               (x) => x !== undefined && x !== null && x !== ""

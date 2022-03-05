@@ -159,7 +159,122 @@
             </div>
           </div>
         </div>
-
+        <div v-if="showAgreement" class="review-edit mt-5">
+          <div class="review-edit-label">
+            Verification & Reference
+            <img
+              class="ms-2 edit-step"
+              src="@/assets/icon/edit_step.svg"
+              alt="icon"
+              @click="$emit('toggleStep', 2)"
+            />
+          </div>
+          <div class="row">
+            <div class="col-md-12 mb-3">
+              <div class="card-custom h-100 shadow-default">
+                <table>
+                  <TableRow
+                    title="ID document issuing country & city"
+                    textClass="text-subtitle-1"
+                    :value="representativeDetails.verification.ver_city"
+                  />
+                  <TableRow
+                    title="Document type"
+                    textClass="text-subtitle-1"
+                    :value="
+                      representativeDetails.verification.ver_document_type
+                    "
+                  />
+                  <TableRow
+                    title="Title"
+                    textClass="text-subtitle-1"
+                    :value="
+                      representativeDetails.verification
+                        .ver_recommender_title
+                    "
+                  />
+                  <TableRow
+                    title="First Name"
+                    textClass="text-subtitle-1"
+                    :value="
+                      representativeDetails.verification
+                        .ver_recommender_first_name
+                    "
+                  />
+                  
+                  <TableRow
+                    title="Last Name"
+                    textClass="text-subtitle-1"
+                    :value="
+                      representativeDetails.verification
+                        .ver_recommender_last_name
+                    "
+                  />
+                  <TableRow
+                    title="Occupation"
+                    textClass="text-subtitle-1"
+                    :value="
+                      representativeDetails.verification
+                        .ver_recommender_occupation
+                    "
+                  />
+                  
+                  <TableRow
+                    title="Address"
+                    textClass="text-subtitle-1"
+                    :value="
+                      representativeDetails.verification
+                        .ver_recommender_address
+                    "
+                  />
+                  <TableRow
+                    title="Mobile No"
+                    textClass="text-subtitle-1"
+                    :value="
+                      representativeDetails.verification
+                        .ver_recommender_mobile_no
+                    "
+                  />
+                   <TableRow
+                    title="Email"
+                    textClass="text-subtitle-1"
+                    :value="
+                      representativeDetails.verification
+                        .ver_recommender_email
+                    "
+                  />
+                  
+                </table>
+              </div>
+            </div>
+             <div class="col-12 col-md-6 mb-4">
+              <div class="profile-img text-center">
+                <img
+                  v-viewer
+                  :src="representativeDetails.verification.ver_document_frontside"
+                  class="user-image"
+                  alt="img"
+                  height="250"
+                  width="200"
+                />
+                <p class="text-center">Front Side</p>
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mb-4">
+              <div class="profile-img text-center">
+                <img
+                  v-viewer
+                  :src="representativeDetails.verification.ver_document_backside"
+                  class="user-image"
+                  alt="img"
+                  height="250"
+                  width="200"
+                />
+                <p class="text-center">Back Side</p>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- Uploaded Image -->
         <div class="review-edit mt-5">
           <div class="review-edit-label">
@@ -209,14 +324,16 @@ import RatingComponent from "../profile/RatingComponent.vue";
 import ApiService from "@/services/api.service";
 import JwtService from "@/services/jwt.service";
 import { AGES, HEIGHTS, Employment_Statuses } from "@/models/data";
+import TableRow from "@/components/atom/TableRow";
 export default {
   name: "Review",
   components: {
     RatingComponent,
+    TableRow,
   },
-  props: {},
+  props: ['showAgreement'],
   data() {
-    return { representativeDetails: null };
+    return { representativeDetails: null, };
   },
   mounted() {
     this.getRepresentativeInfo();
