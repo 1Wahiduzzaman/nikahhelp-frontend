@@ -283,6 +283,9 @@ body {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    input{
+        color: #555;
+    }
 
 }
 .style-chooser .vs__selected span {

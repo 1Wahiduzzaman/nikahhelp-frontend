@@ -394,7 +394,7 @@
                   <span class="mr-2 fw-500">This section is optional. </span>
                   <span class="mr-2 fw-500"
                     >We may request this information anytime in case we need to
-                    do enhanced ID checks. 48m 44s .
+                    do enhanced ID checks.
                   </span>
                 </div>
               </div>
