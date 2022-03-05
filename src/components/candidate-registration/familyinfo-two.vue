@@ -63,15 +63,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[0].first"
-                    @click="toggle(0)"
-                  >
+                  <span v-if="arr[0].first" @click="toggle(0)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(0)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(0)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -128,15 +123,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[1].first"
-                    @click="toggle(1)"
-                  >
+                  <span v-if="arr[1].first" @click="toggle(1)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(1)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(1)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -176,6 +166,13 @@
                   v-model="familyInformation.siblings_desc"
                 ></a-textarea>
               </a-form-model-item>
+              <span style="display: flex; justify-content: flex-end"
+                >{{
+                  familyInformation.siblings_desc
+                    ? familyInformation.siblings_desc.length
+                    : 0
+                }}/200</span
+              >
             </div>
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
               <p>
@@ -231,6 +228,13 @@
                   v-model="familyInformation.family_info"
                 ></a-textarea>
               </a-form-model-item>
+              <span style="display: flex; justify-content: flex-end"
+                >{{
+                  familyInformation.family_info
+                    ? familyInformation.family_info.length
+                    : 0
+                }}/200</span
+              >
             </div>
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
               <p>
@@ -379,7 +383,7 @@ export default {
     this.checkDisabled();
   },
   methods: {
-     toggle(index) {
+    toggle(index) {
       this.arr = this.arr.map((a, ind) => {
         if (ind === index) {
           a.first = !a.first;

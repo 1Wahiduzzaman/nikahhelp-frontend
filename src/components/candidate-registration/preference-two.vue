@@ -903,17 +903,24 @@
                   @blur="onValueChange($event, 'pre_other_preference')"
                   :rows="3"
                   showCount
-                  :maxLength="200"
+                  :maxLength="1800"
                   autocomplete="off"
                   autocorrect="off"
                   autocapitalize="off"
                   spellcheck="false"
                   id="pre_other_preference"
                   v-model.lazy.lazy="preferenceData.pre_other_preference"
-                  placeholder="maximum 500 characters"
+                  placeholder="maximum 1800 characters"
                   class="w-full form-right-content"
                 />
               </a-form-model-item>
+              <span style="display: flex; justify-content: flex-end"
+                >{{
+                  preferenceData.pre_other_preference
+                    ? preferenceData.pre_other_preference.length
+                    : 0
+                }}/1800</span
+              >
             </div>
             <div class="col-12 mobile-margin mobile-help none-padding">
               <p>
@@ -961,33 +968,24 @@
                 <a-textarea
                   @blur="onValueChange($event, 'pre_description')"
                   :rows="3"
-                  :maxLength="1000"
+                  :maxLength="2000"
                   autocomplete="off"
                   autocorrect="off"
                   autocapitalize="off"
                   spellcheck="false"
                   id="pre_description"
                   v-model.lazy.lazy="preferenceData.pre_description"
-                  placeholder="maximum 1000 charaters"
+                  placeholder="maximum 2000 charaters"
                   class="w-full form-right-input"
                 />
-                <!-- <v-textarea
-                  counter
-                  @blur="onValueChange"
-                  :rows="3"
-                  outlined
-                  shaped
-                  :maxLength="1000"
-                  autocomplete="off"
-                  autocorrect="off"
-                  autocapitalize="off"
-                  spellcheck="false"
-                  id="pre_description"
-                  v-model="preferenceData.pre_description"
-                  placeholder="* Sample Text"
-                  class="w-full form-right-input"
-                ></v-textarea> -->
               </a-form-model-item>
+              <span style="display: flex; justify-content: flex-end"
+                >{{
+                  preferenceData.pre_description
+                    ? preferenceData.pre_description.length
+                    : 0
+                }}/2000</span
+              >
             </div>
             <div class="col-12 mobile-margin mobile-help none-padding">
               <p>
@@ -1155,7 +1153,10 @@
                 id="collapsePartnerLookApperence"
               >
                 <div class="card card-body bubble">
-                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
+                  This star rating is a about perception - seeing how others
+                  look at you, their impression of what is important to you.
+                  Sometimes others see strengths in us and we can be unkind to
+                  ourselves.
                 </div>
               </div>
             </div>
@@ -1210,7 +1211,10 @@
                 id="collapsePartnerReligiousFaith"
               >
                 <div class="card card-body bubble">
-                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
+                  This star rating is a about perception - seeing how others
+                  look at you, their impression of what is important to you.
+                  Sometimes others see strengths in us and we can be unkind to
+                  ourselves.
                 </div>
               </div>
             </div>
@@ -1266,7 +1270,10 @@
                 id="collapsePartnerMannerSocialSkills"
               >
                 <div class="card card-body bubble">
-                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
+                  This star rating is a about perception - seeing how others
+                  look at you, their impression of what is important to you.
+                  Sometimes others see strengths in us and we can be unkind to
+                  ourselves.
                 </div>
               </div>
             </div>
@@ -1320,7 +1327,10 @@
                 id="collapsePartnerEmotionMaturityRating"
               >
                 <div class="card card-body bubble">
-                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
+                  This star rating is a about perception - seeing how others
+                  look at you, their impression of what is important to you.
+                  Sometimes others see strengths in us and we can be unkind to
+                  ourselves.
                 </div>
               </div>
             </div>
@@ -1374,7 +1384,10 @@
                 id="collapsePartnerGoodlistenerRating"
               >
                 <div class="card card-body bubble">
-                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
+                  This star rating is a about perception - seeing how others
+                  look at you, their impression of what is important to you.
+                  Sometimes others see strengths in us and we can be unkind to
+                  ourselves.
                 </div>
               </div>
             </div>
@@ -1428,7 +1441,10 @@
                 id="collapsePartnerGoodTalkerRating"
               >
                 <div class="card card-body bubble">
-                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
+                  This star rating is a about perception - seeing how others
+                  look at you, their impression of what is important to you.
+                  Sometimes others see strengths in us and we can be unkind to
+                  ourselves.
                 </div>
               </div>
             </div>
@@ -1482,7 +1498,10 @@
                 id="collapsePartnerWillingToLearnRating"
               >
                 <div class="card card-body bubble">
-                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
+                  This star rating is a about perception - seeing how others
+                  look at you, their impression of what is important to you.
+                  Sometimes others see strengths in us and we can be unkind to
+                  ourselves.
                 </div>
               </div>
             </div>
@@ -1536,7 +1555,10 @@
                 id="collapsePartnerFamilySocialStatusRating"
               >
                 <div class="card card-body bubble">
-                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
+                  This star rating is a about perception - seeing how others
+                  look at you, their impression of what is important to you.
+                  Sometimes others see strengths in us and we can be unkind to
+                  ourselves.
                 </div>
               </div>
             </div>
@@ -1590,7 +1612,10 @@
                 id="collapsePartnerEmploymentWealthrating"
               >
                 <div class="card card-body bubble">
-                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
+                  This star rating is a about perception - seeing how others
+                  look at you, their impression of what is important to you.
+                  Sometimes others see strengths in us and we can be unkind to
+                  ourselves.
                 </div>
               </div>
             </div>
@@ -1644,7 +1669,10 @@
                 id="collapsePartnerEducationRating"
               >
                 <div class="card card-body bubble">
-                This star rating is a about perception - seeing how others look at you, their impression of what is important to you. Sometimes others see strengths in us and we can be unkind to ourselves.
+                  This star rating is a about perception - seeing how others
+                  look at you, their impression of what is important to you.
+                  Sometimes others see strengths in us and we can be unkind to
+                  ourselves.
                 </div>
               </div>
             </div>
