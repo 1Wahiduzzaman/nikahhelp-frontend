@@ -159,7 +159,7 @@
               <div>
                 <router-link
                   v-if="item.account_type === 1"
-                  :to="'/admin/user_candidate_details/' + item.id"
+                  :to="'/admin/user_candidate_details/' + item.id + '?type=' +item.account_type"
                 >
                   <v-btn style="background-color: #522e8e; color: #fff" small>
                     view
@@ -167,7 +167,7 @@
                 </router-link>
                 <router-link
                   v-else
-                  :to="'/admin/user_candidate_details/' + item.id"
+                  :to="'/admin/user_candidate_details/' + item.id + '?type=' +item.account_type"
                 >
                   <v-btn style="background-color: #522e8e; color: #fff" small>
                     view
