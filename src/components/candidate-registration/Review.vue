@@ -834,7 +834,7 @@
             <div class="col-12">
               <div class="card-custom shadow-default">
                 <h4>Image setting</h4>
-                <div class="d-flex">
+                <div class="d-flex align-items-baseline">
                   <a-icon
                     v-if="candidateData.personal.anybody_can_see == 0"
                     class="color-danger mt-2 mr-2 fs-16 fw-500"
@@ -842,7 +842,7 @@
                   />
                   <a-icon
                     v-else
-                    class="color-success mt-2 mr-2 fs-16 fw-500"
+                    class="color-success mt-2 mr-2 fs-14 fw-500"
                     type="check"
                   />
                   <span class="fs-16">
@@ -850,30 +850,30 @@
                     MatrimonyAssist</span
                   >
                 </div>
-                <div class="d-flex">
+                <div class="d-flex align-items-baseline">
                   <a-icon
                     v-if="candidateData.personal.only_team_can_see == 0"
-                    class="color-danger mt-2 mr-2 fs-16 fw-500"
+                    class="color-danger mt-2 mr-2 fs-14 fw-500"
                     type="stop"
                   />
                   <a-icon
                     v-else
-                    class="color-success mt-2 mr-2 fs-16 fw-500"
+                    class="color-success mt-2 mr-2 fs-14 fw-500"
                     type="check"
                   />
                   <span class="fs-16">
                     Do not share my images with anyone at the moment</span
                   >
                 </div>
-                <div class="d-flex">
+                <div class="d-flex align-items-baseline">
                   <a-icon
                     v-if="candidateData.personal.team_connection_can_see == 0"
-                    class="color-danger mt-2 mr-2 fs-16 fw-500"
+                    class="color-danger mt-2 mr-2 fs-14 fw-500"
                     type="stop"
                   />
                   <a-icon
                     v-else
-                    class="color-success mt-2 mr-2 fs-16 fw-500"
+                    class="color-success mt-2 mr-2 fs-14 fw-500"
                     type="check"
                   />
                   <span class="fs-16">

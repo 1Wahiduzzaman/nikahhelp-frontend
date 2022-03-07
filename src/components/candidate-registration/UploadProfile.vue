@@ -242,7 +242,7 @@
               </svg>
               <span class="share-settings-text">Image Sharing Settings</span>
             </h3>
-            <div class="d-flex">
+            <div class="d-flex align-items-baseline">
               <a-switch
                 v-model="anybody_can_see"
                 @change="onConfirmationSwitchChnaged1"
@@ -254,7 +254,7 @@
                 Share my images with anyone who searches on MatrimonyAssist
               </span>
             </div>
-            <div class="d-flex mt-4">
+            <div class="d-flex align-items-baseline mt-4">
               <a-switch
                 @change="onConfirmationSwitchChnaged2"
                 v-model="only_team_can_see"
@@ -266,7 +266,7 @@
                 Do not share my images with anybody at the moment (my own team can see still)
               </span>
             </div>
-            <div class="d-flex mt-4">
+            <div class="d-flex align-items-baseline mt-4">
               <a-switch
                 @change="onConfirmationSwitchChnaged3"
                 v-model="team_connection_can_see"

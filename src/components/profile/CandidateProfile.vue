@@ -161,7 +161,7 @@
                   <legend id="my-partner-pref" class="ml-8 bg-white px-1"><span>My partner preference</span></legend>
                   <v-container fluid class="pt-0 px-5">
                         <v-row dense>
-                            <v-col class="pt-1" cols="12" md="7">
+                            <v-col class= "pt-1" cols="12" md="7">
                                 <MyPrefTable
                                   :preference="candidateData.preference"
                                   :countries="candidateData.preference.preferred_countries"
