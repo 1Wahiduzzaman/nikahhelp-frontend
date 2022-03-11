@@ -8,7 +8,7 @@
       <p class="mb-5 px-2">
         Please check the information and details that you have provided, if you
         are happy with it please submit for approval by MatrimonyAssist Team. If
-        anything needs to be changed, then you can access relavant sections by
+        anything needs to be changed, then you can access relevant sections by
         pressing previous button.
       </p>
       <div class="text-start">
