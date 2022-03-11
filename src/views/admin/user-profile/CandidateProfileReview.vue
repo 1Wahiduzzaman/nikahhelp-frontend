@@ -1,13 +1,43 @@
 <template>
   <div class="review-publish px-2">
-    <fieldset v-if="candidateDetails && candidateData.personal" class="review">
-      <h4 class="fw-700 px-2">Review and Publish Profile</h4>
-      <p class="mb-5 px-2">
-        Please check the information and details that you have provided, if you
-        are happy with it please submit for approval by MatrimonyAssist Team. If
-        anything needs to be changed, then you can access relavant sections by
-        pressing previous button.
-      </p>
+    <fieldset v-if="candidateData.personal" class="review">
+      <h4 class="fw-700 mt-3">Review and approve or reject</h4>
+      <v-row>
+        <v-col>
+          User status: <strong>{{  getUserStatus(userStatus) }}</strong> 
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col class="mb-4">
+          <v-btn
+            :loading="loading"
+            class="mr-2"
+            @click="updateUserVerifyOrReject('verified')"
+            style="background-color: rgb(42 205 100); color: #fff"
+            small
+          >
+            Approve
+          </v-btn>
+          <v-btn
+            v-if="userStatus !=4 && userStatus !=3"
+            :loading="cancelLoading"
+            @click="openDialog(item)"
+            style="background-color: rgb(191 20 67); color: #fff"
+            small
+          >
+            Reject
+          </v-btn>
+          <v-btn
+            v-if="userStatus == 4 || userStatus == 3"
+            :loading="cancelLoading"
+            @click="updateUserVerifyOrReject('completed')"
+            style="background-color: rgb(61 185 156); color: #fff"
+            small
+          >
+            Reinstate
+          </v-btn>
+        </v-col>
+      </v-row>
       <div class="text-start">
         <!-- Preference -->
         <div class="review-edit">
@@ -422,7 +452,7 @@
 														candidateData.personal.per_religion_id
 													].name
 												}} -->
-                        {{
+                        <!-- {{
                           candidateDetails.religions.find(
                             (x) =>
                               x.id === candidateData.personal.per_religion_id
@@ -433,7 +463,7 @@
                                   candidateData.personal.per_religion_id
                               ).name
                             : ""
-                        }}
+                        }} -->
                       </span></span
                     >
                   </li>
@@ -458,7 +488,8 @@
                   <li class="flex-between-start">
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
                       >Nationality</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    >
+                    <!-- <span class="flex-60 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateDetails.countries[
                           candidateData.personal.per_nationality
@@ -467,8 +498,7 @@
                               candidateData.personal.per_nationality
                             ].name
                           : ""
-                      }}</span></span
-                    >
+                      }}</span></span> -->
                   </li>
                   <li class="flex-between-start">
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
@@ -743,42 +773,42 @@
             <div class="col-md-12 mb-3">
               <div class="card-custom h-100 shadow-default">
                 <table>
-                  <TableRow
+                  <!-- <TableRow
                     title="ID document issuing country & city"
                     textClass="text-subtitle-1"
                     :value="candidateDetails.verification.ver_city"
-                  />
-                  <TableRow
+                  /> -->
+                  <!-- <TableRow
                     title="Document type"
                     textClass="text-subtitle-1"
                     :value="candidateDetails.verification.ver_document_type"
-                  />
+                  /> -->
                 </table>
               </div>
             </div>
             <div class="col-12 col-md-6 mb-4">
               <div class="profile-img text-center">
-                <img
+                <!-- <img
                   v-viewer
                   :src="candidateDetails.verification.ver_image_front"
                  
                   alt="img"
                   height="250"
                   width="200"
-                />
+                /> -->
                 <p class="text-center">Front Side</p>
               </div>
             </div>
             <div class="col-12 col-md-6 mb-4">
               <div class="profile-img text-center">
-                <img
+                <!-- <img
                   v-viewer
                   :src="candidateDetails.verification.ver_image_back"
                  
                   alt="img"
                   height="250"
                   width="200"
-                />
+                /> -->
                 <p class="text-center">Back Side</p>
               </div>
             </div>
@@ -887,20 +917,28 @@
         </div>
       </div>
     </fieldset>
+    <NoteModal @save="save" @cancel="cancel" :dialog="dialog" />
   </div>
 </template>
 <script>
+import NoteModal from "@/views/admin/NoteModal.vue";
 import RatingComponent from "@/components/profile/RatingComponent.vue";
 import ApiService from "@/services/api.service";
 import TableRow from "@/components/atom/TableRow";
 import FieldsetCard from "@/components/atom/FieldsetCard";
 import { AGES, HEIGHTS, Employment_Statuses } from "@/models/data";
 export default {
-  name: "Review",
+  name: "ReviewCandidate",
   components: {
     RatingComponent,
     TableRow,
     FieldsetCard,
+    NoteModal
+  },
+  computed: {
+    userStatus() {
+      return this.candidateData?.user?.status
+    }
   },
   props: {
     candidateDetails: {
@@ -912,6 +950,10 @@ export default {
   },
   data() {
     return {
+      loading: false,
+      cancelLoading: false,
+      statusArr: [{key:1, name: 'InComplete'}, {key:2, name:'Complete'}, {key:3, name: 'Verified'}, {key: 4, name:'Rejected'},{key: 5, name:'Approved'}, {key: 9, name:'Suspended'},{ key: 0, name :'Deleted'}],
+      dialog: false,
       candidateData: {},
       heightTV: HEIGHTS,
     };
@@ -920,10 +962,76 @@ export default {
     this.getCandidateData();
   },
   methods: {
+    getUserStatus (status) {
+      return this.statusArr.find(i => i.key == status).name
+    },
+    cancel(e) {
+      this.dialog = false;
+    },
+
+    openDialog(item) {
+      this.dialog = true;
+      this.selectedItem = item;
+    },
+
+    async save(note) {
+      const data = {
+        id: this.$route.params.user_id,
+        status: "rejected",
+        note: note,
+      };
+      this.cancelLoading = true;
+      await this.$store
+        .dispatch("updateUserVerifyOrReject", data)
+        .then((data) => {
+          this.cancelLoading = false;
+          console.log(data, 'rejected')
+          if(data.status == 4) {
+            this.candidateData.user.status = 4
+          }
+          // this.items = this.items.filter(
+          //   (item) => item.id !== this.selectedItem.id
+          // );
+          // let loggedUser = JSON.parse(localStorage.getItem("user"));
+          // if (loggedUser.id == this.selectedItem.id) {
+          //   loggedUser.status = "4";
+          //   localStorage.setItem("user", JSON.stringify(loggedUser));
+          // }
+          this.cancel(null);
+        })
+        .catch((error) => {
+          this.cancelLoading = false;
+        });
+      },
+    async updateUserVerifyOrReject(status) {
+      const data = {
+        id: this.$route.params.user_id,
+        status: status,
+      };
+      this.loading = true;
+      await this.$store
+        .dispatch("updateUserVerifyOrReject", data)
+        .then((data) => {
+          this.loading = false;
+          console.log(data, 'accepted')
+          if(data.status) {
+            this.candidateData.user.status = data.status
+          }
+          // this.items = this.items.filter((item) => item.id !== user.id);
+          // let loggedUser = JSON.parse(localStorage.getItem("user"));
+          // if (loggedUser.id == user.id) {
+          //   loggedUser.status = status == "verified" ? "3" : "4";
+          //   localStorage.setItem("user", JSON.stringify(loggedUser));
+          // }
+        })
+        .catch((error) => {
+          this.loading = false;
+        });
+    },
+
     async getCandidateData() {
       try {
-        const user = JSON.parse(localStorage.getItem("user"));
-        const response = await ApiService.get(`/v1/admin/representative-info/132`);
+        const response = await ApiService.get(`/v1/admin/candidate-user-info/`+this.$route.params.user_id);
         this.candidateData = {
           ...response.data.data,
           preference: {

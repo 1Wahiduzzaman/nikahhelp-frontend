@@ -25,7 +25,6 @@ export default {
   data() {
     return {
       candidateData: {},
-      heightTV: HEIGHTS,
       isLoading: false,
     };
   },
