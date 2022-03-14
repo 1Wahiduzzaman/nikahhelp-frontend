@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-// import ApiService from "@/services/api.service";
+import ApiService from "@/services/api.service";
 // import JwtService from "@/services/jwt.service";
 // import { AGES, HEIGHTS, Employment_Statuses } from "@/models/data";
 
@@ -17,14 +17,10 @@ export default {
     CandidateProfileReview,
     RepresentativeProfileReview,
   },
-  props: {
-    candidateDetails: {
-      type: Object,
-    },
-  },
   data() {
     return {
       candidateData: {},
+      candidateDetails: {},
       isLoading: false,
     };
   },
@@ -34,7 +30,30 @@ export default {
     }
   },
   methods: {
+    getCandidateInitialInfo: async function () {
+      this.isLoading = true;
+      const response = await ApiService.get("v1/candidate/initial-info/151");
+      if (response.status === 200) {
+        this.isLoading = false;
+        const details = {
+          countries: response.data.data.countries,
+          occupations: response.data.data.occupations,
+          verification: {
+            ...response.data.data.validation_info.verification,
+            cities: [],
+          },
+        };
+
+        this.candidateDetails = {
+          ...this.candidateDetails,
+          ...details,
+        };
+      }
+    },
   },
+
+  mounted () {
+  }
 };
 </script>
 
