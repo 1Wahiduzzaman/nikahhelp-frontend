@@ -17,25 +17,31 @@
 
 			<a-row>
 				<div class="space-align-container">
+					
 					<div class="space-align-block">
 						<a-space align="center">
-							<a-button class="confirm-button" v-on:click="$emit('joinATeam')"
+						<a-button class="confirm-button" v-on:click="$emit('joinATeam')"
 								>Join a team
 							</a-button>
 						</a-space>
+<p>[Have an invite link, click here to join a team.]</p>
 					</div>
-					<p class="text-center pt-2">or</p>
+
+				<p class="text-center pb-1">or</p>
 
 					<div class="space-align-block">
-						<a-space align="center">
+												<a-space align="center">
 							<a-button class="confirm-button" v-on:click="$emit('createATeam')"
 								>Create a team
 							</a-button>
 						</a-space>
+						<p>[If you do not have invite link, then you need to create a team and generate an invite link and then share it to your potential member(s) to join your team.]</p>
 					</div>
 				</div>
+		
 			</a-row>
 		</a-card>
+
 	</div>
 </template>
 

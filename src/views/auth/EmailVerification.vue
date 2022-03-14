@@ -23,7 +23,7 @@
             </p>
             
 <p class="instruction">
-              If you do not verify your email address with the sent verification link within <span class="font-italic font-weight-bold">30 minutes</span>, then this link will expire and your signup information will be deleted from MatrimonyAssist.   <br /> You can re-join at any time by once again following the MatrimonyAssist signup process.</p>
+              If you do not verify your email address with the sent verification link within <span class="font-italic font-weight-bold">15 minutes</span>, then this link will expire and your signup information will be deleted from MatrimonyAssist.   <br /> You can re-join at any time by once again following the MatrimonyAssist signup process.</p>
             <p>
               For user safety we need to ensure that only genuine and identifiable
               <br />
