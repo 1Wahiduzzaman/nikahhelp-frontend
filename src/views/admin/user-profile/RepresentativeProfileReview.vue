@@ -5,13 +5,45 @@
       v-if="representativeDetails && representativeDetails.essential"
       class="review"
     >
-      <h4 class="fw-700 px-2">Review and Publish Profile</h4>
-      <p class="mb-5 px-2">
-        Please check the information and details that you have provided, if you
-        are happy with it please submit for approval by MatrimonyAssist Team. If
-        anything needs to be changed, then you can access relevant sections by
-        pressing previous button.
-      </p>
+      <h4 class="fw-700 mt-3">Review and approve or reject</h4>
+      <v-row>
+        <v-col>
+          User status: <strong>{{  getUserStatus(userStatus) }}</strong> 
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col class="mb-4">
+          <v-btn
+            :loading="loading"
+            class="mr-2"
+            @click="updateUserVerifyOrReject('verified')"
+            style="background-color: rgb(42 205 100); color: #fff"
+            small
+          >
+            Approve
+          </v-btn>
+          <v-btn
+            v-if="userStatus !=4 && userStatus !=3"
+            :loading="cancelLoading"
+            @click="openDialog(item)"
+            style="background-color: rgb(191 20 67); color: #fff"
+            small
+          >
+            Reject
+          </v-btn>
+          <v-btn
+            v-if="userStatus == 4 || userStatus == 3"
+            :loading="cancelLoading"
+            @click="updateUserVerifyOrReject('completed')"
+            style="background-color: rgb(61 185 156); color: #fff"
+            small
+          >
+            Reinstate
+          </v-btn>
+        </v-col>
+      </v-row>
+      
       <div class="text-start">
         <!-- Personal Information -->
         <div class="review-edit mt-5">
@@ -318,31 +350,40 @@
         </div>
       </div>
     </fieldset>
+    <NoteModal @save="save" @cancel="cancel" :dialog="dialog" />
   </div>
 </template>
 <script>
-import RatingComponent from "@/components/profile/RatingComponent.vue";
+import NoteModal from "@/views/admin/NoteModal.vue";
+// import RatingComponent from "@/components/profile/RatingComponent.vue";
 import ApiService from "@/services/api.service";
-import JwtService from "@/services/jwt.service";
-import { AGES, HEIGHTS, Employment_Statuses } from "@/models/data";
+// import JwtService from "@/services/jwt.service";
+// import { AGES, HEIGHTS, Employment_Statuses } from "@/models/data";
 import TableRow from "@/components/atom/TableRow";
 export default {
   name: "Review",
   components: {
-    RatingComponent,
+    NoteModal,
+    // RatingComponent,
     TableRow,
   },
   props: ['showAgreement'],
   data() {
-    return { 
-        representativeDetails: null,
-        loading: false
+    return {
+      loading: false,
+      cancelLoading: false,
+      dialog: false,
+      statusArr: [{key:1, name: 'InComplete'}, {key:2, name:'Complete'}, {key:3, name: 'Verified'}, {key: 4, name:'Rejected'},{key: 5, name:'Approved'}, {key: 9, name:'Suspended'},{ key: 0, name :'Deleted'}],
+      representativeDetails: null,
     };
   },
   mounted() {
     this.getRepresentativeInfo();
   },
   methods: {
+    getUserStatus (status) {
+      return this.statusArr.find(i => i.key == status).name
+    },
     async getRepresentativeInfo() {
         try {
             this.loading = true
@@ -360,11 +401,78 @@ export default {
             this.loading = false
         }
     },
+
+    cancel(e) {
+      this.dialog = false;
+    },
+
+    openDialog(item) {
+      this.dialog = true;
+      this.selectedItem = item;
+    },
+
+    async save(note) {
+      const data = {
+        id: this.$route.params.user_id,
+        status: "rejected",
+        note: note,
+      };
+      this.cancelLoading = true;
+      await this.$store
+        .dispatch("updateUserVerifyOrReject", data)
+        .then((data) => {
+          this.cancelLoading = false;
+          console.log(data, 'rejected')
+          if(data.status == 4) {
+            this.representativeDetails.user.status = 4
+          }
+          // this.items = this.items.filter(
+          //   (item) => item.id !== this.selectedItem.id
+          // );
+          // let loggedUser = JSON.parse(localStorage.getItem("user"));
+          // if (loggedUser.id == this.selectedItem.id) {
+          //   loggedUser.status = "4";
+          //   localStorage.setItem("user", JSON.stringify(loggedUser));
+          // }
+          this.cancel(null);
+        })
+        .catch((error) => {
+          this.cancelLoading = false;
+        });
+      },
+    async updateUserVerifyOrReject(status) {
+      const data = {
+        id: this.$route.params.user_id,
+        status: status,
+      };
+      this.loading = true;
+      await this.$store
+        .dispatch("updateUserVerifyOrReject", data)
+        .then((data) => {
+          this.loading = false;
+          console.log(data, 'accepted')
+          if(data.status) {
+            this.representativeDetails.user.status = data.status
+          }
+          // this.items = this.items.filter((item) => item.id !== user.id);
+          // let loggedUser = JSON.parse(localStorage.getItem("user"));
+          // if (loggedUser.id == user.id) {
+          //   loggedUser.status = status == "verified" ? "3" : "4";
+          //   localStorage.setItem("user", JSON.stringify(loggedUser));
+          // }
+        })
+        .catch((error) => {
+          this.loading = false;
+        });
+    },
   },
   computed: {
     user_id: function () {
       return this.$route.params.user_id;
-    } 
+    },
+    userStatus() {
+      return this.representativeDetails?.user?.status
+    }
   },
 };
 </script>

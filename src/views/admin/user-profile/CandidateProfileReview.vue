@@ -952,8 +952,8 @@ export default {
     return {
       loading: false,
       cancelLoading: false,
-      statusArr: [{key:1, name: 'InComplete'}, {key:2, name:'Complete'}, {key:3, name: 'Verified'}, {key: 4, name:'Rejected'},{key: 5, name:'Approved'}, {key: 9, name:'Suspended'},{ key: 0, name :'Deleted'}],
       dialog: false,
+      statusArr: [{key:1, name: 'InComplete'}, {key:2, name:'Complete'}, {key:3, name: 'Verified'}, {key: 4, name:'Rejected'},{key: 5, name:'Approved'}, {key: 9, name:'Suspended'},{ key: 0, name :'Deleted'}],
       candidateData: {},
       heightTV: HEIGHTS,
     };
