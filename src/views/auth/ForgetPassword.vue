@@ -145,7 +145,7 @@ export default {
               .then((re) => {
                 this.disabled = false;
                 this.message =
-                  "We have sent you a link to reset your password. This link is valid for 15 minutes.";
+                  "We have sent you a password reset link to your registered email address. This link is valid for 15 mins.";
               })
               .catch((r) => {
                 this.disabled = false;
