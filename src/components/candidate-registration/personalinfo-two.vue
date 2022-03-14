@@ -1354,7 +1354,7 @@
                       ref="select"
                       v-model="personalInformation.contact.mobile_country_code"
                       placeholder="Code"
-                    >
+                     >
                       <a-select-option value="">Select</a-select-option>
                       <a-select-option value="+44">+44</a-select-option>
                       <a-select-option value="+88">+88</a-select-option>
@@ -1375,7 +1375,7 @@
                       :maxLength="10"
                       v-model="personalInformation.contact.mobile_number"
                       placeholder="Mobile Number"
-                    />
+                     />
                   </a-form-model-item>
                 </div>
               </div>

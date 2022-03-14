@@ -29,7 +29,7 @@
 
         <v-card-text>
           Please check the information and details that you have provided. If
-          you are not happy, please edit. if you are happy, please submit the
+          you are not happy, please edit. If you are happy, please submit the
           form for approval by the MatrimonyAssist Team.
         </v-card-text>
 
@@ -38,7 +38,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="warning" @click="cancel"> Cancel </v-btn>
-          <v-btn color="primary" @click="save"> Yes </v-btn>
+          <v-btn color="primary" @click="save">Submit </v-btn>
         </v-card-actions>
       </v-card>
       <v-card class="message" v-if="showConfirmation">
