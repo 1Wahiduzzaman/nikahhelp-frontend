@@ -20,7 +20,7 @@
              </p>
              <p class="fs-14 color-primary status">
                Verification Status:
-               <span class="font-weight-bolder">{{ getAuthUser && getAuthUser.status == 3 ? 'Verified' : 'Not Verified' }}</span>
+               <span class="font-weight-bolder">{{ userDataFromApi.status == 3 ? 'Verified' : 'Not Verified' }}</span>
                <router-link to="/settings" class="btn px-2 bg-primary ml-3 color-white profile-btn cursor-pointer fs-12 btn-hover btn-border">Upload ID</router-link>
              </p>
            </div>
@@ -158,12 +158,14 @@ export default {
     Slide,
   },
   created() {
+    this.getUserInfo()
     this.loadTeams();
     this.loadProfileGraphApi();
     this.getTeamActivity();
   },
   data() {
     return {
+      userInfo: {},
       avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
       teams: [],
       activeTeam: null,
@@ -240,6 +242,9 @@ export default {
     }
   },
   computed: {
+    userDataFromApi() {
+      return this.userInfo?.user ? this.userInfo.user : {}
+    },
     chartRangeText() {
       if(this.viewType === 0) {
         return 'days';
@@ -267,6 +272,10 @@ export default {
     },
   },
   methods: {
+    async getUserInfo () {
+       let {data} = await ApiService.get("v1/user").then(res => res.data);
+       this.userInfo = data
+    },
     async loadTeams() {
       let activeTeamId = JwtService.getTeamIDAppWide();
       let {data} = await ApiService.get("v1/team-list").then(res => res.data);

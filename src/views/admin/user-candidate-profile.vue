@@ -32,7 +32,7 @@ export default {
   methods: {
     getCandidateInitialInfo: async function () {
       this.isLoading = true;
-      const response = await ApiService.get("v1/candidate/initial-info/151");
+      const response = await ApiService.get("v1/candidate/initial-info");
       if (response.status === 200) {
         this.isLoading = false;
         const details = {
@@ -53,6 +53,7 @@ export default {
   },
 
   mounted () {
+    this.getCandidateInitialInfo()
   }
 };
 </script>

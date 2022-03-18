@@ -447,23 +447,7 @@
                       >Religion</span
                     ><span class="flex-60 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">
-                        <!-- {{
-													$store.state.candidateInfo.religion_options[
-														candidateData.personal.per_religion_id
-													].name
-												}} -->
-                        <!-- {{
-                          candidateDetails.religions.find(
-                            (x) =>
-                              x.id === candidateData.personal.per_religion_id
-                          )
-                            ? candidateDetails.religions.find(
-                                (x) =>
-                                  x.id ===
-                                  candidateData.personal.per_religion_id
-                              ).name
-                            : ""
-                        }} -->
+                        {{ getReligion() }}
                       </span></span
                     >
                   </li>
@@ -489,16 +473,11 @@
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
                       >Nationality</span
                     >
-                    <!-- <span class="flex-60 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
-                        candidateDetails.countries[
-                          candidateData.personal.per_nationality
-                        ]
-                          ? candidateDetails.countries[
-                              candidateData.personal.per_nationality
-                            ].name
-                          : ""
-                      }}</span></span> -->
+                    <span class="flex-60 px-2 d-inherit">:
+                      <span class="ml-3 text--secondary text-subtitle-1">
+                          {{ getNationality() }}
+                      </span>
+                    </span>
                   </li>
                   <li class="flex-between-start">
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
@@ -962,6 +941,16 @@ export default {
     this.getCandidateData();
   },
   methods: {
+    getNationality () {
+      let nationArr = [];
+      this.candidateData.preference?.preferred_nationality.map(i => {
+        nationArr.push(i.name)
+      })
+      return nationArr.join(', ')
+    },
+    getReligion () {
+      return this.candidateData.preference?.pre_partner_religion.join(', ')
+    },
     getUserStatus (status) {
       return this.statusArr.find(i => i.key == status).name
     },
