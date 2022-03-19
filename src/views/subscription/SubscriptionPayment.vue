@@ -11,7 +11,7 @@
                 <p class="text-center heading-desc-payment">
                   We don't want people to be looking for someone for too
                   long. <br/>
-                  The sooner you find someone suitable we feel we have
+                  The sooner you find someone suitable, we feel we have
                   achieved both your and our goal
                 </p>
               </div>

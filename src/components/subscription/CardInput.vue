@@ -24,11 +24,12 @@
 					<option value="" disabled>Select Country</option>
 					<option
 						v-for="c in $store.state.candidateInfo.countries"
-						:value="c.code"
+						:value="c.id"
 						:key="c.id"
 					>
-						{{ c.name }} - {{ c.code }}
-					</option>
+						{{ c.name }} 
+						
+						</option>
 				</select>
 			</div>
 			<div class="form-row mt-3">
@@ -71,10 +72,10 @@
 </template>
 
 <script>
-// let stripe = Stripe(
-// 	"pk_test_51IsaaMBGUmvLHtCrCZvd5unlKMW6StKdBGOZQi5nwmF1PMZgcVuNKLFlZtawZwhaMbNch0B3fFIYzWdR0jB8UX6I00OBk9xw8o"
-// );
-//let elements = stripe.elements();
+let stripe = Stripe(
+	"pk_test_51IsaaMBGUmvLHtCrCZvd5unlKMW6StKdBGOZQi5nwmF1PMZgcVuNKLFlZtawZwhaMbNch0B3fFIYzWdR0jB8UX6I00OBk9xw8o"
+);
+let elements = stripe.elements();
 const style = {
 	base: {
 		border: "2px solid #aaa",
@@ -103,21 +104,22 @@ export default {
 		};
 	},
   created() {
-    const self = this;
-    setTimeout(() => {
-      let cardElement = elements.getElement('card');
-      if(cardElement) {
-        self.card = "";
-        self.card = elements.getElement('card');
-        self.card.mount(self.$refs.card);
-      } else {
-        self.card = elements.create("card", style);
-        self.card.mount(self.$refs.card);
-      }
-    }, 500);
+    // setTimeout(() => {
+    //   let cardElement = elements.getElement('card');
+    //   if(cardElement) {
+    //     self.card = "";
+    //     self.card = elements.getElement('card');
+    //     self.card.mount(self.$refs.card);
+    //   } else {
+    //     self.card = elements.create("card", style);
+    //     self.card.mount(self.$refs.card);
+    //   }
+    // }, 500);
   },
   mounted() {
-		//location.reload();
+	this.card = elements.create("card", style);
+		this.card.mount(this.$refs.card);
+	//location.reload();
     // this.card = elements?.create("card", style);
     // this.card.mount(this.$refs.card);
 	},

@@ -35,7 +35,7 @@ export default {
     const self = this;
     setInterval(() => {
       self.timer += 1;
-      if(self.timer > 4) {
+      if(self.timer > 10) {
         self.closeInstantNotification();
       }
     }, 1000);
