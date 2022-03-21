@@ -626,7 +626,7 @@ export default {
     async saveDataInputStatus(satge) {
       let user = JSON.parse(localStorage.getItem("user"));
       if (user) {
-        user.data_input_status = satge;l
+        user.data_input_status = satge;
         localStorage.removeItem("user");
         localStorage.setItem("user", JSON.stringify(user));
       }
