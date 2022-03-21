@@ -270,7 +270,7 @@ export const HEIGHTS = [
   },
   {
     value: 5,
-    value: '4F 4" or 132cm',
+    name: '4F 4" or 132cm',
     label:
       '<p class="m-0">4F 4" or 132 cm</p>',
     serialNo: 5
@@ -299,7 +299,7 @@ export const HEIGHTS = [
   },
   {
     value: 9,
-    value: '4F 8" or 142 cm',
+    name: '4F 8" or 142 cm',
     label:
       '<p class="m-0">4F 8" or 142 cm</p>',
     serialNo: 9
