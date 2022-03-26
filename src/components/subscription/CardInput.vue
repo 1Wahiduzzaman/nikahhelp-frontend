@@ -24,7 +24,7 @@
 					<option value="" disabled>Select Country</option>
 					<option
 						v-for="c in $store.state.candidateInfo.countries"
-						:value="c.code"
+						:value="c.iso2"
 						:key="c.id"
 					>
 						{{ c.name }} 
