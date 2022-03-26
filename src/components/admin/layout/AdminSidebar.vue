@@ -18,7 +18,7 @@
             src="@/assets/icon/check2.svg"
             alt="icon"
           />
-          <span class="mb-0">Approval</span>
+          <span class="mb-0">Pending Approvals</span>
           <a-badge
             class="ml-auto"
             :number-style="{ backgroundColor: '#e42076' }"
@@ -33,7 +33,7 @@
             src="@/assets/icon/person-fill-secondary.svg"
             alt="icon"
           />
-          <span class="mb-0">Users</span>
+          <span class="mb-0">Approved Users</span>
           <a-badge
             class="ml-auto"
             :number-style="{ backgroundColor: '#e42076' }"
@@ -48,7 +48,7 @@
             src="@/assets/icon/group-fill-secondary.svg"
             alt="icon"
           />
-          <span class="mb-0">Teams</span>
+          <span class="mb-0">Team List</span>
           <a-badge
             class="ml-auto"
             :number-style="{ backgroundColor: '#e42076' }"

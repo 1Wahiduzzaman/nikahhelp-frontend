@@ -27,7 +27,7 @@
             <TableRow 
                 title="Gender"
                 textClass="text-subtitle-1"
-                :value="personal.per_gender == 0 ? 'Female' : 'Male'"
+                :value="personal.per_gender == 2 ? 'Female' : 'Male'"
             />
             <TableRow 
                 title="Age"
