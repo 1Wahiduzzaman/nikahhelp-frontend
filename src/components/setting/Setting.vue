@@ -149,7 +149,7 @@
     <div v-if="showIdentity" class="panel-content">
       <div class="content-identity">
         <h4>Identity Verification</h4>
-        <div v-if="userData.status == '3'" class="identity">
+        <div v-if="userInfo.user && userInfo.user.status == '3'" class="identity">
           <img
             src="@/assets/icon/varified.svg"
             alt="icon"
@@ -157,7 +157,7 @@
           />
           <span>Verified</span>
         </div>
-        <div v-if="userData.status == '1'" class="identity">
+        <div v-if="userInfo.user && userInfo.user.status == '1'" class="identity">
           <img
             src="@/assets/icon/account-circle.svg"
             alt="icon"
@@ -171,7 +171,7 @@
             Verify
           </v-btn>
         </div>
-        <div v-if="userData.status == '2'" class="identity">
+        <div v-if="userInfo.user && userInfo.user.status == '2'" class="identity">
           <img
             src="@/assets/icon/dots-horizontal-circle.svg"
             alt="icon"
@@ -223,6 +223,7 @@ import VerificationCandidate from "@/components/setting/Verification-Candidate.v
 import EditContactModal from "@/components/setting/EditContactModal.vue";
 import jwtService from "@/services/jwt.service";
 export default {
+  name: 'Setting',
   components: {
     VerificationRepresentative,
     VerificationCandidate,
@@ -230,6 +231,7 @@ export default {
   },
   data() {
     return {
+      userInfo: {},
       representativeDetails: null,
       candidateDetails: null,
       ModalText: "Change Password",
@@ -248,6 +250,8 @@ export default {
     };
   },
   async mounted() {
+    this.getUserInfo();
+
     this.userData = JSON.parse(localStorage.getItem("user"));
     if (this.userData && this.userData.account_type === 2) {
       this.userData.mobile = this.userData.get_representative.mobile_number;
@@ -261,6 +265,11 @@ export default {
     }
   },
   methods: {
+    async getUserInfo () {
+       let {data} = await ApiService.get("v1/user").then(res => res.data);
+       this.userInfo = data
+    },
+
     openDialog(e) {
       this.dialog = null;
       setTimeout(() => {
