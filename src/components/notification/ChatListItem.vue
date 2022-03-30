@@ -9,7 +9,7 @@
       <div class="content">
         <span class="label">{{ item.label }}</span>
         <h4 class="mt-1 fs-14">{{ item.name }}</h4>
-        <p class="mb-0 text-margin">{{ item.message ? item.message.body : '' }}</p>
+        <p class="mb-0 text-margin">{{ item.message && item.message.body ? messageStr(item.message.body) : '' }}</p>
       </div>
       <span class="online-icon" v-if="item.message && item.message.seen == 0"></span>
       <a-dropdown v-if="status == 'connected'">
@@ -79,6 +79,14 @@ export default {
       }
       return '';
     },
+
+    messageStr(body){
+      if (body.length>20){
+        return body.substr(0,20) + '...'
+      }
+      return body
+    },
+
     onlineTeam() {
       let team_members = [];
       let loggedUser = JSON.parse(localStorage.getItem('user'));

@@ -335,7 +335,7 @@
                         <div class="text-right">
                           <img :src="getAuthUser && getAuthUser.per_main_image_url ? getAuthUser.per_main_image_url : getImage()" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
                         </div>
-                        <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 white-space-pre" v-html="item.body">
+                        <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 w100" v-html="item.body">
                           <!--                        <div class="font-weight-bold mb-1">You</div>-->
 <!--                          {{ item.body || '' }}-->
                         </div>
@@ -351,7 +351,7 @@
                         <div class="text-left">
                           <img :src="getConversationUserImage(item.sender.id)" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
                         </div>
-                        <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 white-space-pre" v-html="item.body">
+                        <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 w100" v-html="item.body">
                           <!--                        <div class="font-weight-bold mb-1">Sharon Lessman</div>-->
 <!--                          {{ item.body || '' }}-->
                         </div>
@@ -625,121 +625,124 @@ export default {
 
       this.sockets.subscribe('receive_message', function (res) {
         if(!res.support || res.support == null || res.support == undefined) {
-          res.sender = res.senderInfo;
-          if(this.chat_type && (this.activeTeam == res.target_opened_chat || this.one_to_one_user == res.target_opened_chat || this.inConnectedChat || this.private_chat)) {
-            this.chats.push(res);
-            // if(this.chats.length <= 0) {
-            //   this.chats.push(res);
-            // } else {
-            //   this.chats.unshift(res);
-            // }
-          }
+          this.loadPageData();
 
-          let teamPersonalChat = this.teamChat.find(item => item.user_id == res.senderId);
-          if(teamPersonalChat) {
-            if(teamPersonalChat.message) {
-              teamPersonalChat.message.body = res.body;
-              teamPersonalChat.message.created_at = res.created_at;
-              teamPersonalChat.message.seen = 0;
 
-              // this.loadPageData();
-            } else {
-              teamPersonalChat.message = {
-                body: res.body,
-                created_at: res.created_at,
-                seen: 0,
-              };
+          // res.sender = res.senderInfo;
+          // if(this.chat_type && (this.activeTeam == res.target_opened_chat || this.one_to_one_user == res.target_opened_chat || this.inConnectedChat || this.private_chat)) {
+          //   this.chats.push(res);
+          //   // if(this.chats.length <= 0) {
+          //   //   this.chats.push(res);
+          //   // } else {
+          //   //   this.chats.unshift(res);
+          //   // }
+          // }
 
-              // this.loadPageData();
-            }
+          // let teamPersonalChat = this.teamChat.find(item => item.user_id == res.senderId);
+          // if(teamPersonalChat) {
+          //   if(teamPersonalChat.message) {
+          //     teamPersonalChat.message.body = res.body;
+          //     teamPersonalChat.message.created_at = res.created_at;
+          //     teamPersonalChat.message.seen = 0;
 
-            // ordering
-            // this.teamChat.unshift(
-            //     this.teamChat.splice(
-            //         this.teamChat.findIndex(
-            //             elt => elt.user_id == res.senderId),
-            //         1)[0]
-            // );
-          }
+          //     // this.loadPageData();
+          //   } else {
+          //     teamPersonalChat.message = {
+          //       body: res.body,
+          //       created_at: res.created_at,
+          //       seen: 0,
+          //     };
 
-          let teamChat = this.teamChat.find(item => item.team_id == res.target_opened_chat);
-          if(teamChat) {
-            teamChat.last_group_message.body = res.body;
-            teamChat.last_group_message.created_at = res.created_at;
-            teamChat.last_group_message.seen = 0;
+          //     // this.loadPageData();
+          //   }
 
-            teamChat.message.body = res.body;
-            teamChat.message.created_at = res.created_at;
-            teamChat.message.seen = 0;
+          //   // ordering
+          //   // this.teamChat.unshift(
+          //   //     this.teamChat.splice(
+          //   //         this.teamChat.findIndex(
+          //   //             elt => elt.user_id == res.senderId),
+          //   //         1)[0]
+          //   // );
+          // }
 
-            // ordering
-            // this.teamChat.unshift(
-            //     this.teamChat.splice(
-            //         this.teamChat.findIndex(
-            //             elt => elt.team_id == res.target_opened_chat),
-            //         1)[0]
-            // );
-          }
+          // let teamChat = this.teamChat.find(item => item.team_id == res.target_opened_chat);
+          // if(teamChat) {
+          //   teamChat.last_group_message.body = res.body;
+          //   teamChat.last_group_message.created_at = res.created_at;
+          //   teamChat.last_group_message.seen = 0;
 
-          let recentTeamMemberChat = this.chatHistory.find(item => item.user_id == res.target_opened_chat);
-          if(recentTeamMemberChat) {
-            recentTeamMemberChat.message.body = res.body;
-            recentTeamMemberChat.message.created_at = res.created_at;
-            recentTeamMemberChat.message.seen = 0;
+          //   teamChat.message.body = res.body;
+          //   teamChat.message.created_at = res.created_at;
+          //   teamChat.message.seen = 0;
 
-            // ordering
-            // this.chatHistory.unshift(
-            //     this.chatHistory.splice(
-            //         this.chatHistory.findIndex(
-            //             elt => elt.user_id == res.target_opened_chat),
-            //         1)[0]
-            // );
-          }
+          //   // ordering
+          //   // this.teamChat.unshift(
+          //   //     this.teamChat.splice(
+          //   //         this.teamChat.findIndex(
+          //   //             elt => elt.team_id == res.target_opened_chat),
+          //   //         1)[0]
+          //   // );
+          // }
 
-          let recentPrivateChat = this.chatHistory.find(item => res.target_opened_chat && item.private_team_chat_id == res.target_opened_chat.private_team_chat_id);
-          if(recentPrivateChat) {
-            recentPrivateChat.message.body = res.body;
-            recentPrivateChat.message.created_at = res.created_at;
-            recentPrivateChat.message.seen = 0;
+          // let recentTeamMemberChat = this.chatHistory.find(item => item.user_id == res.target_opened_chat);
+          // if(recentTeamMemberChat) {
+          //   recentTeamMemberChat.message.body = res.body;
+          //   recentTeamMemberChat.message.created_at = res.created_at;
+          //   recentTeamMemberChat.message.seen = 0;
 
-            // ordering
-            // this.chatHistory.unshift(
-            //     this.chatHistory.splice(
-            //         this.chatHistory.findIndex(
-            //             elt => res.target_opened_chat && elt.private_team_chat_id == res.target_opened_chat.private_team_chat_id),
-            //         1)[0]
-            // );
-          }
+          //   // ordering
+          //   // this.chatHistory.unshift(
+          //   //     this.chatHistory.splice(
+          //   //         this.chatHistory.findIndex(
+          //   //             elt => elt.user_id == res.target_opened_chat),
+          //   //         1)[0]
+          //   // );
+          // }
 
-          let connectedTeamChat = this.connectedTeam.find(item => item && item.team_private_chat && item.team_private_chat.team_connection_id == res.team_connection_id);
-          if(connectedTeamChat) {
-            connectedTeamChat.message.body = res.body;
-            connectedTeamChat.message.created_at = res.created_at;
-            connectedTeamChat.message.seen = 0;
+          // let recentPrivateChat = this.chatHistory.find(item => res.target_opened_chat && item.private_team_chat_id == res.target_opened_chat.private_team_chat_id);
+          // if(recentPrivateChat) {
+          //   recentPrivateChat.message.body = res.body;
+          //   recentPrivateChat.message.created_at = res.created_at;
+          //   recentPrivateChat.message.seen = 0;
 
-            // ordering
-            // this.connectedTeam.unshift(
-            //     this.connectedTeam.splice(
-            //         this.connectedTeam.findIndex(
-            //             elt => elt && elt.team_private_chat && elt.team_private_chat.team_connection_id == res.team_connection_id),
-            //         1)[0]
-            // );
-          }
+          //   // ordering
+          //   // this.chatHistory.unshift(
+          //   //     this.chatHistory.splice(
+          //   //         this.chatHistory.findIndex(
+          //   //             elt => res.target_opened_chat && elt.private_team_chat_id == res.target_opened_chat.private_team_chat_id),
+          //   //         1)[0]
+          //   // );
+          // }
 
-          let connectHistory = this.chatHistory.find(item => item && item.team_connection_id == res.team_connection_id);
-          if(connectHistory) {
-            connectHistory.message.body = res.body;
-            connectHistory.message.created_at = res.created_at;
-            connectHistory.message.seen = 0;
+          // let connectedTeamChat = this.connectedTeam.find(item => item && item.team_private_chat && item.team_private_chat.team_connection_id == res.team_connection_id);
+          // if(connectedTeamChat) {
+          //   connectedTeamChat.message.body = res.body;
+          //   connectedTeamChat.message.created_at = res.created_at;
+          //   connectedTeamChat.message.seen = 0;
 
-            // ordering
-            // this.chatHistory.unshift(
-            //     this.chatHistory.splice(
-            //         this.chatHistory.findIndex(
-            //             elt => elt && elt.team_connection_id == res.team_connection_id),
-            //         1)[0]
-            // );
-          }
+          //   // ordering
+          //   // this.connectedTeam.unshift(
+          //   //     this.connectedTeam.splice(
+          //   //         this.connectedTeam.findIndex(
+          //   //             elt => elt && elt.team_private_chat && elt.team_private_chat.team_connection_id == res.team_connection_id),
+          //   //         1)[0]
+          //   // );
+          // }
+
+          // let connectHistory = this.chatHistory.find(item => item && item.team_connection_id == res.team_connection_id);
+          // if(connectHistory) {
+          //   connectHistory.message.body = res.body;
+          //   connectHistory.message.created_at = res.created_at;
+          //   connectHistory.message.seen = 0;
+
+          //   // ordering
+          //   // this.chatHistory.unshift(
+          //   //     this.chatHistory.splice(
+          //   //         this.chatHistory.findIndex(
+          //   //             elt => elt && elt.team_connection_id == res.team_connection_id),
+          //   //         1)[0]
+          //   // );
+          // }
         }
       });
 
@@ -2696,7 +2699,11 @@ export default {
 .chat-message-left,
 .chat-message-right {
   display: flex;
-  flex-shrink: 0
+  flex-shrink: 0;
+  width:50%;
+}
+.w100{
+  width: 100%;
 }
 
 .chat-message-left {
