@@ -1,6 +1,35 @@
 <template>
-  <div class="panel-container">
-    <div class="panel-content border-content">
+  <div style="height:calc(100% - 25px)" class="mt-5">
+     <v-card
+     style="height:100%"
+      class="mx-auto"
+      max-width="300"
+      tile
+    >
+    <v-list flat>
+      <v-subheader>User Status</v-subheader>
+      <hr>
+      <v-list-item-group
+        v-model="selectedItem"
+        color="primary"
+      >
+        <v-list-item
+          v-for="(item, i) in items"
+          :key="i"
+        >
+          <!-- <v-list-item-icon>
+            <v-icon v-text="item.icon"></v-icon>
+          </v-list-item-icon> -->
+          <v-list-item-content>
+            <router-link :to="item.link">
+              <v-list-item-title v-text="item.text"></v-list-item-title>
+            </router-link>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-item-group>
+    </v-list>
+  </v-card>
+    <!-- <div class="panel-content border-content">
       <img
         class="mr-3"
         src="@/assets/icon/person-fill-secondary.svg"
@@ -33,15 +62,21 @@
           Deleted Users
         </a-button>
       </router-link>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {};
-  },
+  data: () => ({
+      selectedItem: 1,
+      items: [
+        { text: 'All type', icon: 'mdi-clock', link: '/admin/active_users' },
+        { text: 'Verified', icon: 'mdi-clock', link: '/admin/approve_documents?type=verified' },
+        { text: 'Rejected', icon: 'mdi-account', link: '/admin/approve_documents?type=rejected' },
+        { text: 'Pending', icon: 'mdi-flag', link: '/admin/approve_documents?type=pending' },
+      ],
+    }),
   components: {},
   created() {},
   methods: {},

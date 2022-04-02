@@ -3,7 +3,7 @@
     <div class="panel-header">
       <div class="top-header">
         <div>
-          <v-btn style="background-color: #522e8e; color: #fff" large>
+          <!-- <v-btn style="background-color: #522e8e; color: #fff" large>
             {{
               showPendingDocuments
                 ? "Awaiting documents for approval"
@@ -11,9 +11,9 @@
                 ? "Rejected Documents"
                 : "Verified Documents"
             }}
-          </v-btn>
+          </v-btn> -->
         </div>
-        <div class="top-right">
+        <!-- <div class="top-right">
           <v-btn
             v-if="showPendingDocuments"
             @click="getVerifiedUsers"
@@ -41,7 +41,7 @@
             <v-icon dark> md-minus </v-icon>
             Back
           </v-btn>
-        </div>
+        </div> -->
       </div>
       <div class="bottom-header">
         <v-tabs @change="onSelectedTab" v-model="selectedTab">
@@ -217,7 +217,9 @@
 <script>
 import NoteModal from "@/views/admin/NoteModal.vue";
 export default {
+  name: 'User',
   components: { NoteModal },
+
   data() {
     return {
       search: "",
@@ -252,8 +254,23 @@ export default {
     };
   },
 
-  mounted() {
-    this.getPendingUsers();
+  computed: {
+    type () {
+      return this.$route.query.type
+    }
+  },
+
+  created() {
+    console.log(this.type, '>>>>>>>>>')
+    if(this.type == 'verified') {
+      this.getVerifiedUsers();
+    }
+    else if (this.type == 'rejected') {
+      this.getRejectedUsers();
+    }
+    else {
+      this.getPendingUsers();
+    }
   },
   methods: {
     openDialog(item) {
