@@ -11,7 +11,7 @@
           <span class="mb-0">Dashboard</span>
         </router-link>
       </li>
-      <li class="list-item">
+      <!-- <li class="list-item">
         <router-link to="/admin/approval" class="d-flex align-items-center">
           <img
             class="mr-3"
@@ -25,7 +25,7 @@
             count="0"
           />
         </router-link>
-      </li>
+      </li> -->
       <li class="list-item">
         <router-link to="/admin/users" class="d-flex align-items-center">
           <img
@@ -33,7 +33,8 @@
             src="@/assets/icon/person-fill-secondary.svg"
             alt="icon"
           />
-          <span class="mb-0">Approved Users</span>
+          <!-- <span class="mb-0">Approved Users</span> -->
+          <span class="mb-0">Users</span>
           <a-badge
             class="ml-auto"
             :number-style="{ backgroundColor: '#e42076' }"

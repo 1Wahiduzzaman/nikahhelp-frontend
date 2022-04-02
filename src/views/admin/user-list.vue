@@ -3,9 +3,6 @@
     <div class="admin-header">
       <div class="top-header">
         <div class="top-left">
-          <v-btn style="background-color: #522e8e; color: #fff" large>
-            Active Users
-          </v-btn>
           <v-tabs
             @change="onSelectedTab"
             v-model="selectedTab"
