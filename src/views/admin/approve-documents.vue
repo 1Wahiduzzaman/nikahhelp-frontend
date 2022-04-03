@@ -175,35 +175,42 @@
             </td>
             <td class="Actions">
               <div>
-                <router-link :to="'/admin/document_details/' + item.id">
+                <router-link
+                  v-if="item.account_type === 1"
+                  :to="'/admin/user_candidate_details/' + item.id + '?type=' +item.account_type">
                   <v-btn style="background-color: #522e8e; color: #fff" small>
                     view
                   </v-btn>
                 </router-link>
-                <v-btn
+                <router-link v-else :to="'/admin/user_candidate_details/' + item.id + '?type=' +item.account_type">
+                  <v-btn style="background-color: #522e8e; color: #fff" small>
+                    view
+                  </v-btn>
+                </router-link>
+                <!-- <v-btn
                   v-if="showPendingDocuments"
                   @click="updateUserVerifyOrReject(item, 'verified')"
                   style="background-color: rgb(42 205 100); color: #fff"
                   small
                 >
                   Approve
-                </v-btn>
-                <v-btn
+                </v-btn> -->
+                <!-- <v-btn
                   v-if="showPendingDocuments"
                   @click="openDialog(item)"
                   style="background-color: rgb(191 20 67); color: #fff"
                   small
                 >
                   Reject
-                </v-btn>
-                <v-btn
+                </v-btn> -->
+                <!-- <v-btn
                   v-if="showRejectedDocuments"
                   @click="updateUserVerifyOrReject(item, 'completed')"
                   style="background-color: rgb(61 185 156); color: #fff"
                   small
                 >
                   Reinstate
-                </v-btn>
+                </v-btn> -->
               </div>
             </td>
           </tr>
