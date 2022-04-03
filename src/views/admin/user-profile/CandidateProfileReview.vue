@@ -4,7 +4,12 @@
       <h4 class="fw-700 mt-3">Review and approve or reject</h4>
       <v-row>
         <v-col>
-          User status: <strong>{{  getUserStatus(userStatus) }}</strong> 
+          <div>
+            Name: <strong> {{ candidateData.first_name }} {{ candidateData.last_name }}</strong>
+          </div>
+          <div>
+            User status: <strong>{{  getUserStatus(userStatus) }}</strong>
+          </div>
         </v-col>
       </v-row>
       <v-row>
@@ -895,6 +900,51 @@
           </div>
         </div>
       </div>
+
+
+      <div  v-if="documentInfo && documentInfo.candidate_info">
+        <div class="mt-5">
+            <div>
+              <h4>Document Preview</h4>
+              <div class="row">
+                <div class="col-12 col-md-6 mb-4">
+                  <div class="profile-img text-center">
+                    <img
+                      :src="
+                        documentInfo.image_server_base_url +
+                        '/' +
+                        documentInfo.candidate_info.ver_image_front
+                      "
+                      v-viewer
+                      class=""
+                      alt="img"
+                      height="250"
+                      width="200"
+                    />
+                    <p class="text-center">Font Side</p>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 mb-4">
+                  <div class="profile-img text-center">
+                    <img
+                      v-viewer
+                      :src="
+                        documentInfo.image_server_base_url +
+                        '/' +
+                        documentInfo.candidate_info.ver_image_back
+                      "
+                      class=""
+                      alt="img"
+                      height="250"
+                      width="200"
+                    />
+                    <p class="text-center">Back Side</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
     </fieldset>
     <NoteModal @save="save" @cancel="cancel" :dialog="dialog" />
   </div>
@@ -930,6 +980,7 @@ export default {
   data() {
     return {
       loading: false,
+      documentInfo: {},
       cancelLoading: false,
       dialog: false,
       statusArr: [{key:1, name: 'InComplete'}, {key:2, name:'Complete'}, {key:3, name: 'Verified'}, {key: 4, name:'Rejected'},{key: 5, name:'Approved'}, {key: 9, name:'Suspended'},{ key: 0, name :'Deleted'}],
@@ -939,6 +990,7 @@ export default {
   },
   mounted() {
     this.getCandidateData();
+    this.getDocumentInfo();
   },
   methods: {
     getNationality () {
@@ -1045,6 +1097,20 @@ export default {
     getHeight(val) {
       let h = this.heightTV.find((x) => x.value === val);
       return h ? h.name : "";
+    },
+
+    async getDocumentInfo() {
+      this.isLoading = true;
+      await this.$store
+        .dispatch("getDocumentInfo", this.$route.params.user_id)
+        .then((data) => {
+          this.documentInfo = {
+            ...data,
+            candidate_info: data.candidate_info ? data.candidate_info : {},
+          };
+          this.isLoading = false;
+        })
+        .catch((error) => {});
     },
   },
   
