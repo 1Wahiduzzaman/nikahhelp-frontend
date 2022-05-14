@@ -1,5 +1,4 @@
 <template>
-
     <div class="container-fluid" style="padding-top: 0px;">
       <div style="margin-bottom: 5px; padding-right: 1000px"></div>   <!--plz ignore this div -->
       <Loader v-if="isLoading" :isLoading="isLoading" />
@@ -8,47 +7,10 @@
         <div class="col-12">
           <div class="chat-wrapper my-2">
             <div class="chat-left" :class="{'chat-hide': conversationTitle}">
-              <div class="chat-title d-chat-title">My {{ chatTab }} chats</div>
-<!--              <div class="chat-search">-->
-<!--                <div class="form-group has-search">-->
-<!--                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.02 40.76">-->
-<!--                    <g id="Layer_2" data-name="Layer 2">-->
-<!--                      <g id="draw_boxes" data-name="draw boxes">-->
-<!--                        <path fill="#cccccc" class="cls-1"-->
-<!--                              d="M41.67,35.89A1.33,1.33,0,0,0,41.58,34L30.34,23.79a1.34,1.34,0,0,0-1.88.09l-4,4.44a1.34,1.34,0,0,0,.09,1.88L35.78,40.41a1.32,1.32,0,0,0,1.88-.09Z"/>-->
-<!--                        <path fill="#cccccc" class="cls-1"-->
-<!--                              d="M14.72,0A14.72,14.72,0,1,1,9.91.81,14.73,14.73,0,0,1,14.72,0m0,4a10.82,10.82,0,0,0-3.51.59h0A10.73,10.73,0,1,0,14.72,4Z"/>-->
-<!--                      </g>-->
-<!--                    </g>-->
-<!--                  </svg>-->
-<!--                  <input type="text" class="form-control" placeholder="Search..." v-model="conv_search_key">-->
-<!--                </div>-->
-<!--              </div>-->
               <div class="chat-category">
                 <nav>
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-<!--                    <a class="nav-link" :class="{'active': chatTab == 'Recent'}" id="nav-home-tab" data-toggle="tab" role="tab"-->
-<!--                       aria-controls="nav-home" aria-selected="true">-->
-<!--                      <div class="category-item" @click="setChatTab('Recent')">-->
-<!--                        <a href="#">-->
-<!--                          <svg xmlns="http://www.w3.org/2000/svg" class="recent-icon" viewBox="0 0 33.75 33.75"-->
-<!--                               style="margin-top:3px">-->
-<!--                            <g id="Layer_2" data-name="Layer 2">-->
-<!--                              <g id="middle">-->
-<!--                                <path class="cls-1"-->
-<!--                                      d="M16.88,3A13.88,13.88,0,1,1,3,16.88,13.89,13.89,0,0,1,16.88,3m0-3A16.88,16.88,0,1,0,33.75,16.88,16.88,16.88,0,0,0,16.88,0Z"/>-->
-<!--                                <polygon class="cls-1"-->
-<!--                                         points="25.49 19.47 13.92 19.47 13.92 10.67 15.92 10.67 15.92 17.47 25.49 17.47 25.49 19.47"/>-->
-<!--                              </g>-->
-<!--                            </g>-->
-<!--                          </svg>-->
-<!--&lt;!&ndash;                          <span class="countOfChat">{{ totalUnreadCount }}</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                          <span class="countOfChat">{{ chatHistory.length }}</span>&ndash;&gt;-->
-<!--                          <p class="category-name">Recent</p>-->
-<!--                        </a>-->
-<!--                      </div>-->
-<!--                    </a>-->
-                    <a class="nav-link" :class="{'active': chatTab == 'Team'}">
+    <a class="nav-link" :class="{'active': chatTab == 'Team'}">
                       <div class="category-item" @click="setChatTab('Team')">
                         <a>
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.02 31.17" style="margin-top:3px">
@@ -59,16 +21,13 @@
                               </g>
                             </g>
                           </svg>
-<!--                          <span class="countOfChat">{{ teamUnreadCount }}</span>-->
-<!--                          <span class="countOfChat">{{ teamChat.length - 1 }}</span>-->
-                          <p class="category-name">Team</p>
+                          <p class="category-name">Current Team</p>
                         </a>
                       </div>
                     </a>
                     <a class="nav-link" :class="{'active': chatTab == 'Connected'}">
                       <div class="category-item" @click="setChatTab('Connected')">
                         <a>
-                          <!-- <img src="@/assets/icon/connected.svg" alt="connected icon"/> -->
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.52 39.16" style="margin-top:3px">
                             <g id="Layer_2" data-name="Layer 2">
                               <g id="middle">
@@ -77,27 +36,7 @@
                               </g>
                             </g>
                           </svg>
-<!--                          <span class="countOfChat">{{ connectedUnreadCount }}</span>-->
-<!--                          <span class="countOfChat">{{ connectedTeam.length }}</span>-->
-                          <p class="category-name">Connected</p>
-                        </a>
-                      </div>
-                    </a>
-                    <a class="nav-link" :class="{'active': chatTab == 'Private'}">
-                      <div class="category-item" @click="setChatTab('Private')">
-                        <a>
-                          <!-- <img src="@/assets/icon/connected.svg" alt="connected icon"/> -->
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.52 39.16" style="margin-top:3px">
-                            <g id="Layer_2" data-name="Layer 2">
-                              <g id="middle">
-                                <path class="cls-1"
-                                      d="M24.46,14.64c1.43,1.43,1.62,4.38-3.42,7-5-2.6-4.85-5.55-3.42-7S21,14.17,21,15.3C21,14.17,23,13.2,24.46,14.64ZM8.59,25.1a6.48,6.48,0,1,0-6.48-6.48A6.48,6.48,0,0,0,8.59,25.1Zm1.29,0H7.3A7.37,7.37,0,0,0,0,31.59a.84.84,0,0,0,.85.91H16.32a.84.84,0,0,0,.85-.91A7.37,7.37,0,0,0,9.88,25.15Zm24-7.43a6.48,6.48,0,1,0-6.48-6.48A6.48,6.48,0,0,0,33.93,17.72Zm1.29.05H32.64a7.38,7.38,0,0,0-7.3,6.44.85.85,0,0,0,.86.91H41.66a.84.84,0,0,0,.85-.91A7.37,7.37,0,0,0,35.22,17.77ZM7,11a1.53,1.53,0,0,0,.68.23,1.48,1.48,0,0,0,1.38-.65,12.12,12.12,0,0,1,11-4.86l-.92,2.71,8.72-1.76L22,0,21,2.84A15.07,15.07,0,0,0,6.59,8.94,1.49,1.49,0,0,0,7,11ZM37,26a1.49,1.49,0,0,0-2,.73A12.15,12.15,0,0,1,25,33.22l.48-2.83-8.34,3.1L24,39.16l.51-3h.63a15.08,15.08,0,0,0,12.68-8.25A1.49,1.49,0,0,0,37,26Z"/>
-                              </g>
-                            </g>
-                          </svg>
-<!--                          <span class="countOfChat">{{ connectedUnreadCount }}</span>-->
-<!--                          <span class="countOfChat">{{ connectedTeam.length }}</span>-->
-                          <p class="category-name">Private</p>
+                          <p class="category-name">Connected team</p>
                         </a>
                       </div>
                     </a>
@@ -108,9 +47,6 @@
                           <div class="position-absolute bg-danger chat-request-chip" v-if="privateRequested.length > 0">{{ privateRequested.length }}</div>
                         </a>
                         <a-menu slot="overlay" class="text-center px-2">
-                          <a-menu-item class="border-bottom" @click="setChatTab('Request')">
-                            <a class="fs-12 color-primary">Private chat request <a-badge :count="privateRequested.length"></a-badge></a>
-                          </a-menu-item>
                           <a-menu-item class="border-bottom">
                             <a-tooltip title="Coming soon">
                               <a class="fs-12 color-primary">Chat history</a>
@@ -132,36 +68,6 @@
               </div>
               <div class="chat-item-wrapper">
                 <div class="tab-content">
-<!--                  <div v-if="chatTab == 'Recent'" class="tab-pane fade" :class="{'show active': chatTab == 'Recent'}" role="tabpanel" aria-labelledby="nav-home-tab">-->
-<!--                    <div-->
-<!--                        class="chat-item"-->
-<!--                        v-for="item in chatHistory"-->
-<!--                        :key="item.team_id"-->
-<!--                        :class="{'selected-chat': chatheadopen == item}"-->
-<!--                        @click="item.label == 'Connected Team' ? getConnectedTeamChatHistory(item) : getIndividualChat(item, item)"-->
-<!--                    >-->
-<!--                      <ConnectedTeamChat-->
-<!--                          v-if="item.label == 'Connected Team'"-->
-<!--                          :item="item"-->
-<!--                          :status="'connected'"-->
-<!--                          :online_users="online_users"-->
-<!--                          :teamMembers="teamMembers"-->
-<!--                          :activeTeam="activeTeam"-->
-<!--                          action-->
-<!--                          @socketNotification="socketNotification"-->
-<!--                          class="w-full pr-3 cursor-pointer"-->
-<!--                      />-->
-<!--                      <ChatListItem-->
-<!--                          v-else-->
-<!--                          :item="item"-->
-<!--                          :status="'recent'"-->
-<!--                          :online_users="online_users"-->
-<!--                          :teamMembers="teamMembers"-->
-<!--                          action-->
-<!--                          class="w-full pr-3 cursor-pointer"-->
-<!--                      />-->
-<!--                    </div>-->
-<!--                  </div>-->
                   <div v-if="chatTab == 'Team'" class="tab-pane fade" :class="{'show active': chatTab == 'Team'}">
                     <div class="chat-item"
                          v-for="item in teamChat"
@@ -207,17 +113,6 @@
                         :class="{'selected-chat': chatheadopen == item}"
                         @click="item.label == 'Connected Team' ? getConnectedTeamChatHistory(item) : getIndividualChat(item, item)"
                     >
-<!--                      <ConnectedTeamChat-->
-<!--                          v-if="item.label == 'Connected Team'"-->
-<!--                          :item="item"-->
-<!--                          :status="'connected'"-->
-<!--                          :online_users="online_users"-->
-<!--                          :teamMembers="teamMembers"-->
-<!--                          :activeTeam="activeTeam"-->
-<!--                          action-->
-<!--                          @socketNotification="socketNotification"-->
-<!--                          class="w-full pr-3 cursor-pointer"-->
-<!--                      />-->
                       <ChatListItem
                           :item="item"
                           :status="'recent'"
@@ -228,36 +123,16 @@
                       />
                     </div>
                   </div>
-                  <div v-if="chatTab == 'Request'" class="tab-pane fade" :class="{'show active': chatTab == 'Request'}">
-                    <div class="chat-item cursor-pointer"
-                         v-for="item in privateRequested"
-                         :key="item.id">
-                      <private-request-chat :item="item"
-                                            :status="'connected'"
-                                            :online_users="online_users"
-                                            :teamMembers="teamMembers"
-                                            :activeTeam="activeTeam"
-                                            action
-                                            @socketNotification="socketNotification"
-                                            class="w-full pr-3 cursor-pointer" />
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
             <div class="chat-right position-relative" :class="{'chat-hide': !conversationTitle}" v-if="chatheadopen">
-<!--              <button class="btn btn-primary flex justify-content-center align-items-center my-2 d-lg-none position-absolute btn-short-back"-->
-<!--                      @click="backToTabList()">-->
-<!--                <a-icon type="caret-left"/>-->
-<!--              </button>-->
-<!--              <h4 class="cursor-pointer btn-short-back" @click="backToTabList()">&#8592;</h4>-->
               <div class="header clearfix">
                 <div class="left">
                   <div class="top">
                     <h4 class="cursor-pointer btn-mobile-back" @click="backToTabList()">&#8592;</h4>
                     <div class="item-img conv-head-logo">
                       <img :src="chatheadopen.logo ? chatheadopen.logo : getImage()" alt="info image">
-<!--                      <span></span>-->
                     </div>
                     <div class="chat-info">
                       <div class="chat-group bg-primary">{{ chatheadopen.label }}</div>
@@ -270,9 +145,6 @@
                     </div>
                   </div>
                 </div>
-<!--                <div class="middle">-->
-<!--                  <div class="chat-group">{{ getChatType }} chat</div>-->
-<!--                </div>-->
                 <div class="right">
                   <a-dropdown>
                     <a class="ant-dropdown-link py-2" @click="e => e.preventDefault()">
@@ -309,22 +181,6 @@
                 </div>
               </div>
               <div class="chat-area">
-<!--                <div class="chat-box" ref="chatbox" id="chat_box">-->
-<!--                  <div-->
-<!--                      v-for="item in chats"-->
-<!--                      :key="item.id"-->
-<!--                      :class="['chats', (parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId)) ? 'me' : '']"-->
-<!--                  >-->
-<!--                    <div class="item-img">-->
-<!--                      <img src="../../assets/info-img.png" alt="info image"/>-->
-<!--                      <span></span>-->
-<!--                    </div>-->
-<!--                    <div class="message">-->
-<!--                      <p class="msg-text">{{ item.body || '' }}</p>-->
-<!--                      <p class="date-time"> {{ messageCreatedAt(item.created_at) }} </p>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
                 <div class="position-relative">
                   <div class="chat-messages py-4 pr-1" id="chat-messages">
                     <div v-for="(item, cIndex) in chats" :key="item.id" class="position-relative" :id="chats.length === cIndex + 1 ? 'messagesid' : ''">
@@ -336,12 +192,9 @@
                           <img :src="getAuthUser && getAuthUser.per_main_image_url ? getAuthUser.per_main_image_url : getImage()" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
                         </div>
                         <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 w100" v-html="item.body">
-                          <!--                        <div class="font-weight-bold mb-1">You</div>-->
-<!--                          {{ item.body || '' }}-->
                         </div>
                         <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">
                           {{ messageCreatedAt(item.created_at) }}<span>, Me</span>
-<!--                          {{ messageCreatedAt(item.created_at) }}<span v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))">, {{ item.sender ? item.sender.full_name : '' }}</span>-->
                         </div>
                       </div>
 
@@ -352,19 +205,12 @@
                           <img :src="getConversationUserImage(item.sender.id)" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
                         </div>
                         <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 w100" v-html="item.body">
-                          <!--                        <div class="font-weight-bold mb-1">Sharon Lessman</div>-->
-<!--                          {{ item.body || '' }}-->
                         </div>
                         <div class="text-muted small text-nowrap mt-2 position-absolute msg-left-created-at">
                           {{ messageCreatedAt(item.created_at) }}<span>, {{ item.sender ? item.sender.full_name : '' }}</span>
                         </div>
                       </div>
-
-<!--                      <div class="position-absolute conv-left-user color-primary" v-if="chatheadopen.label == 'Group chat' || chatheadopen.label == 'Connected Team'">-->
-<!--                        {{ item.sender ? item.sender.full_name : '' }}-->
-<!--                      </div>-->
                     </div>
-
                   </div>
                 </div>
                 <div class="footer">
@@ -398,7 +244,6 @@
                             </div>
                           </div>
                         </div>
-                        <!-- <button :disabled="returnMsgSendBtnDeactiveStatus" class="btn btn-primary btn-submit js-msg-send">  -->
                         <button class="btn btn-primary btn-submit js-msg-send">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.68 18.77">
                             <g id="Layer_2" data-name="Layer 2">
@@ -425,7 +270,6 @@
           </div>
         </div>
       </div>
-<!--      <div style="margin-top: 100px;"></div>   &lt;!&ndash;plz ignore this div &ndash;&gt;-->
     </div>
 </template>
 
@@ -445,6 +289,7 @@ const messageKeys = ['id', 'user_id', 'chat_id', 'team_id', 'from_team_id', 'to_
 
 export default {
   name: 'ChatWindow',
+
   sockets: {
     connect: function () {
       console.log('socket connected')
@@ -453,6 +298,7 @@ export default {
       console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
     }
   },
+
   data() {
     return {
       redirection: false,
@@ -491,6 +337,7 @@ export default {
     ConnectedTeamChat,
     ChatListItem
   },
+
   watch: {
     scrollFlag(newValue, oldValue) {
       // Our fancy notification (2).
@@ -526,6 +373,7 @@ export default {
       });
     }
   },
+
   computed: {
     scrollFlag: function () {
       return this.$store.state.chat.scrolldown_msg;
@@ -957,6 +805,7 @@ export default {
           });
         }
         this.teamChat = this.processTeamChatResponse(data);
+        this.teamChat = this.teamChat.filter(e => e.id !== undefined);
       } catch (e) {
         console.error(e);
       }
