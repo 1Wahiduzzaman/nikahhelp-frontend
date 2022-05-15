@@ -1,68 +1,70 @@
 <template>
     <div class="container-fluid" style="padding-top: 0px;">
-      <div style="margin-bottom: 5px; padding-right: 1000px"></div>   <!--plz ignore this div -->
+      <div style="margin-bottom: 5px; padding-right: 1000px"></div>
       <Loader v-if="isLoading" :isLoading="isLoading" />
       <div class="row" v-else>
         <TeamOffRedirection v-if="redirection" />
         <div class="col-12">
           <div class="chat-wrapper my-2">
-            <div class="chat-left" :class="{'chat-hide': conversationTitle}">
+            <div class="chat-left"
+                 :class="{'chat-hide': conversationTitle}">
               <div class="chat-category">
                 <nav>
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-    <a class="nav-link" :class="{'active': chatTab == 'Team'}">
-                      <div class="category-item" @click="setChatTab('Team')">
-                        <a>
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.02 31.17" style="margin-top:3px">
-                            <g id="Layer_2" data-name="Layer 2">
-                              <g id="middle">
-                                <path class="cls-1"
+                    <a class="nav-link"
+                       :class="{'active': chatTab == 'Team'}">
+                      <div class="category-item"
+                           @click="setChatTab('Team')">
+                           <a>
+                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.02 31.17" style="margin-top:3px">
+                               <g id="Layer_2" data-name="Layer 2">
+                                 <g id="middle">
+                                   <path class="cls-1"
                                       d="M9.37,20.31A13.43,13.43,0,0,0,6.8,24.07,14.3,14.3,0,0,0,5.64,28c0,.34-.07.68-.09,1s0,.67,0,1v1.08H2A2,2,0,0,1,.59,30.5,2,2,0,0,1,0,29.09,12.63,12.63,0,0,1,6,18.34,9.73,9.73,0,0,0,9.37,20.31Zm4.13-3.68a8.66,8.66,0,0,1-1.61-1.7,9.2,9.2,0,0,1-1.74-5.72A8.93,8.93,0,0,1,11,5.64a9.08,9.08,0,0,1,1.72-2.52A8.06,8.06,0,0,0,7.47,17.38a8.16,8.16,0,0,0,2.93,1.54c.28-.28.56-.52.84-.75l.34-.28c.3-.23.58-.44.86-.63a1.43,1.43,0,0,1,1.27-.16l.93.34A8.39,8.39,0,0,1,13.5,16.63Zm19.15,3.68a13.64,13.64,0,0,1,2.57,3.76A14.3,14.3,0,0,1,36.38,28c0,.34.07.68.09,1s0,.67,0,1v1.08H40a2,2,0,0,0,1.42-.59A2,2,0,0,0,42,29.09a12.63,12.63,0,0,0-6-10.75A9.73,9.73,0,0,1,32.65,20.31Zm-5.27-2.87.93-.34a1.43,1.43,0,0,1,1.27.16c.28.19.56.4.86.63l.34.28c.28.23.56.47.84.75a8.06,8.06,0,0,0-2.33-15.8A9.08,9.08,0,0,1,31,5.64a8.93,8.93,0,0,1,.86,3.57,9.2,9.2,0,0,1-1.74,5.72,8.66,8.66,0,0,1-1.61,1.7A8.39,8.39,0,0,1,27.38,17.44Zm2-11.93A9.23,9.23,0,0,0,20.92,0,9.23,9.23,0,0,0,11.7,9.22a9.14,9.14,0,0,0,1.94,5.66,8.6,8.6,0,0,0,1.65,1.65,9.21,9.21,0,0,0,3,1.53,9.21,9.21,0,0,0,8.28-1.53A9,9,0,0,0,28.1,15a9.23,9.23,0,0,0,1.26-9.5Zm-.45,13.11h0a4.06,4.06,0,0,0-.36-.26,1.1,1.1,0,0,0-.14-.09A16.08,16.08,0,0,1,25,19.8a17.09,17.09,0,0,1-4.08.58c-1.2.11-3.87-.67-5.72-1.28l-.48-.16-1.5-.52c-.26.17-.51.36-.75.55l-.32.27A14.67,14.67,0,0,0,11,20.31a13.86,13.86,0,0,0-2.57,3.76A14.28,14.28,0,0,0,7.26,28c0,.34-.07.68-.1,1s0,.67,0,1v1.17L34.7,31v-1.2a13.67,13.67,0,0,0-1.77-6.73,14.08,14.08,0,0,0-3.38-4Zm-.37-.26a4.06,4.06,0,0,1,.36.26m-.36-.26a4.06,4.06,0,0,1,.36.26"/>
-                              </g>
-                            </g>
-                          </svg>
-                          <p class="category-name">Current Team</p>
-                        </a>
+                                    </g>
+                                  </g>
+                                </svg>
+                                <p class="category-name">Current Team</p>
+                              </a>
+                            </div>
+                          </a>
+                          <a class="nav-link" :class="{'active': chatTab == 'Connected'}">
+                            <div class="category-item" @click="setChatTab('Connected')">
+                              <a>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.52 39.16" style="margin-top:3px">
+                                  <g id="Layer_2" data-name="Layer 2">
+                                    <g id="middle">
+                                      <path class="cls-1"
+                                            d="M24.46,14.64c1.43,1.43,1.62,4.38-3.42,7-5-2.6-4.85-5.55-3.42-7S21,14.17,21,15.3C21,14.17,23,13.2,24.46,14.64ZM8.59,25.1a6.48,6.48,0,1,0-6.48-6.48A6.48,6.48,0,0,0,8.59,25.1Zm1.29,0H7.3A7.37,7.37,0,0,0,0,31.59a.84.84,0,0,0,.85.91H16.32a.84.84,0,0,0,.85-.91A7.37,7.37,0,0,0,9.88,25.15Zm24-7.43a6.48,6.48,0,1,0-6.48-6.48A6.48,6.48,0,0,0,33.93,17.72Zm1.29.05H32.64a7.38,7.38,0,0,0-7.3,6.44.85.85,0,0,0,.86.91H41.66a.84.84,0,0,0,.85-.91A7.37,7.37,0,0,0,35.22,17.77ZM7,11a1.53,1.53,0,0,0,.68.23,1.48,1.48,0,0,0,1.38-.65,12.12,12.12,0,0,1,11-4.86l-.92,2.71,8.72-1.76L22,0,21,2.84A15.07,15.07,0,0,0,6.59,8.94,1.49,1.49,0,0,0,7,11ZM37,26a1.49,1.49,0,0,0-2,.73A12.15,12.15,0,0,1,25,33.22l.48-2.83-8.34,3.1L24,39.16l.51-3h.63a15.08,15.08,0,0,0,12.68-8.25A1.49,1.49,0,0,0,37,26Z"/>
+                                    </g>
+                                  </g>
+                                </svg>
+                                <p class="category-name">Connected team</p>
+                              </a>
+                            </div>
+                          </a>
+                          <a class="nav-link mt-2" :class="{'active': chatTab == 'Request'}">
+                            <a-dropdown>
+                              <a class="ant-dropdown-link position-relative" @click="e => e.preventDefault()">
+                                <a-icon type="more" class="fs-30 font-weight-bolder br-50 bg-c9 color-primary"/>
+                                <div class="position-absolute bg-danger chat-request-chip" v-if="privateRequested.length > 0">{{ privateRequested.length }}</div>
+                              </a>
+                              <a-menu slot="overlay" class="text-center px-2">
+                                <a-menu-item class="border-bottom">
+                                  <a-tooltip title="Coming soon">
+                                    <a class="fs-12 color-primary">Chat history</a>
+                                  </a-tooltip>
+                                </a-menu-item>
+                                <a-menu-item class="border-bottom">
+                                  <a-tooltip title="Coming soon">
+                                    <a class="fs-12 color-primary">Archived chat</a>
+                                  </a-tooltip>
+                                </a-menu-item>
+                              </a-menu>
+                            </a-dropdown>
+                          </a>
                       </div>
-                    </a>
-                    <a class="nav-link" :class="{'active': chatTab == 'Connected'}">
-                      <div class="category-item" @click="setChatTab('Connected')">
-                        <a>
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.52 39.16" style="margin-top:3px">
-                            <g id="Layer_2" data-name="Layer 2">
-                              <g id="middle">
-                                <path class="cls-1"
-                                      d="M24.46,14.64c1.43,1.43,1.62,4.38-3.42,7-5-2.6-4.85-5.55-3.42-7S21,14.17,21,15.3C21,14.17,23,13.2,24.46,14.64ZM8.59,25.1a6.48,6.48,0,1,0-6.48-6.48A6.48,6.48,0,0,0,8.59,25.1Zm1.29,0H7.3A7.37,7.37,0,0,0,0,31.59a.84.84,0,0,0,.85.91H16.32a.84.84,0,0,0,.85-.91A7.37,7.37,0,0,0,9.88,25.15Zm24-7.43a6.48,6.48,0,1,0-6.48-6.48A6.48,6.48,0,0,0,33.93,17.72Zm1.29.05H32.64a7.38,7.38,0,0,0-7.3,6.44.85.85,0,0,0,.86.91H41.66a.84.84,0,0,0,.85-.91A7.37,7.37,0,0,0,35.22,17.77ZM7,11a1.53,1.53,0,0,0,.68.23,1.48,1.48,0,0,0,1.38-.65,12.12,12.12,0,0,1,11-4.86l-.92,2.71,8.72-1.76L22,0,21,2.84A15.07,15.07,0,0,0,6.59,8.94,1.49,1.49,0,0,0,7,11ZM37,26a1.49,1.49,0,0,0-2,.73A12.15,12.15,0,0,1,25,33.22l.48-2.83-8.34,3.1L24,39.16l.51-3h.63a15.08,15.08,0,0,0,12.68-8.25A1.49,1.49,0,0,0,37,26Z"/>
-                              </g>
-                            </g>
-                          </svg>
-                          <p class="category-name">Connected team</p>
-                        </a>
-                      </div>
-                    </a>
-                    <a class="nav-link mt-2" :class="{'active': chatTab == 'Request'}">
-                      <a-dropdown>
-                        <a class="ant-dropdown-link position-relative" @click="e => e.preventDefault()">
-                          <a-icon type="more" class="fs-30 font-weight-bolder br-50 bg-c9 color-primary"/>
-                          <div class="position-absolute bg-danger chat-request-chip" v-if="privateRequested.length > 0">{{ privateRequested.length }}</div>
-                        </a>
-                        <a-menu slot="overlay" class="text-center px-2">
-                          <a-menu-item class="border-bottom">
-                            <a-tooltip title="Coming soon">
-                              <a class="fs-12 color-primary">Chat history</a>
-                            </a-tooltip>
-                          </a-menu-item>
-                          <a-menu-item class="border-bottom">
-                            <a-tooltip title="Coming soon">
-                              <a class="fs-12 color-primary">Archived chat</a>
-                            </a-tooltip>
-                          </a-menu-item>
-                        </a-menu>
-                      </a-dropdown>
-                    </a>
-                  </div>
-                </nav>
-
+                  </nav>
               </div>
               <div class="chat-item-wrapper">
                 <div class="tab-content">
@@ -89,7 +91,7 @@
                          v-for="item in connectedTeam"
                          :key="item.team_id"
                          :class="{'selected-chat': chatheadopen == item}"
-                         @click="getConnectedTeamChatHistory(item)"
+                         @click="getIndividualChat(item, item)"
                     >
                       <ConnectedTeamChat
                           :item="item"
@@ -260,6 +262,7 @@
                 </div>
               </div>
             </div>
+
             <div class="chat-right" v-else>
               <div class="flex justify-content-center align-items-center empty-height">
                 <h4 class="fs-20 flex flex-column align-items-center justify-content-center">Select a conversation & start the chat</h4>
@@ -282,6 +285,7 @@ import ConnectedTeamChat from "../../components/chat/ConnectedTeamChat";
 import PrivateRequestChat from "../../components/chat/PrivateRequestChat";
 import Notification from "@/common/notification.js";
 import TeamOffRedirection from "../../components/redirection/TeamOffRedirection";
+import ChatArea from './ChatArea';
 
 const messageKeys = ['id', 'user_id', 'chat_id', 'team_id', 'from_team_id', 'to_team_id', 'private_receiver_id', 'private_team_chat_id', 'body', 'seen', 'created_at'];
 
@@ -336,27 +340,23 @@ export default {
       isLoading: false,
       fromChatItem: null,
       active_team_id: null,
-      chatListedImage: []
+      chatListedImage: [],
+      connectedTeamChats: [],
     }
   },
+
   components: {
     TeamOffRedirection,
     PrivateRequestChat,
     ConnectedTeamChat,
-    ChatListItem
+    ChatListItem,
+    ChatArea,
   },
 
   watch: {
     scrollFlag(newValue, oldValue) {
-      // Our fancy notification (2).
-      // console.log(oldValue);
       if (newValue) {
         console.log('scroll down needed now');
-
-        // var msg_list = this.$store.state.chat.messages;
-        // var last_msg = msg_list[msg_list.length - 1];
-        // var last_msg_id = last_msg.id;
-        // console.log('id found:',last_msg_id);
 
         var element = document.getElementById("chat_box");
         let height = (element.scrollHeight - element.offsetHeight); // this isn't perfect
@@ -367,11 +367,11 @@ export default {
 
         console.log(element.scrollHeight)
 
-        // this.$refs.chatbox.scrollTop = this.$refs.chatbox.lastElementChild.offsetTop;
-        //
+
         this.$store.dispatch('setScrollDownStatus', false);
       }
     },
+
     chats: function(val) {
       // console.log(val);
       setTimeout(() => {
@@ -379,6 +379,11 @@ export default {
         const messagesid = document.getElementById('messagesid');
         messages.scrollTop = messagesid.offsetTop - 10;
       });
+    },
+
+    chatTab(value) {
+        console.log(value);
+            this.chatheadopen = null;
     }
   },
 
@@ -455,7 +460,6 @@ export default {
     }
   },
   created() {
-    // this.$store.state.chat.chats = [];
     this.getActiveTeamId();
     if(this.$route.query.connection_id) {
       this.setChatTab('Connected');
@@ -467,7 +471,6 @@ export default {
       this.$socket.emit('ping', {user_id: loggedUser.id});
 
       this.sockets.subscribe('ping_success', function (res) {
-        // console.log(res);
         if (res && res.online_users) {
           this.online_users = res.online_users;
         }
@@ -479,7 +482,7 @@ export default {
         }
       });
 
-  
+
 
       this.sockets.subscribe('lis_typing', function (res) {
         if(res.team_id) {
@@ -539,21 +542,32 @@ export default {
       this.loadConnectedGroup();
       this.getPrivateRequests();
     },
+
     getActiveTeamId() {
       if (!JwtService.getTeamIDAppWide()) {
-        // this.isLoading = true;
-        // setTimeout(() => {
-        //   this.isLoading = false;
-        //   openModalRoute(this, "manage_team_redirect");
-        // }, 2000);
         this.redirection = true;
       } else {
         this.active_team_id = JwtService.getTeamIDAppWide();
         this.loadPageData();
       }
     },
+
     setChatTab(type) {
       this.chatTab = type;
+    },
+    async sendMsg(e) {
+      console.log(e);
+      if (this.msg_text && this.msg_text.length > 0) {
+        if (this.chatheadopen.label == 'Connected Team') {
+          await this.sendConnectedTeamMessage();
+        } else {
+          if(this.chatheadopen && this.chatheadopen.team_private_chat_id) {
+            await this.sendPrivateMessage();
+          } else {
+            await this.sendTeamMessage();
+          }
+        }
+      }
     },
     ifOnline(item) {
       if(item.label === 'Group chat') {
@@ -616,19 +630,6 @@ export default {
     processChatHistoryResponse(data) {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
 
-      // let singleChat = map(data.single_chat, item => {
-      //   return {
-      //     label: 'Team member',
-      //     state: 'seen',
-      //     name: item.user?.full_name || 'user name',
-      //     logo: item.user?.avatar,
-      //     user_id: item.user.id,
-      //     other_mate_id: item.user_id,
-      //     typing_status: 0,
-      //     typing_text: '',
-      //     message: pick(item.last_message, messageKeys)
-      //   }
-      // });
 
       let privateChat = map(data.private_chat, item => {
         return {
@@ -649,26 +650,7 @@ export default {
         }
       });
 
-      // let lastGroupMsg = data.last_group_msg ? [{
-      //   label: 'Group chat',
-      //   state: 'Typing...',
-      //   name: data.last_group_msg.team.name,
-      //   logo: data.last_group_msg.team.logo,
-      //   typing_status: 0,
-      //   typing_text: '',
-      //   message: pick(data.last_group_msg, messageKeys)
-      // }] : []
-      //
-      // let connectedMsg = data.connected_team_msgs.map(item => {
-      //   item.label = 'Connected Team';
-      //   item.typing_status = 0;
-      //   item.typing_text = '';
-      //   item.message = item.id && item.last_message ? item.last_message : {};
-      //   item.is_friend = 1;
-      //   return item;
-      // });
 
-      // return [...lastGroupMsg, ...connectedMsg, ...singleChat, ...privateChat];
       return [...privateChat];
     },
     getPrivateChatUserName(item) {
@@ -724,19 +706,6 @@ export default {
           this.$router.replace({ query });
         }
 
-        // if (data && data.connected_teams) {
-        //   this.connectedTeam = map(data.connected_teams, item => {
-        //     return {
-        //       label: 'Connected Team',
-        //       state: 'seen',
-        //       name: item.team_name ? item.team_name : 'user name',
-        //       team_id: item.team_id,
-        //       chat_id: null,
-        //       // message: { chat_id: null }
-        //     }
-        //   });
-        // }
-        // this.connectedChat = this.processTeamChatResponse(data);
       } catch (e) {
         console.error(e);
       }
@@ -755,7 +724,6 @@ export default {
         item.typing_status = 0;
         item.typing_text = '';
         item.logo = this.getPrivateChatLogo(item);
-        // item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
         return item;
       });
     },
@@ -770,7 +738,7 @@ export default {
     async loadIndividualChatHistory(payload) {
       try {
         let url = 'individual-chat-history';
-        if(payload.team_chat_id) {
+        if(payload.from_team_id) {
           url = 'connected-team-chat-history';
         }
         if(this.chatheadopen.team_private_chat_id) {
@@ -800,7 +768,7 @@ export default {
           to_team_id: 1
         };
         let {data} = await ApiService.post('/v1/connected-team-chat-history', payload).then(res => res.data);
-        this.chats = data.map(item => {
+        this.connectedTeamChats = data.map(item => {
           item.senderId = item.sender?.id
           return item;
         });
@@ -817,7 +785,8 @@ export default {
         type: chat_id ? 'single' : 'team',
         chat_id,
         team_id,
-        user_id
+        user_id,
+        from_team_id,
       };
 
       this.conversationTitle = '';
@@ -859,17 +828,10 @@ export default {
       this.chatheadopen = item;
       this.chatheadopen.message.seen = 1;
 
+
       this.processChatConnectedImage();
-
+      this.chats = [];
       this.chats = await this.loadIndividualChatHistory(payload);
-      // this.chats = this.chats.reverse();
-
-      // if(!isAnyKeyValueFalse) {
-      //   this.conversationTitle = name;
-      //   this.chats = await this.loadIndividualChatHistory(payload);
-      // }else {
-      //   this.chats = [];
-      // }
     },
     async getConnectedTeamChatHistory(item) {
       this.fromChatItem = 'connected-team';
@@ -898,7 +860,7 @@ export default {
       if (data && data.message_history) {
         data = data.message_history;
       }
-      this.chats = data.map(item => {
+      this.connectedTeamChats = data.map(item => {
         item.senderId = item.sender?.id
         return item;
       });
@@ -944,9 +906,11 @@ export default {
     messageCreatedAt(time) {
       return format(time);
     },
+
     backToTabList() {
       this.conversationTitle = '';
     },
+
     createConversations() {
       // console.log('create conv clicked');
       // var member_1 = Math.floor(Math.random() * 6) + 1;
@@ -990,20 +954,7 @@ export default {
 
       this.$store.dispatch('clearUnreadMsg', payload);
     },
-    async sendMsg(e) {
-      console.log(e);
-      if (this.msg_text && this.msg_text.length > 0) {
-        if (this.chatheadopen.label == 'Connected Team') {
-          await this.sendConnectedTeamMessage();
-        } else {
-          if(this.chatheadopen && this.chatheadopen.team_private_chat_id) {
-            await this.sendPrivateMessage();
-          } else {
-            await this.sendTeamMessage();
-          }
-        }
-      }
-    },
+
     async sendTeamMessage() {
       let url = '';
       let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -1044,7 +995,6 @@ export default {
         payload.sender = loggedUser;
         payload.chat_id = this.chat_id;
         payload.to = this.one_to_one_user.toString();
-        // this.chats.unshift(payload);
         this.$socket.emit('send_message', payload);
 
         this.chatheadopen.message.body = this.msg_text;
@@ -1053,7 +1003,6 @@ export default {
         this.chatheadopen.message.senderInfo = loggedUser;
         this.chatheadopen.message.sender = loggedUser;
       } else {
-        // this.chats.unshift(payload);
         this.chatheadopen.message.body = this.msg_text;
         this.chatheadopen.message.created_at = new Date();
         this.chatheadopen.message.senderId = loggedUser.id.toString();
@@ -1070,7 +1019,6 @@ export default {
         };
       }
 
-      // this.findOneAndPushToFirst();
 
       this.chats.push(payload);
       payload.sender = loggedUser.id.toString();
@@ -1127,7 +1075,6 @@ export default {
       payload.target_opened_chat = payload.to_team_id;
       this.$socket.emit('send_message_in_group', payload);
 
-      // this.findOneAndPushToFirst();
 
       this.chats.push(payload);
       teamMembers.splice(selfIndex, 1);
@@ -1160,15 +1107,15 @@ export default {
         private_team_chat_id: this.chatheadopen.private_team_chat_id
       }
       payload.sender = loggedUser.id.toString();
-      // this.chats.unshift(payload);
-      this.chats.push(payload);
+
+      this.connectedTeamChats.push(payload);
+
       this.chatheadopen.message.body = this.msg_text;
       this.chatheadopen.message.created_at = new Date();
       this.chatheadopen.message.senderId = loggedUser.id.toString();
       this.chatheadopen.message.senderInfo = loggedUser;
       this.$socket.emit('send_message', payload);
 
-      // this.findOneAndPushToFirst();
 
       payload.from_team_id = this.activeTeam;
       if(parseInt(this.activeTeam) == parseInt(this.chatheadopen.from_team_id)) {
