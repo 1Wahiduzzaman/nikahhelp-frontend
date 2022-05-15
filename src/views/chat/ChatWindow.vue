@@ -285,7 +285,6 @@ import ConnectedTeamChat from "../../components/chat/ConnectedTeamChat";
 import PrivateRequestChat from "../../components/chat/PrivateRequestChat";
 import Notification from "@/common/notification.js";
 import TeamOffRedirection from "../../components/redirection/TeamOffRedirection";
-import ChatArea from './ChatArea';
 
 const messageKeys = ['id', 'user_id', 'chat_id', 'team_id', 'from_team_id', 'to_team_id', 'private_receiver_id', 'private_team_chat_id', 'body', 'seen', 'created_at'];
 
@@ -350,7 +349,6 @@ export default {
     PrivateRequestChat,
     ConnectedTeamChat,
     ChatListItem,
-    ChatArea,
   },
 
   watch: {
