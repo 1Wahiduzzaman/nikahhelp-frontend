@@ -91,7 +91,7 @@
                          v-for="item in connectedTeam"
                          :key="item.team_id"
                          :class="{'selected-chat': chatheadopen == item}"
-                         @click="getIndividualChat(item, item)"
+                         @click="getConnectedTeamChatHistory(item)"
                     >
                       <ConnectedTeamChat
                           :item="item"
@@ -183,7 +183,7 @@
               <div class="chat-area">
                 <div class="position-relative">
                   <div class="chat-messages py-4 pr-1" id="chat-messages">
-                    <div v-for="(item, cIndex) in chats" :key="item.id" class="position-relative" :id="chats.length === cIndex + 1 ? 'messagesid' : ''">
+                    <div v-for="(item, cIndex) in chatFilter" :key="item.id" class="position-relative" :id="chats.length === cIndex + 1 ? 'messagesid' : ''">
                       <div
                            class="chat-message-right pb-4 position-relative"
                            :class="{'conv-mb': chats.length !== cIndex + 1}"
@@ -370,19 +370,15 @@ export default {
       }
     },
 
-    chats: function(val) {
-      // console.log(val);
-      setTimeout(() => {
-        const messages = document.getElementById('chat-messages');
-        const messagesid = document.getElementById('messagesid');
-        messages.scrollTop = messagesid.offsetTop - 10;
-      });
-    },
+    chats: 'scrollBottom',
 
     chatTab(value) {
         console.log(value);
             this.chatheadopen = null;
-    }
+            this.loadPageData();
+    },
+
+    connectedTeamChats: 'scrollBottom',
   },
 
   computed: {
@@ -455,6 +451,10 @@ export default {
       } else {
         return this.one_to_one_user ? 'Private' : this.conversationTitle + ' Group'
       }
+    },
+
+    chatFilter() {
+      return this.chatTab === 'Connected' ? this.connectedTeamChats : this.chats;
     }
   },
   created() {
@@ -858,10 +858,12 @@ export default {
       if (data && data.message_history) {
         data = data.message_history;
       }
+      this.connectedTeamChats = [];
       this.connectedTeamChats = data.map(item => {
         item.senderId = item.sender?.id
         return item;
       });
+      this.scrollBottom();
     },
     processChatConnectedImage() {
       this.chatListedImage = [];
@@ -1074,7 +1076,7 @@ export default {
       this.$socket.emit('send_message_in_group', payload);
 
 
-      this.chats.push(payload);
+      this.connectedTeamChats.push(payload);
       teamMembers.splice(selfIndex, 1);
       this.msg_text = null;
       this.notifyKeyboardStatus();
@@ -1259,6 +1261,14 @@ export default {
       } else {
         return this.getImage();
       }
+    },
+
+    scrollBottom() {
+      setTimeout(() => {
+        const messages = document.getElementById('chat-messages');
+        const messagesid = document.getElementById('messagesid');
+        messages.scrollTop = messagesid.offsetTop - 10;
+      });
     }
   }
 };
