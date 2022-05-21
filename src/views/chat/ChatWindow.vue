@@ -309,11 +309,11 @@ export default {
       this.chats = [...this.chats, recieveMessage];
 
       if (this.chatTab === 'Connected') {
-        this.connectedTeamChats = [...this.ConnectedTeamChat, recieveMessage];
+        this.connectedTeamChats = [...this.connectedTeamChats, recieveMessage];
       }
     },
 
-      
+
 
   },
 
