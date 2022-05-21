@@ -307,7 +307,14 @@ export default {
         body: data.body,
       };
       this.chats = [...this.chats, recieveMessage];
-    }
+
+      if (this.chatTab === 'Connected') {
+        this.connectedTeamChats = [...this.ConnectedTeamChat, recieveMessage];
+      }
+    },
+
+      
+
   },
 
   data() {
