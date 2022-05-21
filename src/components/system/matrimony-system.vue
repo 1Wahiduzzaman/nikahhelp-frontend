@@ -40,6 +40,7 @@ export default {
         this.$store.state.chat.chats = this.processChatHistoryResponse(data);
       } catch (e) {
         console.error(e);
+        this.$store.dispatch('logout');
       }
     },
     processChatHistoryResponse(data) {
@@ -106,6 +107,7 @@ export default {
         this.processTeamChatResponse(data);
       } catch (e) {
         console.error(e);
+        this.$store.dispatch('logout');
       }
     },
     processTeamChatResponse(data) {
