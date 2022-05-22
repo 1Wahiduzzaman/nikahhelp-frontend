@@ -71,7 +71,7 @@ export default {
   data: () => ({
       selectedItem: 1,
       items: [
-        { text: 'All type', icon: 'mdi-clock', link: '/admin/active_users' },
+        { text: 'All type', icon: 'mdi-clock', link: '/admin/matrimony-users' },
         { text: 'Verified', icon: 'mdi-clock', link: '/admin/approve_documents?type=verified' },
         { text: 'Rejected', icon: 'mdi-account', link: '/admin/approve_documents?type=rejected' },
         { text: 'Pending', icon: 'mdi-flag', link: '/admin/approve_documents?type=pending' },

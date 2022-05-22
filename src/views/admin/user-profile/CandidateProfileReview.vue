@@ -11,17 +11,25 @@
             User status: <strong>{{  getUserStatus(userStatus) }}</strong>
           </div>
         </v-col>
+        <v-col></v-col>
+        <v-col>
+          <v-btn @click="getBackToUserList"> 
+            <v-icon> arrow_back_ios </v-icon>
+          Back to user list</v-btn>
+        </v-col>
       </v-row>
       <v-row>
         <v-col class="mb-4">
           <v-btn
             :loading="loading"
-            class="mr-2"
+            :disabled="userStatus === 3"
+            class="mr-2 "
+            :class="statusBtnColor"
             @click="updateUserVerifyOrReject('verified')"
-            style="background-color: rgb(42 205 100); color: #fff"
+            :color="userStatus < 3 && 'primary'"
             small
           >
-            Approve
+            {{ statusMessage }}
           </v-btn>
           <v-btn
             v-if="userStatus !=4 && userStatus !=3"
@@ -967,7 +975,12 @@ export default {
   computed: {
     userStatus() {
       return this.candidateData?.user?.status
-    }
+    },
+
+    statusMessage() {
+      return this.userStatus === 3 ? 'Verified' : 'Approve';
+    },
+
   },
   props: {
     candidateDetails: {
@@ -1112,6 +1125,10 @@ export default {
         })
         .catch((error) => {});
     },
+
+    getBackToUserList() {
+      this.$router.push({name: 'Users'});
+    }
   },
   
 };

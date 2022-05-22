@@ -191,8 +191,9 @@ const AppRouter = new VueRouter({
 
             },
             {
-                path: "active_users",
+                path: "matrimony-users",
                 component: UsersList,
+                name: "Users"
 
             },
             {
@@ -487,7 +488,8 @@ const AppRouter = new VueRouter({
             component: UserAgreement,
         },
     ]
-})
+});
+
 
 export default AppRouter;
 window.AppRouter = AppRouter;
