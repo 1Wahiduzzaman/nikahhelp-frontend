@@ -134,24 +134,32 @@
               }}
             </td>
 
+            <td class="status">
+              <!-- {{ item['status'] === 3 ? 'Verified' : item['status'] !== '4' ? 'Pending' : 'Rejected' }} -->
+              {{ getStatus(item)}}
+            </td>
+
             <td class="email">
               {{ item["email"] }}
             </td>
-            <td class="publisher">
+
+            <!-- <td class="publisher">
               <router-link
                 v-if="item['status'] > 1"
                 :to="'/admin/user_candidate_details/' + item.id"
                 >{{ item["status"] > 1 ? "Yes" : "No" }}
               </router-link>
               <span v-else>{{ item["status"] > 1 ? "Yes" : "No" }}</span>
-            </td>
+            </td> -->
+<!-- 
             <td class="publisher">
               <a
                 :href="'https://www.ncbi.nlm.nih.gov/pubmed/' + item.pmid"
                 target="_blank"
                 >Yes</a
               >
-            </td>
+            </td> -->
+
             <td class="Actions">
               <div>
                 <router-link
@@ -170,12 +178,12 @@
                     view
                   </v-btn>
                 </router-link>
-                <v-btn
+               <!--  <v-btn
                   style="background-color: rgb(42 205 100); color: #fff"
                   small
                 >
                   Edit
-                </v-btn>
+                </v-btn> -->
                 <!-- <v-btn
                   @click="updateUserVerifyOrReject(item)"
                   style="background-color: rgb(61 185 156); color: #fff"
@@ -218,12 +226,14 @@ export default {
         { text: "Created", value: "calories" },
         { text: "Name", value: "fat" },
         { text: "Type", value: "carbs" },
-        { text: "Form", value: "carbs" },
-        { text: "Email", value: "email" },
-        { text: "Documents", value: "protein" },
-        { text: "Images", value: "protein" },
+        { text: "Profile", value: "carbs" },
+        { text: "Status", value: "complete" },
 
-        { text: "actions", value: "actions", sortable: false, align: "start" },
+        { text: "Email", value: "email" },
+        // { text: "Documents", value: "protein" },
+        // { text: "Images", value: "protein" },
+
+        { text: "Actions", value: "actions", sortable: false, align: "start" },
       ],
       items: [],
       totalNumberOfItems: 0,
@@ -326,11 +336,25 @@ export default {
           this.loading = false;
         });
     },
-  },
-};
+
+    getStatus(item) {
+        const status = {
+          0: 'Deleted',
+          1:'Pending', 
+          2: 'Pending',
+          3: 'Verified',
+          4: 'Rejected',
+          9: 'Suspended',
+        };
+
+        return status[item.status];
+      }
+}
+}
 </script>
 
-<style  lang="scss" >
+<style  lang="scss">
+
 .active-user-container {
   display: flex;
   flex-direction: column;
