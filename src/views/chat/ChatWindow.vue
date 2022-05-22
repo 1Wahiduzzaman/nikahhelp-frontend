@@ -24,7 +24,7 @@
                                     </g>
                                   </g>
                                 </svg>
-                                <p class="category-name">Current Team</p>
+                                <p class="category-name">My Team</p>
                               </a>
                             </div>
                           </a>
@@ -43,7 +43,7 @@
                               </a>
                             </div>
                           </a>
-                          <a class="nav-link mt-2" :class="{'active': chatTab == 'Request'}">
+                          <!-- <a class="nav-link mt-2" :class="{'active': chatTab == 'Request'}">
                             <a-dropdown>
                               <a class="ant-dropdown-link position-relative" @click="e => e.preventDefault()">
                                 <a-icon type="more" class="fs-30 font-weight-bolder br-50 bg-c9 color-primary"/>
@@ -62,7 +62,7 @@
                                 </a-menu-item>
                               </a-menu>
                             </a-dropdown>
-                          </a>
+                          </a> -->
                       </div>
                   </nav>
               </div>
@@ -182,8 +182,11 @@
               </div>
               <div class="chat-area">
                 <div class="position-relative">
-                  <div class="chat-messages py-4 pr-1" id="chat-messages">
-                    <div v-for="(item, cIndex) in chatFilter" :key="item.id" class="position-relative" :id="chats.length === cIndex + 1 ? 'messagesid' : ''">
+                  <div class="chat-messages py-4 pr-1" ref="chatMessages"   id="chat-messages">
+                    <div v-for="(item, cIndex) in chatFilter" 
+                          :key="item.id" 
+                          class="position-relative"
+                          :id="chatFilter.length === cIndex + 1 ? 'messagesid' : ''">
                       <div
                            class="chat-message-right pb-4 position-relative"
                            :class="{'conv-mb': chats.length !== cIndex + 1}"
@@ -292,12 +295,12 @@ export default {
   name: 'ChatWindow',
 
   sockets: {
-    connect: function () {
-      console.log('socket connected')
+    connect() {
     },
-    ping: function (data) {
-      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+
+    ping(data) {
     },
+
     receive_message(data) {
       console.log(data);
       const recieveMessage = {
@@ -312,9 +315,6 @@ export default {
         this.connectedTeamChats = [...this.connectedTeamChats, recieveMessage];
       }
     },
-
-
-
   },
 
   data() {
@@ -359,25 +359,7 @@ export default {
   },
 
   watch: {
-    scrollFlag(newValue, oldValue) {
-      if (newValue) {
-        console.log('scroll down needed now');
-
-        var element = document.getElementById("chat_box");
-        let height = (element.scrollHeight - element.offsetHeight); // this isn't perfect
-        let offset = (element.offsetHeight - element.clientHeight); // and does this fix it? seems to...
-        let scrollMax = height + offset;
-
-        element.scrollTop = scrollMax;
-
-        console.log(element.scrollHeight)
-
-
-        this.$store.dispatch('setScrollDownStatus', false);
-      }
-    },
-
-    chats: 'scrollBottom',
+    chatFilter: 'scrollBottom',
 
     chatTab(value) {
         console.log(value);
@@ -385,22 +367,20 @@ export default {
             this.loadPageData();
     },
 
-    connectedTeamChats: 'scrollBottom',
   },
 
   computed: {
-    scrollFlag: function () {
-      return this.$store.state.chat.scrolldown_msg;
-    },
     privateRequested() {
       if(this.teamMembers && this.teamMembers.length > 0) {
         return this.privateRequests.filter(item => item.is_friend == 0 && this.teamMembers.includes(item.receiver.toString()));
       }
       return [];
     },
+
     totalUnreadCount: function () {
       return this.$store.state.chat.unread_records.length;
     },
+
     teamUnreadCount: function () {
       var count = 0;
       for (var i = 0; i < this.$store.state.chat.unread_records.length; i++) {
@@ -410,6 +390,7 @@ export default {
       }
       return count;
     },
+
     connectedUnreadCount: function () {
       var count = 0;
       for (var i = 0; i < this.$store.state.chat.unread_records.length; i++) {
@@ -419,6 +400,7 @@ export default {
       }
       return count;
     },
+
     connectedConversations: function () {
       var connectedConversations = [];
       if (this.conv_search_key == null || this.conv_search_key == "") {
@@ -442,6 +424,7 @@ export default {
         return connectedConversations;
       }
     },
+
     getAuthUserId() {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       if (loggedUser) {
@@ -464,12 +447,22 @@ export default {
       return this.chatTab === 'Connected' ? this.connectedTeamChats : this.chats;
     }
   },
+
+  // directives: {
+  //     scrollBottom: {
+  //       inserted(el) {
+
+  //       }
+  //     }
+  // },
+
   created() {
     this.getActiveTeamId();
     if(this.$route.query.connection_id) {
       this.setChatTab('Connected');
     }
   },
+
   mounted() {
     let loggedUser = JSON.parse(localStorage.getItem('user'));
     if (loggedUser) {
@@ -1271,11 +1264,11 @@ export default {
     },
 
     scrollBottom() {
-      setTimeout(() => {
-        const messages = document.getElementById('chat-messages');
+        setTimeout(() => {
+             const messages = document.getElementById('chat-messages');
         const messagesid = document.getElementById('messagesid');
         messages.scrollTop = messagesid.offsetTop - 10;
-      });
+        })
     }
   }
 };
@@ -1441,12 +1434,12 @@ export default {
       display: flex;
       padding-bottom: 4px;
       padding-top: 2px;
-      margin: 0 10px 20px;
-      justify-content: space-between;
+      margin: 0 2rem;
+      justify-content: space-around;
       border-bottom: 2px solid #f2f2f2;
-      border-top: 2px solid #f2f2f2;
       @media (max-width: 991px) {
         padding-bottom: 10px;
+        margin: 0 6rem;
       }
 
       nav {
@@ -1649,6 +1642,7 @@ export default {
         padding-top: 15px;
         padding-bottom: 10px;
         border-bottom: 1px solid #ececec;
+        margin: 0 2rem;
 
         .top {
           display: flex;
@@ -2405,20 +2399,22 @@ export default {
 }
 
 .chat-message-left {
-  margin-right: auto
+  margin-right: auto;
+  width: 50%;
 }
 
 .chat-message-right {
   flex-direction: row-reverse;
-  margin-left: auto
+  margin-left: auto;
+  width: 50%;
 }
 .msg-right-created-at {
   bottom: -4px;
-  right: 6px;
+  right: 3rem;
 }
 .msg-left-created-at {
   bottom: -4px;
-  left: 6px;
+  left: 3rem;
 }
 .flex-grow-0 {
   flex-grow: 0!important;
