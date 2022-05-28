@@ -239,7 +239,7 @@
 <!--        </div>-->
 <!--      </div>-->
 
-      <h3
+      < h3
         v-if="!showMemberTypeForm && !showMemberFormType"
         class="mt-6 text-header-black font-weight-bolder text-center"
       >
