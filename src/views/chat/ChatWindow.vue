@@ -1434,7 +1434,7 @@ export default {
       display: flex;
       padding-bottom: 4px;
       padding-top: 2px;
-      margin: 0 2rem;
+      margin: 0 0rem;
       justify-content: space-around;
       border-bottom: 2px solid #f2f2f2;
       @media (max-width: 991px) {
@@ -1639,10 +1639,10 @@ export default {
       overflow-y: auto;
 
       .chat-item {
-        padding-top: 15px;
+        padding-top: 30px;
         padding-bottom: 10px;
         border-bottom: 1px solid #ececec;
-        margin: 0 2rem;
+        margin: 0 0rem;
 
         .top {
           display: flex;

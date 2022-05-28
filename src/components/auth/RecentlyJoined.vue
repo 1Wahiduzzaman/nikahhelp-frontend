@@ -26,7 +26,7 @@
               <!--							<div>{{ user.name }}</div>-->
               <div>{{  user.ethnicity ? user.ethnicity : 'N/A' }}, {{ user.religion ? user.religion : 'N/A' }}</div>
               <div>{{ user.study_level ? user.study_level : 'N/A' }}</div>
-              <!--							<div>{{ user.location_name }}</div>-->
+              <!-- <div>{{ user.location_name }}</div>-->
               <!-- <div>{{ getAge(user.age) }}</div>
               <div>{{ user.religion }}</div>
               <div>{{ user.ethinicity }}</div> -->
@@ -132,6 +132,10 @@ export default {
 			padding: 5px;
 			flex: 1 1 100%;
 			color: white;
+			 width:200px;
+			 white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 	}
 
