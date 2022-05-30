@@ -1321,7 +1321,7 @@ export default {
 
 .chat-wrapper {
   margin: auto;
-  padding: 20px;
+  padding: 20px 20px 20px 0px;
   width: 100%;
   border-radius: 10px;
   background-color: #ffffff;
@@ -1434,12 +1434,12 @@ export default {
       display: flex;
       padding-bottom: 4px;
       padding-top: 2px;
-      margin: 0 0rem;
-      justify-content: space-around;
+      //margin: 0 0rem;
+      //justify-content: space-around;
       border-bottom: 2px solid #f2f2f2;
       @media (max-width: 991px) {
         padding-bottom: 10px;
-        margin: 0 6rem;
+        //margin: 0 6rem;
       }
 
       nav {
@@ -1449,7 +1449,7 @@ export default {
         .nav-tabs {
           border: 0;
           display: flex;
-          justify-content: space-between;
+          //justify-content: space-between;
           //align-items: center;
           .nav-link {
             margin-bottom: -2px;
@@ -1639,10 +1639,9 @@ export default {
       overflow-y: auto;
 
       .chat-item {
-        padding-top: 30px;
-        padding-bottom: 10px;
+        padding: 10px 0px 0px 8px;
         border-bottom: 1px solid #ececec;
-        margin: 0 0rem;
+        margin: 5px 0px 0px 0px;
 
         .top {
           display: flex;
@@ -2377,7 +2376,7 @@ export default {
 }
 .chat-item:hover {
   background: #efefef;
-  border-radius: 20px;
+  border-radius: 8px;
 }
 
 .chat-online {
@@ -2581,7 +2580,7 @@ export default {
 }
 .selected-chat {
   background-color: #efefef;
-  border-radius: 20px;
+  border-radius: 8px;
   padding-left: 4px;
 }
 .btn-mobile-back {
