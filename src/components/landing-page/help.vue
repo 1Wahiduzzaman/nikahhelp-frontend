@@ -33,12 +33,12 @@
       <!-- FAQ -->
 
       <section class="faq-section">
-        <div class="container">
+        <div class="container1">
           <div class="row">
             <!-- ***** FAQ Start ***** -->
             <div class="col-sm-12">
               <div class="faq-title pb-3">
-                <h2>FAQ</h2>
+                <h3>FAQ</h3>
               </div>
             </div>
             <div class="col-sm-12">
@@ -265,10 +265,8 @@
             </div>
           </div>
         </div>
-      </section>
-
-
-      <h5>Still need help? Can't find what you're looking for?</h5>
+        
+        <div class="container2"><h5>Still need help? Can't find what you're looking for?</h5>
       <br />
 
       <h4>Contact the MatrimonyAssist team</h4>
@@ -277,12 +275,13 @@
         as you can. We aim to get back to you within two working days. However,
         at busy times this may take a little longer.
       </p>
-      <br />
+      </div>
+  
+      </section>
 
       <!-- Contact form  -->
-      <h4>SEND US AN EMAIL</h4>
-
-      <div class="container">
+      <div class="container1">
+        <h4>SEND US AN EMAIL</h4>
         <form action="">
           <label for="query">What is your enquiry regarding?</label>
           <select id="query" name="query">
@@ -464,16 +463,21 @@ input[type="submit"]:hover {
 }
 
 /* Add a background color and some padding around the form */
-.container {
+.container1 {
   border-radius: 5px;
-  background-color: #f2f2f2;
+  background-color: #f1f1f1;
   padding: 20px;
 }
 
+.container2 {
+  border-radius: 5px;
+  background-color: #ffffff;
+  padding: 20px;
+}
 // FAQ CSS
 
 .faq-section {
-  background: #fdfdfd;
+  //background: #f6f3f3;
   min-height: 85vh;
   padding: 5vh 0 0;
   width: 100%;
