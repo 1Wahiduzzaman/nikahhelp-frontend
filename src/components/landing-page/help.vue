@@ -38,7 +38,7 @@
             <!-- ***** FAQ Start ***** -->
             <div class="col-sm-12">
               <div class="faq-title pb-3">
-                <h3>FAQ</h3>
+                <h4>FAQ</h4>
               </div>
             </div>
             <div class="col-sm-12">
@@ -279,6 +279,7 @@
   
       </section>
 
+  
       <!-- Contact form  -->
       <div class="container1">
         <h4>SEND US AN EMAIL</h4>
