@@ -167,7 +167,7 @@ export default {
     },
   },
   beforeDestroy() {
-    this.$store.auth.state.errorMessage = null;
+    this.$store.state.auth.errorMessage = null;
   }
 };
 </script>
