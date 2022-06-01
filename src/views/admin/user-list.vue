@@ -120,17 +120,23 @@
               {{
                 item["account_type"] == 1 && item.candidate_info
                   ? item.candidate_info.data_input_status == 0
-                    ? "In-completed"
-                    : item.candidate_info.data_input_status > 5 && item.status==3
-                    ? "Fully Completed":
-                    item.candidate_info.data_input_status > 5 && (item.status==2|| item.status==1)?
-                    'Completed Without ID'
+                    ? "In-complete"
+                    : item.candidate_info.data_input_status > 5 &&
+                      item.status == 2
+                    ? "Fully Completed"
+                    : item.candidate_info.data_input_status > 5 &&
+                      item.status == 1
+                    ? "Completed Without ID"
                     : "Partially Completed"
                   : item["account_type"] == 2 && item.representative_info
                   ? item.representative_info.data_input_status == 0
-                    ? "In-completed"
-                    : item.representative_info.data_input_status > 2
-                    ? "Completed"
+                    ? "In-complete"
+                    : item.representative_info.data_input_status > 2 &&
+                      item.status == 2
+                    ? "Fully Completed"
+                    : item.representative_info.data_input_status > 2 &&
+                      item.status == 1
+                    ? "Completed Without ID"
                     : "Partially Completed"
                   : "In-completed"
               }}

@@ -259,9 +259,16 @@ export default {
     },
     async updateUserVerifyOrReject() {
       let user = JSON.parse(localStorage.getItem("user"));
+      const isComplete = Object.values({
+        ver_city,
+        ver_country,
+        ver_document_type,
+        ver_document_frontside,
+        ver_document_backside,
+      }).every((x) => x !== undefined && x !== null && x !== "");
       const data = {
         id: user.id,
-        status: "completed",
+        status: isComplete ? "completed" : "InComplete",
       };
       await this.$store
         .dispatch("updateUserVerifyOrReject", data)
