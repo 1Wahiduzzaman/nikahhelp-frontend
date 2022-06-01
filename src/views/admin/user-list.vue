@@ -121,8 +121,10 @@
                 item["account_type"] == 1 && item.candidate_info
                   ? item.candidate_info.data_input_status == 0
                     ? "In-completed"
-                    : item.candidate_info.data_input_status > 5
-                    ? "Completed"
+                    : item.candidate_info.data_input_status > 5 && item.status==3
+                    ? "Fully Completed":
+                    item.candidate_info.data_input_status > 5 && (item.status==2|| item.status==1)?
+                    'Completed Without ID'
                     : "Partially Completed"
                   : item["account_type"] == 2 && item.representative_info
                   ? item.representative_info.data_input_status == 0
@@ -136,7 +138,7 @@
 
             <td class="status">
               <!-- {{ item['status'] === 3 ? 'Verified' : item['status'] !== '4' ? 'Pending' : 'Rejected' }} -->
-              {{ getStatus(item)}}
+              {{ getStatus(item) }}
             </td>
 
             <td class="email">
@@ -151,7 +153,7 @@
               </router-link>
               <span v-else>{{ item["status"] > 1 ? "Yes" : "No" }}</span>
             </td> -->
-<!-- 
+            <!-- 
             <td class="publisher">
               <a
                 :href="'https://www.ncbi.nlm.nih.gov/pubmed/' + item.pmid"
@@ -164,7 +166,12 @@
               <div>
                 <router-link
                   v-if="item.account_type === 1"
-                  :to="'/admin/user_candidate_details/' + item.id + '?type=' +item.account_type"
+                  :to="
+                    '/admin/user_candidate_details/' +
+                    item.id +
+                    '?type=' +
+                    item.account_type
+                  "
                 >
                   <v-btn style="background-color: #522e8e; color: #fff" small>
                     view
@@ -172,13 +179,18 @@
                 </router-link>
                 <router-link
                   v-else
-                  :to="'/admin/user_candidate_details/' + item.id + '?type=' +item.account_type"
+                  :to="
+                    '/admin/user_candidate_details/' +
+                    item.id +
+                    '?type=' +
+                    item.account_type
+                  "
                 >
                   <v-btn style="background-color: #522e8e; color: #fff" small>
                     view
                   </v-btn>
                 </router-link>
-               <!--  <v-btn
+                <!--  <v-btn
                   style="background-color: rgb(42 205 100); color: #fff"
                   small
                 >
@@ -338,23 +350,22 @@ export default {
     },
 
     getStatus(item) {
-        const status = {
-          0: 'Deleted',
-          1:'Pending', 
-          2: 'Pending',
-          3: 'Verified',
-          4: 'Rejected',
-          9: 'Suspended',
-        };
+      const status = {
+        0: "Deleted",
+        1: "Pending",
+        2: "Pending",
+        3: "Verified",
+        4: "Rejected",
+        9: "Suspended",
+      };
 
-        return status[item.status];
-      }
-}
-}
+      return status[item.status];
+    },
+  },
+};
 </script>
 
 <style  lang="scss">
-
 .active-user-container {
   display: flex;
   flex-direction: column;
