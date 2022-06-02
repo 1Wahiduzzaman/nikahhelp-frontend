@@ -101,7 +101,11 @@
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
-          :class="{'disabled': !enabledNextBtn, 'next-btn-pos': current !== 0, 'first-next-btn-pos':  current === 0 }"
+          :class="{
+            disabled: !enabledNextBtn,
+            'next-btn-pos': current !== 0,
+            'first-next-btn-pos': current === 0,
+          }"
           style="float: right"
           class="mt-3"
           @click="next"
@@ -112,9 +116,9 @@
         <a-button
           v-if="current > 0"
           shape="round"
-          style="float: right;"
+          style="float: right"
           class="mt-3"
-          :class="{'prev-btn': current !== 3, 'last-prev-btn': current === 3}"
+          :class="{ 'prev-btn': current !== 3, 'last-prev-btn': current === 3 }"
           @click="prev"
         >
           Previous
@@ -123,15 +127,18 @@
         <a-button
           shape="round"
           type="primary"
-          style="float: left;"
-          :class="{'first-save-btn': current === 0, 'save-btn': current !== 0}"
+          style="float: left"
+          :class="{
+            'first-save-btn': current === 0,
+            'save-btn': current !== 0,
+          }"
           class="mt-3"
           @click="saveExit"
         >
           Save & Back
         </a-button>
       </div>
-        <br><br><br><br><br>
+      <br /><br /><br /><br /><br />
     </div>
   </div>
 </template>
@@ -220,6 +227,23 @@ export default {
     updateFixedStatus(next) {
       this.fixedStatus.headerIsFixed = next;
     },
+    async updateUserVerifyOrReject() {
+      let user = JSON.parse(localStorage.getItem("user"));
+      if (user.status == "3") {
+        const data = {
+          id: user.id,
+          status: "InComplete",
+        };
+        await this.$store
+          .dispatch("updateUserVerifyOrReject", data)
+          .then((data) => {
+            user.status = "2";
+            localStorage.setItem("user", JSON.stringify(user));
+            this.$emit("valueChange", true);
+          })
+          .catch((error) => {});
+      }
+    },
     onDataChange(e) {
       switch (e.current) {
         case 0:
@@ -243,6 +267,7 @@ export default {
           break;
       }
       this.checkExistData();
+      this.updateUserVerifyOrReject();
     },
     getCandidateInitialInfo: async function () {
       this.isLoading = true;
@@ -266,7 +291,7 @@ export default {
           hobbies: hobbies,
           foods: foods,
           thankfulThings: thankfulThings,
-           improveMyselfThings:improveMyselfThings,
+          improveMyselfThings: improveMyselfThings,
           verification: {
             ...response.data.data.validation_info.verification,
             cities: [],
@@ -384,12 +409,9 @@ export default {
                   return parseInt(v, 10);
                 }
               ),
-               pre_ethnicities: !response.data.data.user.preference
-              .pre_ethnicities
+            pre_ethnicities: !response.data.data.user.preference.pre_ethnicities
               ? undefined
-              : response.data.data.user.preference.pre_ethnicities.split(
-                  ","
-                ),
+              : response.data.data.user.preference.pre_ethnicities.split(","),
             pre_preferred_divorcee:
               response.data.data.user.preference.pre_preferred_divorcee == 0
                 ? false
@@ -688,7 +710,7 @@ export default {
 
     nullToUndefined(object) {
       Object.keys(object).forEach(function (k) {
-        if (object[k] === null|| object[k] === 0) {
+        if (object[k] === null || object[k] === 0) {
           object[k] = undefined;
         }
       });
