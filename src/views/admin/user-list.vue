@@ -42,8 +42,16 @@
             label="Search"
             single-line
             hide-details
-            @blur="onSearch"
+            @keyup.enter="onSearch"
           ></v-text-field>
+          <v-btn
+            class="mr-2"
+            @click="onSearch"
+            style="background-color: rgb(42 205 100); color: #fff"
+            m
+          >
+            Search
+          </v-btn>
         </div>
       </div>
       <!-- <div class="bottom-header"></div> -->
@@ -287,7 +295,7 @@ export default {
       this.getPageiniationUsers(_payload);
     },
     paginate(e) {
-      if (!e || e.page == 1) {
+      if (!e) {
         return;
       }
 
@@ -363,6 +371,7 @@ export default {
         3: "Verified",
         4: "Rejected",
         9: "Suspended",
+        0: "Deleted",
       };
 
       return status[item.status];

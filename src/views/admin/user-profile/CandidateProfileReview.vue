@@ -5,49 +5,82 @@
       <v-row>
         <v-col>
           <div>
-            Name: <strong> {{ candidateData.first_name }} {{ candidateData.last_name }}</strong>
+            Name:
+            <strong>
+              {{ candidateData.first_name }}
+              {{ candidateData.last_name }}</strong
+            >
           </div>
           <div>
-            User status: <strong>{{  getUserStatus(userStatus) }}</strong>
+            User status: <strong>{{ getUserStatus(userStatus) }}</strong>
           </div>
         </v-col>
         <v-col></v-col>
         <v-col>
-          <v-btn @click="getBackToUserList"> 
+          <v-btn @click="getBackToUserList">
             <v-icon> arrow_back_ios </v-icon>
-          Back to user list</v-btn>
+            Back to user list</v-btn
+          >
         </v-col>
       </v-row>
       <v-row>
         <v-col class="mb-4">
           <v-btn
             :loading="loading"
-            :disabled="userStatus === 3"
-            class="mr-2 "
+            v-if="userStatus < 3 && dataInputStatus == 6"
+            class="mr-2"
             :class="statusBtnColor"
             @click="updateUserVerifyOrReject('verified')"
-            :color="userStatus < 3 && 'primary'"
             small
+            style="background-color: rgb(42 205 100); color: #fff"
           >
-            {{ statusMessage }}
+            Approve
           </v-btn>
           <v-btn
-            v-if="userStatus !=4 && userStatus !=3"
-            :loading="cancelLoading"
+            class="mr-2"
+            v-if="
+              userStatus == 4 ||
+              userStatus == 3 ||
+              userStatus == 9 ||
+              userStatus == 0
+            "
+            :loading="loadingReinstate"
+            @click="updateUserVerifyOrReject('completed')"
+            style="background-color: rgb(61 185 156); color: #fff"
+            small
+          >
+            Reinstate
+          </v-btn>
+          <v-btn
+            class="mr-2"
+            v-if="userStatus != 4 && userStatus != 3"
+            :loading="loadingReject"
             @click="openDialog(item)"
             style="background-color: rgb(191 20 67); color: #fff"
             small
           >
             Reject
           </v-btn>
+
           <v-btn
-            v-if="userStatus == 4 || userStatus == 3"
-            :loading="cancelLoading"
-            @click="updateUserVerifyOrReject('completed')"
-            style="background-color: rgb(61 185 156); color: #fff"
+            v-if="userStatus != 9"
+            class="mr-2"
+            :loading="loadingSuspend"
+            @click="updateUserVerifyOrReject('suspend')"
+            style="background-color: #6c757d; color: #fff"
             small
           >
-            Reinstate
+            Suspend
+          </v-btn>
+          <v-btn
+            v-if="userStatus != 0"
+            class="mr-2"
+            :loading="loadingDelete"
+            @click="updateUserVerifyOrReject('deleted')"
+            style="background-color: #f5222d; color: #fff"
+            small
+          >
+            Delete
           </v-btn>
         </v-col>
       </v-row>
@@ -486,9 +519,10 @@
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
                       >Nationality</span
                     >
-                    <span class="flex-60 px-2 d-inherit">:
+                    <span class="flex-60 px-2 d-inherit"
+                      >:
                       <span class="ml-3 text--secondary text-subtitle-1">
-                          {{ getNationality() }}
+                        {{ getNationality() }}
                       </span>
                     </span>
                   </li>
@@ -909,49 +943,48 @@
         </div>
       </div>
 
-
-      <div  v-if="documentInfo && documentInfo.candidate_info">
+      <div v-if="documentInfo && documentInfo.candidate_info">
         <div class="mt-5">
-            <div>
-              <h4>Document Preview</h4>
-              <div class="row">
-                <div class="col-12 col-md-6 mb-4">
-                  <div class="profile-img text-center">
-                    <img
-                      :src="
-                        documentInfo.image_server_base_url +
-                        '/' +
-                        documentInfo.candidate_info.ver_image_front
-                      "
-                      v-viewer
-                      class=""
-                      alt="img"
-                      height="250"
-                      width="200"
-                    />
-                    <p class="text-center">Font Side</p>
-                  </div>
+          <div>
+            <h4>Document Preview</h4>
+            <div class="row">
+              <div class="col-12 col-md-6 mb-4">
+                <div class="profile-img text-center">
+                  <img
+                    :src="
+                      documentInfo.image_server_base_url +
+                      '/' +
+                      documentInfo.candidate_info.ver_image_front
+                    "
+                    v-viewer
+                    class=""
+                    alt="img"
+                    height="250"
+                    width="200"
+                  />
+                  <p class="text-center">Font Side</p>
                 </div>
-                <div class="col-12 col-md-6 mb-4">
-                  <div class="profile-img text-center">
-                    <img
-                      v-viewer
-                      :src="
-                        documentInfo.image_server_base_url +
-                        '/' +
-                        documentInfo.candidate_info.ver_image_back
-                      "
-                      class=""
-                      alt="img"
-                      height="250"
-                      width="200"
-                    />
-                    <p class="text-center">Back Side</p>
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 mb-4">
+                <div class="profile-img text-center">
+                  <img
+                    v-viewer
+                    :src="
+                      documentInfo.image_server_base_url +
+                      '/' +
+                      documentInfo.candidate_info.ver_image_back
+                    "
+                    class=""
+                    alt="img"
+                    height="250"
+                    width="200"
+                  />
+                  <p class="text-center">Back Side</p>
                 </div>
               </div>
             </div>
           </div>
+        </div>
       </div>
     </fieldset>
     <NoteModal @save="save" @cancel="cancel" :dialog="dialog" />
@@ -970,33 +1003,47 @@ export default {
     RatingComponent,
     TableRow,
     FieldsetCard,
-    NoteModal
+    NoteModal,
   },
   computed: {
     userStatus() {
-      return this.candidateData?.user?.status
+      return this.candidateData?.user?.status;
+    },
+    dataInputStatus() {
+      return this.candidateData?.data_input_status;
     },
 
     statusMessage() {
-      return this.userStatus === 3 ? 'Verified' : 'Approve';
+      return this.userStatus === 3 ? "Verified" : "Approve";
     },
-
   },
   props: {
     candidateDetails: {
       type: Object,
     },
-    showAgreement:{
-      type:Boolean
-    }
+    showAgreement: {
+      type: Boolean,
+    },
   },
   data() {
     return {
       loading: false,
+      loadingDelete: false,
+      loadingReject: false,
+      loadingSuspend: false,
+      loadingReinstate: false,
       documentInfo: {},
       cancelLoading: false,
       dialog: false,
-      statusArr: [{key:1, name: 'InComplete'}, {key:2, name:'Complete'}, {key:3, name: 'Verified'}, {key: 4, name:'Rejected'},{key: 5, name:'Approved'}, {key: 9, name:'Suspended'},{ key: 0, name :'Deleted'}],
+      statusArr: [
+        { key: 1, name: "InComplete" },
+        { key: 2, name: "Complete" },
+        { key: 3, name: "Verified" },
+        { key: 4, name: "Rejected" },
+        { key: 5, name: "Approved" },
+        { key: 9, name: "Suspended" },
+        { key: 0, name: "Deleted" },
+      ],
       candidateData: {},
       heightTV: HEIGHTS,
     };
@@ -1006,18 +1053,18 @@ export default {
     this.getDocumentInfo();
   },
   methods: {
-    getNationality () {
+    getNationality() {
       let nationArr = [];
-      this.candidateData.preference?.preferred_nationality.map(i => {
-        nationArr.push(i.name)
-      })
-      return nationArr.join(', ')
+      this.candidateData.preference?.preferred_nationality.map((i) => {
+        nationArr.push(i.name);
+      });
+      return nationArr.join(", ");
     },
-    getReligion () {
-      return this.candidateData.preference?.pre_partner_religion.join(', ')
+    getReligion() {
+      return this.candidateData.preference?.pre_partner_religion.join(", ");
     },
-    getUserStatus (status) {
-      return this.statusArr.find(i => i.key == status).name
+    getUserStatus(status) {
+      return this.statusArr.find((i) => i.key == status).name;
     },
     cancel(e) {
       this.dialog = false;
@@ -1039,9 +1086,9 @@ export default {
         .dispatch("updateUserVerifyOrReject", data)
         .then((data) => {
           this.cancelLoading = false;
-          console.log(data, 'rejected')
-          if(data.status == 4) {
-            this.candidateData.user.status = 4
+          console.log(data, "rejected");
+          if (data.status == 4) {
+            this.candidateData.user.status = 4;
           }
           // this.items = this.items.filter(
           //   (item) => item.id !== this.selectedItem.id
@@ -1056,36 +1103,48 @@ export default {
         .catch((error) => {
           this.cancelLoading = false;
         });
-      },
+    },
     async updateUserVerifyOrReject(status) {
+      switch (status) {
+        case "completed":
+          this.loading = true;
+          break;
+        case "suspend":
+          this.loadingSuspend = true;
+          break;
+        case "deleted":
+          this.loadingDelete = true;
+          break;
+        case "completed":
+          this.loadingReinstate = true;
+          break;
+      }
       const data = {
         id: this.$route.params.user_id,
         status: status,
       };
-      this.loading = true;
       await this.$store
         .dispatch("updateUserVerifyOrReject", data)
         .then((data) => {
-          this.loading = false;
-          console.log(data, 'accepted')
-          if(data.status) {
-            this.candidateData.user.status = data.status
+          if (data.status) {
+            this.candidateData.user.status = data.status;
           }
-          // this.items = this.items.filter((item) => item.id !== user.id);
-          // let loggedUser = JSON.parse(localStorage.getItem("user"));
-          // if (loggedUser.id == user.id) {
-          //   loggedUser.status = status == "verified" ? "3" : "4";
-          //   localStorage.setItem("user", JSON.stringify(loggedUser));
-          // }
         })
-        .catch((error) => {
+        .catch((error) => {})
+        .finally(() => {
           this.loading = false;
+          this.loadingDelete = false;
+          this.loadingReject = false;
+          this.loadingSuspend = false;
+          this.loadingReinstate = false;
         });
     },
 
     async getCandidateData() {
       try {
-        const response = await ApiService.get(`/v1/admin/candidate-user-info/`+this.$route.params.user_id);
+        const response = await ApiService.get(
+          `/v1/admin/candidate-user-info/` + this.$route.params.user_id
+        );
         this.candidateData = {
           ...response.data.data,
           preference: {
@@ -1127,10 +1186,9 @@ export default {
     },
 
     getBackToUserList() {
-      this.$router.push({name: 'Users'});
-    }
+      this.$router.push({ name: "Users" });
+    },
   },
-  
 };
 </script>
 
