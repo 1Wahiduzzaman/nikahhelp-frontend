@@ -38,6 +38,21 @@
           </v-btn>
           <v-btn
             class="mr-2"
+            v-if="
+              userStatus == 4 ||
+              userStatus == 3 ||
+              userStatus == 9 ||
+              userStatus == 0
+            "
+            :loading="loadingReinstate"
+            @click="updateUserVerifyOrReject('completed')"
+            style="background-color: rgb(61 185 156); color: #fff"
+            small
+          >
+            Reinstate
+          </v-btn>
+          <v-btn
+            class="mr-2"
             v-if="userStatus != 4 && userStatus != 3"
             :loading="loadingReject"
             @click="openDialog(item)"
@@ -48,17 +63,7 @@
           </v-btn>
 
           <v-btn
-            class="mr-2"
-            v-if="userStatus == 4 || userStatus == 3 || userStatus == 9"
-            :loading="loadingReinstate"
-            @click="updateUserVerifyOrReject('completed')"
-            style="background-color: rgb(61 185 156); color: #fff"
-            small
-          >
-            Reinstate
-          </v-btn>
-          <v-btn
-            v-if="userStatus !== 9"
+            v-if="userStatus != 9"
             class="mr-2"
             :loading="loadingSuspend"
             @click="updateUserVerifyOrReject('suspend')"
@@ -68,7 +73,7 @@
             Suspend
           </v-btn>
           <v-btn
-            v-if="userStatus !== 0"
+            v-if="userStatus != 0"
             class="mr-2"
             :loading="loadingDelete"
             @click="updateUserVerifyOrReject('deleted')"

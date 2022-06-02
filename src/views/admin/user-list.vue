@@ -48,7 +48,7 @@
             class="mr-2"
             @click="onSearch"
             style="background-color: rgb(42 205 100); color: #fff"
-            small
+            m
           >
             Search
           </v-btn>
