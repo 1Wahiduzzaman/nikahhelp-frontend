@@ -834,6 +834,12 @@ export default {
       this.checkExistData();
     },
     async updateUserVerifyOrReject() {
+      const {
+        ver_country_id,
+        ver_document_type,
+        ver_image_back,
+        ver_image_front,
+      } = this.candidateDetails.verification;
       const isComplete = Object.values({
         ver_country_id,
         ver_document_type,
@@ -848,8 +854,8 @@ export default {
       await this.$store
         .dispatch("updateUserVerifyOrReject", data)
         .then((data) => {
-          user.status = "2";
-          localStorage.setItem("user", JSON.stringify(user));
+          (user.status = isComplete ? 2 : 1),
+            localStorage.setItem("user", JSON.stringify(user));
           this.$emit("valueChange", true);
         })
         .catch((error) => {});
