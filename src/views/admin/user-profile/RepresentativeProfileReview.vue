@@ -9,11 +9,15 @@
       <v-row>
         <v-col>
           <div>
-              Name: <strong> {{ representativeDetails.first_name }} {{ representativeDetails.last_name }}</strong>
-            </div>
-            <div>
-              User status: <strong>{{  getUserStatus(userStatus) }}</strong>
-            </div>
+            Name:
+            <strong>
+              {{ representativeDetails.first_name }}
+              {{ representativeDetails.last_name }}</strong
+            >
+          </div>
+          <div>
+            User status: <strong>{{ getUserStatus(userStatus) }}</strong>
+          </div>
         </v-col>
       </v-row>
 
@@ -21,34 +25,64 @@
         <v-col class="mb-4">
           <v-btn
             :loading="loading"
+            v-if="userStatus < 3 && dataInputStatus > 2"
             class="mr-2"
+            :class="statusBtnColor"
             @click="updateUserVerifyOrReject('verified')"
-            style="background-color: rgb(42 205 100); color: #fff"
             small
+            style="background-color: rgb(42 205 100); color: #fff"
           >
             Approve
           </v-btn>
           <v-btn
-            v-if="userStatus !=4 && userStatus !=3"
-            :loading="cancelLoading"
-            @click="openDialog(item)"
-            style="background-color: rgb(191 20 67); color: #fff"
-            small
-          >
-            Reject
-          </v-btn>
-          <v-btn
-            v-if="userStatus == 4 || userStatus == 3"
-            :loading="cancelLoading"
+            class="mr-2"
+            v-if="
+              userStatus == 4 ||
+              userStatus == 3 ||
+              userStatus == 9 ||
+              userStatus == 0
+            "
+            :loading="loadingReinstate"
             @click="updateUserVerifyOrReject('completed')"
             style="background-color: rgb(61 185 156); color: #fff"
             small
           >
             Reinstate
           </v-btn>
+          <v-btn
+            class="mr-2"
+            v-if="userStatus != 4 && userStatus != 3"
+            :loading="loadingReject"
+            @click="openDialog(item)"
+            style="background-color: rgb(191 20 67); color: #fff"
+            small
+          >
+            Reject
+          </v-btn>
+
+          <v-btn
+            v-if="userStatus != 9"
+            class="mr-2"
+            :loading="loadingSuspend"
+            @click="updateUserVerifyOrReject('suspend')"
+            style="background-color: #6c757d; color: #fff"
+            small
+          >
+            Suspend
+          </v-btn>
+          <v-btn
+            v-if="userStatus != 0"
+            class="mr-2"
+            :loading="loadingDelete"
+            @click="updateUserVerifyOrReject('deleted')"
+            style="background-color: #f5222d; color: #fff"
+            small
+          >
+            Delete
+          </v-btn>
         </v-col>
       </v-row>
-      
+
       <div class="text-start">
         <!-- Personal Information -->
         <div class="review-edit mt-5">
@@ -227,8 +261,7 @@
                     title="Title"
                     textClass="text-subtitle-1"
                     :value="
-                      representativeDetails.verification
-                        .ver_recommender_title
+                      representativeDetails.verification.ver_recommender_title
                     "
                   />
                   <TableRow
@@ -239,7 +272,7 @@
                         .ver_recommender_first_name
                     "
                   />
-                  
+
                   <TableRow
                     title="Last Name"
                     textClass="text-subtitle-1"
@@ -256,13 +289,12 @@
                         .ver_recommender_occupation
                     "
                   />
-                  
+
                   <TableRow
                     title="Address"
                     textClass="text-subtitle-1"
                     :value="
-                      representativeDetails.verification
-                        .ver_recommender_address
+                      representativeDetails.verification.ver_recommender_address
                     "
                   />
                   <TableRow
@@ -273,23 +305,23 @@
                         .ver_recommender_mobile_no
                     "
                   />
-                   <TableRow
+                  <TableRow
                     title="Email"
                     textClass="text-subtitle-1"
                     :value="
-                      representativeDetails.verification
-                        .ver_recommender_email
+                      representativeDetails.verification.ver_recommender_email
                     "
                   />
-                  
                 </table>
               </div>
             </div>
-             <div class="col-12 col-md-6 mb-4">
+            <div class="col-12 col-md-6 mb-4">
               <div class="profile-img text-center">
                 <img
                   v-viewer
-                  :src="representativeDetails.verification.ver_document_frontside"
+                  :src="
+                    representativeDetails.verification.ver_document_frontside
+                  "
                   class="user-image"
                   alt="img"
                   height="250"
@@ -302,7 +334,9 @@
               <div class="profile-img text-center">
                 <img
                   v-viewer
-                  :src="representativeDetails.verification.ver_document_backside"
+                  :src="
+                    representativeDetails.verification.ver_document_backside
+                  "
                   class="user-image"
                   alt="img"
                   height="250"
@@ -355,48 +389,48 @@
         </div>
       </div>
 
-      <div  v-if="documentInfo && documentInfo.candidate_info">
+      <div v-if="documentInfo && documentInfo.candidate_info">
         <div class="mt-5">
-            <div>
-              <h4>Document Preview</h4>
-              <div class="row">
-                <div class="col-12 col-md-6 mb-4">
-                  <div class="profile-img text-center">
-                    <img
-                      :src="
-                        documentInfo.image_server_base_url +
-                        '/' +
-                        documentInfo.candidate_info.ver_image_front
-                      "
-                      v-viewer
-                      class=""
-                      alt="img"
-                      height="250"
-                      width="200"
-                    />
-                    <p class="text-center">Font Side</p>
-                  </div>
+          <div>
+            <h4>Document Preview</h4>
+            <div class="row">
+              <div class="col-12 col-md-6 mb-4">
+                <div class="profile-img text-center">
+                  <img
+                    :src="
+                      documentInfo.image_server_base_url +
+                      '/' +
+                      documentInfo.candidate_info.ver_image_front
+                    "
+                    v-viewer
+                    class=""
+                    alt="img"
+                    height="250"
+                    width="200"
+                  />
+                  <p class="text-center">Font Side</p>
                 </div>
-                <div class="col-12 col-md-6 mb-4">
-                  <div class="profile-img text-center">
-                    <img
-                      v-viewer
-                      :src="
-                        documentInfo.image_server_base_url +
-                        '/' +
-                        documentInfo.candidate_info.ver_image_back
-                      "
-                      class=""
-                      alt="img"
-                      height="250"
-                      width="200"
-                    />
-                    <p class="text-center">Back Side</p>
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 mb-4">
+                <div class="profile-img text-center">
+                  <img
+                    v-viewer
+                    :src="
+                      documentInfo.image_server_base_url +
+                      '/' +
+                      documentInfo.candidate_info.ver_image_back
+                    "
+                    class=""
+                    alt="img"
+                    height="250"
+                    width="200"
+                  />
+                  <p class="text-center">Back Side</p>
                 </div>
               </div>
             </div>
           </div>
+        </div>
       </div>
     </fieldset>
     <NoteModal @save="save" @cancel="cancel" :dialog="dialog" />
@@ -416,14 +450,22 @@ export default {
     // RatingComponent,
     TableRow,
   },
-  props: ['showAgreement'],
+  props: ["showAgreement"],
   data() {
     return {
-      documentInfo:{},
+      documentInfo: {},
       loading: false,
       cancelLoading: false,
       dialog: false,
-      statusArr: [{key:1, name: 'InComplete'}, {key:2, name:'Complete'}, {key:3, name: 'Verified'}, {key: 4, name:'Rejected'},{key: 5, name:'Approved'}, {key: 9, name:'Suspended'},{ key: 0, name :'Deleted'}],
+      statusArr: [
+        { key: 1, name: "InComplete" },
+        { key: 2, name: "Complete" },
+        { key: 3, name: "Verified" },
+        { key: 4, name: "Rejected" },
+        { key: 5, name: "Approved" },
+        { key: 9, name: "Suspended" },
+        { key: 0, name: "Deleted" },
+      ],
       representativeDetails: null,
     };
   },
@@ -432,25 +474,27 @@ export default {
     this.getDocumentInfo();
   },
   methods: {
-    getUserStatus (status) {
-      return this.statusArr.find(i => i.key == status).name
+    getUserStatus(status) {
+      return this.statusArr.find((i) => i.key == status).name;
     },
     async getRepresentativeInfo() {
-        try {
-            this.loading = true
-            const data = await ApiService.get(`/v1/admin/representative-info/${this.user_id}`);
-            this.representativeDetails = {
-            ...data.data.data,
-            personal: {
-                ...data.data.data.personal,
-                per_email: 'user.email',
-                },
-            };
-        } catch(er) {
-            console.log(er, '>err<')
-        } finally {
-            this.loading = false
-        }
+      try {
+        this.loading = true;
+        const data = await ApiService.get(
+          `/v1/admin/representative-info/${this.user_id}`
+        );
+        this.representativeDetails = {
+          ...data.data.data,
+          personal: {
+            ...data.data.data.personal,
+            per_email: "user.email",
+          },
+        };
+      } catch (er) {
+        console.log(er, ">err<");
+      } finally {
+        this.loading = false;
+      }
     },
 
     async getDocumentInfo() {
@@ -487,9 +531,9 @@ export default {
         .dispatch("updateUserVerifyOrReject", data)
         .then((data) => {
           this.cancelLoading = false;
-          console.log(data, 'rejected')
-          if(data.status == 4) {
-            this.representativeDetails.user.status = 4
+          console.log(data, "rejected");
+          if (data.status == 4) {
+            this.representativeDetails.user.status = 4;
           }
           // this.items = this.items.filter(
           //   (item) => item.id !== this.selectedItem.id
@@ -504,30 +548,40 @@ export default {
         .catch((error) => {
           this.cancelLoading = false;
         });
-      },
+    },
     async updateUserVerifyOrReject(status) {
+      switch (status) {
+        case "completed":
+          this.loading = true;
+          break;
+        case "suspend":
+          this.loadingSuspend = true;
+          break;
+        case "deleted":
+          this.loadingDelete = true;
+          break;
+        case "completed":
+          this.loadingReinstate = true;
+          break;
+      }
       const data = {
         id: this.$route.params.user_id,
         status: status,
       };
-      this.loading = true;
       await this.$store
         .dispatch("updateUserVerifyOrReject", data)
         .then((data) => {
-          this.loading = false;
-          console.log(data, 'accepted')
-          if(data.status) {
-            this.representativeDetails.user.status = data.status
+          if (data.status) {
+            this.candidateData.user.status = data.status;
           }
-          // this.items = this.items.filter((item) => item.id !== user.id);
-          // let loggedUser = JSON.parse(localStorage.getItem("user"));
-          // if (loggedUser.id == user.id) {
-          //   loggedUser.status = status == "verified" ? "3" : "4";
-          //   localStorage.setItem("user", JSON.stringify(loggedUser));
-          // }
         })
-        .catch((error) => {
+        .catch((error) => {})
+        .finally(() => {
           this.loading = false;
+          this.loadingDelete = false;
+          this.loadingReject = false;
+          this.loadingSuspend = false;
+          this.loadingReinstate = false;
         });
     },
   },
@@ -535,9 +589,12 @@ export default {
     user_id: function () {
       return this.$route.params.user_id;
     },
+    dataInputStatus() {
+      return this.representativeDetails?.data_input_status;
+    },
     userStatus() {
-      return this.representativeDetails?.user?.status
-    }
+      return this.representativeDetails?.user?.status;
+    },
   },
 };
 </script>
