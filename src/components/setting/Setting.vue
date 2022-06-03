@@ -149,7 +149,10 @@
     <div v-if="showIdentity" class="panel-content">
       <div class="content-identity">
         <h4>Identity Verification</h4>
-        <div v-if="userInfo.user && userInfo.user.status == '3'" class="identity">
+        <div
+          v-if="userInfo.user && userInfo.user.status == '3'"
+          class="identity"
+        >
           <img
             src="@/assets/icon/varified.svg"
             alt="icon"
@@ -157,7 +160,10 @@
           />
           <span>Verified</span>
         </div>
-        <div v-if="userInfo.user && userInfo.user.status == '1'" class="identity">
+        <div
+          v-if="userInfo.user && userInfo.user.status == '1'"
+          class="identity"
+        >
           <img
             src="@/assets/icon/account-circle.svg"
             alt="icon"
@@ -171,13 +177,50 @@
             Verify
           </v-btn>
         </div>
-        <div v-if="userInfo.user && userInfo.user.status == '2'" class="identity">
+
+        <div
+          v-if="userInfo.user && userInfo.user.status == '2'"
+          class="identity"
+        >
           <img
             src="@/assets/icon/dots-horizontal-circle.svg"
             alt="icon"
             style="width: 200px; height: 230px"
           />
           <span>In Review</span>
+        </div>
+        <div
+          v-if="userInfo.user && userInfo.user.status == '4'"
+          class="identity"
+        >
+          <img
+            src="@/assets/rejected.jpg"
+            alt="icon"
+            style="width: 200px; height: 230px"
+          />
+          <span>Rejected</span>
+        </div>
+        <div
+          v-if="userInfo.user && userInfo.user.status == '9'"
+          class="identity"
+        >
+          <img
+            src="@/assets/suspended.jpg"
+            alt="icon"
+            style="width: 200px; height: 230px"
+          />
+          <span>Suspended</span>
+        </div>
+        <div
+          v-if="userInfo.user && userInfo.user.status == '0'"
+          class="identity"
+        >
+          <img
+            src="@/assets/icon/dots-horizontal-circle.svg"
+            alt="icon"
+            style="width: 200px; height: 230px"
+          />
+          <span>Deleted</span>
         </div>
         <div class="identity-footer">
           <span
@@ -223,7 +266,7 @@ import VerificationCandidate from "@/components/setting/Verification-Candidate.v
 import EditContactModal from "@/components/setting/EditContactModal.vue";
 import jwtService from "@/services/jwt.service";
 export default {
-  name: 'Setting',
+  name: "Setting",
   components: {
     VerificationRepresentative,
     VerificationCandidate,
@@ -265,9 +308,9 @@ export default {
     }
   },
   methods: {
-    async getUserInfo () {
-       let {data} = await ApiService.get("v1/user").then(res => res.data);
-       this.userInfo = data
+    async getUserInfo() {
+      let { data } = await ApiService.get("v1/user").then((res) => res.data);
+      this.userInfo = data;
     },
 
     openDialog(e) {
