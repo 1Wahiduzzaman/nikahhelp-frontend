@@ -1090,14 +1090,7 @@ export default {
           if (data.status == 4) {
             this.candidateData.user.status = 4;
           }
-          // this.items = this.items.filter(
-          //   (item) => item.id !== this.selectedItem.id
-          // );
-          // let loggedUser = JSON.parse(localStorage.getItem("user"));
-          // if (loggedUser.id == this.selectedItem.id) {
-          //   loggedUser.status = "4";
-          //   localStorage.setItem("user", JSON.stringify(loggedUser));
-          // }
+         
           this.cancel(null);
         })
         .catch((error) => {

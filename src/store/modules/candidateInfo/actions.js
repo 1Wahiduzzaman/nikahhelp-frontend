@@ -146,6 +146,20 @@ export default {
           });
     });
   },
+
+
+async saveCandidateUploadDoc(_, payload) {
+  return new Promise((resolve, reject) => {
+    ApiService.post("v1/candidate-upload-doc", payload)
+      .then((data) => {
+        resolve(data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+},
+
   async saveVerificationInfo(_, payload) {
     return new Promise((resolve, reject) => {
       ApiService.post("v1/candidate/personal-verification-info", payload)
@@ -229,6 +243,17 @@ export default {
     
     return new Promise((resolve, reject) => {
       ApiService.post("v1/candidate/image-upload", payload)
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
+  async deleteImage(_, payload) {
+    return new Promise((resolve, reject) => {
+      ApiService.delete(`v1/candidate/image-upload/${payload}`)
         .then((data) => {
           resolve(data);
         })

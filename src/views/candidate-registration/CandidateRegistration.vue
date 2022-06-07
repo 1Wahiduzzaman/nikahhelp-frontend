@@ -284,19 +284,7 @@ export default {
     cancel(e) {
       this.dialog = false;
     },
-    async updateUserVerifyOrReject() {
-      const data = {
-        id: this.userData.id,
-        status: "completed",
-      };
-      await this.$store
-        .dispatch("updateUserVerifyOrReject", data)
-        .then((data) => {
-          this.userData.status = "2";
-          localStorage.setItem("user", JSON.stringify(this.userData));
-        })
-        .catch((error) => {});
-    },
+
     updateFixedStatus(next) {
       this.fixedStatus.headerIsFixed = next;
     },
@@ -598,7 +586,7 @@ export default {
         }
         this.current = response.data.data.user.data_input_status;
         this.showAgreement =
-          user.status == "2" || user.status == "3" ? true : false;
+          response.data.data.user.is_uplaoded_doc == "1" ? true : false;
         const {
           ver_country_id,
           ver_document_type,
@@ -611,7 +599,10 @@ export default {
           ver_image_back,
           ver_image_front,
         }).every((x) => x !== undefined && x !== null && x !== "");
-        if (!this.showAgreement && user.status == "1") {
+        if (
+          !this.showAgreement &&
+          response.data.data.user.is_uplaoded_doc == "0"
+        ) {
           this.candidateDetails.verification = {
             ...this.candidateDetails.verification,
             ver_document_frontside: "",
@@ -822,8 +813,8 @@ export default {
       this.$router.push("/login");
     },
     doneBtn() {
+      this.saveCandidateUploadDoc();
       this.saveDataInputStatus(6);
-      this.updateUserVerifyOrReject();
     },
     continueToDashboard() {
       this.dialog = false;
@@ -833,7 +824,7 @@ export default {
       this.current = step;
       this.checkExistData();
     },
-    async updateUserVerifyOrReject() {
+    async saveCandidateUploadDoc() {
       const {
         ver_country_id,
         ver_document_type,
@@ -849,13 +840,13 @@ export default {
       let user = JSON.parse(localStorage.getItem("user"));
       const data = {
         id: user.id,
-        status: isComplete ? "completed" : "InComplete",
+        is_uplaoded_doc: isComplete ? "1" : "0",
       };
       await this.$store
-        .dispatch("updateUserVerifyOrReject", data)
+        .dispatch("saveCandidateUploadDoc", data)
         .then((data) => {
-          (user.status = isComplete ? 2 : 1),
-            localStorage.setItem("user", JSON.stringify(user));
+          user.is_uplaoded_doc = isComplete ? "1" : "0";
+          localStorage.setItem(JSON.stringify(user));
           this.$emit("valueChange", true);
         })
         .catch((error) => {});

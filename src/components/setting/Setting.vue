@@ -161,7 +161,13 @@
           <span>Verified</span>
         </div>
         <div
-          v-if="userInfo.user && userInfo.user.status == '1'"
+          v-if="
+            (userInfo.user.status < 3 &&
+              userInfo.candidate_information &&
+              userInfo.candidate_information.is_uplaoded_doc == '0') ||
+            (userInfo.representative_information &&
+              userInfo.representative_information.is_uplaoded_doc == '0')
+          "
           class="identity"
         >
           <img
@@ -179,7 +185,13 @@
         </div>
 
         <div
-          v-if="userInfo.user && userInfo.user.status == '2'"
+          v-if="
+            (userInfo.user.status < 3 &&
+              userInfo.candidate_information &&
+              userInfo.candidate_information.is_uplaoded_doc == '1') ||
+            (userInfo.representative_information &&
+              userInfo.representative_information.is_uplaoded_doc == '1')
+          "
           class="identity"
         >
           <img
@@ -322,6 +334,23 @@ export default {
     onDataChange(value) {
       this.showIdentity = true;
       this.userData = JSON.parse(localStorage.getItem("user"));
+      if (this.userInfo.user.account_type === 1) {
+        this.userInfo = {
+          ...this.userInfo,
+          candidate_information: {
+            ...this.userInfo.candidate_information,
+            is_uplaoded_doc: value,
+          },
+        };
+      } else {
+        this.userInfo = {
+          ...this.userInfo,
+          representative_information: {
+            ...this.userInfo.representative_information,
+            is_uplaoded_doc: value,
+          },
+        };
+      }
     },
     getVerifyInfo() {
       const userData = JSON.parse(localStorage.getItem("user"));

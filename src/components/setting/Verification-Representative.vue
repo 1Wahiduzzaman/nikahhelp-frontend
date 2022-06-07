@@ -528,18 +528,30 @@ export default {
     changeActivekey(key) {
       this.activeKey = key;
     },
-    async updateUserVerifyOrReject() {
+    async saveRepresentativeUploadDoc() {
+      const {
+        ver_country,
+        ver_document_type,
+        ver_document_backside,
+        ver_document_frontside,
+      } = this.verification;
+      const isComplete = Object.values({
+        ver_country,
+        ver_document_type,
+        ver_document_backside,
+        ver_document_frontside,
+      }).every((x) => x !== undefined && x !== null && x !== "");
       let user = JSON.parse(localStorage.getItem("user"));
       const data = {
         id: user.id,
-        status: "completed",
+        is_uplaoded_doc: isComplete ? "1" : "0",
       };
       await this.$store
-        .dispatch("updateUserVerifyOrReject", data)
+        .dispatch("saveRepresentativeUploadDoc", data)
         .then((data) => {
-          user.status = "2";
-          localStorage.setItem("user", JSON.stringify(user));
+          user.is_uplaoded_doc = isComplete ? "1" : "0";
           this.$emit("valueChange", true);
+       
         })
         .catch((error) => {});
     },

@@ -263,7 +263,8 @@
                 <a-icon slot="unCheckedChildren" type="close" />
               </a-switch>
               <span class="ml-3 switch-text">
-                Do not share my images with anybody at the moment (my own team can see still)
+                Do not share my images with anybody at the moment (my own team
+                can see still)
               </span>
             </div>
             <div class="d-flex align-items-baseline mt-4">
@@ -275,8 +276,8 @@
                 <a-icon slot="unCheckedChildren" type="close" />
               </a-switch>
               <span class="ml-3 switch-text">
-                Share my images with the connected teams (only if I or they accept
-                connect request)
+                Share my images with the connected teams (only if I or they
+                accept connect request)
               </span>
             </div>
             <br />
@@ -323,27 +324,32 @@ export default {
   },
   methods: {
     clearImg(action) {
-      let formData = new FormData();
       switch (action) {
         case "main":
           this.mainImageSrc = "";
           this.imageModel.main_image_url = "";
-          formData.append("per_avatar_url", "");
+          this.deleteImage(1);
           break;
         case "avatar":
           this.avatarSrc = "";
           this.imageModel.avatar_image_url = "";
-          formData.append("per_main_image_url", "");
+          this.deleteImage(0);
           break;
         case "additional":
           this.additionalImageSrc = "";
           this.imageModel.additionalImageSrc = "";
-          formData.append("image[0][image]", "");
-          formData.append("image[0][type]", 2);
-          formData.append("image[0][visibility]", 4);
+          this.deleteImage(3);
           break;
       }
-      this.saveImage(formData);
+    },
+    async deleteImage(data) {
+      await this.$store.dispatch("deleteImage", data);
+      this.$emit("valueChange", {
+        value: {
+          ...this.imageModel,
+        },
+        current: 3,
+      });
     },
     showError(errorMessage) {
       this.$error({
