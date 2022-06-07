@@ -105,8 +105,7 @@
             <td>
               <v-checkbox
                 style="margin: 0px; padding-left: 16px"
-                v-model="selectedTasks"
-                :value="item"
+                :value="item.isChecked"
                 hide-details
               />
             </td>
@@ -130,20 +129,20 @@
                   ? item.candidate_info.data_input_status == 0
                     ? "In-complete"
                     : item.candidate_info.data_input_status > 5 &&
-                      item.status == 2
+                      item.candidate_info.is_uplaoded_doc == 1
                     ? "Fully Completed"
                     : item.candidate_info.data_input_status > 5 &&
-                      item.status == 1
+                      item.candidate_info.is_uplaoded_doc == 0
                     ? "Completed Without ID"
                     : "Partially Completed"
                   : item["account_type"] == 2 && item.representative_info
                   ? item.representative_info.data_input_status == 0
                     ? "In-complete"
                     : item.representative_info.data_input_status > 2 &&
-                      item.status == 2
+                      item.representative_info.is_uplaoded_doc == 1
                     ? "Fully Completed"
                     : item.representative_info.data_input_status > 2 &&
-                      item.status == 1
+                      item.representative_info.is_uplaoded_doc == 0
                     ? "Completed Without ID"
                     : "Partially Completed"
                   : "In-completed"
@@ -151,7 +150,6 @@
             </td>
 
             <td class="status">
-              <!-- {{ item['status'] === 3 ? 'Verified' : item['status'] !== '4' ? 'Pending' : 'Rejected' }} -->
               {{ getStatus(item) }}
             </td>
 

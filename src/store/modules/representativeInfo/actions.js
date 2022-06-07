@@ -92,6 +92,17 @@ export default {
         .catch((error) => reject(error));
     });
   },
+  async saveRepresentativeUploadDoc(_, payload) {
+    return new Promise((resolve, reject) => {
+      ApiService.post("v1/rep-upload-doc", payload)
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
   async getRepresentativeInfo(context, _) {
     return new Promise((resolve, reject) => {
       ApiService.get(`v1/representative/info/${JwtService.getUser().id}`)

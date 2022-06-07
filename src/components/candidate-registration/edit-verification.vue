@@ -467,7 +467,7 @@
         </a-collapse-panel>
       </a-collapse>
     </div>
-    <!-- <div class="verification-msg" v-if="userData && userData.isUplaodedDoc == '1'">
+    <div class="verification-msg" v-if="userData && userData.status == '2'">
       <div class="identity">
         <img
           src="@/assets/icon/dots-horizontal-circle.svg"
@@ -507,7 +507,7 @@
           card or residence permit issued in European Economic Are (EEA).</span
         >
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -520,7 +520,7 @@ import ApiService from "@/services/api.service";
 import vSelect from "vue-select";
 import { VERIFICATION } from "./models/candidate";
 export default {
-  name: "Verification",
+  name: "EditVerification",
   props: {
     candidateDetails: {
       type: Object,
@@ -637,14 +637,32 @@ export default {
       });
     },
     saveVerificationInfo() {
-      const { ver_city_id, ver_country, ver_country_id, ver_document_type } =
-        this.verification;
+      const {
+        ver_city_id,
+        ver_country,
+        ver_country_id,
+        ver_document_type,
+        // ver_recommences_address,
+        // ver_recommences_first_name,
+        // ver_recommences_last_name,
+        // ver_recommences_occupation,
+        // ver_recommences_title,
+        // ver_status,
+        // ver_recommences_mobile_no,
+      } = this.verification;
       this.$store
         .dispatch("saveVerificationInfo", {
           ver_city_id,
           ver_country,
           ver_country_id,
           ver_document_type,
+          // ver_recommences_address,
+          // ver_recommences_first_name,
+          // ver_recommences_last_name,
+          // ver_recommences_occupation,
+          // ver_recommences_title,
+          // ver_status,
+          // ver_recommences_mobile_no,
         })
         .then((data) => {
           this.$emit("valueChange", {

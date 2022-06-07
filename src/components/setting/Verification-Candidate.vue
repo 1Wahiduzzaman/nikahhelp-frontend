@@ -1,9 +1,9 @@
 <template>
   <div id="accordion" class="verificationInfo p-3 rounded">
-       <div class="section-heading heading-text">
-        <h3>Verification Information</h3>
-        <!-- <p>Your Verification Information</p> -->
-      </div>
+    <div class="section-heading heading-text">
+      <h3>Verification Information</h3>
+      <!-- <p>Your Verification Information</p> -->
+    </div>
     <a-form-model
       v-if="verification"
       ref="verification"
@@ -25,7 +25,7 @@
 
             <p class="instruction-title">
               Follow these tips to make sure your document is accepted:
-            </p> 
+            </p>
             <ul>
               <li class="flex-start-center">
                 <img
@@ -388,148 +388,7 @@
       </div>
 
       <!--Community standing-->
-      <div class="row pt-3 border-bottom">
-        <div class="col-12 col-md-6 none-padding">
-          <div class="mb-2 font-weight-bold">
-            <a-icon
-              v-if="
-                verification.ver_recommences_title &&
-                verification.ver_recommences_first_name &&
-                verification.ver_recommences_last_name &&
-                verification.ver_recommences_occupation &&
-                verification.ver_recommences_address &&
-                verification.ver_recommences_mobile_no
-              "
-              class="color-success mr-2 fs-18 fw-500"
-              type="check"
-            />Person of community standing who know you?
-          </div>
-        </div>
-        <div class="col-12 col-md-6 mobile-margin">
-          <a-form-model-item
-            ref="ver_recommences_title"
-            prop="ver_recommences_title"
-          >
-            <a-input
-              :maxLength="10"
-              v-model="verification.ver_recommences_title"
-              class="w-100"
-              placeholder="Title"
-              @blur="onValueChange"
-            />
-          </a-form-model-item>
-
-          <div class="row mt-2">
-            <div class="col-6">
-              <a-form-model-item
-                ref="ver_recommences_first_name"
-                prop="ver_recommences_first_name"
-              >
-                <a-input
-                  :maxLength="10"
-                  v-model="verification.ver_recommences_first_name"
-                  class="w-100 rounded-right"
-                  placeholder="First Name"
-                  @blur="onValueChange"
-                />
-              </a-form-model-item>
-            </div>
-            <div class="col-6">
-              <a-form-model-item
-                ref="ver_recommences_last_name"
-                prop="ver_recommences_last_name"
-              >
-                <a-input
-                  v-model="verification.ver_recommences_last_name"
-                  class="w-100 rounded-left"
-                  :maxLength="10"
-                  placeholder="Last Name"
-                  @blur="onValueChange"
-                />
-              </a-form-model-item>
-            </div>
-          </div>
-
-          <a-form-model-item
-            ref="ver_recommences_occupation"
-            prop="ver_recommences_occupation"
-            class="mt-2"
-          >
-            <v-select
-              :clearable="false"
-              class="style-chooser"
-              @input="onValueChange"
-              id="ver_recommences_occupation"
-              placeholder="Occupation"
-              v-model="verification.ver_recommences_occupation"
-              label="name"
-              :reduce="(option) => option.name"
-              :options="candidateDetails.occupations"
-              ><template #open-indicator> <a-icon type="down" /> </template
-            ></v-select>
-          </a-form-model-item>
-          <a-form-model-item
-            ref="ver_recommences_address"
-            prop="ver_recommences_address"
-            class="mt-2"
-          >
-            <a-textarea
-              @blur="onValueChange"
-              :rows="3"
-              :maxLength="200"
-              autocomplete="off"
-              autocorrect="off"
-              autocapitalize="off"
-              spellcheck="false"
-              id="ver_recommences_address"
-              v-model.lazy="verification.ver_recommences_address"
-              placeholder="Address"
-              class="w-full form-right-content"
-            />
-          </a-form-model-item>
-          <a-form-model-item
-            ref="ver_recommences_mobile_no"
-            prop="ver_recommences_mobile_no"
-            class="mt-2"
-          >
-            <a-input
-              class="w-100"
-              id="inputNumber"
-              placeholder="Mobile number"
-              v-model="verification.ver_recommences_mobile_no"
-              @blur="onValueChange"
-            />
-          </a-form-model-item>
-        </div>
-        <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
-          <p>
-            <a
-              class="color-blue fw-700 fs-14"
-              data-toggle="collapse"
-              href="#Needver_recommences_title"
-              role="button"
-              aria-expanded="false"
-              aria-controls="collapseExample"
-            >
-              <span v-if="arr[4].first" @click="arr[4].first = !arr[4].first">
-                Need Help?
-              </span>
-              <span v-else @click="arr[4].first = !arr[4].first">
-                Hide Help?
-              </span>
-            </a>
-          </p>
-          <div
-            data-parent="#accordion"
-            class="collapse"
-            id="Needver_recommences_title"
-          >
-            <div class="card card-body bubble">
-              Please provide tooltip texts so we can place it here
-            </div>
-          </div>
-        </div>
-      </div>
+      
       <div class="d-flex justify-content-end">
         <a-button
           shape="round"
@@ -568,15 +427,8 @@ export default {
     vSelect,
   },
 
-  created() {
-    // console.log(this.handleChangeFromProp)
-    console.log(this.repData);
-  },
-  mounted() {
-    // this.setPersonalInfoRepData();
-    // this.getCountries();
-    // this.getOccupations();
-  },
+  created() {},
+  mounted() {},
   data() {
     return {
       arr: [
@@ -605,21 +457,35 @@ export default {
   },
 
   methods: {
-    async updateUserVerifyOrReject() {
+    async saveCandidateUploadDoc() {
+      const {
+        ver_country_id,
+        ver_document_type,
+        ver_image_back,
+        ver_image_front,
+      } = this.verification;
+      const isComplete = Object.values({
+        ver_country_id,
+        ver_document_type,
+        ver_image_back,
+        ver_image_front,
+      }).every((x) => x !== undefined && x !== null && x !== "");
       let user = JSON.parse(localStorage.getItem("user"));
       const data = {
         id: user.id,
-        status: "completed",
+        is_uplaoded_doc: isComplete ? "1" : "0",
       };
       await this.$store
-        .dispatch("updateUserVerifyOrReject", data)
+        .dispatch("saveCandidateUploadDoc", data)
         .then((data) => {
-          user.status = "2";
-          localStorage.setItem("user", JSON.stringify(user));
+          user.is_uplaoded_doc = isComplete ? "1" : "0";
+         // localStorage.setItem(JSON.stringify(user));
           this.$emit("valueChange", true);
+          console.log('sss')
         })
         .catch((error) => {});
     },
+  
     changeActivekey(key) {
       this.activeKey = key;
     },
@@ -627,7 +493,7 @@ export default {
       this.$refs.verification.validate((valid) => {
         if (valid) {
           this.activeKey = null;
-          this.updateUserVerifyOrReject();
+          this.saveCandidateUploadDoc();
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
@@ -648,17 +514,10 @@ export default {
     },
     saveVerificationInfo() {
       const {
-        ver_city_id,
-        ver_country,
-        ver_country_id,
-        ver_document_type,
-        ver_recommences_address,
-        ver_recommences_first_name,
-        ver_recommences_last_name,
-        ver_recommences_occupation,
-        ver_recommences_title,
-        ver_status,
-        ver_recommences_mobile_no,
+         ver_city_id,
+          ver_country,
+          ver_country_id,
+          ver_document_type,
       } = this.verification;
       this.$store
         .dispatch("saveVerificationInfo", {
@@ -666,17 +525,8 @@ export default {
           ver_country,
           ver_country_id,
           ver_document_type,
-          ver_recommences_address,
-          ver_recommences_first_name,
-          ver_recommences_last_name,
-          ver_recommences_occupation,
-          ver_recommences_title,
-          ver_status,
-          ver_recommences_mobile_no,
         })
-        .then((data) => {
-         
-        })
+        .then((data) => {})
         .catch((error) => {});
     },
     saveImageVerificationInfo(image) {
@@ -687,7 +537,6 @@ export default {
             data.data.data.verification.ver_image_back;
           this.verification.ver_image_front =
             data.data.data.verification.ver_image_front;
-         
         })
         .catch((error) => {});
     },
@@ -768,10 +617,9 @@ export default {
 .section-heading {
   text-align: center;
   color: $color-brand;
-  
+
   h3 {
     color: $color-brand;
-
   }
   p {
     font-size: 16px;

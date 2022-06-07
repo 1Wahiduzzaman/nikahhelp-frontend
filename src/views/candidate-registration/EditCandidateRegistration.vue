@@ -72,14 +72,7 @@
           ref="personalInfoTwo"
         />
       </div>
-      <!-- <div class="steps-content" v-if="current == 2">
-        <Verification
-          @valueChange="onDataChange($event)"
-          :verification="candidateDetails.verification"
-          :candidateDetails="candidateDetails"
-          ref="Verification"
-        />
-      </div> -->
+
       <div class="steps-content" v-if="current == 2">
         <FamilyInfoTwo
           @valueChange="onDataChange($event)"
@@ -92,6 +85,14 @@
         <UploadProfile
           @valueChange="onDataChange($event)"
           :imageModel="candidateDetails.imageModel"
+        />
+      </div>
+      <div class="steps-content" v-if="current == 4">
+        <EditVerification
+          @valueChange="onDataChange($event)"
+          :verification="candidateDetails.verification"
+          :candidateDetails="candidateDetails"
+          ref="EditVerification"
         />
       </div>
 
@@ -151,7 +152,7 @@ const createData = () => ({
 });
 
 import PreferenceTwo from "@/components/candidate-registration/preference-two.vue";
-import Verification from "@/components/candidate-registration/verification.vue";
+import EditVerification from "@/components/candidate-registration/edit-verification.vue";
 import PersonalInfoTwo from "@/components/candidate-registration/personalinfo-two.vue";
 import FamilyInfoTwo from "@/components/candidate-registration/familyinfo-two.vue";
 import UploadProfile from "@/components/candidate-registration/UploadProfile.vue";
@@ -173,7 +174,7 @@ export default {
     FamilyInfoTwo,
     UploadProfile,
     Review,
-    Verification,
+    EditVerification,
     VueFixedHeader,
     Header,
   },
@@ -201,10 +202,7 @@ export default {
           title: "Personal Information",
           content: "Second-content",
         },
-        // {
-        //   title: "Verification",
-        //   content: "Last-content",
-        // },
+
         {
           title: "Family Information",
           content: "Last-content",
@@ -213,13 +211,17 @@ export default {
           title: "Image Upload",
           content: "Last-content",
         },
+        {
+          title: "Verification",
+          content: "Last-content",
+        },
       ],
       mobileSteps: [
         "Preference",
         "Personal Information",
-        //"Verification",
         "Family Information",
         "Image Upload",
+        "Verification",
       ],
     };
   },
@@ -232,7 +234,7 @@ export default {
       if (user.status == "3") {
         const data = {
           id: user.id,
-          status: "InComplete",
+          status: "inComplete",
         };
         await this.$store
           .dispatch("updateUserVerifyOrReject", data)
