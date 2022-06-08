@@ -338,7 +338,7 @@ export default {
         case "additional":
           this.additionalImageSrc = "";
           this.imageModel.additionalImageSrc = "";
-          this.deleteImage(3);
+          this.deleteImage(9);
           break;
       }
     },
