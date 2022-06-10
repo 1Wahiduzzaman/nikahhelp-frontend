@@ -439,7 +439,7 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                  v-if="preferenceData.pre_partner_religion_id.length > 0"
+                  v-if="preferenceData.pre_partner_religion_id"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />Preferred religion of your prospective companion?
@@ -453,7 +453,7 @@
                 <v-select
                   :clearable="false"
                   id="pre_partner_religion_id"
-                  :reduce="(option) => option.id"
+                  :reduce="(option) => option.name"
                   class="style-chooser"
                   placeholder="please select"
                   @input="onValueChange($event, 'pre_partner_religion_id')"
