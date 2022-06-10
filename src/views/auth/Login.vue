@@ -132,7 +132,11 @@ export default {
   },
   methods: {
     entered() {
-      if(this.signinModel && this.signinModel.email && this.signinModel.password) {
+      if (
+        this.signinModel &&
+        this.signinModel.email &&
+        this.signinModel.password
+      ) {
         this.handleSubmit();
       }
     },
@@ -142,8 +146,7 @@ export default {
           try {
             this.isLoading = true;
             this.$store.dispatch("login", this.signinModel).then((response) => {
-              console.log(response);
-              this.isLoading = false;
+               this.isLoading = false;
               if (this.$store.state.auth.errorMessage) {
                 this.$error({
                   title: this.$store.state.auth.errorMessage,
@@ -152,6 +155,7 @@ export default {
               }
             });
           } catch (error) {
+           
             this.error = error.response.data.message;
             this.isLoading = false;
           }
@@ -168,7 +172,7 @@ export default {
   },
   beforeDestroy() {
     this.$store.state.auth.errorMessage = null;
-  }
+  },
 };
 </script>
 

@@ -14,11 +14,14 @@ export default {
       });
       context.commit("setUser", {
         token: response.data.data.access_token,
+
+
       });
       router.push({ name: 'root' });
-    }).catch(e => {
+    }).catch((e) => {
+      console.log('message', e.message)
       context.commit("setErrorMessage", {
-        errorMessage: "Invalid email or password",
+        errorMessage: e,
       });
     });
   },
@@ -49,7 +52,7 @@ export default {
   },
   async verify(_, payload) {
     return new Promise((resolve, reject) => {
-       axios.get(`/v1/emailVerify/${payload.token}`).then((data) => {
+      axios.get(`/v1/emailVerify/${payload.token}`).then((data) => {
         resolve(data);
       })
         .catch((error) => {

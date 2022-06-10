@@ -29,10 +29,7 @@
           class="form-ma"
         >
           <!-- Gender -->
-          <div
-            v-if="activeRouteName == 'CandidateRegistration'"
-            class="row mt-3 pb-2 border-bottom"
-          >
+          <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -45,6 +42,7 @@
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_gender" prop="per_gender">
                 <v-select
+                  :disabled="activeRouteName !== 'CandidateRegistration'"
                   :clearable="false"
                   class="style-chooser"
                   @input="onValueChange($event, 'essential', 'per_gender')"
@@ -1354,7 +1352,7 @@
                       ref="select"
                       v-model="personalInformation.contact.mobile_country_code"
                       placeholder="Code"
-                     >
+                    >
                       <a-select-option value="">Select</a-select-option>
                       <a-select-option value="+44">+44</a-select-option>
                       <a-select-option value="+88">+88</a-select-option>
@@ -1375,7 +1373,7 @@
                       :maxLength="10"
                       v-model="personalInformation.contact.mobile_number"
                       placeholder="Mobile Number"
-                     />
+                    />
                   </a-form-model-item>
                 </div>
               </div>
@@ -2464,7 +2462,7 @@
                   v-model="personalInformation.more_about.per_about"
                 />
               </a-form-model-item>
-            <span style="display: flex; justify-content: flex-end"
+              <span style="display: flex; justify-content: flex-end"
                 >{{
                   personalInformation.more_about.per_about
                     ? personalInformation.more_about.per_about.length
@@ -2540,7 +2538,8 @@
               <span style="display: flex; justify-content: flex-end"
                 >{{
                   personalInformation.more_about.per_additional_info_text
-                    ? personalInformation.more_about.per_additional_info_text.length
+                    ? personalInformation.more_about.per_additional_info_text
+                        .length
                     : 0
                 }}/2000</span
               >
@@ -3139,6 +3138,9 @@ export default {
   .anticon {
     color: #b3b2b2;
   }
+}
+.ant-input-disabled {
+  color: #282828 !important;
 }
 input[type="file"] {
   cursor: pointer;

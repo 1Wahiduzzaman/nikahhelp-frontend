@@ -475,11 +475,7 @@ export default {
                 : response.data.data.user.preference.pre_partner_age_min,
 
             pre_partner_religion_id:
-              response.data.data.user.preference.pre_partner_religion_id.map(
-                function (v) {
-                  return parseInt(v, 10);
-                }
-              ),
+              response.data.data.user.preference.pre_partner_religion_id[0],
             pre_ethnicities: !response.data.data.user.preference.pre_ethnicities
               ? undefined
               : response.data.data.user.preference.pre_ethnicities.split(","),
