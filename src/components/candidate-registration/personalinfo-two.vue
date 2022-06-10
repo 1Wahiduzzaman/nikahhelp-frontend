@@ -29,10 +29,7 @@
           class="form-ma"
         >
           <!-- Gender -->
-          <div
-            v-if="activeRouteName == 'CandidateRegistration'"
-            class="row mt-3 pb-2 border-bottom"
-          >
+          <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -45,6 +42,7 @@
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_gender" prop="per_gender">
                 <v-select
+                  :disabled="activeRouteName !== 'CandidateRegistration'"
                   :clearable="false"
                   class="style-chooser"
                   @input="onValueChange($event, 'essential', 'per_gender')"
