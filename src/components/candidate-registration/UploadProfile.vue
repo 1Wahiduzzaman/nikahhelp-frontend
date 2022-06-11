@@ -436,12 +436,10 @@ export default {
       }
       this.imageModel.additionalImageSrc = e.target.files[0];
       let formData = new FormData();
-      formData.append("other_images", e.target.files[0]);
-      // formData.append("image[0][type]", 2);
-      // formData.append("image[0][visibility]", 4);
-      const data = {
-        other_images: file,
-      };
+      formData.append("image[0][image]", e.target.files[0]);
+      formData.append("image[0][type]", 9);
+      formData.append("image[0][visibility]", 4);
+
       this.saveImage(formData);
       let reader = new FileReader();
       reader.readAsDataURL(file);
@@ -503,10 +501,7 @@ export default {
             value: {
               avatar_image_url: data.data.data.avatar_image_url,
               main_image_url: data.data.data.main_image_url,
-              additionalImageSrc:
-                data.data.data.other_images.length > 0
-                  ? `https://chobi.arranzed.com/${data.data.data.other_images}`
-                  : this.additionalImageSrc,
+              additionalImageSrc: data.data.data.other_images,
             },
             current: 3,
           });
