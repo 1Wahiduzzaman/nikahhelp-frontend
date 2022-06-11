@@ -415,12 +415,14 @@ export default {
               ? undefined
               : response.data.data.user.preference.pre_ethnicities.split(","),
             pre_preferred_divorcee:
-              response.data.data.user.preference.pre_preferred_divorcee == 0
+              response.data.data.user.preference.pre_preferred_divorcee == 0 ||
+              !response.data.data.user.preference.pre_preferred_divorcee
                 ? false
                 : true,
             pre_preferred_divorcee_child:
               response.data.data.user.preference.pre_preferred_divorcee_child ==
-              0
+                0 ||
+              !response.data.data.user.preference.pre_preferred_divorcee_child
                 ? false
                 : true,
             pre_partner_comes_from: [],
