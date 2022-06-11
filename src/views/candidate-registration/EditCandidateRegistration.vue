@@ -281,10 +281,7 @@ export default {
           countries: response.data.data.countries,
           imageModel: {
             ...response.data.data.candidate_image,
-            additionalImageSrc:
-              response.data.data.candidate_image.other_images.length > 0
-                ? response.data.data.candidate_image.other_images[0].image_path
-                : null,
+            additionalImageSrc: response.data.data.candidate_image.other_images,
           },
           occupations: response.data.data.occupations,
           religions: response.data.data.religions,

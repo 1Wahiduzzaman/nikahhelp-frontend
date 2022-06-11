@@ -424,7 +424,7 @@ export default {
     openGallery() {
       this.images= [];
       let images = this.candidateData.other_images
-      if(images.length > 0) {
+      if(images && images.length > 0) {
         images.map(i => this.images.push(i.image_path));
         this.show();
       } else {
