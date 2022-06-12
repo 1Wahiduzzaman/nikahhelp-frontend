@@ -248,10 +248,7 @@ export default {
           countries: response.data.data.countries,
           imageModel: {
             ...response.data.data.candidate_image,
-            additionalImageSrc:
-              response.data.data.candidate_image.other_images.length > 0
-                ? response.data.data.candidate_image.other_images[0].image_path
-                : null,
+            additionalImageSrc: response.data.data.candidate_image.other_images,
           },
           occupations: response.data.data.occupations,
           religions: response.data.data.religions,
@@ -584,7 +581,7 @@ export default {
 
     nullToUndefined(object) {
       Object.keys(object).forEach(function (k) {
-        if (object[k] === null|| object[k] === 0) {
+        if (object[k] === null || object[k] === 0) {
           object[k] = undefined;
         }
       });

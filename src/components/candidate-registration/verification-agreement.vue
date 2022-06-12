@@ -90,7 +90,7 @@ export default {
   font-size: 32px;
 }
 .agree-button {
-  background-color: $color-secondary;
+  background-color: #dddae0;
   padding: 0px 20px;
   color: white;
   height: 36px;
