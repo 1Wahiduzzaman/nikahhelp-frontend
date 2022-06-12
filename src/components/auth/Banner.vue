@@ -71,7 +71,7 @@ export default {
 @import "~@vueform/slider/themes/default.css";
 @import "@/styles/base/_variables.scss";
 .banner {
-  background: url("~@/assets/Top image.jpg") no-repeat center center / cover;
+  background: url("~@/assets/Top image.webp") no-repeat center center / cover;
   color: $color-white;
   text-align: center;
   position: relative;
