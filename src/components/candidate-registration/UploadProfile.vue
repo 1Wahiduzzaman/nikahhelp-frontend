@@ -501,7 +501,10 @@ export default {
             value: {
               avatar_image_url: data.data.data.avatar_image_url,
               main_image_url: data.data.data.main_image_url,
-              additionalImageSrc: data.data.data.other_images,
+              additionalImageSrc:
+                data.data.data.other_images.length > 0
+                  ? data.data.data.other_images
+                  : this.additionalImageSrc,
             },
             current: 3,
           });
