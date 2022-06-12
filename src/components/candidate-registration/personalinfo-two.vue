@@ -3142,7 +3142,7 @@ export default {
   }
 }
 .ant-input-disabled {
-  color: #282828 !important;
+  color: #999999 !important;
 }
 input[type="file"] {
   cursor: pointer;
