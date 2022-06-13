@@ -14,41 +14,41 @@
             "
           />
           <v-container fluid>
-                <v-row>
-                  <v-col cols="12">
-                    <div class="flex justify-center">
-                    <ButtonComponent
-                      class="mr-2"
-                      iconHeight="14px"
-                      :isSmall="true"
-                      title="Gallery"
-                      icon="/assets/icon/gallery.svg"
-                      customEvent="openGallery"
-                      :isBlock="false"
-                      @onClickButton="onClickButton"
-                    />
-                    <ButtonComponent
-                      class="mr-2"
-                      iconHeight="14px"
-                      :isSmall="true"
-                      title="EditProfile"
-                      icon="/assets/icon/edit_step.svg"
-                      customEvent="editProfile"
-                      :isBlock="false"
-                      @onClickButton="onClickButton"
-                    />
-                    <ButtonComponent
-                      iconHeight="14px"
-                      :isSmall="true"
-                      title="View as public"
-                      icon="/assets/icon/edit_step.svg"
-                      customEvent="viewAsPublic"
-                      :isBlock="false"
-                      @onClickButton="onClickButton"
-                    />
-                    </div>
-                  </v-col>
-                  <!-- <v-col>
+            <v-row>
+              <v-col cols="12">
+                <div class="flex justify-center">
+                  <ButtonComponent
+                    class="mr-2"
+                    iconHeight="14px"
+                    :isSmall="true"
+                    title="Gallery"
+                    icon="/assets/icon/gallery.svg"
+                    customEvent="openGallery"
+                    :isBlock="false"
+                    @onClickButton="onClickButton"
+                  />
+                  <ButtonComponent
+                    class="mr-2"
+                    iconHeight="14px"
+                    :isSmall="true"
+                    title="EditProfile"
+                    icon="/assets/icon/edit_step.svg"
+                    customEvent="editProfile"
+                    :isBlock="false"
+                    @onClickButton="onClickButton"
+                  />
+                  <ButtonComponent
+                    iconHeight="14px"
+                    :isSmall="true"
+                    title="View as public"
+                    icon="/assets/icon/edit_step.svg"
+                    customEvent="viewAsPublic"
+                    :isBlock="false"
+                    @onClickButton="onClickButton"
+                  />
+                </div>
+              </v-col>
+              <!-- <v-col>
                     <ButtonComponent
                       iconHeight="14px"
                       :isSmall="true"
@@ -59,39 +59,39 @@
                       @onClickButton="onClickButton"
                     />
                   </v-col> -->
-                </v-row>
+            </v-row>
           </v-container>
           <!-- Team name and profile link -->
           <v-container fluid>
             <v-row class="pt-5">
               <v-col cols="12" md="6" class="pt-0">
-                  <div class="d-flex justify-space-between d-md-none">
-                      <OutlinedButton
-                          :name="copyProfileText"
-                          customEvent="onClickCopyText"
-                          @onClickCopyText="onClickCopyText"
-                      />
-                      <OutlinedButton 
-                          name="Team Information"
-                          customEvent="onClickTeamDetail"
-                          @onClickTeamDetail="onClickTeamDetail"
-                      />
-                  </div>
-                  <div class="d-none d-md-flex">
-                      <OutlinedButton
-                          :name="copyProfileText"
-                          customEvent="onClickCopyText"
-                          @onClickCopyText="onClickCopyText"
-                      />
-                      <OutlinedButton 
-                          name="Team Information"
-                          customEvent="onClickTeamDetail"
-                          @onClickTeamDetail="onClickTeamDetail"
-                      />
-                  </div>
+                <div class="d-flex justify-space-between d-md-none">
+                  <OutlinedButton
+                    :name="copyProfileText"
+                    customEvent="onClickCopyText"
+                    @onClickCopyText="onClickCopyText"
+                  />
+                  <OutlinedButton
+                    name="Team Information"
+                    customEvent="onClickTeamDetail"
+                    @onClickTeamDetail="onClickTeamDetail"
+                  />
+                </div>
+                <div class="d-none d-md-flex">
+                  <OutlinedButton
+                    :name="copyProfileText"
+                    customEvent="onClickCopyText"
+                    @onClickCopyText="onClickCopyText"
+                  />
+                  <OutlinedButton
+                    name="Team Information"
+                    customEvent="onClickTeamDetail"
+                    @onClickTeamDetail="onClickTeamDetail"
+                  />
+                </div>
               </v-col>
               <v-col class="pt-0" cols="12" md="6">
-                  <Scroller />
+                <Scroller />
               </v-col>
             </v-row>
           </v-container>
@@ -99,92 +99,106 @@
             <v-row>
               <v-col cols="12">
                 <fieldset class="">
-                    <legend class="ml-8 px-1"><span>Personal Information</span></legend>
-                    <v-container fluid class="pt-0 px-5">
-                        <v-row dense>
-                            <v-col class="pt-1" cols="12" md="8">
-                              <PersonalInformationTable 
-                                :data="candidateData"
-                              />
-                            </v-col>
-                            <v-col ref="family-information" class="pt-1" cols="12" md="4">
-                                <MoreAbout 
-                                  :data="candidateData"
-                                />
-                            </v-col>
-                            <v-col class="pt-1" cols="12">
-                              <CardInfo title="More about me" 
-                                :detail="candidateData.personal.per_about" 
-                                class="mt-2"
-                              />
-                            </v-col>
-                            <v-col class="pt-1" cols="12">
-                              <CardInfo
-                                :showDownloadBtn="true"
-                                title="Additional Information"
-                                :detail="candidateData.more_about.per_additional_info_text"
-                                class="mt-2"
-                                @onClickDownload="onClickDownload"
-                              />
-                            </v-col>
-                            <v-col class="pt-1 mb-5" cols="12" md="6">
-                              <CardInfo
-                                title="I'm thankful for"
-                                class="mt-2"
-                                :detail="candidateData.personal.per_thankfull_for"
-                              />
-                            </v-col>
-                            <v-col class="pt-1 mb-5" cols="12" md="6">
-                              <CardInfo
-                                title="How I improve myself?"
-                                class="mt-2"
-                                :detail="getHowIImprove()"
-                              />
-                            </v-col>
-                        </v-row>
-                    </v-container>
+                  <legend class="ml-8 px-1">
+                    <span>Personal Information</span>
+                  </legend>
+                  <v-container fluid class="pt-0 px-5">
+                    <v-row dense>
+                      <v-col class="pt-1" cols="12" md="8">
+                        <PersonalInformationTable :data="candidateData" />
+                      </v-col>
+                      <v-col
+                        ref="family-information"
+                        class="pt-1"
+                        cols="12"
+                        md="4"
+                      >
+                        <MoreAbout :data="candidateData" />
+                      </v-col>
+                      <v-col class="pt-1" cols="12">
+                        <CardInfo
+                          title="More about me"
+                          :detail="candidateData.personal.per_about"
+                          class="mt-2"
+                        />
+                      </v-col>
+                      <v-col class="pt-1" cols="12">
+                        <CardInfo
+                          :showDownloadBtn="true"
+                          title="Additional Information"
+                          :detail="
+                            candidateData.more_about.per_additional_info_text
+                          "
+                          class="mt-2"
+                          @onClickDownload="onClickDownload"
+                        />
+                      </v-col>
+                      <v-col class="pt-1 mb-5" cols="12" md="6">
+                        <CardInfo
+                          title="I'm thankful for"
+                          class="mt-2"
+                          :detail="candidateData.personal.per_thankfull_for"
+                        />
+                      </v-col>
+                      <v-col class="pt-1 mb-5" cols="12" md="6">
+                        <CardInfo
+                          title="How I improve myself?"
+                          class="mt-2"
+                          :detail="getHowIImprove()"
+                        />
+                      </v-col>
+                    </v-row>
+                  </v-container>
                 </fieldset>
                 <fieldset id="family-information" class="-mt-15">
-                <legend class="ml-8 bg-white px-1"><span>Family Information</span></legend>
-                <v-container fluid class="pt-0 px-5">
+                  <legend class="ml-8 bg-white px-1">
+                    <span>Family Information</span>
+                  </legend>
+                  <v-container fluid class="pt-0 px-5">
                     <v-row dense>
-                        <v-col class="pt-1 mb-5" cols="12" md="7">
-                            <FamilyInfoTable :data="candidateData"/>
-                        </v-col>
-                        <v-col class="pt-1 mb-5" cols="12" md="5">
-                            <CardInfo :detail="candidateData.family.family_info"/>
-                        </v-col>
+                      <v-col class="pt-1 mb-5" cols="12" md="7">
+                        <FamilyInfoTable :data="candidateData" />
+                      </v-col>
+                      <v-col class="pt-1 mb-5" cols="12" md="5">
+                        <CardInfo :detail="candidateData.family.family_info" />
+                      </v-col>
                     </v-row>
-                </v-container>
+                  </v-container>
                 </fieldset>
                 <fieldset class="-mt-15">
-                  <legend id="my-partner-pref" class="ml-8 bg-white px-1"><span>My partner preference</span></legend>
+                  <legend id="my-partner-pref" class="ml-8 bg-white px-1">
+                    <span>My partner preference</span>
+                  </legend>
                   <v-container fluid class="pt-0 px-5">
-                        <v-row dense>
-                            <v-col class= "pt-1" cols="12" md="7">
-                                <MyPrefTable
-                                  :preference="candidateData.preference"
-                                  :countries="candidateData.preference.preferred_countries"
-                                />
-                            </v-col>
-                            <v-col class="pt-1" cols="12" md="5">
-                                <CardInfo
-                                    title="What I'm Looking for"
-                                    :detail="candidateData.preference.pre_description"
-                                />
-                            </v-col>
-                            <v-col class="pt-1" cols="12">
-                                <CardInfo
-                                    title="Other requirements"
-                                    :detail="candidateData.preference.pre_other_preference"
-                                />
-                            </v-col>
-                            <v-col class="pt-1" cols="12">
-                              <v-card class="px-3 py-5">
-                                <h5>More about preferred partner</h5>
-                                <p>How Important following characters are to me</p>
-                                <!-- Character -->
-                                <!-- <rating-component
+                    <v-row dense>
+                      <v-col class="pt-1" cols="12" md="7">
+                        <MyPrefTable
+                          :preference="candidateData.preference"
+                          :countries="
+                            candidateData.preference.preferred_countries
+                          "
+                        />
+                      </v-col>
+                      <v-col class="pt-1" cols="12" md="5">
+                        <CardInfo
+                          title="What I'm Looking for"
+                          :detail="candidateData.preference.pre_description"
+                        />
+                      </v-col>
+                      <v-col class="pt-1" cols="12">
+                        <CardInfo
+                          title="Other requirements"
+                          :detail="
+                            candidateData.preference.pre_other_preference
+                          "
+                        />
+                      </v-col>
+                      <v-col class="pt-1" cols="12">
+                        <v-card class="px-3 py-5">
+                          <h5>More about preferred partner</h5>
+                          <p>How Important following characters are to me</p>
+                          <!-- Character -->
+                          <!-- <rating-component
                                   title="Strength of character from a moral point of view"
                                   :value="
                                     candidateData.preference.pre_strength_of_character_rate
@@ -194,111 +208,169 @@
                                       .pre_strength_of_character_rate_string
                                   "
                                 ></rating-component> -->
-                                <!-- Looks and Appearance -->
-                                <rating-component
-                                  title="Looks, appearance & attractiveness"
-                                  :value="
-                                    candidateData.preference.pre_look_and_appearance_rate
-                                  "
-                                  :valueString="
-                                    candidateData.preference
-                                      .pre_look_and_appearance_rate_string
-                                  "
-                                ></rating-component>
-                                <!-- Religiosity/Faith -->
-                                <rating-component
-                                  title="Religiosity / Faith"
-                                  :value="
-                                    candidateData.preference.pre_religiosity_or_faith_rate
-                                  "
-                                  :valueString="
-                                    candidateData.preference
-                                      .pre_religiosity_or_faith_rate_string
-                                  "
-                                ></rating-component>
-                                <rating-component
-                                  title="Manners, Social skills and ethics"
-                                  :value="
-                                    candidateData.preference
-                                      .pre_manners_socialskill_ethics_rate
-                                  "
-                                  :valueString="
-                                    candidateData.preference
-                                      .pre_manners_socialskill_ethics_rate_string
-                                  "
-                                ></rating-component>
-                                <!-- Emotional Maturity and compatibility -->
-                                <rating-component
-                                  title="Emotional Maturity and general intelligence"
-                                  :value="
-                                    candidateData.preference.pre_emotional_maturity_rate
-                                  "
-                                  :valueString="
-                                    candidateData.preference
-                                      .pre_emotional_maturity_rate_string
-                                  "
-                                ></rating-component>
-                                <!-- Good Listener -->
-                                <rating-component
-                                  title="Good Listener"
-                                  :value="candidateData.preference.pre_good_listener_rate"
-                                  :valueString="
-                                    candidateData.preference.pre_good_listener_rate_string
-                                  "
-                                ></rating-component>
-                                <!-- Good talker -->
-                                <rating-component
-                                  title="Good communicator"
-                                  :value="candidateData.preference.pre_good_talker_rate"
-                                  :valueString="
-                                    candidateData.preference.pre_good_talker_rate_string
-                                  "
-                                ></rating-component>
-                                <!-- Willing to learn -->
-                                <rating-component
-                                  title="Willing to learn"
-                                  :value="candidateData.preference.pre_wiling_to_learn_rate"
-                                  :valueString="
-                                    candidateData.preference.pre_wiling_to_learn_rate_string
-                                  "
-                                ></rating-component>
-                                <!-- Family or Social Status-->
-                                <rating-component
-                                  title="Family or Social Status"
-                                  :value="
-                                    candidateData.preference.pre_family_social_status_rate
-                                  "
-                                  :valueString="
-                                    candidateData.preference
-                                      .pre_family_social_status_rate_string
-                                  "
-                                ></rating-component>
-                                <!-- Employment or Wealth-->
-                                <rating-component
-                                  title="Employment and financial stability"
-                                  :value="
-                                    candidateData.preference.pre_employment_wealth_rate
-                                  "
-                                  :valueString="
-                                    candidateData.preference
-                                      .pre_employment_wealth_rate_string
-                                  "
-                                ></rating-component>
-                                <!-- Education -->
-                                <rating-component
-                                  title="Education and academic accomplishments"
-                                  :value="candidateData.preference.pre_education_rate"
-                                  :valueString="
-                                    candidateData.preference.pre_education_rate_string
-                                  "
-                                ></rating-component>
-                              </v-card>
-                            </v-col>
-                        </v-row>
-                    </v-container>
+                          <!-- Looks and Appearance -->
+                          <rating-component
+                            title="Looks, appearance & attractiveness"
+                            :value="
+                              candidateData.preference
+                                .pre_look_and_appearance_rate
+                            "
+                            :valueString="
+                              candidateData.preference
+                                .pre_look_and_appearance_rate_string
+                            "
+                          ></rating-component>
+                          <!-- Religiosity/Faith -->
+                          <rating-component
+                            title="Religiosity / Faith"
+                            :value="
+                              candidateData.preference
+                                .pre_religiosity_or_faith_rate
+                            "
+                            :valueString="
+                              candidateData.preference
+                                .pre_religiosity_or_faith_rate_string
+                            "
+                          ></rating-component>
+                          <rating-component
+                            title="Manners, Social skills and ethics"
+                            :value="
+                              candidateData.preference
+                                .pre_manners_socialskill_ethics_rate
+                            "
+                            :valueString="
+                              candidateData.preference
+                                .pre_manners_socialskill_ethics_rate_string
+                            "
+                          ></rating-component>
+                          <!-- Emotional Maturity and compatibility -->
+                          <rating-component
+                            title="Emotional Maturity and general intelligence"
+                            :value="
+                              candidateData.preference
+                                .pre_emotional_maturity_rate
+                            "
+                            :valueString="
+                              candidateData.preference
+                                .pre_emotional_maturity_rate_string
+                            "
+                          ></rating-component>
+                          <!-- Good Listener -->
+                          <rating-component
+                            title="Good Listener"
+                            :value="
+                              candidateData.preference.pre_good_listener_rate
+                            "
+                            :valueString="
+                              candidateData.preference
+                                .pre_good_listener_rate_string
+                            "
+                          ></rating-component>
+                          <!-- Good talker -->
+                          <rating-component
+                            title="Good communicator"
+                            :value="
+                              candidateData.preference.pre_good_talker_rate
+                            "
+                            :valueString="
+                              candidateData.preference
+                                .pre_good_talker_rate_string
+                            "
+                          ></rating-component>
+                          <!-- Willing to learn -->
+                          <rating-component
+                            title="Willing to learn"
+                            :value="
+                              candidateData.preference.pre_wiling_to_learn_rate
+                            "
+                            :valueString="
+                              candidateData.preference
+                                .pre_wiling_to_learn_rate_string
+                            "
+                          ></rating-component>
+                          <!-- Family or Social Status-->
+                          <rating-component
+                            title="Family or Social Status"
+                            :value="
+                              candidateData.preference
+                                .pre_family_social_status_rate
+                            "
+                            :valueString="
+                              candidateData.preference
+                                .pre_family_social_status_rate_string
+                            "
+                          ></rating-component>
+                          <!-- Employment or Wealth-->
+                          <rating-component
+                            title="Employment and financial stability"
+                            :value="
+                              candidateData.preference
+                                .pre_employment_wealth_rate
+                            "
+                            :valueString="
+                              candidateData.preference
+                                .pre_employment_wealth_rate_string
+                            "
+                          ></rating-component>
+                          <!-- Education -->
+                          <rating-component
+                            title="Education and academic accomplishments"
+                            :value="candidateData.preference.pre_education_rate"
+                            :valueString="
+                              candidateData.preference.pre_education_rate_string
+                            "
+                          ></rating-component>
+                        </v-card>
+                      </v-col>
+                    </v-row>
+                  </v-container>
                 </fieldset>
               </v-col>
             </v-row>
+          </v-container>
+          <v-container fluid>
+            <div class="review-edit mt-5">
+              <div class="review-edit-label">
+                My Uploaded Image
+               
+              </div>
+              <div class="row">
+                <div class="col-12 col-md-6 mb-4">
+                  <div class="profile-img text-center">
+                    <img
+                      v-viewer
+                      :src="candidateData.personal.per_avatar_url"
+                      alt="img"
+                      class="contain"
+                    />
+                    <p class="text-center">Avatar</p>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 mb-4">
+                  <div class="profile-img text-center">
+                    <img
+                      v-viewer
+                      :src="candidateData.personal.per_main_image_url"
+                      alt="img"
+                      class="contain"
+                    />
+                    <p class="text-center">Main image</p>
+                  </div>
+                </div>
+
+                <!-- <div class="col-12 col-md-4 mb-3">
+                  <div class="profile-img text-center">
+                    <img
+                      v-viewer
+                      :src="candidateData.other_images"
+                      alt="img"
+                      class="contain"
+                    />
+                    <p class="text-center">Additional image</p>
+                  </div>
+                </div> -->
+              </div>
+            </div>
           </v-container>
           <ComingSoonModal
             title="Team details quick view"
@@ -312,26 +384,26 @@
 </template>
 
 <script>
-import PersonalInformationTable from '@/components/search/personal-information/PersonalInformationTable.vue'
-import FamilyInfoTable from '@/components/search/personal-information/FamilyInfoTable.vue'
-import MyPrefTable from '@/components/search/personal-information/MyPrefTable.vue'
-import CardInfo from '@/components/atom/CardInfo'
-import MoreAbout from '@/components/search/personal-information/MoreAbout.vue'
-import Scroller from  '@/components/atom/Scroller'
-import ButtonComponent from '@/components/atom/ButtonComponent'
+import PersonalInformationTable from "@/components/search/personal-information/PersonalInformationTable.vue";
+import FamilyInfoTable from "@/components/search/personal-information/FamilyInfoTable.vue";
+import MyPrefTable from "@/components/search/personal-information/MyPrefTable.vue";
+import CardInfo from "@/components/atom/CardInfo";
+import MoreAbout from "@/components/search/personal-information/MoreAbout.vue";
+import Scroller from "@/components/atom/Scroller";
+import ButtonComponent from "@/components/atom/ButtonComponent";
 
 import RatingComponent from "./RatingComponent.vue";
 import ProfileBanner from "@/components/atom/ProfileBanner";
 import firebase from "../../configs/firebase";
 import Footer from "@/components/auth/Footer.vue";
 import ApiService from "@/services/api.service";
-import OutlinedButton from '@/components/atom/OutlinedButton'
-import ComingSoonModal from "@/components/search/ComingSoonModal"
-import improveMyselfThings from '@/common/improveMyselfThings'
+import OutlinedButton from "@/components/atom/OutlinedButton";
+import ComingSoonModal from "@/components/search/ComingSoonModal";
+import improveMyselfThings from "@/common/improveMyselfThings";
 
 export default {
   name: "CandidateProfile",
-  components: { 
+  components: {
     PersonalInformationTable,
     FamilyInfoTable,
     MyPrefTable,
@@ -339,19 +411,19 @@ export default {
     CardInfo,
     Scroller,
     ButtonComponent,
-    RatingComponent, 
+    RatingComponent,
     Footer,
     ProfileBanner,
     OutlinedButton,
-    ComingSoonModal
+    ComingSoonModal,
   },
   data() {
     return {
       improveMyselfThings,
-      copyProfileText: 'Copy Profile URL',
+      copyProfileText: "Copy Profile URL",
       images: [],
-      copyIcon: '/assets/icon/copy-secondary.svg',
-      checkIcon: '/assets/icon/check-circle-secondary.svg',
+      copyIcon: "/assets/icon/copy-secondary.svg",
+      checkIcon: "/assets/icon/check-circle-secondary.svg",
       copied: false,
       avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
       conversations: [],
@@ -364,7 +436,7 @@ export default {
   },
   computed: {
     domain() {
-      return window.location.origin
+      return window.location.origin;
     },
     studyLevel() {
       if (this.candidateData.preference.pre_study_level_id) {
@@ -384,70 +456,75 @@ export default {
   },
   methods: {
     onClickTeamDetail() {
-      this.$refs.advDiag.openDiag()
+      this.$refs.advDiag.openDiag();
       // alert('coming soon')
     },
     onClickDownload() {
       //location.href=`${this.candidateData.more_about?.per_additional_info_doc}`
-      if(this.candidateData.more_about?.per_additional_info_doc == null) {
+      if (this.candidateData.more_about?.per_additional_info_doc == null) {
         this.$error({
-          title: 'Link not available!',
+          title: "Link not available!",
           center: true,
         });
       }
 
-      if(this.candidateData.more_about?.per_additional_info_doc) {
-        window.open(this.candidateData.more_about?.per_additional_info_doc, '_blank')
+      if (this.candidateData.more_about?.per_additional_info_doc) {
+        window.open(
+          this.candidateData.more_about?.per_additional_info_doc,
+          "_blank"
+        );
       }
     },
     getHowIImprove() {
       let text = [];
       let items = [];
-      if(this.candidateData.more_about?.per_improve_myself?.length) {
-        this.candidateData.more_about.per_improve_myself.map(i => {
-          items.push(this.improveMyselfThings.find(im => im.value === i))
-        })
+      if (this.candidateData.more_about?.per_improve_myself?.length) {
+        this.candidateData.more_about.per_improve_myself.map((i) => {
+          items.push(this.improveMyselfThings.find((im) => im.value === i));
+        });
       }
-      if(items && items.length) {
-        items.map(i => {
-          text.push(i.label)
-        })
+      if (items && items.length) {
+        items.map((i) => {
+          text.push(i.label);
+        });
       }
-      return text.join(' \n ');
+      return text.join(" \n ");
     },
     onClickButton(data) {
-      if(data.event == 'editProfile') this.$router.push('/edit_candidate')
-      if(data.event == 'openGallery') this.openGallery()
-      if(data.event == 'viewAsPublic') this.viewAsPublic()
-      console.log(data, '>>>>>>>>>>>')
+      if (data.event == "editProfile") this.$router.push("/edit_candidate");
+      if (data.event == "openGallery") this.openGallery();
+      if (data.event == "viewAsPublic") this.viewAsPublic();
+      console.log(data, ">>>>>>>>>>>");
     },
     openGallery() {
-      this.images= [];
-      let images = this.candidateData.other_images
-      if(images && images.length > 0) {
-        images.map(i => this.images.push(i.image_path));
+      this.images = [];
+      let images = this.candidateData.other_images;
+      if (images && images.length > 0) {
+        images.map((i) => this.images.push(i.image_path));
         this.show();
       } else {
         this.$error({
-          title: 'No image found',
+          title: "No image found",
           center: true,
         });
       }
     },
     viewAsPublic() {
-      this.$router.push(`/user/profile/${this.candidateData.user_id}`)
+      this.$router.push(`/user/profile/${this.candidateData.user_id}`);
     },
     show() {
       this.$viewerApi({
         images: this.images,
-      })
+      });
     },
     onClickCopyText() {
-      this.copyProfileText = 'Copy successful'
-      navigator.clipboard.writeText(this.domain+'/user/profile/'+this.candidateData.user_id);
+      this.copyProfileText = "Copy successful";
+      navigator.clipboard.writeText(
+        this.domain + "/user/profile/" + this.candidateData.user_id
+      );
       this.copied = true;
       setTimeout(() => {
-        this.copyProfileText = 'Copy Profile URL';
+        this.copyProfileText = "Copy Profile URL";
       }, 3000);
     },
     copyProfileLink() {
@@ -579,24 +656,24 @@ export default {
 
 <style scoped lang="scss">
 .container--fluid {
-    max-width: 100% !important;
+  max-width: 100% !important;
 }
 fieldset {
-    border: 1px solid #d3d0e4;
-    border-radius: 10px;
+  border: 1px solid #d3d0e4;
+  border-radius: 10px;
 }
 legend {
-    display: inline;
-    width: inherit;
-    color: #6259a8;
-    font-size: 18px;
-    font-weight: 600;
+  display: inline;
+  width: inherit;
+  color: #6259a8;
+  font-size: 18px;
+  font-weight: 600;
 }
 .-mt-15 {
-    margin-top: -13px;
+  margin-top: -13px;
 }
 .bg-white {
-    background: white;
+  background: white;
 }
 @import "@/styles/base/_variables.scss";
 .candidate-profile {
@@ -641,9 +718,9 @@ legend {
         position: absolute;
         right: 5px;
         cursor: pointer;
-        transition: .4s;
-        opacity: .7;
-        top:0;
+        transition: 0.4s;
+        opacity: 0.7;
+        top: 0;
         &:hover {
           opacity: 1;
         }
@@ -653,7 +730,7 @@ legend {
         }
       }
     }
-      padding-right: 15px;
+    padding-right: 15px;
     @media (max-width: 1024px) {
       max-width: calc(100% - 15px);
       border-radius: 10px;
@@ -762,6 +839,34 @@ legend {
   width: 100%;
   @media (max-width: 767px) {
     display: none;
+  }
+}
+.review-edit {
+  position: relative;
+  padding: 15px;
+  border: 1px solid $border-secondary;
+  border-radius: 5px;
+  .review-edit-label {
+    position: absolute;
+    color: $color-secondary;
+    left: 50px;
+    top: -12px;
+    background: $bg-white;
+    cursor: pointer;
+  }
+}
+ul {
+  .label-text {
+    //opacity: 0.8;
+  }
+}
+.profile-img {
+  border-radius: 5px;
+  overflow: hidden;
+  p {
+    font-size: 16px;
+    margin-top: 10px;
+    font-weight: bolder;
   }
 }
 </style>
