@@ -53,13 +53,13 @@ const thankfulThings = [
     label: "My Parents",
     value: "My Parents",
     description:
-      "Even they�re now in their old age, but they looked after me when I was little. I am what I am now, it is because of them. ",
+      "Even they are now in their old age, but they looked after me when I was little. I am what I am now, it is because of them. ",
   },
   {
     label: "Weekends or quiet time",
     value: "Weekends or quiet time",
     description:
-      "There�s something magical about weekends or quiet time",
+      "There is something magical about weekends or quiet time",
   },
   {
     label: "Having a Partner",
@@ -77,13 +77,13 @@ const thankfulThings = [
     label: "Learning from Mistakes",
     value: "Learning from Mistakes",
     description:
-      "If we never made mistakes, we wouldn�t learn much so it is one of those things we should be thankful for.",
+      "If we never made mistakes, we wouldn't learn much so it is one of those things we should be thankful for.",
   },
   {
     label: "Opportunity to Get an Education",
     value: "Opportunity to Get an Education",
     description:
-      "The opportunity to attend school is something many people don�t have.",
+      "The opportunity to attend school is something many people don't have.",
   },
   {
     label: "Laughter",
@@ -100,7 +100,7 @@ const thankfulThings = [
     label: "An Ability to Read",
     value: "An Ability to Read",
     description:
-      "If you�re reading this right now, you have a lot to be thankful for.",
+      "If you are reading this right now, you have a lot to be thankful for.",
   },
   {
     label: "Breathing Fresh Air",
@@ -112,7 +112,7 @@ const thankfulThings = [
     label: "A Bed to Sleep",
     value: "A Bed to Sleep",
     description:
-      "A bed is one of those things that�s easy to take for granted, until you don�t have one.",
+      "A bed is one of those things that is easy to take for granted, until you don't have one.",
   },
   // {
   //   label: "Laughter",
@@ -134,12 +134,12 @@ const thankfulThings = [
     label: "Sunshine",
     value: "Sunshine",
     description:
-      "The sun�s warmth can brighten any day, benefits us and other life forms.",
+      "The sun's warmth can brighten any day, benefits us and other life forms.",
   },
   {
     label: "Time",
     value: "Time",
-    description: "Although we often don�t think there�s enough of it, time is something we shouldn�t take for granted.",
+    description: "Although we often don't think there's enough of it, time is something we shouldn't take for granted.",
   },
   {
     label: "Clean Water",
@@ -154,7 +154,7 @@ const thankfulThings = [
   // {
   //   label: "Time",
   //   value: "Time",
-  //   description: "Although we often don�t think there�s enough of it, time is something we shouldn�t take for granted.",
+  //   description: "Although we often don't think there's enough of it, time is something we shouldn't take for granted.",
   // },
   {
     label: "Books",

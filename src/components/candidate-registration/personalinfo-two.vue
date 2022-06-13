@@ -802,7 +802,9 @@
                   <span v-else @click="toggle(19)"> Hide Help? </span>
                 </a>
               </p>
-              <div class="collapse" id="collapsePersonalInfoCountryOfBirth">
+              <div class="collapse" 
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoCountryOfBirth">
                 <div class="card card-body bubble">
                   If you can't find your country listed, please select 'other'
                   and state your country details in the additional information
@@ -3140,7 +3142,7 @@ export default {
   }
 }
 .ant-input-disabled {
-  color: #282828 !important;
+  color: #999999 !important;
 }
 input[type="file"] {
   cursor: pointer;
