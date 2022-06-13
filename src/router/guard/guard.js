@@ -38,7 +38,7 @@ export const InitRoute = (to, from, next) => {
         return to.name == 'ManageTeam' ? next() : next({ name: 'ManageTeam' });
     }
 
-    else if (user.account_type === 1 && user.form_type === 1 && user.data_input_status <= 5) {
+    else if (user.account_type === 1 && user.form_type === 1 && (user.data_input_status <= 5 || user.status == '4')) {
 
         return to.name == 'CandidateRegistration' ? next() : next({ name: 'CandidateRegistration' });
     }
@@ -48,7 +48,7 @@ export const InitRoute = (to, from, next) => {
         return to.name == 'ManageTeam' ? next() : next({ name: 'ManageTeam' });
     }
 
-    else if (user.account_type === 2 && user.data_input_status <= 3) {
+    else if (user.account_type === 2 && (user.data_input_status <= 3 || user.status == '4')) {
         return to.name == 'RepresentativeRegistration' ? next() : next({ name: 'RepresentativeRegistration' });
     }
 
