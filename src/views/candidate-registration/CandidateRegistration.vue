@@ -225,6 +225,7 @@ export default {
   },
   data() {
     return {
+      isAgree: false,
       dialog: false,
       isLoading: false,
       showAgreement: false,
@@ -299,12 +300,8 @@ export default {
       }
     },
     onAgree(value) {
-      this.showAgreement = value;
-      if (!this.showAgreement) {
-        this.current++;
-      } else {
-        this.checkExistData();
-      }
+      this.isAgree = value;
+      this.enabledNextBtn = true;
     },
     onDataChange(e) {
       switch (e.current) {
@@ -578,8 +575,8 @@ export default {
           );
         }
         this.current = response.data.data.user.data_input_status;
-        this.showAgreement =
-          response.data.data.user.is_uplaoded_doc == "1" ? true : false;
+        // this.showAgreement =
+        //   response.data.data.user.is_uplaoded_doc == "1" ? true : false;
         const {
           ver_country_id,
           ver_document_type,
@@ -598,8 +595,8 @@ export default {
         ) {
           this.candidateDetails.verification = {
             ...this.candidateDetails.verification,
-            ver_document_frontside: "",
-            ver_document_backside: "",
+            ver_image_back: "",
+            ver_image_front: "",
           };
         }
         this.checkExistData();
@@ -779,14 +776,13 @@ export default {
             ver_image_back,
             ver_image_front,
           } = this.candidateDetails.verification;
-          isEnabled = this.showAgreement
-            ? Object.values({
-                ver_country_id,
-                ver_document_type,
-                ver_image_back,
-                ver_image_front,
-              }).every((x) => x !== undefined && x !== null && x !== "")
-            : true;
+          isEnabled = Object.values({
+            ver_country_id,
+            ver_document_type,
+            ver_image_back,
+            ver_image_front,
+          }).every((x) => x !== undefined && x !== null && x !== "");
+
           break;
       }
 
@@ -863,7 +859,12 @@ export default {
           break;
         }
         case 4: {
-          this.current++;
+          if (this.isAgree) {
+            this.showAgreement = true;
+            this.isAgree = false;
+          } else {
+            this.current++;
+          }
           break;
         }
         default: {

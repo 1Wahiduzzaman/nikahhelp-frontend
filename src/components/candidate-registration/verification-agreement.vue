@@ -2,44 +2,51 @@
   <div class="success-message font-poppins">
     <div>
       <h3 class="mt-3 fw-700 text-black-50 header-text">ID Verification</h3>
+      <p class="mt-4">We wish to provide genuine and ID verified candidates.</p>
       <p class="mt-4">
-        We wish to provide genuine and ID verified candidates.
-        </p>
-  <p class="mt-4">
-       To connect, a team must have the candidate and at  least one representative ID verified.
-        </p>
+        To connect, a team must have the candidate and at least one
+        representative ID verified.
+      </p>
 
-
-  <p class="mt-4">
-        You can upload your ID now or later. </p>
-          <p class="mt-4">
-        If you choose to do this later, you can do it through your personal settings screen. By proceeding you agree to do this in line with your consent and agreement to the MatrimonyAssist terms and conditions.
-        </p>
+      <p class="mt-4">You can upload your ID now or later.</p>
+      <p class="mt-4">
+        If you choose to do this later, you can do it through your personal
+        settings screen. By proceeding you agree to do this in line with your
+        consent and agreement to the MatrimonyAssist terms and conditions.
+      </p>
       <p class="mt-5 verify-text fs-20">Do you wish to upload your ID now?</p>
-
 
       <!-- <p class="mt-4">
         Please press Yes button to complete the
         <span class="type-access">ID</span> Verification.
       </p>
       <p class="mt-4">Or please press No button to ignore it.</p> -->
-      
+
       <div class="actions">
         <button
-          @click="handleClick(false)"
-          class="btn ms-2 text-nowrap disagree-button"
+          :class="{ active: showDisAgree }"
+          @click="
+            handleClick(false);
+            showDisAgree = true;
+            showAgree = false;
+          "
+          class="btn ms-2 text-nowrap agree-button"
         >
           No
         </button>
         <button
-          @click="handleClick(true)"
+          :class="{ active: showAgree }"
+          @click="
+            handleClick(true);
+            showAgree = true;
+            showDisAgree = false;
+          "
           class="btn ms-2 text-nowrap agree-button"
         >
           Yes
         </button>
       </div>
-      <br><br><br><br>
-
+      <br /><br /><br /><br />
     </div>
   </div>
 </template>
@@ -49,11 +56,15 @@ export default {
   name: "VerificationAgreement",
   components: {},
   data() {
-    return {};
+    return {
+      showAgree: null,
+      showDisAgree: null,
+    };
   },
   created() {},
   methods: {
     handleClick(value) {
+      this.showAgree = value;
       this.$emit("agree", value);
     },
   },
@@ -92,17 +103,15 @@ export default {
 .agree-button {
   background-color: #dddae0;
   padding: 0px 20px;
-  color: white;
-  height: 36px;
-  border-radius: 60px;
-}
-.disagree-button {
-  background-color: #dddae0;
-  padding: 0px 20px;
   color: #282626;
   height: 36px;
   border-radius: 60px;
+  &.active {
+    background-color: #6159a7;
+    color: #dddae0;
+  }
 }
+
 .type-access {
   color: $color-primary;
   text-decoration: underline;
