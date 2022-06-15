@@ -45,7 +45,7 @@
               userStatus == 0
             "
             :loading="loadingReinstate"
-            @click="updateUserVerifyOrReject('completed')"
+            @click="updateUserVerifyOrReject('reinstate')"
             style="background-color: rgb(61 185 156); color: #fff"
             small
           >
@@ -1085,17 +1085,32 @@ export default {
       await this.$store
         .dispatch("updateUserVerifyOrReject", data)
         .then((data) => {
+          this.saveCandidateUploadDoc();
           this.cancelLoading = false;
           console.log(data, "rejected");
           if (data.status == 4) {
             this.candidateData.user.status = 4;
           }
-         
+
           this.cancel(null);
         })
         .catch((error) => {
           this.cancelLoading = false;
         });
+    },
+    async saveCandidateUploadDoc() {
+      const data = {
+        id: this.$route.params.user_id,
+        is_uplaoded_doc: "0",
+      };
+      await this.$store
+        .dispatch("saveCandidateUploadDoc", data)
+        .then((data) => {
+          user.is_uplaoded_doc = "0";
+          localStorage.setItem(JSON.stringify(user));
+          this.$emit("valueChange", true);
+        })
+        .catch((error) => {});
     },
     async updateUserVerifyOrReject(status) {
       switch (status) {
@@ -1104,17 +1119,19 @@ export default {
           break;
         case "suspend":
           this.loadingSuspend = true;
+            this.saveCandidateUploadDoc();
           break;
         case "deleted":
           this.loadingDelete = true;
+            this.saveCandidateUploadDoc();
           break;
-        case "completed":
+        case "reinstate":
           this.loadingReinstate = true;
           break;
       }
       const data = {
         id: this.$route.params.user_id,
-        status: status,
+        status: status=='reinstate'?'completed':status,
       };
       await this.$store
         .dispatch("updateUserVerifyOrReject", data)

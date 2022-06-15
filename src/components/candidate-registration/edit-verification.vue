@@ -467,7 +467,10 @@
         </a-collapse-panel>
       </a-collapse>
     </div>
-    <div class="verification-msg" v-if="userData && userData.status == '2'">
+    <div
+      class="verification-msg"
+      v-if="candidateDetails && candidateDetails.is_uplaoded_doc == '1'"
+    >
       <div class="identity">
         <img
           src="@/assets/icon/dots-horizontal-circle.svg"
