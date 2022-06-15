@@ -177,6 +177,7 @@ const AppRouter = new VueRouter({
             },
             {
                 path: "support",
+                name:'Support',
                 component: AdminSupport,
 
             },

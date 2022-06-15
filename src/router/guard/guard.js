@@ -19,7 +19,9 @@ export const InitRoute = (to, from, next) => {
     else if (user.is_verified == 0) {
         return to.name == 'EmailVerification' ? next() : next({ name: 'EmailVerification' });
     }
-
+    else if (user && user.email === 'support@gmail.com' && to.name == 'DHome') {
+        return next({ name: 'Support' });
+    }
     else if (user && user.email === 'superadmin@gmail.com' && to.name == 'DHome') {
         return next({ name: 'AdminUsers' });
     }
