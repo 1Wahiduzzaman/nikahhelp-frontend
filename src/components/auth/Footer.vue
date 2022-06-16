@@ -59,19 +59,11 @@
   </footer>
 </template>
 
-<script>
-export default {
-  name: "Footer",
-  components: {},
-};
-</script>
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 footer {
   border-top: 1px solid $border-default;
 
-  // z-index: -1;
-  // overflow: hidden;
   .footer-menu {
     display: flex;
     flex-wrap: wrap;

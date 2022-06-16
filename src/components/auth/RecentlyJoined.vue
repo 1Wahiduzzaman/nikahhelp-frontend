@@ -19,44 +19,21 @@
         <slide v-for="(user, recIndex) in recJoin" :key="user.id">
           <div class="item flex-between-center ml-2 mr-2">
             <div class="item-img custom-size">
-              <img class="item-img" @error="imgLoad(index, user)" :ref="`avatar-${index}`" :src="user.image" alt="img" style="border: 1px solid white;"/>
+              <img class="item-img"
+                   @error="imgLoad(index, user)"
+                   :ref="`avatar-${index}`"
+                   :src="user.image"
+                   alt="img"
+                   style="border: 1px solid white;"/>
             </div>
             <div class="item-content">
               <div>{{ getUserGender(user) }}, {{ user.age ? getAge(user.age) + ' years' : 'N/A' }}</div>
-              <!--							<div>{{ user.name }}</div>-->
               <div>{{  user.ethnicity ? user.ethnicity : 'N/A' }}, {{ user.religion ? user.religion : 'N/A' }}</div>
               <div>{{ user.study_level ? user.study_level : 'N/A' }}</div>
-              <!-- <div>{{ user.location_name }}</div>-->
-              <!-- <div>{{ getAge(user.age) }}</div>
-              <div>{{ user.religion }}</div>
-              <div>{{ user.ethinicity }}</div> -->
             </div>
           </div>
         </slide>
       </carousel>
-
-<!--			<div class="row position-relative" style="margin-top: 10px">-->
-<!--				<div class="col-md-4" v-for="user in recJoin" :key="user.name">-->
-<!--					<div class="item flex-between-center">-->
-<!--						<div class="item-img">-->
-<!--							<img class="item-img" @error="imgLoad(index, user)" :ref="`avatar-${index}`" :src="user.image" alt="img" style="border: 1px solid white;"/>-->
-<!--						</div>-->
-<!--						<div class="item-content">-->
-<!--							<div>{{ user.age ? getAge(user.age) : 'N/A' }}</div>-->
-<!--&lt;!&ndash;							<div>{{ user.name }}</div>&ndash;&gt;-->
-<!--							<div>{{  user.ethinicity ? user.ethinicity : 'N/A' }}, {{ user.religion ? user.religion : 'N/A' }}</div>-->
-<!--							<div>{{ user.study_level ? user.study_level : 'N/A' }}</div>-->
-<!--&lt;!&ndash;							<div>{{ user.location_name }}</div>&ndash;&gt;-->
-<!--							&lt;!&ndash; <div>{{ getAge(user.age) }}</div>-->
-<!--              <div>{{ user.religion }}</div>-->
-<!--              <div>{{ user.ethinicity }}</div> &ndash;&gt;-->
-<!--						</div>-->
-<!--					</div>-->
-<!--				</div>-->
-
-<!--        <img src="@/assets/icon/bg_layer_1.svg" alt="bg" class="position-absolute bg-layer-2 layer-2" />-->
-<!--        <img src="@/assets/icon/bg_layer_1_1.svg" alt="bg" class="position-absolute bg-layer-2-1" />-->
-<!--			</div>-->
 		</div>
 	</div>
 </template>
@@ -66,21 +43,25 @@ import ApiService from "../../services/api.service";
 import { Carousel, Slide } from "vue-carousel";
 export default {
 	name: "RecentlyJoined",
+
 	components: {
     Carousel,
     Slide,
   },
+
 	data() {
 		return {
 			recJoin: [],
 		};
 	},
+
 	async mounted() {
 		await ApiService.get("v1/recent-join-candidate").then((data) => {
 			console.log(data);
 			this.recJoin = data.data.data;
 		});
 	},
+
 	methods: {
     getUserGender(user) {
       if(user && user.gender && user.gender > 0) {
@@ -88,6 +69,7 @@ export default {
       }
       return 'N/A';
     },
+
 		getAge(dateString) {
 			let today = new Date();
 			let birthDate = new Date(dateString);
@@ -98,6 +80,7 @@ export default {
 			}
 			return age;
 		},
+
 		imgLoad(index, user) {
 			let img = this.$refs[`avatar-${index}`][0];
 			img.src = `https://ui-avatars.com/api/?name=${user.name}background=b5b5b5&color=fff`;
@@ -105,6 +88,7 @@ export default {
 	},
 };
 </script>
+
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .recently-joinded {

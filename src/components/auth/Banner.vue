@@ -31,12 +31,7 @@ import UnAuthSearchForm from "@/components/search/UnAuthSearchForm";
 export default {
   name: "Banner",
   components: {UnAuthSearchForm },
-  data() {
-    return {
-      countries: [],
-      religions: []
-    };
-  },
+
   methods: {
     handleSearch(_payload) {
       this.$router
@@ -44,29 +39,11 @@ export default {
             name: "UnAuthSearch",
             params: { url: _payload },
           });
-      // await ApiService.get(_payload).then(response => {
-      //   if(response && response.data && response.data.status != 'FAIL') {
-      //     this.$router
-      //         .push({
-      //           name: "UnAuthSearch",
-      //           params: { url: response.data.data.data },
-      //         });
-      //   } else {
-      //     this.$error({
-      //       title: "No candidate found",
-      //       center: true,
-      //     });
-      //   }
-      // }).catch(e => {
-      //   this.$error({
-      //     title: "Something went wrong!",
-      //     center: true,
-      //   });
-      // });
     },
   },
 };
 </script>
+
 <style lang="scss">
 @import "~@vueform/slider/themes/default.css";
 @import "@/styles/base/_variables.scss";
