@@ -171,7 +171,7 @@
 
               <div v-if="preferenceData.pre_has_country_allow_preference">
                 <div class="row my-1">
-                  <div class="col-md-6 mobile-margin">
+                  <div class="col-md-12 mobile-margin">
                     <v-select
                       :clearable="false"
                       id="preferred_countries0"
@@ -187,22 +187,22 @@
                         <a-icon type="down" /> </template
                     ></v-select>
                   </div>
-                  <div class="col-md-6 mobile-margin">
-                    <v-select
-                      :clearable="false"
-                      :loading="loading"
-                      id="preferred_cities0"
-                      class="style-chooser"
-                      label="name"
-                      placeholder="any city"
-                      v-model.lazy="preferenceData.preferred_cities[0]"
-                      :options="preferenceData.allowedCity.listOne"
-                      @input="onValueChange($event, 'preferred_cities')"
-                      ><template #open-indicator>
-                        <a-icon type="down" />
-                      </template>
-                    </v-select>
-                  </div>
+<!--                  <div class="col-md-6 mobile-margin">-->
+<!--                    <v-select-->
+<!--                      :clearable="false"-->
+<!--                      :loading="loading"-->
+<!--                      id="preferred_cities0"-->
+<!--                      class="style-chooser"-->
+<!--                      label="name"-->
+<!--                      placeholder="any city"-->
+<!--                      v-model.lazy="preferenceData.preferred_cities[0]"-->
+<!--                      :options="preferenceData.allowedCity.listOne"-->
+<!--                      @input="onValueChange($event, 'preferred_cities')"-->
+<!--                      ><template #open-indicator>-->
+<!--                        <a-icon type="down" />-->
+<!--                      </template>-->
+<!--                    </v-select>-->
+<!--                  </div>-->
                 </div>
 
                 <!-- <div class="row my-1">
@@ -372,7 +372,7 @@
               </div>
               <div v-if="preferenceData.pre_has_country_disallow_preference">
                 <div class="row my-1">
-                  <div class="col-md-6 mobile-margin">
+                  <div class="col-md-12 mobile-margin">
                     <v-select
                       :clearable="false"
                       id="bloked_countries0"
@@ -382,21 +382,6 @@
                       placeholder="Select Country"
                       :options="candidateDetails.countries"
                       @input="onChangeCountry($event, 'listOne', 'disAllowed')"
-                      ><template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
-                  </div>
-                  <div class="col-md-6 mobile-margin">
-                    <v-select
-                      :clearable="false"
-                      :loading="loadingDisallowed"
-                      id="blocked_cities0"
-                      class="style-chooser"
-                      placeholder="any city"
-                      v-model.lazy="preferenceData.blocked_cities[0]"
-                      label="name"
-                      :options="preferenceData.disAllowedCity.listOne"
-                      @input="onValueChange($event, 'blocked_cities')"
                       ><template #open-indicator>
                         <a-icon type="down" /> </template
                     ></v-select>

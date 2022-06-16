@@ -925,7 +925,7 @@
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <div class="row">
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-12">
                   <a-form-model-item
                     ref="per_current_residence_country"
                     prop="per_current_residence_country"
@@ -975,59 +975,59 @@
                     </a-select> -->
                   </a-form-model-item>
                 </div>
-                <div class="col-12 col-md-6 mobile-margin">
-                  <a-form-model-item
-                    ref="per_current_residence_city"
-                    prop="per_current_residence_city"
-                  >
-                    <v-select
-                      :clearable="false"
-                      :loading="loading"
-                      class="style-chooser"
-                      @input="
-                        onValueChange(
-                          $event,
-                          'contact',
-                          'per_current_residence_city'
-                        )
-                      "
-                      id="per_current_residence_city"
-                      placeholder="Select City"
-                      v-model.number="
-                        personalInformation.contact.per_current_residence_city
-                      "
-                      :reduce="(option) => option.name"
-                      label="name"
-                      :options="personalInformation.contact.residenceCities"
-                      ><template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
-                    <!-- <a-select
-                      @change="onValueChange($event, 'contact')"
-                      id="per_current_residence_city"
-                      style="width: 150px"
-                      placeholder="City"
-                      :filter-option="filterOption"
-                      :showSearch="true"
-                      v-model.number="
-                        personalInformation.contact
-                          .per_current_residence_city
-                      "
-                      class="select-ma w-100"
-                    >
-                      <a-select-option disabled :value="0"
-                        >Select City</a-select-option
-                      >
-                      <a-select-option
-                        v-for="city in personalInformation.contact
-                          .residenceCities"
-                        :key="city.id"
-                        :value="city.id"
-                        >{{ city.name }}</a-select-option
-                      >
-                    </a-select> -->
-                  </a-form-model-item>
-                </div>
+<!--                <div class="col-12 col-md-6 mobile-margin">-->
+<!--                  <a-form-model-item-->
+<!--                    ref="per_current_residence_city"-->
+<!--                    prop="per_current_residence_city"-->
+<!--                  >-->
+<!--                    <v-select-->
+<!--                      :clearable="false"-->
+<!--                      :loading="loading"-->
+<!--                      class="style-chooser"-->
+<!--                      @input="-->
+<!--                        onValueChange(-->
+<!--                          $event,-->
+<!--                          'contact',-->
+<!--                          'per_current_residence_city'-->
+<!--                        )-->
+<!--                      "-->
+<!--                      id="per_current_residence_city"-->
+<!--                      placeholder="Select City"-->
+<!--                      v-model.number="-->
+<!--                        personalInformation.contact.per_current_residence_city-->
+<!--                      "-->
+<!--                      :reduce="(option) => option.name"-->
+<!--                      label="name"-->
+<!--                      :options="personalInformation.contact.residenceCities"-->
+<!--                      ><template #open-indicator>-->
+<!--                        <a-icon type="down" /> </template-->
+<!--                    ></v-select>-->
+<!--                    &lt;!&ndash; <a-select-->
+<!--                      @change="onValueChange($event, 'contact')"-->
+<!--                      id="per_current_residence_city"-->
+<!--                      style="width: 150px"-->
+<!--                      placeholder="City"-->
+<!--                      :filter-option="filterOption"-->
+<!--                      :showSearch="true"-->
+<!--                      v-model.number="-->
+<!--                        personalInformation.contact-->
+<!--                          .per_current_residence_city-->
+<!--                      "-->
+<!--                      class="select-ma w-100"-->
+<!--                    >-->
+<!--                      <a-select-option disabled :value="0"-->
+<!--                        >Select City</a-select-option-->
+<!--                      >-->
+<!--                      <a-select-option-->
+<!--                        v-for="city in personalInformation.contact-->
+<!--                          .residenceCities"-->
+<!--                        :key="city.id"-->
+<!--                        :value="city.id"-->
+<!--                        >{{ city.name }}</a-select-option-->
+<!--                      >-->
+<!--                    </a-select> &ndash;&gt;-->
+<!--                  </a-form-model-item>-->
+<!--                </div>-->
               </div>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
