@@ -436,9 +436,8 @@ export default {
       }
       this.imageModel.additionalImageSrc = e.target.files[0];
       let formData = new FormData();
-      formData.append("image[0][image]", e.target.files[0]);
-      formData.append("image[0][type]", 9);
-      formData.append("image[0][visibility]", 4);
+      formData.append("other_images", e.target.files[0]);
+
 
       this.saveImage(formData);
       let reader = new FileReader();

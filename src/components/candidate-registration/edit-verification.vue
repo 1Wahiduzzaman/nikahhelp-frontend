@@ -1,7 +1,7 @@
 <template>
   <div id="accordion" class="verificationInfo p-3 rounded">
     <div
-      v-if="userData && userData.status == '1'"
+      v-if="candidateDetails && candidateDetails.is_uplaoded_doc == '0'"
       class="verification-content"
       style="margin-top: 40px"
     >
@@ -469,7 +469,10 @@
     </div>
     <div
       class="verification-msg"
-      v-if="candidateDetails && candidateDetails.is_uplaoded_doc == '1'"
+      v-if="
+        candidateDetails &&
+        candidateDetails.is_uplaoded_doc == '1'
+      "
     >
       <div class="identity">
         <img
