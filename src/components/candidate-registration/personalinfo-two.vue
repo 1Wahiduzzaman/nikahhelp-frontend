@@ -802,9 +802,11 @@
                   <span v-else @click="toggle(19)"> Hide Help? </span>
                 </a>
               </p>
-              <div class="collapse" 
+              <div
+                class="collapse"
                 data-parent="#personalInfoAccordian"
-                id="collapsePersonalInfoCountryOfBirth">
+                id="collapsePersonalInfoCountryOfBirth"
+              >
                 <div class="card card-body bubble">
                   If you can't find your country listed, please select 'other'
                   and state your country details in the additional information
@@ -1082,7 +1084,23 @@
                 ref="per_permanent_post_code"
                 prop="per_permanent_post_code"
               >
-                <a-input
+                <v-select
+                  :clearable="false"
+                  :filterable="false"
+                  @search="onSearch"
+                   :reduce="(option) => option.place_name"
+                  class="style-chooser"
+                  id="per_permanent_post_code"
+                  placeholder="Post Code"
+                   @input="
+                    onValueChange($event, 'contact', 'per_permanent_post_code')
+                  "
+                  v-model="personalInformation.contact.per_permanent_post_code"
+                  label="place_name"
+                  :options="postCodes"
+                  ><template #open-indicator> <a-icon type="down" /> </template
+                ></v-select>
+                <!-- <a-input
                   @blur="
                     onValueChange($event, 'contact', 'per_permanent_post_code')
                   "
@@ -1090,7 +1108,7 @@
                   :maxLength="10"
                   placeholder="Post Code"
                   v-model="personalInformation.contact.per_permanent_post_code"
-                />
+                /> -->
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -1340,12 +1358,19 @@
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
-              <div class="row">
+              <vue-tel-input
+                @blur="onValueChange($event, 'contact')"
+                id="mobile_number"
+                v-model="personalInformation.contact.mobile_number"
+                placeholder="Mobile Number"
+              ></vue-tel-input>
+              <!-- <div class="row">
                 <div class="col-4">
                   <a-form-model-item
                     ref="mobile_country_code"
                     prop="mobile_country_code"
                   >
+                   <vue-tel-input v-model="phone"></vue-tel-input>
                     <a-select
                       @change="
                         onValueChange($event, 'contact', 'mobile_country_code')
@@ -1378,7 +1403,7 @@
                     />
                   </a-form-model-item>
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
@@ -2655,6 +2680,7 @@ export default {
       //     return open;
       //   },
       // },
+      postCodes: [],
       activeKey: 1,
       default_date: null,
       rules: RULESPERSONALINFO,
@@ -2686,6 +2712,20 @@ export default {
   },
 
   methods: {
+    async onSearch(search, loading) {
+      if (search.length) {
+        loading(true);
+        await this.$store
+          .dispatch("getSearchLocation", {
+            search: search,
+          })
+          .then((data) => {
+            this.postCodes = [...data.features];
+            loading(false);
+          })
+          .catch((error) => {});
+      }
+    },
     toggle(index) {
       this.arr = this.arr.map((a, ind) => {
         if (ind === index) {
@@ -3224,5 +3264,8 @@ input[type="file"]::-webkit-file-upload-button {
       padding: 5px 0px;
     }
   }
+}
+.vue-tel-input {
+  border-radius: 15px;
 }
 </style>
