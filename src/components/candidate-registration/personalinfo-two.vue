@@ -1156,7 +1156,7 @@
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <div class="row">
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-12">
                   <a-form-model-item
                     ref="per_permanent_country"
                     prop="per_permanent_country"
@@ -1176,78 +1176,6 @@
                       ><template #open-indicator>
                         <a-icon type="down" /> </template
                     ></v-select>
-                    <!-- <a-select
-                      @change="
-                        onCountryChange($event, 'contact', 'permanant')
-                      "
-                      id="per_permanent_country"
-                      style="width: 150px"
-                      placeholder="Country"
-                      :filter-option="filterOption"
-                      :showSearch="true"
-                      v-model="
-                        personalInformation.contact.per_permanent_country
-                      "
-                      class="select-ma w-100"
-                    >
-                      <a-select-option disabled :value="0"
-                        >Select Country</a-select-option
-                      >
-                      <a-select-option
-                        :value="item.id"
-                        v-bind:key="index"
-                        style="width: 100px"
-                        v-for="(item, index) in candidateDetails.countries"
-                      >
-                        {{ item.name }}
-                      </a-select-option>
-                    </a-select> -->
-                  </a-form-model-item>
-                </div>
-                <div class="col-12 col-md-6 mobile-margin">
-                  <a-form-model-item
-                    ref="per_permanent_city"
-                    prop="per_permanent_city"
-                  >
-                    <v-select
-                      :clearable="false"
-                      :loading="loadingPermanant"
-                      class="style-chooser"
-                      @input="
-                        onValueChange($event, 'contact', 'per_permanent_city')
-                      "
-                      id="per_permanent_city"
-                      placeholder="Select City"
-                      v-model="personalInformation.contact.per_permanent_city"
-                      :reduce="(option) => option.name"
-                      label="name"
-                      :options="personalInformation.contact.permanantCities"
-                      ><template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
-                    <!-- <a-select
-                      @change="onValueChange($event, 'contact')"
-                      id="per_permanent_city"
-                      style="width: 150px"
-                      placeholder="City"
-                      :filter-option="filterOption"
-                      :showSearch="true"
-                      v-model="
-                        personalInformation.contact.per_permanent_city
-                      "
-                      class="select-ma w-100"
-                    >
-                      <a-select-option disabled :value="0"
-                        >Select City</a-select-option
-                      >
-                      <a-select-option
-                        v-for="city in personalInformation.contact
-                          .permanantCities"
-                        :key="city.id"
-                        :value="city.id"
-                        >{{ city.name }}</a-select-option
-                      >
-                    </a-select> -->
                   </a-form-model-item>
                 </div>
               </div>
