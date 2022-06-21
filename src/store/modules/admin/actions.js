@@ -1,5 +1,7 @@
-import ApiService from "../../../services/api.service";
 
+
+import ApiService from "../../../services/api.service";
+import axios from "axios";
 export default {
 
   async getPendingUsers() {
@@ -114,6 +116,18 @@ export default {
         });
     });
   },
+  async getSearchLocation(context, payload) {
+    return new Promise((resolve, reject) => {
+      axios.post(`/v1/search/location`,payload)
+        .then((data) => {
+          console.log('dd',data.data)
+          resolve(data.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  },
   async getUserReports() {
     return new Promise((resolve, reject) => {
       ApiService.get(`v1/admin/users-report`)
@@ -125,6 +139,10 @@ export default {
         });
     });
   },
+  
+
+
+
   async getUserReportsByPage(context, payload) {
     return new Promise((resolve, reject) => {
       ApiService.get(`v1/admin/users-report?page=${payload.page}&account_type=${payload.account_type}&keyword=${payload.keyword}`)

@@ -22,6 +22,8 @@ import TextareaAutosize from 'vue-textarea-autosize';
 import ApiService from "./services/api.service";
 import Vuetify from 'vuetify';
 import 'viewerjs/dist/viewer.css';
+import VueTelInput from 'vue-tel-input';
+import 'vue-tel-input/dist/vue-tel-input.css';
 import VueViewer from 'v-viewer';
 Vue.use(VueViewer);
 Vue.use(Vuetify);
@@ -40,6 +42,7 @@ Vue.filter('formatDate', function (value) {
 });
 
 Vue.use(VueCompositionAPI);
+Vue.use(VueTelInput);
 Vue.use(Antd);
 Vue.component('MainHeader', MainHeader);
 Vue.component('Layout', Layout);
