@@ -57,20 +57,6 @@
                   ]"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
-                <!-- <a-select
-                  @change="onValueChange($event, 'essential')"
-                  id="per_gender"
-                  ref="select"
-                  placeholder="Select your gender"
-                  class="select-ma w-100"
-                  v-model="personalInformation.essential.per_gender"
-                >
-                  <a-select-option disabled :value="0"
-                    >Select your gender</a-select-option
-                  >
-                  <a-select-option :value="1">Male</a-select-option>
-                  <a-select-option :value="2">Female</a-select-option>
-                </a-select> -->
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -598,29 +584,6 @@
                   :options="candidateDetails.languages"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
-                <!-- <a-select
-                  @change="onValueChange($event, 'general')"
-                  id="per_mother_tongue"
-                  :showSearch="true"
-                  option-filter-prop="children"
-                  :filter-option="filterOption"
-                  :showArrow="true"
-                  ref="select"
-                  placeholder="Select your mother tongue"
-                  v-model="personalInformation.general.per_mother_tongue"
-                  class="select-ma w-100"
-                >
-                  <a-select-option disabled :value="0"
-                    >Select your mother tongue</a-select-option
-                  >
-                  <a-select-option
-                    v-for="language in candidateDetails.languages"
-                    :value="language"
-                    :key="language.id"
-                  >
-                    {{ language }}
-                  </a-select-option>
-                </a-select> -->
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -678,28 +641,6 @@
                   :options="candidateDetails.countries"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
-                <!-- <a-select
-                  @change="onValueChange($event, 'general')"
-                  id="per_nationality"
-                  :filter-option="filterOption"
-                  :showSearch="true"
-                  style="width: 150px"
-                  placeholder="Country"
-                  v-model="personalInformation.general.per_nationality"
-                  class="select-ma w-100"
-                >
-                  <a-select-option disabled :value="0"
-                    >Select your nationality</a-select-option
-                  >
-                  <a-select-option
-                    :value="item.id"
-                    v-bind:key="index"
-                    style="width: 100px"
-                    v-for="(item, index) in candidateDetails.countries"
-                  >
-                    {{ item.name }}
-                  </a-select-option>
-                </a-select> -->
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -762,28 +703,6 @@
                   :options="candidateDetails.countries"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
-                <!-- <a-select
-                  @change="onValueChange($event, 'general')"
-                  id="per_country_of_birth"
-                  :filter-option="filterOption"
-                  :showSearch="true"
-                  style="width: 150px"
-                  placeholder="Country"
-                  v-model="personalInformation.general.per_country_of_birth"
-                  class="select-ma w-100"
-                >
-                  <a-select-option disabled :value="0"
-                    >Select your country of birth</a-select-option
-                  >
-                  <a-select-option
-                    :value="item.id"
-                    v-bind:key="index"
-                    style="width: 100px"
-                    v-for="(item, index) in candidateDetails.countries"
-                  >
-                    {{ item.name }}
-                  </a-select-option>
-                </a-select> -->
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -948,88 +867,9 @@
                       ><template #open-indicator>
                         <a-icon type="down" /> </template
                     ></v-select>
-                    <!-- <a-select
-                      @change="
-                        onCountryChange($event, 'contact', 'residence')
-                      "
-                      id="per_current_residence_country"
-                      style="width: 150px"
-                      :filter-option="filterOption"
-                      :showSearch="true"
-                      placeholder="Country"
-                      v-model="
-                        personalInformation.contact
-                          .per_current_residence_country
-                      "
-                      class="select-ma w-100"
-                    >
-                      <a-select-option disabled :value="0"
-                        >Select Country</a-select-option
-                      >
-                      <a-select-option
-                        :value="item.id"
-                        v-bind:key="index"
-                        style="width: 100px"
-                        v-for="(item, index) in candidateDetails.countries"
-                      >
-                        {{ item.name }}
-                      </a-select-option>
-                    </a-select> -->
                   </a-form-model-item>
                 </div>
-<!--                <div class="col-12 col-md-6 mobile-margin">-->
-<!--                  <a-form-model-item-->
-<!--                    ref="per_current_residence_city"-->
-<!--                    prop="per_current_residence_city"-->
-<!--                  >-->
-<!--                    <v-select-->
-<!--                      :clearable="false"-->
-<!--                      :loading="loading"-->
-<!--                      class="style-chooser"-->
-<!--                      @input="-->
-<!--                        onValueChange(-->
-<!--                          $event,-->
-<!--                          'contact',-->
-<!--                          'per_current_residence_city'-->
-<!--                        )-->
-<!--                      "-->
-<!--                      id="per_current_residence_city"-->
-<!--                      placeholder="Select City"-->
-<!--                      v-model.number="-->
-<!--                        personalInformation.contact.per_current_residence_city-->
-<!--                      "-->
-<!--                      :reduce="(option) => option.name"-->
-<!--                      label="name"-->
-<!--                      :options="personalInformation.contact.residenceCities"-->
-<!--                      ><template #open-indicator>-->
-<!--                        <a-icon type="down" /> </template-->
-<!--                    ></v-select>-->
-<!--                    &lt;!&ndash; <a-select-->
-<!--                      @change="onValueChange($event, 'contact')"-->
-<!--                      id="per_current_residence_city"-->
-<!--                      style="width: 150px"-->
-<!--                      placeholder="City"-->
-<!--                      :filter-option="filterOption"-->
-<!--                      :showSearch="true"-->
-<!--                      v-model.number="-->
-<!--                        personalInformation.contact-->
-<!--                          .per_current_residence_city-->
-<!--                      "-->
-<!--                      class="select-ma w-100"-->
-<!--                    >-->
-<!--                      <a-select-option disabled :value="0"-->
-<!--                        >Select City</a-select-option-->
-<!--                      >-->
-<!--                      <a-select-option-->
-<!--                        v-for="city in personalInformation.contact-->
-<!--                          .residenceCities"-->
-<!--                        :key="city.id"-->
-<!--                        :value="city.id"-->
-<!--                        >{{ city.name }}</a-select-option-->
-<!--                      >-->
-<!--                    </a-select> &ndash;&gt;-->
-<!--                  </a-form-model-item>-->
-<!--                </div>-->
+
               </div>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -1292,46 +1132,6 @@
                 v-model="personalInformation.contact.mobile_number"
                 placeholder="Mobile Number"
               ></vue-tel-input>
-              <!-- <div class="row">
-                <div class="col-4">
-                  <a-form-model-item
-                    ref="mobile_country_code"
-                    prop="mobile_country_code"
-                  >
-                   <vue-tel-input v-model="phone"></vue-tel-input>
-                    <a-select
-                      @change="
-                        onValueChange($event, 'contact', 'mobile_country_code')
-                      "
-                      id="mobile_country_code"
-                      ref="select"
-                      v-model="personalInformation.contact.mobile_country_code"
-                      placeholder="Code"
-                    >
-                      <a-select-option value="">Select</a-select-option>
-                      <a-select-option value="+44">+44</a-select-option>
-                      <a-select-option value="+88">+88</a-select-option>
-                      <a-select-option value="+46">+46</a-select-option>
-                      <a-select-option value="+31	">+31 </a-select-option>
-                      <a-select-option value="+39">+39</a-select-option>
-                      <a-select-option value="+33">+33</a-select-option>
-                      <a-select-option value="+353">+353</a-select-option>
-                      <a-select-option value="+011">+011</a-select-option>
-                    </a-select>
-                  </a-form-model-item>
-                </div>
-                <div class="col-8">
-                  <a-form-model-item ref="mobile_number" prop="mobile_number">
-                    <a-input
-                      @blur="onValueChange($event, 'contact')"
-                      id="mobile_number"
-                      :maxLength="10"
-                      v-model="personalInformation.contact.mobile_number"
-                      placeholder="Mobile Number"
-                    />
-                  </a-form-model-item>
-                </div>
-              </div> -->
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
@@ -1492,25 +1292,6 @@
                   ]"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
-                <!-- <a-select
-                  @change="onValueChange($event, 'more_about')"
-                  id="per_marital_status"
-                  ref="select"
-                  placeholder="Select your Marital Status"
-                  v-model="
-                    personalInformation.more_about.per_marital_status
-                  "
-                  class="select-ma"
-                >
-                  <a-select-option value="single">Single</a-select-option>
-                  <a-select-option value="married">Married</a-select-option>
-                  <a-select-option value="divorced"
-                    >Divorced</a-select-option
-                  >
-                  <a-select-option value="divorced_with_children"
-                    >Divorced with Children</a-select-option
-                  >
-                </a-select> -->
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -1596,28 +1377,6 @@
                   ]"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
-                <!-- <a-select
-                  @change="onValueChange($event, 'more_about')"
-                  id="per_currently_living_with"
-                  ref="select"
-                  placeholder="Currently Living With"
-                  v-model="
-                    personalInformation.more_about.per_currently_living_with
-                  "
-                  class="select-ma"
-                >
-                  <a-select-option disabled :value="0"
-                    >Select your current living arrangement</a-select-option
-                  >
-                  <a-select-option value="parents">Parents</a-select-option>
-                  <a-select-option value="live in my own home"
-                    >Live in my own home</a-select-option
-                  >
-                  <a-select-option value="live in others home"
-                    >Live in others home</a-select-option
-                  >
-                  <a-select-option value="other">Other</a-select-option>
-                </a-select> -->
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -1697,23 +1456,6 @@
                   ]"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
-                <!-- <a-select
-                  @change="onValueChange($event, 'more_about')"
-                  id="per_willing_to_relocate"
-                  ref="select"
-                  placeholder="Willing to relocate"
-                  v-model="
-                    personalInformation.more_about.per_willing_to_relocate
-                  "
-                  class="select-ma"
-                >
-                  <a-select-option disabled :value="0"
-                    >Select your option</a-select-option
-                  >
-                  <a-select-option value="1">Yes</a-select-option>
-                  <a-select-option value="2">No</a-select-option>
-                  <a-select-option value="3">Let's discuss</a-select-option>
-                </a-select> -->
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -1779,24 +1521,6 @@
                   ]"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
-                <!-- <a-select
-                  @change="onValueChange($event, 'more_about')"
-                  id="per_smoker"
-                  ref="select"
-                  placeholder="Are you a Smoker"
-                  v-model="personalInformation.more_about.per_smoker"
-                  class="select-ma"
-                >
-                  <a-select-option disabled :value="0"
-                    >Select whether you are a smoker or
-                    not?</a-select-option
-                  >
-                  <a-select-option :value="1">Yes</a-select-option>
-                  <a-select-option :value="2">No</a-select-option>
-                  <a-select-option :value="3"
-                    >Former smoker</a-select-option
-                  >
-                </a-select> -->
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -1867,43 +1591,6 @@
                 >
                   <template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
-                <!-- <a-select
-                  @change="
-                    onMultiValueChange(
-                      $event,
-                      'per_language_speak',
-                      'more_about'
-                    )
-                  "
-                  id="per_language_speak"
-                  option-filter-prop="children"
-                  :showSearch="true"
-                  :filter-option="filterOption"
-                  :showArrow="false"
-                  ref="select"
-                  mode="multiple"
-                  placeholder="Select the language you speak"
-                  v-model="
-                    personalInformation.more_about.per_language_speak
-                  "
-                  class="select-ma w-100"
-                >
-                  <a-select-option disabled :value="0"
-                    >Select the language you speak</a-select-option
-                  >
-                  <a-select-option value="Don't Mind"
-                    >Don't Mind
-                  </a-select-option>
-                  <a-select-option
-                    v-for="(
-                      spoken_language, key
-                    ) in candidateDetails.languages"
-                    :value="spoken_language"
-                    :key="key"
-                  >
-                    {{ spoken_language }}
-                  </a-select-option>
-                </a-select> -->
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -2109,41 +1796,6 @@
                     <a-icon type="down" />
                   </template>
                 </v-select>
-                <!-- <a-select
-                  @change="
-                    onMultiValueChange(
-                      $event,
-                      'per_food_cuisine_like',
-                      'more_about'
-                    )
-                  "
-                  id="per_food_cuisine_like"
-                  :showSearch="true"
-                  option-filter-prop="children"
-                  :filter-option="filterOption"
-                  :showArrow="false"
-                  mode="multiple"
-                  placeholder="Food and Cuisine I like"
-                  v-model="
-                    personalInformation.more_about.per_food_cuisine_like
-                  "
-                  class="select-ma"
-                >
-                  <a-select-option disabled :value="0"
-                    >Select your Favorite Food Cuisine</a-select-option
-                  >
-                  <a-select-option value="Don't Mind"
-                    >Don't Mind
-                  </a-select-option>
-                  <a-select-option
-                    :value="value"
-                    :key="key"
-                    v-for="(value, key) in candidateDetails.foods"
-                  >
-                    {{ value }}
-                  </a-select-option>
-
-                </a-select> -->
               </a-form-model-item>
             </div>
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
@@ -2224,38 +1876,6 @@
                     </div>
                   </template>
                 </v-select>
-                <!-- <a-select
-                  @change="
-                    onMultiValueChange(
-                      $event,
-                      'per_thankfull_for',
-                      'more_about'
-                    )
-                  "
-                  id="per_thankfull_for"
-                  :showSearch="true"
-                  option-filter-prop="children"
-                  :filter-option="filterOption"
-                  placeholder="I'm Thankfull For"
-                  mode="multiple"
-                  v-model="personalInformation.more_about.per_thankfull_for"
-                  class="select-ma"
-                >
-                  <a-select-option disabled :value="0"
-                    >Select things you are thankful for</a-select-option
-                  >
-                  <a-select-option value="Don't Mind"
-                    >Don't Mind
-                  </a-select-option>
-                  <a-select-option
-                    :value="value.value"
-                    :key="key"
-                    style="width: 100px"
-                    v-for="(value, key) in candidateDetails.thankfulThings"
-                  >
-                    {{ value.label }}
-                  </a-select-option>
-                </a-select> -->
               </a-form-model-item>
             </div>
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
@@ -2332,38 +1952,6 @@
                     </div>
                   </template>
                 </v-select>
-                <!-- <a-select
-                  @change="
-                    onMultiValueChange(
-                      $event,
-                      'per_thankfull_for',
-                      'more_about'
-                    )
-                  "
-                  id="per_thankfull_for"
-                  :showSearch="true"
-                  option-filter-prop="children"
-                  :filter-option="filterOption"
-                  placeholder="I'm Thankfull For"
-                  mode="multiple"
-                  v-model="personalInformation.more_about.per_thankfull_for"
-                  class="select-ma"
-                >
-                  <a-select-option disabled :value="0"
-                    >Select things you are thankful for</a-select-option
-                  >
-                  <a-select-option value="Don't Mind"
-                    >Don't Mind
-                  </a-select-option>
-                  <a-select-option
-                    :value="value.value"
-                    :key="key"
-                    style="width: 100px"
-                    v-for="(value, key) in candidateDetails.thankfulThings"
-                  >
-                    {{ value.label }}
-                  </a-select-option>
-                </a-select> -->
               </a-form-model-item>
             </div>
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
@@ -2602,12 +2190,6 @@ export default {
   },
   data() {
     return {
-      // dropdownShouldOpen: {
-      //   type: Function,
-      //   default({ noDrop, open, mutableLoading }) {
-      //     return open;
-      //   },
-      // },
       postCodes: [],
       activeKey: 1,
       default_date: null,
