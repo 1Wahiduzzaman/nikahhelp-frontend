@@ -1,15 +1,15 @@
 <template>
-  <nav class="top-menu navbar justify-content-between">
+  <nav class="top-menu navbar justify-content-between" ref="nav">
     <div class="container">
       <router-link to="/">
-        <a href="javascript:void()" class="navbar-brand"
+        <div class="navbar-brand"
           ><img
             class="logo"
             src="@/assets/Icons/Logo/SVG/White Logo.svg"
             alt="logo"
-        /></a>
+        /></div>
       </router-link>
-      <form class="login">
+      <div class="login">
         <div>
           <router-link to="/login"
             ><img
@@ -29,10 +29,7 @@
             Join Now
           </router-link>
         </div>
-        <!-- <div v-else>
-          <router-link to="/dashboard"> Dashboard </router-link>
-        </div> -->
-      </form>
+      </div>
     </div>
   </nav>
 </template>
@@ -40,20 +37,10 @@
 <script>
 export default {
   name: "Header",
-  components: {},
-  data() {
-    return {
-      isLoading: true,
-      user: {},
-      is_verified: 1,
-    };
-  },
-  created() {
-    //this.checkAuthentication();
-  },
+
   mounted() {
     let scrollpos = window.scrollY;
-    const header = document.querySelector("nav");
+    const header = this.$refs.nav;
     const header_height = header.offsetHeight;
 
     const add_class_on_scroll = () => header.classList.add("on-scroll");
@@ -69,23 +56,9 @@ export default {
       }
     });
   },
-
-  computed: {
-    isLoggedIn() {
-      return this.$store.getters.isAuthenticated;
-    },
-  },
-  methods: {
-    checkAuthentication() {
-      if (!this.isLoggedIn && window.location.pathname !== "/") {
-        this.$router.push("/").catch((err) => {
-          console.log("err", err);
-        });
-      }
-    },
-  },
 };
 </script>
+
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .top-menu {

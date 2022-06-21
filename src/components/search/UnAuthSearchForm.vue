@@ -110,31 +110,6 @@
           size="large"
           class="btn btn-block btn-round color-outline-primary h-40btn br-40"
         >
-<!--          <svg-->
-<!--            xmlns="http://www.w3.org/2000/svg"-->
-<!--            viewBox="0 0 42.02 40.76"-->
-<!--            style="width: 25px; height: 25px"-->
-<!--          >-->
-<!--            <g id="Layer_2" data-name="Layer 2">-->
-<!--              <g id="draw_boxes" data-name="draw boxes">-->
-<!--                <path-->
-<!--                  fill="#fff"-->
-<!--                  class="cls-1"-->
-<!--                  d="M41.67,35.89A1.33,1.33,0,0,0,41.58,34L30.34,23.79a1.34,1.34,0,0,0-1.88.09l-4,4.44a1.34,1.34,0,0,0,.09,1.88L35.78,40.41a1.32,1.32,0,0,0,1.88-.09Z"-->
-<!--                />-->
-<!--                <path-->
-<!--                  fill="#fff"-->
-<!--                  class="cls-1"-->
-<!--                  d="M14.72,0A14.72,14.72,0,1,1,9.91.81,14.73,14.73,0,0,1,14.72,0m0,4a10.82,10.82,0,0,0-3.51.59h0A10.73,10.73,0,1,0,14.72,4Z"-->
-<!--                />-->
-<!--                <path-->
-<!--                  fill="#fff"-->
-<!--                  class="cls-1"-->
-<!--                  d="M14.72,21.39c7.68-4,7.4-8.47,5.22-10.65s-5.22-.71-5.22,1c0-1.73-3-3.2-5.21-1S7,17.43,14.72,21.39Z"-->
-<!--                />-->
-<!--              </g>-->
-<!--            </g>-->
-<!--          </svg>-->
           <img src="@/assets/icon/search-love-secondary.svg" alt="search" class="search-icon" />
           <span class="ml-3 fs-20"> Search </span>
         </button>
@@ -145,12 +120,13 @@
 
 <script>
 import SelectGroup from "@/components/ui/selects/SelectGroup";
-// import { ReligionTV } from "../../models/religion";
-// import { CountriesTV } from "../../models/country";
+
 import { AGES, HEIGHTS } from "@/models/data";
 import ApiService from "@/services/api.service";
+
 export default {
   name: "UnAuthSearchForm",
+
   data() {
     return {
       searchModel: {
@@ -176,9 +152,11 @@ export default {
       trying: false
     };
   },
+
   components: {
     SelectGroup,
   },
+
   props: {
     useFor: {
       type: String,
@@ -186,6 +164,7 @@ export default {
       validator: (value) => ["home", "search"].includes(value),
     },
   },
+
   computed: {
     cardBorder() {
       return this.useFor == "home" ? "homeCardBorder" : "searchCardBorder";
@@ -215,6 +194,7 @@ export default {
       }
     }
   },
+
   methods: {
     async getCandidateInitialInfo() {
       const response = await ApiService.get("v1/initial-dropdowns");
@@ -223,12 +203,15 @@ export default {
         this.religionTV = response.data.data.religions;
       }
     },
+
     onDropdownChange({ name, value }) {
       this.searchModel[name] = value;
     },
+
     onSelectedGender(gender) {
       this.searchModel.gender = gender;
     },
+
     handleSearch() {
       this.trying = true;
       if(this.filterExists) {
@@ -251,6 +234,7 @@ export default {
         this.$emit("handleSearch", _payload);
       }
     },
+
     onAfterChangeSlider(value) {
       this.age = value;
     },
@@ -381,5 +365,4 @@ export default {
     flex-direction: row;
   }
 }
-
 </style>

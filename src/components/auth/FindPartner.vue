@@ -36,12 +36,6 @@
    </div>
 </template>
 
-<script>
-export default {
-  name: "FindPartner",
-  components: {},
-};
-</script>
 <style scoped lang="scss">
 @import '@/styles/base/_variables.scss';
 .find-partner{
