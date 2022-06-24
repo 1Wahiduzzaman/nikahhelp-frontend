@@ -54,7 +54,7 @@
 								<div class="feature-icon">
 									<img src="@/assets/Icons/chat.svg" alt="Icon" />
 								</div>
-								<p class="mt-4 fs-18 color-brand">Team & private chat</p>
+								<p class="mt-4 fs-18 color-brand">Team Chat</p>
 							</div>
 						</a-tooltip>
 					</div>
