@@ -305,6 +305,7 @@ export default {
         this.checkExistData();
       }
     },
+
     onDataChange(e) {
       switch (e.current) {
         case 0:
@@ -312,9 +313,6 @@ export default {
             ...e.value,
           };
           break;
-
-          break;
-
         case 1:
           this.representativeDetails.imageModel = {
             ...e.value,
@@ -558,27 +556,19 @@ export default {
             per_permanent_post_code,
             mobile_country_code,
             mobile_number,
-            per_current_residence_city,
             per_current_residence_country,
           } = this.representativeDetails.personalInformation.personal;
+
           let personal = {
             mobile_number,
-            per_current_residence_city,
             per_current_residence_country,
             per_permanent_address,
             per_permanent_country,
             per_permanent_post_code,
             mobile_country_code,
           };
-          Object.values({
-            essential,
-            personal,
-          }).forEach((ob) => {
-            isEnabled = Object.values(ob).every(
-              (x) => x !== undefined && x !== null && x !== ""
-            );
-            if (!isEnabled) return;
-          });
+
+	        isEnabled = this.isFormCompleted(personal, essential);
           break;
 
         case 1:
@@ -614,9 +604,23 @@ export default {
 
       this.enabledNextBtn = isEnabled;
     },
+
+	  isFormCompleted(personal, essential) {
+			return Object.values({
+		    essential,
+		    personal,
+		  }).every((information) => {
+		    return this.isFieldFilled(information);
+		  });
+	  },
+
+	  isFieldFilled(formFields) {
+			return Object.values(formFields).every((field) => {
+				return	field !== undefined && field !== null && field !== ""});
+	  },
+
     onDoneClick() {
       this.loading = true;
-      console.log(this.agreementChecked);
       if (this.agreementChecked == false) {
         this.loading = false;
         this.$message.error(
