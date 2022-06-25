@@ -97,7 +97,7 @@
                     v-if="verification.ver_country_id"
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
-                  />Document issuing country & city
+                  />Document issuing country
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
@@ -146,42 +146,6 @@
                   </div>
 
                   <div class="col-12 col-md-6 mobile-margin">
-                    <a-form-model-item ref="ver_city_id" prop="ver_city_id">
-                      <v-select
-                        :clearable="false"
-                        class="style-chooser"
-                        id="ver_city_id"
-                        placeholder="please select"
-                        @input="onValueChange($event, 'ver_city_id')"
-                        :loading="loading"
-                        :reduce="(option) => option.id"
-                        v-model="verification.ver_city_id"
-                        label="name"
-                        :options="verification.cities"
-                        ><template #open-indicator>
-                          <a-icon type="down" /> </template
-                      ></v-select>
-
-                      <!-- <a-select
-                        id="ver_city"
-                        :showSearch="true"
-                        option-filter-prop="children"
-                        :filter-option="filterOption"
-                        :showArrow="true"
-                        v-model="verification.ver_city"
-                        class="select-ma w-100"
-                        placeholder="City"
-                        @change="onValueChange"
-                      >
-                        <a-select-option
-                          v-for="(_city, key) in verification.cities"
-                          :value="_city.id"
-                          :key="key"
-                        >
-                          {{ _city.name }}
-                        </a-select-option>
-                      </a-select> -->
-                    </a-form-model-item>
                   </div>
                 </div>
               </div>
