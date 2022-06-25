@@ -703,10 +703,6 @@ import { RULES, RULES_PERSONAL } from "./models/representative";
 	    };
 	  },
 
-
-
-
-
 		computed: {
 			personal() {
 				return {
@@ -717,8 +713,6 @@ import { RULES, RULES_PERSONAL } from "./models/representative";
 					   per_permanent_post_code: this.postCode,
 					   per_permanent_address: this.permanentAddress,
 					   email: this.personalInformation.personal.email,
-
-
 				}
 			} ,
 
@@ -727,7 +721,6 @@ import { RULES, RULES_PERSONAL } from "./models/representative";
 					per_gender: this.gender,             
 					per_occupation: this.occupation,     
 					dob: this.dob,
-
 				}
 			}
 		}  ,
