@@ -225,17 +225,16 @@
                   <a-icon
                     v-if="
                       personalInformation.personal
-                        .per_current_residence_country &&
-                      personalInformation.personal.per_current_residence_city
+                        .per_current_residence_country 
                     "
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
-                  />What is your current country and city of residence?
+                  />What is your current country  of residence?
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
                 <div class="row">
-                  <div class="col-12 col-md-6">
+                  <div class="col-12">
                     <a-form-model-item
                       ref="per_current_residence_country"
                       prop="per_current_residence_country"
@@ -264,7 +263,7 @@
                       ></v-select>
                     </a-form-model-item>
                   </div>
-                  <div class="col-12 col-md-6 mobile-margin">
+                  <!-- <div class="col-12 col-md-6 mobile-margin">
                     <a-form-model-item
                       ref="per_current_residence_city"
                       prop="per_current_residence_city"
@@ -293,7 +292,7 @@
                           <a-icon type="down" /> </template
                       ></v-select>
                     </a-form-model-item>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">
@@ -393,17 +392,16 @@
                 <div class="mb-2 font-weight-bold">
                   <a-icon
                     v-if="
-                      personalInformation.personal.per_permanent_country &&
-                      personalInformation.personal.per_permanent_city
+                      personalInformation.personal.per_permanent_country 
                     "
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
-                  />Permanent Country and City
+                  />Permanent Country
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
                 <div class="row">
-                  <div class="col-12 col-md-6">
+                  <div class="col-12">
                     <a-form-model-item
                       ref="per_permanent_country"
                       prop="per_permanent_country"
@@ -431,7 +429,7 @@
                       ></v-select>
                     </a-form-model-item>
                   </div>
-                  <div class="col-12 col-md-6 mobile-margin">
+                  <!-- <div class="col-12 col-md-6 mobile-margin">
                     <a-form-model-item
                       ref="per_permanent_city"
                       prop="per_permanent_city"
@@ -455,7 +453,7 @@
                           <a-icon type="down" /> </template
                       ></v-select>
                     </a-form-model-item>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">

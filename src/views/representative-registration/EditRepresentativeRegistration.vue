@@ -249,32 +249,32 @@ export default {
         this.representativeDetails = {
           ...details,
         };
-        if (
-          this.representativeDetails.personalInformation &&
-          this.representativeDetails.personalInformation.personal
-            .per_current_residence_country > 0
-        ) {
-          this.onChangeCountry(
-            {
-              id: this.representativeDetails.personalInformation.personal
-                .per_current_residence_country,
-            },
-            "residence"
-          );
-        }
-        if (
-          this.representativeDetails.personalInformation &&
-          this.representativeDetails.personalInformation.personal
-            .per_permanent_country > 0
-        ) {
-          this.onChangeCountry(
-            {
-              id: this.representativeDetails.personalInformation.personal
-                .per_permanent_country,
-            },
-            "permanat"
-          );
-        }
+        // if (
+        //   this.representativeDetails.personalInformation &&
+        //   this.representativeDetails.personalInformation.personal
+        //     .per_current_residence_country > 0
+        // ) {
+        //   this.onChangeCountry(
+        //     {
+        //       id: this.representativeDetails.personalInformation.personal
+        //         .per_current_residence_country,
+        //     },
+        //     "residence"
+        //   );
+        // }
+        // if (
+        //   this.representativeDetails.personalInformation &&
+        //   this.representativeDetails.personalInformation.personal
+        //     .per_permanent_country > 0
+        // ) {
+        //   this.onChangeCountry(
+        //     {
+        //       id: this.representativeDetails.personalInformation.personal
+        //         .per_permanent_country,
+        //     },
+        //     "permanat"
+        //   );
+        // }
         // if (
         //   this.representativeDetails.verification &&
         //   this.representativeDetails.verification.ver_country > 0

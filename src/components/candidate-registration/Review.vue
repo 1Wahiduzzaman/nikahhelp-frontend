@@ -61,14 +61,62 @@
                     </a-tooltip>
                     <span class="flex-60 px-2 d-inherit">
                       :
-                      <span class="ml-3 text--secondary text-subtitle-1">
+                      <span
+                        v-if="
+                          candidateData.preference.preferred_countries
+                            .length === 0
+                        "
+                        class="ml-3 text--secondary text-subtitle-1"
+                      >
+                        No
+                      </span>
+                      <span
+                        v-if="
+                          candidateData.preference.preferred_countries.length >
+                          0
+                        "
+                        class="ml-3 text--secondary text-subtitle-1"
+                      >
                         <div
                           v-for="country in candidateData.preference
                             .preferred_countries"
                           :key="country.id"
                         >
                           {{ country.name }}
-                          <!-- {{ candidateDetails.preferred_countries[index].name }} -->
+                        </div>
+                      </span>
+                    </span>
+                  </li>
+
+                  <!-- Bloked countries and cities -->
+                  <li class="flex-between-start">
+                    <a-tooltip title="Country and city Blocked">
+                      <span class="flex-40 px-2 text--disabled text-subtitle-1">
+                        Not Preferred country
+                      </span>
+                    </a-tooltip>
+                    <span class="flex-60 px-2 d-inherit">
+                      :
+                      <span
+                        v-if="
+                          candidateData.preference.bloked_countries.length === 0
+                        "
+                        class="ml-3 text--secondary text-subtitle-1"
+                      >
+                        No
+                      </span>
+                      <span
+                        v-if="
+                          candidateData.preference.bloked_countries.length > 0
+                        "
+                        class="ml-3 text--secondary text-subtitle-1"
+                      >
+                        <div
+                          v-for="country in candidateData.preference
+                            .bloked_countries"
+                          :key="country.id"
+                        >
+                          {{ country.name }}
                         </div>
                       </span>
                     </span>
@@ -744,9 +792,9 @@
               <div class="card-custom h-100 shadow-default">
                 <table>
                   <TableRow
-                    title="ID document issuing country & city"
+                    title="ID document issuing country"
                     textClass="text-subtitle-1"
-                    :value="candidateDetails.verification.ver_city"
+                    :value="candidateDetails.verification.ver_country"
                   />
                   <TableRow
                     title="Document type"
@@ -761,7 +809,6 @@
                 <img
                   v-viewer
                   :src="candidateDetails.verification.ver_image_front"
-                 
                   alt="img"
                   height="250"
                   width="200"
@@ -774,7 +821,6 @@
                 <img
                   v-viewer
                   :src="candidateDetails.verification.ver_image_back"
-                 
                   alt="img"
                   height="250"
                   width="200"
@@ -906,9 +952,9 @@ export default {
     candidateDetails: {
       type: Object,
     },
-    showAgreement:{
-      type:Boolean
-    }
+    showAgreement: {
+      type: Boolean,
+    },
   },
   data() {
     return {
@@ -993,6 +1039,8 @@ export default {
     .profile-img {
       border-radius: 5px;
       overflow: hidden;
+      width: 200px;
+      height: 200px;
       p {
         font-size: 16px;
         margin-top: 10px;

@@ -912,7 +912,7 @@
           :rules="rules"
         >
           <!-- Current Residence -->
-          <div class="row mt-3 pb-2 border-bottom">
+          <!-- <div class="row mt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
@@ -948,7 +948,7 @@
                       ><template #open-indicator>
                         <a-icon type="down" /> </template
                     ></v-select>
-                    <!-- <a-select
+                     <a-select
                       @change="
                         onCountryChange($event, 'contact', 'residence')
                       "
@@ -974,7 +974,7 @@
                       >
                         {{ item.name }}
                       </a-select-option>
-                    </a-select> -->
+                    </a-select> 
                   </a-form-model-item>
                 </div>
                 <div class="col-12 col-md-6 mobile-margin">
@@ -1004,7 +1004,7 @@
                       ><template #open-indicator>
                         <a-icon type="down" /> </template
                     ></v-select>
-                    <!-- <a-select
+                    <a-select
                       @change="onValueChange($event, 'contact')"
                       id="per_current_residence_city"
                       style="width: 150px"
@@ -1027,7 +1027,7 @@
                         :value="city.id"
                         >{{ city.name }}</a-select-option
                       >
-                    </a-select> -->
+                    </a-select> 
                   </a-form-model-item>
                 </div>
               </div>
@@ -1059,7 +1059,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <!-- Permanent Address Heading -->
           <div class="pt-3">
@@ -1084,7 +1084,7 @@
                 ref="per_permanent_post_code"
                 prop="per_permanent_post_code"
               >
-                <v-select
+                <!-- <v-select
                   :clearable="false"
                   :filterable="false"
                   @search="onSearch"
@@ -1099,8 +1099,8 @@
                   label="place_name"
                   :options="postCodes"
                   ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
-                <!-- <a-input
+                ></v-select> -->
+                <a-input
                   @blur="
                     onValueChange($event, 'contact', 'per_permanent_post_code')
                   "
@@ -1108,7 +1108,7 @@
                   :maxLength="10"
                   placeholder="Post Code"
                   v-model="personalInformation.contact.per_permanent_post_code"
-                /> -->
+                />
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">

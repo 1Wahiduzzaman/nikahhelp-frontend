@@ -123,8 +123,8 @@ export default {
             return cityArr.join(', ')
         },
         getReligion() {
-            if(this.preference.pre_partner_religion.length) {
-                return this.preference.pre_partner_religion.join(', ')
+            if(this.preference.pre_partner_religion_id.length) {
+                return this.preference.pre_partner_religion_id.join(', ')
             }
             return ''
         },
