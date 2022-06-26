@@ -97,7 +97,7 @@
                     v-if="verification.ver_country_id"
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
-                  />Document issuing country & city
+                  />Document issuing country
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">

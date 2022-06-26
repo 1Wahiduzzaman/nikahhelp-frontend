@@ -699,231 +699,287 @@
     </a-collapse>
   </div>
 </template>
+
 <script>
 import DropdownDatePicker from "vue-dropdown-datepicker";
-import ApiService from "@/services/api.service";
 import vSelect from "vue-select";
 import { RULES, RULES_PERSONAL } from "./models/representative";
-export default {
-  props: {
-    representativeDetails: {
-      type: Object,
-    },
-    personalInformation: {
-      type: Object,
-    },
-  },
-  name: "personInfoRefTwo",
-  components: {
-    DropdownDatePicker,
-    vSelect,
-  },
-  data() {
-    return {
-      rules: RULES,
-      loading: false,
-      loadingPermanant: false,
-      rules_personal: RULES_PERSONAL,
-      arr: [
-        { first: true },
-        { first: true },
-        { first: true },
-        { first: true },
-        { first: true },
 
-        { first: true },
-        { first: true },
-        { first: true },
+	export default {
+	  props: {
+	    representativeDetails: {
+	      type: Object,
+	    },
+	    personalInformation: {
+	      type: Object,
+	    },
+	  },
 
-        { first: true },
-        { first: true },
-        { first: true },
-      ],
-      activeKey: ["1"],
-      default_date: null,
-      phoneNumber: undefined,
-    };
-  },
+	  name: "personInfoRefTwo",
 
-  async mounted() {},
-  methods: {
-    checkValidation(name, action) {
-      switch (action) {
-        case "essential":
-          this.$refs.repPersonalInfoFormOne.fields.forEach((f) => {
-            if (f.prop == name) {
-              f.onFieldBlur();
-            }
-          });
-          break;
-        case "contact":
-          this.$refs.repPersonalInfoFormTwo.fields.forEach((f) => {
-            if (f.prop == name) {
-              f.onFieldBlur();
-            }
-          });
-          break;
-      }
-    },
-    handleSubmitFormOne() {
-      this.$refs.repPersonalInfoFormOne.validate((valid) => {
-        if (valid) {
-          this.activeKey = ["2"];
-        } else {
-          setTimeout(() => {
-            const el = document.querySelector(".has-error:first-of-type");
-            el.scrollIntoView();
-          }, 100);
-          return false;
-        }
-      });
-    },
-    handleSubmitFormTwo() {
-      this.$refs.repPersonalInfoFormTwo.validate((valid) => {
-        if (valid) {
-          this.activeKey = null;
-        } else {
-          setTimeout(() => {
-            const el = document.querySelector(".has-error:first-of-type");
-            el.scrollIntoView();
-          }, 100);
-          return false;
-        }
-      });
-    },
-    onValueChange(e, name, action) {
-      this.checkValidation(name, action);
-      this.save(action);
-    },
-    async saveEssentialInfo() {
-      await this.$store
-        .dispatch("createPersonalInfoForRepresentative", {
-          ...this.personalInformation.essential,
-        })
-        .then((data) => {
-          this.$emit("valueChange", {
-            value: this.personalInformation,
-            current: 0,
-          });
-        })
-        .catch((error) => {});
-    },
-    async saveContactInfo() {
-      await this.$store
-        .dispatch(
-          "creatContactInfoForRepresentative",
-          this.personalInformation.personal
-        )
-        .then((data) => {
-          this.$emit("valueChange", {
-            value: this.personalInformation,
-            current: 0,
-          });
-        })
-        .catch((error) => {});
-    },
-    save(action) {
-      switch (action) {
-        case "essential":
-          this.saveEssentialInfo();
-          break;
+	  components: {
+	    DropdownDatePicker,
+	    vSelect,
+	  },
 
-        case "contact":
-          this.saveContactInfo();
-          break;
-      }
-    },
-    filterOption(input, option) {
-      return (
-        option.componentOptions.children[0].text
-          .toLowerCase()
-          .indexOf(input.toLowerCase()) >= 0
-      );
-    },
-    toggle(index) {
-      this.arr = this.arr.map((a, ind) => {
-        if (ind === index) {
-          a.first = !a.first;
-        } else {
-          a.first = true;
-        }
-        return a;
-      });
-    },
-    onChangeDD(d, m, y) {
-      this.save("essential");
-    },
-    onChangePanel(e) {
-      this.activeKey = e;
-      this.$emit("pannelChanged", e);
-    },
-    async onCountryChange(e, name, action) {
-      this.checkValidation(name, action);
-      if (name == "per_current_residence_country") {
-        this.loading = true;
-      } else {
-        this.loadingPermanant = true;
-      }
-      const res = await ApiService.get(`v1/utilities/cities/${e}`);
-      this.loading = false;
-      this.loadingPermanant = false;
-      if (res.status === 200) {
-        switch (name) {
-          case "per_permanent_country":
-            this.personalInformation.personal.permanantCities = [];
-            this.personalInformation.personal.permanantCities.push(
-              ...res.data.data
-            );
-            break;
-          case "per_current_residence_country":
-            this.personalInformation.personal.residenceCities = [];
-            this.personalInformation.personal.residenceCities.push(
-              ...res.data.data
-            );
-            break;
-        }
-      }
+	  data() {
+	    return {
+				gender: this.personalInformation?.essential?.per_gender,
+		    occupation: this.personalInformation?.essential?.per_occupation,
+		    residence:  this.personalInformation?.personal?.per_current_residence_country,
+		    postCode: this.personalInformation?.personal?.per_permanent_post_code,
+		    permanentCountry: this.personalInformation?.personal?.per_permanent_country,
+		    permanentAddress: this.personalInformation?.personal?.per_permanent_address,
+		    countryCode: this.personalInformation?.personal?.mobile_country_code,
+		    mobileNumber: this.personalInformation?.personal?.mobile_number,
+		    dob: this.personalInformation?.personal?.dob,
+	      rules: RULES,
+	      loading: false,
+	      loadingPermanant: false,
+	      rules_personal: RULES_PERSONAL,
+	      arr: [
+	        { first: true },
+	        { first: true },
+	        { first: true },
+	        { first: true },
+	        { first: true },
 
-      this.saveContactInfo();
-    },
-  },
-};
+	        { first: true },
+	        { first: true },
+	        { first: true },
+
+	        { first: true },
+	        { first: true },
+	        { first: true },
+	      ],
+	      activeKey: ["1"],
+	      default_date: null,
+	      phoneNumber: undefined,
+	    };
+	  },
+
+		computed: {
+			personal() {
+				return {
+					   per_current_residence_country: this.residence,
+					   per_permanent_country: this.permanentCountry,
+					   mobile_country_code: this.countryCode,
+					   mobile_number: this.mobileNumber,
+					   per_permanent_post_code: this.postCode,
+					   per_permanent_address: this.permanentAddress,
+					   email: this.personalInformation.personal.email,
+				}
+			} ,
+
+			essential() {
+				return {
+					per_gender: this.gender,             
+					per_occupation: this.occupation,     
+					dob: this.dob,
+				}
+			}
+		}  ,
+
+	  methods: {
+	    checkValidation(name, action) {
+	      switch (action) {
+	        case "essential":
+	          this.$refs.repPersonalInfoFormOne.fields.forEach((f) => {
+	            if (f.prop === name) {
+	              f.onFieldBlur();
+	            }
+	          });
+	          break;
+	        case "contact":
+	          this.$refs.repPersonalInfoFormTwo.fields.forEach((f) => {
+	            if (f.prop === name) {
+	              f.onFieldBlur();
+	            }
+	          });
+	          break;
+	      }
+	    },
+
+	    handleSubmitFormOne() {
+	      this.$refs.repPersonalInfoFormOne.validate((valid) => {
+	        if (valid) {
+	          this.activeKey = ["2"];
+	        } else {
+	          setTimeout(() => {
+	            const el = document.querySelector(".has-error:first-of-type");
+	            el.scrollIntoView();
+	          }, 100);
+	          return false;
+	        }
+	      });
+	    },
+
+	    handleSubmitFormTwo() {
+		    console.log('test');
+	      this.$refs.repPersonalInfoFormTwo.validate((valid) => {
+		      console.log(valid)
+	        if (valid) {
+	          this.activeKey = null;
+	        } else {
+	          setTimeout(() => {
+	            const el = document.querySelector(".has-error:first-of-type");
+	            el.scrollIntoView();
+	          }, 100);
+	          return false;
+	        }
+	      });
+	    },
+
+	    onValueChange(e, name, action) {
+	      this.checkValidation(name, action);
+	      this.save(action);
+	    },
+
+	    async saveEssentialInfo() {
+				
+
+
+
+				
+
+
+
+
+
+
+
+	      await this.$store
+	        .dispatch("createPersonalInfoForRepresentative", {
+	          essential: this.essential,
+		        personal: this.personal,
+	        })
+	        .then(() => {
+	          this.$emit("valueChange", {
+	            value: {
+								essential: this.essential,
+		            personal: this.personal
+	            },
+	            current: 0,
+	          });
+	        })
+	        .catch(() => {});
+	    },
+
+	    async saveContactInfo() {
+	      await this.$store
+	        .dispatch(
+	          "creatContactInfoForRepresentative",
+			        {personal: this.personal,
+			            essential: this.essential
+			        },
+	        )
+	        .then(() => {
+	          this.$emit("valueChange", {
+	            value: {
+								     personal: this.personal,
+		                 essential: this.essential,
+	            },
+	            current: 0,
+	          });
+	        })
+	        .catch(() => {});
+	    },
+
+	    save(action) {
+	      switch (action) {
+	        case "essential":
+	          this.saveEssentialInfo();
+	          break;
+
+	        case "contact":
+	          this.saveContactInfo();
+	          break;
+	      }
+	    },
+
+	    filterOption(input, option) {
+	      return (
+	        option.componentOptions.children[0].text
+	          .toLowerCase()
+	          .indexOf(input.toLowerCase()) >= 0
+	      );
+	    },
+
+	    toggle(index) {
+	      this.arr = this.arr.map((a, ind) => {
+	        if (ind === index) {
+	          a.first = !a.first;
+	        } else {
+	          a.first = true;
+	        }
+	        return a;
+	      });
+	    },
+
+	    onChangeDD() {
+	      this.save("essential");
+	    },
+
+	    onChangePanel(e) {
+	      this.activeKey = e;
+	      this.$emit("pannelChanged", e);
+	    },
+
+	    async onCountryChange(e, name, action) {
+	      this.checkValidation(name, action);
+	      this.loading = false;
+	      this.loadingPermanant = false;
+
+	     await this.saveContactInfo();
+	    },
+	  },
+	};
 </script>
 
 <style scoped lang="scss">
-@import "@/styles/base/_variables.scss";
-@import "@/styles/base/_generic.scss";
-.anticon {
-  color: #b3b2b2;
-}
-.ant-tooltip-inner {
-  border-radius: 0px;
-}
-.mobile-margin {
-  margin-top: 0.5rem;
-}
-.mobile-center {
-  text-align: center;
-}
-.mobile-switch {
-  margin-top: 12px;
-}
-@media (min-width: 768px) {
-  .form-right-content {
-    float: right;
-    padding-right: 0;
-  }
-  .mobile-margin {
-    margin-top: 0;
-  }
-  .non-padding-mobile-margin {
-    margin-top: 0;
-  }
-  .mobile-center {
-    text-align: left;
-  }
-  .mobile-switch {
-    margin-top: 0;
-  }
-}
+		@import "@/styles/base/_variables.scss";
+		@import "@/styles/base/_generic.scss";
+
+		.anticon {
+		  color: #b3b2b2;
+		}
+
+		.ant-tooltip-inner {
+		  border-radius: 0px;
+		}
+
+		.mobile-margin {
+		  margin-top: 0.5rem;
+		}
+
+		.mobile-center {
+		  text-align: center;
+		}
+
+		.mobile-switch {
+		  margin-top: 12px;
+		}
+
+		@media (min-width: 768px) {
+		  .form-right-content {
+		    float: right;
+		    padding-right: 0;
+		  }
+
+		  .mobile-margin {
+		    margin-top: 0;
+		  }
+
+		  .non-padding-mobile-margin {
+		    margin-top: 0;
+		  }
+
+		  .mobile-center {
+		    text-align: left;
+		  }
+			
+		  .mobile-switch {
+		    margin-top: 0;
+		  }
+		}
 </style>
