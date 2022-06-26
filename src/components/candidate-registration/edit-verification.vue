@@ -102,7 +102,7 @@
               </div>
               <div class="col-12 col-md-6 mobile-margin">
                 <div class="row">
-                  <div class="col-12 col-md-12">
+                  <div class="col-12">
                     <a-form-model-item
                       ref="ver_country_id"
                       prop="ver_country_id"
@@ -145,8 +145,44 @@
                     </a-form-model-item>
                   </div>
 
-                  <div class="col-12 col-md-6 mobile-margin">
-                  </div>
+                  <!-- <div class="col-12 col-md-6 mobile-margin">
+                    <a-form-model-item ref="ver_city_id" prop="ver_city_id">
+                      <v-select
+                        :clearable="false"
+                        class="style-chooser"
+                        id="ver_city_id"
+                        placeholder="please select"
+                        @input="onValueChange($event, 'ver_city_id')"
+                        :loading="loading"
+                        :reduce="(option) => option.id"
+                        v-model="verification.ver_city_id"
+                        label="name"
+                        :options="verification.cities"
+                        ><template #open-indicator>
+                          <a-icon type="down" /> </template
+                      ></v-select>
+
+                      <a-select
+                        id="ver_city"
+                        :showSearch="true"
+                        option-filter-prop="children"
+                        :filter-option="filterOption"
+                        :showArrow="true"
+                        v-model="verification.ver_city"
+                        class="select-ma w-100"
+                        placeholder="City"
+                        @change="onValueChange"
+                      >
+                        <a-select-option
+                          v-for="(_city, key) in verification.cities"
+                          :value="_city.id"
+                          :key="key"
+                        >
+                          {{ _city.name }}
+                        </a-select-option>
+                      </a-select>
+                    </a-form-model-item>
+                  </div> -->
                 </div>
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">
@@ -550,7 +586,7 @@ export default {
 
     cancel() {
       this.verification = {
-        ver_city_id: "",
+     
         ver_country: "",
         ver_country_id: "",
         ver_document_type: "",
@@ -559,7 +595,7 @@ export default {
       };
       this.$store
         .dispatch("saveVerificationInfo", {
-          ver_city_id: "",
+        
           ver_country: "",
           ver_country_id: "",
           ver_document_type: "",
@@ -608,31 +644,19 @@ export default {
     },
     saveVerificationInfo() {
       const {
-        ver_city_id,
+       
         ver_country,
         ver_country_id,
         ver_document_type,
-        // ver_recommences_address,
-        // ver_recommences_first_name,
-        // ver_recommences_last_name,
-        // ver_recommences_occupation,
-        // ver_recommences_title,
-        // ver_status,
-        // ver_recommences_mobile_no,
+        
       } = this.verification;
       this.$store
         .dispatch("saveVerificationInfo", {
-          ver_city_id,
+        
           ver_country,
           ver_country_id,
           ver_document_type,
-          // ver_recommences_address,
-          // ver_recommences_first_name,
-          // ver_recommences_last_name,
-          // ver_recommences_occupation,
-          // ver_recommences_title,
-          // ver_status,
-          // ver_recommences_mobile_no,
+         
         })
         .then((data) => {
           this.$emit("valueChange", {

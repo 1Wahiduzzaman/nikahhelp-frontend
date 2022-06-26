@@ -96,13 +96,7 @@ export const RULES_PERSONAL = {
             trigger: "blur",
         },
     ],
-    per_current_residence_city: [
-        {
-            required: true,
-            message: "Select a city",
-            trigger: "blur",
-        },
-    ],
+   
     per_permanent_country: [
         {
             required: true,
@@ -110,13 +104,7 @@ export const RULES_PERSONAL = {
             trigger: "blur",
         },
     ],
-    per_permanent_city: [
-        {
-            required: true,
-            message: "Select permanent city",
-            trigger: "blur",
-        },
-    ],
+   
     per_permanent_post_code: [
         {
             required: true,

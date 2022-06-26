@@ -391,52 +391,50 @@ export default {
         this.representativeDetails = {
           ...details,
         };
-        if (
-          this.representativeDetails.personalInformation &&
-          this.representativeDetails.personalInformation.personal
-            .per_current_residence_country > 0
-        ) {
-          this.onChangeCountry(
-            {
-              id: this.representativeDetails.personalInformation.personal
-                .per_current_residence_country,
-            },
-            "residence"
-          );
-        }
-        if (
-          this.representativeDetails.personalInformation &&
-          this.representativeDetails.personalInformation.personal
-            .per_permanent_country > 0
-        ) {
-          this.onChangeCountry(
-            {
-              id: this.representativeDetails.personalInformation.personal
-                .per_permanent_country,
-            },
-            "permanat"
-          );
-        }
-        if (
-          this.representativeDetails.verification &&
-          this.representativeDetails.verification.ver_country > 0
-        ) {
-          this.onChangeCountry(
-            { id: this.representativeDetails.verification.ver_country },
-            "verification"
-          );
-        }
+        // if (
+        //   this.representativeDetails.personalInformation &&
+        //   this.representativeDetails.personalInformation.personal
+        //     .per_current_residence_country > 0
+        // ) {
+        //   this.onChangeCountry(
+        //     {
+        //       id: this.representativeDetails.personalInformation.personal
+        //         .per_current_residence_country,
+        //     },
+        //     "residence"
+        //   );
+        // }
+        // if (
+        //   this.representativeDetails.personalInformation &&
+        //   this.representativeDetails.personalInformation.personal
+        //     .per_permanent_country > 0
+        // ) {
+        //   this.onChangeCountry(
+        //     {
+        //       id: this.representativeDetails.personalInformation.personal
+        //         .per_permanent_country,
+        //     },
+        //     "permanat"
+        //   );
+        // }
+        // if (
+        //   this.representativeDetails.verification &&
+        //   this.representativeDetails.verification.ver_country > 0
+        // ) {
+        //   this.onChangeCountry(
+        //     { id: this.representativeDetails.verification.ver_country },
+        //     "verification"
+        //   );
+        // }
         this.showAgreement =
           user.status == "2" || user.status == "3" ? true : false;
         const {
-          ver_city,
           ver_country,
           ver_document_type,
           ver_document_frontside,
           ver_document_backside,
         } = this.representativeDetails.verification;
         this.showAgreement = Object.values({
-          ver_city,
           ver_country,
           ver_document_type,
           ver_document_frontside,
@@ -484,14 +482,12 @@ export default {
     },
     doneBtn() {
       const {
-        ver_city,
         ver_country,
         ver_document_type,
         ver_document_frontside,
         ver_document_backside,
       } = this.representativeDetails.verification;
       const isComplete = Object.values({
-        ver_city,
         ver_country,
         ver_document_type,
         ver_document_frontside,
@@ -582,14 +578,12 @@ export default {
         case 2:
           if (this.showAgreement) {
             const {
-              ver_city,
               ver_country,
               ver_document_type,
               ver_document_frontside,
               ver_document_backside,
             } = this.representativeDetails.verification;
             isEnabled = Object.values({
-              ver_city,
               ver_country,
               ver_document_type,
               ver_document_frontside,

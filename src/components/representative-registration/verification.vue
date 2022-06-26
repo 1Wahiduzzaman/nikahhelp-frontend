@@ -82,7 +82,7 @@
                     v-if="verification.ver_country"
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
-                  />ID document issuing country & city
+                  />ID document issuing country 
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
@@ -104,7 +104,7 @@
                       ></v-select>
                     </a-form-model-item>
                   </div>
-                  <div class="col-12 col-md-6">
+                  <!-- <div class="col-12 col-md-6">
                     <a-form-model-item ref="ver_city" prop="ver_city">
                       <v-select
                         :clearable="false"
@@ -121,7 +121,7 @@
                           <a-icon type="down" /> </template
                       ></v-select>
                     </a-form-model-item>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">
@@ -706,7 +706,7 @@ export default {
     },
     saveVerificationInfo() {
       const {
-        ver_city,
+       
         ver_country,
         ver_document_type,
         ver_recommender_address,
@@ -718,7 +718,7 @@ export default {
       } = this.verification;
       this.$store
         .dispatch("saveRepresentativeVerificationInfo", {
-          ver_city,
+        
           ver_country,
           ver_document_type,
           ver_recommender_address,
@@ -753,7 +753,7 @@ export default {
     },
     cancel() {
       this.verification = {
-        ver_city: "",
+      
         ver_country: "",
         ver_document_type: "",
         ver_recommender_address: "",
@@ -769,7 +769,7 @@ export default {
 
       this.$store
         .dispatch("saveRepresentativeVerificationInfo", {
-          ver_city: "",
+         
           ver_country: "",
           ver_document_type: "",
           ver_recommender_address: "",
