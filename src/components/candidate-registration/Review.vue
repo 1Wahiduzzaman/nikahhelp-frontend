@@ -527,7 +527,7 @@
                       }}</span></span
                     >
                   </li>
-                  <li class="flex-between-start">
+                  <!-- <li class="flex-between-start">
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
                       >Current Residance</span
                     ><span class="flex-60 px-2 d-inherit"
@@ -535,7 +535,7 @@
                         candidateData.personal.per_current_residence
                       }}</span></span
                     >
-                  </li>
+                  </li> -->
                   <li class="flex-between-start">
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
                       >Address</span
@@ -794,12 +794,12 @@
                   <TableRow
                     title="ID document issuing country"
                     textClass="text-subtitle-1"
-                    :value="candidateDetails.verification.ver_country"
+                    :value="candidateData.verification.ver_country"
                   />
                   <TableRow
                     title="Document type"
                     textClass="text-subtitle-1"
-                    :value="candidateDetails.verification.ver_document_type"
+                    :value="candidateData.verification.ver_document_type"
                   />
                 </table>
               </div>
@@ -808,7 +808,7 @@
               <div class="profile-img text-center">
                 <img
                   v-viewer
-                  :src="candidateDetails.verification.ver_image_front"
+                  :src="candidateData.verification.ver_image_front"
                   alt="img"
                   height="250"
                   width="200"
@@ -820,7 +820,7 @@
               <div class="profile-img text-center">
                 <img
                   v-viewer
-                  :src="candidateDetails.verification.ver_image_back"
+                  :src="candidateData.verification.ver_image_back"
                   alt="img"
                   height="250"
                   width="200"
@@ -977,6 +977,10 @@ export default {
             pre_occupation: JSON.parse(
               response.data.data.preference.pre_occupation
             ),
+          },
+           verification: {
+            ...response.data.data.verification.verification,
+           
           },
           // personal: {
           //   ...response.data.data.personal,
