@@ -61,7 +61,7 @@
         <div class="col-12 col-md-6 none-padding">
           <div class="mb-2 font-weight-bold">
             <a-icon
-              v-if="verification.ver_country_id"
+              v-if="verification.ver_country"
               class="color-success mr-2 fs-18 fw-500"
               type="check"
             />Country
@@ -69,17 +69,17 @@
         </div>
         <div class="col-12 col-md-6 mobile-margin">
           <div class="row">
-            <div class="col-12 col-md-6">
-              <a-form-model-item ref="ver_country_id" prop="ver_country_id">
+            <div class="col-12">
+              <a-form-model-item ref="ver_country" prop="ver_country">
                 <v-select
                   :clearable="false"
                   class="style-chooser"
                   @input="onChangeCountry"
-                  id="ver_country_id"
+                  id="ver_country"
                   placeholder="Country"
-                  v-model="verification.ver_country_id"
+                  v-model="verification.ver_country"
                   label="name"
-                  :reduce="(option) => option.id"
+                  :reduce="(option) => option.name"
                   :options="candidateDetails.countries"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
@@ -107,7 +107,7 @@
                       </a-select> -->
               </a-form-model-item>
             </div>
-            <div class="col-12 col-md-6 mobile-margin">
+            <!-- <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="ver_city_id" prop="ver_city_id">
                 <v-select
                   :clearable="false"
@@ -121,7 +121,7 @@
                   :options="verification.cities"
                   ><template #open-indicator> <a-icon type="down" /> </template
                 ></v-select>
-                <!-- <a-select
+                <a-select
                         id="ver_city"
                         :showSearch="true"
                         option-filter-prop="children"
@@ -139,9 +139,9 @@
                         >
                           {{ _city.name }}
                         </a-select-option>
-                      </a-select> -->
+                      </a-select> 
               </a-form-model-item>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="col-12 none-padding mobile-margin mobile-help">
@@ -459,13 +459,13 @@ export default {
   methods: {
     async saveCandidateUploadDoc() {
       const {
-        ver_country_id,
+        ver_country,
         ver_document_type,
         ver_image_back,
         ver_image_front,
       } = this.verification;
       const isComplete = Object.values({
-        ver_country_id,
+        ver_country,
         ver_document_type,
         ver_image_back,
         ver_image_front,
@@ -514,16 +514,12 @@ export default {
     },
     saveVerificationInfo() {
       const {
-         ver_city_id,
           ver_country,
-          ver_country_id,
           ver_document_type,
       } = this.verification;
       this.$store
         .dispatch("saveVerificationInfo", {
-          ver_city_id,
           ver_country,
-          ver_country_id,
           ver_document_type,
         })
         .then((data) => {})
@@ -588,11 +584,6 @@ export default {
     },
 
     async onChangeCountry(e) {
-      const res = await ApiService.get(`v1/utilities/cities/${e}`);
-      if (res.status === 200) {
-        this.verification.cities = [];
-        this.verification.cities.push(...res.data.data);
-      }
       this.saveVerificationInfo();
     },
     clearImg(action) {
@@ -680,7 +671,7 @@ input[type="file"]::-webkit-file-upload-button {
   display: grid;
   place-content: center;
   position: absolute;
-  right: 2.5rem;
+  right: 3.5rem;
   top: 2.5rem;
   width: 2rem;
   height: 2rem;
