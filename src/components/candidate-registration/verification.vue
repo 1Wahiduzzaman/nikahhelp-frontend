@@ -94,7 +94,7 @@
               <div class="col-12 col-md-6 none-padding">
                 <div class="mb-2 font-weight-bold">
                   <a-icon
-                    v-if="verification.ver_country_id"
+                    v-if="verification.ver_country"
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
                   />Document issuing country
@@ -104,18 +104,18 @@
                 <div class="row">
                   <div class="col-12 col-md-12">
                     <a-form-model-item
-                      ref="ver_country_id"
-                      prop="ver_country_id"
+                      ref="ver_country"
+                      prop="ver_country"
                     >
                       <v-select
                         :clearable="false"
                         class="style-chooser"
-                        @input="onChangeCountry($event, 'ver_country_id')"
-                        id="ver_country_id"
+                        @input="onChangeCountry($event, 'ver_country')"
+                        id="ver_country"
                         placeholder="please select"
-                        v-model="verification.ver_country_id"
+                        v-model="verification.ver_country"
                         label="name"
-                        :reduce="(option) => option.id"
+                        :reduce="(option) => option.name"
                         :options="candidateDetails.countries"
                         ><template #open-indicator>
                           <a-icon type="down" /> </template
@@ -581,7 +581,7 @@ export default {
     cancel() {
       this.verification = {
         ver_country: "",
-        ver_country_id: "",
+
         ver_document_type: "",
         ver_image_back: "",
         ver_image_front: "",
@@ -589,7 +589,7 @@ export default {
       this.$store
         .dispatch("saveVerificationInfo", {
           ver_country: "",
-          ver_country_id: "",
+
           ver_document_type: "",
         })
         .then((data) => {
@@ -635,12 +635,11 @@ export default {
       });
     },
     saveVerificationInfo() {
-      const { ver_country, ver_country_id, ver_document_type } =
-        this.verification;
+      const { ver_country, ver_document_type } = this.verification;
       this.$store
         .dispatch("saveVerificationInfo", {
           ver_country,
-          ver_country_id,
+
           ver_document_type,
         })
         .then((data) => {
@@ -717,12 +716,6 @@ export default {
     async onChangeCountry(e, name) {
       this.loading = true;
       this.checkValidation(name);
-      const res = await ApiService.get(`v1/utilities/cities/${e}`);
-      if (res.status === 200) {
-        this.verification.cities = [];
-        this.verification.cities.push(...res.data.data);
-        this.loading = false;
-      }
       this.saveVerificationInfo();
     },
     clearImg(action) {

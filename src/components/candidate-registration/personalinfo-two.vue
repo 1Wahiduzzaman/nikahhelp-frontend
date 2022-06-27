@@ -1209,6 +1209,7 @@
               <vue-tel-input
                 @blur="onValueChange($event, 'contact')"
                 id="mobile_number"
+                maxlength="10"
                 v-model="personalInformation.contact.mobile_number"
                 placeholder="Mobile Number"
               ></vue-tel-input>

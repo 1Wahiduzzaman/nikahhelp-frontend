@@ -564,27 +564,27 @@ export default {
             ""
           );
         }
-        if (
-          this.candidateDetails.verification &&
-          this.candidateDetails.verification.ver_country_id > 0
-        ) {
-          this.onChangeCountry(
-            { id: this.candidateDetails.verification.ver_country_id },
-            "verification",
-            ""
-          );
-        }
+        // if (
+        //   this.candidateDetails.verification &&
+        //   this.candidateDetails.verification.ver_country > 0
+        // ) {
+        //   this.onChangeCountry(
+        //     { id: this.candidateDetails.verification.ver_country },
+        //     "verification",
+        //     ""
+        //   );
+        // }
         this.current = response.data.data.user.data_input_status;
         // this.showAgreement =
         //   response.data.data.user.is_uplaoded_doc == "1" ? true : false;
         const {
-          ver_country_id,
+          ver_country,
           ver_document_type,
           ver_image_back,
           ver_image_front,
         } = this.candidateDetails.verification;
         this.showAgreement = Object.values({
-          ver_country_id,
+          ver_country,
           ver_document_type,
           ver_image_back,
           ver_image_front,
@@ -771,13 +771,13 @@ export default {
           break;
         case 4:
           const {
-            ver_country_id,
+            ver_country,
             ver_document_type,
             ver_image_back,
             ver_image_front,
           } = this.candidateDetails.verification;
           isEnabled = Object.values({
-            ver_country_id,
+            ver_country,
             ver_document_type,
             ver_image_back,
             ver_image_front,
@@ -815,13 +815,13 @@ export default {
     },
     async saveCandidateUploadDoc() {
       const {
-        ver_country_id,
+        ver_country,
         ver_document_type,
         ver_image_back,
         ver_image_front,
       } = this.candidateDetails.verification;
       const isComplete = Object.values({
-        ver_country_id,
+        ver_country,
         ver_document_type,
         ver_image_back,
         ver_image_front,
