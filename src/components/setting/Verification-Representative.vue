@@ -580,7 +580,7 @@ export default {
     },
     saveVerificationInfo() {
       const {
-        ver_city,
+      
         ver_country,
         ver_document_type,
         ver_recommender_address,
@@ -592,7 +592,7 @@ export default {
       } = this.verification;
       this.$store
         .dispatch("saveRepresentativeVerificationInfo", {
-          ver_city,
+         
           ver_country,
           ver_document_type,
           ver_recommender_address,
@@ -755,7 +755,7 @@ input[type="file"]::-webkit-file-upload-button {
   display: grid;
   place-content: center;
   position: absolute;
-  right: 2.5rem;
+  right: 3.5rem;
   top: 2rem;
   width: 2rem;
   height: 2rem;

@@ -105,39 +105,19 @@ export default {
             
             return arr.join(', ')
         },
-        getCountry() {
-            let cityArr = [];
-             if(this.preference.preferred_countries.length) {
-                this.preference.preferred_countries.map(city => {
-                    cityArr.push(city.name)
-                })
-            }
-            if(this.preference.preferred_cities.length) {
-                this.preference.preferred_cities.map(city => {
-                    cityArr.push(city.name)
-                })
-            }
-            if(!cityArr.length) return 'No'
-            return cityArr.join(', ')
-        },
-        getBlockedCityCountry() {
-            let cityArr = [];
-             if(this.preference.blocked_cities?.length) {
-                this.preference.blocked_cities.map(city => {
-                    cityArr.push(city.name)
-                })
-            }
-            if(this.preference.bloked_countries?.length) {
-                this.preference.bloked_countries.map(city => {
-                    cityArr.push(city.name)
-                })
-            }
-            if(!cityArr.length) return 'No'
-            return cityArr.join(', ')
-        },
+    getCountry() {
+      return this.preference.preferred_countries.length > 0
+        ? this.preference.preferred_countries.map((c) => c.name).join(", ")
+        : "None";
+    },
+    getBlockedCityCountry() {
+      return  this.preference.bloked_countries.length > 0
+        ? this.preference.bloked_countries.map((c) => c.name).join(", ")
+        : "None";
+    },
         getReligion() {
-            if(this.preference.pre_partner_religion.length) {
-                return this.preference.pre_partner_religion.join(', ')
+            if(this.preference.pre_partner_religion_id.length>0) {
+                return this.preference.pre_partner_religion_id.join(', ')
             }
             return ''
         },
