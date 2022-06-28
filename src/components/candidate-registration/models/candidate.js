@@ -170,12 +170,12 @@ export const RULES = {
 export const RULES_FAMILY_INFO = {
     father_profession: [{
         required: true,
-        message: "Select your father's profession",
+        message: "Write your father's profession",
         trigger: "blur",
     }],
     mother_profession: [{
         required: true,
-        message: "Select your mother's profession",
+        message: "Write your mother's profession",
         trigger: "blur",
     }],
     siblings_desc: [{

@@ -330,10 +330,7 @@
           </v-container>
           <v-container fluid>
             <div class="review-edit mt-5">
-              <div class="review-edit-label">
-                My Uploaded Image
-               
-              </div>
+              <div class="review-edit-label">My Uploaded Image</div>
               <div class="row">
                 <div class="col-12 col-md-6 mb-4">
                   <div class="profile-img text-center">
@@ -863,6 +860,8 @@ ul {
 .profile-img {
   border-radius: 5px;
   overflow: hidden;
+  width: 200px;
+  height: 200px;
   p {
     font-size: 16px;
     margin-top: 10px;

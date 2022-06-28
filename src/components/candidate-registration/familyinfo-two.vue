@@ -39,7 +39,7 @@
                 ref="father_profession"
                 prop="father_profession"
               >
-                <v-select
+                <!-- <v-select
                   :clearable="false"
                   class="style-chooser"
                   @input="onValueChange($event, 'father_profession')"
@@ -50,7 +50,14 @@
                   label="name"
                   :options="candidateDetails.occupations"
                   ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                ></v-select> -->
+                <a-input
+                  @blur="onValueChange($event, 'father_profession')"
+                  id="father_profession"
+                  class="style-chooser"
+                  placeholder="write your father's profession"
+                  v-model="familyInformation.father_profession"
+                />
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -98,8 +105,14 @@
               <a-form-model-item
                 ref="mother_profession"
                 prop="mother_profession"
-              >
-                <v-select
+                ><a-input
+                  @blur="onValueChange($event, 'mother_profession')"
+                  id="mother_profession"
+                  class="style-chooser"
+                  placeholder="write your mother's profession"
+                  v-model="familyInformation.mother_profession"
+                />
+                <!-- <v-select
                   :clearable="false"
                   class="style-chooser"
                   @input="onValueChange($event, 'mother_profession')"
@@ -110,7 +123,7 @@
                   :reduce="(option) => option.name"
                   :options="candidateDetails.occupations"
                   ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                ></v-select> -->
               </a-form-model-item>
             </div>
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">

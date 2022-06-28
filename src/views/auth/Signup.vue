@@ -40,7 +40,7 @@
                     Match Maker
                   </button>
                   <p
-                    class="fs-12 mt-5"
+                    class="fs-14 mt-5"
                     v-for="(info, iIndex) in getInstruction"
                     :key="iIndex"
                   >
@@ -61,7 +61,7 @@
                     Candidate
                   </button>
                   <p
-                    class="fs-12 mt-5"
+                    class="fs-14 mt-5"
                     v-for="(info, iIndex) in instructions[0].data"
                     :key="iIndex"
                   >
@@ -79,7 +79,7 @@
                     Representative
                   </button>
                   <p
-                    class="fs-12 mt-5"
+                    class="fs-14 mt-5"
                     v-for="(info, iIndex) in instructions[1].data"
                     :key="iIndex"
                   >
@@ -95,7 +95,7 @@
                     Match Maker
                   </button>
                   <p
-                    class="fs-12 mt-5"
+                    class="fs-14 mt-5"
                     v-for="(info, iIndex) in instructions[2].data"
                     :key="iIndex"
                   >
@@ -530,25 +530,25 @@ export default {
           title: "candidiate",
           data: [
             "Candidate is either the bride or groom looking to get married",
-            "Create your own team or join a team",
-            "Represented by only ONE team",
-            "Be a representative for another 4 candidates",
+            "A candidate must be represented by a team",
+            "The same candidate cannot be represented by another team",
+            "But they can join another team as a rep",
           ],
         },
         {
           title: "representative",
           data: [
-            "Anyone can be a representative, they simply help and guide the candidate to find suitable match",
-            "Create your own team or join a team",
-            "Can switch account to candidate",
-            "Can create or join upto 5 teams",
+            "Anyone can be a representative",
+            "They simply help and guide the candidate to find suitable match",
+            "Every rep must obtain consent from candidate to represent them",
+            "A rep can be part of multiple teams as a rep ",
           ],
         },
         {
           title: "match-maker",
           data: [
             "Matchmaker is a professional who helps the candidate to find prospects ",
-            "Matchmaker role is same as representative",
+            "Matchmaker role is same as representative but with bigger capacity",
             "Can not switch membership to candidate",
             "Can create or join upto 100+ teams",
           ],

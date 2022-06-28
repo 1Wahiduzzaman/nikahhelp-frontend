@@ -85,11 +85,11 @@
                 textClass="text-subtitle-1"
                 :value="personal.per_country_of_birth"
             />
-            <TableRow 
+            <!-- <TableRow 
                 title="Current Residence"
                 textClass="text-subtitle-1"
                 :value="personal.per_current_residence"
-            />
+            /> -->
             <template v-if="routeName === 'Profile'">
                 <TableRow 
                     title="Permanent Country and City"
