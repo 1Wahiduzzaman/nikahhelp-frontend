@@ -53,8 +53,7 @@
                         data-aria-expanded="true"
                         data-aria-controls="faqCollapse-1"
                       >
-                        <span class="badge">1</span>How do I sign up with
-                        MatrimonyAssist?
+                        <span class="badge">1</span>What is MatrimonyAssist?
                       </h5>
                     </div>
                   </div>
@@ -66,11 +65,22 @@
                   >
                     <div class="card-body">
                       <p>
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the
-                        industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and
-                        scrambled it to make a type specimen book.
+                        MatrimonyAssist is an online platform designed to facilitate
+                        conversation between families who are seeking marriage
+                        partners for their loved ones. In MatrimonyAssist, both
+                        the candidate and the family jointly play vital role in
+                        finding a prospect. Our goal is simple. We want to
+                        assist as many people as we can finding compatible
+                        marriage partners.
+                      </p>
+                      <p>
+                        MatrimonyAssist is a family and friends matrimonial
+                        introduction service to help you navigate traditions,
+                        sensitivities, keeping true to your values, and finding
+                        someone who is trying to do the same. It is a convenient
+                        and smart way to go about companion hunting, while
+                        involving family and friends on a secure portal, without
+                        too much sweat and stress.
                       </p>
                     </div>
                   </div>
@@ -85,7 +95,8 @@
                         data-aria-expanded="false"
                         data-aria-controls="faqCollapse-2"
                       >
-                        <span class="badge">2</span> I cannot login to the site.
+                        <span class="badge">2</span> How do I sign up with
+                        MatrimonyAssist?
                       </h5>
                     </div>
                   </div>
@@ -97,9 +108,12 @@
                   >
                     <div class="card-body">
                       <p>
-                        Contrary to popular belief, Lorem Ipsum is not simply
-                        random text. It has roots in a piece of classical Latin
-                        literature from 45 BC, making it over 2000 years old.
+                        Joining with MatrimonyAssist is very easy and simple.
+                        You sign up with a valid email address and create your
+                        own password. Once your email is verified, you have full
+                        access to the site to create your profile. Your profile
+                        also goes through a verification process. If everything
+                        is satisfactory, we publish your profile on to the site.
                       </p>
                     </div>
                   </div>
@@ -114,8 +128,7 @@
                         data-aria-expanded="false"
                         data-aria-controls="faqCollapse-3"
                       >
-                        <span class="badge">3</span>I need help with
-                        subscription plan.
+                        <span class="badge">3</span>I cannot login to the site.
                       </h5>
                     </div>
                   </div>
@@ -127,12 +140,22 @@
                   >
                     <div class="card-body">
                       <p>
-                        It is a long established fact that a reader will be
-                        distracted by the readable content of a page when
-                        looking at its layout. The point of using Lorem Ipsum is
-                        that it has a more-or-less normal distribution of
-                        letters, as opposed to using 'Content here, content
-                        here.
+                        Please ensure Caps Lock is off. The form fields are case
+                        sensitive. If you receive an error message “Login could
+                        not be completed due to unregistered account”. This
+                        means that either you don't have an online account, or
+                        you made a mistake with your email and/or your password.
+                      </p>
+                      <p>
+                        Please try logging in again ensuring that you have
+                        entered your email and password correctly. If you do not
+                        have a password that would mean you do not have an
+                        online account. If you don't have an online account,
+                        <a href="#">please sign up for an online account</a>. If
+                        you continue to have difficulties logging in, please
+                        contact technical support team by email
+                        support@matrimonyassist.com where they will be happy to
+                        assist you.
                       </p>
                     </div>
                   </div>
@@ -147,7 +170,8 @@
                         data-aria-expanded="false"
                         data-aria-controls="faqCollapse-4"
                       >
-                        <span class="badge">4</span> Where can I get some?
+                        <span class="badge">4</span> Can anyone register on to
+                        MatrimonyAssist site?
                       </h5>
                     </div>
                   </div>
@@ -159,10 +183,13 @@
                   >
                     <div class="card-body">
                       <p>
-                        There are many variations of passages of Lorem Ipsum
-                        available, but the majority have suffered alteration in
-                        some form, by injected humour, or randomised words which
-                        don't look even slightly believable.
+                        MatrimonyAssist is open to families looking for
+                        prospects for their loved ones. Any candidate wants to
+                        join the site, must be aged 18 + and create a team with
+                        family members or a guardian or a representative. To
+                        represent the candidate, a guardian or a representative
+                        must have consent from the candidate to act on their
+                        behalf.
                       </p>
                     </div>
                   </div>
@@ -177,7 +204,8 @@
                         data-aria-expanded="false"
                         data-aria-controls="faqCollapse-5"
                       >
-                        <span class="badge">5</span> What is Lorem Ipsum?
+                        <span class="badge">5</span> What happens when after
+                        submitting a profile?
                       </h5>
                     </div>
                   </div>
@@ -189,10 +217,8 @@
                   >
                     <div class="card-body">
                       <p>
-                        It has survived not only five centuries, but also the
-                        leap into electronic typesetting, remaining essentially
-                        unchanged. It was popularised in the 1960s with the
-                        release of Letraset sheets containing
+                        MatrimonyAssist team verifies your profile and contact
+                        you if further verification information is required.
                       </p>
                     </div>
                   </div>
@@ -207,7 +233,8 @@
                         data-aria-expanded="false"
                         data-aria-controls="faqCollapse-6"
                       >
-                        <span class="badge">6</span> Where does it come from?
+                        <span class="badge">6</span>What aspects of my profile
+                        are publicly visible?
                       </h5>
                     </div>
                   </div>
@@ -219,12 +246,17 @@
                   >
                     <div class="card-body">
                       <p>
-                        The standard chunk of Lorem Ipsum used since the 1500s
-                        is reproduced below for those interested. Sections
-                        1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum"
-                        by Cicero are also reproduced in their exact original
-                        form, accompanied by English versions from the 1914
-                        translation by H. Rackham.
+                        General public who are not registered with
+                        MatrimonyAssist can see anonymous information of a
+                        candidate. This includes your age, nationality,
+                        ethnicity, religion, and education level. However,
+                        members who are registered and verified by the
+                        MatrimonyAssist can view most of the information except
+                        your date of birth, phone number, email, and home
+                        address. Regarding image, avatar image is viewable to
+                        everyone all time. Your main and other images are
+                        viewable only if you have given permission to view at
+                        image setting of profile completion.
                       </p>
                     </div>
                   </div>
@@ -239,7 +271,8 @@
                         data-aria-expanded="false"
                         data-aria-controls="faqCollapse-7"
                       >
-                        <span class="badge">7</span> Why do we use it?
+                        <span class="badge">7</span> How do I delete my profile
+                        from MatrmonyAssist?
                       </h5>
                     </div>
                   </div>
@@ -251,12 +284,11 @@
                   >
                     <div class="card-body">
                       <p>
-                        Many desktop publishing packages and web page editors
-                        now use Lorem Ipsum as their default model text, and a
-                        search for 'lorem ipsum' will uncover many web sites
-                        still in their infancy. Various versions have evolved
-                        over the years, sometimes by accident, sometimes on
-                        purpose (injected humour and the like).
+                        You can delete your profile from the setting menu. This
+                        will stop your profile appearing to the search result.
+                        However, if you want to completely delete profile from
+                        the MatrimonyAssist then you need to us a request at
+                        support@matrimonyassist.com
                       </p>
                     </div>
                   </div>
@@ -265,21 +297,20 @@
             </div>
           </div>
         </div>
-        
-        <div class="container2"><h5>Still need help? Can't find what you're looking for?</h5>
-      <br />
 
-      <h4>Contact the MatrimonyAssist team</h4>
-      <p>
-        Please use the form below to get in touch. Please provide as much detail
-        as you can. We aim to get back to you within two working days. However,
-        at busy times this may take a little longer.
-      </p>
-      </div>
-  
+        <div class="container2">
+          <h5>Still need help? Can't find what you're looking for?</h5>
+          <br />
+
+          <h4>Contact the MatrimonyAssist team</h4>
+          <p>
+            Please use the form below to get in touch. Please provide as much
+            detail as you can. We aim to get back to you within two working
+            days. However, at busy times this may take a little longer.
+          </p>
+        </div>
       </section>
 
-  
       <!-- Contact form  -->
       <div class="container1">
         <h4>SEND US AN EMAIL</h4>
