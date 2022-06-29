@@ -23,7 +23,6 @@ import ApiService from "./services/api.service";
 import Vuetify from 'vuetify';
 import 'viewerjs/dist/viewer.css';
 import VueTelInput from 'vue-tel-input';
-import 'vue-tel-input/dist/vue-tel-input.css';
 import VueViewer from 'v-viewer';
 Vue.use(VueViewer);
 Vue.use(Vuetify);
