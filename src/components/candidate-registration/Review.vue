@@ -641,11 +641,7 @@
                   title="Things I Enjoy"
                   :info="candidateData.personal.per_things_enjoy"
                 />
-                <FieldsetCard
-                  class="mt-3"
-                  title="Things I Enjoy"
-                  :info="candidateData.personal.per_things_enjoy"
-                />
+
                 <FieldsetCard
                   class="mt-3"
                   title="I am Thankfull for"
