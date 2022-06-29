@@ -621,11 +621,7 @@
                   title="Language"
                   :info="candidateData.personal.per_language_speak"
                 />
-                <FieldsetCard
-                  class="mt-3"
-                  title="Language"
-                  :info="candidateData.personal.per_language_speak"
-                />
+               
                 <FieldsetCard
                   class="mt-3"
                   title="My Hobbies & Interests"
