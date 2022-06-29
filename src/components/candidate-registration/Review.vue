@@ -68,7 +68,7 @@
                         "
                         class="ml-3 text--secondary text-subtitle-1"
                       >
-                        No
+                        None
                       </span>
                       <span
                         v-if="
@@ -508,12 +508,13 @@
                       >Nationality</span
                     ><span class="flex-60 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
-                        candidateDetails.countries[
-                          candidateData.personal.per_nationality
-                        ]
-                          ? candidateDetails.countries[
-                              candidateData.personal.per_nationality
-                            ].name
+                        candidateDetails.countries.find(
+                          (c) => c.id === candidateData.personal.per_nationality
+                        )
+                          ? candidateDetails.countries.find(
+                              (c) =>
+                                c.id === candidateData.personal.per_nationality
+                            ).name
                           : ""
                       }}</span></span
                     >
@@ -640,11 +641,7 @@
                   title="Things I Enjoy"
                   :info="candidateData.personal.per_things_enjoy"
                 />
-                <FieldsetCard
-                  class="mt-3"
-                  title="Things I Enjoy"
-                  :info="candidateData.personal.per_things_enjoy"
-                />
+
                 <FieldsetCard
                   class="mt-3"
                   title="I am Thankfull for"
@@ -978,9 +975,8 @@ export default {
               response.data.data.preference.pre_occupation
             ),
           },
-           verification: {
+          verification: {
             ...response.data.data.verification.verification,
-           
           },
           // personal: {
           //   ...response.data.data.personal,

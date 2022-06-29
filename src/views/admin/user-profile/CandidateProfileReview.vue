@@ -137,14 +137,28 @@
                     </a-tooltip>
                     <span class="flex-60 px-2 d-inherit">
                       :
-                      <span class="ml-3 text--secondary text-subtitle-1">
+                      <span
+                        v-if="
+                          candidateData.preference.preferred_countries
+                            .length === 0
+                        "
+                        class="ml-3 text--secondary text-subtitle-1"
+                      >
+                        None
+                      </span>
+                      <span
+                        v-if="
+                          candidateData.preference.preferred_countries.length >
+                          0
+                        "
+                        class="ml-3 text--secondary text-subtitle-1"
+                      >
                         <div
                           v-for="country in candidateData.preference
                             .preferred_countries"
                           :key="country.id"
                         >
                           {{ country.name }}
-                          <!-- {{ candidateDetails.preferred_countries[index].name }} -->
                         </div>
                       </span>
                     </span>
@@ -535,15 +549,7 @@
                       }}</span></span
                     >
                   </li>
-                  <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
-                      >Current Residance</span
-                    ><span class="flex-60 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
-                        candidateData.personal.per_current_residence
-                      }}</span></span
-                    >
-                  </li>
+
                   <li class="flex-between-start">
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
                       >Address</span
@@ -582,11 +588,9 @@
                   </li>
                   <li class="flex-between-start">
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
-                      >Permanent city & country</span
+                      >Permanent country</span
                     ><span class="flex-60 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
-                        candidateData.contact.per_permanent_city +
-                        ", " +
                         candidateData.contact.per_permanent_country_name
                       }}</span></span
                     >
@@ -628,31 +632,19 @@
                   title="Language"
                   :info="candidateData.personal.per_language_speak"
                 />
-                <FieldsetCard
-                  class="mt-3"
-                  title="Language"
-                  :info="candidateData.personal.per_language_speak"
-                />
+                
                 <FieldsetCard
                   class="mt-3"
                   title="My Hobbies & Interests"
                   :info="candidateData.personal.per_hobbies_interests"
                 />
-                <FieldsetCard
-                  class="mt-3"
-                  title="Food & Cuisine I like"
-                  :info="candidateData.personal.per_food_cuisine_like"
-                />
+               
                 <FieldsetCard
                   class="mt-3"
                   title="Things I Enjoy"
                   :info="candidateData.personal.per_things_enjoy"
                 />
-                <FieldsetCard
-                  class="mt-3"
-                  title="Things I Enjoy"
-                  :info="candidateData.personal.per_things_enjoy"
-                />
+                
                 <FieldsetCard
                   class="mt-3"
                   title="I am Thankfull for"
@@ -660,14 +652,7 @@
                 />
               </div>
             </div>
-            <!-- <div class="col-md-12 mb-3">
-							<div class="card-custom shadow-default">
-								<h4>A little bit about me</h4>
-								<p class="mb-0">
-									{{ candidateData.personal.per_about }}
-								</p>
-							</div>
-						</div> -->
+           
 
             <div class="col-md-12 mb-3">
               <div class="card-custom shadow-default">
@@ -1061,7 +1046,7 @@ export default {
       return nationArr.join(", ");
     },
     getReligion() {
-      return this.candidateData.preference?.pre_partner_religion.join(", ");
+      return this.candidateData.preference?.pre_partner_religion_id.join(", ");
     },
     getUserStatus(status) {
       return this.statusArr.find((i) => i.key == status).name;
@@ -1119,11 +1104,11 @@ export default {
           break;
         case "suspend":
           this.loadingSuspend = true;
-            this.saveCandidateUploadDoc();
+          this.saveCandidateUploadDoc();
           break;
         case "deleted":
           this.loadingDelete = true;
-            this.saveCandidateUploadDoc();
+          this.saveCandidateUploadDoc();
           break;
         case "reinstate":
           this.loadingReinstate = true;
@@ -1131,7 +1116,7 @@ export default {
       }
       const data = {
         id: this.$route.params.user_id,
-        status: status=='reinstate'?'completed':status,
+        status: status == "reinstate" ? "completed" : status,
       };
       await this.$store
         .dispatch("updateUserVerifyOrReject", data)

@@ -51,6 +51,7 @@
         :value="preference.pre_preferred_divorcee == 1 ? 'Yes' : 'NO'"
       />
       <TableRow
+        v-if="preference.pre_preferred_divorcee == 1"
         title="Accept a divorcee with children?"
         textClass="text-subtitle-1"
         :value="preference.pre_preferred_divorcee == 1 ? 'Yes' : 'NO'"
@@ -112,7 +113,7 @@ export default {
         : "None";
     },
     getBlockedCityCountry() {
-      return  this.preference.bloked_countries.length > 0
+      return this.preference.bloked_countries.length > 0
         ? this.preference.bloked_countries.map((c) => c.name).join(", ")
         : "None";
     },

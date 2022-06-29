@@ -1071,7 +1071,7 @@
                   "
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Permanent Country and City
+                />Permanent Country
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -1138,7 +1138,7 @@
                   v-if="personalInformation.contact.per_permanent_address"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Home Address
+                />Full Home Address
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -1207,9 +1207,10 @@
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <vue-tel-input
-                @blur="onValueChange($event, 'contact')"
+                v-bind="bindProps"
+                @input="onNumberChange($event,obj)"
                 id="mobile_number"
-                inputOptions="{maxlength:10}"
+                :maxlength="'10'"
                 v-model="personalInformation.contact.mobile_number"
                 placeholder="Mobile Number"
               ></vue-tel-input>
@@ -2271,6 +2272,10 @@ export default {
   },
   data() {
     return {
+      bindProps: {
+        maxLen: 14,
+      },
+
       postCodes: [],
       activeKey: 1,
       default_date: null,
@@ -2595,6 +2600,9 @@ export default {
           this.saveMoreAboutInfo();
           break;
       }
+    },
+    onNumberChange(e,object){
+
     },
     async saveEssentialInfo() {
       await this.$store
