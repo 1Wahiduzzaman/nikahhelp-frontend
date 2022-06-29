@@ -224,76 +224,40 @@
                 <div class="mb-2 font-weight-bold">
                   <a-icon
                     v-if="
-                      personalInformation.personal
-                        .per_current_residence_country 
+                      personalInformation.personal.per_current_residence_country
                     "
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
-                  />What is your current country  of residence?
+                  />What is your current country of residence?
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
-                <div class="row">
-                  <div class="col-12">
-                    <a-form-model-item
-                      ref="per_current_residence_country"
-                      prop="per_current_residence_country"
-                    >
-                      <v-select
-                        :clearable="false"
-                        class="style-chooser"
-                        @input="
-                          onCountryChange(
-                            $event,
-                            'per_current_residence_country',
-                            'contact'
-                          )
-                        "
-                        id="per_current_residence_country"
-                        :placeholder="'Country'"
-                        v-model="
-                          personalInformation.personal
-                            .per_current_residence_country
-                        "
-                        label="name"
-                        :reduce="(option) => option.id"
-                        :options="representativeDetails.countries"
-                        ><template #open-indicator>
-                          <a-icon type="down" /> </template
-                      ></v-select>
-                    </a-form-model-item>
-                  </div>
-                  <!-- <div class="col-12 col-md-6 mobile-margin">
-                    <a-form-model-item
-                      ref="per_current_residence_city"
-                      prop="per_current_residence_city"
-                    >
-                      <v-select
-                        :clearable="false"
-                        :loading="loading"
-                        class="style-chooser"
-                        @input="
-                          onValueChange(
-                            $event,
-                            'per_current_residence_city',
-                            'contact'
-                          )
-                        "
-                        id="per_current_residence_city"
-                        placeholder="Select City"
-                        :reduce="(option) => option.name"
-                        v-model="
-                          personalInformation.personal
-                            .per_current_residence_city
-                        "
-                        label="name"
-                        :options="personalInformation.personal.residenceCities"
-                        ><template #open-indicator>
-                          <a-icon type="down" /> </template
-                      ></v-select>
-                    </a-form-model-item>
-                  </div> -->
-                </div>
+                <a-form-model-item
+                  ref="per_current_residence_country"
+                  prop="per_current_residence_country"
+                >
+                  <v-select
+                    :clearable="false"
+                    class="style-chooser"
+                    @input="
+                      onCountryChange(
+                        $event,
+                        'per_current_residence_country',
+                        'contact'
+                      )
+                    "
+                    id="per_current_residence_country"
+                    :placeholder="'Country'"
+                    v-model="
+                      personalInformation.personal.per_current_residence_country
+                    "
+                    label="name"
+                    :reduce="(option) => option.id"
+                    :options="representativeDetails.countries"
+                    ><template #open-indicator>
+                      <a-icon type="down" /> </template
+                  ></v-select>
+                </a-form-model-item>
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">
                 <p>
@@ -336,33 +300,38 @@
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
-                <a-form-model-item
-                  ref="per_permanent_post_code"
-                  prop="per_permanent_post_code"
-                >
-                  <a-input
-                    @blur="
-                      onValueChange(
-                        $event,
-                        'contact',
-                        'per_permanent_post_code'
-                      )
-                    "
-                    id="per_permanent_post_code"
-                    :maxLength="10"
-                    placeholder="Post code, e.g. ME1 1BA"
-                    v-model="
-                      personalInformation.personal.per_permanent_post_code
-                    "
-                  />
-                </a-form-model-item>
+                <div class="row">
+                  <div class="col-12">
+                    <a-form-model-item
+                      ref="per_permanent_post_code"
+                      prop="per_permanent_post_code"
+                    >
+                      <a-input
+                        class="w-100"
+                        @blur="
+                          onValueChange(
+                            $event,
+                            'contact',
+                            'per_permanent_post_code'
+                          )
+                        "
+                        id="per_permanent_post_code"
+                        :maxLength="10"
+                        placeholder="Post code, e.g. ME1 1BA"
+                        v-model="
+                          personalInformation.personal.per_permanent_post_code
+                        "
+                      />
+                    </a-form-model-item>
+                  </div>
+                </div>
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">
                 <p>
                   <a
                     class="color-blue fw-700 fs-14"
                     data-toggle="collapse"
-                    href="#collapsePersonalInfoPostCode"
+                    href="#collapseRepPersonalInfoPostCode"
                     role="button"
                     aria-expanded="false"
                     aria-controls="collapseExample"
@@ -376,7 +345,7 @@
                 <div
                   class="collapse"
                   data-parent="#accordion"
-                  id="collapsePersonalInfoPostCode"
+                  id="collapseRepPersonalInfoPostCode"
                 >
                   <div class="card card-body bubble">
                     Please provide a valid post code. We ask for this
@@ -387,81 +356,48 @@
             </div>
 
             <!-- Permanent Residence -->
-            <div class="row pt-3 pb-2 border-bottom">
+            <div class="row mt-3 pb-2 border-bottom">
               <div class="col-12 col-md-6 none-padding">
                 <div class="mb-2 font-weight-bold">
                   <a-icon
-                    v-if="
-                      personalInformation.personal.per_permanent_country 
-                    "
+                    v-if="personalInformation.personal.per_permanent_country"
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
                   />Permanent Country
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
-                <div class="row">
-                  <div class="col-12">
-                    <a-form-model-item
-                      ref="per_permanent_country"
-                      prop="per_permanent_country"
-                    >
-                      <v-select
-                        :clearable="false"
-                        class="style-chooser"
-                        @input="
-                          onCountryChange(
-                            $event,
-                            'per_permanent_country',
-                            'contact'
-                          )
-                        "
-                        id="per_permanent_country"
-                        placeholder="Select Country"
-                        v-model="
-                          personalInformation.personal.per_permanent_country
-                        "
-                        :reduce="(option) => option.id"
-                        label="name"
-                        :options="representativeDetails.countries"
-                        ><template #open-indicator>
-                          <a-icon type="down" /> </template
-                      ></v-select>
-                    </a-form-model-item>
-                  </div>
-                  <!-- <div class="col-12 col-md-6 mobile-margin">
-                    <a-form-model-item
-                      ref="per_permanent_city"
-                      prop="per_permanent_city"
-                    >
-                      <v-select
-                        :clearable="false"
-                        :loading="loadingPermanant"
-                        class="style-chooser"
-                        @input="
-                          onValueChange($event, 'per_permanent_city', 'contact')
-                        "
-                        id="per_permanent_city"
-                        placeholder="Select City"
-                        v-model="
-                          personalInformation.personal.per_permanent_city
-                        "
-                        :reduce="(option) => option.name"
-                        label="name"
-                        :options="personalInformation.personal.permanantCities"
-                        ><template #open-indicator>
-                          <a-icon type="down" /> </template
-                      ></v-select>
-                    </a-form-model-item>
-                  </div> -->
-                </div>
+                <a-form-model-item
+                  ref="per_permanent_country"
+                  prop="per_permanent_country"
+                >
+                  <v-select
+                    :clearable="false"
+                    class="style-chooser"
+                    @input="
+                      onCountryChange(
+                        $event,
+                        'per_permanent_country',
+                        'contact'
+                      )
+                    "
+                    id="per_permanent_country"
+                    placeholder="Select Country"
+                    v-model="personalInformation.personal.per_permanent_country"
+                    :reduce="(option) => option.id"
+                    label="name"
+                    :options="representativeDetails.countries"
+                    ><template #open-indicator>
+                      <a-icon type="down" /> </template
+                  ></v-select>
+                </a-form-model-item>
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">
                 <p>
                   <a
                     class="color-blue fw-700 fs-14"
                     data-toggle="collapse"
-                    href="#personalInfoParmanentCountryCity"
+                    href="#reppersonalInfoParmanentCountryCity"
                     role="button"
                     aria-expanded="false"
                     aria-controls="collapseExample"
@@ -475,7 +411,7 @@
                 <div
                   class="collapse"
                   data-parent="#accordion"
-                  id="personalInfoParmanentCountryCity"
+                  id="reppersonalInfoParmanentCountryCity"
                 >
                   <div class="card card-body bubble">
                     Please provide a valid permanent address. This may be the
@@ -486,7 +422,6 @@
                 </div>
               </div>
             </div>
-
             <!-- Home Permanent Address  -->
             <div class="row mt-3 pb-2 border-bottom">
               <div class="col-12 col-md-6 none-padding">
@@ -499,29 +434,39 @@
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
-                <a-form-model-item
-                  ref="per_permanent_address"
-                  prop="per_permanent_address"
-                >
-                  <a-textarea
-                    @blur="
-                      onValueChange($event, 'per_permanent_address', 'contact')
-                    "
-                    id="per_permanent_address"
-                    :rows="3"
-                    :maxLength="200"
-                    v-model="personalInformation.personal.per_permanent_address"
-                    placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
-                  ></a-textarea>
-                </a-form-model-item>
-                <span style="display: flex; justify-content: flex-end"
-                  >{{
-                    personalInformation.personal.per_permanent_address
-                      ? personalInformation.personal.per_permanent_address
-                          .length
-                      : 0
-                  }}/200</span
-                >
+                <div class="row">
+                  <div class="col-12">
+                    <a-form-model-item
+                      ref="per_permanent_address"
+                      prop="per_permanent_address"
+                    >
+                      <a-textarea
+                        @blur="
+                          onValueChange(
+                            $event,
+                            'per_permanent_address',
+                            'contact'
+                          )
+                        "
+                        id="per_permanent_address"
+                        :rows="3"
+                        :maxLength="200"
+                        v-model="
+                          personalInformation.personal.per_permanent_address
+                        "
+                        placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
+                      ></a-textarea>
+                    </a-form-model-item>
+                    <span style="display: flex; justify-content: flex-end"
+                      >{{
+                        personalInformation.personal.per_permanent_address
+                          ? personalInformation.personal.per_permanent_address
+                              .length
+                          : 0
+                      }}/200</span
+                    >
+                  </div>
+                </div>
               </div>
               <div class="col-12 none-padding mobile-margin mobile-help">
                 <p>
@@ -705,281 +650,270 @@ import DropdownDatePicker from "vue-dropdown-datepicker";
 import vSelect from "vue-select";
 import { RULES, RULES_PERSONAL } from "./models/representative";
 
-	export default {
-	  props: {
-	    representativeDetails: {
-	      type: Object,
-	    },
-	    personalInformation: {
-	      type: Object,
-	    },
-	  },
+export default {
+  props: {
+    representativeDetails: {
+      type: Object,
+    },
+    personalInformation: {
+      type: Object,
+    },
+  },
 
-	  name: "personInfoRefTwo",
+  name: "personInfoRefTwo",
 
-	  components: {
-	    DropdownDatePicker,
-	    vSelect,
-	  },
+  components: {
+    DropdownDatePicker,
+    vSelect,
+  },
 
-	  data() {
-	    return {
-				gender: this.personalInformation?.essential?.per_gender,
-		    occupation: this.personalInformation?.essential?.per_occupation,
-		    residence:  this.personalInformation?.personal?.per_current_residence_country,
-		    postCode: this.personalInformation?.personal?.per_permanent_post_code,
-		    permanentCountry: this.personalInformation?.personal?.per_permanent_country,
-		    permanentAddress: this.personalInformation?.personal?.per_permanent_address,
-		    countryCode: this.personalInformation?.personal?.mobile_country_code,
-		    mobileNumber: this.personalInformation?.personal?.mobile_number,
-		    dob: this.personalInformation?.personal?.dob,
-	      rules: RULES,
-	      loading: false,
-	      loadingPermanant: false,
-	      rules_personal: RULES_PERSONAL,
-	      arr: [
-	        { first: true },
-	        { first: true },
-	        { first: true },
-	        { first: true },
-	        { first: true },
+  data() {
+    return {
+      gender: this.personalInformation?.essential?.per_gender,
+      occupation: this.personalInformation?.essential?.per_occupation,
+      residence:
+        this.personalInformation?.personal?.per_current_residence_country,
+      postCode: this.personalInformation?.personal?.per_permanent_post_code,
+      permanentCountry:
+        this.personalInformation?.personal?.per_permanent_country,
+      permanentAddress:
+        this.personalInformation?.personal?.per_permanent_address,
+      countryCode: this.personalInformation?.personal?.mobile_country_code,
+      mobileNumber: this.personalInformation?.personal?.mobile_number,
+      dob: this.personalInformation?.personal?.dob,
+      rules: RULES,
+      loading: false,
+      loadingPermanant: false,
+      rules_personal: RULES_PERSONAL,
+      arr: [
+        { first: true },
+        { first: true },
+        { first: true },
+        { first: true },
+        { first: true },
 
-	        { first: true },
-	        { first: true },
-	        { first: true },
+        { first: true },
+        { first: true },
+        { first: true },
 
-	        { first: true },
-	        { first: true },
-	        { first: true },
-	      ],
-	      activeKey: ["1"],
-	      default_date: null,
-	      phoneNumber: undefined,
-	    };
-	  },
+        { first: true },
+        { first: true },
+        { first: true },
+      ],
+      activeKey: ["1"],
+      default_date: null,
+      phoneNumber: undefined,
+    };
+  },
 
-		computed: {
-			personal() {
-				return {
-					   per_current_residence_country: this.residence,
-					   per_permanent_country: this.permanentCountry,
-					   mobile_country_code: this.countryCode,
-					   mobile_number: this.mobileNumber,
-					   per_permanent_post_code: this.postCode,
-					   per_permanent_address: this.permanentAddress,
-					   email: this.personalInformation.personal.email,
-				}
-			} ,
+  computed: {
+    personal() {
+      return {
+        per_current_residence_country: this.residence,
+        per_permanent_country: this.permanentCountry,
+        mobile_country_code: this.countryCode,
+        mobile_number: this.mobileNumber,
+        per_permanent_post_code: this.postCode,
+        per_permanent_address: this.permanentAddress,
+        email: this.personalInformation.personal.email,
+      };
+    },
 
-			essential() {
-				return {
-					per_gender: this.gender,             
-					per_occupation: this.occupation,     
-					dob: this.dob,
-				}
-			}
-		}  ,
+    essential() {
+      return {
+        per_gender: this.gender,
+        per_occupation: this.occupation,
+        dob: this.dob,
+      };
+    },
+  },
 
-	  methods: {
-	    checkValidation(name, action) {
-	      switch (action) {
-	        case "essential":
-	          this.$refs.repPersonalInfoFormOne.fields.forEach((f) => {
-	            if (f.prop === name) {
-	              f.onFieldBlur();
-	            }
-	          });
-	          break;
-	        case "contact":
-	          this.$refs.repPersonalInfoFormTwo.fields.forEach((f) => {
-	            if (f.prop === name) {
-	              f.onFieldBlur();
-	            }
-	          });
-	          break;
-	      }
-	    },
+  methods: {
+    checkValidation(name, action) {
+      switch (action) {
+        case "essential":
+          this.$refs.repPersonalInfoFormOne.fields.forEach((f) => {
+            if (f.prop === name) {
+              f.onFieldBlur();
+            }
+          });
+          break;
+        case "contact":
+          this.$refs.repPersonalInfoFormTwo.fields.forEach((f) => {
+            if (f.prop === name) {
+              f.onFieldBlur();
+            }
+          });
+          break;
+      }
+    },
 
-	    handleSubmitFormOne() {
-	      this.$refs.repPersonalInfoFormOne.validate((valid) => {
-	        if (valid) {
-	          this.activeKey = ["2"];
-	        } else {
-	          setTimeout(() => {
-	            const el = document.querySelector(".has-error:first-of-type");
-	            el.scrollIntoView();
-	          }, 100);
-	          return false;
-	        }
-	      });
-	    },
+    handleSubmitFormOne() {
+      this.$refs.repPersonalInfoFormOne.validate((valid) => {
+        if (valid) {
+          this.activeKey = ["2"];
+        } else {
+          setTimeout(() => {
+            const el = document.querySelector(".has-error:first-of-type");
+            el.scrollIntoView();
+          }, 100);
+          return false;
+        }
+      });
+    },
 
-	    handleSubmitFormTwo() {
-		    console.log('test');
-	      this.$refs.repPersonalInfoFormTwo.validate((valid) => {
-		      console.log(valid)
-	        if (valid) {
-	          this.activeKey = null;
-	        } else {
-	          setTimeout(() => {
-	            const el = document.querySelector(".has-error:first-of-type");
-	            el.scrollIntoView();
-	          }, 100);
-	          return false;
-	        }
-	      });
-	    },
+    handleSubmitFormTwo() {
+      console.log("test");
+      this.$refs.repPersonalInfoFormTwo.validate((valid) => {
+        console.log(valid);
+        if (valid) {
+          this.activeKey = null;
+        } else {
+          setTimeout(() => {
+            const el = document.querySelector(".has-error:first-of-type");
+            el.scrollIntoView();
+          }, 100);
+          return false;
+        }
+      });
+    },
 
-	    onValueChange(e, name, action) {
-	      this.checkValidation(name, action);
-	      this.save(action);
-	    },
+    onValueChange(e, name, action) {
+      this.checkValidation(name, action);
+      this.save(action);
+    },
 
-	    async saveEssentialInfo() {
-				
+    async saveEssentialInfo() {
+      await this.$store
+        .dispatch("createPersonalInfoForRepresentative", {
+          essential: this.essential,
+          personal: this.personal,
+        })
+        .then(() => {
+          this.$emit("valueChange", {
+            value: {
+              essential: this.essential,
+              personal: this.personal,
+            },
+            current: 0,
+          });
+        })
+        .catch(() => {});
+    },
 
+    async saveContactInfo() {
+      await this.$store
+        .dispatch("creatContactInfoForRepresentative", {
+          personal: this.personal,
+          essential: this.essential,
+        })
+        .then(() => {
+          this.$emit("valueChange", {
+            value: {
+              personal: this.personal,
+              essential: this.essential,
+            },
+            current: 0,
+          });
+        })
+        .catch(() => {});
+    },
 
+    save(action) {
+      switch (action) {
+        case "essential":
+          this.saveEssentialInfo();
+          break;
 
-				
+        case "contact":
+          this.saveContactInfo();
+          break;
+      }
+    },
 
+    filterOption(input, option) {
+      return (
+        option.componentOptions.children[0].text
+          .toLowerCase()
+          .indexOf(input.toLowerCase()) >= 0
+      );
+    },
 
+    toggle(index) {
+      this.arr = this.arr.map((a, ind) => {
+        if (ind === index) {
+          a.first = !a.first;
+        } else {
+          a.first = true;
+        }
+        return a;
+      });
+    },
 
+    onChangeDD() {
+      this.save("essential");
+    },
 
+    onChangePanel(e) {
+      this.activeKey = e;
+      this.$emit("pannelChanged", e);
+    },
 
+    async onCountryChange(e, name, action) {
+      this.checkValidation(name, action);
+      this.loading = false;
+      this.loadingPermanant = false;
 
-
-	      await this.$store
-	        .dispatch("createPersonalInfoForRepresentative", {
-	          essential: this.essential,
-		        personal: this.personal,
-	        })
-	        .then(() => {
-	          this.$emit("valueChange", {
-	            value: {
-								essential: this.essential,
-		            personal: this.personal
-	            },
-	            current: 0,
-	          });
-	        })
-	        .catch(() => {});
-	    },
-
-	    async saveContactInfo() {
-	      await this.$store
-	        .dispatch(
-	          "creatContactInfoForRepresentative",
-			        {personal: this.personal,
-			            essential: this.essential
-			        },
-	        )
-	        .then(() => {
-	          this.$emit("valueChange", {
-	            value: {
-								     personal: this.personal,
-		                 essential: this.essential,
-	            },
-	            current: 0,
-	          });
-	        })
-	        .catch(() => {});
-	    },
-
-	    save(action) {
-	      switch (action) {
-	        case "essential":
-	          this.saveEssentialInfo();
-	          break;
-
-	        case "contact":
-	          this.saveContactInfo();
-	          break;
-	      }
-	    },
-
-	    filterOption(input, option) {
-	      return (
-	        option.componentOptions.children[0].text
-	          .toLowerCase()
-	          .indexOf(input.toLowerCase()) >= 0
-	      );
-	    },
-
-	    toggle(index) {
-	      this.arr = this.arr.map((a, ind) => {
-	        if (ind === index) {
-	          a.first = !a.first;
-	        } else {
-	          a.first = true;
-	        }
-	        return a;
-	      });
-	    },
-
-	    onChangeDD() {
-	      this.save("essential");
-	    },
-
-	    onChangePanel(e) {
-	      this.activeKey = e;
-	      this.$emit("pannelChanged", e);
-	    },
-
-	    async onCountryChange(e, name, action) {
-	      this.checkValidation(name, action);
-	      this.loading = false;
-	      this.loadingPermanant = false;
-
-	     await this.saveContactInfo();
-	    },
-	  },
-	};
+      await this.saveContactInfo();
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
-		@import "@/styles/base/_variables.scss";
-		@import "@/styles/base/_generic.scss";
+@import "@/styles/base/_variables.scss";
+@import "@/styles/base/_generic.scss";
 
-		.anticon {
-		  color: #b3b2b2;
-		}
+.anticon {
+  color: #b3b2b2;
+}
 
-		.ant-tooltip-inner {
-		  border-radius: 0px;
-		}
+.ant-tooltip-inner {
+  border-radius: 0px;
+}
 
-		.mobile-margin {
-		  margin-top: 0.5rem;
-		}
+.mobile-margin {
+  margin-top: 0.5rem;
+}
 
-		.mobile-center {
-		  text-align: center;
-		}
+.mobile-center {
+  text-align: center;
+}
 
-		.mobile-switch {
-		  margin-top: 12px;
-		}
+.mobile-switch {
+  margin-top: 12px;
+}
 
-		@media (min-width: 768px) {
-		  .form-right-content {
-		    float: right;
-		    padding-right: 0;
-		  }
+@media (min-width: 768px) {
+  .form-right-content {
+    float: right;
+    padding-right: 0;
+  }
 
-		  .mobile-margin {
-		    margin-top: 0;
-		  }
+  .mobile-margin {
+    margin-top: 0;
+  }
 
-		  .non-padding-mobile-margin {
-		    margin-top: 0;
-		  }
+  .non-padding-mobile-margin {
+    margin-top: 0;
+  }
 
-		  .mobile-center {
-		    text-align: left;
-		  }
-			
-		  .mobile-switch {
-		    margin-top: 0;
-		  }
-		}
+  .mobile-center {
+    text-align: left;
+  }
+
+  .mobile-switch {
+    margin-top: 0;
+  }
+}
 </style>

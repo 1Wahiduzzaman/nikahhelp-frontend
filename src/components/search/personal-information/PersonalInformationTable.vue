@@ -72,12 +72,12 @@
             <TableRow 
                 title="Nationality"
                 textClass="text-subtitle-1"
-                :value="$store.state.candidateInfo.countries[
-                            personal.per_nationality
-                        ]
-                        ? $store.state.candidateInfo.countries[
-                           personal.per_nationality
-                        ].name
+                :value="$store.state.candidateInfo.countries.find(
+                          (c) => c.id === personal.per_nationality
+                        )
+                        ? $store.state.candidateInfo.countries.find(
+                          (c) => c.id === personal.per_nationality
+                        ).name
                         : '' "
             />
             <TableRow 
