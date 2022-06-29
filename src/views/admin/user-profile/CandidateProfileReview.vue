@@ -632,19 +632,19 @@
                   title="Language"
                   :info="candidateData.personal.per_language_speak"
                 />
-                
+
                 <FieldsetCard
                   class="mt-3"
                   title="My Hobbies & Interests"
                   :info="candidateData.personal.per_hobbies_interests"
                 />
-               
+
                 <FieldsetCard
                   class="mt-3"
                   title="Things I Enjoy"
                   :info="candidateData.personal.per_things_enjoy"
                 />
-                
+
                 <FieldsetCard
                   class="mt-3"
                   title="I am Thankfull for"
@@ -652,7 +652,6 @@
                 />
               </div>
             </div>
-           
 
             <div class="col-md-12 mb-3">
               <div class="card-custom shadow-default">
@@ -864,7 +863,7 @@
               <div class="profile-img text-center">
                 <img
                   v-viewer
-                  :src="candidateData.personal.other_images"
+                  :src="candidateData.other_images"
                   alt="img"
                   class="contain"
                 />
@@ -1226,6 +1225,8 @@ export default {
     .profile-img {
       border-radius: 5px;
       overflow: hidden;
+      height: 200px;
+      width: 200px;
       p {
         font-size: 16px;
         margin-top: 10px;
