@@ -864,7 +864,7 @@
               <div class="profile-img text-center">
                 <img
                   v-viewer
-                  :src="candidateData.personal.per_main_image_url"
+                  :src="candidateData.personal.other_images"
                   alt="img"
                   class="contain"
                 />
