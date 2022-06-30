@@ -9,6 +9,7 @@ import SafetyAndGuidancePage from "@/components/landing-page/safety-guidance.vue
 import UserAgreement from "@/components/landing-page/user-agreement.vue";
 import Signup from "@/views/auth/Signup.vue";
 import Login from "@/views/auth/Login.vue";
+import AdminLogin from "@/views/admin/AdminLogin.vue";
 import EmailVerification from "@/views/auth/EmailVerification.vue";
 import VerifyEmail from "@/views/auth/VerifyEmail.vue";
 import Success from "@/views/auth/Success.vue";
@@ -79,7 +80,7 @@ import Header from "../components/header/header.vue";
 import ChatWindow from "@/views/chat/ChatWindow.vue";
 
 
-import { InitRoute, lazyLoadComponent, lazyLoadView } from './guard/guard'
+import { InitRoute, lazyLoadComponent, lazyLoadView, InitAdminRoute } from './guard/guard'
 
 Vue.use(VueRouter);
 const AppRouter = new VueRouter({
@@ -147,7 +148,7 @@ const AppRouter = new VueRouter({
             path: "/admin",
             name: "Admin",
             component: lazyLoadView('admin', 'admin-system'),
-            beforeEnter: InitRoute,
+            beforeEnter: InitAdminRoute,
             children: [{
                 path: "",
                 component: AdminDashboard,
@@ -157,12 +158,13 @@ const AppRouter = new VueRouter({
             {
                 path: "dashboard",
                 component: AdminDashboard,
+                name: 'AdminDashboard'
 
             },
             {
                 path: "users",
                 component: AdminUsers,
-                name:'AdminUsers'
+                name: 'AdminUsers'
 
             },
             {
@@ -177,7 +179,7 @@ const AppRouter = new VueRouter({
             },
             {
                 path: "support",
-                name:'Support',
+                name: 'Support',
                 component: AdminSupport,
 
             },
@@ -418,11 +420,18 @@ const AppRouter = new VueRouter({
             component: lazyLoadView('auth', 'Signup'),
             beforeEnter: InitRoute,
         },
+
         {
             path: "/login",
             name: "Login",
             component: lazyLoadView('auth', 'Login'),
             beforeEnter: InitRoute,
+        },
+        {
+            path: "/admin/login",
+            name: "AdminLogin",
+            component: lazyLoadView('admin', 'AdminLogin'),
+            beforeEnter: InitAdminRoute,
         },
 
         {

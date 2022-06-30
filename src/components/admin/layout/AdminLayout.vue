@@ -1,6 +1,6 @@
 <template>
   <div class="container-admin">
-  <MainHeader/>
+  <AdminHeader/>
 
     <a-layout
       id="layout"
@@ -34,11 +34,13 @@
 
 <script>
 import Sidebar from "@/components/admin/layout/AdminSidebar.vue";
+import AdminHeader from "@/components/admin/layout/AdminHeader.vue";
 import Footer from "@/components/admin/layout/Footer.vue";
 export default {
   components: {
     Sidebar,
     Footer,
+    AdminHeader
   },
   data() {
     return {

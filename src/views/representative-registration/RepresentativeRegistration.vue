@@ -336,6 +336,17 @@ export default {
       const response = await this.$store.dispatch("getRepresentativeData");
       if (response.status === 200) {
         this.isLoading = false;
+        const {
+          mobile_country_code,
+          mobile_number,
+          per_current_residence_country,
+          per_current_residence_country_text,
+          per_permanent_address,
+          per_permanent_country,
+          per_permanent_country_text,
+          per_permanent_post_code,
+          per_email,
+        } = response.data.data.personal;
         const details = {
           countries: response.data.data.countries,
           occupations: response.data.data.occupations,
@@ -370,20 +381,24 @@ export default {
               default_date: response.data.data.essential.dob,
             },
             personal: {
-              ...response.data.data.personal,
+              ...{
+                mobile_country_code,
+                mobile_number,
+                per_current_residence_country,
+                per_current_residence_country_text,
+                per_permanent_address,
+                per_permanent_country,
+                per_permanent_country_text,
+                per_permanent_post_code,
+                per_email,
+              },
               residenceCities: [],
               permanantCities: [],
               email: user.email,
-              per_current_residence_country: response.data.data.personal
-                .per_current_residence_country
-                ? parseInt(
-                    response.data.data.personal.per_current_residence_country
-                  )
-                : response.data.data.personal.per_current_residence_country,
-              per_permanent_country: response.data.data.personal
-                .per_permanent_country
-                ? parseInt(response.data.data.personal.per_permanent_country)
-                : response.data.data.personal.per_permanent_country,
+              per_current_residence_country:
+                response.data.data.personal.per_current_residence_country_text,
+              per_permanent_country:
+                response.data.data.personal.per_permanent_country_text,
             },
           },
         };
@@ -564,7 +579,7 @@ export default {
             mobile_country_code,
           };
 
-	        isEnabled = this.isFormCompleted(personal, essential);
+          isEnabled = this.isFormCompleted(personal, essential);
           break;
 
         case 1:
@@ -599,19 +614,20 @@ export default {
       this.enabledNextBtn = isEnabled;
     },
 
-	  isFormCompleted(personal, essential) {
-			return Object.values({
-		    essential,
-		    personal,
-		  }).every((information) => {
-		    return this.isFieldFilled(information);
-		  });
-	  },
+    isFormCompleted(personal, essential) {
+      return Object.values({
+        essential,
+        personal,
+      }).every((information) => {
+        return this.isFieldFilled(information);
+      });
+    },
 
-	  isFieldFilled(formFields) {
-			return Object.values(formFields).every((field) => {
-				return	field !== undefined && field !== null && field !== ""});
-	  },
+    isFieldFilled(formFields) {
+      return Object.values(formFields).every((field) => {
+        return field !== undefined && field !== null && field !== "";
+      });
+    },
 
     onDoneClick() {
       this.loading = true;

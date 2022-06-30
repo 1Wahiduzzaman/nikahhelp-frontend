@@ -1,32 +1,22 @@
 export const InitRoute = (to, from, next) => {
-    //next();
     const user = JSON.parse(localStorage.getItem('user'));
-    if (!user && to.name == 'Signup') {
+    const token = JSON.parse(localStorage.getItem('token'));
+    if (!token && to.name == 'Signup') {
         return next();
     }
-    /**please explain how this home route works 
-     * You can only navigate to home page If you aren't logged in.
-    */
-
-    else if (!user && to.name == 'Home') {
+    else if (!token && to.name == 'Home') {
         return next();
     }
-
-    else if (!user) {
+    else if (!token) {
         return to.name == 'Login' ? next() : next({ name: 'Login' });
     }
-
+    else if (user && !user.account_type) {
+        next({ name: 'AdminDashboard' });
+    }
     else if (user.is_verified == 0) {
         return to.name == 'EmailVerification' ? next() : next({ name: 'EmailVerification' });
     }
-    else if (user && user.email === 'support@gmail.com' && to.name == 'DHome') {
-        return next({ name: 'Support' });
-    }
-    else if (user && user.email === 'superadmin@gmail.com' && to.name == 'DHome') {
-        return next({ name: 'AdminUsers' });
-    }
-
-    else if (user && user.email !== 'superadmin@gmail.com' && to.name == 'Admin') {
+    else if (user && to.name == 'Admin' && (user.account_type == 1 || user.account_type == 2)) {
         return to.name == 'DHome' ? next() : next({ name: 'DHome' });
     }
 
@@ -60,6 +50,20 @@ export const InitRoute = (to, from, next) => {
 
     else if (user && (to.name == 'Signup' || to.name == 'Login' || user && to.name == 'Home')) {
         return to.name == 'root' ? next() : next({ name: 'root' });
+    }
+    else {
+        next();
+    }
+
+}
+export const InitAdminRoute = (to, from, next) => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const token = JSON.parse(localStorage.getItem('token'));
+    if (!token && to.name == 'Home') {
+        return next();
+    }
+    else if (!token) {
+        return to.name == 'AdminLogin' ? next() : next({ name: 'AdminLogin' });
     }
     else {
         next();
