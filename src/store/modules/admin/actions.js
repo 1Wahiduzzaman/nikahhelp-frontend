@@ -1,9 +1,31 @@
 
 
-import ApiService from "../../../services/api.service";
+import Vue from "vue";
 import axios from "axios";
+import JwtService from "../../../services/jwt.service";
+import router from '../../../router';
+import ApiService from "../../../services/api.service";
 export default {
-
+  async adminLogin(context, payload) {
+    await axios.post("v1/admin/login", payload).then(response => {
+      const token = response.data.data.token.access_token;
+      let data = { token: token };
+       JwtService.saveTokenAndUser(data);
+      JwtService.setUser(response.data.data.user);
+      context.commit("setErrorMessage", {
+        errorMessage: null,
+      });
+      context.commit("setUser", {
+        token: response.data.data.access_token,
+      });
+      router.push({ name: 'AdminUsers' });
+    }).catch((e) => {
+      console.log('message', e.message)
+      context.commit("setErrorMessage", {
+        errorMessage: e,
+      });
+    });
+  },
   async getPendingUsers() {
     return new Promise((resolve, reject) => {
       ApiService.get(`v1/admin/pending-user`)
@@ -118,9 +140,9 @@ export default {
   },
   async getSearchLocation(context, payload) {
     return new Promise((resolve, reject) => {
-      axios.post(`/v1/search/location`,payload)
+      axios.post(`/v1/search/location`, payload)
         .then((data) => {
-          console.log('dd',data.data)
+          console.log('dd', data.data)
           resolve(data.data);
         })
         .catch((err) => {
@@ -139,7 +161,7 @@ export default {
         });
     });
   },
-  
+
 
 
 

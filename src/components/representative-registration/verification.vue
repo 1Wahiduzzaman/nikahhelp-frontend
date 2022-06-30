@@ -87,7 +87,7 @@
               </div>
               <div class="col-12 col-md-6 mobile-margin">
                 <div class="row">
-                  <div class="col-12 col-md-6">
+                  <div class="col-12">
                     <a-form-model-item ref="ver_country" prop="ver_country">
                       <v-select
                         :clearable="false"

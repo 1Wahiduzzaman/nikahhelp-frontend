@@ -1,356 +1,366 @@
 <template>
-	<nav class="d-navbar navbar navbar-expand-sm navbar-light">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="/admin"
-				><img src="@/assets/logo.png" alt="logo"
-			/></a>
-			<button
-				class="navbar-toggler"
-				type="button"
-				data-bs-toggle="collapse"
-				data-bs-target="#navbarNavDropdown"
-				aria-controls="navbarNavDropdown"
-				aria-expanded="false"
-				aria-label="Toggle navigation"
-			>
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNavDropdown">
-				<ul class="navbar-nav ml-auto my-2 my-lg-0">
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="/dashboard"
-							><img src="@/assets/icon/house-door-fill-white.svg" alt="img"
-						/></a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="/manageteam"
-							><img src="@/assets/icon/group-fill-white.svg" alt="img"
-						/></a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="/shortlist"
-							><img src="@/assets/icon/star-fill-white.svg" alt="img"
-						/></a>
-					</li>
-					<li class="nav-item">
-						<div class = "dropdownNotificationBar ">
-							<a class="nav-link active" aria-current="page" a href="#"
-								role="button" id="dropdownMenuLink" data-toggle="dropdown"
-								><img src="@/assets/icon/bell-fill-white.svg" alt="img" style=border/>
-							</a>
+  <header class="header-container bg-secondary shadow-default radius-none px-4">
+    <div
+      class="header-content d-flex align-items-center justify-content-between"
+    >
+      <div class="shrink-none none-mobile">
+        <a href="/" class="navbar-brand">
+          <img
+            width="120"
+            src="@/assets/Icons/Logo/SVG/White Logo.svg"
+            alt="logo"
+          />
+        </a>
+      </div>
 
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropdownNotificationID">
-								<div>
-									<div class="dropdownNotify-title"><strong>Notifications</strong></div>
-								</div>
-								<div class="dropdown-divider"> </div>
+      <div
+        class="header-right user-avatar-area shrink-none mobile-menu"
+        style="align-self: center;"
+      >
+    
+        <div class="mobile-menu" style="display: flex;">
+          <a-dropdown>
+            <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
+              <img
+                v-if="loggedUser.per_main_image_url"
+                class="avatar-image"
+                :src="loggedUser.per_main_image_url"
+                alt=""
+              />
+              <img
+                v-if="!loggedUser.per_main_image_url"
+                class="avatar-image"
+                src="@/assets/mike.jpg"
+                alt=""
+              />
+            </a>
+            <a-menu slot="overlay" class="none-mobile-block">
+              <a-menu-item @click="logout">
+                <img width="22" src="@/assets/icon/logout.svg" alt="icon" />
+                <span class="ml-2">Logout</span>
+              </a-menu-item>
+            </a-menu>
+          </a-dropdown>
 
-								<div class="dayOfNotification">	
-									<a class="dropdownNotify-item" href="#" id="menuOfNotification">Recent</a>
-								</div>
-							
-								
-								<!-- item 1 -->
-								<div class="dropdownNotify-itemList">	
-									<div class="profileImage" id="recentProfile">
-										<img src="@/assets/r-join.png" alt="dp" style="width: 50px"> 
-									</div>
-							
-									<div class="dropdownNotify-item" style="overflow: hidden;">
-										<a href="#" class = "dropdownNotify-item">Robert Alex commented on your profile <br></a>
-										<span class="detailsOfNotification">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet...</span>
-									</div>								
-								</div>
+          <div style="align-self: center">
+            <div class="ml-2 text-white">
+              <a-dropdown>
+                <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
+                  <router-link class="" to="/profile">
+                    <h6 class="mb-0 text-white fs-14 name-hover">
+                      {{
+                        loggedUser && loggedUser.full_name
+                          ? loggedUser.full_name
+                          : "N/A"
+                      }}
+                    </h6>
+                  </router-link>
+                </a>
+                <a-menu slot="overlay" class="none-mobile-block">
+          
+                  <a-menu-item @click="logout">
+                    <img width="22" src="@/assets/icon/logout.svg" alt="icon" />
+                    <span class="ml-2">Logout</span>
+                  </a-menu-item>
+                </a-menu>
+              </a-dropdown>
+              
+            </div>
+          </div>
+        </div>
+        <div class="d-sm-none">
+          <a-dropdown :trigger="['click']">
+            <svg
+              @click="(e) => e.preventDefault()"
+              xmlns="http://www.w3.org/2000/svg"
+              class="menu-icon-alt"
+              fill="#fff"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
 
-								<div class="TimeOfActivity">
-									<span class="notification_time">23 Nov 2021 at 12:44 AM</span>
-								</div>
-								<div class="dropdown-divider"> </div>
-								
-								<!-- item 2 -->
-								<div class="dropdownNotify-itemList">	
-									<div class="profileImage" id="recentProfile">
-										<img src="@/assets/r-join.png" alt="dp" style="width: 50px"> 
-									</div>
-							
-									<div class="dropdownNotify-item" style="overflow: hidden;">
-										<a href="#" class = "dropdownNotify-item">Robert Alex commented on your profile <br></a>
-										<span class="detailsOfNotification">Lorem ipsum dolo adipiscing elit. Phasellus imperdiet...</span>
-									</div>								
-								</div>
-
-								<div class="TimeOfActivity">
-									<span class="notification_time">23 Nov 2021 at 12:44 AM</span>
-								</div>
-								<div class="dropdown-divider"> </div>
-								 
-								<!--yesterday -->
-
-								<div class="dayOfNotification">	
-									<a class="dropdownNotify-item" href="#" id="menuOfNotification">Yesterday</a>
-								</div>
-
-								<!-- item 3 -->
-								<div class="dropdownNotify-itemList">	
-									<div class="profileImage" >
-										<img src="@/assets/r-join.png" alt="dp" style="width: 50px"> 
-									</div>
-							
-									<div class="dropdownNotify-item" style="overflow: hidden;">
-										<a href="#" class = "dropdownNotify-item">Robert Alex commented on your profile <br></a>
-										<span class="detailsOfNotification">Lorem adipiscing elit...</span>
-									</div>								
-								</div>
-
-								<div class="TimeOfActivity">
-									<span class="notification_time">23 Nov 2021 at 12:44 AM</span>
-								</div>
-								
-
-								<div class="dropdown-divider" style="padding: 0px 0px 0px 0px"> </div>
-								<div>
-									<a class="dropdownNotify-showAll" href="#" style="padding-left: 25%">Show All Notifications</a>
-								</div>
-							</div>
-						</div>
-					</li>
-
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="#"
-							><img src="@/assets/icon/chat-dots-fill-white.svg" alt="img"
-						/></a>
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link cursor-context-menu" href="#">
-							<div class="profile flex-center-center">
-								<img
-									class="profile-img"
-									src="@/assets/mike.jpg"
-									alt="profile"
-								/>
-								<div class="profile-info">
-									<div class="name">
-										{{ user.full_name }}
-										<!-- <span
-											class="btn btn-sm btn-primary-outlined logout-btn"
-											@click="logout"
-										>
-											Logout
-										</span> -->
-									</div>
-
-									<div class="team-role flex-between-center">
-										<!-- <select
-											class="form-select custom-form-select"
-											aria-label=".form-select-sm example"
-										>
-											<option selected>select</option>
-											<option value="1">Team1</option>
-											<option value="2">Team2</option>
-											<option value="3">Team3</option>
-										</select> -->
-										<span class="role">admin</span>
-									</div>
-								</div>
-							</div>
-						</a>
-						<!-- <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul> -->
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+            <a-menu slot="overlay" style="min-width: 320px">
+              <a-menu-item @click="$emit('toggleCollapse')">
+                <img width="22" src="@/assets/Icons/form.svg" alt="icon" />
+                <span class="ml-2"
+                  >{{ collapsed ? "Open" : "Close" }} left sidebar</span
+                >
+              </a-menu-item>
+              <a-divider class="m-0" />
+              <a-menu-item @click="logout">
+                <img width="22" src="@/assets/icon/logout.svg" alt="icon" />
+                <span class="ml-2">Logout</span>
+              </a-menu-item>
+            </a-menu>
+          </a-dropdown>
+        </div>
+      </div>
+    </div>
+  </header>
 </template>
 
 <script>
+import NotificationPopup from "@/components/notification/NotificationPopup";
+import ApiService from "@/services/api.service";
+import JwtService from "../../../services/jwt.service";
 export default {
-	name: "Header",
-	components: {},
-	props: {
-		user: Object,
-	},
-	methods: {
-		logout() {
-			this.$store.dispatch("logout");
-			this.$router.push("/");
-		},
-	},
+  name: "AdminHeader",
+  props: ['collapsed'],
+  components: {
+    NotificationPopup,
+  },
+  created() {
+   
+  },
+  data() {
+    return {
+      activeTeamId: null,
+      teamsForHeader: [],
+      teamsOriginal: []
+    };
+  },
+  computed: {
+    loggedUser() {
+      let loggedUser = JSON.parse(localStorage.getItem("user"));
+      if (loggedUser) {
+        return loggedUser;
+      }
+      return null;
+    },
+
+  },
+  methods: {
+    responsiveToggle() {
+      this.collapsed = false;
+    },
+    popupDiv() {
+      document.getElementById('layout');
+    },
+    async loadNotifications() {
+      await ApiService.get("v1/list-notification")
+        .then((response) => {
+          this.$store.state.notification.notifications = response.data.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+    async loadTeams() {
+      let {data} = await ApiService.get("v1/team-list").then(res => res.data);
+      this.teamsForHeader = data;
+      this.teamsOriginal = data;
+      this.$store.state.team.team_list = this.teamsOriginal;
+      this.checkTurnedOnSwitch();
+      
+    },
+    checkTurnedOnSwitch() {
+      this.activeTeamId = JwtService.getTeamIDAppWide();
+    },
+    logout() {
+      const vm = this;
+      this.$confirm({
+        title: "Are you sure?",
+        content: "Do you want to logout?",
+        okText: "Yes",
+        okType: "danger",
+        cancelText: "No",
+        async onOk() {
+          await vm.$store.dispatch("logout");
+          vm.$router.replace("/admin/login");
+        },
+        onCancel() {
+          console.log("Cancel");
+        },
+      });
+    },
+    verifyPopup() {
+      const self = this;
+      self.$confirm({
+        icon: "info-circle",
+        title: "Your account is not verified. Please verify the account",
+        okText: 'Verify Now',
+        center: true,
+        confirmLoading: true,
+        onOk() {
+          self.$router.push({name: 'Settings'});
+        },
+      });
+    }
+  },
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import "@/styles/base/_variables.scss";
-.d-navbar {
-	background: $bg-secondary;
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	z-index: 100;
-	.navbar-brand {
-		img {
-			width: 100px;
-		}
-	}
-	.navbar-nav {
-		align-items: center;
-		.nav-item {
-			img {
-				width: 26px;
-			}
-		}
-	}
+.main-container {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.notification-wrapper {
+  padding: 10px;
+  background-color: #fff;
+  //box-shadow: 0 3px 8px 1px #d3d3d3;
+  box-shadow: 0 3px 8px 1px rgb(0 0 0 / 12%);
+  border-radius: 5px;
+}
+.header-nav-icons .nav-item {
+  position: relative;
+}
+.mobile-menu {
+  width: 100%;
+  @media (min-width: 768px) {
+    width: auto;
+  }
+}
+.menu-icon-alt {
+  width: 25px;
+  color: #fff;
+  margin-left: 10px;
+}
+.header-nav-icons .nav-item .ant-dropdown-open img,
+.header-nav-icons .nav-item .ant-dropdown-open svg {
+  outline: 8px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.notification__items {
+  overflow-y: scroll;
+  max-height: 350px;
+}
+.user-avatar-area {
+  .avatar-image {
+    border-radius: 50%;
+    outline: 2px solid #ddd;
+    width: 35px;
+    height: 35px;
+  }
+  .team-active {
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 10px;
+    font-size: 11px;
+    position: relative;
+    padding-right: 20px;
+    cursor: pointer;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 5px;
+      right: 6px;
+      background-color: #4aa02c;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      box-shadow: 0px 0px 3px 1px #639e4e;
+    }
+  }
+  .team-deactive {
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 10px;
+    font-size: 11px;
+    position: relative;
+    padding-right: 20px;
+    cursor: pointer;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 5px;
+      right: 6px;
+      background-color: $bg-brand;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      box-shadow: 0px 0px 3px 1px $border-brand;
+    }
+  }
+  .role {
+    display: inline-block;
+    border: 1px solid rgb(99, 99, 99);
+    border-radius: 10px;
+    font-size: 11px;
+    position: relative;
+    text-align: center;
+  }
+}
 
-	.profile {
-		color: $color-white;
-		padding: 0px;
-		.profile-img {
-			height: 30px;
-			width: 30px;
-			border-radius: 50%;
-			vertical-align: middle;
-			overflow: hidden;
-		}
-		.profile-info {
-			padding-left: 5px;
-			font-size: 12px;
-			.name {
-				font-size: 16px;
-				font-weight: 600;
-				.logout-btn {
-					cursor: pointer;
-				}
-			}
-			.custom-form-select {
-				background-position: right 0.45rem center;
-				padding: 0px 20px 0 5px;
-				line-height: normal;
-				border-radius: 14px;
-				font-size: 12px;
-			}
-			.role {
-				padding: 0 5px;
-				border: 1px solid #fff;
-				border-radius: 14px;
-				margin-left: 2px;
-				line-height: normal;
-			}
-		}
-	}
+.avatar-dropdown {
+  background-color: #fff;
+  box-shadow: 0 3px 8px 1px #d3d3d3;
+  padding: 5px;
+  border-radius: 4px;
+  min-width: 150px;
+  padding: 10px;
+  .list-item {
+    text-align: center;
+    & > span {
+      font-size: 11px;
+    }
+    & > p {
+      background-color: #ddd;
+      font-size: 13px;
+      border-radius: 2px;
+    }
+  }
+}
+.name-hover:hover {
+  color: #e51f76ff !important;
+  text-decoration: underline;
+}
 
-	.dropdownNotify-title {
-		font-size: 20px;
-		padding-bottom: 8px;
-	}
-	.dropdown-menu {
-		padding: 10px 30px 10px 30px;
-		width: 350px !important;
-		height: auto;
-		margin-left: 70%;
-		margin-top: -10px;
-		font-family: Open Sans,sans-serif;
-		@media (max-width: 1190px) {
-			margin-left: 65%;
-		}
-		@media (max-width: 1013px) {
-			margin-left: 60%;
-		}
-		@media (max-width: 887px) {
-			margin-left: 55%;
-		}
-
-		@media (max-width: 791px) {
-			margin-left: 50%;
-		}
-
-		@media (max-width: 712px) {
-			margin-left: 45%;
-		}
-
-		@media (max-width: 647px) {
-			margin-left: 40%;
-		}
-
-		
-		@media (max-width: 591px) {
-			margin-left: 35%;
-		}
-	}
-
-	.detailsOfNotification {
-			color: #9c9c9c;;
-	}
-
-	.profileImage {
-		margin-right: 10px;
-		margin-top: 7px; 
-		float: left;
-
-	}
-
-	#recentProfile:before {
-    	content:"• ";
-		font-size:30px; 
-  		color: #E51F76;
-		padding-right: 0px;
-		margin: 0px;
-		margin-left: -2px;
-	}
-
-	#menuOfNotification {
-		margin-left:-10px;
-		color: #9c9c9c;
-
-	}
-
-	.notification_time {
-		align-items: right;
-		text-align: right;
-		color: #6610f2;
-		font-family: Open Sans,sans-serif;
-		font-size: 10px;
-		padding-left: 50%;
-	}
-
-	#dropdownNotificationID {
-		box-sizing: border-box;
-		border: 1px solid $border-white;
-    	box-shadow: 2px 2px 2px 2px #999;
-	}
-
-	.dropdownNotify-item {
-		text-align: left;
-		color: black;
-		font-size: 13px;
-		text-decoration: none;	
-		overflow: hidden;	
-	}
-
-	.dropdownNotify-showAll {
-		text-align: center;
-		align-items: center;
-		color: #9c9c9c;
-		text-decoration: none;
-		font-size: 14px;
-	
-	}
-	
-	.dropdown-menu .dropdownNotify-itemList {
-	
-		align-items: center;
-		box-sizing: border-box;
-		overflow: hidden;
-		
-	}
-
-	.detailsOfNotification {
-		font-size: 11px;
-	}	
-	
+.none-mobile {
+  display: none;
+  @media (min-width: 768px) {
+    display: flex;
+  }
+}
+.none-mobile-block {
+  display: none;
+  @media (min-width: 768px) {
+    display: block;
+  }
+}
+.header-container {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  @media (min-width: 768px) {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+@keyframes flickerAnimation {
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-o-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-moz-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-webkit-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+.animate-flicker {
+  -webkit-animation: flickerAnimation 1s infinite;
+  -moz-animation: flickerAnimation 1s infinite;
+  -o-animation: flickerAnimation 1s infinite;
+  animation: flickerAnimation 1s infinite;
 }
 </style>
