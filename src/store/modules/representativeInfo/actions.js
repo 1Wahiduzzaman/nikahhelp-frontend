@@ -49,7 +49,7 @@ export default {
   },
   async saveRepresentativeImage(_, payload) {
     return new Promise((resolve, reject) => {
-      ApiService.image("v1/representative/image/upload", payload)
+      ApiService.post("v1/representative/image/upload", payload)
         .then((data) => {
           resolve(data);
         })
