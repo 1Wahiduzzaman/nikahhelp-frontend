@@ -57,15 +57,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[0].first"
-                    @click="toggle(0)"
-                  >
+                  <span v-if="arr[0].first" @click="toggle(0)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(0)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(0)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -117,15 +112,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[1].first"
-                    @click="toggle(1)"
-                  >
+                  <span v-if="arr[1].first" @click="toggle(1)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(1)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(1)"> Hide Help? </span>
                 </a>
               </p>
               <div data-parent="#accordion" class="collapse" id="Needdob">
@@ -183,15 +173,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[2].first"
-                    @click="toggle(2)"
-                  >
+                  <span v-if="arr[2].first" @click="toggle(2)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(2)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(2)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -257,7 +242,13 @@
                     <v-select
                       :clearable="false"
                       class="style-chooser"
-                      @input="onCountryChange($event, 'per_current_residence_country','contact')"
+                      @input="
+                        onCountryChange(
+                          $event,
+                          'per_current_residence_country',
+                          'contact'
+                        )
+                      "
                       id="per_current_residence_country"
                       :placeholder="'Country'"
                       v-model="
@@ -272,7 +263,6 @@
                     ></v-select>
                   </a-form-model-item>
                 </div>
-               
               </div>
               <a-input
                 class="w-100 mt-2"
@@ -298,15 +288,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[3].first"
-                    @click="toggle(3)"
-                  >
+                  <span v-if="arr[3].first" @click="toggle(3)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(3)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(3)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -335,214 +320,17 @@
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item
-                  ref="per_permanent_post_code"
-                  prop="per_permanent_post_code"
-                >
-                  <a-input
-                    @blur="
-                      onValueChange(
-                        $event,
-                        'contact',
-                        'per_permanent_post_code'
-                      )
-                    "
-                    id="per_permanent_post_code"
-                    :maxLength="10"
-                    placeholder="Post code, e.g. ME1 1BA"
-                    v-model="
-                      personalInformation.personal.per_permanent_post_code
-                    "
-                  />
-                </a-form-model-item>
-            </div>
-            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
-              <p>
-                <a
-                  class="color-blue fw-700 fs-14"
-                  data-toggle="collapse"
-                  href="#Needmobile_number"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
-                >
-                  <span
-                    v-if="arr[4].first"
-                    @click="toggle(4)"
-                  >
-                    Need Help?
-                  </span>
-                  <span v-else @click="toggle(4)">
-                    Hide Help?
-                  </span>
-                </a>
-              </p>
-              <div
-                data-parent="#accordion"
-                class="collapse"
-                id="Needmobile_number"
+                ref="per_permanent_post_code"
+                prop="per_permanent_post_code"
               >
-                <div class="card card-body bubble">
-                  Please provide tooltip texts so we can place it here
-                </div>
-              </div>
-            </div>
-          </div>
-           <div class="row pt-3 pb-2 border-bottom">
-            <div class="col-12 col-md-6 none-padding">
-              <div class="mb-2 font-weight-bold">
-                <a-icon
-                  v-if="personalInformation.personal.per_permanent_country"
-                  class="color-success mr-2 fs-18 fw-500"
-                  type="check"
-                />Permanent Country
-              </div>
-            </div>
-            <div class="col-12 col-md-6 mobile-margin">
-                <a-form-model-item
-                      ref="per_permanent_country"
-                      prop="per_permanent_country"
-                    >
-                      <v-select
-                        :clearable="false"
-                        class="style-chooser"
-                        @input="
-                          onCountryChange(
-                            $event,
-                            'per_permanent_country',
-                            'contact'
-                          )
-                        "
-                        id="per_permanent_country"
-                        placeholder="Select Country"
-                        v-model="
-                          personalInformation.personal.per_permanent_country
-                        "
-                        :reduce="(option) => option.id"
-                        label="name"
-                        :options="representativeDetails.countries"
-                        ><template #open-indicator>
-                          <a-icon type="down" /> </template
-                      ></v-select>
-                    </a-form-model-item>
-            </div>
-            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
-              <p>
-                <a
-                  class="color-blue fw-700 fs-14"
-                  data-toggle="collapse"
-                  href="#Needmobile_number"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
-                >
-                  <span
-                    v-if="arr[4].first"
-                    @click="toggle(4)"
-                  >
-                    Need Help?
-                  </span>
-                  <span v-else @click="toggle(4)">
-                    Hide Help?
-                  </span>
-                </a>
-              </p>
-              <div
-                data-parent="#accordion"
-                class="collapse"
-                id="Needmobile_number"
-              >
-                <div class="card card-body bubble">
-                  Please provide tooltip texts so we can place it here
-                </div>
-              </div>
-            </div>
-          </div>
-             <div class="row pt-3 pb-2 border-bottom">
-            <div class="col-12 col-md-6 none-padding">
-              <div class="mb-2 font-weight-bold">
-                <a-icon
-                  v-if="personalInformation.personal.per_permanent_address"
-                  class="color-success mr-2 fs-18 fw-500"
-                  type="check"
-                />Home Address
-              </div>
-            </div>
-            <div class="col-12 col-md-6 mobile-margin">
-                          <a-form-model-item
-                  ref="per_permanent_address"
-                  prop="per_permanent_address"
-                >
-                  <a-textarea
-                    @blur="
-                      onValueChange($event, 'per_permanent_address', 'contact')
-                    "
-                    id="per_permanent_address"
-                    :rows="3"
-                    :maxLength="200"
-                    v-model="personalInformation.personal.per_permanent_address"
-                    placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
-                  ></a-textarea>
-                </a-form-model-item>
-                <span style="display: flex; justify-content: flex-end"
-                  >{{
-                    personalInformation.personal.per_permanent_address
-                      ? personalInformation.personal.per_permanent_address
-                          .length
-                      : 0
-                  }}/200</span
-                >
-            </div>
-            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
-              <p>
-                <a
-                  class="color-blue fw-700 fs-14"
-                  data-toggle="collapse"
-                  href="#Needmobile_number"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
-                >
-                  <span
-                    v-if="arr[4].first"
-                    @click="toggle(4)"
-                  >
-                    Need Help?
-                  </span>
-                  <span v-else @click="toggle(4)">
-                    Hide Help?
-                  </span>
-                </a>
-              </p>
-              <div
-                data-parent="#accordion"
-                class="collapse"
-                id="Needmobile_number"
-              >
-                <div class="card card-body bubble">
-                  Please provide tooltip texts so we can place it here
-                </div>
-              </div>
-            </div>
-          </div>
-           <div class="row pt-3 pb-2 border-bottom">
-            <div class="col-12 col-md-6 none-padding">
-              <div class="mb-2 font-weight-bold">
-                <a-icon
-                  v-if="personalInformation.personal.mobile_number"
-                  class="color-success mr-2 fs-18 fw-500"
-                  type="check"
-                />What is your Phone number?
-              </div>
-            </div>
-            <div class="col-12 col-md-6 mobile-margin">
-              <a-form-model-item ref="mobile_number" prop="mobile_number">
                 <a-input
-                  class="w-100"
-                  placeholder="+8801685117737"
-                  id="inputNumber"
+                  @blur="
+                    onValueChange($event, 'contact', 'per_permanent_post_code')
+                  "
+                  id="per_permanent_post_code"
                   :maxLength="10"
-                  v-model="personalInformation.personal.mobile_number"
-                  @blur="onValueChange($event, 'mobile_number', 'contact')"
+                  placeholder="Post code, e.g. ME1 1BA"
+                  v-model="personalInformation.personal.per_permanent_post_code"
                 />
               </a-form-model-item>
             </div>
@@ -556,15 +344,186 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[4].first"
-                    @click="toggle(4)"
-                  >
+                  <span v-if="arr[4].first" @click="toggle(4)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(4)">
-                    Hide Help?
+                  <span v-else @click="toggle(4)"> Hide Help? </span>
+                </a>
+              </p>
+              <div
+                data-parent="#accordion"
+                class="collapse"
+                id="Needmobile_number"
+              >
+                <div class="card card-body bubble">
+                  Please provide tooltip texts so we can place it here
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                  v-if="personalInformation.personal.per_permanent_country"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
+                />Permanent Country
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item
+                ref="per_permanent_country"
+                prop="per_permanent_country"
+              >
+                <v-select
+                  :clearable="false"
+                  class="style-chooser"
+                  @input="
+                    onCountryChange($event, 'per_permanent_country', 'contact')
+                  "
+                  id="per_permanent_country"
+                  placeholder="Select Country"
+                  v-model="personalInformation.personal.per_permanent_country"
+                  :reduce="(option) => option.id"
+                  label="name"
+                  :options="representativeDetails.countries"
+                  ><template #open-indicator> <a-icon type="down" /> </template
+                ></v-select>
+              </a-form-model-item>
+            </div>
+            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#Needmobile_number"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  <span v-if="arr[4].first" @click="toggle(4)">
+                    Need Help?
                   </span>
+                  <span v-else @click="toggle(4)"> Hide Help? </span>
+                </a>
+              </p>
+              <div
+                data-parent="#accordion"
+                class="collapse"
+                id="Needmobile_number"
+              >
+                <div class="card card-body bubble">
+                  Please provide tooltip texts so we can place it here
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                  v-if="personalInformation.personal.per_permanent_address"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
+                />Home Address
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item
+                ref="per_permanent_address"
+                prop="per_permanent_address"
+              >
+                <a-textarea
+                  @blur="
+                    onValueChange($event, 'per_permanent_address', 'contact')
+                  "
+                  id="per_permanent_address"
+                  :rows="3"
+                  :maxLength="200"
+                  v-model="personalInformation.personal.per_permanent_address"
+                  placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
+                ></a-textarea>
+              </a-form-model-item>
+              <span style="display: flex; justify-content: flex-end"
+                >{{
+                  personalInformation.personal.per_permanent_address
+                    ? personalInformation.personal.per_permanent_address.length
+                    : 0
+                }}/200</span
+              >
+            </div>
+            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#Needmobile_number"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  <span v-if="arr[4].first" @click="toggle(4)">
+                    Need Help?
+                  </span>
+                  <span v-else @click="toggle(4)"> Hide Help? </span>
+                </a>
+              </p>
+              <div
+                data-parent="#accordion"
+                class="collapse"
+                id="Needmobile_number"
+              >
+                <div class="card card-body bubble">
+                  Please provide tooltip texts so we can place it here
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                  v-if="personalInformation.personal.mobile_number"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
+                />What is your Phone number?
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item ref="mobile_number" prop="mobile_number">
+                <!-- <a-input
+                  class="w-100"
+                  placeholder="+8801685117737"
+                  id="inputNumber"
+                  :maxLength="10"
+                  v-model="personalInformation.personal.mobile_number"
+                  @blur="onValueChange($event, 'mobile_number', 'contact')"
+                /> -->
+                <vue-tel-input
+                  v-bind="bindProps"
+                  v-model="personalInformation.personal.mobile_number"
+                  @blur="onValueChange($event, 'mobile_number', 'contact')"
+                  id="mobile_number"
+                  :maxlength="'10'"
+                  placeholder="Mobile Number"
+                ></vue-tel-input>
+              </a-form-model-item>
+            </div>
+            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#Needmobile_number"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  <span v-if="arr[4].first" @click="toggle(4)">
+                    Need Help?
+                  </span>
+                  <span v-else @click="toggle(4)"> Hide Help? </span>
                 </a>
               </p>
               <div
@@ -606,15 +565,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span
-                    v-if="arr[5].first"
-                    @click="toggle(5)"
-                  >
+                  <span v-if="arr[5].first" @click="toggle(5)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(5)">
-                    Hide Help?
-                  </span>
+                  <span v-else @click="toggle(5)"> Hide Help? </span>
                 </a>
               </p>
               <div data-parent="#accordion" class="collapse" id="Needemail">
@@ -684,7 +638,7 @@ export default {
 
   async mounted() {},
   methods: {
-       checkValidation(name,action) {
+    checkValidation(name, action) {
       switch (action) {
         case "essential":
           this.$refs.repPersonalInfoFormOne.fields.forEach((f) => {
@@ -700,7 +654,6 @@ export default {
             }
           });
           break;
-      
       }
     },
     handleSubmitFormOne() {
@@ -795,8 +748,8 @@ export default {
       this.activeKey = e;
       this.$emit("pannelChanged", e);
     },
-    async onCountryChange(e,name, action) {
-       this.checkValidation(name, action);
+    async onCountryChange(e, name, action) {
+      this.checkValidation(name, action);
       this.saveContactInfo();
     },
   },

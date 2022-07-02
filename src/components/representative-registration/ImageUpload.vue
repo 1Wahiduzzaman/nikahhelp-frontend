@@ -33,12 +33,14 @@
                         <div class="img-preview mb-2">
                           <img
                             v-viewer
-                            :src="avatarSrc"
+                            :src="
+                              avatarSrc ? avatarSrc : imageModel.per_avatar_url
+                            "
                             class="contain"
-                            v-if="avatarSrc"
+                            v-if="imageModel.per_avatar_url"
                           />
                           <div class="mt-3">Avatar Image</div>
-                          <div class="mt-4" v-if="!avatarSrc">
+                          <div class="mt-4" v-if="!imageModel.per_avatar_url">
                             <a-icon
                               type="plus-circle"
                               :style="{ fontSize: '80px', color: '#aaa' }"
@@ -46,7 +48,7 @@
                           </div>
                         </div>
                         <input
-                          v-if="!avatarSrc"
+                          v-if="!imageModel.per_avatar_url"
                           type="file"
                           class="input-image"
                           name="avatar"
@@ -55,7 +57,7 @@
                         <a-button
                           type="primary"
                           style="width: 200px"
-                          v-if="avatarSrc"
+                          v-if="imageModel.per_avatar_url"
                           @click="clearImg('avatar')"
                         >
                           Remove
@@ -70,12 +72,19 @@
                         <div class="img-preview mb-2">
                           <img
                             v-viewer
-                            :src="mainImageSrc"
+                            :src="
+                              mainImageSrc
+                                ? mainImageSrc
+                                : imageModel.per_main_image_url
+                            "
                             class="contain"
-                            v-if="mainImageSrc"
+                            v-if="imageModel.per_main_image_url"
                           />
                           <div class="mt-3">Main Profile Image</div>
-                          <div class="mt-4" v-if="!mainImageSrc">
+                          <div
+                            class="mt-4"
+                            v-if="!imageModel.per_main_image_url"
+                          >
                             <a-icon
                               type="plus-circle"
                               :style="{ fontSize: '80px', color: '#aaa' }"
@@ -83,7 +92,7 @@
                           </div>
                         </div>
                         <input
-                          v-if="!mainImageSrc"
+                          v-if="!imageModel.per_main_image_url"
                           type="file"
                           class="input-image"
                           name="mainImage"
@@ -92,7 +101,7 @@
                         <a-button
                           type="primary"
                           style="width: 200px"
-                          v-if="mainImageSrc"
+                          v-if="imageModel.per_main_image_url"
                           @click="clearImg('main')"
                         >
                           Remove
@@ -184,7 +193,11 @@
 export default {
   name: "UploadImage",
   components: {},
-  props: ["imageModel"],
+  props: {
+    imageModel: {
+      type: Object,
+    },
+  },
   data() {
     return {
       src: "",
@@ -196,10 +209,7 @@ export default {
       additionalImageSrc: "",
     };
   },
-  async mounted() {
-    this.avatarSrc = this.imageModel.per_avatar_url;
-    this.mainImageSrc = this.imageModel.per_main_image_url;
-  },
+  async mounted() {},
   methods: {
     clearImg(action) {
       let formData = new FormData();
@@ -247,12 +257,12 @@ export default {
         file = "";
         return;
       }
-      this.avatar = e.target.files[0];
+      this.imageModel.per_avatar_url = e.target.files[0];
+      let formData = new FormData();
+      formData.append("per_avatar_url", this.imageModel.per_avatar_url);
+      this.saveImages(formData);
       let reader = new FileReader();
       reader.readAsDataURL(file);
-      this.saveImages({
-        per_avatar_url: this.avatar,
-      });
       reader.onload = (e) => {
         this.avatarSrc = e.target.result;
       };
@@ -263,11 +273,11 @@ export default {
         file = "";
         return;
       }
-      this.mainImage = e.target.files[0];
+      this.imageModel.per_main_image_url = e.target.files[0];
+      let formData = new FormData();
+      formData.append("per_main_image_url", this.imageModel.per_main_image_url);
+      this.saveImages(formData);
       let reader = new FileReader();
-      this.saveImages({
-        per_main_image_url: this.mainImage,
-      });
       reader.readAsDataURL(file);
       reader.onload = (e) => {
         this.mainImageSrc = e.target.result;
