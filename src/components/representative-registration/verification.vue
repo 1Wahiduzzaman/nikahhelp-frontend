@@ -753,7 +753,6 @@ export default {
     },
     cancel() {
       this.verification = {
-      
         ver_country: "",
         ver_document_type: "",
         ver_recommender_address: "",

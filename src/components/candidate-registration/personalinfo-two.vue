@@ -982,12 +982,163 @@
           </div> -->
 
           <!-- Permanent Address Heading -->
-          <div class="pt-3">
+          <!-- <div class="pt-3">
             <div class="mb-2 font-weight-bold">
-              What is your permanent address?
+              What is your address?
+            </div>
+          </div> -->
+          <!-- Home Permanent Address  -->
+          <div class="row mt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                  v-if="personalInformation.contact.address_1"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
+                />
+                Address Line 1
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item ref="address_1" prop="address_1">
+                <a-input
+                  @blur="onValueChange($event, 'contact', 'address_1')"
+                  id="address_1"
+                  v-model="personalInformation.contact.address_1"
+                  placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
+                />
+              </a-form-model-item>
+
+              <!-- <span style="display: flex; justify-content: flex-end"
+                >{{
+                  personalInformation.contact.per_permanent_address
+                    ? personalInformation.contact.per_permanent_address.length
+                    : 0
+                }}/200</span -->
+            </div>
+            <div class="col-12 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoFullAddress"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  <span v-if="arr[14].first" @click="toggle(14)">
+                    Need Help?
+                  </span>
+                  <span v-else @click="toggle(14)"> Hide Help? </span>
+                </a>
+              </p>
+              <div
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoFullAddress"
+              >
+                <div class="card card-body bubble">Full address</div>
+              </div>
             </div>
           </div>
-
+          <div class="row mt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                  v-if="personalInformation.contact.address_2"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
+                />Address Line 2
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item ref="address_2" prop="per_permanent_address">
+                <a-input
+                  @blur="onValueChange($event, 'contact', 'address_2')"
+                  id="address_2"
+                  :rows="3"
+                  :maxLength="200"
+                  v-model="personalInformation.contact.address_2"
+                  placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
+                />
+              </a-form-model-item>
+              <!-- <span style="display: flex; justify-content: flex-end"
+                >{{
+                  personalInformation.contact.per_permanent_address
+                    ? personalInformation.contact.per_permanent_address.length
+                    : 0
+                }}/200</span -->
+            </div>
+            <div class="col-12 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsePersonalInfoaddress_2"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  <span v-if="arr[29].first" @click="toggle(29)">
+                    Need Help?
+                  </span>
+                  <span v-else @click="toggle(29)"> Hide Help? </span>
+                </a>
+              </p>
+              <div
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsePersonalInfoaddress_2"
+              >
+                <div class="card card-body bubble">Full address</div>
+              </div>
+            </div>
+          </div>
+                 <!--City -->
+          <div class="row pt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                  v-if="personalInformation.contact.per_permanent_city"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
+                />City
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-input
+                @blur="onValueChange($event, 'contact', 'per_permanent_city')"
+                id="per_permanent_city"
+                type="text"
+                v-model="personalInformation.contact.per_permanent_city"
+                placeholder="City"
+              />
+            </div>
+            <div class="col-12 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#collapsepersonalInfoCity"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  <span v-if="arr[30].first" @click="toggle(30)">
+                    Need Help?
+                  </span>
+                  <span v-else @click="toggle(13)"> Hide Help? </span>
+                </a>
+              </p>
+              <div
+                class="collapse"
+                data-parent="#personalInfoAccordian"
+                id="collapsepersonalInfoCity"
+              >
+                <div class="card card-body bubble">Provide your city</div>
+              </div>
+            </div>
+          </div>
           <!-- Permanent Post Code  -->
           <div class="row mt-3">
             <div class="col-12 col-md-6 none-padding">
@@ -1065,13 +1216,10 @@
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                  v-if="
-                    personalInformation.contact.per_permanent_country &&
-                    personalInformation.contact.per_permanent_city
-                  "
+                  v-if="personalInformation.contact.per_permanent_country"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Permanent Country
+                />Country
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -1130,90 +1278,30 @@
             </div>
           </div>
 
-          <!-- Home Permanent Address  -->
-          <div class="row mt-3 pb-2 border-bottom">
-            <div class="col-12 col-md-6 none-padding">
-              <div class="mb-2 font-weight-bold">
-                <a-icon
-                  v-if="personalInformation.contact.per_permanent_address"
-                  class="color-success mr-2 fs-18 fw-500"
-                  type="check"
-                />Full Home Address
-              </div>
-            </div>
-            <div class="col-12 col-md-6 mobile-margin">
-              <a-form-model-item
-                ref="per_permanent_address"
-                prop="per_permanent_address"
-              >
-                <a-textarea
-                  @blur="
-                    onValueChange($event, 'contact', 'per_permanent_address')
-                  "
-                  id="per_permanent_address"
-                  :rows="3"
-                  :maxLength="200"
-                  v-model="personalInformation.contact.per_permanent_address"
-                  placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
-                ></a-textarea>
-              </a-form-model-item>
-              <span style="display: flex; justify-content: flex-end"
-                >{{
-                  personalInformation.contact.per_permanent_address
-                    ? personalInformation.contact.per_permanent_address.length
-                    : 0
-                }}/200</span
-              >
-            </div>
-            <div class="col-12 none-padding mobile-margin mobile-help">
-              <p>
-                <a
-                  class="color-blue fw-700 fs-14"
-                  data-toggle="collapse"
-                  href="#collapsePersonalInfoFullAddress"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
-                >
-                  <span v-if="arr[14].first" @click="toggle(14)">
-                    Need Help?
-                  </span>
-                  <span v-else @click="toggle(14)"> Hide Help? </span>
-                </a>
-              </p>
-              <div
-                class="collapse"
-                data-parent="#personalInfoAccordian"
-                id="collapsePersonalInfoFullAddress"
-              >
-                <div class="card card-body bubble">Full address</div>
-              </div>
-            </div>
-          </div>
-
+   
           <!-- Mobile Number -->
           <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
                 <a-icon
-                  v-if="
-                    personalInformation.contact.mobile_number &&
-                    personalInformation.contact.mobile_country_code
-                  "
+                  v-if="personalInformation.contact.mobile_number"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What is your mobile number?
+                />Mobile number
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <vue-tel-input
-                v-bind="bindProps"
-                @input="onNumberChange($event,obj)"
+                @onInput="onNumberChange($event)"
                 id="mobile_number"
-                :maxlength="'10'"
+                :validCharactersOnly="true"
+                :autoDefaultCountry="true"
                 v-model="personalInformation.contact.mobile_number"
                 placeholder="Mobile Number"
               ></vue-tel-input>
+              <span class="error-number" v-if="!isValidNumber"
+                >Please write a valid mobile number</span
+              >
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
@@ -1251,7 +1339,7 @@
                   v-if="personalInformation.contact.per_email"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What is your email address?
+                />Email address
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -2276,6 +2364,7 @@ export default {
         maxLen: 14,
       },
 
+      isValidNumber: true,
       postCodes: [],
       activeKey: 1,
       default_date: null,
@@ -2601,8 +2690,13 @@ export default {
           break;
       }
     },
-    onNumberChange(e,object){
 
+    onNumberChange(e) {
+      this.isValidNumber = e.isValid;
+      if (e.isValid) {
+        this.personalInformation.contact.mobile_number = `${e.country.dialCode} ${this.personalInformation.contact.mobile_number}`;
+        this.save("contact");
+      }
     },
     async saveEssentialInfo() {
       await this.$store
@@ -2717,30 +2811,30 @@ export default {
         .catch((error) => {});
     },
     async onCountryChange(e, name, action) {
-      if (action === "residence") {
-        this.loading = true;
-      } else {
-        this.loadingPermanant = true;
-      }
-      const res = await ApiService.get(`v1/utilities/cities/${e}`);
-      this.loading = false;
-      this.loadingPermanant = false;
-      if (res.status === 200) {
-        switch (action) {
-          case "permanant":
-            this.personalInformation.contact.permanantCities = [];
-            this.personalInformation.contact.permanantCities.push(
-              ...res.data.data
-            );
-            break;
-          case "residence":
-            this.personalInformation.contact.residenceCities = [];
-            this.personalInformation.contact.residenceCities.push(
-              ...res.data.data
-            );
-            break;
-        }
-      }
+      // if (action === "residence") {
+      //   this.loading = true;
+      // } else {
+      //   this.loadingPermanant = true;
+      // }
+      // const res = await ApiService.get(`v1/utilities/cities/${e}`);
+      // this.loading = false;
+      // this.loadingPermanant = false;
+      // if (res.status === 200) {
+      //   switch (action) {
+      //     case "permanant":
+      //       this.personalInformation.contact.permanantCities = [];
+      //       this.personalInformation.contact.permanantCities.push(
+      //         ...res.data.data
+      //       );
+      //       break;
+      //     case "residence":
+      //       this.personalInformation.contact.residenceCities = [];
+      //       this.personalInformation.contact.residenceCities.push(
+      //         ...res.data.data
+      //       );
+      //       break;
+      //   }
+      // }
 
       this.saveContactInfo();
     },
@@ -2790,7 +2884,10 @@ input[type="file"] {
   overflow: hidden;
   border-radius: 20px !important;
 }
-
+.error-number {
+  color: red;
+  margin: 5px;
+}
 input[type="file"]:before {
   width: 100%;
   height: 32px;
