@@ -234,7 +234,7 @@ export default {
       if (user.status == "3") {
         const data = {
           id: user.id,
-          status: "inComplete",
+          status: "Complete",
         };
         await this.$store
           .dispatch("updateUserVerifyOrReject", data)

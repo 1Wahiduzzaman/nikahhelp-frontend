@@ -501,13 +501,15 @@
                   @blur="onValueChange($event, 'mobile_number', 'contact')"
                 /> -->
                 <vue-tel-input
-                  v-bind="bindProps"
                   v-model="personalInformation.personal.mobile_number"
-                  @blur="onValueChange($event, 'mobile_number', 'contact')"
+                  @onInput="onNumberChange($event)"
                   id="mobile_number"
-                  :maxlength="'10'"
+                  :validCharactersOnly="true"
                   placeholder="Mobile Number"
                 ></vue-tel-input>
+                <span class="error-number" v-if="!isValidNumber"
+                  >Please write a valid mobile number</span
+                >
               </a-form-model-item>
             </div>
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
@@ -633,6 +635,7 @@ export default {
       activeKey: ["1"],
       default_date: null,
       phoneNumber: undefined,
+      isValidNumber: true,
     };
   },
 
@@ -713,6 +716,13 @@ export default {
         })
         .catch((error) => {});
     },
+    onNumberChange(e) {
+      this.isValidNumber = e.isValid;
+      if (e.isValid) {
+         this.personalInformation.personal.mobile_number = `${e.country.dialCode} ${this.personalInformation.personal.mobile_number}`;
+        this.save("contact");
+      }
+    },
     save(action) {
       switch (action) {
         case "essential":
@@ -791,5 +801,9 @@ export default {
   .mobile-switch {
     margin-top: 0;
   }
+}
+.error-number {
+  color: red;
+  margin: 5px;
 }
 </style>

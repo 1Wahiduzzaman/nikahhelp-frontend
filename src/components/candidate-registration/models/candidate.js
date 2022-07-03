@@ -403,7 +403,14 @@ export const RULESPERSONALINFO = {
             trigger: "blur",
         },
     ],
-    per_permanent_address: [
+    address_1: [
+        {
+            required: true,
+            message: "Write about your home address",
+            trigger: "blur",
+        },
+    ],
+    address_2: [
         {
             required: true,
             message: "Write about your home address",
@@ -608,7 +615,15 @@ export const ARR_PersonalInfo = [
     },
     {
         first: true,
+    },
+    {
+        first: true,
+    },
+    {
+        first: true,
     }
+
+
 ]
 
 export const ARR_FAMILY_INFO = [
@@ -1037,7 +1052,7 @@ export const _PROFESSIONS = [
     "Geotechnical engineer",
     "Ghostwriter",
     "Glass designer",
-     "Governor",
+    "Governor",
     "Grant Writer",
     "Graphic designer",
     "Group Sales",
@@ -1064,9 +1079,9 @@ export const _PROFESSIONS = [
     "Herbalist",
     "Heritage manager",
     "High intensity therapist",
-    
+
     "Higher education lecturer",
-     "Holiday representative",
+    "Holiday representative",
     "Homeless Shelter Worker",
     "Homeopath",
     "Horticultural consultant",
@@ -1588,3 +1603,13 @@ export const _PROFESSIONS = [
     "Zookeeper",
     "Zoologist",
 ];
+
+export const validateMobile = (rule, value, callback) => {
+    if (!value) {
+        callback(new Error("Enter your valid mobile number"));
+    }
+
+    else {
+        callback();
+    }
+};
