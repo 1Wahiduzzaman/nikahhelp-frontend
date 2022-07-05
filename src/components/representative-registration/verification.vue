@@ -82,7 +82,7 @@
                     v-if="verification.ver_country"
                     class="color-success mr-2 fs-18 fw-500"
                     type="check"
-                  />ID document issuing country 
+                  />ID document issuing country
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin">
@@ -97,7 +97,7 @@
                         placeholder="Country"
                         v-model="verification.ver_country"
                         label="name"
-                        :reduce="(option) => option.id"
+                        :reduce="(option) => option.name"
                         :options="representativeDetails.countries"
                         ><template #open-indicator>
                           <a-icon type="down" /> </template
@@ -487,8 +487,24 @@
                     @blur="onValueChange($event, 'ver_recommender_address')"
                   />
                 </a-form-model-item>
-
                 <a-form-model-item
+                  ref="ver_recommender_mobile_no"
+                  prop="ver_recommender_mobile_no"
+                >
+                  <vue-tel-input
+                    v-model="verification.ver_recommender_mobile_no"
+                    @onInput="
+                      onNumberChange($event, 'ver_recommender_mobile_no')
+                    "
+                    id="ver_recommender_mobile_no"
+                    :validCharactersOnly="true"
+                    placeholder="Mobile Number"
+                  ></vue-tel-input>
+                  <span class="error-number" v-if="!isValidNumber"
+                    >Please write a valid mobile number</span
+                  >
+                </a-form-model-item>
+                <!-- <a-form-model-item
                   ref="ver_recommender_mobile_no"
                   prop="ver_recommender_mobile_no"
                 >
@@ -500,7 +516,7 @@
                     v-model="verification.ver_recommender_mobile_no"
                     @blur="onValueChange($event, 'ver_recommender_mobile_no')"
                   />
-                </a-form-model-item>
+                </a-form-model-item> -->
                 <a-form-model-item
                   ref="ver_recommender_email"
                   prop="ver_recommender_email"
@@ -666,10 +682,18 @@ export default {
       activeKey: 1,
       userData: null,
       loading: false,
+      isValidNumber: true,
     };
   },
 
   methods: {
+    onNumberChange(e) {
+      this.isValidNumber = e.isValid;
+      if (e.isValid) {
+        this.verification.ver_recommender_mobile_no = `${e.country.dialCode} ${this.verification.ver_recommender_mobile_no}`;
+        this.saveVerificationInfo();
+      }
+    },
     changeActivekey(key) {
       this.activeKey = key;
     },
@@ -706,7 +730,6 @@ export default {
     },
     saveVerificationInfo() {
       const {
-       
         ver_country,
         ver_document_type,
         ver_recommender_address,
@@ -715,10 +738,10 @@ export default {
         ver_recommender_occupation,
         ver_recommender_title,
         ver_recommender_mobile_no,
+        ver_recommender_email
       } = this.verification;
       this.$store
         .dispatch("saveRepresentativeVerificationInfo", {
-        
           ver_country,
           ver_document_type,
           ver_recommender_address,
@@ -727,6 +750,7 @@ export default {
           ver_recommender_occupation,
           ver_recommender_title,
           ver_recommender_mobile_no,
+          ver_recommender_email
         })
         .then((data) => {
           this.$emit("valueChange", {
@@ -768,7 +792,6 @@ export default {
 
       this.$store
         .dispatch("saveRepresentativeVerificationInfo", {
-         
           ver_country: "",
           ver_document_type: "",
           ver_recommender_address: "",
@@ -838,13 +861,7 @@ export default {
     async onChangeCountry(e, name) {
       this.loading = true;
       this.checkValidation(name);
-      const res = await ApiService.get(`v1/utilities/cities/${e}`);
-      if (res.status === 200) {
-        this.loading = false;
-        console.log("this.verification", this.verification);
-        this.verification.cities = [];
-        this.verification.cities.push(...res.data.data);
-      }
+     
       this.saveVerificationInfo();
     },
     toggle(index) {
@@ -972,5 +989,10 @@ input[type="file"]::-webkit-file-upload-button {
   .mobile-switch {
     margin-top: 0;
   }
+}
+.vue-tel-input {
+  border-radius: 20px;
+  height: 35px;
+
 }
 </style>

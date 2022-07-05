@@ -90,14 +90,37 @@
                       >:<span class="ml-3 text--secondary text-subtitle-1"
                         >{{
                           representativeDetails.personal
-                            .per_current_residence_country_text
-                        }},
-                        {{
-                          representativeDetails.personal
-                            .per_current_residence_city
+                            .per_current_residence_country
                         }}</span
                       >
                     </span>
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Address Line 1</span
+                    ><span class="flex-70 px-2 d-inherit"
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                        representativeDetails.personal.address_1
+                      }}</span></span
+                    >
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Address Line 2</span
+                    ><span class="flex-70 px-2 d-inherit"
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                        representativeDetails.personal.address_2
+                      }}</span></span
+                    >
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >City</span
+                    ><span class="flex-70 px-2 d-inherit"
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                        representativeDetails.personal.per_permanent_city
+                      }}</span></span
+                    >
                   </li>
                   <li class="flex-between-start">
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
@@ -110,37 +133,22 @@
                   </li>
                   <li class="flex-between-start">
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
-                      >Permanant Residance</span
+                      >Country</span
                     ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1"
                         >{{
                           representativeDetails.personal
-                            .per_permanent_country_text
+                            .per_permanent_country
                         }},
-                        {{
-                          representativeDetails.personal.per_permanent_city
-                        }}</span
-                      >
+                      </span>
                     </span>
-                  </li>
-                  <li class="flex-between-start">
-                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
-                      >Address</span
-                    ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
-                        representativeDetails.personal.per_permanent_address
-                      }}</span></span
-                    >
                   </li>
 
                   <li class="flex-between-start">
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Mobile No</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1"
-                        >{{
-                          representativeDetails.personal.mobile_country_code
-                        }}
+                      >:<span class="ml-3 text--secondary text-subtitle-1">
                         {{ representativeDetails.personal.mobile_number }}</span
                       ></span
                     >
@@ -174,9 +182,9 @@
               <div class="card-custom h-100 shadow-default">
                 <table>
                   <TableRow
-                    title="ID document issuing country & city"
+                    title="ID document issuing country"
                     textClass="text-subtitle-1"
-                    :value="representativeDetails.verification.ver_city"
+                    :value="representativeDetails.verification.ver_country"
                   />
                   <TableRow
                     title="Document type"
@@ -189,8 +197,7 @@
                     title="Title"
                     textClass="text-subtitle-1"
                     :value="
-                      representativeDetails.verification
-                        .ver_recommender_title
+                      representativeDetails.verification.ver_recommender_title
                     "
                   />
                   <TableRow
@@ -201,7 +208,7 @@
                         .ver_recommender_first_name
                     "
                   />
-                  
+
                   <TableRow
                     title="Last Name"
                     textClass="text-subtitle-1"
@@ -218,13 +225,12 @@
                         .ver_recommender_occupation
                     "
                   />
-                  
+
                   <TableRow
                     title="Address"
                     textClass="text-subtitle-1"
                     :value="
-                      representativeDetails.verification
-                        .ver_recommender_address
+                      representativeDetails.verification.ver_recommender_address
                     "
                   />
                   <TableRow
@@ -235,23 +241,23 @@
                         .ver_recommender_mobile_no
                     "
                   />
-                   <TableRow
+                  <TableRow
                     title="Email"
                     textClass="text-subtitle-1"
                     :value="
-                      representativeDetails.verification
-                        .ver_recommender_email
+                      representativeDetails.verification.ver_recommender_email
                     "
                   />
-                  
                 </table>
               </div>
             </div>
-             <div class="col-12 col-md-6 mb-4">
+            <div class="col-12 col-md-6 mb-4">
               <div class="profile-img text-center">
                 <img
                   v-viewer
-                  :src="representativeDetails.verification.ver_document_frontside"
+                  :src="
+                    representativeDetails.verification.ver_document_frontside
+                  "
                   class="user-image"
                   alt="img"
                   height="250"
@@ -264,7 +270,9 @@
               <div class="profile-img text-center">
                 <img
                   v-viewer
-                  :src="representativeDetails.verification.ver_document_backside"
+                  :src="
+                    representativeDetails.verification.ver_document_backside
+                  "
                   class="user-image"
                   alt="img"
                   height="250"
@@ -321,9 +329,6 @@
 </template>
 <script>
 import RatingComponent from "../profile/RatingComponent.vue";
-import ApiService from "@/services/api.service";
-import JwtService from "@/services/jwt.service";
-import { AGES, HEIGHTS, Employment_Statuses } from "@/models/data";
 import TableRow from "@/components/atom/TableRow";
 export default {
   name: "Review",
@@ -331,9 +336,9 @@ export default {
     RatingComponent,
     TableRow,
   },
-  props: ['showAgreement'],
+  props: ["showAgreement"],
   data() {
-    return { representativeDetails: null, };
+    return { representativeDetails: null };
   },
   mounted() {
     this.getRepresentativeInfo();
@@ -439,7 +444,7 @@ export default {
 }
 
 .card-height-design {
-  height: 360px;
+  height: 390px
 }
 
 .mobile-margin-top {
@@ -478,7 +483,7 @@ export default {
     margin-top: 0;
   }
   .personal-height {
-    height: 360px;
+    height: 390px
   }
 }
 </style>

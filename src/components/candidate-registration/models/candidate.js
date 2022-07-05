@@ -406,14 +406,21 @@ export const RULESPERSONALINFO = {
     address_1: [
         {
             required: true,
-            message: "Write about your home address",
+            message: "Write address line one",
             trigger: "blur",
         },
     ],
     address_2: [
         {
             required: true,
-            message: "Write about your home address",
+            message: "Write address line two",
+            trigger: "blur",
+        },
+    ],
+    mobile_number: [
+        {
+            required: true,
+            message: "Write your mobile number",
             trigger: "blur",
         },
     ],
@@ -424,6 +431,14 @@ export const RULESPERSONALINFO = {
             trigger: "blur",
         },
     ],
+   
+    per_permanent_country: [
+        {
+            required: true,
+            message: "Select your country",
+            trigger: "blur",
+        },
+    ],
     postCode: [
         {
             required: true,
@@ -431,17 +446,10 @@ export const RULESPERSONALINFO = {
             trigger: "blur",
         },
     ],
-    per_permanent_country: [
-        {
-            required: true,
-            message: "Select your permanant country",
-            trigger: "blur",
-        },
-    ],
     per_permanent_city: [
         {
             required: true,
-            message: "Select your permanant city",
+            message: "Select your city",
             trigger: "blur",
         },
     ],

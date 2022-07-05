@@ -552,27 +552,54 @@
 
                   <li class="flex-between-start">
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
-                      >Address</span
+                      >Address Line 1</span
                     ><span class="flex-60 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
-                        candidateData.contact.per_permanent_address
+                        candidateData.contact.address_1
                       }}</span></span
                     >
                   </li>
-                  <!-- <li class="flex-between-start">
-                    <span class="flex-60 px-2 text--disabled text-subtitle-1">Telephone NO</span
+                  <li class="flex-between-start">
+                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                      >Address Line 2</span
                     ><span class="flex-60 px-2 d-inherit"
-                      >:<span class="ml-3">{{
-                        candidateData.personal.per_telephone_no
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                        candidateData.contact.address_2
                       }}</span></span
                     >
-                  </li> -->
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                      >City</span
+                    ><span class="flex-60 px-2 d-inherit"
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                        candidateData.contact.per_permanent_city
+                      }}</span></span
+                    >
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                      >Post Code</span
+                    ><span class="flex-60 px-2 d-inherit"
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                        candidateData.contact.per_permanent_post_code
+                      }}</span></span
+                    >
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                      >Country</span
+                    ><span class="flex-60 px-2 d-inherit"
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                        candidateData.contact.per_permanent_country_name
+                      }}</span></span
+                    >
+                  </li>
                   <li class="flex-between-start">
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
                       >Mobile No</span
                     ><span class="flex-60 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1"
-                        >{{ candidateData.contact.mobile_country_code }}
+                      >:<span class="ml-3 text--secondary text-subtitle-1">
                         {{ candidateData.contact.mobile_number }}</span
                       ></span
                     >
@@ -583,15 +610,6 @@
                     ><span class="flex-60 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.contact.per_email
-                      }}</span></span
-                    >
-                  </li>
-                  <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
-                      >Permanent country</span
-                    ><span class="flex-60 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
-                        candidateData.contact.per_permanent_country_name
                       }}</span></span
                     >
                   </li>

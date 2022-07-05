@@ -1052,7 +1052,7 @@
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
-              <a-form-model-item ref="address_2" prop="per_permanent_address">
+              <a-form-model-item ref="address_2" prop="address_2">
                 <a-input
                   @blur="onValueChange($event, 'contact', 'address_2')"
                   id="address_2"
@@ -1094,7 +1094,7 @@
               </div>
             </div>
           </div>
-                 <!--City -->
+          <!--City -->
           <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
@@ -1106,13 +1106,18 @@
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
-              <a-input
-                @blur="onValueChange($event, 'contact', 'per_permanent_city')"
-                id="per_permanent_city"
-                type="text"
-                v-model="personalInformation.contact.per_permanent_city"
-                placeholder="City"
-              />
+              <a-form-model-item
+                ref="per_permanent_city"
+                prop="per_permanent_city"
+              >
+                <a-input
+                  @blur="onValueChange($event, 'contact', 'per_permanent_city')"
+                  id="per_permanent_city"
+                  type="text"
+                  v-model="personalInformation.contact.per_permanent_city"
+                  placeholder="City"
+                />
+              </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
@@ -1278,7 +1283,6 @@
             </div>
           </div>
 
-   
           <!-- Mobile Number -->
           <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
@@ -1291,6 +1295,10 @@
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
+               <a-form-model-item
+                ref="mobile_number"
+                prop="mobile_number"
+              >
               <vue-tel-input
                 @onInput="onNumberChange($event)"
                 id="mobile_number"
@@ -1298,10 +1306,13 @@
                 :autoDefaultCountry="true"
                 v-model="personalInformation.contact.mobile_number"
                 placeholder="Mobile Number"
+                  class="style-chooser"
               ></vue-tel-input>
+              
               <span class="error-number" v-if="!isValidNumber"
                 >Please write a valid mobile number</span
               >
+               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
               <p>
@@ -2962,6 +2973,8 @@ input[type="file"]::-webkit-file-upload-button {
   }
 }
 .vue-tel-input {
-  border-radius: 15px;
+  border-radius: 20px;
+  height: 35px;
+
 }
 </style>
