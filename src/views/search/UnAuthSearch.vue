@@ -166,7 +166,7 @@ export default {
       page: 1,
       per_page: 10
     };
-    this.landingLoading = true;
+    // this.landingLoading = true;
     this.handleSearch(this.url, pagination);
   },
   components: {
@@ -180,8 +180,8 @@ export default {
 			this.searchModalVisible = true;
 		},
 		async handleSearch(payload, pagination) {
-      this.isLoading = true;
-      let fromModal = false;
+      // this.isLoading = true;
+      // let fromModal = false;
       if(this.searchModalVisible) {
         fromModal = true;
         // this.searchModalVisible = false;
@@ -196,18 +196,15 @@ export default {
 			let _payload = `v1/home-searches${payload}`;
 			await ApiService.get(_payload)
 				.then((data) => {
+					console.log(data.data.data);
           this.landingLoading = false;
-          if(fromModal) {
-            this.updatedResult = data.data.data.data;
+            this.updatedResult = data.data.data;
             this.searchModalVisible = false;
-          } else {
-            this.updatedResult = [...this.updatedResult, ...data.data.data.data];
-            this.searchModalVisible = false;
-          }
-					this.pagination = data.data.data.pagination;
-					this.searchResult = true;
-					this.searchModalVisible = false;
-          this.isLoading = false;
+					// console.log()
+					// this.pagination = data.data.data.pagination;
+					// this.searchResult = true;
+					// this.searchModalVisible = false;
+          // this.isLoading = false;
 				})
 				.catch((error) => {
 					console.log(error);
