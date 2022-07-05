@@ -340,12 +340,11 @@ export default {
           mobile_country_code,
           mobile_number,
           per_current_residence_country,
-          per_current_residence_country_text,
-          per_permanent_address,
+          address_1,
+          address_2,
           per_permanent_country,
-          per_permanent_country_text,
+          per_permanent_city,
           per_permanent_post_code,
-          per_email,
         } = response.data.data.personal;
         const details = {
           countries: response.data.data.countries,
@@ -385,20 +384,13 @@ export default {
                 mobile_country_code,
                 mobile_number,
                 per_current_residence_country,
-                per_current_residence_country_text,
-                per_permanent_address,
+                address_1,
+                address_2,
                 per_permanent_country,
-                per_permanent_country_text,
+                per_permanent_city,
                 per_permanent_post_code,
-                per_email,
               },
-              residenceCities: [],
-              permanantCities: [],
               email: user.email,
-              per_current_residence_country:
-                response.data.data.personal.per_current_residence_country_text,
-              per_permanent_country:
-                response.data.data.personal.per_permanent_country_text,
             },
           },
         };
@@ -562,21 +554,25 @@ export default {
             this.representativeDetails.personalInformation.essential;
           let essential = { dob, per_gender, per_occupation };
           let {
-            per_permanent_address,
-            per_permanent_country,
-            per_permanent_post_code,
             mobile_country_code,
             mobile_number,
             per_current_residence_country,
+            address_1,
+            address_2,
+            per_permanent_country,
+            per_permanent_city,
+            per_permanent_post_code,
           } = this.representativeDetails.personalInformation.personal;
 
           let personal = {
+            mobile_country_code,
             mobile_number,
             per_current_residence_country,
-            per_permanent_address,
+            address_1,
+            address_2,
             per_permanent_country,
+            per_permanent_city,
             per_permanent_post_code,
-            mobile_country_code,
           };
 
           isEnabled = this.isFormCompleted(personal, essential);

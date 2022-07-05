@@ -57,35 +57,13 @@ export const VERIFICATION_RULES = {
         message: "Select document type",
         trigger: "blur",
     }],
-    // ver_recommender_address:[{
-    //     required: true,
-    //     message: "Write your address",
-    //     trigger: "blur",
-    // }],
-    // ver_recommender_first_name:[{
-    //     required: true,
-    //     message: "Write your first name",
-    //     trigger: "blur",
-    // }],
-    // ver_recommender_last_name:[{
-    //     required: true,
-    //     message: "Write your last name",
-    //     trigger: "blur",
-    // }],
-    ver_recommender_mobile_no: [
-        
-        { validator: validateNumber, trigger: "change" },
-        { validator: validateNumber, trigger: "blur" },],
-    // ver_recommender_occupation:[{
-    //     required: true,
-    //     message: "Select your occupation",
-    //     trigger: "blur",
-    // }],
-    // ver_recommender_title:[{
-    //     required: true,
-    //     message: "Write your title",
-    //     trigger: "blur",
-    // }],
+    
+    ver_recommender_mobile_no:  {
+        required: true,
+        message: "Enter your mobile number",
+        trigger: "blur",
+    },
+    
 }
 export const RULES_PERSONAL = {
 
@@ -96,7 +74,13 @@ export const RULES_PERSONAL = {
             trigger: "blur",
         },
     ],
-   
+    mobile_number: [
+        {
+            required: true,
+            message: "Write your mobile number",
+            trigger: "blur",
+        },
+    ],
     per_permanent_country: [
         {
             required: true,
@@ -104,11 +88,33 @@ export const RULES_PERSONAL = {
             trigger: "blur",
         },
     ],
-   
+
     per_permanent_post_code: [
         {
             required: true,
             message: "Please provide a valid postcode",
+            trigger: "blur",
+        },
+    ],
+
+    address_1: [
+        {
+            required: true,
+            message: "Write address line one",
+            trigger: "blur",
+        },
+    ],
+    address_2: [
+        {
+            required: true,
+            message: "Write address line two",
+            trigger: "blur",
+        },
+    ],
+    per_permanent_city: [
+        {
+            required: true,
+            message: "Select your city",
             trigger: "blur",
         },
     ],
@@ -120,8 +126,7 @@ export const RULES_PERSONAL = {
         },
     ],
     mobile_number: [
-        { validator: validateNumber, trigger: "change" },
-        { validator: validateNumber, trigger: "blur" },
+
         {
             required: true,
             message: "Enter your mobile number",

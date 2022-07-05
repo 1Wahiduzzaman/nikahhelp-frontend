@@ -173,6 +173,33 @@
                   </li>
                   <li class="flex-between-start">
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Address Line 1</span
+                    ><span class="flex-70 px-2 d-inherit"
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                        representativeDetails.personal.address_1
+                      }}</span></span
+                    >
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Address Line 2</span
+                    ><span class="flex-70 px-2 d-inherit"
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                        representativeDetails.personal.address_2
+                      }}</span></span
+                    >
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >City</span
+                    ><span class="flex-70 px-2 d-inherit"
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                        representativeDetails.personal.per_permanent_city_text
+                      }}</span></span
+                    >
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Post Code</span
                     ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
@@ -182,27 +209,15 @@
                   </li>
                   <li class="flex-between-start">
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
-                      >Permanant Residance</span
+                      >Country</span
                     ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1"
                         >{{
                           representativeDetails.personal
                             .per_permanent_country_text
                         }},
-                        {{
-                          representativeDetails.personal.per_permanent_city
-                        }}</span
-                      >
+                      </span>
                     </span>
-                  </li>
-                  <li class="flex-between-start">
-                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
-                      >Address</span
-                    ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
-                        representativeDetails.personal.per_permanent_address
-                      }}</span></span
-                    >
                   </li>
 
                   <li class="flex-between-start">
@@ -210,9 +225,7 @@
                       >Mobile No</span
                     ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1"
-                        >{{
-                          representativeDetails.personal.mobile_country_code
-                        }}
+                        >
                         {{ representativeDetails.personal.mobile_number }}</span
                       ></span
                     >

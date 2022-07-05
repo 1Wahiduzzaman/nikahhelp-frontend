@@ -467,47 +467,7 @@
         </a-collapse-panel>
       </a-collapse>
     </div>
-    <!-- <div class="verification-msg" v-if="userData && userData.isUplaodedDoc == '1'">
-      <div class="identity">
-        <img
-          src="@/assets/icon/dots-horizontal-circle.svg"
-          alt="icon"
-          style="width: 200px; height: 230px"
-        />
-        <span>In Review</span>
-      </div>
-      <div class="identity-footer">
-        <span
-          >To keep your account safe, we need to verify your identity. This is a
-          legal requirement that help us to keep your account secure.
-        </span>
-        <span
-          >We accept photo/scans of a driving license, passport, national ID
-          card or residence permit issued in European Economic Are (EEA).</span
-        >
-      </div>
-    </div>
-    <div class="verification-msg" v-if="userData && userData.status == '3'">
-      <div class="identity">
-        <img
-          src="@/assets/icon/varified.svg"
-          alt="icon"
-          style="width: 200px; height: 230px"
-        />
-        &nbsp;
-        <span>Verified</span>
-      </div>
-      <div class="identity-footer">
-        <span
-          >To keep your account safe, we need to verify your identity. This is a
-          legal requirement that help us to keep your account secure.
-        </span>
-        <span
-          >We accept photo/scans of a driving license, passport, national ID
-          card or residence permit issued in European Economic Are (EEA).</span
-        >
-      </div>
-    </div> -->
+   
   </div>
 </template>
 
@@ -516,7 +476,6 @@
 </style>
 <script>
 import FileUploadOne from "@/components/shared/FileUploadOne.vue";
-import ApiService from "@/services/api.service";
 import vSelect from "vue-select";
 import { VERIFICATION } from "./models/candidate";
 export default {

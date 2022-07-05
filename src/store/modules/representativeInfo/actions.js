@@ -70,13 +70,22 @@ export default {
     });
   },
 
-
+  async deleteRepImage(_, payload) {
+    return new Promise((resolve, reject) => {
+      ApiService.delete(`v1/representative/remove-img/${payload}`)
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
   async getRepresentativeData(context) {
     return new Promise((resolve, reject) => {
       ApiService.get("v1/representative-information")
         .then((data) => {
           context.commit("setRepresentativeData", data);
-          // console.log(data.data.data[0])
           resolve(data);
         })
         .catch((error) => {

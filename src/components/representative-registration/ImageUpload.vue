@@ -212,33 +212,28 @@ export default {
   async mounted() {},
   methods: {
     clearImg(action) {
-      let formData = new FormData();
       switch (action) {
         case "main":
           this.mainImageSrc = "";
-          this.imageModel.main_image_url = "";
-          this.$emit("valueChange", {
-            value: {
-              per_avatar_url: null,
-              per_main_image_url: this.imageModel.per_main_image_url,
-            },
-            current: 1,
-          });
+          this.imageModel.per_main_image_url = "";
+          this.deleteImage(1);
           break;
         case "avatar":
           this.avatarSrc = "";
           this.imageModel.per_avatar_url = "";
-          this.$emit("valueChange", {
-            value: {
-              per_avatar_url: this.imageModel.per_avatar_url,
-              per_main_image_url: null,
-            },
-            current: 1,
-          });
+          this.deleteImage(0);
           break;
       }
     },
-
+    async deleteImage(data) {
+      await this.$store.dispatch("deleteRepImage", data);
+      this.$emit("valueChange", {
+        value: {
+          ...this.imageModel,
+        },
+        current: 1,
+      });
+    },
     imageSizeCheck(file) {
       if (file["size"] > 4223550) {
         this.$error({

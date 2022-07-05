@@ -256,7 +256,7 @@
                           .per_current_residence_country
                       "
                       label="name"
-                      :reduce="(option) => option.id"
+                      :reduce="(option) => option.name"
                       :options="representativeDetails.countries"
                       ><template #open-indicator>
                         <a-icon type="down" /> </template
@@ -308,6 +308,151 @@
               </div>
             </div>
           </div>
+
+          <div class="row pt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                  v-if="personalInformation.personal.address_1"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
+                />Address Line 1
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item ref="address_1" prop="address_1">
+                <a-input
+                  @blur="onValueChange($event, 'address_1', 'contact')"
+                  id="address_1"
+                  v-model="personalInformation.personal.address_1"
+                  placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#address_1"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  <span v-if="arr[4].first" @click="toggle(4)">
+                    Need Help?
+                  </span>
+                  <span v-else @click="toggle(4)"> Hide Help? </span>
+                </a>
+              </p>
+              <div
+                data-parent="#accordion"
+                class="collapse"
+                id="address_1"
+              >
+                <div class="card card-body bubble">
+                  Please provide tooltip texts so we can place it here
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                  v-if="personalInformation.personal.per_permanent_address"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
+                />Address Line 2
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item ref="address_2" prop="address_2">
+                <a-input
+                  @blur="onValueChange($event, 'address_2', 'contact')"
+                  id="address_2"
+                  v-model="personalInformation.personal.address_2"
+                  placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#address_2"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  <span v-if="arr[5].first" @click="toggle(5)">
+                    Need Help?
+                  </span>
+                  <span v-else @click="toggle(5)"> Hide Help? </span>
+                </a>
+              </p>
+              <div
+                data-parent="#accordion"
+                class="collapse"
+                id="address_2"
+              >
+                <div class="card card-body bubble">
+                  Please provide tooltip texts so we can place it here
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row pt-3 pb-2 border-bottom">
+            <div class="col-12 col-md-6 none-padding">
+              <div class="mb-2 font-weight-bold">
+                <a-icon
+                  v-if="personalInformation.personal.per_permanent_city"
+                  class="color-success mr-2 fs-18 fw-500"
+                  type="check"
+                />City
+              </div>
+            </div>
+            <div class="col-12 col-md-6 mobile-margin">
+              <a-form-model-item
+                ref="per_permanent_city"
+                prop="per_permanent_city"
+              >
+                <a-input
+                  @blur="onValueChange($event, 'per_permanent_city', 'contact')"
+                  id="per_permanent_city"
+                  v-model="personalInformation.personal.per_permanent_city"
+                  placeholder="city"
+                />
+              </a-form-model-item>
+            </div>
+            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
+              <p>
+                <a
+                  class="color-blue fw-700 fs-14"
+                  data-toggle="collapse"
+                  href="#per_permanent_city"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  <span v-if="arr[6].first" @click="toggle(6)">
+                    Need Help?
+                  </span>
+                  <span v-else @click="toggle(6)"> Hide Help? </span>
+                </a>
+              </p>
+              <div
+                data-parent="#accordion"
+                class="collapse"
+                id="per_permanent_city"
+              >
+                <div class="card card-body bubble">
+                  Please provide tooltip texts so we can place it here
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
               <div class="mb-2 font-weight-bold">
@@ -339,21 +484,21 @@
                 <a
                   class="color-blue fw-700 fs-14"
                   data-toggle="collapse"
-                  href="#Needmobile_number"
+                  href="#per_permanent_post_code"
                   role="button"
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span v-if="arr[4].first" @click="toggle(4)">
+                  <span v-if="arr[7].first" @click="toggle(7)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(4)"> Hide Help? </span>
+                  <span v-else @click="toggle(7)"> Hide Help? </span>
                 </a>
               </p>
               <div
                 data-parent="#accordion"
                 class="collapse"
-                id="Needmobile_number"
+                id="per_permanent_post_code"
               >
                 <div class="card card-body bubble">
                   Please provide tooltip texts so we can place it here
@@ -368,7 +513,7 @@
                   v-if="personalInformation.personal.per_permanent_country"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Permanent Country
+                />Country
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -385,7 +530,7 @@
                   id="per_permanent_country"
                   placeholder="Select Country"
                   v-model="personalInformation.personal.per_permanent_country"
-                  :reduce="(option) => option.id"
+                  :reduce="(option) => option.name"
                   label="name"
                   :options="representativeDetails.countries"
                   ><template #open-indicator> <a-icon type="down" /> </template
@@ -397,82 +542,21 @@
                 <a
                   class="color-blue fw-700 fs-14"
                   data-toggle="collapse"
-                  href="#Needmobile_number"
+                  href="#per_permanent_country"
                   role="button"
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span v-if="arr[4].first" @click="toggle(4)">
+                  <span v-if="arr[8].first" @click="toggle(8)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(4)"> Hide Help? </span>
+                  <span v-else @click="toggle(8)"> Hide Help? </span>
                 </a>
               </p>
               <div
                 data-parent="#accordion"
                 class="collapse"
-                id="Needmobile_number"
-              >
-                <div class="card card-body bubble">
-                  Please provide tooltip texts so we can place it here
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row pt-3 pb-2 border-bottom">
-            <div class="col-12 col-md-6 none-padding">
-              <div class="mb-2 font-weight-bold">
-                <a-icon
-                  v-if="personalInformation.personal.per_permanent_address"
-                  class="color-success mr-2 fs-18 fw-500"
-                  type="check"
-                />Home Address
-              </div>
-            </div>
-            <div class="col-12 col-md-6 mobile-margin">
-              <a-form-model-item
-                ref="per_permanent_address"
-                prop="per_permanent_address"
-              >
-                <a-textarea
-                  @blur="
-                    onValueChange($event, 'per_permanent_address', 'contact')
-                  "
-                  id="per_permanent_address"
-                  :rows="3"
-                  :maxLength="200"
-                  v-model="personalInformation.personal.per_permanent_address"
-                  placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
-                ></a-textarea>
-              </a-form-model-item>
-              <span style="display: flex; justify-content: flex-end"
-                >{{
-                  personalInformation.personal.per_permanent_address
-                    ? personalInformation.personal.per_permanent_address.length
-                    : 0
-                }}/200</span
-              >
-            </div>
-            <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
-              <p>
-                <a
-                  class="color-blue fw-700 fs-14"
-                  data-toggle="collapse"
-                  href="#Needmobile_number"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
-                >
-                  <span v-if="arr[4].first" @click="toggle(4)">
-                    Need Help?
-                  </span>
-                  <span v-else @click="toggle(4)"> Hide Help? </span>
-                </a>
-              </p>
-              <div
-                data-parent="#accordion"
-                class="collapse"
-                id="Needmobile_number"
+                id="per_permanent_country"
               >
                 <div class="card card-body bubble">
                   Please provide tooltip texts so we can place it here
@@ -492,14 +576,6 @@
             </div>
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="mobile_number" prop="mobile_number">
-                <!-- <a-input
-                  class="w-100"
-                  placeholder="+8801685117737"
-                  id="inputNumber"
-                  :maxLength="10"
-                  v-model="personalInformation.personal.mobile_number"
-                  @blur="onValueChange($event, 'mobile_number', 'contact')"
-                /> -->
                 <vue-tel-input
                   v-model="personalInformation.personal.mobile_number"
                   @onInput="onNumberChange($event)"
@@ -517,21 +593,21 @@
                 <a
                   class="color-blue fw-700 fs-14"
                   data-toggle="collapse"
-                  href="#Needmobile_number"
+                  href="#mobile_number"
                   role="button"
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span v-if="arr[4].first" @click="toggle(4)">
+                  <span v-if="arr[9].first" @click="toggle(9)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(4)"> Hide Help? </span>
+                  <span v-else @click="toggle(9)"> Hide Help? </span>
                 </a>
               </p>
               <div
                 data-parent="#accordion"
                 class="collapse"
-                id="Needmobile_number"
+                id="mobile_number"
               >
                 <div class="card card-body bubble">
                   Please provide tooltip texts so we can place it here
@@ -567,10 +643,10 @@
                   aria-expanded="false"
                   aria-controls="collapseExample"
                 >
-                  <span v-if="arr[5].first" @click="toggle(5)">
+                  <span v-if="arr[10].first" @click="toggle(10)">
                     Need Help?
                   </span>
-                  <span v-else @click="toggle(5)"> Hide Help? </span>
+                  <span v-else @click="toggle(10)"> Hide Help? </span>
                 </a>
               </p>
               <div data-parent="#accordion" class="collapse" id="Needemail">
@@ -719,7 +795,7 @@ export default {
     onNumberChange(e) {
       this.isValidNumber = e.isValid;
       if (e.isValid) {
-         this.personalInformation.personal.mobile_number = `${e.country.dialCode} ${this.personalInformation.personal.mobile_number}`;
+        this.personalInformation.personal.mobile_number = `${e.country.dialCode} ${this.personalInformation.personal.mobile_number}`;
         this.save("contact");
       }
     },
@@ -805,5 +881,10 @@ export default {
 .error-number {
   color: red;
   margin: 5px;
+}
+.vue-tel-input {
+  border-radius: 20px;
+  height: 35px;
+
 }
 </style>
