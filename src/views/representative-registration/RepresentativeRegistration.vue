@@ -398,43 +398,7 @@ export default {
         this.representativeDetails = {
           ...details,
         };
-        // if (
-        //   this.representativeDetails.personalInformation &&
-        //   this.representativeDetails.personalInformation.personal
-        //     .per_current_residence_country > 0
-        // ) {
-        //   this.onChangeCountry(
-        //     {
-        //       id: this.representativeDetails.personalInformation.personal
-        //         .per_current_residence_country,
-        //     },
-        //     "residence"
-        //   );
-        // }
-        // if (
-        //   this.representativeDetails.personalInformation &&
-        //   this.representativeDetails.personalInformation.personal
-        //     .per_permanent_country > 0
-        // ) {
-        //   this.onChangeCountry(
-        //     {
-        //       id: this.representativeDetails.personalInformation.personal
-        //         .per_permanent_country,
-        //     },
-        //     "permanat"
-        //   );
-        // }
-        // if (
-        //   this.representativeDetails.verification &&
-        //   this.representativeDetails.verification.ver_country > 0
-        // ) {
-        //   this.onChangeCountry(
-        //     { id: this.representativeDetails.verification.ver_country },
-        //     "verification"
-        //   );
-        // }
-        this.showAgreement =
-          user.status == "2" || user.status == "3" ? true : false;
+
         const {
           ver_country,
           ver_document_type,
@@ -447,7 +411,10 @@ export default {
           ver_document_frontside,
           ver_document_backside,
         }).every((x) => x !== undefined && x !== null && x !== "");
-        if (!this.showAgreement && user.status == "1") {
+        if (
+          !this.showAgreement &&
+          response.data.data.user.is_uplaoded_doc == "0"
+        ) {
           this.representativeDetails.verification = {
             ...this.representativeDetails.verification,
             ver_document_frontside: "",

@@ -40,29 +40,53 @@
               </div>
               <div class="div-2 position-relative bg-white">
                 <div
-                  class="d-flex cursor-pointer py-4 px-5 item-duration align-items-center justify-content-center border-bottom"
-                  :class="{'bg-brand-gradient': choosedPlan && choosedPlan.id == plan.id, 'border-top': pIndex === 0 }"
+                  class="
+                    d-flex
+                    cursor-pointer
+                    py-4
+                    px-5
+                    item-duration
+                    align-items-center
+                    justify-content-center
+                    border-bottom
+                  "
+                  :class="{
+                    'bg-brand-gradient':
+                      choosedPlan && choosedPlan.id == plan.id,
+                    'border-top': pIndex === 0,
+                  }"
                   @click="setPlan(plan)"
                   v-for="(plan, pIndex) in plans"
                   :key="pIndex"
                 >
-<!--                  <a-icon-->
-<!--                    type="check"-->
-<!--                    class="text-transparent icon-check"-->
-<!--                    :class="{ 'text-white': isSelected1 }"-->
-<!--                  />-->
-                  <img src="@/assets/icon/subscription_check.svg" alt="icon" v-if="choosedPlan && choosedPlan.id == plan.id" class="mr-4" />
+                  <img
+                    src="@/assets/icon/subscription_check.svg"
+                    alt="icon"
+                    v-if="choosedPlan && choosedPlan.id == plan.id"
+                    class="mr-4"
+                  />
                   <h4
                     class="duration"
-                    :class="{ selected: choosedPlan && choosedPlan.id == plan.id }"
+                    :class="{
+                      selected: choosedPlan && choosedPlan.id == plan.id,
+                    }"
                   >
                     {{ plan.title }}
                   </h4>
                 </div>
               </div>
-              <div class="div-3 bg-primary-gradient">
+              <div
+                v-if="activeStepIndex == 1"
+                style="height: 200px"
+                class="div-3 bg-primary-gradient"
+              >
+                <h3 class="text-center text-white font-weight-bolder">
+                  Plan Description
+                </h3>
                 <p class="text-center fs-12 text-white">
-                  {{ activeStepIndex >=0 ? descriptions[activeStepIndex] : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni eius at expedita? Explicabo laboriosam ipsa commod' }}
+                  {{
+                    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni eius at expedita? Explicabo laboriosam ipsa commod"
+                  }}
                 </p>
               </div>
             </div>
@@ -73,6 +97,7 @@
           >
             <!-- Card 2 -->
             <div
+              style="padding: 30px 0"
               class="
                 custom-card
                 card-2
@@ -81,14 +106,17 @@
                 height-1
               "
             >
-              <div class="div-1 text-center">
-                <img
-                  src="@/assets/icon/Pound.svg"
-                  alt=""
-                  width="180"
-                  height="180"
-                  class="mt-3"
-                />
+              <div
+                style="
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+                class="div-1 text-center"
+              >
+                <span style="font-size: 50px">&#127881;</span>
+                <h1 class="text-white">Launch Offer</h1>
+                <span style="font-size: 50px">&#127881;</span>
               </div>
               <div
                 class="
@@ -102,9 +130,12 @@
                   £ {{ amount.toFixed(2) }}
                 </h3>
                 <p class="price-text text-white font-weight-bolder">
-<!--                  Saved {{ savedAmount }} £-->
-                  Save {{ savedAmount }} £ by using cupon
+                  <!--                  Saved {{ savedAmount }} £-->
+                  For the whole year
                 </p>
+              </div>
+              <div class="">
+                <p class="text-center px-4 fs-14">Regular Price £ 120</p>
               </div>
               <div class="">
                 <p class="text-center text-white px-4 fs-14">
@@ -150,7 +181,11 @@
               </h1>
 
               <div class="form-group px-4">
-                <select class="w-100 custom-select fs-18" v-model="teamSelected" @change="setActiveTeam">
+                <select
+                  class="w-100 custom-select fs-18"
+                  v-model="teamSelected"
+                  @change="setActiveTeam"
+                >
                   <option
                     v-for="(team, teamIndex) in teams"
                     :value="team"
@@ -174,14 +209,12 @@
                   @click="setContentType('details')"
                 >
                   <h4 class="fs-14 pt-1">This team details</h4>
-<!--                  <a-icon-->
-<!--                    type="up"-->
-<!--                    :class="{ 'rotate-180': contentShow == 'details' }"-->
-<!--                  />-->
+                  <!--                  <a-icon-->
+                  <!--                    type="up"-->
+                  <!--                    :class="{ 'rotate-180': contentShow == 'details' }"-->
+                  <!--                  />-->
                 </div>
-                <div
-                  class="team-details mt-2 px-4 d-block text-white mb-2"
-                >
+                <div class="team-details mt-2 px-4 d-block text-white mb-2">
                   <li class="flex-between-start">
                     <span class="flex-45 px-2">Team Name </span>
                     <span class="flex-55 px-2" v-if="teamSelected">
@@ -191,20 +224,22 @@
                   <li class="flex-between-start">
                     <span class="flex-45 px-2">Team ID</span>
                     <span class="flex-55 px-2" v-if="teamSelected">
-                      :<span class="ml-2">{{ teamSelected.team_id.substr(0, 8) }}</span></span
+                      :<span class="ml-2">{{
+                        teamSelected.team_id.substr(0, 8)
+                      }}</span></span
                     >
                   </li>
-<!--                  <li class="flex-between-start">-->
-<!--                    <span class="flex-45 px-2">Team Status </span>-->
-<!--                    <span class="flex-55 px-2" v-if="teamSelected">-->
-<!--                      :<span class="ml-2"-->
-<!--                        >{{ teamSelected.status == 1 ? "Active" : "Inactive" }},-->
-<!--                        {{-->
-<!--                          teamSelected.member_count > 1 ? "Valid" : "Invalid"-->
-<!--                        }}, Verified</span-->
-<!--                      ></span-->
-<!--                    >-->
-<!--                  </li>-->
+                  <!--                  <li class="flex-between-start">-->
+                  <!--                    <span class="flex-45 px-2">Team Status </span>-->
+                  <!--                    <span class="flex-55 px-2" v-if="teamSelected">-->
+                  <!--                      :<span class="ml-2"-->
+                  <!--                        >{{ teamSelected.status == 1 ? "Active" : "Inactive" }},-->
+                  <!--                        {{-->
+                  <!--                          teamSelected.member_count > 1 ? "Valid" : "Invalid"-->
+                  <!--                        }}, Verified</span-->
+                  <!--                      ></span-->
+                  <!--                    >-->
+                  <!--                  </li>-->
                   <li class="flex-between-start">
                     <span class="flex-45 px-2">Team Creation Date </span>
                     <span class="flex-55 px-2" v-if="teamSelected">
@@ -220,13 +255,17 @@
                   <li class="flex-between-start">
                     <span class="flex-45 px-2">My Role </span>
                     <span class="flex-55 px-2" v-if="teamSelected">
-                      :<span class="ml-2">{{ selfMember ? selfMember.role : '' }}</span></span
+                      :<span class="ml-2">{{
+                        selfMember ? selfMember.role : ""
+                      }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
                     <span class="flex-45 px-2">Participated As </span>
                     <span class="flex-55 px-2" v-if="teamSelected">
-                      :<span class="ml-2">{{ selfMember ? selfMember.user_type : '' }}</span></span
+                      :<span class="ml-2">{{
+                        selfMember ? selfMember.user_type : ""
+                      }}</span></span
                     >
                   </li>
                 </div>
@@ -247,21 +286,49 @@
                   <h4 class="fs-14 pt-1">
                     This team's last subscription details
                   </h4>
-<!--                  <a-icon-->
-<!--                    type="up"-->
-<!--                    :class="{ 'rotate-180': contentShow == 'subscription' }"-->
-<!--                  />-->
+                  <!--                  <a-icon-->
+                  <!--                    type="up"-->
+                  <!--                    :class="{ 'rotate-180': contentShow == 'subscription' }"-->
+                  <!--                  />-->
                 </div>
-                <div
-                  class="px-4 d-block mt-1"
-                >
-                  <small class="text-white">{{ teamSelected && teamSelected.last_subscription && teamSelected.last_subscription.created_at ? messageCreatedAt(teamSelected.last_subscription.created_at) : '' }}</small>
+                <div class="px-4 d-block mt-1">
+                  <small class="text-white">{{
+                    teamSelected &&
+                    teamSelected.last_subscription &&
+                    teamSelected.last_subscription.created_at
+                      ? messageCreatedAt(
+                          teamSelected.last_subscription.created_at
+                        )
+                      : ""
+                  }}</small>
                   <h4 class="fs-12 text-white mt-2">
-                    Subscribed <b>{{ teamSelected && teamSelected.last_subscription && teamSelected.last_subscription.plans ? teamSelected.last_subscription.plans.title : '' }} Plan</b> by - <b>{{ teamSelected && teamSelected.last_subscription && teamSelected.last_subscription.user ? teamSelected.last_subscription.user.full_name : '' }}</b>
+                    Subscribed
+                    <b
+                      >{{
+                        teamSelected &&
+                        teamSelected.last_subscription &&
+                        teamSelected.last_subscription.plans
+                          ? teamSelected.last_subscription.plans.title
+                          : ""
+                      }}
+                      Plan</b
+                    >
+                    by -
+                    <b>{{
+                      teamSelected &&
+                      teamSelected.last_subscription &&
+                      teamSelected.last_subscription.user
+                        ? teamSelected.last_subscription.user.full_name
+                        : ""
+                    }}</b>
                   </h4>
                   <small class="text-white"
                     >Team Expire period extended to the date of -
-                    {{ teamSelected && teamSelected.subscription_expire_at ? formateDate(teamSelected.subscription_expire_at) : '' }}</small
+                    {{
+                      teamSelected && teamSelected.subscription_expire_at
+                        ? formateDate(teamSelected.subscription_expire_at)
+                        : ""
+                    }}</small
                   >
                 </div>
               </div>
@@ -303,9 +370,7 @@
       <a-input v-model="cupon" placeholder="Coupon" />
 
       <template slot="footer">
-        <a-button key="back" @click="nextWithoutCupon">
-          Skip
-        </a-button>
+        <a-button key="back" @click="nextWithoutCupon"> Skip </a-button>
         <a-button key="submit" type="primary" @click="handleOkFreeModal">
           Submit
         </a-button>
@@ -319,7 +384,7 @@ import Header from "@/components/dashboard/layout/Header.vue";
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import Footer from "@/components/auth/Footer.vue";
 import ApiService from "../../services/api.service";
-import {format} from "timeago.js";
+import { format } from "timeago.js";
 
 export default {
   name: "Subscription",
@@ -330,7 +395,7 @@ export default {
   },
   data() {
     return {
-      cupon: '',
+      cupon: "",
       isLoading: false,
       user: {},
       is_verified: 1,
@@ -342,15 +407,10 @@ export default {
       contentShow: "details",
       activeStep: 1,
       freeModal: false,
-      activeStepIndex: 0,
+      activeStepIndex: null,
       plans: [],
       choosedPlan: null,
-      descriptions: [
-          'Plan 1',
-          'Plan 2',
-          'Plan 3',
-          'Plan 4'
-      ]
+      descriptions: ["Plan 1", "Plan 2", "Plan 3", "Plan 4"],
     };
   },
   created() {
@@ -367,21 +427,29 @@ export default {
       } else return "N/A";
     },
     getPlans() {
-      if(this.plans && this.plans.plan_data && this.plans.plan_data.length > 0) {
+      if (
+        this.plans &&
+        this.plans.plan_data &&
+        this.plans.plan_data.length > 0
+      ) {
         return this.plans.plan_data;
       }
       return [];
     },
     teamCreatedBy() {
-      return this.teamSelected && this.teamSelected.created_by ? this.teamSelected.created_by.full_name : '';
+      return this.teamSelected && this.teamSelected.created_by
+        ? this.teamSelected.created_by.full_name
+        : "";
     },
     selfMember() {
-      let loggedUser = JSON.parse(localStorage.getItem('user'));
-      if(loggedUser && this.teamSelected) {
-        return this.teamSelected.team_members.find(member => parseInt(member.user_id) === parseInt(loggedUser.id));
+      let loggedUser = JSON.parse(localStorage.getItem("user"));
+      if (loggedUser && this.teamSelected) {
+        return this.teamSelected.team_members.find(
+          (member) => parseInt(member.user_id) === parseInt(loggedUser.id)
+        );
       }
       return null;
-    }
+    },
   },
   methods: {
     formateDate(date) {
@@ -389,9 +457,9 @@ export default {
         return "  Not Exist";
       }
       let d = new Date(date),
-          month = "" + (d.getMonth() + 1),
-          day = "" + d.getDate(),
-          year = d.getFullYear();
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
+        year = d.getFullYear();
 
       if (month.length < 2) month = "0" + month;
       if (day.length < 2) day = "0" + day;
@@ -402,14 +470,16 @@ export default {
       if (time) {
         return format(time);
       }
-      return '';
+      return "";
     },
     setContentType(type) {
       this.contentShow = type;
     },
     async loadPlans() {
-      let {data} = await ApiService.get('/v1/package-list').then(res => res.data);
-      if(data) {
+      let { data } = await ApiService.get("/v1/package-list").then(
+        (res) => res.data
+      );
+      if (data) {
         this.plans = data;
       }
     },
@@ -445,8 +515,9 @@ export default {
       this.activeStep = step;
     },
     setPlan(item) {
+      this.activeStepIndex = 1;
       this.choosedPlan = item;
-      this.amount = item.price;
+      this.amount = 9.99;
       this.savedAmount = item.discount;
       this.$store.state.team.subscriptionAmount = this.amount;
       this.$store.state.team.legalSubscription = true;
@@ -462,44 +533,63 @@ export default {
         return;
       }
 
-      if(this.choosedPlan && this.choosedPlan.id) {
-        if(this.choosedPlan.promo_code && this.choosedPlan.id == this.plans[0].id) {
-          let usedAlready = this.choosedPlan.team_ids.findIndex(item => parseInt(item) === parseInt(this.teamSelected.id));
-          if(usedAlready >= 0) {
-            this.$store.state.team.subscriptionAmount = parseFloat(this.choosedPlan.price);
-            this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
+      if (this.choosedPlan && this.choosedPlan.id) {
+        if (
+          this.choosedPlan.promo_code &&
+          this.choosedPlan.id == this.plans[0].id
+        ) {
+          let usedAlready = this.choosedPlan.team_ids.findIndex(
+            (item) => parseInt(item) === parseInt(this.teamSelected.id)
+          );
+          if (usedAlready >= 0) {
+            this.$store.state.team.subscriptionAmount = parseFloat(
+              this.choosedPlan.price
+            );
+            this.$store.state.team.originalAmount = parseFloat(
+              this.choosedPlan.price
+            );
             this.$store.state.team.discountedAmount = 0;
             this.$store.state.team.legalSubscription = true;
             this.$router.push(
-                `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
+              `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
             );
           } else {
-            this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
-            if(this.choosedPlan.promo_code) {
+            this.$store.state.team.originalAmount = parseFloat(
+              this.choosedPlan.price
+            );
+            if (this.choosedPlan.promo_code) {
               this.freeModal = true;
             } else {
-              this.$store.state.team.subscriptionAmount = parseFloat(this.choosedPlan.price);
-              this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
+              this.$store.state.team.subscriptionAmount = parseFloat(
+                this.choosedPlan.price
+              );
+              this.$store.state.team.originalAmount = parseFloat(
+                this.choosedPlan.price
+              );
               this.$store.state.team.legalSubscription = true;
               this.$store.state.team.teamSelected = this.teamSelected;
               this.$store.state.team.discountedAmount = 0;
               this.$router.push(
-                  `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
+                `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
               );
             }
           }
         } else {
-          if(this.choosedPlan.promo_code) {
+          if (this.choosedPlan.promo_code) {
             this.freeModal = true;
           } else {
             this.freeModal = false;
-            this.$store.state.team.subscriptionAmount = parseFloat(this.choosedPlan.price);
-            this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
+            this.$store.state.team.subscriptionAmount = parseFloat(
+              this.choosedPlan.price
+            );
+            this.$store.state.team.originalAmount = parseFloat(
+              this.choosedPlan.price
+            );
             this.$store.state.team.discountedAmount = 0;
             this.$store.state.team.legalSubscription = true;
             this.$store.state.team.teamSelected = this.teamSelected;
             this.$router.push(
-                `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
+              `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
             );
           }
         }
@@ -516,14 +606,22 @@ export default {
       this.freeModal = false;
     },
     handleOkFreeModal() {
-      if(this.choosedPlan.promo_code && this.cupon == this.choosedPlan.promo_code) {
-        this.$store.state.team.subscriptionAmount = (this.amount - this.savedAmount);
-        this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
-        this.$store.state.team.discountedAmount = parseFloat(this.choosedPlan.discount);
+      if (
+        this.choosedPlan.promo_code &&
+        this.cupon == this.choosedPlan.promo_code
+      ) {
+        this.$store.state.team.subscriptionAmount =
+          this.amount - this.savedAmount;
+        this.$store.state.team.originalAmount = parseFloat(
+          this.choosedPlan.price
+        );
+        this.$store.state.team.discountedAmount = parseFloat(
+          this.choosedPlan.discount
+        );
         this.$store.state.team.legalSubscription = true;
         this.$store.state.team.teamSelected = this.teamSelected;
         this.$router.push(
-            `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
+          `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
         );
       } else {
         this.$error({
@@ -534,15 +632,19 @@ export default {
       }
     },
     nextWithoutCupon() {
-      this.$store.state.team.subscriptionAmount = parseFloat(this.choosedPlan.price);
-      this.$store.state.team.originalAmount = parseFloat(this.choosedPlan.price);
+      this.$store.state.team.subscriptionAmount = parseFloat(
+        this.choosedPlan.price
+      );
+      this.$store.state.team.originalAmount = parseFloat(
+        this.choosedPlan.price
+      );
       this.$store.state.team.discountedAmount = 0;
       this.$store.state.team.legalSubscription = true;
       this.$store.state.team.teamSelected = this.teamSelected;
       this.$router.push(
-          `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
+        `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
       );
-    }
+    },
   },
 };
 </script>
@@ -692,7 +794,21 @@ export default {
   //  #bf47a1,
   //  #962a7b
   //);
-  background-image: linear-gradient(to right top, #522e8e, #602d8d, #6e2b8c, #7a2a8a, #852888, #912787, #9d2585, #a82483, #b72181, #c51f7e, #d31f7b, #e02076);
+  background-image: linear-gradient(
+    to right top,
+    #522e8e,
+    #602d8d,
+    #6e2b8c,
+    #7a2a8a,
+    #852888,
+    #912787,
+    #9d2585,
+    #a82483,
+    #b72181,
+    #c51f7e,
+    #d31f7b,
+    #e02076
+  );
   padding-top: 10px;
 }
 .background-design-cardfooter {
@@ -708,13 +824,41 @@ export default {
   //  #ca56ad,
   //  #eb5e94
   //);
-  background-image: linear-gradient(to right top, #522e8e, #602d8d, #6e2b8c, #7a2a8a, #852888, #912787, #9d2585, #a82483, #b72181, #c51f7e, #d31f7b, #e02076);
+  background-image: linear-gradient(
+    to right top,
+    #522e8e,
+    #602d8d,
+    #6e2b8c,
+    #7a2a8a,
+    #852888,
+    #912787,
+    #9d2585,
+    #a82483,
+    #b72181,
+    #c51f7e,
+    #d31f7b,
+    #e02076
+  );
   margin-top: 18px;
 }
 
 .background-design-rightcard {
   //background-image: linear-gradient(to bottom, #6159a7, #ca56ad, #eb5e94);
-  background-image: linear-gradient(to right top, #522e8e, #602d8d, #6e2b8c, #7a2a8a, #852888, #912787, #9d2585, #a82483, #b72181, #c51f7e, #d31f7b, #e02076);
+  background-image: linear-gradient(
+    to right top,
+    #522e8e,
+    #602d8d,
+    #6e2b8c,
+    #7a2a8a,
+    #852888,
+    #912787,
+    #9d2585,
+    #a82483,
+    #b72181,
+    #c51f7e,
+    #d31f7b,
+    #e02076
+  );
   margin-top: 18px;
 }
 
@@ -759,7 +903,21 @@ export default {
   //  #bf47a1,
   //  #962a7b
   //);
-  background-image: linear-gradient(to right top, #522e8e, #602d8d, #6e2b8c, #7a2a8a, #852888, #912787, #9d2585, #a82483, #b72181, #c51f7e, #d31f7b, #e02076) !important;
+  background-image: linear-gradient(
+    to right top,
+    #522e8e,
+    #602d8d,
+    #6e2b8c,
+    #7a2a8a,
+    #852888,
+    #912787,
+    #9d2585,
+    #a82483,
+    #b72181,
+    #c51f7e,
+    #d31f7b,
+    #e02076
+  ) !important;
 }
 .bg-primary-gradient {
   //background-image: linear-gradient(
@@ -769,7 +927,21 @@ export default {
   //  #ca56ad,
   //  #eb5e94
   //);
-  background-image: linear-gradient(to right top, #522e8e, #602d8d, #6e2b8c, #7a2a8a, #852888, #912787, #9d2585, #a82483, #b72181, #c51f7e, #d31f7b, #e02076);
+  background-image: linear-gradient(
+    to right top,
+    #522e8e,
+    #602d8d,
+    #6e2b8c,
+    #7a2a8a,
+    #852888,
+    #912787,
+    #9d2585,
+    #a82483,
+    #b72181,
+    #c51f7e,
+    #d31f7b,
+    #e02076
+  );
 }
 .price {
   font-size: 54px;
@@ -826,7 +998,21 @@ export default {
   margin-top: 50px;
 }
 .item-duration:hover {
-  background-image: linear-gradient(to right top, #522e8e, #602d8d, #6e2b8c, #7a2a8a, #852888, #912787, #9d2585, #a82483, #b72181, #c51f7e, #d31f7b, #e02076);
+  background-image: linear-gradient(
+    to right top,
+    #522e8e,
+    #602d8d,
+    #6e2b8c,
+    #7a2a8a,
+    #852888,
+    #912787,
+    #9d2585,
+    #a82483,
+    #b72181,
+    #c51f7e,
+    #d31f7b,
+    #e02076
+  );
   .duration {
     color: #ffffff;
   }
