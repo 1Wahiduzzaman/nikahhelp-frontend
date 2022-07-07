@@ -316,7 +316,7 @@
         <h4>SEND US AN EMAIL</h4>
         <form action="">
           <label for="query">What is your enquiry regarding?</label>
-          <select id="query" name="query">
+          <select id="query" name="query" v-model="query">
             <option value="" disabled selected>Please select</option>
             <option value="feedback">Give feedback</option>
             <option value="suggestion">Offer suggestion</option>
@@ -337,6 +337,7 @@
             required
             value=""
             maxLength="1000"
+            v-model="message"
           ></textarea>
 
           <label for="fname">What is your first name?</label>
@@ -346,6 +347,7 @@
             name="firstname"
             placeholder="First name"
             required
+            v-model="firstname"
           />
 
           <label for="lname">What is your last name?</label>
@@ -355,6 +357,7 @@
             name="lastname"
             placeholder="Last name"
             required
+            v-model="lastname"
           />
 
           <label for="telephone"
@@ -365,6 +368,7 @@
             id="telephone"
             name="telephone"
             placeholder="Contact number"
+            v-model="telephone"
           />
 
           <label for="email">What is your email address?</label>
@@ -374,6 +378,7 @@
             name="email"
             placeholder="Email address"
             required
+            v-model="email"
           />
 
           <p>
@@ -382,7 +387,7 @@
             <a href="">privacy and cookie policy</a>.
           </p>
 
-          <input type="submit" value="Submit" />
+	        <button type="submit" value="Submit" @click.prevent="save">Submit</button>
         </form>
         <br />
         <p>
@@ -398,12 +403,41 @@
 <script>
 import Footer from "@/components/auth/Footer.vue";
 import LandingPageHeader from "@/components/landing-page/LandingPageHeader.vue";
+import ApiService from "@/services/api.service";
 export default {
   name: "Help",
   components: {
     LandingPageHeader,
     Footer,
   },
+
+	data() {
+		return {
+			firstname: '',
+			lastname: '',
+			email: '',
+			telephone: '',
+			message: '',
+			query: '',
+		};
+	},
+
+	methods: {
+		save() {
+			ApiService.post('v1/feedback', {
+				firstname: this.firstname,
+				lastname: this.lastname,
+				email: this.email,
+				telephone: this.telephone,
+				message: this.message,
+				query: this.query,
+			}).then((data) => {
+				console.log(data);
+			}).catch((err) => {
+				console.log(err.message);
+			});
+		}
+	}
 };
 </script>
 
@@ -479,7 +513,7 @@ label {
 }
 
 /* Style the submit button with a specific background color etc */
-input[type="submit"] {
+button {
   background-color: #04aa6d;
   color: white;
   padding: 12px 20px;
@@ -490,7 +524,7 @@ input[type="submit"] {
 }
 
 /* When moving the mouse over the submit button, add a darker green color */
-input[type="submit"]:hover {
+button:hover {
   background-color: #45a049;
 }
 
