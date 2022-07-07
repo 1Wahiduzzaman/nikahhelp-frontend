@@ -135,7 +135,7 @@
                 </p>
               </div>
               <div class="">
-                <p class="text-center px-4 fs-14">Regular Price £ 120</p>
+                <p class="price-tag text-center px-4">Regular Price £ 120</p>
               </div>
               <div class="">
                 <p class="text-center text-white px-4 fs-14">
@@ -957,6 +957,15 @@ export default {
   border: 2px solid $color-white;
   outline-style: solid;
   outline-color: #cfcece;
+}
+.price-tag {
+  font-size: 24px;
+  background: #fff;
+  font-weight: 500;
+  text-decoration: line-through;
+  text-align: center;
+  width: 280px;
+  margin: 10px auto;
 }
 .heading {
   font-size: 20px;
