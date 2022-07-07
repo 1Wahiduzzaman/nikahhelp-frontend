@@ -13,36 +13,26 @@
       />
       <template v-if="routeName === 'Profile'">
         <TableRow
-          title="Address"
+          title="Address Line 1"
           textClass="text-subtitle-1"
           :value="contact.address_1"
         />
         <TableRow
-          title="Address"
+          title="Address Line 2"
           textClass="text-subtitle-1"
           :value="contact.address_2"
         />
         <TableRow
-          title="Mobile"
+          title="City"
           textClass="text-subtitle-1"
           :value="contact.per_permanent_city"
         />
-        <TableRow
-          title="Mobile"
-          textClass="text-subtitle-1"
-          :value="contact.per_permanent_post_code"
-        />
+
         <TableRow
           title="Mobile"
           textClass="text-subtitle-1"
           :value="personal.mobile_number"
         />
-
-        <!-- <TableRow 
-                    title="Address"
-                    textClass="text-subtitle-1"
-                    :value="contact.per_permanent_address"
-                /> -->
       </template>
 
       <TableRow

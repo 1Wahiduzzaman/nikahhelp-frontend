@@ -197,6 +197,16 @@ export default {
       const response = await this.$store.dispatch("getRepresentativeData");
       if (response.status === 200) {
         this.isLoading = false;
+        const {
+          mobile_country_code,
+          mobile_number,
+          per_current_residence_country,
+          address_1,
+          address_2,
+          per_permanent_country,
+          per_permanent_city,
+          per_permanent_post_code,
+        } = response.data.data.personal;
         const details = {
           countries: response.data.data.countries,
           occupations: response.data.data.occupations,
@@ -207,6 +217,8 @@ export default {
               response.data.data.image_upload.only_team_can_see == 0
                 ? true
                 : false,
+            is_agree:
+              response.data.data.image_upload.is_agree == 0 ? true : false,
             team_connection_can_see:
               response.data.data.image_upload.team_connection_can_seee == 0
                 ? true
@@ -221,6 +233,7 @@ export default {
             ver_country: response.data.data.verification.ver_country
               ? parseInt(response.data.data.verification.ver_country)
               : response.data.data.verification.ver_country,
+            cities: [],
           },
           personalInformation: {
             essential: {
@@ -228,20 +241,17 @@ export default {
               default_date: response.data.data.essential.dob,
             },
             personal: {
-              ...response.data.data.personal,
-              residenceCities: [],
-              permanantCities: [],
+              ...{
+                mobile_country_code,
+                mobile_number,
+                per_current_residence_country,
+                address_1,
+                address_2,
+                per_permanent_country,
+                per_permanent_city,
+                per_permanent_post_code,
+              },
               email: user.email,
-              per_current_residence_country: response.data.data.personal
-                .per_current_residence_country
-                ? parseInt(
-                    response.data.data.personal.per_current_residence_country
-                  )
-                : response.data.data.personal.per_current_residence_country,
-              per_permanent_country: response.data.data.personal
-                .per_permanent_country
-                ? parseInt(response.data.data.personal.per_permanent_country)
-                : response.data.data.personal.per_permanent_country,
             },
           },
         };
@@ -249,42 +259,31 @@ export default {
         this.representativeDetails = {
           ...details,
         };
-        // if (
-        //   this.representativeDetails.personalInformation &&
-        //   this.representativeDetails.personalInformation.personal
-        //     .per_current_residence_country > 0
-        // ) {
-        //   this.onChangeCountry(
-        //     {
-        //       id: this.representativeDetails.personalInformation.personal
-        //         .per_current_residence_country,
-        //     },
-        //     "residence"
-        //   );
-        // }
-        // if (
-        //   this.representativeDetails.personalInformation &&
-        //   this.representativeDetails.personalInformation.personal
-        //     .per_permanent_country > 0
-        // ) {
-        //   this.onChangeCountry(
-        //     {
-        //       id: this.representativeDetails.personalInformation.personal
-        //         .per_permanent_country,
-        //     },
-        //     "permanat"
-        //   );
-        // }
-        // if (
-        //   this.representativeDetails.verification &&
-        //   this.representativeDetails.verification.ver_country > 0
-        // ) {
-        //   this.onChangeCountry(
-        //     { id: this.representativeDetails.verification.ver_country },
-        //     "verification"
-        //   );
-        // }
-        // this.current = response.data.data.user.data_input_status;
+
+        const {
+          ver_country,
+          ver_document_type,
+          ver_document_frontside,
+          ver_document_backside,
+        } = this.representativeDetails.verification;
+        this.showAgreement = Object.values({
+          ver_country,
+          ver_document_type,
+          ver_document_frontside,
+          ver_document_backside,
+        }).every((x) => x !== undefined && x !== null && x !== "");
+        if (
+          !this.showAgreement &&
+          response.data.data.user.is_uplaoded_doc == "0"
+        ) {
+          this.representativeDetails.verification = {
+            ...this.representativeDetails.verification,
+            ver_document_frontside: "",
+            ver_document_backside: "",
+          };
+        }
+        this.current = response.data.data.data_input_status;
+        this.checkExistData();
       } else {
         this.isLoading = false;
       }
