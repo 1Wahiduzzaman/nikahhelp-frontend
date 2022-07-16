@@ -1,79 +1,79 @@
 <template>
 	<div class="search-page main-container">
-    <Loader v-if="isLoading" :isLoading="isLoading" />
+		<Loader v-if="isLoading" :isLoading="isLoading" />
 		<header class="header-container">
 			<div class="container desktop-view">
 				<a href="/"><img src="@/assets/logo.png" alt="logo" class="" /></a>
 				<div class="float-right auth-btn" id="logRegisterBtn">
 					<a
-						href="/login"
-						class="btn btn-sm btn-secondary mr-2 signin-btn"
-						id="signInButton"
+							href="/login"
+							class="btn btn-sm btn-secondary mr-2 signin-btn"
+							id="signInButton"
 					>
 						Sign In
 					</a>
 					<a
-						href="/signup"
-						class="btn btn-sm btn-secondary btn-brand ml-2 signup-btn"
-						id="joinNowButton"
+							href="/signup"
+							class="btn btn-sm btn-secondary btn-brand ml-2 signup-btn"
+							id="joinNowButton"
 					>
 						Join Now
 					</a>
 				</div>
 			</div>
-      <div class="container mobile-view">
-        <div class="header text-center">
-          <a href="/"><img src="@/assets/logo.png" alt="logo" class="text-center mat-logo" /></a>
-        </div>
-        <div class="flex justify-content-center mt-2">
-          <router-link to="/login" role="button" class="btn btn-sm signinbtn">Sign In</router-link>
-          <router-link to="/signup" role="button" class="ml-3 btn btn-sm signupbtn">Join Now</router-link>
-        </div>
-      </div>
+			<div class="container mobile-view">
+				<div class="header text-center">
+					<a href="/"><img src="@/assets/logo.png" alt="logo" class="text-center mat-logo" /></a>
+				</div>
+				<div class="flex justify-content-center mt-2">
+					<router-link to="/login" role="button" class="btn btn-sm signinbtn">Sign In</router-link>
+					<router-link to="/signup" role="button" class="ml-3 btn btn-sm signupbtn">Join Now</router-link>
+				</div>
+			</div>
 		</header>
 
 		<div class="container body-container">
-<!--			<div class="d-flex justify-content-between my-4">-->
-<!--				<h4>Search Results</h4>-->
-<!--				<button-->
-<!--					@click="setSearchModalVisible"-->
-<!--					class="btn btn-sm btn-primary advanced-search-button"-->
-<!--				>-->
-<!--					<img-->
-<!--						src="@/assets/icon/Search Your Match.svg"-->
-<!--						alt="Icon"-->
-<!--						height="20px"-->
-<!--						class="advanceIcon"-->
-<!--						style="margin-bottom: 3px; margin-right: 3px"-->
-<!--					/>-->
-<!--					Advanced Search-->
-<!--				</button>-->
-<!--			</div>-->
-      <div class="flex justify-content-between align-items-center my-4">
-        <h5 class="search-text">Search Results</h5>
-        <button
-            @click="setSearchModalVisible"
-            class="btn btn-primary py-2 px-4 advance-btn"
-        >
-          <img
-              src="@/assets/icon/Search Your Match.svg"
-              alt="Icon"
-              height="20px"
-              class="advanceIcon"
-          />
-          Advanced Search
-        </button>
-      </div>
-			
+			<!--			<div class="d-flex justify-content-between my-4">-->
+			<!--				<h4>Search Results</h4>-->
+			<!--				<button-->
+			<!--					@click="setSearchModalVisible"-->
+			<!--					class="btn btn-sm btn-primary advanced-search-button"-->
+			<!--				>-->
+			<!--					<img-->
+			<!--						src="@/assets/icon/Search Your Match.svg"-->
+			<!--						alt="Icon"-->
+			<!--						height="20px"-->
+			<!--						class="advanceIcon"-->
+			<!--						style="margin-bottom: 3px; margin-right: 3px"-->
+			<!--					/>-->
+			<!--					Advanced Search-->
+			<!--				</button>-->
+			<!--			</div>-->
+			<div class="flex justify-content-between align-items-center my-4">
+				<h5 class="search-text">Search Results</h5>
+				<button
+						@click="setSearchModalVisible"
+						class="btn btn-primary py-2 px-4 advance-btn"
+				>
+					<img
+							src="@/assets/icon/Search Your Match.svg"
+							alt="Icon"
+							height="20px"
+							class="advanceIcon"
+					/>
+					Advanced Search
+				</button>
+			</div>
+
 			<!-- TODO Advanced Search Button -->
 			<div>
 				<div
-					class="search-result"
-					style="margin-bottom: 100px"
+						class="search-result"
+						style="margin-bottom: 100px"
 				>
 					<div v-if="updatedResult.length == 0 && !isLoading" class="text-center mt-150"  >
 						<span
-							><a-icon
+						><a-icon
 								type="warning"
 								:style="{ fontSize: '50px', color: 'red'}"
 						/></span>
@@ -82,58 +82,58 @@
 
 					</div>
 
-          <div class="row mt-2" v-else>
-            <div class="col-sm-12 col-md-6 col-lg-4" v-if="landingLoading">
-              <v-sheet
-                  color="lighten-4"
-                  class="pa-3"
-              >
-                <v-skeleton-loader
-                    class="mx-auto skeleton-width"
-                    type="card"
-                ></v-skeleton-loader>
-              </v-sheet>
-            </div>
-            <div v-for="(candidate, n) in  updatedResult" :key="n" class="col-sm-12 col-md-6 col-lg-4" v-else>
-              <candidate-grid
-                  :candidate="candidate"
-              ></candidate-grid>
-            </div>
-          </div>
+					<div class="row mt-2" v-else>
+						<div class="col-sm-12 col-md-6 col-lg-4" v-if="landingLoading">
+							<v-sheet
+									color="lighten-4"
+									class="pa-3"
+							>
+								<v-skeleton-loader
+										class="mx-auto skeleton-width"
+										type="card"
+								></v-skeleton-loader>
+							</v-sheet>
+						</div>
+						<div v-for="(candidate, n) in  updatedResult" :key="n" class="col-sm-12 col-md-6 col-lg-4" v-else>
+							<candidate-grid
+									:candidate="candidate"
+							></candidate-grid>
+						</div>
+					</div>
 				</div>
-<!--				<div v-else class="search-result">-->
-<!--					<div v-if="result.length == 0" class="text-center">-->
-<!--						<span-->
-<!--							><a-icon-->
-<!--								type="warning"-->
-<!--								:style="{ fontSize: '50px', color: 'red' }"-->
-<!--						/></span>-->
+				<!--				<div v-else class="search-result">-->
+				<!--					<div v-if="result.length == 0" class="text-center">-->
+				<!--						<span-->
+				<!--							><a-icon-->
+				<!--								type="warning"-->
+				<!--								:style="{ fontSize: '50px', color: 'red' }"-->
+				<!--						/></span>-->
 
-<!--						<span class="fs-28 px-5"-->
-<!--							>Sorry! There are no matching candidates matching your search-->
-<!--							criteria.</span-->
-<!--						>-->
-<!--					</div>-->
+				<!--						<span class="fs-28 px-5"-->
+				<!--							>Sorry! There are no matching candidates matching your search-->
+				<!--							criteria.</span-->
+				<!--						>-->
+				<!--					</div>-->
 
-<!--          <div class="row mt-2">-->
-<!--            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">-->
-<!--              <div class="row">-->
-<!--                <div v-for="(candidate, n) in  result" :key="n" class="col-sm-12 col-md-6 col-lg-4">-->
-<!--                  <candidate-grid-->
-<!--                      :candidate="candidate"-->
-<!--                  ></candidate-grid>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--				</div>-->
+				<!--          <div class="row mt-2">-->
+				<!--            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">-->
+				<!--              <div class="row">-->
+				<!--                <div v-for="(candidate, n) in  result" :key="n" class="col-sm-12 col-md-6 col-lg-4">-->
+				<!--                  <candidate-grid-->
+				<!--                      :candidate="candidate"-->
+				<!--                  ></candidate-grid>-->
+				<!--                </div>-->
+				<!--              </div>-->
+				<!--            </div>-->
+				<!--          </div>-->
+				<!--				</div>-->
 			</div>
 
-      <Observer @intersect="onIntersect"/>
+			<Observer @intersect="onIntersect"/>
 		</div>
 		<un-auth-search-modal
-			v-model="searchModalVisible"
-			@handleSearch="handleSearch"
+				v-model="searchModalVisible"
+				@handleSearch="handleSearch"
 		></un-auth-search-modal>
 		<div class="footer-container">
 			<Footer style="margin-top: 50px" />
@@ -155,75 +155,78 @@ export default {
 		return {
 			searchModalVisible: false,
 			updatedResult: [],
-      landingLoading: false,
+			landingLoading: false,
 			searchResult: false,
-      isLoading: false,
-      pagination: {}
+			isLoading: false,
+			pagination: {}
 		};
 	},
-  created() {
-    let pagination = {
-      page: 1,
-      per_page: 10
-    };
-    // this.landingLoading = true;
-    this.handleSearch(this.url, pagination);
-  },
-  components: {
+	created() {
+		let pagination = {
+			page: 1,
+			per_page: 10
+		};
+		this.landingLoading = true;
+		this.handleSearch(this.url, pagination);
+	},
+	components: {
 		Footer,
-    CandidateGrid,
+		CandidateGrid,
 		UnAuthSearchModal,
-    Observer,
+		Observer,
 	},
 	methods: {
 		setSearchModalVisible() {
 			this.searchModalVisible = true;
 		},
 		async handleSearch(payload, pagination) {
-      // this.isLoading = true;
-      // let fromModal = false;
-      if(this.searchModalVisible) {
-        fromModal = true;
-        // this.searchModalVisible = false;
-      }
-      if(!pagination) {
-        pagination = {
-          page: 1,
-          per_page: 10
-        };
-      }
-      payload = `?page=${pagination.page}&parpage=${pagination.per_page}&` + payload;
+			this.isLoading = true;
+			let fromModal = false;
+			if(this.searchModalVisible) {
+				fromModal = true;
+				// this.searchModalVisible = false;
+			}
+			if(!pagination) {
+				pagination = {
+					page: 1,
+					per_page: 10
+				};
+			}
+			payload = `?page=${pagination.page}&parpage=${pagination.per_page}&` + payload;
 			let _payload = `v1/home-searches${payload}`;
 			await ApiService.get(_payload)
-				.then((data) => {
-					console.log(data.data.data);
-          this.landingLoading = false;
-            this.updatedResult = data.data.data;
-            this.searchModalVisible = false;
-					// console.log()
-					// this.pagination = data.data.data.pagination;
-					// this.searchResult = true;
-					// this.searchModalVisible = false;
-          // this.isLoading = false;
-				})
-				.catch((error) => {
-					console.log(error);
-					console.log(error.response);
-					// this.$message.error("Something went wrong");
-					this.searchModalVisible = false;
-          this.isLoading = false;
-          // this.updatedResult = [];
-				});
+					.then((data) => {
+						this.landingLoading = false;
+						if(fromModal) {
+							this.updatedResult = data.data.data.data;
+							this.searchModalVisible = false;
+						} else {
+							this.updatedResult = [...this.updatedResult, ...data.data.data.data];
+							this.searchModalVisible = false;
+						}
+						this.pagination = data.data.data.pagination;
+						this.searchResult = true;
+						this.searchModalVisible = false;
+						this.isLoading = false;
+					})
+					.catch((error) => {
+						console.log(error);
+						console.log(error.response);
+						// this.$message.error("Something went wrong");
+						this.searchModalVisible = false;
+						this.isLoading = false;
+						// this.updatedResult = [];
+					});
 		},
-    onIntersect() {
-      let payload = {
-        page: this.pagination && this.pagination.current_page ? this.pagination.current_page + 1 : 1,
-        per_page: 10
-      }
-      if(!this.isLoading) {
-        this.handleSearch(this.url, payload);
-      }
-    },
+		onIntersect() {
+			let payload = {
+				page: this.pagination && this.pagination.current_page ? this.pagination.current_page + 1 : 1,
+				per_page: 10
+			}
+			if(!this.isLoading) {
+				this.handleSearch(this.url, payload);
+			}
+		},
 	},
 };
 </script>
@@ -236,9 +239,9 @@ export default {
 		background-color: $bg-secondary;
 		img {
 			height: 60px;
-      @media (min-width: 768px) {
-        height: 80px;
-      }
+			@media (min-width: 768px) {
+				height: 80px;
+			}
 		}
 
 		.auth-btn {
@@ -268,11 +271,11 @@ export default {
 			//@media (max-width: 1020px) {
 			//	grid-template-columns: none;
 			//}
-      //
+			//
 			//@media (max-width: 1243px) {
 			//	grid-template-columns: none;
 			//}
-      //
+			//
 			//@media (max-width: 767px) {
 			//	grid-template-columns: none;
 			//}
@@ -345,86 +348,86 @@ export default {
 	}
 }
 .signin-btn {
-  &:hover {
-    color: #3A3092 !important;
-    background: #FFFFFF !important;
-    box-shadow: none !important;
-  }
+	&:hover {
+		color: #3A3092 !important;
+		background: #FFFFFF !important;
+		box-shadow: none !important;
+	}
 }
 .signup-btn {
-  &:hover {
-    color: $bg-brand !important;
-    background: #FFFFFF !important;
-    box-shadow: none !important;
-  }
+	&:hover {
+		color: $bg-brand !important;
+		background: #FFFFFF !important;
+		box-shadow: none !important;
+	}
 }
 .main-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
 }
 .header-container {
-  flex-shrink: 0;
+	flex-shrink: 0;
 }
 .body-container{
-  flex-grow: 1;
-  overflow: auto;
-  min-height: 2em;
+	flex-grow: 1;
+	overflow: auto;
+	min-height: 2em;
 }
 .footer-container{
-  flex-shrink: 0;
+	flex-shrink: 0;
 }
 .skeleton-width {
-  width: 300px;
+	width: 300px;
 }
 .search-header-div {
-  align-items: center;
-  justify-content: space-between;
+	align-items: center;
+	justify-content: space-between;
 }
 .desktop-view {
-  display: none;
-  @media (min-width: 768px) {
-    display: block;
-  }
+	display: none;
+	@media (min-width: 768px) {
+		display: block;
+	}
 }
 .mobile-view {
-  @media (min-width: 768px) {
-    display: none;
-  }
+	@media (min-width: 768px) {
+		display: none;
+	}
 }
 .signinbtn {
-  border: 1px solid #FFFFFF;
-  color: #FFFFFF;
-  border-radius: 20px;
-  &:hover {
-    color: $color-primary;
-    background: $bg-primary;
-  }
+	border: 1px solid #FFFFFF;
+	color: #FFFFFF;
+	border-radius: 20px;
+	&:hover {
+		color: $color-primary;
+		background: $bg-primary;
+	}
 }
 .signupbtn {
-  border: 1px solid #FFFFFF;
-  color: #FFFFFF;
-  background: $bg-brand;
-  border-radius: 20px;
-  &:hover {
-    color: $color-brand;
-    background: #FFFFFF;
-    border: 1px solid $color-brand;
-  }
+	border: 1px solid #FFFFFF;
+	color: #FFFFFF;
+	background: $bg-brand;
+	border-radius: 20px;
+	&:hover {
+		color: $color-brand;
+		background: #FFFFFF;
+		border: 1px solid $color-brand;
+	}
 }
 .search-text {
-  font-size: 14px;
-  @media (min-width: 768px) {
-    font-size: 24px;
-  }
+	font-size: 14px;
+	@media (min-width: 768px) {
+		font-size: 24px;
+	}
 }
 .advance-btn {
-  font-size: 14px;
+	font-size: 14px;
 }
 
 .mt-150 {
-  margin-top: 150px;
+	margin-top: 150px;
 }
 </style>
