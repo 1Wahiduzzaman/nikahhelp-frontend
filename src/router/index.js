@@ -408,7 +408,7 @@ const AppRouter = new VueRouter({
             ]
         },
         {
-            path: "/visitor/search",
+            path: "/visitor/search/:search",
             name: "UnAuthSearch",
             component: UnAuthSearch,
             props: true,
