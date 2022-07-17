@@ -396,6 +396,7 @@ import {mapGetters, mapMutations, mapActions} from 'vuex'
 
 export default {
 	name: 'SimpleSearch',
+	props: ['user'],
 	components: {
 		SelectTeamModal,
 		SelectGroup,
@@ -513,8 +514,9 @@ export default {
 			if (this.max_age) {
 				_payload += `&max_age=${this.max_age}`;
 			}
-			if (this.gender != "") {
-				_payload += `&gender=${this.gender}`;
+			if (this.user?.get_candidate?.per_gender != "") {
+				let oppositeGender = this.user.get_candidate?.per_gender === 1 ? 2 : 1;
+				_payload += `&gender=${oppositeGender}`;
 			}
 			if (this.heightMin > 0 || this.minHeightFt > 0) {
 				if (this.minHeightFt) {
@@ -599,7 +601,7 @@ export default {
 			this.setComponent('AddComponent')
             this.$emit('switchComponent', 'CandidateProfiles')
 			this.$refs.top.click()
-			this.currentPage = 1
+			this.currentPage = 1;
 			let query = this.getQuery();
 			this.setSearchStatus(true)
 			console.log(query, '>>>>>>>>>>>>>>>>')
@@ -607,17 +609,17 @@ export default {
 			this.fetchSearchData(query)
 		},
 
-		handlePaginate() {
-			console.log(this.pagination.last_page, 'this.pagination.last_page')
-			if(this.pagination?.last_page) {
-				if(this.currentPage >= this.pagination.last_page ) return
-			}
-			console.log(this.pagination, 'pagination')
-			this.currentPage = this.pagination.current_page + 1
-			let query = this.getQuery();
-			this.removePrevious = false;
-			this.fetchSearchData(query)
-		},
+		// handlePaginate() {
+		// 	console.log(this.pagination.last_page, 'this.pagination.last_page')
+		// 	if(this.pagination?.last_page) {
+		// 		if(this.currentPage >= this.pagination.last_page ) return
+		// 	}
+		// 	console.log(this.pagination, 'pagination')
+		// 	this.currentPage = this.pagination.current_page + 1
+		// 	let query = this.getQuery();
+		// 	this.removePrevious = false;
+		// 	this.fetchSearchData(query)
+		// },
 
 		async fetchSearchData(query) {
 			// const res = await ApiService.get(`v1/home-searches${query}`);

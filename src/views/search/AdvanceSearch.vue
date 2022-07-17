@@ -32,6 +32,7 @@
               <SimpleSearch
                 ref="simpleSearch"
                 @switchComponent="switchComponent"
+                user="loggedUser"
               />
             </template>
           </Sidebar>
@@ -301,9 +302,9 @@ export default {
         if(data.pre_partner_religion_id.length) {
           this.$refs.simpleSearch.setAttr('religion', parseInt(data.pre_partner_religion_id[0]));
         }
-        let genderObj = {1:2, 2:1, 0:1};
-        this.query += `&gender=${genderObj[personal.per_gender_id]}`
-        this.$refs.simpleSearch.setAttr('gender', genderObj[personal.per_gender_id]); //have to set depending on candidate
+				let oppositeGender = this.loggedUser?.get_candidate?.per_gender === 1 ? 2 : 1;
+        this.query += `&gender=${oppositeGender}`
+        this.$refs.simpleSearch.setAttr('gender', oppositeGender); //have to set depending on candidate
         this.fetchInitialCandidate();
       },1000)
     },
