@@ -515,8 +515,12 @@ export default {
 				_payload += `&max_age=${this.max_age}`;
 			}
 			if (this.user?.get_candidate?.per_gender != "") {
-				let oppositeGender = this.user.get_candidate?.per_gender === 1 ? 2 : 1;
-				_payload += `&gender=${oppositeGender}`;
+				const gender = {
+					1: 2,
+					2: 1
+				};
+				const genderpref = gender[this.user.get_candidate.per_gender];
+				 _payload += `&gender=${genderpref}`;
 			}
 			if (this.heightMin > 0 || this.minHeightFt > 0) {
 				if (this.minHeightFt) {
