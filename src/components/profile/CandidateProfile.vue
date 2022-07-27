@@ -371,7 +371,6 @@
           </v-container>
           <ComingSoonModal
             title="Team details quick view"
-            @closeDialog="closeDialog"
             ref="advDiag"
           />
         </div>

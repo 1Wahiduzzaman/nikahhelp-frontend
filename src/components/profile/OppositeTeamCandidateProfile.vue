@@ -306,7 +306,6 @@
 					</div> -->
 					<ComingSoonModal
 						title="Team details quick view"
-						@closeDialog="closeDialog"
 						ref="advDiag"
 					/>
 				</v-col>
@@ -361,22 +360,7 @@ export default {
 			improveMyselfThings
 		};
 	},
-	created() {
-		var self = this;
-		firebase
-			.collection("conversations")
-			.get()
-			.then((querySnapshot) => {
-				console.log(`Found ${querySnapshot.size} documents.`);
-				querySnapshot.forEach((doc) => {
-					var convDetails = doc.data();
-					convDetails.id = doc.id;
-					self.conversations.push(convDetails);
-				});
-			});
 
-		console.log("conversations loaded");
-	},
 	computed: {
 		studyLevel() {
 			if (this.candidateData.preference.pre_study_level_id) {
