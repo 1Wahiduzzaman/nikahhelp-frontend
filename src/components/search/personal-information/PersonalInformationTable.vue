@@ -103,12 +103,18 @@
                 textClass="text-subtitle-1"
                 :value="personal.per_current_residence"
             /> -->
-      <template v-if="routeName === 'Profile'">
+      <template>
         <TableRow
-          title="Permanent Country and City"
+          title="Permanent Country"
           textClass="text-subtitle-1"
           :value="contact.per_permanent_country_name"
         />
+
+	      <TableRow
+			      title="Permanent City"
+			      textClass="text-subtitle-1"
+			      :value="contact.per_permanent_city"
+	      />
       </template>
       <!-- <tr>
                 <td class="text--disabled text-subtitle-1" style="width: 160px">Mobile No</td>
@@ -164,7 +170,7 @@ export default {
       return this.personal.per_height
         ? this.HEIGHTS[this.personal.per_height - 1].name
         : "";
-    },
+    }
   },
   methods: {
     getAge(dateString) {
