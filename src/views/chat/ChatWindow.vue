@@ -71,7 +71,6 @@
                   <div v-if="chatTab == 'Team'" class="tab-pane fade" :class="{'show active': chatTab == 'Team'}">
                     <div class="chat-item"
                          v-for="item in teamChat"
-                         v-if="item.user_id != getAuthUserId"
                          :key="item.team_id"
                          :class="{'selected-chat': chatheadopen == item}"
                          @click="getIndividualChat(item, item)"
@@ -101,28 +100,30 @@
                           :activeTeam="activeTeam"
                           action
                           @socketNotification="socketNotification"
+                          :online="notify"
                           class="w-full pr-3 cursor-pointer"
+                          :key="item"
                       />
                     </div>
                   </div>
-                  <div v-if="chatTab == 'Private'" class="tab-pane fade" :class="{'show active': chatTab == 'Private'}">
-                    <div
-                        class="chat-item"
-                        v-for="item in chatHistory"
-                        :key="item.team_id"
-                        :class="{'selected-chat': chatheadopen == item}"
-                        @click="item.label == 'Connected Team' ? getConnectedTeamChatHistory(item) : getIndividualChat(item, item)"
-                    >
-                      <ChatListItem
-                          :item="item"
-                          :status="'recent'"
-                          :online_users="online_users"
-                          :teamMembers="teamMembers"
-                          action
-                          class="w-full pr-3 cursor-pointer"
-                      />
-                    </div>
-                  </div>
+<!--                  <div v-if="chatTab == 'Private'" class="tab-pane fade" :class="{'show active': chatTab == 'Private'}">-->
+<!--                    <div-->
+<!--                        class="chat-item"-->
+<!--                        v-for="item in chatHistory"-->
+<!--                        :key="item.team_id"-->
+<!--                        :class="{'selected-chat': chatheadopen == item}"-->
+<!--                        @click="item.label == 'Connected Team' ? getConnectedTeamChatHistory(item) : getIndividualChat(item, item)"-->
+<!--                    >-->
+<!--                      <ChatListItem-->
+<!--                          :item="item"-->
+<!--                          :status="'recent'"-->
+<!--                          :online_users="online_users"-->
+<!--                          :teamMembers="teamMembers"-->
+<!--                          action-->
+<!--                          class="w-full pr-3 cursor-pointer"-->
+<!--                      />-->
+<!--                    </div>-->
+<!--                  </div>-->
                 </div>
               </div>
             </div>
@@ -216,6 +217,7 @@
                     </div>
                   </div>
                 </div>
+
                 <div class="footer">
                    <div class="footer-top"><strong>{{ chatheadopen.typer_name }}</strong> {{ chatheadopen.typing_text }}</div>
                   <div class="footer-bottom">
@@ -313,6 +315,7 @@ export default {
 
       if (this.chatTab === 'Connected') {
         this.connectedTeamChats = [...this.connectedTeamChats, recieveMessage];
+				this.notify = data;
       }
     },
   },
@@ -348,6 +351,7 @@ export default {
       active_team_id: null,
       chatListedImage: [],
       connectedTeamChats: [],
+	    notify: 0
     }
   },
 
@@ -365,8 +369,7 @@ export default {
         console.log(value);
             this.chatheadopen = null;
             this.loadPageData();
-    },
-
+    }
   },
 
   computed: {
@@ -832,6 +835,8 @@ export default {
       this.chats = await this.loadIndividualChatHistory(payload);
     },
     async getConnectedTeamChatHistory(item) {
+			this.notify = false;
+	    this.connectedTeamChats = [];
       this.fromChatItem = 'connected-team';
       this.chat_type = 'Connected-team';
       this.inConnectedChat = true;
@@ -858,11 +863,12 @@ export default {
       if (data && data.message_history) {
         data = data.message_history;
       }
-      this.connectedTeamChats = [];
+
       this.connectedTeamChats = data.map(item => {
         item.senderId = item.sender?.id
         return item;
       });
+
       this.scrollBottom();
     },
     processChatConnectedImage() {
