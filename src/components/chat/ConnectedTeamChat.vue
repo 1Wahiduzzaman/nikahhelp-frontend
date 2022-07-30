@@ -9,9 +9,9 @@
       <div class="content">
         <span class="label">{{ item.label }}</span>
         <h4 class="mt-1 fs-14">{{ getTeamName }}</h4>
-        <p class="mb-0 text-margin">{{ item.message && item.message.body ? messageStr(item.message.body) : '' }}</p>
+<!--        <p class="mb-0 text-margin">{{ item.message && item.message.body ? messageStr(item.message.body) : '' }}</p>-->
       </div>
-      <span class="online-icon" v-if="item.message && item.message.seen == 0"></span>
+      <span class="online-icon" v-if="online.from_team_id === item.to_team_id"></span>
 
       <a-dropdown v-if="item.is_friend == 0">
         <a class="ant-dropdown-link dropdown-box" @click="e => e.preventDefault()">
@@ -57,7 +57,10 @@ export default {
     },
     activeTeam: {
 
-    }
+    },
+	  online: {
+			type: Boolean
+	  }
   },
   computed: {
     ifOnline() {

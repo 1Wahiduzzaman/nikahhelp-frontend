@@ -20,8 +20,8 @@
           <div class="item flex-between-center ml-2 mr-2">
             <div class="item-img custom-size">
               <img class="item-img"
-                   @error="imgLoad(index, user)"
-                   :ref="`avatar-${index}`"
+                   @error="imgLoad(recIndex, user)"
+                   :ref="`avatar-${recIndex}`"
                    :src="user.image"
                    alt="img"
                    style="border: 1px solid white;"/>
