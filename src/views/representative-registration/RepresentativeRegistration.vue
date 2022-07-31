@@ -411,7 +411,7 @@ export default {
         }).every((x) => x !== undefined && x !== null && x !== "");
         if (
           !this.showAgreement &&
-          response.data.data.user.is_uplaoded_doc == "0"
+          response.data.data.is_uplaoded_doc == "0"
         ) {
           this.representativeDetails.verification = {
             ...this.representativeDetails.verification,
