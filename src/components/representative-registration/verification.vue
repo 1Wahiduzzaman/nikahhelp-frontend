@@ -841,19 +841,49 @@ export default {
     },
     getBackPage(e) {
       let file = e.target.files[0];
+
       if (!this.imageSizeCheck(file)) {
         file = "";
         return;
       }
+
       this.verification.ver_document_backside = e.target.files[0];
+
       this.saveImageVerificationInfo({
         ver_document_backside: this.verification.ver_document_backside,
       });
+
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
         this.imageBack = e.target.result;
       };
+	    let user = JSON.parse(localStorage.getItem("user"));
+	    const {
+		    ver_country,
+		    ver_document_type,
+		    ver_document_frontside,
+		    ver_document_backside,
+	    } = this.verification;
+	    const isComplete = Object.values({
+		    ver_country,
+		    ver_document_type,
+		    ver_document_backside,
+		    ver_document_frontside,
+	    }).every((x) => x !== undefined && x !== null && x !== "");
+	    const data = {
+		    id: user.id,
+		    is_uplaoded_doc: isComplete ? "1" : "0",
+	    };
+
+			ApiService.post('v1/rep-upload-doc', data)
+					.then((data) => {
+						user.is_uplaoded_doc = isComplete ? "1" : "0";
+						// localStorage.setItem(JSON.stringify(user));
+						this.$emit("valueChange", true);
+						console.log('sss')
+					})
+					.catch((error) => {});
     },
 
     async onChangeCountry(e, name) {
