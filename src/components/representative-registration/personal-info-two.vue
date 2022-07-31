@@ -217,97 +217,97 @@
           :rules="rules_personal"
           class="form-ma"
         >
-          <div class="row mt-3 pb-2 border-bottom">
-            <div class="col-12 col-md-6 none-padding">
-              <div class="mb-2 font-weight-bold">
-                <a-icon
-                  v-if="
-                    personalInformation.personal
-                      .per_current_residence_country &&
-                    personalInformation.personal.per_current_residence_city
-                  "
-                  class="color-success mr-2 fs-18 fw-500"
-                  type="check"
-                />
-                Where is your current place of residence?
-              </div>
-            </div>
-            <div class="col-12 col-md-6 mobile-margin">
-              <div class="row">
-                <div class="col-12">
-                  <a-form-model-item
-                    ref="per_current_residence_country"
-                    prop="per_current_residence_country"
-                  >
-                    <v-select
-                      :clearable="false"
-                      class="style-chooser"
-                      @input="
-                        onCountryChange(
-                          $event,
-                          'per_current_residence_country',
-                          'contact'
-                        )
-                      "
-                      id="per_current_residence_country"
-                      :placeholder="'Country'"
-                      v-model="
-                        personalInformation.personal
-                          .per_current_residence_country
-                      "
-                      label="name"
-                      :reduce="(option) => option.name"
-                      :options="representativeDetails.countries"
-                      ><template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
-                  </a-form-model-item>
-                </div>
-              </div>
-              <a-input
-                class="w-100 mt-2"
-                v-if="
-                  personalInformation.personal.per_current_residence_country ==
-                    'Other' ||
-                  personalInformation.personal.per_current_residence_city ==
-                    'Other'
-                "
-                placeholder="Please specify"
-                @change="
-                  onValueChange($event, 'per_current_residence_city', 'contact')
-                "
-              />
-            </div>
-            <div class="col-12 none-padding mobile-margin mobile-help">
-              <p>
-                <a
-                  class="color-blue fw-700 fs-14"
-                  data-toggle="collapse"
-                  href="#Needper_current_residence_country"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
-                >
-                  <span v-if="arr[3].first" @click="toggle(3)">
-                    Need Help?
-                  </span>
-                  <span v-else @click="toggle(3)"> Hide Help? </span>
-                </a>
-              </p>
-              <div
-                data-parent="#accordion"
-                class="collapse"
-                id="Needper_current_residence_country"
-              >
-                <div class="card card-body bubble">
-                  We ask this question as we may need to crosscheck this
-                  information with any future ID checks that may be necessary in
-                  case there are queries about the authenticity of individual
-                  registrations.
-                </div>
-              </div>
-            </div>
-          </div>
+<!--          <div class="row mt-3 pb-2 border-bottom">-->
+<!--            <div class="col-12 col-md-6 none-padding">-->
+<!--              <div class="mb-2 font-weight-bold">-->
+<!--                <a-icon-->
+<!--                  v-if="-->
+<!--                    personalInformation.personal-->
+<!--                      .per_current_residence_country &&-->
+<!--                    personalInformation.personal.per_current_residence_city-->
+<!--                  "-->
+<!--                  class="color-success mr-2 fs-18 fw-500"-->
+<!--                  type="check"-->
+<!--                />-->
+<!--                Where is your current place of residence?-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12 col-md-6 mobile-margin">-->
+<!--              <div class="row">-->
+<!--                <div class="col-12">-->
+<!--                  <a-form-model-item-->
+<!--                    ref="per_current_residence_country"-->
+<!--                    prop="per_current_residence_country"-->
+<!--                  >-->
+<!--                    <v-select-->
+<!--                      :clearable="false"-->
+<!--                      class="style-chooser"-->
+<!--                      @input="-->
+<!--                        onCountryChange(-->
+<!--                          $event,-->
+<!--                          'per_current_residence_country',-->
+<!--                          'contact'-->
+<!--                        )-->
+<!--                      "-->
+<!--                      id="per_current_residence_country"-->
+<!--                      :placeholder="'Country'"-->
+<!--                      v-model="-->
+<!--                        personalInformation.personal-->
+<!--                          .per_current_residence_country-->
+<!--                      "-->
+<!--                      label="name"-->
+<!--                      :reduce="(option) => option.name"-->
+<!--                      :options="representativeDetails.countries"-->
+<!--                      ><template #open-indicator>-->
+<!--                        <a-icon type="down" /> </template-->
+<!--                    ></v-select>-->
+<!--                  </a-form-model-item>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <a-input-->
+<!--                class="w-100 mt-2"-->
+<!--                v-if="-->
+<!--                  personalInformation.personal.per_current_residence_country ==-->
+<!--                    'Other' ||-->
+<!--                  personalInformation.personal.per_current_residence_city ==-->
+<!--                    'Other'-->
+<!--                "-->
+<!--                placeholder="Please specify"-->
+<!--                @change="-->
+<!--                  onValueChange($event, 'per_current_residence_city', 'contact')-->
+<!--                "-->
+<!--              />-->
+<!--            </div>-->
+<!--            <div class="col-12 none-padding mobile-margin mobile-help">-->
+<!--              <p>-->
+<!--                <a-->
+<!--                  class="color-blue fw-700 fs-14"-->
+<!--                  data-toggle="collapse"-->
+<!--                  href="#Needper_current_residence_country"-->
+<!--                  role="button"-->
+<!--                  aria-expanded="false"-->
+<!--                  aria-controls="collapseExample"-->
+<!--                >-->
+<!--                  <span v-if="arr[3].first" @click="toggle(3)">-->
+<!--                    Need Help?-->
+<!--                  </span>-->
+<!--                  <span v-else @click="toggle(3)"> Hide Help? </span>-->
+<!--                </a>-->
+<!--              </p>-->
+<!--              <div-->
+<!--                data-parent="#accordion"-->
+<!--                class="collapse"-->
+<!--                id="Needper_current_residence_country"-->
+<!--              >-->
+<!--                <div class="card card-body bubble">-->
+<!--                  We ask this question as we may need to crosscheck this-->
+<!--                  information with any future ID checks that may be necessary in-->
+<!--                  case there are queries about the authenticity of individual-->
+<!--                  registrations.-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
 
           <div class="row pt-3 pb-2 border-bottom">
             <div class="col-12 col-md-6 none-padding">
