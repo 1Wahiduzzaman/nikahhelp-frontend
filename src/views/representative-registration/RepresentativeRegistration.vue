@@ -369,9 +369,7 @@ export default {
           },
           verification: {
             ...response.data.data.verification,
-            ver_country: response.data.data.verification.ver_country
-              ? parseInt(response.data.data.verification.ver_country)
-              : response.data.data.verification.ver_country,
+            ver_country: response.data.data.verification.ver_country,
             cities: [],
           },
           personalInformation: {

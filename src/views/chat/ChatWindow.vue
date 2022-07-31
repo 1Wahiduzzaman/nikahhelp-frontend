@@ -193,7 +193,7 @@
                            :class="{'conv-mb': chats.length !== cIndex + 1}"
                            v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))" >
                         <div class="text-right">
-                          <img :src="getAuthUser && getAuthUser.per_main_image_url ? getAuthUser.per_main_image_url : getImage()" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
+                          <img :src="getAuthUser && getAuthUser.per_main_image_url ? getAuthUser.per_main_image_url : getImage()" class="rounded-circle mr-1" alt="" width="40" height="40">
                         </div>
                         <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 w100" v-html="item.body">
                         </div>
@@ -206,7 +206,7 @@
                            class="chat-message-left pb-4 position-relative"
                            :class="{'conv-mb': chats.length !== cIndex + 1}" v-else>
                         <div class="text-left">
-                          <img :src="getConversationUserImage(item.sender.id)" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+                          <img :src="getConversationUserImage(item.sender.id)" class="rounded-circle mr-1" width="40" height="40">
                         </div>
                         <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 w100" v-html="item.body">
                         </div>
@@ -876,7 +876,16 @@ export default {
       if(this.chatheadopen.label == 'Group chat') {
         this.chatheadopen.team_members.forEach(member => {
           let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url : '';
-          this.chatListedImage.push({
+					let repPhoto = member && member.user && member.user.representative_info ? member.user.representative_info.per_main_image_url : '';
+
+					if (!member.user.candidate_info) {
+						this.chatListedImage.push({
+							user_id: member.user_id,
+							logo: repPhoto
+						});
+					}
+
+					this.chatListedImage.push({
             user_id: member.user_id,
             logo: candidateLogo
           });

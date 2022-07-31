@@ -488,8 +488,6 @@
                   />
                 </a-form-model-item>
                 <a-form-model-item
-                  ref="ver_recommender_mobile_no"
-                  prop="ver_recommender_mobile_no"
                 >
                   <vue-tel-input
                     v-model="verification.ver_recommender_mobile_no"
