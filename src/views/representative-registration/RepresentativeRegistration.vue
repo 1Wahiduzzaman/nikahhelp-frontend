@@ -521,7 +521,6 @@ export default {
           let {
             mobile_country_code,
             mobile_number,
-            per_current_residence_country,
             address_1,
             address_2,
             per_permanent_country,
@@ -532,7 +531,6 @@ export default {
           let personal = {
             mobile_country_code,
             mobile_number,
-            per_current_residence_country,
             address_1,
             address_2,
             per_permanent_country,
