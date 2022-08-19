@@ -316,7 +316,6 @@
 
 <script>
 import RatingComponent from "./RatingComponent.vue";
-import firebase from "../../configs/firebase";
 import improveMyselfThings from '@/common/improveMyselfThings'
 // import Footer from "@/components/auth/Footer.vue";
 
@@ -427,59 +426,7 @@ export default {
 			}
 			return text.join(' \n ');
 		},
-		startConversation() {
-			var res_userid = this.candidateData.user_id;
-			var my_user_id = this.$store.state.user.user.id;
-			var chat_category = this.returnCategoryId(
-				"one2one",
-				res_userid,
-				my_user_id
-			);
-			var checkConvId = this.checkChatCategory(chat_category);
-			// check if same chat exists
-			if (checkConvId) {
-				console.log("chat found");
-				this.$store.dispatch("setCurrentConversation", checkConvId);
-			} else {
-				console.log("chat not found");
-				// else create chat
-				var res_fname = this.candidateData.first_name;
-				var my_fname = "";
-				if (this.$store.state.user.user.account_type == 1) {
-					my_fname = this.$store.state.user.candidate_information.first_name;
-				} else {
-					my_fname =
-						this.$store.state.user.representative_information.first_name;
-				}
-				var chatTitle = this.returnChatTitle(
-					res_userid,
-					my_user_id,
-					res_fname,
-					my_fname
-				);
-
-				var members = [res_userid, my_user_id];
-				var newConv = {
-					title: chatTitle,
-					type: "connected",
-					members: members,
-					last_msg: "",
-					category_id: chat_category,
-				};
-
-				var convCollection = firebase.collection("conversations");
-				convCollection.add(newConv);
-				alert("conv createed:" + chatTitle);
-				// console.log('conversation start clicked');
-				// console.log(res_userid);
-				// console.log(my_user_id);
-				// console.log(chat_category);
-				// console.log(res_fname);
-				// console.log(my_fname);
-				// console.log(chatTitle);
-			}
-			this.$router.push("/chat-window");
-		},
+		startConversation() {},
 		returnCategoryId(type, id1, id2) {
 			var category_id = "";
 			if (id1 > id2) {

@@ -50,7 +50,7 @@
 						id="country"
 						class="w-100 py-2 px-4 bg-white form-control input-round"
 						v-model="city"
-						placeholder="New York"
+						placeholder="London"
 					/>
 				</div>
 			</div>
