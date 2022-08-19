@@ -146,7 +146,6 @@
 </template>
 
 <script>
-import firebase from "../../configs/firebase";
 import { getAge } from "@/common/helpers.js";
 import JwtService from "@/services/jwt.service";
 export default {
@@ -161,15 +160,7 @@ export default {
 		};
 	},
 	mounted() {
-		// var self = this;
-		// firebase.collection("conversations").get().then(querySnapshot => {
-		// 		console.log(`Found ${querySnapshot.size} documents.`);
-		// 		querySnapshot.forEach(doc => {
-		// 			var convDetails = doc.data();
-		// 			convDetails.id = doc.id;
-		// 			self.conversations.push(convDetails);
-		// 		});
-		// 	});
+
 		this.conversations = this.$store.state.chat.conversations;
 		console.log("conversations loaded");
 		// this.$store.dispatch("getConwiseInfo");
@@ -241,46 +232,7 @@ export default {
 			);
 		},
 		startConversation() {
-			console.log("start clicked");
-			var con_id = this.connection.connection_id;
-			var conwise_chatinfo = this.$store.state.chat.conwise_info;
-			for (var i = 0; i < conwise_chatinfo.length; i++) {
-				if (conwise_chatinfo[i].con_id == con_id) {
-					var chat_title = conwise_chatinfo[i].title;
-					var member_list = conwise_chatinfo[i].member_list;
-					var chat_category = "connected_" + con_id.toString();
-					var check = this.checkChatCategory(chat_category);
-					if (check) {
-						console.log("chat found");
-						this.$store.dispatch("setCurrentConversation", check);
-					} else {
-						var newConv = {
-							title: chat_title,
-							type: "connected",
-							members: member_list,
-							last_msg: "",
-							category_id: chat_category,
-						};
-						var convCollection = firebase.collection("conversations");
-						var newconvid = "";
-						var self = this;
-						convCollection
-							.add(newConv)
-							.then(function (docRef) {
-								newconvid = docRef.id;
-								self.$store.dispatch("setCurrentConversation", docRef.id);
-								console.log("Document written with ID: ", docRef.id);
-							})
-							.catch(function (error) {
-								console.error("Error adding document: ", error);
-							});
 
-						console.log("New conv ID:", newconvid);
-						// this.$store.dispatch('setCurrentConversation',newconvid);
-						alert("conv createed:" + chat_title);
-					}
-					this.$router.push("/chat-window");
-				}
 			}
 		},
 		checkChatCategory(categoryId) {

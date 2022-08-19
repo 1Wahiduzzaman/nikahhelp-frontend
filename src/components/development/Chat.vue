@@ -324,7 +324,6 @@
 </template>
 
 <script>
-import firebase from "../../configs/firebase";
 export default {
   name: 'Chat',
   data(){
@@ -504,41 +503,6 @@ export default {
       // this.$store.dispatch('getMsgs');
       // this.$store.dispatch('getUnreadRecords',user_id);
     },
-    createConversations(){
-      // console.log('create conv clicked');
-      // var member_1 = Math.floor(Math.random() * 6) + 1;
-      // var member_2 = Math.floor(Math.random() * 7) + 1;
-      // var member_3 = Math.floor(Math.random() * 8) + 1;
-      // var member_4 = Math.floor(Math.random() * 9) + 1;
-
-      var members = [8,9,10,11];
-      // members = this.unique(members);
-
-      // var conv_title = 'Group:'+members[0].toString()+","+members[1].toString()+','+members[2].toString();
-      var conv_title = 'test conv';
-
-      // var total = member_1+member_2+member_3;
-      // var conv_type = '';
-      // if(total % 2 == 0) {
-      //     conv_type = 'team chat'; 
-      // }
-      // else{
-      //   conv_type = 'connected';
-      // }
-
-      var conv_type = 'connected';
-
-      var newConv = {
-        title: conv_title,
-        type: conv_type,
-        members: members,
-        last_msg: ''
-      }
-
-      var convCollection = firebase.collection('conversations');
-      convCollection.add(newConv);
-      alert('conv createed:'+conv_title);
-    },
     selectConversation(conv_id){
       // this.current_conversation = conv_id;
       this.$store.dispatch('setCurrentConversation',conv_id);
@@ -553,53 +517,7 @@ export default {
     },
     sendMsg(e){
       e.preventDefault();
-      var current_conv = this.$store.state.chat.current_conversation;
-      if(current_conv == null || current_conv == ''){
-        alert('Please select conversation');
-      }
-      else{
-        var sent_by = this.$store.state.user.user.id;
-        var msg_text = this.msg_text;
-        var conv_id = this.$store.state.chat.current_conversation;
-        var members = this.$store.getters["getChatMemberList"];
-        var conv_type = this.$store.getters["getConversationType"];
-        // console.log(members);
-        var sent_at = new Date();
-        var new_msg = {
-          conv_id: conv_id,
-          msg_text: msg_text,
-          sent_by: sent_by,
-          sent_at: sent_at
 
-        }
-        var self = this;
-        var msgCollection = firebase.collection('messages');
-        msgCollection.add(new_msg)
-        .then(function(docRef) {
-            var msg_id = docRef.id;
-            var unreadCollection = firebase.collection('unread_records');   
-            for(var i=0;i<members.length;i++){
-              var temp_member = members[i];
-              if(self.$store.state.user.user.id != temp_member){
-                var unread_record = {
-                  conv_id: conv_id,
-                  conv_type: conv_type,
-                  msg_id: msg_id,
-                  user_id: temp_member,
-                  created_at: sent_at
-                }
-                unreadCollection.add(unread_record);
-              }
-            }
-            self.msg_text = ''
-            // window.scrollTo(0,document.querySelector(".chat-box").scrollHeight);
-            // console.log("Document written with ID: ", docRef.id);
-        })
-        .catch(function(error) {
-            console.error("Error adding document: ", error);
-        });
-
-      }
       
       // msgCollection.add(new_msg);
     },

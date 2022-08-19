@@ -716,7 +716,6 @@ import LTModal from "./Modals/LTModal.vue";
 import TNCModal from "./Modals/TeamNameChangeModal.vue";
 import TDCModal from "./Modals/TeamDescriptionChange.vue";
 // import { Modal } from 'ant-design-vue';
-import firebase from "../../configs/firebase";
 export default {
   name: "TeamDetailsCard",
   props: ["teamData", "index"],
@@ -772,18 +771,7 @@ export default {
   },
   created() {
     this.teamInfo = this.teamData;
-    var self = this;
-    firebase
-        .collection("conversations")
-        .get()
-        .then((querySnapshot) => {
-          console.log(`Found ${querySnapshot.size} documents.`);
-          querySnapshot.forEach((doc) => {
-            var convDetails = doc.data();
-            convDetails.id = doc.id;
-            self.conversations.push(convDetails);
-          });
-        });
+
 
     console.log("conversations loaded");
   },
@@ -1602,47 +1590,7 @@ export default {
         JwtService.destroyTeamIDAppWide();
       }
     },
-    startConversation() {
-      // alert("new start conv clicked");
-      var conv_title = this.teamData.name;
-      var chat_members = [];
-      var member_list = this.teamData.team_members;
-      for (var i = 0; i < member_list.length; i++) {
-        chat_members.push(member_list[i].user_id);
-      }
-      var chatCategoryId = "team_" + this.teamData.team_id;
-      var checkConvId = this.checkChatCategory(chatCategoryId);
-
-      if (checkConvId) {
-        console.log("chat found");
-        this.$store.dispatch("setCurrentConversation", checkConvId);
-      } else {
-        var newConv = {
-          title: conv_title,
-          type: "team chat",
-          members: chat_members,
-          last_msg: "",
-          category_id: chatCategoryId,
-        };
-        var convCollection = firebase.collection("conversations");
-        var self = this;
-        convCollection
-            .add(newConv)
-            .then(function (docRef) {
-              self.$store.dispatch("setCurrentConversation", docRef.id);
-              console.log("Document written with ID: ", docRef.id);
-            })
-            .catch(function (error) {
-              console.error("Error adding document: ", error);
-            });
-        alert("conv createed:" + conv_title);
-      }
-      this.$router.push("/chat-window");
-      console.log(conv_title);
-      console.log(member_list);
-      console.log(this.teamData);
-      console.log(chatCategoryId);
-    },
+    startConversation() {},
     checkChatCategory(categoryId) {
       console.log("inside");
       console.log(this.conversations.length);
