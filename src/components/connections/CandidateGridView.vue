@@ -438,7 +438,7 @@ export default {
       //     }
       //     this.$router.push("/chat-window");
       //   }
-      }
+
     },
     checkChatCategory(categoryId) {
       console.log("inside");
@@ -471,7 +471,7 @@ export default {
     gotoChat() {
       this.$router.push({ name: 'ChatWindow', query: { connection_id: this.connection.connection_id } });
     }
-  },
+  }
 }
 </script>
 

@@ -233,7 +233,6 @@ export default {
 		},
 		startConversation() {
 
-			}
 		},
 		checkChatCategory(categoryId) {
 			console.log("inside");
@@ -249,7 +248,7 @@ export default {
 			}
 			return false;
 		},
-	},
+	}
 };
 </script>
 
