@@ -3,69 +3,17 @@
     <div class="container-fluid mt-4">
       <div class="row mobile-version">
         <div class="col-12 col-lg-8">
-          <div class="card p-4 br-10 card-faq">
-            <div class="h1-flex justify-content-between w-full">
-              <h4 class="fs-24">Support</h4>
-              <div class="desktop-btns justify-content-end">
-                <v-btn type="primary" color="indigo" class="text-white rate-btn" rounded outlined>Rating</v-btn>
-                <v-btn type="primary" color="indigo" class="ml-2 text-white rate-btn" rounded outlined>Feedback</v-btn>
-              </div>
-              <div class="mobile-btns justify-content-end">
-                <v-tooltip bottom color="indigo">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn type="primary" color="indigo" rounded outlined
-                           v-bind="attrs"
-                           v-on="on">
-                      <a-icon type="star" class="fs-24" />
-                    </v-btn>
-                  </template>
-                  <span>Rating</span>
-                </v-tooltip>
-                <v-tooltip bottom color="indigo">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn class="ml-2" type="primary" color="indigo" rounded outlined
-                           v-bind="attrs"
-                           v-on="on">
-                      <a-icon type="star" class="fs-24" />
-                    </v-btn>
-                  </template>
-                  <span>Feedback</span>
-                </v-tooltip>
-              </div>
-            </div>
-            <div class="none-mobile mt-2">
-              <a-select
-                  placeholder="Select help category"
-                  class="ml-1 fs-14 w-25"
-              >
-                <a-select-option value=""> Select help category </a-select-option>
-              </a-select>
-              <a-input
-                  medium
-                  type="text"
-                  class="w-25 search-ml"
-                  placeholder="Search FAQs"
-                  autocomplete="off"
-              />
-            </div>
-
-            <div class="mt-5">
-              <a-collapse default-active-key="1" :bordered="false">
-                <template #expandIcon="props">
-                  <a-icon type="caret-right" class="color-primary" :rotate="props.isActive ? 90 : 0" />
-                </template>
-                <a-collapse-panel key="1" class="faq" header="This is panel header 1" :style="customStyle">
-                  <p class="pl-5">{{ text }}</p>
-                </a-collapse-panel>
-                <a-collapse-panel key="2" class="faq" header="This is panel header 2" :style="customStyle">
-                  <p class="pl-5">{{ text }}</p>
-                </a-collapse-panel>
-                <a-collapse-panel key="3" class="faq" header="This is panel header 3" :style="customStyle">
-                  <p class="pl-5">{{ text }}</p>
-                </a-collapse-panel>
-              </a-collapse>
-            </div>
-          </div>
+	        <h2 class="">Past ticket history</h2>
+	        <v-card v-for="ticket in getUserTickets" :key="ticket.id" class="mb-3">
+		        <v-list-item>
+							<v-list-item-title>
+								<v-icon>
+									mdi-bug
+								</v-icon>
+								{{ ticket.issue_type }}
+							</v-list-item-title>
+		        </v-list-item>
+	        </v-card>
         </div>
         <div class="col-12 col-lg-4">
           <div class="card br-10">
@@ -216,10 +164,16 @@
 <script>
 import ApiService from '@/services/api.service';
 import {format} from "timeago.js";
+import {mapGetters} from "vuex";
+
+
 export default {
-  name: "Index",
+  name: "Support",
 	components: {},
 
+	created() {
+		this.$store.dispatch('getMyTickets', this.getAuthUserId);
+	},
 	// sockets: {
   //   connect: function () {
   //     console.log('socket connected')
@@ -253,6 +207,9 @@ export default {
   },
 
   computed: {
+		...mapGetters([
+				'getUserTickets'
+		]),
     getAuthUserId() {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       if (loggedUser) {

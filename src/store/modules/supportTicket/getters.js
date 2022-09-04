@@ -16,5 +16,9 @@ export default {
 
     supportHasError(state) {
         return state.supportError;
+    },
+
+    getUserTickets(state) {
+        return state.userTickets;
     }
 }

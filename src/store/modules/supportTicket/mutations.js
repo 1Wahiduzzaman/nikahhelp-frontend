@@ -15,5 +15,9 @@ export default {
 
     error(state, payload) {
         state.supportError = payload;
+    },
+
+    getMyTickets(state, payload) {
+        state.userTickets = payload;
     }
 };

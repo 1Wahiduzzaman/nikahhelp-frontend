@@ -9,6 +9,7 @@ export default {
             ticket: {},
             ticketMessages: [],
             supportError: false,
+            userTickets: []
         }
     },
 

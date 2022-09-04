@@ -30,5 +30,12 @@ export default {
             context.dispatch('getSupportMessages', payload.ticket_id);
 
         });
+    },
+
+    getMyTickets(context, payload) {
+        ApiService.get(`/v1/getAllTickets/${payload}`)
+            .then((data) => {
+                context.commit('getMyTickets', data.data.data);
+            })
     }
 }
