@@ -81,6 +81,12 @@ import ChatWindow from "@/views/chat/ChatWindow.vue";
 
 
 import { InitRoute, lazyLoadComponent, lazyLoadView, InitAdminRoute } from './guard/guard'
+import SupportTickets from "@/views/admin/SupportTickets";
+import Reporter from "@/views/admin/Reporter";
+import Ticket from "@/views/admin/Ticket";
+import TicketDetails from "@/views/admin/support/TicketDetails";
+import SendTicketMessage from "@/views/admin/support/SendTicketMessage";
+import TicketMessages from "@/views/admin/support/TicketMessages";
 
 Vue.use(VueRouter);
 const AppRouter = new VueRouter({
@@ -179,10 +185,30 @@ const AppRouter = new VueRouter({
             },
             {
                 path: "support",
-                name: 'Support',
-                component: AdminSupport,
-
+                    name: "support",
+                    component: SupportTickets,
             },
+            {
+                path: "ticket",
+                name: "ticket",
+                component: Ticket,
+            },
+                {
+                    path: "ticket-details",
+                    name: "ticketDetails",
+                    component: TicketDetails
+                },
+                {
+                    path: "ticket-messages",
+                    name: "ticketMessages",
+                    component: TicketMessages
+                },
+                {
+                    path: "send-ticket-message/:id",
+                    name: "sendTicketMessage",
+                    component: SendTicketMessage,
+                    props: true
+                },
             {
                 path: "flag",
                 component: AdminFlag,

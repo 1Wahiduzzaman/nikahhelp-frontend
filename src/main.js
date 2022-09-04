@@ -19,13 +19,12 @@ import HighchartsVue from 'highcharts-vue';
 import Storage from "vue-web-storage";
 import TextareaAutosize from 'vue-textarea-autosize';
 // * ApiService for the application
+import vuetify from "@/plugins/vuetify";
 import ApiService from "./services/api.service";
-import Vuetify from 'vuetify';
 import 'viewerjs/dist/viewer.css';
 import VueTelInput from 'vue-tel-input';
 import VueViewer from 'v-viewer';
 Vue.use(VueViewer);
-Vue.use(Vuetify);
 Vue.use(HighchartsVue);
 Vue.use(Storage, {
   prefix: "",
@@ -48,6 +47,7 @@ Vue.component('Layout', Layout);
 Vue.component('Loader', Loader);
 Vue.component('AdminLayout', AdminLayout);
 Vue.use(TextareaAutosize)
+
 import VueSocketIO from 'vue-socket.io'
 import SocketIO from 'socket.io-client'
 const socketConnection = SocketIO('https://biya.arranzed.com:4009');
@@ -62,21 +62,6 @@ Vue.use(new VueSocketIO({
 new Vue({
   router,
   store,
-  vuetify: new Vuetify({
-    icons: {
-      iconfont: 'md',  // 'mdi' || 'mdiSvg' || 'md' || 'fa' || 'fa4'
-    },
-    theme: {
-      dark: false,
-    },
-    themes: {
-      light: {
-        primary: "#4682b4",
-        secondary: "#b0bec5",
-        accent: "#8c9eff",
-        error: "#b71c1c",
-      },
-    },
-  }),
+  vuetify,
   render: (h) => h(App),
 }).$mount("#app");
