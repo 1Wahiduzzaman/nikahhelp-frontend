@@ -13,6 +13,7 @@ import notificationModule from "./modules/notification/index.js";
 import searchModule from "./modules/search/index.js";
 import chat from "./modules/chat/index.js";
 import AdminModule from "./modules/admin/index.js";
+import SupportTicketModule from "@/store/modules/supportTicket";
 
 const store = new Vuex.Store({
   modules: {
@@ -27,6 +28,7 @@ const store = new Vuex.Store({
     search: searchModule,
     chat: chat,
     Admin: AdminModule,
+    SupportTicket: SupportTicketModule
   },
 });
 
