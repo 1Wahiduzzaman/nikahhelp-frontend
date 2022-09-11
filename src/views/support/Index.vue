@@ -2,19 +2,7 @@
   <div>
     <div class="container-fluid mt-4">
       <div class="row mobile-version">
-        <div class="col-12 col-lg-8">
-	        <h2 class="">Past ticket history</h2>
-	        <v-card v-for="ticket in getUserTickets" :key="ticket.id" class="mb-3">
-		        <v-list-item>
-							<v-list-item-title>
-								<v-icon>
-									mdi-bug
-								</v-icon>
-								{{ ticket.issue_type }}
-							</v-list-item-title>
-		        </v-list-item>
-	        </v-card>
-        </div>
+        <component :is="currentTicketComponents"></component>
         <div class="col-12 col-lg-4">
           <div class="card br-10">
             <v-tabs color="error accent-4" class="w-full d-flex justify-content-between support-tab" grow>
@@ -164,14 +152,18 @@
 <script>
 import ApiService from '@/services/api.service';
 import {format} from "timeago.js";
+import Tickets from "@/views/support/Tickets";
 import {mapGetters} from "vuex";
+import UserTicket from "@/views/support/UserTicket";
 
 
 export default {
   name: "Support",
-	components: {},
+	components: {Tickets, UserTicket},
+
 
 	created() {
+		this.getTickets();
 		this.$store.dispatch('getMyTickets', this.getAuthUserId);
 	},
 	// sockets: {
@@ -208,7 +200,8 @@ export default {
 
   computed: {
 		...mapGetters([
-				'getUserTickets'
+				'currentTicketComponents'
+
 		]),
     getAuthUserId() {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -288,6 +281,10 @@ export default {
     messageCreatedAt(time) {
       return format(time);
     },
+
+	  getTickets() {
+			this.currentComponent = 'tickets';
+	  }
   },
 
   mounted() {

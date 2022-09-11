@@ -9,7 +9,10 @@ export default {
             ticket: {},
             ticketMessages: [],
             supportError: false,
-            userTickets: []
+            userTickets: [],
+            ticketsComponents: '',
+            userTicket: {},
+            userTicketMessages: []
         }
     },
 

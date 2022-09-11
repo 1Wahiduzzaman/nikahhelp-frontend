@@ -19,5 +19,21 @@ export default {
 
     getMyTickets(state, payload) {
         state.userTickets = payload;
+    },
+
+    toTicketComponent(state, payload) {
+        state.ticketsComponents = payload;
+    },
+
+    viewUserTicket(state, payload) {
+        state.userTicket = state.userTickets.filter(ticket => ticket.id === payload)[0];
+    },
+
+    toUserTicket(state, payload) {
+        state.ticketsComponents = payload;
+    },
+
+    viewMessages(state, payload) {
+        state.userTicketMessages = state.userTickets.filter(ticket => ticket.id === payload).map(ticket => ticket.process_ticket).pop();
     }
 };

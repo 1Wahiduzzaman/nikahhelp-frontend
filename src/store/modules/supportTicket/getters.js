@@ -20,5 +20,17 @@ export default {
 
     getUserTickets(state) {
         return state.userTickets;
+    },
+
+    currentTicketComponents(state) {
+        return state.ticketsComponents;
+    },
+
+    getUserTicket(state) {
+       return state.userTicket;
+    },
+
+    ticketMessages(state, payload) {
+       return state.userTicketMessages;
     }
 }
