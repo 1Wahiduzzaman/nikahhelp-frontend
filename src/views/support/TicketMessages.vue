@@ -9,7 +9,7 @@
 				<li class="breadcrumb-item active" aria-current="page">Ticket Messages</li>
 			</ol>
 		</nav>
-		<v-icon large>
+		<v-icon large @click="messageReply(ticketMessages[0].id)">
 			Reply:
 			mdi-message-reply
 		</v-icon>
@@ -18,6 +18,10 @@
 		<v-list-item>
 			<v-list-item-title>
 				{{ message.message}}
+			</v-list-item-title>
+			<v-list-item-title>
+				reply by:
+				{{ getName(message.user) }}
 			</v-list-item-title>
 		</v-list-item>
 	  </v-card>
@@ -35,14 +39,21 @@ export default {
 				'ticketMessages'
 		]),
 
-		
+		accountDetails() {
+			return JSON.parse(localStorage.getItem('user'));
+		}
 	},
 
 	methods: {
 		...mapActions([
 			'backToList',
-			'goTo'
-		])
+			'goTo',
+			'messageReply'
+		]),
+
+		getName(user) {
+			return this.accountDetails.id === JSON.parse(user)?.id ? 'You' : JSON.parse(user)?.full_name;
+		}
 	}
 
 }

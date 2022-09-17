@@ -12,7 +12,8 @@ export default {
             userTickets: [],
             ticketsComponents: '',
             userTicket: {},
-            userTicketMessages: []
+            userTicketMessages: [],
+            ticket_id: 0,
         }
     },
 

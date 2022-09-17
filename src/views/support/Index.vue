@@ -80,10 +80,10 @@ import Tickets from "@/views/support/Tickets";
 import {mapGetters} from "vuex";
 import UserTicket from "@/views/support/UserTicket";
 import TicketMessages from '@/views/support/TicketMessages.vue';
-
+import SendMessageForTickets from '@/views/support/SendMessageForTickets.vue';
 export default {
   name: "Support",
-	components: {Tickets, UserTicket, TicketMessages},
+	components: {Tickets, UserTicket, TicketMessages, SendMessageForTickets},
 
 
 	created() {

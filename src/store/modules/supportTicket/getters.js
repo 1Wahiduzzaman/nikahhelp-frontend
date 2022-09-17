@@ -30,7 +30,11 @@ export default {
        return state.userTicket;
     },
 
-    ticketMessages(state, payload) {
+    ticketMessages(state) {
        return state.userTicketMessages;
+    },
+
+    getTicketId(state) {
+        return state.ticket_id;
     }
 }

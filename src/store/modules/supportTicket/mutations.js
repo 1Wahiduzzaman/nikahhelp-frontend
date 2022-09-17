@@ -35,5 +35,9 @@ export default {
 
     viewMessages(state, payload) {
         state.userTicketMessages = state.userTickets.filter(ticket => ticket.id === payload).map(ticket => ticket.process_ticket).pop();
+    },
+
+    sendMessage(state, payload) {
+        state.ticket_id = payload;
     }
 };
