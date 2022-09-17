@@ -1,5 +1,15 @@
 <template>
 	<div class="col-12 col-lg-8">
+		<h2>Current Ticket</h2>
+		<v-card class="d-flex justify-space-between" flat>
+			<nav aria-label="breadcrumb">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item" @click="backToList">Tickets</li>
+				<li class="breadcrumb-item">Selected Tickets</li>
+			</ol>
+		</nav>
+		</v-card>
+		
 		<v-card>
 			<v-list-item>
 				<v-list-item-title>
@@ -39,7 +49,8 @@ export default {
 
 	methods: {
 		...mapActions([
-				'viewMessages'
+				'viewMessages',
+				'backToList'
 		])
 	}
 }

@@ -56,5 +56,13 @@ export default {
     viewMessages(context, payload) {
         context.dispatch('navigateTicketComponent', 'TicketMessages');
         context.commit('viewMessages', payload);
+    },
+
+    goTo(context, payload) {
+        context.dispatch('viewUserTicket', payload);
+    },
+
+    backToList(context, payload) {
+        context.dispatch('navigateTicketComponent', 'tickets')
     }
 }
