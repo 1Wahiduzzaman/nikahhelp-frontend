@@ -2,25 +2,13 @@
   <div>
     <div class="container-fluid mt-4">
       <div class="row mobile-version">
-        <div class="col-12 col-lg-8">
-	        <h2 class="">Past ticket history</h2>
-	        <v-card v-for="ticket in getUserTickets" :key="ticket.id" class="mb-3">
-		        <v-list-item>
-							<v-list-item-title>
-								<v-icon>
-									mdi-bug
-								</v-icon>
-								{{ ticket.issue_type }}
-							</v-list-item-title>
-		        </v-list-item>
-	        </v-card>
-        </div>
+        <component :is="currentTicketComponents"></component>
+
         <div class="col-12 col-lg-4">
           <div class="card br-10">
             <v-tabs color="error accent-4" class="w-full d-flex justify-content-between support-tab" grow>
 	            <v-tab href="#tab-2" @click="tab = 'tab-2'" class="">Submit a ticket</v-tab>
               <v-tab href="#tab-1" @click="tab = 'tab-1'" class="">Start a chat</v-tab>
-
             </v-tabs>
 
             <v-tabs-items v-model="tab">
@@ -76,82 +64,6 @@
 		            <div class="chat-area px-4">
 			            <h1 class="d-flex justify-content-center align-items-center">Coming soon</h1>
 		            </div>
-
-		            <!--                  <div class="position-relative">-->
-		            <!--                    <div class="chat-messages py-4 pr-1" id="chat-messages">-->
-		            <!--                      <div class="position-relative" v-for="(item, cIndex) in chats"-->
-		            <!--                           :key="item.id"-->
-		            <!--                           :id="chats.length === cIndex + 1 ? 'messagesid' : ''">-->
-		            <!--                        <div class="chat-message-right pb-4 position-relative"-->
-		            <!--                             v-if="(parseInt(item.senderId) == parseInt(getAuthUserId))"-->
-		            <!--                             :class="{'conv-mb': chats.length !== cIndex + 1}">-->
-		            <!--                          <div class="text-right">-->
-		            <!--                            <img :src="getAuthUser && getAuthUser.per_main_image_url ? getAuthUser.per_main_image_url : avatarSrc" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">-->
-		            <!--                          </div>-->
-		            <!--                          <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 white-space-pre" v-html="item.body"></div>-->
-		            <!--&lt;!&ndash;                          <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">{{ messageCreatedAt(item.created_at) }}</div>&ndash;&gt;-->
-		            <!--                        </div>-->
-
-		            <!--                        <div class="chat-message-left pb-4 position-relative"-->
-		            <!--                             :class="{'conv-mb': chats.length !== cIndex + 1}"-->
-		            <!--                             v-else>-->
-		            <!--                          <div class="text-left">-->
-		            <!--                            <img src="@/assets/icon/support-secondary.svg" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">-->
-		            <!--                          </div>-->
-		            <!--                          <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 white-space-pre" v-html="item.body"></div>-->
-		            <!--&lt;!&ndash;                          <div class="text-muted small text-nowrap mt-2 position-absolute msg-left-created-at">2021-12-31</div>&ndash;&gt;-->
-		            <!--                        </div>-->
-		            <!--                      </div>-->
-
-		            <!--                    </div>-->
-		            <!--                  </div>-->
-		            <!--                  <div class="footer">-->
-		            <!--                    &lt;!&ndash;                <div class="footer-top"><strong>{{ chatheadopen.typer_name }}</strong> {{ chatheadopen.typing_text }}</div>&ndash;&gt;-->
-		            <!--                    <div class="footer-bottom px-4">-->
-		            <!--                      <form action="#" @submit.prevent="sendMsg">-->
-		            <!--                        <div class="left flex justify-content-end align-items-end">-->
-		            <!--                          <div class="message-box">-->
-		            <!--                            <textarea name="message" id="" cols="30" rows="4" v-model="message" placeholder="Enter message..."></textarea>-->
-		            <!--                            <div class="position-absolute msgbox-right">-->
-		            <!--                              <div class="flex flex-column justify-content-center align-items-center h-full">-->
-		            <!--                                <a-tooltip>-->
-		            <!--                                  <template slot="title">-->
-		            <!--                                    Coming soon-->
-		            <!--                                  </template>-->
-		            <!--                                  <button class="btn-emoji" title="Coming soon">&#128528;</button>-->
-		            <!--                                </a-tooltip>-->
-		            <!--                                <a-tooltip>-->
-		            <!--                                  <template slot="title">-->
-		            <!--                                    Coming soon-->
-		            <!--                                  </template>-->
-		            <!--                                  <button><img src="../../assets/icon/microphone.png" alt="icon" class="microphone" /></button>-->
-		            <!--                                </a-tooltip>-->
-		            <!--                                <a-tooltip>-->
-		            <!--                                  <template slot="title">-->
-		            <!--                                    Coming soon-->
-		            <!--                                  </template>-->
-		            <!--                                  <button><a-icon type="file-image" class="color-primary" /></button>-->
-		            <!--                                </a-tooltip>-->
-		            <!--                              </div>-->
-		            <!--                            </div>-->
-		            <!--                          </div>-->
-		            <!--                          &lt;!&ndash; <button :disabled="returnMsgSendBtnDeactiveStatus" class="btn btn-primary btn-submit js-msg-send">  &ndash;&gt;-->
-		            <!--                          <button class="btn btn-primary btn-submit js-msg-send" @keydown.enter.exact.prevent="sendMsg($event)">-->
-		            <!--                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.68 18.77">-->
-		            <!--                              <g id="Layer_2" data-name="Layer 2">-->
-		            <!--                                <g id="middle" fill="white">-->
-		            <!--                                  <polygon class="cls-1" points="8.6 12.29 7.06 13.34 6.86 11.05 8.6 12.29"/>-->
-		            <!--                                  <polygon class="cls-1" points="0 6.23 25.68 0 17.75 18.77 0 6.23"/>-->
-		            <!--                                  <polygon class="cls-2" points="6.86 11.05 24.95 0.57 8.6 12.29 6.86 11.05"/>-->
-		            <!--                                </g>-->
-		            <!--                              </g>-->
-		            <!--                            </svg>-->
-		            <!--                            Send-->
-		            <!--                          </button>-->
-		            <!--                        </div>-->
-		            <!--                      </form>-->
-		            <!--                    </div>-->
-		            <!--                  </div>-->
 	            </v-tab-item>
             </v-tabs-items>
           </div>
@@ -164,42 +76,27 @@
 <script>
 import ApiService from '@/services/api.service';
 import {format} from "timeago.js";
+import Tickets from "@/views/support/Tickets";
 import {mapGetters} from "vuex";
-
-
+import UserTicket from "@/views/support/UserTicket";
+import TicketMessages from '@/views/support/TicketMessages.vue';
+import SendMessageForTickets from '@/views/support/SendMessageForTickets.vue';
 export default {
   name: "Support",
-	components: {},
+	components: {Tickets, UserTicket, TicketMessages, SendMessageForTickets},
+
 
 	created() {
+		this.getTickets();
 		this.$store.dispatch('getMyTickets', this.getAuthUserId);
 	},
-	// sockets: {
-  //   connect: function () {
-  //     console.log('socket connected')
-  //   },
-	//
-  //   ping_success: function (data) {
-  //     console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
-	// 		this.currentUsers =  data?.online_users;
-  //     console.log(data);
-  //   },
-	//
-	//   receive_message(data) {
-	// 	  console.log(data);
-	//
-	//   }
-  // },
+	
   data() {
     return {
       tab: 'tab-2',
       text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
       customStyle: 'border: none; background: #ffffff',
-      // message: '',
-      // chats: [],
-      // supportAdmin: null,
-	    // currentUsers: [],
 	    selectedIssue: '',
 	    issue: '',
 	    screenshotData: {}
@@ -208,7 +105,8 @@ export default {
 
   computed: {
 		...mapGetters([
-				'getUserTickets'
+				'currentTicketComponents'
+
 		]),
     getAuthUserId() {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -227,41 +125,7 @@ export default {
   },
 
   methods: {
-    // async sendMsg(e) {
-    //   console.log(e);
-    //   let loggedUser = JSON.parse(localStorage.getItem('user'));
-    //   let payload = {
-    //     sender: loggedUser.id,
-    //     receiver: this.currentUsers?.shift(),
-    //     to:  this.currentUsers?.shift(),
-    //     message: this.message,
-    //     user: loggedUser,
-    //     support: true,
-    //     last_message: {
-    //       body: this.message,
-    //       created_at: new Date(),
-    //       sender: loggedUser,
-    //       senderId: loggedUser.id,
-    //       receiver: null,
-    //       receiverId: this.currentUsers.shift(),
-    //       seen: 0
-    //     }
-    //   };
-    //   this.$socket.emit('send_message', payload);
-    //   this.chats.push(payload);
-    //   this.message = '';
-    //   await ApiService.post('/v1/support-send-message', payload).then(response => {
-    //     console.log(response);
-    //   });
-    // },
 	  giveScreenShot() {
-			// if (navigator.userAgent.indexOf("MSIE") != -1 ) {
-			// 	const event = document.createEvent('Event');
-			// 	event.initEvent('input', true, true);
-			//
-			// 	this.$refs.screenshot.dispatchEvent(event);
-			// 	return;
-			// }
 			const event = new Event('click', {
 				bubbles: true
 			});
@@ -284,34 +148,15 @@ export default {
 					})
 	  },
 
-
     messageCreatedAt(time) {
       return format(time);
     },
+
+	  getTickets() {
+			this.currentComponent = 'tickets';
+	  }
   },
 
-  mounted() {
-    let loggedUser = JSON.parse(localStorage.getItem('user'));
-    // this.$socket.emit('ping', {user_id: loggedUser.id, user: loggedUser});
-		//
-    // this.sockets.subscribe('receive_message', function (res) {
-    //   if(res.support) {
-    //     this.chats.push(res.last_message);
-    //   }
-    // });
-  },
-
-
-  // watch: {
-  //   chats: function(val) {
-  //     // console.log(val);
-  //     setTimeout(() => {
-  //       const messages = document.getElementById('chat-messages');
-  //       const messagesid = document.getElementById('messagesid');
-  //       messages.scrollTop = messagesid.offsetTop - 10;
-  //     });
-  //   }
-  // }
 }
 </script>
 
