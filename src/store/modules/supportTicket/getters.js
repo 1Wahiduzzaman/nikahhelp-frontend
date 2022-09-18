@@ -9,7 +9,7 @@ export default {
     },
 
     listOfMessages(state) {
-        return state.ticketMessages.map((mesage) => {
+        return state.ticketMessages.reverse().map((mesage) => {
             return {...mesage, user: JSON.parse(mesage.user)};
         });
     },
@@ -19,7 +19,9 @@ export default {
     },
 
     getUserTickets(state) {
-        return state.userTickets;
+        return state.userTickets.reverse().map((item) => {
+            return {...item, color: item.resolve ? 'warning' : 'danger'}
+        });
     },
 
     currentTicketComponents(state) {
@@ -36,5 +38,13 @@ export default {
 
     getTicketId(state) {
         return state.ticket_id;
+    },
+
+    systemError(state) {
+        return state.error;
+    },
+
+    hasError(state) {
+        return state.hasError;
     }
 }

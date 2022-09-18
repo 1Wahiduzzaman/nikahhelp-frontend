@@ -6,16 +6,8 @@
 					max-width="700"
 
 			>
-				<v-list-item v-for="user in users" :key="user.id">
-					<reporter :reporter="user" @giveBackTicketList="recievedTickets"></reporter>
-				</v-list-item>
-
-				<v-list-item v-for="ticket in userTickets" :key="ticket.id">
-					<ticket :ticket="ticket"></ticket>
-				</v-list-item>
+				<component :is="supportComponent"></component>
 			</v-card>
-
-
 		</v-container>
 </template>
 
@@ -23,13 +15,14 @@
 import ApiService from "@/services/api.service";
 import Reporter from "@/views/admin/Reporter";
 import Ticket from "@/views/admin/Ticket";
+import { mapGetters } from 'vuex';
 
 export default {
 	name: "SupportTickets",
 
 	data() {
 		return {
-			users: [],
+			tickets: [],
 			userTickets: []
 		}
 	},
@@ -43,12 +36,18 @@ export default {
 		this.fetchUsers();
 	},
 
+	computed: {
+		...mapGetters([
+			'supportComponent'
+		])
+	},
+
 	methods: {
 		fetchUsers() {
 			 ApiService.get('/v1/admin/get-users-with-tickets')
 					 .then(data => data.data)
 					 .then(data => {
-						 this.users = data.data;
+						 this.tickets = data.data;
 					 })
 		},
 

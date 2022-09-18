@@ -14,6 +14,8 @@ export default {
             userTicket: {},
             userTicketMessages: [],
             ticket_id: 0,
+            error: '',
+            hasError: false,
         }
     },
 

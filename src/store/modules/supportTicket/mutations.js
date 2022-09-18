@@ -39,5 +39,13 @@ export default {
 
     sendMessage(state, payload) {
         state.ticket_id = payload;
+    },
+
+    systemError(state) {
+        state.error = 'There is a system error';
+    },
+
+    hasError(state, payload) {
+        state.hasError = payload;
     }
 };
