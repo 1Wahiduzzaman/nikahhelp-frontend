@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div class="container-fluid mt-4">
+    <v-skeleton-loader
+        v-if="loading"
+          type="card"
+        ></v-skeleton-loader>
+    <div class="container-fluid mt-4" v-else>
       <div class="row mobile-version">
         <component :is="currentTicketComponents"></component>
 
@@ -13,7 +17,7 @@
 
             <v-tabs-items v-model="tab">
               <v-tab-item value="tab-2">
-                <div class="chat-area px-4">
+                <div class="chat-area px-4" v-if="!ticketSubmitted">
 	                <a-form-model-item label="Type of issue">
 		                <a-select style="width: 100%; margin-bottom: 0.5rem;"
 		                          required
@@ -21,7 +25,7 @@
 			                <a-select-option value="manageteam">
 				                Manage Team
 			                </a-select-option>
-			                <a-select-option value="lucy">
+			                <a-select-option value="Chat">
 				                Chat
 			                </a-select-option>
 			                <a-select-option value="connection">
@@ -48,16 +52,25 @@
 		                </a-select>
 									</a-form-model-item>
 	                <a-form-model-item label="Your message">
-		                <a-textarea v-model="issue"
+		                <v-textarea v-model="issue"
+                                name="input-7-1"
+                              filled
+                              label="describe issue"
+                              auto-grow
 		                            required
-		                            placeholder="Describe the issue (max.1000 characters)"
-		                            :auto-size="{ 'minRow': 800, }" style="height: 10rem; margin-bottom: 0.5rem;"></a-textarea>
+		                            :auto-size="{ 'minRow': 800, }" style="height: 10rem; margin-bottom: 0.5rem;"></v-textarea>
 	                </a-form-model-item>
-	                <a-form-model-item label="ScreenShot">
-		                <a-button type="secondary" @click="giveScreenShot">choose a file</a-button>
-		                <a-input type="file" hidden ref="screenshot" @change="imageUpload"></a-input>
-	                </a-form-model-item>
-	                <a-button type="primary" @submit="submitTicket">Submit Ticket</a-button>
+	                <v-btn type="primary" @click="ticketSumbission">Submit Ticket</v-btn>
+                </div>
+                <div class="chat-area px-4 " v-else>
+                  <v-card class="d-flex flex-column align-center justify-center mt-4">
+                    <v-icon color="success">
+                      mdi-check-circle
+                    </v-icon>
+                    <v-card-text>
+                      Success
+                    </v-card-text>
+                  </v-card>
                 </div>
               </v-tab-item>
 	            <v-tab-item value="tab-1">
@@ -74,17 +87,19 @@
 </template>
 
 <script>
-import ApiService from '@/services/api.service';
+  
 import {format} from "timeago.js";
 import Tickets from "@/views/support/Tickets";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import UserTicket from "@/views/support/UserTicket";
 import TicketMessages from '@/views/support/TicketMessages.vue';
 import SendMessageForTickets from '@/views/support/SendMessageForTickets.vue';
+import ApiService from '../../services/api.service';
 export default {
   name: "Support",
 	components: {Tickets, UserTicket, TicketMessages, SendMessageForTickets},
 
+  
 
 	created() {
 		this.getTickets();
@@ -99,13 +114,16 @@ export default {
       customStyle: 'border: none; background: #ffffff',
 	    selectedIssue: '',
 	    issue: '',
-	    screenshotData: {}
+	    screenshotData: {},
+      noTickets: true,
+      ticketSubmitted: false
     }
   },
 
   computed: {
 		...mapGetters([
-				'currentTicketComponents'
+				'currentTicketComponents',
+        'getUserTickets',
 
 		]),
     getAuthUserId() {
@@ -122,31 +140,19 @@ export default {
       }
       return null;
     },
+
+    loading() {
+      return this.getUserTickets.length < 1 && this.noTickets;
+    },
+
+
+
   },
 
   methods: {
-	  giveScreenShot() {
-			const event = new Event('click', {
-				bubbles: true
-			});
-			this.$refs.screenshot.$el.click();
-	  },
-
-	  imageUpload(e) {
-		  const screenshot = e.target.files[0];
-			this.screenshotData = new FormData();
-		  this.screenshotData.append('screenshot', screenshot);
-	  },
-
-	  submitTicket() {
-			ApiService.post('v1/ticket-submission', this.screenshotData)
-					.then(() => {
-						this.screenshotData = {};
-					})
-					.catch(e => {
-						console.log(e);
-					})
-	  },
+    ...mapActions([
+      'submitTicket'
+    ]),
 
     messageCreatedAt(time) {
       return format(time);
@@ -154,8 +160,28 @@ export default {
 
 	  getTickets() {
 			this.currentComponent = 'tickets';
-	  }
+	  },
+
+    ticketSumbission() {
+      ApiService.post('v1/ticket-submission', {
+              issue_type: this.selectedIssue,
+              issue: this.issue,
+              user: localStorage.getItem('user'),
+            }).then(() => {
+                            this.ticketSubmitted = true;
+                          })
+                          .catch(e => {
+                              console.log(e);
+                          })
+    }
+    
   },
+
+  watch: {
+    getUserTickets() {
+      this.noTickets = this.getUserTickets.length > 0;
+    }
+  }
 
 }
 </script>

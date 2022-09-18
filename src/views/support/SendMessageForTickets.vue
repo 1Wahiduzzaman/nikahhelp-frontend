@@ -5,27 +5,7 @@
    max-width="500"
   >
 	  <v-textarea class="mx-2" v-model="message" placeholder="more information"></v-textarea>
-	 <v-card-actions>
-
-     </v-card-actions>
-    
-      <v-card-actions class="d-flex justify-end">
-        <v-tooltip top>
-      <template v-slot:activator="{ on, attrs }">
-        <v-icon
-         class="mr-4"
-         color="success"
-          v-bind="attrs"
-          v-on="on"
-          @click="resolve"
-        >
-        mdi-check-circle
-        </v-icon>
-      </template>
-      <span>Resolve ticket</span>
-    </v-tooltip>
-
-        
+	 <v-card-actions class="d-flex justify-end">
 		  <v-icon @click="sendMessage">
 			  mdi-send
 		  </v-icon>
@@ -62,7 +42,8 @@ export default {
         sendMessage() {
             ApiService.post('/v1/send-support-message', {
               message:  this.message,
-              ticket_id: this.getTicketId
+              ticket_id: this.getTicketId,
+              user: localStorage.getItem('user')
             })
                 .then(() => {
                     this.backToList();

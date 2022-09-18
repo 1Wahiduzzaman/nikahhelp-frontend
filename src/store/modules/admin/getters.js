@@ -1,1 +1,5 @@
-export default {};
+export default {
+    supportComponent(state) {
+        return state.supportComponent;
+    }
+};

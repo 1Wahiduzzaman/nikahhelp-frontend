@@ -71,5 +71,21 @@ export default {
     messageReply(context, payload) {
         context.dispatch('navigateTicketComponent', 'sendMessageForTickets');
         context.commit('sendMessage', payload);
-    }
+    },
+
+    resolveTicket(context, payload) {
+        ApiService.post('/v1/resolveTicket', {
+            ticket_id: payload
+        }).then(() => {
+            context.dispatch('backToList');
+            context.commit('hasError', false);
+        }).catch(() => {
+            context.commit('systemError');
+            context.commit('hasError', true);
+        })
+    },
+
+    systemErrorResolved(context, payload) {
+        context.commit('hasError', payload);
+    },
 }

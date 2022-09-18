@@ -7,9 +7,6 @@
 				{{ reporter.first_name + ' ' + reporter.last_name }}
 			</v-list-item-title>
 
-			<v-list-item-title>
-				Number of Tickets Submitted: {{ ticketsNumber }}
-			</v-list-item-title>
 		</v-list-item>
 </template>
 
