@@ -205,7 +205,44 @@ export default {
       context.dispatch('getSupportComponent', 'TicketDetails');
   },
 
-  sendMessage(context, payload) {
+  sendMessage(context) {
     context.commit('getSupportComponent', 'SendTicketMessage');
+  },
+
+  goBackToTickets(context) {
+    context.dispatch('getSupportComponent', 'reporter');
+    context.dispatch('getTicketsFromUsers');
+  },
+
+  resolveTicket(context, payload) {
+      ApiService.post('/v1/admin/ticketResolve', {
+        ticket_id: payload
+      }).then(() => {
+        context.dispatch('goBackToTickets');
+      })
+      .catch(() => {
+
+      });
+  },
+
+  goToMessages(context) {
+    context.commit('messageList');
+    context.dispatch('getSupportComponent', 'TicketMessages');
+  },
+
+  reply(context) {
+    context.dispatch('getSupportComponent', 'SendTicketMessage');
+  },
+
+  replyToCustomers(context, payload) {
+    ApiService.post('/v1/admin/submitTicketRequests', {
+      message: payload.message,
+      ticket_id: payload.ticket_id,
+      user: payload.user
+    }).then(() => {
+      context.dispatch('goBackToTickets');
+    }).catch(() => {
+
+    })
   }
 };

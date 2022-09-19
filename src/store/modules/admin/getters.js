@@ -14,5 +14,12 @@ export default {
 
     currentTicket(state) {
         return state.currentTicket;
+    },
+
+    messages(state) {
+        return state.messageList.map(item => {
+             item.user = JSON.parse(item.user)
+             return item;
+        });
     }
 };

@@ -7,7 +7,8 @@ export default {
     return {
       supportComponent: 'reporter',
       ticketFromUsers: [],
-      currentTicket: {}
+      currentTicket: {},
+      messageList: []
     };
   },
   mutations,

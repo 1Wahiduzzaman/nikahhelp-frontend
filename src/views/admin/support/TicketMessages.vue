@@ -1,6 +1,21 @@
 <template>
 	<v-list>
-		<v-card v-for="message in listOfMessages" :key="message" max-width="600" class="mx-auto pa-3">
+		<v-list-item-action class="d-flex justify-center mx-auto">
+        
+		<v-tooltip top >
+			<template v-slot:activator="{ on,  attrs }">
+				<v-icon large 
+						@click="reply"
+						v-bind="attrs"
+						v-on="on"
+				>
+					mdi-message-reply
+				</v-icon>
+			</template>
+			<span>Send message</span>
+		</v-tooltip>
+		</v-list-item-action>
+		<v-card v-for="message in messages" :key="message" max-width="600" class="mx-auto pa-3">
 
 			<v-list-item-title>
 				<v-icon>
@@ -10,23 +25,33 @@
 			</v-list-item-title>
 			<v-spacer></v-spacer>
 			<v-list-item-title>
-				Reply by:
-				{{ message.user.full_name }}
+				Replied by:
+				{{ getUser(message) }}
 			</v-list-item-title>
 		</v-card>
 	</v-list>
 </template>
 
 <script>
-import {mapGetters } from "vuex";
+import {mapActions, mapGetters } from "vuex";
 
 export default {
 	name: "TicketMessages",
 
 	computed: {
 		...mapGetters([
-				'listOfMessages'
+				'messages'
 		]),
+	},
+
+	methods: {
+		...mapActions([
+			'reply'
+		]),
+
+		getUser(message) {
+			return message.user ? message.user.full_name : 'unknown';
+		}
 	}
 }
 </script>

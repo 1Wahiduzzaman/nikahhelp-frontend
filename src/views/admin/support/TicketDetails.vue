@@ -4,8 +4,8 @@
     <v-card class="d-flex justify-space-between" flat>
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item" @click="">Tickets</li>
-          <li class="breadcrumb-item">Selected Tickets</li>
+          <li class="breadcrumb-item" @click="goBackToTickets">Tickets</li>
+          <li class="breadcrumb-item" >Selected Tickets</li>
         </ol>
       </nav>
     </v-card>
@@ -18,7 +18,7 @@
             color="success"
             v-bind="attrs"
             v-on="on"
-            @click=""
+            @click="resolveTicket(currentTicket.id)"
           >
             mdi-check-circle
           </v-icon>
@@ -51,7 +51,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-icon
                 large
-                @click=""
+                @click="goToMessages"
                 v-bind="attrs"
                 v-on="on"
               >
@@ -85,14 +85,12 @@ export default {
 
 	methods: {
 		...mapActions([
-			'sendMessage'
+			'sendMessage',
+			'goBackToTickets',
+			'goToMessages',
+			'resolveTicket'
 		])
-		// sendMessage() {
-		// 	//this.$store.dispatch('getSupportMessages', this.viewingTicket.id);
-		// 	this.$router.push({ name: 'sendTicketMessage', params: { id: this.viewingTicket.id}});
-		// }
 	}
-
 }
 </script>
 
