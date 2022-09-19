@@ -5,7 +5,7 @@
   >
 	  <v-textarea class="mx-2" v-model="message" placeholder="more information"></v-textarea>
 	  <v-card-actions class="d-flex justify-end">
-		  <v-icon @click="sendMessage">
+		  <v-icon @click="replyNow">
 			  mdi-send
 		  </v-icon>
 	  </v-card-actions>
@@ -13,9 +13,15 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 export default {
 	name: "SendTicketMessage",
-	props: ['id'],
+
+	computed: {
+		...mapGetters([
+			'currentTicket'
+		])
+	},
 
 	data() {
 		return {
@@ -24,16 +30,16 @@ export default {
 	},
 
 	methods: {
-		sendMessage() {
-			const user = localStorage.getItem('user');
-			console.log(user);
-			this.$store.dispatch('submitTicketRequests', {
-				message: this.message,
-				ticket_id: this.id,
-				user: user
-			});
+		...mapActions([
+			'replyToCustomers'
+		]),
 
-			this.$router.push({name: 'ticketMessages'});
+		replyNow() {
+			this.replyToCustomers({
+				message: this.message,
+				ticket_id: this.currentTicket.id,
+				user: localStorage.getItem('user')
+			})
 		}
 	}
 }

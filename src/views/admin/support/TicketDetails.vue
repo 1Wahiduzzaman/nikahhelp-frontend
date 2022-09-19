@@ -1,48 +1,96 @@
 <template>
-	<v-card
-			class="mx-auto border-danger"
-	 max-width="600"
-	>
-		<v-card-title>
-			<v-icon>
-				mdi-bug
-			</v-icon>
-			Issue Type:
-			{{ viewingTicket.issue_type }}
-		</v-card-title>
-		<v-card-subtitle>
-			Message:
-		</v-card-subtitle>
-		<v-card-text>
-			{{ viewingTicket.issue }}
-		</v-card-text>
-		<v-card-text  class="d-flex justify-end">
-			<v-icon large  color="secondary" @click="sendMessage">
-				mdi-reply
-			</v-icon>
-		</v-card-text>
-	</v-card>
+	<div class="col-12 col-lg-8">
+    <h2>Current Ticket</h2>
+    <v-card class="d-flex justify-space-between" flat>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item" @click="goBackToTickets">Tickets</li>
+          <li class="breadcrumb-item" >Selected Tickets</li>
+        </ol>
+      </nav>
+    </v-card>
+
+    <v-card-actions class="d-flex justify-end">
+      <v-tooltip top v-if="currentTicket.resolve > 0">
+        <template v-slot:activator="{ on, attrs }">
+          <v-icon
+            class="mr-4"
+            color="success"
+            v-bind="attrs"
+            v-on="on"
+            @click="resolveTicket(currentTicket.id)"
+          >
+            mdi-check-circle
+          </v-icon>
+        </template>
+        <span>Resolve ticket</span>
+      </v-tooltip>
+      <v-tooltip top v-else>
+        <template v-slot:activator="{ on, attrs }">
+          <v-icon large v-bind="attrs" v-on="on" color="warning">
+            mdi-circle
+          </v-icon>
+        </template>
+        <span>Pending</span>
+      </v-tooltip>
+    </v-card-actions>
+    <v-card>
+      <v-list-item>
+        <v-list-item-title>
+          <v-icon> mdi-bug </v-icon>
+          {{ currentTicket.issue }}
+        </v-list-item-title>
+
+        <v-list-item-title>
+          type of issue:
+          {{ currentTicket.issue_type }}
+        </v-list-item-title>
+
+        <v-list-item>
+          <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon
+                large
+                @click="goToMessages"
+                v-bind="attrs"
+                v-on="on"
+              >
+                mdi-message-reply
+              </v-icon>
+            </template>
+            <span>Send message</span>
+          </v-tooltip>
+        </v-list-item>
+      </v-list-item>
+    </v-card>
+    <v-card>
+      <v-card-text class="mt-4">
+        {{ currentTicket.issue }}
+      </v-card-text>
+    </v-card>
+  </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
 	name: "TicketDetails",
 
 	computed: {
 		...mapGetters([
-				'viewingTicket'
+				'currentTicket'
 		])
 	},
 
 	methods: {
-		sendMessage() {
-			//this.$store.dispatch('getSupportMessages', this.viewingTicket.id);
-			this.$router.push({ name: 'sendTicketMessage', params: { id: this.viewingTicket.id}});
-		}
+		...mapActions([
+			'sendMessage',
+			'goBackToTickets',
+			'goToMessages',
+			'resolveTicket'
+		])
 	}
-
 }
 </script>
 

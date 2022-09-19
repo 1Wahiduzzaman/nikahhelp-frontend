@@ -5,7 +5,10 @@ import getters from "./getters.js";
 export default {
   state() {
     return {
-      supportComponent: ''
+      supportComponent: 'reporter',
+      ticketFromUsers: [],
+      currentTicket: {},
+      messageList: []
     };
   },
   mutations,

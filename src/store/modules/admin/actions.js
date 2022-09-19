@@ -188,6 +188,61 @@ export default {
     });
   },
 
+  getSupportComponent(context, payload) {
+     context.commit('supportComponent', payload);
+  },
 
+  getTicketsFromUsers(context) {
+    ApiService.get('/v1/admin/get-users-with-tickets')
+					 .then(data => data.data)
+					 .then(data => {
+						 context.commit('storeTicketsFromUsers', data.data)
+					 })
+  },
 
+  goToTicket(context, payload) {
+     context.commit('getTicket', payload);
+      context.dispatch('getSupportComponent', 'TicketDetails');
+  },
+
+  sendMessage(context) {
+    context.commit('getSupportComponent', 'SendTicketMessage');
+  },
+
+  goBackToTickets(context) {
+    context.dispatch('getSupportComponent', 'reporter');
+    context.dispatch('getTicketsFromUsers');
+  },
+
+  resolveTicket(context, payload) {
+      ApiService.post('/v1/admin/ticketResolve', {
+        ticket_id: payload
+      }).then(() => {
+        context.dispatch('goBackToTickets');
+      })
+      .catch(() => {
+
+      });
+  },
+
+  goToMessages(context) {
+    context.commit('messageList');
+    context.dispatch('getSupportComponent', 'TicketMessages');
+  },
+
+  reply(context) {
+    context.dispatch('getSupportComponent', 'SendTicketMessage');
+  },
+
+  replyToCustomers(context, payload) {
+    ApiService.post('/v1/admin/submitTicketRequests', {
+      message: payload.message,
+      ticket_id: payload.ticket_id,
+      user: payload.user
+    }).then(() => {
+      context.dispatch('goBackToTickets');
+    }).catch(() => {
+
+    })
+  }
 };
