@@ -1,33 +1,44 @@
 <template>
-		<v-list-item @click="ticketList">
-			<v-list-item-title>
-				<v-list-item-avatar>
-					<v-img :src="reporter.per_avatar_url"></v-img>
-				</v-list-item-avatar>
-				{{ reporter.first_name + ' ' + reporter.last_name }}
-			</v-list-item-title>
+	<div>
+		<v-card
+					id="ticket-reporter"
+					class="mx-auto mb-4"
+					max-width="700"
+					v-for="ticket in getTicketFromUsers" 
+						:key="ticket.id"
+	>
+			<v-list-item  @click="goToTicket(ticket.id)">
+					<v-list-item-avatar>
+						<v-img :src="ticket.user.get_candidate.per_avatar_url"></v-img>
+					</v-list-item-avatar>
+					<v-list-item-title>
+						{{ ticket.user.full_name }}
+					</v-list-item-title>
+					<v-list-item-title>
+						issue type:
+						{{ ticket.issue_type }}
+					</v-list-item-title>
+			</v-list-item>
+	</v-card>
+	</div>
 
-		</v-list-item>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
 	name: "Reporter",
 
-	props: ['reporter'],
-
 	computed: {
-		ticketsNumber() {
-			return this.reporter?.ticket_submission.length;
-		}
+		...mapGetters([
+			'getTicketFromUsers'
+		])
 	},
 
 	methods: {
-		ticketList() {
-			this.$store.dispatch('getSelectedTickets', this.reporter?.ticket_submission);
-
-			this.$router.push({ name: 'ticket'});
-		}
+		...mapActions([
+			'goToTicket'
+		])
 	}
 }
 </script>

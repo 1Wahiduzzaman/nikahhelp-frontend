@@ -1,10 +1,7 @@
 <template>
 		<v-container>
 			<v-card
-					id="ticket-reporter"
-					class="mx-auto"
-					max-width="700"
-
+					
 			>
 				<component :is="supportComponent"></component>
 			</v-card>
@@ -12,10 +9,10 @@
 </template>
 
 <script>
-import ApiService from "@/services/api.service";
-import Reporter from "@/views/admin/Reporter";
-import Ticket from "@/views/admin/Ticket";
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
+import Reporter from '@/views/admin/Reporter.vue';
+import TicketDetails from '@/views/admin/support/TicketDetails.vue';
+import SendTicketMessage from '@/views/admin/support/SendTicketMessage.vue';
 
 export default {
 	name: "SupportTickets",
@@ -28,12 +25,13 @@ export default {
 	},
 
 	components: {
-		Ticket,
-		Reporter: Reporter,
+		Reporter,
+		TicketDetails,
+		SendTicketMessage
 	},
 
 	created() {
-		this.fetchUsers();
+		this.getTicketsFromUsers();
 	},
 
 	computed: {
@@ -43,17 +41,9 @@ export default {
 	},
 
 	methods: {
-		fetchUsers() {
-			 ApiService.get('/v1/admin/get-users-with-tickets')
-					 .then(data => data.data)
-					 .then(data => {
-						 this.tickets = data.data;
-					 })
-		},
-
-		recievedTickets(payload) {
-			this.userTickets = payload;
-		}
+		...mapActions([
+			'getTicketsFromUsers'
+		]), 
 	}
 }
 </script>

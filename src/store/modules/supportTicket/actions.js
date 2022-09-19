@@ -26,7 +26,7 @@ export default {
             message: payload.message,
             ticket_id: payload.ticket_id,
             user: payload.user
-        }).then((data) => {
+        }).then(() => {
             context.dispatch('getSupportMessages', payload.ticket_id);
 
         });

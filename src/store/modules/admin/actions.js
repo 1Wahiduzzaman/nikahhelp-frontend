@@ -188,6 +188,24 @@ export default {
     });
   },
 
+  getSupportComponent(context, payload) {
+     context.commit('supportComponent', payload);
+  },
 
+  getTicketsFromUsers(context) {
+    ApiService.get('/v1/admin/get-users-with-tickets')
+					 .then(data => data.data)
+					 .then(data => {
+						 context.commit('storeTicketsFromUsers', data.data)
+					 })
+  },
 
+  goToTicket(context, payload) {
+     context.commit('getTicket', payload);
+      context.dispatch('getSupportComponent', 'TicketDetails');
+  },
+
+  sendMessage(context, payload) {
+    context.commit('getSupportComponent', 'SendTicketMessage');
+  }
 };
