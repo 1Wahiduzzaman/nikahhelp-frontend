@@ -9,6 +9,8 @@ export default {
            return item;
         }).reverse().sort((a, b) => {
             return a.resolve > b.resolve ? -1 : 1 ;
+        }).map((item) => {
+            return {...item, color: item.resolve ? 'success': 'warning'};
         });
     },
 

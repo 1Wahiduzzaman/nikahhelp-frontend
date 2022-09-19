@@ -18,6 +18,16 @@
 						issue type:
 						{{ ticket.issue_type }}
 					</v-list-item-title>
+					<v-list-item>
+						<v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon large v-bind="attrs" v-on="on" :color="ticket.color">
+                mdi-circle
+              </v-icon>
+            </template>
+            <span>{{ ticketState(ticket.resolve) }}</span>
+          </v-tooltip>
+					</v-list-item>
 			</v-list-item>
 	</v-card>
 	</div>
@@ -38,7 +48,11 @@ export default {
 	methods: {
 		...mapActions([
 			'goToTicket'
-		])
+		]),
+
+		ticketState(state) {
+			return state > 0 ? 'Resolved' : 'Pending';
+		}
 	}
 }
 </script>
