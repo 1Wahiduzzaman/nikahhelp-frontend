@@ -150,7 +150,7 @@
       <div class="content-identity">
         <h4>Identity Verification</h4>
         <div
-          v-if="userInfo.user && userInfo.user.status == '3'"
+          v-if="checkStatus('3')"
           class="identity"
         >
           <img
@@ -161,13 +161,7 @@
           <span>Verified</span>
         </div>
         <div
-          v-if="
-            (userInfo.user.status < 3 &&
-              userInfo.candidate_information &&
-              userInfo.candidate_information.is_uplaoded_doc == '0') ||
-            (userInfo.representative_information &&
-              userInfo.representative_information.is_uplaoded_doc == '0')
-          "
+          v-if="verification"
           class="identity"
         >
           <img
@@ -186,11 +180,7 @@
 
         <div
           v-if="
-            (userInfo.user.status < 3 &&
-              userInfo.candidate_information &&
-              userInfo.candidate_information.is_uplaoded_doc == '1') ||
-            (userInfo.representative_information &&
-              userInfo.representative_information.is_uplaoded_doc == '1')
+            !verification
           "
           class="identity"
         >
@@ -202,7 +192,7 @@
           <span>In Review</span>
         </div>
         <div
-          v-if="userInfo.user && userInfo.user.status == '4'"
+          v-if="checkStatus('4')"
           class="identity"
         >
           <img
@@ -213,7 +203,7 @@
           <span>Rejected</span>
         </div>
         <div
-          v-if="userInfo.user && userInfo.user.status == '9'"
+          v-if="checkStatus('9')"
           class="identity"
         >
           <img
@@ -224,7 +214,7 @@
           <span>Suspended</span>
         </div>
         <div
-          v-if="userInfo.user && userInfo.user.status == '0'"
+          v-if="checkStatus('0')"
           class="identity"
         >
           <img
@@ -304,6 +294,18 @@ export default {
       showIdentity: true,
     };
   },
+
+  computed: {
+    verification() {
+        return  (this.userInfo?.user?.status < 3 &&
+              this.userInfo?.candidate_information &&
+              this.userInfo?.candidate_information.is_uplaoded_doc == '0') ||
+            (this.userInfo?.user?.status < 3 && this.userInfo?.representative_information &&
+              this.userInfo?.representative_information.is_uplaoded_doc == '0')
+         
+    }
+  },
+
   async mounted() {
     this.getUserInfo();
 
@@ -323,6 +325,19 @@ export default {
     async getUserInfo() {
       let { data } = await ApiService.get("v1/user").then((res) => res.data);
       this.userInfo = data;
+    },
+
+    checkStatus(index) {
+        const status = [
+          '1',
+          '2',
+          '3',
+          '4',
+          '9',
+          '0' 
+    ];
+
+        return status[this.userInfo?.user?.status] == index;
     },
 
     openDialog(e) {
