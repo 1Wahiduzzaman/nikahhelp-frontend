@@ -24,7 +24,8 @@
 							labelPlacement="vertical"
 					>
 						<a-step
-								v-for="item in steps"
+								@click="onStep(index)"
+								v-for="(item, index) in steps"
 								:key="item.title"
 								:title="item.title"
 						/>
@@ -36,20 +37,24 @@
 						<div class="mobile-block px-3 justify-content-center">
 							<div
 									class="mobile-step"
+									@click="onStep(0)"
 									:class="{ 'bg-primary': current >= 0 }"
 							></div>
 							<div
 									class="mobile-step ml-2"
+									@click="onStep(1)"
 									:class="{ 'bg-primary': current >= 1 }"
 							></div>
 							<div
 									class="mobile-step ml-2"
+									@click="onStep(2)"
 									:class="{ 'bg-primary': current >= 2 }"
 							></div>
-							<div
+							<!-- <div
 									class="mobile-step ml-2"
+									@click="onStep(3)"
 									:class="{ 'bg-primary': current >= 3 }"
-							></div>
+							></div> -->
 						</div>
 					</div>
 				</div>
@@ -104,9 +109,9 @@
 						ref="VerificationAgreement"
 				/>
 			</div>
-			<div class="steps-content" v-if="current == 3">
+			<!-- <div class="steps-content" v-if="current == 3">
 				<Review :showAgreement="showAgreement" @toggleStep="toggleStep" />
-			</div>
+			</div> -->
 			<div class="steps-action text-right pb-5 clearfix bottom-padding">
 				<a-button
 						:disabled="!enabledNextBtn"
@@ -124,7 +129,7 @@
 				>
 					Next
 				</a-button>
-				<a-button
+				<!-- <a-button
 						v-if="current == steps.length - 1"
 						type="primary"
 						shape="round"
@@ -132,7 +137,7 @@
 						@click="openDialog"
 				>
 					Review and Submit
-				</a-button>
+				</a-button> -->
 				<a-button
 						v-if="current > 0"
 						shape="round"
@@ -144,7 +149,7 @@
 				</a-button>
 
 				<a-button
-						v-if="current < steps.length - 1"
+						v-if="current >= 0"
 						shape="round"
 						type="primary"
 						style="float: left"
@@ -159,12 +164,12 @@
 				</a-button>
 			</div>
 		</div>
-		<AgreementSubmit
+		<!-- <AgreementSubmit
 				@continue="continueToDashboard"
 				@submit="doneBtn"
 				@cancel="cancel"
 				:dialog="dialog"
-		/>
+		/> -->
 		<br /><br /><br /><br /><br />
 	</div>
 </template>
@@ -227,9 +232,9 @@ export default {
 				{
 					title: "Verification & Reference",
 				},
-				{
-					title: "Review & Submit",
-				},
+				// {
+				// 	title: "Review & Submit",
+				// },
 			],
 			mobileSteps: [
 				"Personal Info",
@@ -248,6 +253,10 @@ export default {
 		this.getRepresentativeInitialInfo();
 	},
 	methods: {
+		onStep(index) {
+			this.current = index;
+		},
+
 		openDialog() {
 			this.dialog = false;
 			setTimeout(() => {
@@ -317,6 +326,7 @@ export default {
 					this.representativeDetails.imageModel = {
 						...e.value,
 					};
+					break;
 				case 2:
 					this.representativeDetails.verification = {
 						...this.representativeDetails.verification,
@@ -419,7 +429,7 @@ export default {
 						ver_document_backside: "",
 					};
 				}
-				this.current = response.data.data.data_input_status;
+				this.current = 0;
 				this.checkExistData();
 			} else {
 				this.isLoading = false;

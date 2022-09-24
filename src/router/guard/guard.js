@@ -1,6 +1,16 @@
-export const InitRoute = (to, from, next) => {
+import ApiService from "../../services/api.service";
+
+export const InitRoute =  (to, from, next) => {
     const user = JSON.parse(localStorage.getItem('user'));
     const token = JSON.parse(localStorage.getItem('token'));
+    // ApiService.get('/v1/user')
+    //         .then(() => {
+    //             debugger;
+    //             return next();
+    //         }).catch(() => {
+    //             debugger;
+    //             return to.name == 'Login' ? next() : next({ name: 'Login' });
+    //         })
     if (!token && to.name == 'Signup') {
         return next();
     }
