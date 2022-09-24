@@ -85,7 +85,8 @@
 
       <div class="text-start">
         <!-- Personal Information -->
-        <div class="review-edit mt-5">
+        <div class="review-edit mt-5" v-if="representativeDetails.data_input_status > 0">
+
           <div class="review-edit-label">
             Personal Information
             <img
@@ -95,6 +96,7 @@
               @click="$emit('toggleStep', 0)"
             />
           </div>
+
           <div class="row h-100">
             <div class="col-md-12 mb-3">
               <div class="card-custom shadow-default personal-height">
@@ -243,7 +245,9 @@
               </div>
             </div>
           </div>
+
         </div>
+
         <div v-if="showAgreement" class="review-edit mt-5">
           <div class="review-edit-label">
             Verification & Reference
@@ -361,7 +365,7 @@
           </div>
         </div>
         <!-- Uploaded Image -->
-        <div class="review-edit mt-5">
+        <div class="review-edit mt-5" v-if="representativeDetails.data_input_status > 1">
           <div class="review-edit-label">
             My Uploaded Image
             <img
@@ -402,7 +406,7 @@
         </div>
       </div>
 
-      <div v-if="documentInfo && documentInfo.candidate_info">
+      <div v-if="representativeDetails.data_input_status > 2">
         <div class="mt-5">
           <div>
             <h4>Document Preview</h4>
@@ -411,8 +415,6 @@
                 <div class="profile-img text-center">
                   <img
                     :src="
-                      documentInfo.image_server_base_url +
-                      '/' +
                       documentInfo.candidate_info.ver_image_front
                     "
                     v-viewer
@@ -429,8 +431,6 @@
                   <img
                     v-viewer
                     :src="
-                      documentInfo.image_server_base_url +
-                      '/' +
                       documentInfo.candidate_info.ver_image_back
                     "
                     class=""
@@ -446,6 +446,16 @@
         </div>
       </div>
     </fieldset>
+
+    <div class="jumbotron">
+  <h1 class="display-4">Hello, world!</h1>
+  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+  <hr class="my-4">
+  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+  </p>
+</div>
     <NoteModal @save="save" @cancel="cancel" :dialog="dialog" />
   </div>
 </template>
@@ -457,7 +467,7 @@ import ApiService from "@/services/api.service";
 // import { AGES, HEIGHTS, Employment_Statuses } from "@/models/data";
 import TableRow from "@/components/atom/TableRow";
 export default {
-  name: "Review",
+  name: "RepresentativeReview",
   components: {
     NoteModal,
     // RatingComponent,
