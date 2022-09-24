@@ -48,7 +48,6 @@ export const getUserId = () => {
 // * we can implement save user data on first run from here
 // ! its better to use this method on first login, one time
 export const saveTokenAndUser = (data) => {
-  console.log(data);
   Vue.$localStorage.set(ID_TOKEN_KEY, data.token);
 };
 
