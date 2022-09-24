@@ -155,7 +155,7 @@
                     >
                   </li>
 
-                  <li class="flex-between-start">
+                  <!-- <li class="flex-between-start">
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Current Residance</span
                     ><span class="flex-70 px-2 d-inherit"
@@ -170,7 +170,7 @@
                         }}</span
                       >
                     </span>
-                  </li>
+                  </li> -->
                   <li class="flex-between-start">
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Address Line 1</span
@@ -194,7 +194,7 @@
                       >City</span
                     ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
-                        representativeDetails.personal.per_permanent_city_text
+                        representativeDetails.personal.per_permanent_city
                       }}</span></span
                     >
                   </li>
@@ -214,7 +214,7 @@
                       >:<span class="ml-3 text--secondary text-subtitle-1"
                         >{{
                           representativeDetails.personal
-                            .per_permanent_country_text
+                            .per_permanent_country
                         }},
                       </span>
                     </span>
@@ -235,7 +235,7 @@
                       >Email</span
                     ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
-                        representativeDetails.personal.per_email
+                        representativeDetails.user.email
                       }}</span></span
                     >
                   </li>
