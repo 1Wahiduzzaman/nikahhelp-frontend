@@ -29,7 +29,6 @@
             :loading="loading"
             v-if="userStatus < 3 && dataInputStatus == 6"
             class="mr-2"
-            :class="statusBtnColor"
             @click="updateUserVerifyOrReject('verified')"
             small
             style="background-color: rgb(42 205 100); color: #fff"
@@ -699,7 +698,7 @@
         </div>
 
         <!-- Family Information -->
-        <div class="review-edit mt-5">
+        <div class="review-edit mt-5" v-if="candidateData.data_input_status > 1">
           <div class="review-edit-label">
             Family Information
             <img
@@ -945,7 +944,7 @@
         </div>
       </div>
 
-      <div v-if="documentInfo && documentInfo.candidate_info">
+      <div v-if="documentInfo.candidate_info.ver_image_front">
         <div class="mt-5">
           <div>
             <h4>Document Preview</h4>
@@ -954,8 +953,6 @@
                 <div class="profile-img text-center">
                   <img
                     :src="
-                      documentInfo.image_server_base_url +
-                      '/' +
                       documentInfo.candidate_info.ver_image_front
                     "
                     v-viewer
@@ -972,8 +969,6 @@
                   <img
                     v-viewer
                     :src="
-                      documentInfo.image_server_base_url +
-                      '/' +
                       documentInfo.candidate_info.ver_image_back
                     "
                     class=""
