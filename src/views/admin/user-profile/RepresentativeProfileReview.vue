@@ -16,7 +16,7 @@
             >
           </div>
           <div>
-            User status: <strong>{{ getUserStatus(userStatus) }}</strong>
+            User status: <strong>{{ getStatus }}</strong>
           </div>
         </v-col>
       </v-row>
@@ -470,6 +470,10 @@ export default {
       loading: false,
       cancelLoading: false,
       dialog: false,
+      loadingSuspend: false,
+      loadingDelete: false,
+      loadingReinstate: false,
+      loadingReject: false,
       statusArr: [
         { key: 1, name: "InComplete" },
         { key: 2, name: "Complete" },
@@ -487,6 +491,7 @@ export default {
     this.getDocumentInfo();
   },
   methods: {
+    
     getUserStatus(status) {
       return this.statusArr.find((i) => i.key == status).name;
     },
@@ -597,8 +602,24 @@ export default {
           this.loadingReinstate = false;
         });
     },
+
+    
   },
   computed: {
+    getStatus() {
+      
+        const status = {
+        '0': "Deleted",
+        '1': "Pending",
+        '2': "Pending",
+        '3': "Verified",
+        '4': "Rejected",
+        '9': "Suspended",
+      };
+        return status[this.userStatus];
+      
+    },
+
     user_id: function () {
       return this.$route.params.user_id;
     },
