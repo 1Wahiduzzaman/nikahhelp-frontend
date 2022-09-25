@@ -3,10 +3,64 @@
     <Header />
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else class="steps ma-steps">
-      <div class="steper-header text-center heading-text px-3 d-mb-none">
+      <!-- <div class="steper-header text-center heading-text px-3 d-mb-none">
         <h4>About you and the companion you are looking for</h4>
         <p>To get the best results please complete the questions fully</p>
-      </div>
+      </div> -->
+
+      <v-dialog
+        transition="dialog-bottom-transition"
+        max-width="600"
+        class="d-flex justify-center mb-4 mt-8"
+      >
+      <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="purple"
+            v-bind="attrs"
+            width="400"
+            text
+            outlined
+            v-on="on"
+            center
+            rounded
+            class="mx-auto mb-2 mt-8"
+          > Getting started 
+          <v-icon>
+            mdi-help
+          </v-icon>
+        </v-btn>
+        </template>
+        <template v-slot:default="dialog">
+          <v-card>
+            <v-toolbar
+              color="violet"
+            > {{ contentTitle }}
+              </v-toolbar>
+            <v-card-text>
+              <v-img
+  lazy-src="https://picsum.photos/id/11/10/6"
+  max-height="150"
+  max-width="250"
+  src="https://picsum.photos/id/11/500/300"
+></v-img>
+              <div class="text-h2 pa-12">{{ contentGuidance }}</div>
+            </v-card-text>
+            <v-card-actions class="justify-end">
+              <v-btn
+                text
+                @click="dialog.value = false;"
+              >Skip</v-btn>
+            </v-card-actions>
+            <v-card-actions class="justify-end">
+              <v-btn
+                text
+                @click="changeContent"
+              >next</v-btn>
+            </v-card-actions>
+          </v-card>
+        </template>
+      </v-dialog>
+
 
       <VueFixedHeader
         @change="updateFixedStatus"
@@ -225,6 +279,9 @@ export default {
   },
   data() {
     return {
+      currentGuide: 0,
+      contentTitle: 'Profile & ID completion and getting approval',
+      contentGuidance: 'hello word',
       isAgree: false,
       dialog: false,
       isLoading: false,
@@ -813,6 +870,23 @@ export default {
       this.current = step;
       this.checkExistData();
     },
+
+    changeContent() {
+      this.currentGuide = this.currentGuide + 1;
+
+      switch (this.currentGuide) {
+        case 1:
+          this.contentTitle = 'chanegd';
+          this.contentGuidance = 'guided';
+          break;
+      
+        default:
+          this.contentTitle = 'chanegd';
+          this.contentGuidance = 'guided';
+          break;
+      }
+    },
+
     async saveCandidateUploadDoc() {
       const {
         ver_country,
