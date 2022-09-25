@@ -24,38 +24,70 @@
             center
             rounded
             class="mx-auto mb-2 mt-8"
-          > Getting started 
-          <v-icon>
+          > Quick Tour
+          <!-- <v-icon>
             mdi-help
-          </v-icon>
+          </v-icon> -->
         </v-btn>
         </template>
         <template v-slot:default="dialog">
-          <v-card>
+          <v-card class="relative">
             <v-toolbar
+
               color="violet"
-            > {{ contentTitle }}
-              </v-toolbar>
+              class="d-flex justify-center  font-weight-bold"
+            >
             <v-card-text>
+              {{ currentGuide }}. {{ contentTitle }}
+            </v-card-text>
+              </v-toolbar>
+            <v-card-text class="d-flex flex-column align-center">
               <v-img
   lazy-src="https://picsum.photos/id/11/10/6"
   max-height="150"
   max-width="250"
   src="https://picsum.photos/id/11/500/300"
 ></v-img>
-              <div class="text-h2 pa-12">{{ contentGuidance }}</div>
+              <div class="text-center">{{ contentGuidance }}</div>
             </v-card-text>
-            <v-card-actions class="justify-end">
-              <v-btn
+            <v-btn
+                rounded
+                absolute
+                bottom
+                left
                 text
+                class="mb-2"
                 @click="dialog.value = false;"
               >Skip</v-btn>
-            </v-card-actions>
             <v-card-actions class="justify-end">
+              
+              <v-btn
+                v-if="currentGuide > 0"
+                text
+               
+                @click="changeContentPrev"
+                class="mr-3"
+              >
+            <v-icon
+             color="grey"
+            >
+              mdi-arrow-left-circle
+            </v-icon>
+            </v-btn>
               <v-btn
                 text
                 @click="changeContent"
-              >next</v-btn>
+              >
+              <v-icon
+              color="#6159A7"
+              >
+                mdi-arrow-right-circle
+              </v-icon>
+            
+            </v-btn>
+            </v-card-actions>
+            <v-card-actions class="justify-end">
+              
             </v-card-actions>
           </v-card>
         </template>
@@ -871,18 +903,82 @@ export default {
       this.checkExistData();
     },
 
+    changeContentPrev() {
+       switch (this.currentGuide) {
+        case 1:
+          this.contentTitle = 'Profile & ID completion and getting approval';
+          this.contentGuidance = 'Profile id';
+          this.currentGuide = 0;
+          break;
+        case 2:
+          this.contentTitle = 'Creating or joining a team';
+          this.contentGuidance = 'Team';
+          this.currentGuide = 1;
+
+          break;
+        case 3:
+          this.contentTitle = 'Choosing  a subscription plan';
+          this.contentGuidance = 'subscription';
+          this.currentGuide = 2;
+
+          break;
+        case 4:
+          this.contentTitle = 'Search for suitable prospect';
+          this.contentGuidance = 'search';
+          this.currentGuide = 3;
+
+          break; 
+        case 5:
+          this.contentTitle = 'Shortlist and Connect with prospect’s team';
+          this.contentGuidance = 'Shortlist and Connect';
+          this.currentGuide = 4;
+          break;
+        case 6:
+          this.contentTitle = 'Chat and exchange information with connected team';
+          this.contentyGuidance = 'Chat';  
+          this.currentGuide = 5;
+          break;    
+        default:
+          this.contentTitle = 'Evaluate information and make decision';
+          this.contentGuidance = 'Evaluate information';
+          this.currentGuide = 6;
+          break;
+       }
+    },
+
     changeContent() {
       this.currentGuide = this.currentGuide + 1;
 
       switch (this.currentGuide) {
         case 1:
-          this.contentTitle = 'chanegd';
-          this.contentGuidance = 'guided';
+          this.contentTitle = 'Creating or joining a team';
+          this.contentGuidance = 'Team';
           break;
       
+        case 2:
+          this.contentTitle = 'Choosing  a subscription plan';
+          this.contentGuidance = 'subscription';
+          break; 
+        case 3:
+          this.contentTitle = 'Search for suitable prospect';
+          this.contentGuidance = 'search';
+          break;  
+        case 4:
+          this.contentTitle = 'Shortlist and Connect with prospect’s team';
+          this.contentGuidance = 'Shortlist and Connect';
+          break;
+        case 5:
+          this.contentTitle = 'Chat and exchange information with connected team';
+          this.contentyGuidance = 'Chat';    
+          break;
+        case 6:
+          this.contentTitle = 'Evaluate information and make decision';
+          this.contentGuidance = 'Evaluate information';
+          break;
         default:
-          this.contentTitle = 'chanegd';
-          this.contentGuidance = 'guided';
+          this.contentTitle = 'Profile & ID completion and getting approval';
+          this.contentGuidance = 'Profile id';
+          this.currentGuide = 0;
           break;
       }
     },
