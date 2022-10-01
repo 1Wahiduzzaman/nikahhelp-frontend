@@ -130,7 +130,7 @@ export default {
   data() {
     return {
       searchModel: {
-        gender: 1,
+        gender: null,
         country: undefined,
         religion: undefined,
         min_age: undefined,
