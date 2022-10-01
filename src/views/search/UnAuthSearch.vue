@@ -53,9 +53,12 @@
 				<h5 class="search-text">Search Results</h5>
 				<v-chip-group>
 					<v-chip
-					color="purple"
+					color=""
 					v-for="(item, i) in queries" :key="i">
 						{{ item }}
+						<v-icon>
+							mdi-check
+						</v-icon>
 					</v-chip>
 				</v-chip-group>
 				<button
@@ -138,10 +141,43 @@
 
 			<Observer @intersect="onIntersect"/>
 		</div>
-		<un-auth-search-modal
+		<!-- <un-auth-search-modal
 				v-model="searchModalVisible"
 				@handleSearch="handleSearch"
-		></un-auth-search-modal>
+		></un-auth-search-modal> -->
+		<Modal
+        v-model="searchModalVisible"
+        @onCancel="onCancel"
+        :width="400"
+    >
+      <div class="details-modal p-3">
+        <h3 class="fs-18 text-header-black">We have found several matches for you</h3>
+        <p class="fs-14">
+          Register for free and start in no time by exploring Matrimony
+          Assist with a candidate and rep profile.
+        </p>
+        <p class="fs-14">
+          We request all users on Matrimony Assist to verify their email and
+          mobile number to help build and maintain trust.
+        </p>
+        <div>
+          <div class="text-center">
+            <a href="/login" class="btn btn-sm btn-brand ml-2 btn-unauth">
+              Sign in
+            </a>
+          </div>
+
+          <div class="text-center">
+            <span class="text-center">or</span>
+          </div>
+          <div class="text-center">
+            <a href="/signup" class="btn btn-sm ml-2 btn-unauth">
+              Join now
+            </a>
+          </div>
+        </div>
+      </div>
+    </Modal>
 		<div class="footer-container">
 			<Footer style="margin-top: 50px" />
 		</div>
@@ -150,11 +186,13 @@
 
 <script>
 // import CandidateGrid from "@/components/search/CandidateGrid.vue";
-import UnAuthSearchModal from "@/components/search/UnAuthSearchModal.vue";
+// import UnAuthSearchModal from "@/components/search/UnAuthSearchModal.vue";
 import ApiService from "../../services/api.service";
 import Footer from "@/components/auth/Footer.vue";
 import CandidateGrid from '@/components/search/UnauthCard.vue';
 import Observer from "@/components/atom/Observer";
+import Modal from '@/components/ui/Modal';
+
 
 export default {
 	props: ["url"],
@@ -187,8 +225,9 @@ export default {
 	components: {
 		Footer,
 		CandidateGrid,
-		UnAuthSearchModal,
+		// UnAuthSearchModal,
 		Observer,
+		Modal,
 	},
 
 	watch: {
@@ -210,6 +249,9 @@ export default {
 		}
 	},
 	methods: {
+		onCancel() {
+      this.searchModalVisible = false;
+    },
 		setSearchModalVisible() {
 			this.searchModalVisible = true;
 		},
@@ -463,5 +505,16 @@ export default {
 
 .mt-150 {
 	margin-top: 150px;
+}
+
+.btn-unauth {
+  border: 1px solid #3A3092;
+  color: #3A3092;
+  border-radius: 20px;
+  &:hover {
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    background: #3A3092;
+  }
 }
 </style>
