@@ -51,6 +51,13 @@
 			<!--			</div>-->
 			<div class="flex justify-content-between align-items-center my-4">
 				<h5 class="search-text">Search Results</h5>
+				<v-chip-group>
+					<v-chip
+					color="purple"
+					v-for="(item, i) in queries" :key="i">
+						{{ item }}
+					</v-chip>
+				</v-chip-group>
 				<button
 						@click="setSearchModalVisible"
 						class="btn btn-primary py-2 px-4 advance-btn"
@@ -151,6 +158,7 @@ import Observer from "@/components/atom/Observer";
 
 export default {
 	props: ["url"],
+
 	data() {
 		return {
 			searchModalVisible: false,
@@ -158,9 +166,15 @@ export default {
 			landingLoading: false,
 			searchResult: false,
 			isLoading: false,
-			pagination: {}
+			pagination: {},
+			queries: {}
 		};
 	},
+
+	computed: {
+		
+	}, 
+
 	created() {
 		let pagination = {
 			page: 1,
@@ -169,11 +183,31 @@ export default {
 		this.landingLoading = true;
 		this.handleSearch(this.url, pagination);
 	},
+
 	components: {
 		Footer,
 		CandidateGrid,
 		UnAuthSearchModal,
 		Observer,
+	},
+
+	watch: {
+		updatedResult() {
+			this.queries = this.updatedResult.reduce((acc, curr) => {
+				const query = {
+					gender: curr.per_gender,
+					location: curr.per_nationality,
+					age: this.url.split('&').map(item => {
+						return item.split('_').pop().split('=').pop();
+					}).filter((item, i) => i < 2).join('-'),
+					religion: curr.per_religion
+				}
+				acc.push(query);
+				return acc;
+			}, []);
+
+			this.queries = Object.values(this.queries[0]);
+		}
 	},
 	methods: {
 		setSearchModalVisible() {
