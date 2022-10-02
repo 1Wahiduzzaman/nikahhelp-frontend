@@ -9,6 +9,96 @@
         <p>Please answer all question accurately and in full</p>
       </div>
 
+      <v-dialog
+        transition="dialog-bottom-transition"
+        max-width="600"
+        class="d-flex justify-center mb-4 mt-8"
+      >
+      <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="purple"
+            v-bind="attrs"
+            width="400"
+            text
+            outlined
+            v-on="on"
+            center
+            rounded
+            class="mx-auto mb-2 mt-8"
+          > Quick Tour
+          <!-- <v-icon>
+            mdi-help
+          </v-icon> -->
+        </v-btn>
+        </template>
+        <template v-slot:default="dialog">
+          <v-card class="relative">
+            <!-- <v-toolbar
+
+              color="violet"
+              class="d-flex justify-center  font-weight-bold"
+            >
+           
+              </v-toolbar> -->
+            <v-card-text class="d-flex flex-column align-center pt-4">
+              <v-img
+  lazy-src="https://picsum.photos/id/11/10/6"
+  max-height="150"
+  max-width="250"
+  src="https://picsum.photos/id/11/500/300"
+></v-img>
+              <!-- <div class="text-center">{{ contentGuidance }}</div> -->
+            </v-card-text>
+            <v-card-text class="d-flex flex-column align-center">
+              {{ currentGuide }}. {{ contentTitle }}
+            </v-card-text>
+            <v-card-text class="d-flex flex-column align-center">
+              <p>hello world </p>
+
+            </v-card-text>
+            <v-btn
+                rounded
+                absolute
+                bottom
+                left
+                text
+                class="mb-2"
+                @click="dialog.value = false;"
+              >Skip</v-btn>
+            <v-card-actions class="justify-end">
+              
+              <v-btn
+                v-if="currentGuide > 0"
+                text
+               
+                @click="changeContentPrev"
+                class="mr-3"
+              >
+            <v-icon
+             color="grey"
+            >
+              mdi-arrow-left-circle
+            </v-icon>
+            </v-btn>
+              <v-btn
+                text
+                @click="changeContent"
+              >
+              <v-icon
+              color="#6159A7"
+              >
+                mdi-arrow-right-circle
+              </v-icon>
+            
+            </v-btn>
+            </v-card-actions>
+            <v-card-actions class="justify-end">
+              
+            </v-card-actions>
+          </v-card>
+        </template>
+      </v-dialog>
+
       <VueFixedHeader
         @change="updateFixedStatus"
         :threshold="propsData.threshold"
@@ -65,8 +155,9 @@
         <p class="color-brand fs-18">Details about you</p>
       </div>
       <div class="text-center mt-5" v-if="current == 2">
-        <h5 class="color-brand fs-20">Verification Information</h5>
+        <h5 class="color-brand fs-20">Reference</h5>
         <p class="color-brand fs-18">Details about you</p>
+        <p>lorem ipsum</p>
       </div>
       <div class="text-center mt-5" v-if="current == 3">
         <h5 class="color-brand fs-20">Review & Publish</h5>
@@ -91,18 +182,18 @@
       </div>
       <div class="steps-content px-2" v-if="current == 2">
         <Verification
-          v-if="showAgreement"
+        
           @cancel="cancelVerification"
           :representativeDetails="representativeDetails"
           @valueChange="onDataChange($event)"
           :verification="representativeDetails.verification"
           ref="VerificationRef"
         />
-        <VerificationAgreement
+        <!-- <VerificationAgreement
           @agree="onAgree($event)"
           v-if="!showAgreement"
           ref="VerificationAgreement"
-        />
+        /> -->
       </div>
       <div class="steps-content" v-if="current == 3">
         <Review :showAgreement="showAgreement" @toggleStep="toggleStep" />
@@ -203,6 +294,9 @@ export default {
 
   data() {
     return {
+      currentGuide: 0,
+      contentTitle: 'Profile & ID completion and getting approval',
+      contentGuidance: 'hello word',
       isLoading: false,
       fixedStatus: {
         headerIsFixed: false,
@@ -225,7 +319,7 @@ export default {
           title: "Image Upload",
         },
         {
-          title: "Verification & Reference",
+          title: "Reference",
         },
         {
           title: "Review & Submit",
@@ -234,7 +328,7 @@ export default {
       mobileSteps: [
         "Personal Info",
         "Image Upload",
-        "Verification & Reference",
+        "Reference",
         "Review & Submit",
       ],
 
@@ -329,6 +423,87 @@ export default {
     updateFixedStatus(next) {
       this.fixedStatus.headerIsFixed = next;
     },
+
+    changeContentPrev() {
+       switch (this.currentGuide) {
+        case 1:
+          this.contentTitle = 'Profile & ID completion and getting approval';
+          this.contentGuidance = 'Profile id';
+          this.currentGuide = 0;
+          break;
+        case 2:
+          this.contentTitle = 'Creating or joining a team';
+          this.contentGuidance = 'Team';
+          this.currentGuide = 1;
+
+          break;
+        case 3:
+          this.contentTitle = 'Choosing  a subscription plan';
+          this.contentGuidance = 'subscription';
+          this.currentGuide = 2;
+
+          break;
+        case 4:
+          this.contentTitle = 'Search for suitable prospect';
+          this.contentGuidance = 'search';
+          this.currentGuide = 3;
+
+          break; 
+        case 5:
+          this.contentTitle = 'Shortlist and Connect with prospect’s team';
+          this.contentGuidance = 'Shortlist and Connect';
+          this.currentGuide = 4;
+          break;
+        case 6:
+          this.contentTitle = 'Chat and exchange information with connected team';
+          this.contentyGuidance = 'Chat';  
+          this.currentGuide = 5;
+          break;    
+        default:
+          this.contentTitle = 'Evaluate information and make decision';
+          this.contentGuidance = 'Evaluate information';
+          this.currentGuide = 6;
+          break;
+       }
+    },
+
+    changeContent() {
+      this.currentGuide = this.currentGuide + 1;
+
+      switch (this.currentGuide) {
+        case 1:
+          this.contentTitle = 'Creating or joining a team';
+          this.contentGuidance = 'Team';
+          break;
+      
+        case 2:
+          this.contentTitle = 'Choosing  a subscription plan';
+          this.contentGuidance = 'subscription';
+          break; 
+        case 3:
+          this.contentTitle = 'Search for suitable prospect';
+          this.contentGuidance = 'search';
+          break;  
+        case 4:
+          this.contentTitle = 'Shortlist and Connect with prospect’s team';
+          this.contentGuidance = 'Shortlist and Connect';
+          break;
+        case 5:
+          this.contentTitle = 'Chat and exchange information with connected team';
+          this.contentyGuidance = 'Chat';    
+          break;
+        case 6:
+          this.contentTitle = 'Evaluate information and make decision';
+          this.contentGuidance = 'Evaluate information';
+          break;
+        default:
+          this.contentTitle = 'Profile & ID completion and getting approval';
+          this.contentGuidance = 'Profile id';
+          this.currentGuide = 0;
+          break;
+      }
+    },
+
     getRepresentativeInitialInfo: async function () {
       this.isLoading = true;
       const user = JSON.parse(localStorage.getItem("user"));
