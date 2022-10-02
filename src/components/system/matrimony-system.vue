@@ -18,12 +18,18 @@ export default {
   },
 
   created() {
-    ApiService.get('/v1/user').then(() => {
+    ApiService.get('/v1/user').then((data) => {
+      console.log(data);
+      if (data.data.user.status != 3) {
+        this.logout();
+      }
    }).catch(() => {
      this.logout();
    });
 
   },
+
+ 
 
   methods: {
     ...mapActions([
