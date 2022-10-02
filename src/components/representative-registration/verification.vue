@@ -20,33 +20,33 @@
             class="form-ma"
           >
             <div class="verification-header my-2 text-black-70">
-              <p>
+              <!-- <p>
                 To provide you with an authentic experience we verify all
                 candidates (bride/groom) IDs as well as the ID of at least one
                 representative in each team.
-              </p>
-              <p>
+              </p> -->
+              <!-- <p>
                 If you do not wish to upload your ID documents now, that's fine.
                 You can go back to the previous step by tapping the previous
                 button at the bottom of this section and select 'No'. You can
                 upload your ID documents later through your personal settings
                 screen.
-              </p>
-              <p>
+              </p> -->
+              <!-- <p>
                 We accept photos/scans of a driving license, passport, national
                 ID card or residence permit issued by governments.
-              </p>
-              <p>
+              </p> -->
+              <!-- <p>
                 Copies of your ID document will be deleted once your ID is
                 verified in the interest of security.
-              </p>
-              <p>
+              </p> -->
+              <!-- <p>
                 Our main goal is that real people connect with other real
                 people.
-              </p>
+              </p> -->
 
               <p>Follow these tips to make sure your document is accepted:</p>
-              <ul>
+              <!-- <ul>
                 <li class="flex-start-center">
                   <img
                     src="@/assets/Icons/tick 2.svg"
@@ -71,10 +71,10 @@
                   />
                   Use a colour image that a is clear and easy to read
                 </li>
-              </ul>
+              </ul> -->
             </div>
             <hr />
-
+<!-- 
             <div class="row mt-3 border-bottom">
               <div class="col-12 col-md-6 none-padding">
                 <div class="mb-2 font-weight-bold">
@@ -104,7 +104,7 @@
                       ></v-select>
                     </a-form-model-item>
                   </div>
-                  <!-- <div class="col-12 col-md-6">
+                   <div class="col-12 col-md-6">
                     <a-form-model-item ref="ver_city" prop="ver_city">
                       <v-select
                         :clearable="false"
@@ -121,10 +121,10 @@
                           <a-icon type="down" /> </template
                       ></v-select>
                     </a-form-model-item>
-                  </div> -->
+                  </div> 
                 </div>
-              </div>
-              <div class="col-12 none-padding mobile-margin mobile-help">
+              </div> 
+               <div class="col-12 none-padding mobile-margin mobile-help">
                 <p>
                   <a
                     class="color-blue fw-700 fs-14"
@@ -150,9 +150,9 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
-            <div class="row pt-3 pb-2 border-bottom">
+            <!-- <div class="row pt-3 pb-2 border-bottom">
               <div class="col-12 col-md-6 none-padding">
                 <div class="mb-2 font-weight-bold">
                   <a-icon
@@ -381,7 +381,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div>  -->
 
             <div class="row pt-3 pb-2">
               <div class="col-12 col-md-6 none-padding">
@@ -401,10 +401,10 @@
                   />
                   <div style="display: flex; flex-direction: column">
                     <span class="mr-2 fs-16 fw-700">Personal reference</span>
-                    <span class="mr-2 fw-500">This section is optional. </span>
+                    <!-- <span class="mr-2 fw-500">This section is optional. </span> -->
                     <span class="mr-2 fw-500"
                       >We may request this information anytime in case we need
-                      to do enhanced ID checks.
+                      to do ID checks.
                     </span>
                   </div>
                 </div>
@@ -419,6 +419,7 @@
                     v-model="verification.ver_recommender_title"
                     class="w-100"
                     placeholder="Title"
+                    required
                     @blur="onValueChange($event, 'ver_recommender_title')"
                   />
                 </a-form-model-item>
@@ -502,19 +503,6 @@
                     >Please write a valid mobile number</span
                   >
                 </a-form-model-item>
-                <!-- <a-form-model-item
-                  ref="ver_recommender_mobile_no"
-                  prop="ver_recommender_mobile_no"
-                >
-                  <a-input
-                    class="w-100"
-                    id="inputNumber"
-                    placeholder="Mobile number"
-                    :maxLength="10"
-                    v-model="verification.ver_recommender_mobile_no"
-                    @blur="onValueChange($event, 'ver_recommender_mobile_no')"
-                  />
-                </a-form-model-item> -->
                 <a-form-model-item
                   ref="ver_recommender_email"
                   prop="ver_recommender_email"

@@ -4,8 +4,7 @@
       <div class="text-center">
         <a href="/">
           <img
-            src="@/assets/Icons/Logo/SVG/Black_logo_footer.svg"
-            width="150"
+            src="@/assets/Icons/Logo/1x/black-logo.png"
             height="50"
             alt="logo"
           />
