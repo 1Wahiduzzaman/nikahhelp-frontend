@@ -283,17 +283,17 @@ const AppRouter = new VueRouter({
                     component: JoinTeamPassword,
                 },
 
-                {
-                    path: "/ui",
-                    name: "UI",
-                    component: Test,
-                },
-                {
-                    path: "/ui-chat",
-                    name: "UI-Chat",
-                    component: TestChat,
+                // {
+                //     path: "/ui",
+                //     name: "UI",
+                //     component: Test,
+                // },
+                // {
+                //     path: "/ui-chat",
+                //     name: "UI-Chat",
+                //     component: TestChat,
 
-                },
+                // },
                 {
                     path: "/chat-window",
                     name: "ChatWindow",

@@ -150,7 +150,7 @@
       <div class="content-identity">
         <h4>Identity Verification</h4>
         <div
-          v-if="checkStatus('3')"
+          v-if="verification"
           class="identity"
         >
           <img
@@ -161,7 +161,7 @@
           <span>Verified</span>
         </div>
         <div
-          v-if="verification"
+          v-if="!verification"
           class="identity"
         >
           <img
@@ -180,7 +180,7 @@
 
         <div
           v-if="
-            !verification
+            !verification && checkStatus('2')
           "
           class="identity"
         >
@@ -192,7 +192,7 @@
           <span>In Review</span>
         </div>
         <div
-          v-if="checkStatus('4')"
+          v-if="checkStatus('4') && !verification"
           class="identity"
         >
           <img
@@ -297,11 +297,11 @@ export default {
 
   computed: {
     verification() {
-        return  (this.userInfo?.user?.status < 3 &&
+        return  (this.userInfo?.user?.status == 3 &&
               this.userInfo?.candidate_information &&
-              this.userInfo?.candidate_information.is_uplaoded_doc == '0') ||
-            (this.userInfo?.user?.status < 3 && this.userInfo?.representative_information &&
-              this.userInfo?.representative_information.is_uplaoded_doc == '0')
+              this.userInfo?.candidate_information.is_uplaoded_doc == 1) ||
+            (this.userInfo?.user?.status == 3 && this.userInfo?.representative_information &&
+              (this.userInfo?.representative_information.is_uplaoded_doc == '0' || this.userInfo?.representative_information.is_uplaoded_doc == 1))
          
     }
   },

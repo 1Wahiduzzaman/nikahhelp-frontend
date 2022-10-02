@@ -21,7 +21,7 @@ export default {
     }).catch((e) => {
       console.log('message', e.message)
       context.commit("setErrorMessage", {
-        errorMessage: e,
+        errorMessage: e.response.status == 403 ? 'Your account is deleted': 'No account',
       });
     });
   },
