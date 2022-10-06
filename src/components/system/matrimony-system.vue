@@ -20,9 +20,9 @@ export default {
   created() {
     ApiService.get('/v1/user').then((data) => {
       console.log(data);
-      if (data.data.user.status != 3) {
-        this.logout();
-      }
+      // if (data.data.user.status != 3) {
+      //   this.logout();
+      // }
    }).catch(() => {
      this.logout();
    });
