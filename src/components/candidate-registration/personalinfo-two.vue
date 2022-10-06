@@ -1303,7 +1303,6 @@
                 @onInput="onNumberChange($event)"
                 id="mobile_number"
                 :validCharactersOnly="true"
-                :autoDefaultCountry="true"
                 v-model="personalInformation.contact.mobile_number"
                 placeholder="Mobile Number"
                   class="style-chooser"
