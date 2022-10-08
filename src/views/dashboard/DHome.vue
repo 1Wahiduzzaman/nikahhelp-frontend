@@ -21,7 +21,7 @@ export default {
 		return {
 			// isLoading: true,
 			user: {},
-			is_verified: 1,
+			// is_verified: 1,
 			teams: null,
 			dataInputStatus: undefined,
 		};
