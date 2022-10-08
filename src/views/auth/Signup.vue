@@ -12,7 +12,7 @@
           <h3 class="mt-3 text-header-black font-weight-bolder">
             Welcome To <span class="logo-text">Matrimony Assist</span> Signup
           </h3>
-          <div class="mx-auto" style="width: 80%; padding-right: 3rem; padding-left: 3rem;">
+          <!-- <div class="mx-auto" style="width: 80%; padding-right: 3rem; padding-left: 3rem;">
                 <p>Depends on your requirement and eligibility, you can join MatrimonyAssist either as a candidate or a representative of a candidate or a matchmaker if this is your profession. </p>
                 <p>For this, you will need a valid email address, an avatar, a main and an additional image.
                   If you are a candidate, you will also need: </p>
@@ -27,7 +27,7 @@
                     </li>
                     <li>name of a person (referee) with community of standing who could provide reference about you at request  </li>
                   </ul>
-          </div>
+          </div> -->
           <div class="type mx-auto">
             <p class="text-center py-2">
               Let's get started. Please select your account type, you are
