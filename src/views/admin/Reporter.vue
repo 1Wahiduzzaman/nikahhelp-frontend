@@ -20,13 +20,13 @@
 					</v-list-item-title>
 					<v-list-item>
 						<v-tooltip top>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon large v-bind="attrs" v-on="on" :color="ticket.color">
-                mdi-circle
-              </v-icon>
-            </template>
-            <span>{{ ticketState(ticket.resolve) }}</span>
-          </v-tooltip>
+							<template v-slot:activator="{ on, attrs }">
+								<v-icon large v-bind="attrs" v-on="on" :color="ticket.color">
+									mdi-circle
+								</v-icon>
+							</template>
+							<span>{{ ticketState(ticket.resolve) }}</span>
+						</v-tooltip>
 					</v-list-item>
 			</v-list-item>
 	</v-card>
