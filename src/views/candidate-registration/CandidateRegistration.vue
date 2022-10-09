@@ -906,42 +906,33 @@ export default {
     changeContentPrev() {
        switch (this.currentGuide) {
         case 1:
-          this.contentTitle = 'Profile & ID completion and getting approval';
-          this.contentGuidance = 'Profile id';
+          this.contentTitle = 'Complete Your Profile';
+          this.imageSrc = '@/assets/Complete_Form.png'
+          this.contentGuidance = 'More information you provide, higher the chance to appear on the search result.';
           this.currentGuide = 0;
           break;
         case 2:
+          this.imageSrc = '@/assets/Upload_Images.png';
           this.contentTitle = 'Creating or joining a team';
           this.contentGuidance = 'Team';
           this.currentGuide = 1;
-
           break;
         case 3:
+          this.imageSrc = '@/assets/Verify_Your_ID.png';
           this.contentTitle = 'Choosing  a subscription plan';
           this.contentGuidance = 'subscription';
           this.currentGuide = 2;
-
           break;
         case 4:
-          this.contentTitle = 'Search for suitable prospect';
+          this.imageSrc = '@/assets/Review_and_Submit.png'
           this.contentGuidance = 'search';
           this.currentGuide = 3;
-
           break; 
         case 5:
+          this.imageSrc = '@/assets/What_happens_next.png';
           this.contentTitle = 'Shortlist and Connect with prospect’s team';
           this.contentGuidance = 'Shortlist and Connect';
           this.currentGuide = 4;
-          break;
-        case 6:
-          this.contentTitle = 'Chat and exchange information with connected team';
-          this.contentyGuidance = 'Chat';  
-          this.currentGuide = 5;
-          break;    
-        default:
-          this.contentTitle = 'Evaluate information and make decision';
-          this.contentGuidance = 'Evaluate information';
-          this.currentGuide = 6;
           break;
        }
     },

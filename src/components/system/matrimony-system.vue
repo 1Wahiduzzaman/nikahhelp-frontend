@@ -13,7 +13,7 @@
         class="d-flex justify-center mb-4 mt-8"
       >
       <template v-slot:activator="{ on, attrs }">
-								<v-icon large bg v-bind="attrs" v-on="on" :z-index="999" color="#522e8e">
+								<v-icon large  v-bind="attrs" v-on="on" class="question-mark" color="white">
                   mdi-help-circle
 								</v-icon>
         </template>
@@ -42,7 +42,7 @@
             <v-card-actions class="justify-end">
               
               <v-btn
-                v-if="currentGuide > 0 "
+                v-if="currentGuide > 0 || currentGuide > 4 "
                 text
                
                 @click="changeContentPrev"
@@ -136,8 +136,7 @@ export default {
         default:
           this.contentTitle = 'Evaluate information and make decision';
           this.contentGuidance = 'Finally, when you are absolutely confident, only then make decision. ';
-          this.currentGuide = 0;
-          this.prevcount = 1;
+          this.currentGuide = 5;
           break;
        }
     },
@@ -146,8 +145,12 @@ export default {
       this.currentGuide = this.currentGuide + 1;
 
       switch (this.currentGuide) {
+        case 6:
+          this.currentGuide = 0;
+          this.contentTitle = 'Join or create a team';
+          this.contentGuidance = 'Having a team is a must requirement in MartimonyAssist. Someone who is already registered with MatrimonyAssist, can send you an invite link to join their team. Alternatively, you can create a team and generate an invite link and then share it to your potential member(s) to join your team.';
+          break;
         case 1:
-          this.prevcount = 0;
           this.contentTitle = 'Chose a subscription plan';
           this.contentGuidance = 'In MattrimonyAssist subscription is team based. Anyone can pay for subscription and the rest of the members use it for free.';
           break;
@@ -329,8 +332,16 @@ export default {
   position: fixed;
   bottom: 0;
   right: 0;
-  margin-right: 4rem;
+  // margin-right: 4rem;
   z-index: 9;
-  border-radius: 50%;
+  border-radius: 60% 0 0 0;
+  background-color: #522e8e;
+  width: 5rem;
+
+  .question-mark {
+    position: absolute;
+    right: 0.7rem;
+    top: 0.4rem;
+  }
 }
 </style>
