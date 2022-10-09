@@ -228,52 +228,7 @@ export default {
     this.loadNotifications();
     console.log(this.user);
   },
-  computed: {
-    bgColor() {
-      console.log(dateTime);
-      return (dateTime) => {
-        console.log(dateTime);
-        var d1 = dateTime.split(" ");
-        var temp = d1.slice(0, 3).join("-");
-        var d = new Date(temp);
-        const today = new Date();
-        if (
-          d.getMonth() == today.getMonth() &&
-          today.getDate() == d.getDate()
-        ) {
-          return {
-            new: true,
-          };
-        } else {
-          return {
-            old: true,
-          };
-        }
-      };
-      // var d1 = dateTime.split(" ");
-      // var temp = d1.slice(0, 3).join("-");
-      // var d = new Date(temp);
-      // const today = new Date();
-      // if (d.getMonth() == today.getMonth() && today.getDate() == d.getDate()) {
-      // 	return {
-      // 		new: true,
-      // 	};
-      // } else {
-      // 	return {
-      // 		old: true,
-      // 	};
-      // }
-      // if (this.date) {
-      // 	return {
-      // 		new: this.date,
-      // 	};
-      // } else {
-      // 	return {
-      // 		old: this.date,
-      // 	};
-      // }
-    },
-  },
+  
   methods: {
     async getTeams() {
       this.loading = true;
@@ -311,7 +266,7 @@ export default {
             //alert(error);
           });
       } catch (error) {
-        this.error = errror.message || "Something went wrong! Try again!";
+        this.error = error.message || "Something went wrong! Try again!";
         console.log(this.error);
       }
     },

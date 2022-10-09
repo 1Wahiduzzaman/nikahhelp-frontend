@@ -46,16 +46,15 @@
 
 <script>
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
-import ModalContainer from "@/plugins/modal/modal-container";
 // import ManageTeamRedirect from "@/views/design/ManageTeamRedirect.vue";
-import { createModalMixin, openModalRoute } from "@/plugins/modal/modal.mixin";
+import { createModalMixin } from "@/plugins/modal/modal.mixin";
 import JwtService from "@/services/jwt.service";
 
 export default {
   name: "Layout",
   components: {
     Sidebar,
-    ModalContainer,
+    // ModalContainer,
     // ManageTeamRedirect,
   },
   created() {

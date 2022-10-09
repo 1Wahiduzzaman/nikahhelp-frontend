@@ -672,7 +672,6 @@
 </template>
 <script>
 import DropdownDatePicker from "vue-dropdown-datepicker";
-import ApiService from "@/services/api.service";
 import vSelect from "vue-select";
 import { RULES, RULES_PERSONAL } from "./models/representative";
 export default {
@@ -770,13 +769,13 @@ export default {
         .dispatch("createPersonalInfoForRepresentative", {
           ...this.personalInformation.essential,
         })
-        .then((data) => {
+        .then(() => {
           this.$emit("valueChange", {
             value: this.personalInformation,
             current: 0,
           });
         })
-        .catch((error) => {});
+        .catch(() => {});
     },
     async saveContactInfo() {
       await this.$store
@@ -784,13 +783,13 @@ export default {
           "creatContactInfoForRepresentative",
           this.personalInformation.personal
         )
-        .then((data) => {
+        .then(() => {
           this.$emit("valueChange", {
             value: this.personalInformation,
             current: 0,
           });
         })
-        .catch((error) => {});
+        .catch(() => {});
     },
     onNumberChange(e) {
       this.isValidNumber = e.isValid;
@@ -827,7 +826,7 @@ export default {
         return a;
       });
     },
-    onChangeDD(d, m, y) {
+    onChangeDD() {
       this.save("essential");
     },
     onChangePanel(e) {

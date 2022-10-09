@@ -306,14 +306,17 @@ export default {
     ReviewAndPublishModal,
     VerificationAgreement,
   },
+
   mounted() {
     this.getCandidateInitialInfo();
   },
+
   data() {
     return {
       currentGuide: 0,
-      contentTitle: 'Profile & ID completion and getting approval',
-      contentGuidance: 'hello word',
+      contentTitle: 'Complete Your Profile',
+      contentGuidance: 'More information you provide, higher the chance to appear on the search result.',
+      imageSrc: '@/assets/Complete_Form.png',
       isAgree: false,
       dialog: false,
       isLoading: false,
@@ -371,14 +374,14 @@ export default {
         this.dialog = true;
       });
     },
-    cancel(e) {
+    cancel() {
       this.dialog = false;
     },
 
     updateFixedStatus(next) {
       this.fixedStatus.headerIsFixed = next;
     },
-    cancelVerification(e) {
+    cancelVerification() {
       this.showAgreement = false;
     },
     onStep(index) {
@@ -408,6 +411,7 @@ export default {
           this.candidateDetails.familyInformation = {
             ...e.value,
           };
+          break;
         case 3:
           this.candidateDetails.imageModel = {
             ...e.value,
@@ -700,14 +704,14 @@ export default {
         localStorage.removeItem("user");
         localStorage.setItem("user", JSON.stringify(user));
       }
-      const res = await ApiService.post(
+       await ApiService.post(
         "v1/candidate/personal-info-status?_method=PATCH",
         {
           data_input_status: satge,
         }
       );
     },
-    async onChangeCountry(e, name, action, isDefault = false) {
+    async onChangeCountry(e, name, action) {
       const res = await ApiService.get(`v1/utilities/cities/${e.id}`);
 
       if (res.status === 200) {
@@ -994,12 +998,12 @@ export default {
       };
       await this.$store
         .dispatch("saveCandidateUploadDoc", data)
-        .then((data) => {
+        .then(() => {
           user.is_uplaoded_doc = isComplete ? "1" : "0";
           localStorage.setItem(JSON.stringify(user));
           this.$emit("valueChange", true);
         })
-        .catch((error) => {});
+        .catch(() => {});
     },
     async next() {
       switch (this.current) {
