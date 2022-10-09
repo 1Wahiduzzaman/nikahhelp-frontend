@@ -1,9 +1,79 @@
 <template>
   <div class="position-relative">
+
     <Layout>
       <router-view />
       <instant-notification />
+      
     </Layout>
+    <div class="help-dialog">
+      <v-dialog
+        transition="dialog-bottom-transition"
+        max-width="600"
+        class="d-flex justify-center mb-4 mt-8"
+      >
+      <template v-slot:activator="{ on, attrs }">
+								<v-icon large  v-bind="attrs" v-on="on" class="question-mark" color="white">
+                  mdi-help-circle
+								</v-icon>
+        </template>
+        <template v-slot:default="dialog">
+          <v-card class="relative">
+            
+            <v-card-text class="d-flex flex-column align-center">
+              <img 
+                class="mt-3"
+                src="@/assets/form.jpg" alt="">
+              <v-card-text class="text-center">
+              {{ currentGuide }}. {{ contentTitle }}
+            </v-card-text>
+              <div class="text-center">{{ contentGuidance }}</div>
+              
+            </v-card-text>
+            <v-btn
+                rounded
+                absolute
+                bottom
+                left
+                text
+                class="mb-2"
+                @click="dialog.value = false;"
+              >Skip</v-btn>
+            <v-card-actions class="justify-end">
+              
+              <v-btn
+                v-if="currentGuide > 0 || currentGuide > 4 "
+                text
+               
+                @click="changeContentPrev"
+                class="mr-3"
+              >
+            <v-icon
+             color="grey"
+            >
+              mdi-arrow-left-circle
+            </v-icon>
+            </v-btn>
+              <v-btn
+                text
+                @click="changeContent"
+              >
+              <v-icon
+              color="#6159A7"
+              >
+                mdi-arrow-right-circle
+              </v-icon>
+            
+            </v-btn>
+            </v-card-actions>
+            <v-card-actions class="justify-end">
+              
+            </v-card-actions>
+          </v-card>
+        </template>
+      </v-dialog>
+    </div>
+    
   </div>
 </template>
 
@@ -34,15 +104,88 @@ export default {
   methods: {
     ...mapActions([
       'logout'
-    ])
-  }
-  // data() {
-  //   return {
-  //     notifications: [],
-  //     chatHistory: [],
-  //     active_team_id: null
-  //   };
-  // },
+    ]),
+
+    changeContentPrev() {
+       switch (this.currentGuide) {
+        case 1:
+          this.contentTitle = 'Join or create a team';
+          this.contentGuidance = 'Having a team is a must requirement in MartimonyAssist. Someone who is already registered with MatrimonyAssist, can send you an invite link to join their team. Alternatively, you can create a team and generate an invite link and then share it to your potential member(s) to join your team.';
+          this.currentGuide = 0;
+          break;
+        case 2:
+          this.contentTitle = 'Chose a subscription plan';
+          this.contentGuidance = 'In MattrimonyAssist subscription is team based. Anyone can pay for subscription and the rest of the members use it for free.';
+          this.currentGuide = 1;
+          break;
+        case 3:
+          this.contentTitle = ' Search for suitable prospect';
+          this.contentGuidance = 'Here you search according to your search criteria to find prospect of your choice. ';
+          this.currentGuide = 2;
+          break;
+        case 4:
+          this.contentTitle = 'Shortlist and connect with prospect’s team';
+          this.contentGuidance = 'From the search results, you can create your own shortlist of prospects. ';
+          this.currentGuide = 3;
+          break;
+        case 5:
+          this.contentTitle = 'Use chat feature of Matrimony Assist to communicate with prospect team and find out more about the prospect. ';
+          this.contentyGuidance = 'Chat and exchange information with connected team';  
+          this.currentGuide = 4;
+          break;    
+        default:
+          this.contentTitle = 'Evaluate information and make decision';
+          this.contentGuidance = 'Finally, when you are absolutely confident, only then make decision. ';
+          this.currentGuide = 5;
+          break;
+       }
+    },
+
+    changeContent() {
+      this.currentGuide = this.currentGuide + 1;
+
+      switch (this.currentGuide) {
+        case 6:
+          this.currentGuide = 0;
+          this.contentTitle = 'Join or create a team';
+          this.contentGuidance = 'Having a team is a must requirement in MartimonyAssist. Someone who is already registered with MatrimonyAssist, can send you an invite link to join their team. Alternatively, you can create a team and generate an invite link and then share it to your potential member(s) to join your team.';
+          break;
+        case 1:
+          this.contentTitle = 'Chose a subscription plan';
+          this.contentGuidance = 'In MattrimonyAssist subscription is team based. Anyone can pay for subscription and the rest of the members use it for free.';
+          break;
+        case 2:
+          this.contentTitle = ' Search for suitable prospect';
+          this.contentGuidance = 'Here you search according to your search criteria to find prospect of your choice. ';
+          break;
+        case 3:
+          this.contentTitle = 'Shortlist and connect with prospect’s team';
+          this.contentGuidance = 'From the search results, you can create your own shortlist of prospects. ';
+          break;
+        case 4:
+          this.contentTitle = 'Use chat feature of Matrimony Assist to communicate with prospect team and find out more about the prospect. ';
+          this.contentGuidance = 'Chat and exchange information with connected team';  
+          break;    
+        default:
+          this.contentTitle = 'Evaluate information and make decision';
+          this.contentGuidance = 'Finally, when you are absolutely confident, only then make decision. ';
+          break;
+       }
+    },
+  },
+
+  data() {
+    return {
+      contentTitle: 'Join or create a team',
+      contentGuidance: 'Having a team is a must requirement in MartimonyAssist. Someone who is already registered with MatrimonyAssist, can send you an invite link to join their team. Alternatively, you can create a team and generate an invite link and then share it to your potential member(s) to join your team.',
+      currentGuide: 0,
+      imageSrc: '@/assets/form.jpg',
+      prevcount: 0
+      // notifications: [],
+      // chatHistory: [],
+      // active_team_id: null
+    };
+  },
   // methods: {
   //   async loadChatHistory() {
   //     try {
@@ -184,4 +327,21 @@ export default {
 
 
 <style lang="scss">
+
+.help-dialog {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  // margin-right: 4rem;
+  z-index: 9;
+  border-radius: 60% 0 0 0;
+  background-color: #522e8e;
+  width: 5rem;
+
+  .question-mark {
+    position: absolute;
+    right: 0.7rem;
+    top: 0.4rem;
+  }
+}
 </style>
