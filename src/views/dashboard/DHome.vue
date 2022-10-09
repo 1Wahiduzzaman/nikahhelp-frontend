@@ -34,20 +34,8 @@ export default {
 			response1.then((data) => {
 				this.teams = data.data.data;
 
-				if (
-					this.user.account_type != 0 &&
-					this.user.account_type != undefined &&
-					this.dataInputStatus != 10 &&
-					this.dataInputStatus != 11 &&
-					this.dataInputStatus != 20 &&
-					this.dataInputStatus != 21 &&
-					this.dataInputStatus != undefined
-				) {
-					if (this.teams.length == 0) {
-						const vm = this;
-					}
-				}
-			}).catch((error) => {
+		
+			}).catch(() => {
 				console.log('test');
 			})
 		},
