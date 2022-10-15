@@ -337,7 +337,15 @@ export default {
       agreementChecked: false,
     };
   },
-  created() {},
+
+  created() {
+          const user = JSON.parse(localStorage.getItem('user'));
+
+      if ( user && user?.is_verified) {
+          this.$router.go(-1);
+      }
+  },
+
   mounted() {
     this.getRepresentativeInitialInfo();
   },
