@@ -382,7 +382,6 @@ import hobbies from "@/common/hobbies.js";
 import { AGES, HEIGHTS } from "../../models/data";
 import SelectGroup from "@/components/ui/selects/SelectGroup";
 import {mapGetters, mapMutations, mapActions} from 'vuex'
-import { json } from 'body-parser';
 
 export default {
 	name: 'SimpleSearch',
