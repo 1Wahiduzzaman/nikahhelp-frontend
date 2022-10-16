@@ -278,6 +278,7 @@ import { API_URL } from "../../configs/config";
 import VueFixedHeader from "vue-fixed-header";
 import validator from "validator";
 import jwtService from "../../services/jwt.service";
+import blockRegistrationRouteAfter from '../../mixins/blockRegistrationRouteAfter';
 export default {
   name: "RepresentativeRegistration",
 
@@ -338,13 +339,9 @@ export default {
     };
   },
 
-  created() {
-          const user = JSON.parse(localStorage.getItem('user'));
-
-      if ( user && user?.is_verified) {
-          this.$router.go(-1);
-      }
-  },
+  mixins: [
+    blockRegistrationRouteAfter
+  ],
 
   mounted() {
     this.getRepresentativeInitialInfo();
