@@ -13,19 +13,19 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/',
-    filename: '[name].js',
+    filename: '[name].[contenthash].js',
   },
 
-  // optimisation: {
-  //   runtimeChunk: 'single',
-  //   cacheGroups: {
-  //     vendor: {
-  //       test: /[\\/]node_modules[\\/]/,
-  //       name: 'vendors',
-  //       chunks: 'all',
-  //     },
-  //   },
-  // },
+  optimisation: {
+    runtimeChunk: 'single',
+    cacheGroups: {
+      vendor: {
+        test: /[\\/]node_modules[\\/]/,
+        name: 'vendors',
+        chunks: 'all',
+      },
+    },
+  },
 
   module: {
     rules: [
