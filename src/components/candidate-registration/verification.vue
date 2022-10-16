@@ -1,7 +1,7 @@
 <template>
   <div id="accordion" class="verificationInfo p-3 rounded">
     <div
-      v-if="userData && userData.status == '1'"
+      v-if="userData"
       class="verification-content"
       style="margin-top: 40px"
     >
