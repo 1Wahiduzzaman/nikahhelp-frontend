@@ -2,6 +2,10 @@
 //import JwtService from "../../../services/jwt.service";
 import ApiService from "../../../services/api.service";
 export default {
+  sugeestionOn(context, payload) {
+      context.commit('setSuggestionOn', payload);
+  },
+
   async searchUser(context, payload) {
     return new Promise((resolve, reject) => {
       context.commit('setLoading', true)

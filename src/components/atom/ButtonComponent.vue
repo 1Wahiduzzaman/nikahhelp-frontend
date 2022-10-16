@@ -1,5 +1,5 @@
 <template>
-    <div :style="{width: wrapperWidth}">
+    <div :style="{width: wrapperWidth}" @click="$emit('onClickButton', {event: customEvent, index: index, id: typeId})">
         <v-btn
             :class="[responsive ? 'd-none d-md-block' : '']"
             class="v-custom"
@@ -13,7 +13,7 @@
             outlined
             :small="isSmall"
             rounded
-            @click="$emit('onClickButton', {event: customEvent, index: index, id: typeId})"
+            
         >
             <div class="flex justify-center align-center">
                 <img 

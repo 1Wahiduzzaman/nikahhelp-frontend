@@ -9,11 +9,24 @@ const CompressionPlugin = require("compression-webpack-plugin");
 module.exports = {
   mode: process.env.NODE_ENV,
   entry: './src/main.js',
+
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/',
-    filename: 'build.js'
+    filename: '[name].[contenthash].js',
   },
+
+  optimisation: {
+    runtimeChunk: 'single',
+    cacheGroups: {
+      vendor: {
+        test: /[\\/]node_modules[\\/]/,
+        name: 'vendors',
+        chunks: 'all',
+      },
+    },
+  },
+
   module: {
     rules: [
       {
@@ -40,21 +53,26 @@ module.exports = {
       }
     ]
   },
+
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
     }
   },
+
   devServer: {
     historyApiFallback: true,
     noInfo: false,
   },
+
   devtool: '#eval-source-map',
+
   plugins: [
     new VueLoaderPlugin(),
     new CompressionPlugin(),
   ]
 }
+
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
   module.exports.plugins = (module.exports.plugins || []).concat([
@@ -63,12 +81,14 @@ if (process.env.NODE_ENV === 'production') {
         NODE_ENV: '"production"'
       }
     }),
+
     new HtmlWebpackPlugin({
-      title: 'PRODUCTION prerender-spa-plugin',
+      title: 'Caching',
       template: 'index.html',
       filename: path.resolve(__dirname, 'dist/index.html'),
       favicon: 'favicon.ico'
     }),
+
     new PrerenderSPAPlugin({
       staticDir: path.join(__dirname, 'dist'),
       routes: [ '/', '/about', '/help', ],
@@ -81,6 +101,7 @@ if (process.env.NODE_ENV === 'production') {
         renderAfterDocumentEvent: 'render-event'
       })
     }),
+
     new CompressionPlugin({
       algorithm: 'gzip',
       test: /\.js(\?.*)?$/i,
@@ -95,7 +116,7 @@ if (process.env.NODE_ENV === 'production') {
       }
     }),
     new HtmlWebpackPlugin({
-      title: 'DEVELOPMENT prerender-spa-plugin',
+      title: 'Caching',
       template: 'index.html',
       filename: 'index.html',
       favicon: 'favicon.ico'

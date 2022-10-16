@@ -33,7 +33,32 @@
                 ref="simpleSearch"
                 @switchComponent="switchComponent"
                 :user="loggedUser"
-              />
+                
+              >
+              <template v-slot:button="{ clickBtn }">
+                <ButtonComponent
+									iconHeight="20px"
+									:block="true"
+									:responsive="false"
+									title="Search"
+									icon="/assets/icon/search-love-secondary.svg"
+									customEvent="handleSearch"
+									@onClickButton="clickBtn"
+                  ref="btnsearch"
+								/>
+              </template>
+               <template v-slot="{search}">
+                <button
+										@click="search"
+										class="btn-adv-search"
+                    ref="suggestion"
+									>
+										Reset Search
+									</button>
+               </template>
+                
+              
+            </SimpleSearch>
             </template>
           </Sidebar>
         </a-layout-sider>
@@ -72,6 +97,7 @@
 </template>
 
 <script>
+import ButtonComponent from '@/components/atom/ButtonComponent'
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import Observer from "@/components/atom/Observer"
 import Loader from "@/plugins/loader/loader.vue";
@@ -102,18 +128,10 @@ export default {
     // Footer,
     CandidateProfiles,
     AddComponent,
-    Observer
+    Observer,
+    ButtonComponent,
   },
-  sockets: {
-    connect: function () {
-      console.log("socket connected");
-    },
-    ping: function (data) {
-      console.log(
-          'this method was fired by the socket server. eg: io.emit("customEmit", data)'
-      );
-    },
-  },
+ 
   data() {
     return {
       activeTeamId: null,
@@ -126,8 +144,10 @@ export default {
       componentName: "CandidateProfiles",
     };
   },
+
   computed: {
     ...mapGetters({
+      getSuggested: 'getSugesstedFlag',
       rightSideComponentName: "search/getComponentName",
       isFetching: "search/getLoadingStatus",
     }),
@@ -163,6 +183,7 @@ export default {
   },
   methods: {
     ...mapActions({
+      sugeestionOn: 'search/sugeestionOn',
       searchUser: "search/searchUser",
       getNextUserId: "search/getNextUserId",
       getPreviousUserId: "search/getPreviousUserId",
@@ -177,6 +198,11 @@ export default {
     checkTurnedOnSwitch() {
       this.activeTeamId = JwtService.getTeamIDAppWide();
     },
+
+    profilesuggestion() {
+      //this.$refs.suggestion.
+    },
+
     socketNotification(payload) {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       payload.sender = loggedUser.id;
@@ -336,6 +362,20 @@ export default {
     }
     this.checkTurnedOnSwitch();
     this.handleCandidateInfo();
+
+    this.$nextTick(() => {
+     
+    })
+
+    setTimeout(() => {
+          console.log(this.$refs.suggestion);
+        if (!this.getSuggested) {
+            this.$refs.suggestion.click();
+            console.log(this.$refs.btnsearch);
+            this.$refs.btnsearch.$el.click();
+            this.sugeestionOn(true);
+        }
+    }, 5000)
   },
 };
 </script>

@@ -320,15 +320,10 @@
 					<div class="row">
 						<div class=" mt-12 pt-10">
 							<div class="btn-adv-search-wrapper">
-								<ButtonComponent
-									iconHeight="20px"
-									:block="true"
-									:responsive="false"
-									title="Search"
-									icon="/assets/icon/search-love-secondary.svg"
-									customEvent="handleSearch"
-									@onClickButton="onClickButton"
-								/>
+								<slot name="button" :clickBtn="onClickButton">
+									
+								</slot>
+								
 								<!-- <button class="btn btn-primary" @click="handleSearch">
 									<img src="@/assets/icon/search.svg" alt="Icon" height="25px" />
 									<g data-v-ac485448="" id="Layer_2" data-name="Layer 2">
@@ -353,12 +348,7 @@
 								</button> -->
 								<div>
 									<a id="topper" class="d-noe" ref="top" href="#top"></a>
-									<button
-										@click="resetSearch"
-										class="btn-adv-search"
-									>
-										Reset Search
-									</button>
+									<slot :search="resetSearch"></slot>
 									<button @click="$refs.advDiag.openDiag()" class="btn-adv-search">Advanced Search</button>
 								</div>
 							</div>
@@ -383,7 +373,6 @@
 </template>
 
 <script>
-import ButtonComponent from '@/components/atom/ButtonComponent'
 import SelectTeamModal from "@/components/team/Modals/SelectTeamModal.vue";
 import ComingSoonModal from "@/components/search/ComingSoonModal"
 import ApiService from "@/services/api.service";
@@ -401,8 +390,9 @@ export default {
 		SelectTeamModal,
 		SelectGroup,
 		ComingSoonModal,
-		ButtonComponent
+		// ButtonComponent
 	},
+
 	data() {
 		return {
 			removePrevious: false,
@@ -410,8 +400,8 @@ export default {
 			showMoreSearch: false,
 			ageTV: AGES,
       		heightTv: HEIGHTS,
-			min_age: 20,
-        	max_age: 40,
+			min_age: this.user?.candidate_information?.preference?.pre_partner_age_min,
+        	max_age: this.user?.candidate_information?.preference?.pre_partner_age_max,
 			age: [20, 40],
 			heightMin: undefined,
 			heightMax: undefined,
@@ -456,6 +446,15 @@ export default {
 		this.$store.dispatch("getStudyLevelOptions");
 		this.$store.dispatch("getReligionOptions");
 		this.$store.dispatch("getOccupations");
+		// const user = JSON.stringify(localStorage.getItem('user'));
+		// const age = {
+		// 	max: user?.candidate_information?.preference?.pre_partner_age_max,
+		// 	min: user?.candidate_information?.preference.pre_partner_age_min,
+		// };
+		// this.resetSearch();
+		// this.min_age = age.min;
+		// this.max_age = age.max;
+		// this.handleSearch();
 	},
 	methods: {
 		...mapActions({
@@ -491,24 +490,11 @@ export default {
 				});
 		},
 		getQuery() {
-			console.log(this.$store.state.team.teamInfo,'>>>>>>>>>>>>>>>')
-			// if (localStorage.getItem("teamidappwide")) {
-			// 	this.activeTeamId = localStorage.getItem("teamidappwide");
-			// 	this.activeTeamId = this.activeTeamId.slice(1, -1);
-			// } else if (this.$store.state.team.teamInfo) {
-			// 	console.log(this.$store.state.team.teamInfo);
-			// 	this.candidateActiveTeam = this.$store.state.team.teamInfo;
-			// 	this.activeTeamId = this.$store.state.team.teamInfo.team_id;
-			// } else {
-			// 	this.showActiveTeamModal = true;
-			// 	return;
-			// }
-
-			console.log('>>>>>>>>>>>>>>>>')
 			// let _payload = `?page=0&parpage=10&min_age=${params.age_min}&max_age=${params.age_max}&active_team_id=${this.activeTeamId}`;
 			let _payload = `?page=${this.currentPage}`;
 
-			if (this.min_age) {
+			if (this.min_age != undefined) {
+				console.log('testing');
 				_payload += `&min_age=${this.min_age}`;
 			}
 			if (this.max_age) {
@@ -607,6 +593,7 @@ export default {
 			this.$refs.top.click()
 			this.currentPage = 1;
 			let query = this.getQuery();
+			// this.min_age = 
 			this.setSearchStatus(true)
 			console.log(query, '>>>>>>>>>>>>>>>>')
 			this.removePrevious = true
@@ -660,8 +647,8 @@ export default {
 			this.heightMin = undefined
 			this.heightMax = undefined
 			this.heightMax = undefined
-			this.min_age = undefined
-			this.max_age = undefined
+			// this.min_age = undefined
+			// this.max_age = undefined
 			this.religion = undefined
 			this.country = undefined
 			this.ethnicity = undefined

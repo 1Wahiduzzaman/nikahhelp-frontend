@@ -1,6 +1,7 @@
 import { getUserId } from "../../../services/jwt.service";
 
 export default {
+    setSuggestionOn: (state, payload) => state.suggested = payload,
     setProfiles: (state, payload) => state.profiles =[...state.profiles, ...payload],
     setProfileDetails: (state, payload) => state.profileDetails = payload,
     clearProfiles: (state) => state.profiles = [],
