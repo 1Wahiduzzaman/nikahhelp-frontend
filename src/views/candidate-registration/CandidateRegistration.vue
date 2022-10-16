@@ -188,6 +188,7 @@
           :candidateDetails="candidateDetails"
           ref="Verification"
         />
+
         <VerificationAgreement
           @agree="onAgree($event)"
           v-if="!showAgreement"
@@ -877,7 +878,6 @@ export default {
             ver_image_back,
             ver_image_front,
           }).every((x) => x !== undefined && x !== null && x !== "");
-
           break;
       }
 
