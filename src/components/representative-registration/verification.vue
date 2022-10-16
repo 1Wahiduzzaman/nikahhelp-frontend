@@ -1,6 +1,6 @@
 <template>
   <div id="accordion" class="verificationInfo rounded">
-    <div v-if="userData && userData.status == '1'" class="verification-content">
+    <div v-if="userData" class="verification-content">
       <a-collapse
         default-active-key="1"
         @change="changeActivekey"
