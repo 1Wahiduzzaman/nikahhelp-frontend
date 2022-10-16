@@ -443,7 +443,7 @@
               </div>
             </div>
 
-            <div class="d-flex justify-content-end">
+            <!-- <div class="d-flex justify-content-end">
               <a-button
                 shape="round"
                 type="primary"
@@ -462,7 +462,7 @@
               >
                 Save
               </a-button>
-            </div>
+            </div> -->
           </a-form-model>
         </a-collapse-panel>
       </a-collapse>
@@ -563,19 +563,19 @@ export default {
     changeActivekey(key) {
       this.activeKey = key;
     },
-    handleSubmitFormOne() {
-      this.$refs.verification.validate((valid) => {
-        if (valid) {
-          this.activeKey = null;
-        } else {
-          setTimeout(() => {
-            const el = document.querySelector(".has-error:first-of-type");
-            el.scrollIntoView();
-          }, 100);
-          return false;
-        }
-      });
-    },
+    // handleSubmitFormOne() {
+    //   this.$refs.verification.validate((valid) => {
+    //     if (valid) {
+    //       this.activeKey = null;
+    //     } else {
+    //       setTimeout(() => {
+    //         const el = document.querySelector(".has-error:first-of-type");
+    //         el.scrollIntoView();
+    //       }, 100);
+    //       return false;
+    //     }
+    //   });
+    // },
     filterOption(input, option) {
       return option.componentOptions.children[0].text
         .trim()
@@ -682,10 +682,18 @@ export default {
         case "back":
           this.imageBack = "";
           this.verification.ver_image_back = "";
+          this.$emit("valueChange", {
+            value: this.verification,
+            current: 4,
+          });
           break;
         case "font":
           this.imageFont = "";
           this.verification.ver_image_front = "";
+          this.$emit("valueChange", {
+            value: this.verification,
+            current: 4,
+          });
           break;
       }
     },
