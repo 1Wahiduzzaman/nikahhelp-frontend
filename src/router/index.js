@@ -116,6 +116,12 @@ const AppRouter = new VueRouter({
 
         },
         {
+            path: '/not-found',
+            name: "NotFound",
+            component: lazyLoadView('not-found', '404'),
+            beforeEnter: InitRoute,
+        },
+        {
             path: "/candidate-short-registration",
             name: "CandidateShortRegistration",
             component: lazyLoadView('candidate-registration', 'Candidate-Short-registration'),

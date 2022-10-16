@@ -292,7 +292,7 @@ import improveMyselfThings from "@/common/improveMyselfThings.js";
 import VueFixedHeader from "vue-fixed-header";
 import jwtService from "../../services/jwt.service";
 import Header from "../../components/header/header";
-
+import blockRegistrationRouteAfter from "../../mixins/blockRegistrationRouteAfter";
 export default {
   components: {
     PreferenceTwo,
@@ -307,13 +307,7 @@ export default {
     VerificationAgreement,
   },
 
-  created() {
-      const user = JSON.parse(localStorage.getItem('user'));
-
-      if ( user && user?.is_verified) {
-          this.$router.go(-1);
-      }
-  },
+  mixins: [blockRegistrationRouteAfter],
 
   mounted() {
     this.getCandidateInitialInfo();
