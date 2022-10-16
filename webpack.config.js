@@ -16,16 +16,16 @@ module.exports = {
     filename: '[name].js',
   },
 
-  optimisation: {
-    runtimeChunk: 'single',
-    cacheGroups: {
-      vendor: {
-        test: /[\\/]node_modules[\\/]/,
-        name: 'vendors',
-        chunks: 'all',
-      },
-    },
-  },
+  // optimisation: {
+  //   runtimeChunk: 'single',
+  //   cacheGroups: {
+  //     vendor: {
+  //       test: /[\\/]node_modules[\\/]/,
+  //       name: 'vendors',
+  //       chunks: 'all',
+  //     },
+  //   },
+  // },
 
   module: {
     rules: [
