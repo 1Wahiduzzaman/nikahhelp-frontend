@@ -384,8 +384,10 @@ import SelectGroup from "@/components/ui/selects/SelectGroup";
 import {mapGetters, mapMutations, mapActions} from 'vuex'
 
 export default {
-	name: 'SimpleSearch',
+	name: 'SimpleSearchSideway',
+	
 	props: ['user'],
+
 	components: {
 		SelectTeamModal,
 		SelectGroup,
@@ -633,6 +635,7 @@ export default {
 				console.log(err)
 			}
 		},
+
 		updateCurrentPage() {
 			console.log(this.pagination.current_page);
 			if(this.currentPage<this.pagination.last_page) {
@@ -640,9 +643,11 @@ export default {
 			}
 			console.log(this.currentPage, '>>>>>>>>>current page')
 		},
+
 		onAfterChangeSlider(value) {
 			this.age = value;
 		},
+
 		resetSearch () {
 			this.heightMin = undefined
 			this.heightMax = undefined

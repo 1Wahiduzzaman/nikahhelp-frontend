@@ -4,6 +4,8 @@
       <h5 class="text-center">Image Upload</h5>
       <p class="text-center">Your Profile and Avatar Images</p>
     </div>
+
+    <Loader :isLoading="loading"/>
     <a-collapse
       accordion
       :activeKey="activeKey"
@@ -294,15 +296,19 @@
 
 <script>
 import Vue from "vue";
+import Loader from "../../plugins/loader/loader.vue";
 
 export default {
   name: "UploadProfile",
-  components: {},
+
+  components: { Loader },
+
   props: {
     imageModel: {
       type: Object,
     },
   },
+
   data() {
     return {
       activeKey: ["1"],
@@ -316,12 +322,14 @@ export default {
       anybody_can_see: false,
       only_team_can_see: false,
       team_connection_can_see: false,
+      loading: false
     };
   },
 
   created() {
     this.getImageSharingSettings();
   },
+
   methods: {
     clearImg(action) {
       switch (action) {
@@ -396,6 +404,7 @@ export default {
         });
     },
     getAvatar(e) {
+      this.loading = true;
       let file = e.target.files[0];
       console.log(file);
       if (!this.imageSizeCheck(file)) {
@@ -410,9 +419,11 @@ export default {
       reader.readAsDataURL(file);
       reader.onload = (e) => {
         this.avatarSrc = e.target.result;
+        this.loading = false;
       };
     },
     getMainImage(e) {
+      this.loading = true;
       let file = e.target.files[0];
       if (!this.imageSizeCheck(file)) {
         file = "";
@@ -426,6 +437,7 @@ export default {
       reader.readAsDataURL(file);
       reader.onload = (e) => {
         this.mainImageSrc = e.target.result;
+        this.loading = false;
       };
     },
     getAdditionalImage(e) {
