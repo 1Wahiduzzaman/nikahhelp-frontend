@@ -76,9 +76,9 @@
                 </component>
                 <Observer @intersect="onIntersect"/>
               </div>
-              <div class="main-content-2">
+              <!-- <div class="main-content-2">
                 <component v-bind:is="rightSideComponentName"></component>
-              </div>
+              </div> -->
             </div>
           </a-layout-content>
         </a-layout>
