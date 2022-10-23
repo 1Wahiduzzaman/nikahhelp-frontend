@@ -52,6 +52,7 @@
 										@click="search"
 										class="btn-adv-search"
                     ref="suggestion"
+                    v-begin-search
 									>
 										Reset Search
 									</button>
@@ -143,6 +144,15 @@ export default {
       collapsed: false,
       componentName: "CandidateProfiles",
     };
+  },
+
+  directives: {
+     beginSearch: {
+      inserted(el, binding, vnode) {
+          el.click();
+          console.log(vnode.context);
+      }
+     }
   },
 
   computed: {
@@ -363,19 +373,17 @@ export default {
     this.checkTurnedOnSwitch();
     this.handleCandidateInfo();
 
-    this.$nextTick(() => {
-     
-    })
+    
 
-    setTimeout(() => {
-          console.log(this.$refs.suggestion);
-        if (!this.getSuggested) {
-            this.$refs.suggestion.click();
-            console.log(this.$refs.btnsearch);
-            this.$refs.btnsearch.$el.click();
-            this.sugeestionOn(true);
-        }
-    }, 5000)
+    // setTimeout(() => {
+    //       console.log(this.$refs.suggestion);
+    //     if (!this.getSuggested) {
+    //         this.$refs.suggestion.click();
+    //         console.log(this.$refs.btnsearch);
+    //         this.$refs.btnsearch.$el.click();
+    //         this.sugeestionOn(true);
+    //     }
+    // }, 5000)
   },
 };
 </script>
