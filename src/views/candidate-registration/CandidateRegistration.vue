@@ -1143,7 +1143,7 @@ export default {
   bottom: 0;
   right: 0;
   // margin-right: 4rem;
-  z-index: 9;
+  z-index: 15;
   border-radius: 60% 0 0 0;
   background-color: #522e8e;
   width: 5rem;
