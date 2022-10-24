@@ -9,95 +9,93 @@
         <p>Please answer all question accurately and in full</p>
       </div>
 
-      <v-dialog
-        transition="dialog-bottom-transition"
-        max-width="600"
-        class="d-flex justify-center mb-4 mt-8"
-      >
-      <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            color="purple"
-            v-bind="attrs"
-            width="400"
-            text
-            outlined
-            v-on="on"
-            center
-            rounded
-            class="mx-auto mb-2 mt-8"
-          > Quick Tour
-          <!-- <v-icon>
-            mdi-help
-          </v-icon> -->
-        </v-btn>
-        </template>
-        <template v-slot:default="dialog">
-          <v-card class="relative">
-            <!-- <v-toolbar
-
-              color="violet"
-              class="d-flex justify-center  font-weight-bold"
-            >
-           
-              </v-toolbar> -->
-            <v-card-text class="d-flex flex-column align-center pt-4">
-              <v-img
-  lazy-src="https://picsum.photos/id/11/10/6"
-  max-height="150"
-  max-width="250"
-  src="https://picsum.photos/id/11/500/300"
-></v-img>
-              <!-- <div class="text-center">{{ contentGuidance }}</div> -->
-            </v-card-text>
-            <v-card-text class="d-flex flex-column align-center">
-              {{ currentGuide }}. {{ contentTitle }}
-            </v-card-text>
-            <v-card-text class="d-flex flex-column align-center">
-              <p>hello world </p>
-
-            </v-card-text>
-            <v-btn
-                rounded
-                absolute
-                bottom
-                left
-                text
-                class="mb-2"
-                @click="dialog.value = false;"
-              >Skip</v-btn>
-            <v-card-actions class="justify-end">
-              
-              <v-btn
-                v-if="currentGuide > 0"
-                text
-               
-                @click="changeContentPrev"
-                class="mr-3"
-              >
-            <v-icon
-             color="grey"
-            >
-              mdi-arrow-left-circle
+      <div class="help-dialog">
+        <v-dialog
+          transition="dialog-bottom-transition"
+          max-width="600"
+          class="d-flex justify-center mb-4 mt-8"
+        >
+        <template v-slot:activator="{ on, attrs }">
+            <!-- <v-btn
+              color="purple"
+              v-bind="attrs"
+              width="400"
+              text
+              outlined
+              v-on="on"
+              center
+              rounded
+              class="mx-auto mb-2 mt-8"
+            > Quick Tour
+            </v-btn> -->
+            <v-icon large v-bind="attrs" v-on="on" class="question-mark" color="white">
+              mdi-help-circle
             </v-icon>
-            </v-btn>
-              <v-btn
-                text
-                @click="changeContent"
-              >
-              <v-icon
-              color="#6159A7"
-              >
-                mdi-arrow-right-circle
-              </v-icon>
-            
-            </v-btn>
-            </v-card-actions>
-            <v-card-actions class="justify-end">
-              
-            </v-card-actions>
-          </v-card>
         </template>
-      </v-dialog>
+          <template v-slot:default="dialog">
+            <v-card class="relative">
+              <v-toolbar
+  
+                color="violet"
+                class="d-flex justify-center  font-weight-bold"
+              >
+              <v-card-text>
+                {{ currentGuide }}. {{ contentTitle }}
+              </v-card-text>
+                </v-toolbar>
+              <v-card-text class="d-flex flex-column align-center">
+                <v-img
+                lazy-src="https://picsum.photos/id/11/10/6"
+                max-height="150"
+                max-width="250"
+                src="https://picsum.photos/id/11/500/300"
+                class="mt-2"
+              ></v-img>
+                <div class="text-center">{{ contentGuidance }}</div>
+              </v-card-text>
+              <v-btn
+                  rounded
+                  absolute
+                  bottom
+                  left
+                  text
+                  class="mb-2"
+                  @click="dialog.value = false;"
+                >Skip</v-btn>
+              <v-card-actions class="justify-end">
+                
+                <v-btn
+                  v-if="currentGuide > 0"
+                  text
+                 
+                  @click="changeContentPrev"
+                  class="mr-3"
+                >
+              <v-icon
+               color="grey"
+              >
+                mdi-arrow-left-circle
+              </v-icon>
+              </v-btn>
+                <v-btn
+                  text
+                  @click="changeContent"
+                >
+                <v-icon
+                color="#6159A7"
+                >
+                  mdi-arrow-right-circle
+                </v-icon>
+              
+              </v-btn>
+              </v-card-actions>
+              <v-card-actions class="justify-end">
+                
+              </v-card-actions>
+            </v-card>
+          </template>
+        </v-dialog>
+      </div>
 
       <VueFixedHeader
         @change="updateFixedStatus"
@@ -885,6 +883,23 @@ export default {
       padding: 0;
       z-index: 9;
     }
+  }
+}
+
+.help-dialog {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  // margin-right: 4rem;
+  z-index: 9;
+  border-radius: 60% 0 0 0;
+  background-color: #522e8e;
+  width: 5rem;
+
+  .question-mark {
+    position: absolute;
+    right: 0.7rem;
+    top: 0.4rem;
   }
 }
 

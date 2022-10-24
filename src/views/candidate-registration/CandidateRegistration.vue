@@ -44,11 +44,12 @@
                 </v-toolbar>
               <v-card-text class="d-flex flex-column align-center">
                 <v-img
-    lazy-src="https://picsum.photos/id/11/10/6"
-    max-height="150"
-    max-width="250"
-    src="https://picsum.photos/id/11/500/300"
-  ></v-img>
+                lazy-src="https://picsum.photos/id/11/10/6"
+                max-height="150"
+                max-width="250"
+                src="https://picsum.photos/id/11/500/300"
+                class="mt-2"
+                ></v-img>
                 <div class="text-center">{{ contentGuidance }}</div>
               </v-card-text>
               <v-btn
