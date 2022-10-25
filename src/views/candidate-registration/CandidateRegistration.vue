@@ -2,7 +2,7 @@
   <div class="candidate-registration font-poppins">
     <Header />
     <Loader v-if="isLoading" :isLoading="isLoading" />
-    <div v-else class="steps ma-steps">
+    <div v-else class="steps ma-steps pt-8">
       <!-- <div class="steper-header text-center heading-text px-3 d-mb-none">
         <h4>About you and the companion you are looking for</h4>
         <p>To get the best results please complete the questions fully</p>
@@ -103,8 +103,6 @@
         :headerClass="propsData.headerClass"
         :fixedClass="propsData.fixedClass"
         :hideScrollUp="propsData.hideScrollUp"
-
-        class="mt-12"
       >
         <div class="step-bar">
           <a-steps
