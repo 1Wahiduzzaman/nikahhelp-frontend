@@ -920,6 +920,10 @@ export default {
 }
 .bottom-padding {
   padding: 0 2rem;
+    
+  @media(max-width: 992px){
+    margin-bottom: 2rem;
+  }
 }
 .mobile-step {
   background-color: #b7b7b7;
