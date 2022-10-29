@@ -15,7 +15,7 @@ export default {
       totalResult: 0,
       selectedProfile: {},//profile info 4 r8 sidebar 
       queryArr: ['male', 'dhaka', '20-30 Yrs'],
-      component: 'addComponent',
+      component: '',
       suggested: false,
     };
   },
