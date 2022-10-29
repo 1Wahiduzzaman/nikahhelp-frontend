@@ -14,16 +14,37 @@
 						"
 					/>
 					<div class="flex justify-space-between flex-wrap mt-10">
-						<ButtonComponent
-							class="mb-3"
-							iconHeight="14px"
-							:isSmall="true"
-							title="Gallery"
-							customEvent="openGallery"
-							icon="/assets/icon/gallery.svg"
-							@onClickButton="onClickButton"
-						/>
-						<template v-if="!isOwnProfile">
+						<div v-if="isOwnProfile" class="flex justify-content-center">
+							<ButtonComponent
+								class="mb-3 mr-2"
+								iconHeight="14px"
+								:isSmall="true"
+								title="Gallery"
+								customEvent="openGallery"
+								icon="/assets/icon/gallery.svg"
+								@onClickButton="onClickButton"
+							/>
+							<ButtonComponent
+								class="mb-3"
+								iconHeight="14px"
+								:isSmall="true"
+								title="Close public view"
+								icon="/assets/icon/close.svg"
+								@onClickButton="goBackToProfileView"
+							/>
+						</div>
+						
+
+						<template v-else>
+							<ButtonComponent
+								class="mb-3 mr-2"
+								iconHeight="14px"
+								:isSmall="true"
+								title="Gallery"
+								customEvent="openGallery"
+								icon="/assets/icon/gallery.svg"
+								@onClickButton="onClickButton"
+							/>
 							<ButtonComponent
 								iconHeight="14px"
 								:isSmall="true"
@@ -377,8 +398,13 @@ export default {
 			}
 		},
 		isOwnProfile() {
-			let loggedInUserId = JSON.parse(localStorage.getItem('userId'))
-			return this.candidateData.user_id == loggedInUserId
+			// let loggedInUserId = JSON.parse(localStorage.getItem('userInfo'))
+			// return this.candidateData.user_id === loggedInUserId
+
+			let loggedInUserId = JSON.parse(localStorage.getItem('user')).id
+			return this.candidateData.user_id === loggedInUserId
+
+			
 		}
 	},
 	methods: {
@@ -465,7 +491,9 @@ export default {
 			console.log(eventData)
             if(eventData.event == 'openGallery') this.openGallery();
 
-			let userInfo = JSON.parse(localStorage.getItem("userInfo"))
+			// let userInfo = JSON.parse(localStorage.getItem("userInfo"))
+
+			let userInfo = JSON.parse(localStorage.getItem("user"))
 			if(userInfo.status != 3) {
 				this.showError('Your account is not verified')
 				return
@@ -695,6 +723,9 @@ export default {
                 images: this.images,
             })
         },
+		goBackToProfileView() {
+			this.$router.push('/profile')
+		}
 	},
 };
 </script>
