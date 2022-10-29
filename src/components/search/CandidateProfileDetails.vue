@@ -386,7 +386,7 @@ export default {
             });
         },
         loadSearchResultComponent() {
-            this.setComponent('AddComponent')
+            this.setComponent('')
             this.$emit('switchComponent', 'CandidateProfiles')
         },
         openGallery() {
