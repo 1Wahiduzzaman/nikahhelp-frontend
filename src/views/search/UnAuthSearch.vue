@@ -51,16 +51,18 @@
 			<!--			</div>-->
 			<div class="flex justify-content-between align-items-center my-4">
 				<h5 class="search-text">Search Results</h5>
-				<v-chip-group>
-					<v-chip
-					color=""
-					v-for="(item, i) in queries" :key="i">
-						{{ item }}
-						<v-icon>
-							mdi-check
-						</v-icon>
-					</v-chip>
-				</v-chip-group>
+				<div class="unauth-search-check">
+					<v-chip-group>
+						<v-chip
+						color=""
+						v-for="(item, i) in queries" :key="i">
+							{{ item }}
+							<v-icon>
+								mdi-check
+							</v-icon>
+						</v-chip>
+					</v-chip-group>
+				</div>
 				<button
 						@click="setSearchModalVisible"
 						class="btn btn-primary py-2 px-4 advance-btn"
