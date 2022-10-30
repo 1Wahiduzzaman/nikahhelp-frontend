@@ -80,7 +80,7 @@
                 to="/login"
                 :class="{ 'flex justify-content-center': message }"
               >
-                &#xab; Sign in
+                &#xab; <span>Sign in</span>
               </router-link>
               
               <button
@@ -220,9 +220,17 @@ export default {
         display: flex;
         .btn-primary-outlined {
           box-shadow: none !important;
+          border: none;
           
           &:hover{
-            box-shadow: 2px 2px 2px #999 !important;
+            background-color: transparent !important;
+            color: #522e8e;
+          }
+
+          span {
+            &:hover {
+              border-bottom: 1px solid #522e8e;
+            }
           }
         }
       }
