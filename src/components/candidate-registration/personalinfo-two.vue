@@ -55,8 +55,9 @@
                     { name: 'Male', value: 1 },
                     { name: 'Female', value: 2 },
                   ]"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -172,8 +173,8 @@
                   :options="heightTV"
                   ><template #open-indicator> <a-icon type="down" /> </template>
                   <template v-slot:option="option">
-                    <div v-html="option.label"></div> </template
-                ></v-select>
+                    <div v-html="option.label"></div> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -230,8 +231,9 @@
                   v-model="personalInformation.essential.per_religion_id"
                   label="name"
                   :options="candidateDetails.religions"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -291,8 +293,9 @@
                   v-model="personalInformation.essential.per_education_level_id"
                   label="name"
                   :options="candidateDetails.studylevels"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -353,8 +356,9 @@
                   v-model="personalInformation.essential.per_employment_status"
                   label="name"
                   :options="employment_Statuses"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -412,8 +416,9 @@
                   v-model="personalInformation.essential.per_occupation"
                   label="name"
                   :options="candidateDetails.occupations"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -498,8 +503,9 @@
                   v-model="personalInformation.general.per_ethnicity"
                   label="name"
                   :options="candidateDetails.ethnicities"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
                 <!-- <a-select
                   @change="onValueChange($event, 'general')"
                   id="per_ethnicity"
@@ -582,8 +588,9 @@
                   v-model="personalInformation.general.per_mother_tongue"
                   label="name"
                   :options="candidateDetails.languages"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -639,8 +646,9 @@
                   v-model="personalInformation.general.per_nationality"
                   label="name"
                   :options="candidateDetails.countries"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -701,8 +709,9 @@
                   v-model="personalInformation.general.per_country_of_birth"
                   label="name"
                   :options="candidateDetails.countries"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -1246,9 +1255,10 @@
                       :reduce="(option) => option.id"
                       label="name"
                       :options="candidateDetails.countries"
-                      ><template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
+                      >
+                      <template #open-indicator>
+                        <a-icon type="down" /> </template>
+                    </v-select>
                   </a-form-model-item>
                 </div>
               </div>
@@ -1470,8 +1480,9 @@
                       value: 'divorced_with_children',
                     },
                   ]"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -1555,8 +1566,9 @@
 
                     { name: 'Other', value: 'Other' },
                   ]"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -1634,8 +1646,9 @@
                       value: 3,
                     },
                   ]"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                    <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -1699,8 +1712,9 @@
 
                     { name: `Former smoker`, value: 3 },
                   ]"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                    <template #open-indicator> <a-icon type="down" /> </template>
+                  </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -1769,8 +1783,8 @@
                   label="name"
                   :options="[...candidateDetails.languages]"
                 >
-                  <template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -2869,6 +2883,17 @@ export default {
     }
     p {
       font-size: 14px;
+    }
+  }
+
+  .style-chooser::v-deep {
+    .vti__dropdown {
+      &:hover {
+        background-color: transparent !important;
+      }
+    }
+    .vti__input {
+      font-size: 1rem;
     }
   }
 
