@@ -57,7 +57,7 @@
 						color=""
 						v-for="(item, i) in queries" :key="i">
 							{{ item }}
-							<v-icon>
+							<v-icon size="1rem">
 								mdi-check
 							</v-icon>
 						</v-chip>
