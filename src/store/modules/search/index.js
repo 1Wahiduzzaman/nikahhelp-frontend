@@ -15,7 +15,7 @@ export default {
       totalResult: 0,
       selectedProfile: {},//profile info 4 r8 sidebar 
       queryArr: [],
-      component: '',
+      component: 'addComponent',
       suggested: false,
     };
   },

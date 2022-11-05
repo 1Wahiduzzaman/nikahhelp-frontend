@@ -594,7 +594,7 @@ export default {
 
 		handleSearch() {
 			if(this.isFetching) return;
-			this.setComponent('')
+			this.setComponent('addComponent')
             this.$emit('switchComponent', 'CandidateProfiles')
 			this.$refs.top.click()
 			this.currentPage = 1;
