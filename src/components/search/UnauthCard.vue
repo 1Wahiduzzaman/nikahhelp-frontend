@@ -93,7 +93,7 @@
           :isSmall="true"
           :responsive="false"
           :title="candidate.is_short_listed ? 'Unlist Team' : 'TeamList'"
-          icon="/assets/icon/star-fill-secondary.svg"
+          icon="/assets/icon/team.svg"
           :customEvent="candidate.is_connected ? 'removeTeam' : 'addTeam'"
           @onClickButton="modalVisible"
       />

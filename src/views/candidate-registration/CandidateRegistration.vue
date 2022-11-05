@@ -15,18 +15,6 @@
           class="d-flex justify-center mb-4 mt-8"
         >
         <template v-slot:activator="{ on, attrs }">
-            <!-- <v-btn
-              color="purple"
-              v-bind="attrs"
-              width="400"
-              text
-              outlined
-              v-on="on"
-              center
-              rounded
-              class="mx-auto mb-2 mt-8"
-            > Quick Tour
-            </v-btn> -->
             <v-icon large v-bind="attrs" v-on="on" class="question-mark" color="white">
               mdi-help-circle
             </v-icon>
@@ -43,13 +31,19 @@
               </v-card-text>
                 </v-toolbar>
               <v-card-text class="d-flex flex-column align-center">
-                <v-img
-                lazy-src="https://picsum.photos/id/11/10/6"
-                max-height="150"
-                max-width="250"
-                src="https://picsum.photos/id/11/500/300"
-                class="mt-2"
-                ></v-img>
+                <div class="d-flex justify-center w-100">
+
+                  <v-container class="d-flex justify-center">
+                    <v-img
+                    max-height="200"
+                    max-width="200"
+                    :src="imageSrc"
+                    class="mt-2"
+                    position="cover"
+                    v-if="imageSrc"
+                    ></v-img>
+                  </v-container>
+                </div>
                 <div class="text-center">{{ contentGuidance }}</div>
               </v-card-text>
               <v-btn
@@ -320,9 +314,9 @@ export default {
   data() {
     return {
       currentGuide: 0,
-      contentTitle: 'Complete Your Profile',
-      contentGuidance: 'More information you provide, higher the chance to appear on the search result.',
-      imageSrc: '@/assets/Complete_Form.png',
+      contentTitle: 'Take a moment to get comfortable',
+      contentGuidance: 'We’d like to show you around the steps required to complete this section – it will be fast, promise!',
+      imageSrc: "",
       isAgree: false,
       dialog: false,
       isLoading: false,
@@ -915,32 +909,33 @@ export default {
     changeContentPrev() {
        switch (this.currentGuide) {
         case 1:
-          this.contentTitle = 'Complete Your Profile';
-          this.imageSrc = '@/assets/Complete_Form.png'
-          this.contentGuidance = 'More information you provide, higher the chance to appear on the search result.';
+          this.imageSrc = "";
+          this.contentTitle = 'Take a moment to get comfortable';
+          this.contentGuidance = 'We’d like to show you around the steps required to complete this section – it will be fast, promise!';
           this.currentGuide = 0;
           break;
         case 2:
-          this.imageSrc = '@/assets/Upload_Images.png';
-          this.contentTitle = 'Creating or joining a team';
-          this.contentGuidance = 'Team';
+          this.imageSrc = require('@/assets/help_guide_pics/Complete_Your_Profile.svg');
+          this.contentTitle = 'Complete Your Profile';
+          this.contentGuidance = 'More information you provide, higher the chance to appear on the search result.';
           this.currentGuide = 1;
           break;
         case 3:
-          this.imageSrc = '@/assets/Verify_Your_ID.png';
-          this.contentTitle = 'Choosing  a subscription plan';
-          this.contentGuidance = 'subscription';
+          this.imageSrc = require('@/assets/help_guide_pics/Upload_Images.svg');
+          this.contentTitle = 'Upload Images';
+          this.contentGuidance = 'You need one avatar, one main and one additional image. Use Image Share Setting to give permission who can see your images.';
           this.currentGuide = 2;
           break;
         case 4:
-          this.imageSrc = '@/assets/Review_and_Submit.png'
-          this.contentGuidance = 'search';
+          this.imageSrc = require('@/assets/help_guide_pics/Verify_your_ID.svg');
+          this.contentTitle = 'Verify your ID';
+          this.contentGuidance = 'In MatrimonyAssist all candidates must be verified. You can upload your verification documents while completing your profile or you can do it later from user dashboard';
           this.currentGuide = 3;
           break; 
         case 5:
-          this.imageSrc = '@/assets/What_happens_next.png';
-          this.contentTitle = 'Shortlist and Connect with prospect’s team';
-          this.contentGuidance = 'Shortlist and Connect';
+          this.imageSrc = require('@/assets/help_guide_pics/Review_and_Submit.svg');
+          this.contentTitle = 'Review and Submit';
+          this.contentGuidance = 'Please check all the information you provided on the form are correct. Once you are happy, only then press the submit button to complete your registration.';
           this.currentGuide = 4;
           break;
        }
@@ -951,33 +946,35 @@ export default {
 
       switch (this.currentGuide) {
         case 1:
-          this.contentTitle = 'Creating or joining a team';
-          this.contentGuidance = 'Team';
+          this.imageSrc = require('@/assets/help_guide_pics/Complete_Your_Profile.svg');
+          this.contentTitle = 'Complete Your Profile';
+          this.contentGuidance = 'More information you provide, higher the chance to appear on the search result.';
           break;
       
         case 2:
-          this.contentTitle = 'Choosing  a subscription plan';
-          this.contentGuidance = 'subscription';
+          this.imageSrc = require('@/assets/help_guide_pics/Upload_Images.svg');
+          this.contentTitle = 'Upload Images';
+          this.contentGuidance = 'You need one avatar, one main and one additional image. Use Image Share Setting to give permission who can see your images.';
           break; 
         case 3:
-          this.contentTitle = 'Search for suitable prospect';
-          this.contentGuidance = 'search';
+          this.imageSrc = require('@/assets/help_guide_pics/Verify_your_ID.svg');
+          this.contentTitle = 'Verify your ID';
+          this.contentGuidance = 'In MatrimonyAssist all candidates must be verified. You can upload your verification documents while completing your profile or you can do it later from user dashboard';
           break;  
         case 4:
-          this.contentTitle = 'Shortlist and Connect with prospect’s team';
-          this.contentGuidance = 'Shortlist and Connect';
+          this.imageSrc = require('@/assets/help_guide_pics/Review_and_Submit.svg');
+          this.contentTitle = 'Review and Submit';
+          this.contentGuidance = 'Please check all the information you provided on the form are correct. Once you are happy, only then press the submit button to complete your registration.';
           break;
         case 5:
-          this.contentTitle = 'Chat and exchange information with connected team';
-          this.contentyGuidance = 'Chat';    
-          break;
-        case 6:
-          this.contentTitle = 'Evaluate information and make decision';
-          this.contentGuidance = 'Evaluate information';
+          this.imageSrc = require('@/assets/help_guide_pics/Shortlist_and_connect_with_prospect’s_team.svg');
+          this.contentTitle = 'What happens next?';
+          this.contentGuidance = '\u2713 Wait for the approval of your registration. \u2713 You’ll receive access to a user dashboard to create or join a team and pay subscription';
           break;
         default:
-          this.contentTitle = 'Profile & ID completion and getting approval';
-          this.contentGuidance = 'Profile id';
+          this.imageSrc = "";
+          this.contentTitle = 'Take a moment to get comfortable';
+          this.contentGuidance = 'We’d like to show you around the steps required to complete this section – it will be fast, promise!';
           this.currentGuide = 0;
           break;
       }

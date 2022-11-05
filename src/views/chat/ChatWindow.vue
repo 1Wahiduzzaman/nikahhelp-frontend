@@ -1379,8 +1379,8 @@ export default {
 
     @media (max-width: 913px) {
       .category-name {
-        display: none;
         padding-bottom: 0px;
+        margin-top: 10px;
         margin-bottom: -100px;
 
       }
@@ -1464,8 +1464,7 @@ export default {
         .nav-tabs {
           border: 0;
           display: flex;
-          //justify-content: space-between;
-          //align-items: center;
+          justify-content: space-around;
           .nav-link {
             margin-bottom: -2px;
             border: 0;
@@ -1505,7 +1504,7 @@ export default {
                 font-size: 14px;
                 font-weight: bold;
                 @media (max-width: 990px) {
-                  font-size: 8px;
+                  font-size: 12px;
                   font-weight: normal;
                 }
               }
@@ -1568,14 +1567,16 @@ export default {
             &.active {
               .category-item {
                 &::after {
-                  content: "";
-                  width: 100%;
-                  border-bottom: 2px solid #6059a7;
-                  height: 2px;
-                  background-color: red;
-                  position: absolute;
-                  left: 0;
-                  bottom: -6px;
+                  @media(min-width: 992px){
+                    content: "";
+                    width: 100%;
+                    border-bottom: 2px solid #6059a7;
+                    height: 2px;
+                    background-color: red;
+                    position: absolute;
+                    left: 0;
+                    bottom: -6px;
+                  }
                 }
 
                 svg {

@@ -14,8 +14,8 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="warning" @click="cancel"> Cancel </v-btn>
-          <v-btn color="primary" @click="save"> Submit</v-btn>
+          <v-btn class="v-btn-cancel" rounded @click="cancel"> Cancel </v-btn>
+          <v-btn class="v-btn-submit" rounded @click="save"> Submit</v-btn>
         </v-card-actions>
       </v-card>
       <v-card class="message" v-if="showConfirmation">
@@ -156,5 +156,15 @@ export default {
 }
 .body-container::-webkit-scrollbar {
   display: none;
+}
+
+.v-btn-cancel {
+  background-color: #d81b60 !important;
+  color: #fff;
+}
+
+.v-btn-submit {
+  background-color: #6158a7 !important;
+  color: #fff;
 }
 </style>
