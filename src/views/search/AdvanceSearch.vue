@@ -296,6 +296,7 @@ export default {
       this.collapsed = !this.collapsed;
     },
     setCandidatePref(data, personal) {
+      // debugger;
       setTimeout(() =>{
         if(data.pre_partner_age_max) {
           this.query += `&max_age=${data.pre_partner_age_max}`
@@ -305,43 +306,48 @@ export default {
           this.query += `&min_age=${data.pre_partner_age_min}`
           this.$refs.simpleSearch.setAttr('min_age', data.pre_partner_age_min);
         }
-        if(data.pre_ethnicities) {
-          this.$refs.simpleSearch.setAttr('ethnicity', data.pre_ethnicities);
-        }
-        if(data.pre_ethnicities) {
-          this.$refs.simpleSearch.setAttr('ethnicity', data.pre_ethnicities);
-        }
-        if(data.pre_height_min) {
-          this.query += `&min_height=${data.pre_height_min}`
-          this.$refs.simpleSearch.setAttr('heightMin', data.pre_height_min);
-        }
-        if(data.pre_height_max) {
-          this.query += `&max_height=${data.pre_height_max}`
-          this.$refs.simpleSearch.setAttr('heightMax', data.pre_height_max);
-        }
-        if(data.pre_employment_status) {
-          this.$refs.simpleSearch.setAttr('employmentStatus', data.pre_employment_status);
-        }
-        if(data.preferred_countries.length) {
-          this.query += `&country=${data.preferred_countries[0].id}`
-          this.$refs.simpleSearch.setAttr('country', data.preferred_countries[0].id);
-        }
-        // if(data.per_current_residence_country) {
+        // if(data.pre_ethnicities) {
+        //   this.$refs.simpleSearch.setAttr('ethnicity', data.pre_ethnicities);
+        // }
+        // if(data.pre_ethnicities) {
+        //   this.$refs.simpleSearch.setAttr('ethnicity', data.pre_ethnicities);
+        // }
+        // if(data.pre_height_min) {
+        //   this.query += `&min_height=${data.pre_height_min}`
+        //   this.$refs.simpleSearch.setAttr('heightMin', data.pre_height_min);
+        // }
+        // if(data.pre_height_max) {
+        //   this.query += `&max_height=${data.pre_height_max}`
+        //   this.$refs.simpleSearch.setAttr('heightMax', data.pre_height_max);
+        // }
+        // if(data.pre_employment_status) {
+        //   this.$refs.simpleSearch.setAttr('employmentStatus', data.pre_employment_status);
+        // }
+        // if(data.preferred_countries.length) {
+        //   this.query += `&country=${data.preferred_countries[0].id}`
+        //   this.$refs.simpleSearch.setAttr('country', data.preferred_countries[0].id);
+        // }
+        // // if(data.per_current_residence_country) {
         //   if(data.per_current_residence_country.length){
         //     this.query += `&residence_country=${data.per_current_residence_country[0].id}`
         //     this.$refs.simpleSearch.setAttr('residence_country', data.per_current_residence_country[0].id);
         //   }
         // }
-        if(data.preferred_nationality.length) {
-          this.$refs.simpleSearch.setAttr('nationality', data.preferred_nationality[0].id);
-        }
-        if(data.pre_partner_religion_id.length) {
-          this.$refs.simpleSearch.setAttr('religion', parseInt(data.pre_partner_religion_id[0]));
-        }
-				const oppositeGender = this.loggedUser.get_candidate.per_gender === 1 ? 2 : 2;
+        // if(data.preferred_nationality.length) {
+        //   this.$refs.simpleSearch.setAttr('nationality', data.preferred_nationality[0].id);
+        // }
+        // if(data.pre_partner_religion_id.length) {
+        //   this.$refs.simpleSearch.setAttr('religion', parseInt(data.pre_partner_religion_id[0]));
+        // }
+
+        const gender = {
+					1: 2,
+					2: 1
+				};
+				const oppositeGender = gender[personal.per_gender_id];
         this.query += `&gender=${oppositeGender}`
         this.$refs.simpleSearch.setAttr('gender', oppositeGender); //have to set depending on candidate
-        this.fetchInitialCandidate();
+         this.fetchInitialCandidate();
       },1000)
     },
     async handleCandidateInfo() {
@@ -350,10 +356,17 @@ export default {
           if(info.data.preference) {
             this.setCandidatePref(info.data.preference, info.data.personal)
           } else {//if logged in user don't have a team
-            let genderObj = {1:2, 2:1};
-            const gender = JSON.parse(localStorage.getItem('user')).get_candidate.per_gender
-            this.query += `&gender=${genderObj[gender]}`
-            this.$refs.simpleSearch.setAttr('gender', genderObj[gender]);
+            // let genderObj = {1:2, 2:1};
+            // const gender = JSON.parse(localStorage.getItem('user')).get_candidate.per_gender
+      // debugger;
+     
+      const gender = {
+					1: 2,
+					2: 1
+				};
+				const oppositeGender = gender[info.data.personal.per_gender_id];
+            this.query += `&gender=${oppositeGender}`
+            this.$refs.simpleSearch.setAttr('gender', oppositeGender);
             this.fetchInitialCandidate()
           }
         }
