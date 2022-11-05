@@ -424,7 +424,7 @@ export default {
 
 	methods: {
 		save() {
-			ApiService.post('v1/feedback', {
+			ApiService.post('v1/feed-back', {
 				firstname: this.firstname,
 				lastname: this.lastname,
 				email: this.email,
