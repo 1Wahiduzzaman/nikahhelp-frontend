@@ -384,7 +384,7 @@ import SelectGroup from "@/components/ui/selects/SelectGroup";
 import {mapGetters, mapMutations, mapActions} from 'vuex'
 
 export default {
-	name: 'SimpleSearchSideway',
+	name: 'SimpleSearch',
 	
 	props: ['user'],
 
@@ -461,6 +461,7 @@ export default {
 	methods: {
 		...mapActions({
 			searchUser: 'search/searchUser',
+			getCandidateInfo: 'search/getCandidateInfo',
 		}),
 		onClickButton(data) {
 			if(data.event == 'handleSearch') this.handleSearch()
@@ -491,10 +492,10 @@ export default {
 					console.log(error);
 				});
 		},
-		getQuery() {
+		async getQuery() {
 			// let _payload = `?page=0&parpage=10&min_age=${params.age_min}&max_age=${params.age_max}&active_team_id=${this.activeTeamId}`;
 			let _payload = `?page=${this.currentPage}`;
-
+            const info = await this.getCandidateInfo('v1/candidate-of-team');
 			if (this.min_age != undefined) {
 				console.log('testing');
 				_payload += `&min_age=${this.min_age}`;
@@ -507,7 +508,10 @@ export default {
 					1: 2,
 					2: 1
 				};
-				const genderpref = gender[this.user.get_candidate.per_gender];
+
+				const genderpref = gender[info.data.personal.per_gender_id];
+			
+				this.gender = genderpref;
 				 _payload += `&gender=${genderpref}`;
 			}
 			if (this.heightMin > 0 || this.minHeightFt > 0) {
@@ -590,7 +594,7 @@ export default {
 
 		handleSearch() {
 			if(this.isFetching) return;
-			this.setComponent('')
+			this.setComponent('addComponent')
             this.$emit('switchComponent', 'CandidateProfiles')
 			this.$refs.top.click()
 			this.currentPage = 1;
