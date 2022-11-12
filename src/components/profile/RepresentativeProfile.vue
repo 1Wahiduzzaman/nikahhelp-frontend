@@ -118,7 +118,7 @@
 											<TableRow 
 												title="Current Residence"
 												textClass="text-subtitle-1"
-												:value="personal.per_current_residence_country_text + ', ' +personal.per_current_residence_city"
+												:value="personal.per_permanent_country"
 											/>
 										</table>
 									</v-card>

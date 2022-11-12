@@ -272,7 +272,7 @@ const AppRouter = new VueRouter({
             path: "",
             name: 'root',
             component: lazyLoadComponent('system', 'matrimony-system'),
-            redirect: '/dashboard',
+            redirect: '/manageteam',
             beforeEnter: InitRoute,
             children: [
 
