@@ -4,14 +4,14 @@
       <div class="avatar-area">
         <img class="avatar" width="45" height="45"
              :src="item.logo ? item.logo : getImage()" alt="">
-        <span :class="{'online-icon-avatar': ifOnline}"></span>
+        <span :class="{'online-icon-avatar': isOnline()}"></span>
       </div>
       <div class="content">
         <span class="label">{{ item.label }}</span>
         <h4 class="mt-1 fs-14">{{ item.name }}</h4>
         <p class="mb-0 text-margin">{{ item.message && item.message.body ? messageStr(item.message.body) : '' }}</p>
       </div>
-      <span class="online-icon" v-if="item.message && item.message.seen == 1"></span>
+      <span class="online-icon" v-if="newMessages"></span>
       <a-dropdown v-if="status == 'connected'">
         <a class="ant-dropdown-link dropdown-box" @click="e => e.preventDefault()">
           <a-icon type="more" class="fs-28 font-weight-bolder br-50 bg-c9 color-primary icon-30"/>
@@ -55,17 +55,18 @@ export default {
     index: {
       type: Number,
       required: false
+    },
+    newMessages: {
+      type: Boolean,
+      required: false
     }
   },
   computed: {
-    ifOnline() {
-      if(this.item.label === 'Group chat') {
-        return this.onlineTeam();
-      } else if(this.item.label == 'Team member' || this.item.label == 'Private chat') {
-        return this.onlineUser();
-      }
-      return false;
-    },
+   
+
+    loggedUser() {
+      return JSON.parse(localStorage.getItem('user')) ?? null;
+    }
   },
   watch: {
     item: function(newVal, oldVal) {
@@ -87,30 +88,43 @@ export default {
       return body
     },
 
+    isOnline() {
+      const label = {
+        'Group chat': this.onlineTeam(),
+        'Team member': this.onlineUser(),
+        'Private chat': this.onlineUser(),
+      };
+
+      return  this.item.label !== '' ? label[this.item.label] : false;
+    },
+
     onlineTeam() {
       let team_members = [];
-      let loggedUser = JSON.parse(localStorage.getItem('user'));
-      if(this.item && this.teamMembers && this.teamMembers.length > 0) {
-        team_members = this.teamMembers.map(i => {
-          if(loggedUser.id != i) {
-            return parseInt(i);
-          }
+
+      team_members = this.parseTeamMembersIdsIfExist();
+
+      return this.online_users.find(onlineUser => this.thatHasIn(team_members, onlineUser)) !== undefined;
+           
+    },
+
+    thatHasIn(members, user) {
+      return members.includes(parseInt(user));
+    },
+
+    parseTeamMembersIdsIfExist() {
+        return this.item && this.teamMembers && this.teamMembers.length > 0 ?  this.parseTeamMembersId() : [];
+    },
+
+    parseTeamMembersId() {
+        return this.teamMembers.map(memberId => {
+          return this.loggedUser?.id != memberId ? parseInt(memberId) : memberId;
         });
-      }
-      let online = this.online_users.find(item => team_members.includes(parseInt(item)));
-      if(online) {
-        return true;
-      } else {
-        return false;
-      }
     },
+
     onlineUser() {
-      if(this.item && this.item.other_mate_id && this.online_users.includes(parseInt(this.item.other_mate_id))) {
-        return true;
-      } else {
-        return false;
-      }
+      return this.item && this.item.other_mate_id && this.online_users.includes(parseInt(this.item.other_mate_id))
     },
+
     getImage() {
       return require('../../assets/info-img.png');
     }

@@ -503,7 +503,7 @@ export default {
 			if (this.max_age) {
 				_payload += `&max_age=${this.max_age}`;
 			}
-			if (this.user?.get_candidate?.per_gender != "") {
+			if (info.data.personal.per_gender_id) {
 				const gender = {
 					1: 2,
 					2: 1

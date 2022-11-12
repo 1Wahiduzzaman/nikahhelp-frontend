@@ -80,6 +80,7 @@
                           :status="'team'"
                           :online_users="online_users"
                           :teamMembers="teamMembers"
+                          :newMessages="newMessage"
                           action
                           class="w-full pr-3 cursor-pointer"
                       />
@@ -312,7 +313,7 @@ export default {
         body: data.body,
       };
       this.chats = [...this.chats, recieveMessage];
-
+      this.newMessage = true;
       if (this.chatTab === 'Connected') {
         this.connectedTeamChats = [...this.connectedTeamChats, recieveMessage];
 				this.notify = data;
@@ -351,7 +352,8 @@ export default {
       active_team_id: null,
       chatListedImage: [],
       connectedTeamChats: [],
-	    notify: 0
+	    notify: 0,
+      newMessage: false,
     }
   },
 
