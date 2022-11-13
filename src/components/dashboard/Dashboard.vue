@@ -15,13 +15,36 @@
            <div class="status-div mt-3">
              <p class="fs-14 color-primary status">
                Profile Status:
-               <span class="font-weight-bolder">Not Completed</span>
+               <!-- <span class="font-weight-bolder">Not Completed</span> -->
+               <span class="font-weight-bolder" v-if="userInfo.user">{{ userInfo.user["account_type"] == 1 && userInfo.candidate_information
+                  ? userInfo.candidate_information.data_input_status == 0
+                    ? "In-complete"
+                    : userInfo.candidate_information.data_input_status > 5 &&
+                      userInfo.candidate_information.is_uplaoded_doc == 1
+                    ? "Fully Completed"
+                    : userInfo.candidate_information.data_input_status > 5 &&
+                      userInfo.candidate_information.is_uplaoded_doc == 0
+                    ? "Completed Without ID"
+                    : "Partially Completed"
+                  : userInfo.user["account_type"] == 2 && userInfo.representative_information
+                  ? userInfo.representative_information.data_input_status == 0
+                    ? "In-complete"
+                    : userInfo.representative_information.data_input_status > 2 &&
+                      userInfo.representative_information.is_uplaoded_doc == 1
+                    ? "Fully Completed"
+                    : userInfo.representative_information.data_input_status > 2 &&
+                      userInfo.representative_information.is_uplaoded_doc == 0
+                    ? "Completed Without ID"
+                    : "Partially Completed"
+                  : "In-completed" }}
+                </span>
+                <span class="ant-spin-loader" v-else><a-spin /></span>
                <router-link to="/edit_candidate" class="btn px-2 bg-primary ml-3 color-white profile-btn cursor-pointer fs-12 btn-hover btn-border">Update</router-link>
              </p>
              <p class="fs-14 color-primary status">
                Verification Status:
                <span class="font-weight-bolder">{{ userDataFromApi.status == 3 ? 'Verified' : 'Not Verified' }}</span>
-               <router-link to="/settings" class="btn px-2 bg-primary ml-3 color-white profile-btn cursor-pointer fs-12 btn-hover btn-border">Upload ID</router-link>
+               <router-link to="/settings" class="btn px-2 bg-primary ml-3 color-white profile-btn cursor-pointer fs-12 btn-hover btn-border" v-if="userDataFromApi.status != 3">Upload ID</router-link>
              </p>
            </div>
          </div>
@@ -32,29 +55,35 @@
            <div class="profile-overview mt-5">
              <div class="profile-section flex justify-content-between">
                <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.suggestion }}</h4>
+                 <h4 class="color-primary fs-24 font-weight-bolder" v-if="teamActivity.suggestion !== ''">{{ teamActivity.suggestion }}</h4>
+                 <h4 v-else><span class="ant-spin-loader"><a-spin /></span></h4>
                  <h4 class="fs-14 text-black-50">Suggestions</h4>
                </a-tooltip>
                <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.teamlisted }}</h4>
+                 <h4 class="color-primary fs-24 font-weight-bolder" v-if="teamActivity.teamlisted !== ''">{{ teamActivity.teamlisted }}</h4>
+                 <h4 v-else><span class="ant-spin-loader"><a-spin /></span></h4>
                  <h4 class="fs-14 text-black-50">Teamlisted</h4>
                </a-tooltip>
                <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.shortlisetd }}</h4>
+                 <h4 class="color-primary fs-24 font-weight-bolder" v-if="teamActivity.shortlisted !== ''">{{ teamActivity.shortlisted }}</h4>
+                 <h4 v-else><span class="ant-spin-loader"><a-spin /></span></h4>
                  <h4 class="fs-14 text-black-50">Shortlisted</h4>
                </a-tooltip>
              </div>
              <div class="profile-section flex justify-content-between mt-4">
                <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.connected }}</h4>
+                 <h4 class="color-primary fs-24 font-weight-bolder" v-if="teamActivity.connected !== ''">{{ teamActivity.connected }}</h4>
+                 <h4 v-else><span class="ant-spin-loader"><a-spin /></span></h4>
                  <h4 class="fs-14 text-black-50">Connected</h4>
                </a-tooltip>
                <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.request_received }}</h4>
+                 <h4 class="color-primary fs-24 font-weight-bolder" v-if="teamActivity.request_received !== ''">{{ teamActivity.request_received }}</h4>
+                 <h4 v-else><span class="ant-spin-loader"><a-spin /></span></h4>
                  <h4 class="fs-14 text-black-50">Request received</h4>
                </a-tooltip>
                <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.request_sent }}</h4>
+                 <h4 class="color-primary fs-24 font-weight-bolder" v-if="teamActivity.request_sent !== ''">{{ teamActivity.request_sent }}</h4>
+                 <h4 v-else><span class="ant-spin-loader"><a-spin /></span></h4>
                  <h4 class="fs-14 text-black-50">Request sent</h4>
                </a-tooltip>
              </div>
@@ -104,6 +133,9 @@
       </div>
       <div class="col-md-8 col-12 none-l-padding">
         <div class="chart-div" id="chart">
+          <div class="overlay-div d-flex justify-content-center align-items-center" v-if="!activeTeam">
+            <div>Activate team to see the total views</div>
+          </div>
           <div class="mobile-flex justify-content-between mx-6 pt-3">
             <h6 class="chart-heading">Total <span class="color-primary">{{ totalCount }}</span> view(s) in last <span class="color-primary">{{ viewType === 0 ? 7 : 1 }}</span> {{ chartRangeText }}</h6>
             <div class="btn-flex">
@@ -112,9 +144,11 @@
               <button class="btn btn-chart-type ml-2" :class="{'active-btn': viewType === 2}" @click="toggleProfileViewType(2)">Year</button>
             </div>
           </div>
-          <highcharts :options="chartOptions"></highcharts>
+          <div class="d-flex flex-column justify-content-center h-75">
+            <highcharts :options="chartOptions"></highcharts>
+          </div>
         </div>
-        <div class="tips-div mt-4">
+        <div class="tips-div mt-4" v-if="false">
           <carousel
               perPage="1"
               paginationActiveColor="#522e8e"
@@ -158,7 +192,7 @@ export default {
     Slide,
   },
   created() {
-    this.getUserInfo()
+    this.getUserInfo();
     this.loadTeams();
     this.loadProfileGraphApi();
     this.getTeamActivity();
@@ -232,12 +266,12 @@ export default {
         },
       },
       teamActivity: {
-        suggestion: 20,
-        teamlisted: 10,
-        shortlisetd: 4,
-        connected: 5,
-        request_received: 2,
-        request_sent: 3
+        suggestion: '',
+        teamlisted: '',
+        shortlisted: '',
+        connected: '',
+        request_received: '',
+        request_sent: ''
       }
     }
   },
@@ -303,8 +337,28 @@ export default {
       }
     },
     async getTeamActivity() {
-      let {data} = await ApiService.get("v1/team-activity").then(res => res.data);
-      this.teamActivity = data;
+      // let {data} = await ApiService.get("v1/team-activity").then(res => res.data);
+      // this.teamActivity = data;
+
+      let {data} = await ApiService.get('v1/candidate-of-team');
+      let candidateId = data.data.user_id;
+      let oppositeGender = data.data.personal.per_gender_id === 1 ? "2" : "1";
+      data = await ApiService.get(`v1/home-searches?gender=${oppositeGender}`).then(res => res.data);
+      this.teamActivity.suggestion = data.data.pagination.total_items;
+
+      if(this.userInfo.user.id === candidateId){
+        await this.$store.dispatch("loadShortListedCandidates");
+        await this.$store.dispatch('loadTeamShortListedCandidates');
+        this.teamActivity.shortlisted = this.$store.getters.shortListedCandidates.length;
+        this.teamActivity.teamlisted = this.$store.getters.teamShortListedCandidates.length;
+      }
+
+      let activeTeamId = JwtService.getTeamIDAppWide();
+      let connectionReport = await ApiService.post('v1/connection-reports?team_id='+activeTeamId).then(res => res.data);
+      this.teamActivity.connected = connectionReport.data.connected_teams;
+      this.teamActivity.request_received = connectionReport.data.request_received;
+      this.teamActivity.request_sent = connectionReport.data.request_sent;
+
     },
     getMemberName(user) {
       if(user && user.full_name) {
@@ -460,6 +514,8 @@ export default {
   border: 1px solid #c9c9c9;
   border-radius: 12px;
   padding-bottom: 20px;
+  height: calc(100vh - 115px);
+  overflow-y: auto;
   .user-info-div {
     background: rgba(97, 89, 167, 0.2);
     padding: 5px 5px 5px 10px;
@@ -480,6 +536,11 @@ export default {
         .profile-btn {
           border-radius: 20px;
         }
+        .ant-spin-loader::v-deep {
+          .ant-spin-dot-item {
+            background-color: $bg-primary;
+          }
+        }
       }
     }
   }
@@ -489,6 +550,11 @@ export default {
     border-radius: 12px;
   }
   .team-short-info {
+    .ant-spin-loader::v-deep {
+      .ant-spin-dot-item {
+        background-color: $bg-primary;
+      }
+    }
     .profile-overview {
       padding: 10px 20px;
     }
@@ -528,6 +594,19 @@ export default {
   border: 1px solid #c9c9c9;
   border-radius: 12px;
   padding: 5px 15px 15px 0;
+  height: calc(100vh - 115px);
+  position: relative;
+
+  .overlay-div {
+    position: absolute;
+    top: 0%;
+    z-index: 8;
+    height: 100%;
+    width: 100%;
+    border-radius: 12px;
+    background: #dfdeed;
+    opacity: .91;
+  }
 }
 .tips-div {
   border: 1px solid #c9c9c9;
@@ -576,6 +655,10 @@ export default {
   padding-top: 5px !important;
   padding-left: 15px !important;
   padding-right: 0 !important;
+
+  @media (max-width: 768px) {
+    padding-right: 15px !important;
+  }
 }
 .none-l-padding {
   padding-top: 5px !important;
