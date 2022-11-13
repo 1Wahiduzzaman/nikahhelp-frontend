@@ -25,7 +25,7 @@
             <li class="flex-between-start">
                 <span class="flex-30 label-text">Location</span>
                 <span class="flex-70">:
-                    <span class="ml-1">{{ candidate.per_nationality }}
+                    <span class="ml-1">{{ candidate.contact.per_permanent_country_name }}
                     </span>
                 </span>
             </li>
@@ -128,7 +128,7 @@
 </template>
 
 <script>
-import {mapMutations, mapActions} from 'vuex'
+import {mapMutations, mapActions, mapGetters} from 'vuex'
 import JwtService from "@/services/jwt.service";
 import Notification from "@/common/notification.js";
 import ApiService from '@/services/api.service';
@@ -153,9 +153,9 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
       onceMore: true
     }),
     computed: {
-      connectionEvent() {
-
-      },
+      ...mapGetters({
+        detail: 'search/getProfileDetails'
+      }),
       connectionTitle() {
         /*
         teamConnectType = 1 mean we sent request

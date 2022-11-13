@@ -497,7 +497,6 @@ export default {
 			let _payload = `?page=${this.currentPage}`;
             const info = await this.getCandidateInfo('v1/candidate-of-team');
 			if (this.min_age != undefined) {
-				console.log('testing');
 				_payload += `&min_age=${this.min_age}`;
 			}
 			if (this.max_age) {
@@ -582,6 +581,7 @@ export default {
 			}
 
 			console.log(_payload);
+
 			return _payload;
 			// this.$emit("handle-search", _payload);
 		},
@@ -592,13 +592,13 @@ export default {
 			}
 		},
 
-		handleSearch() {
+		async handleSearch() {
 			if(this.isFetching) return;
 			this.setComponent('addComponent')
             this.$emit('switchComponent', 'CandidateProfiles')
 			this.$refs.top.click()
 			this.currentPage = 1;
-			let query = this.getQuery();
+			let query = await this.getQuery();
 			// this.min_age = 
 			this.setSearchStatus(true)
 			console.log(query, '>>>>>>>>>>>>>>>>')
@@ -623,7 +623,6 @@ export default {
 			try{
 				this.setLoading(true);
 				const res = await this.searchUser({url: `v1/home-searches${query}`, removePrevious: this.removePrevious});
-					console.log(res, '>>>>>>.resstatus')
 				// if(res == undefined) {
 				// 	this.clearProfiles()
 				// }
@@ -636,7 +635,13 @@ export default {
 				// } 
 				
 			} catch(err) {
-				console.log(err)
+
+				console.log(err.response.status)
+				if (err.response.status === 404) {
+                  this.clearProfiles()
+				  this.setPagination({})
+				}
+
 			}
 		},
 
