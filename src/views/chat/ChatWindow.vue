@@ -195,9 +195,9 @@
                         <div class="text-right">
                           <img :src="getAuthUser && getAuthUser.per_main_image_url ? getAuthUser.per_main_image_url : getImage()" class="rounded-circle mr-1" alt="" width="40" height="40">
                         </div>
-                        <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-white br-10 w100" v-html="item.body">
+                        <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-break text-white br-10 w100" v-html="item.body">
                         </div>
-                        <div class="text-muted small text-nowrap mt-2 position-absolute msg-right-created-at">
+                        <div class="text-muted small text-nowrap px-3 mt-2 position-absolute msg-right-created-at">
                           {{ messageCreatedAt(item.created_at) }}<span>, Me</span>
                         </div>
                       </div>
@@ -208,9 +208,9 @@
                         <div class="text-left">
                           <img :src="getConversationUserImage(item.sender.id)" class="rounded-circle mr-1" width="40" height="40">
                         </div>
-                        <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 br-10 w100" v-html="item.body">
+                        <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 text-break br-10 w100" v-html="item.body">
                         </div>
-                        <div class="text-muted small text-nowrap mt-2 position-absolute msg-left-created-at">
+                        <div class="text-muted small text-nowrap px-3 mt-2 position-absolute msg-left-created-at">
                           {{ messageCreatedAt(item.created_at) }}<span>, {{ item.sender ? item.sender.full_name : '' }}</span>
                         </div>
                       </div>
@@ -238,7 +238,7 @@
                                 <template slot="title">
                                   Coming soon
                                 </template>
-                                <button><img src="../../assets/icon/microphone.png" alt="icon" class="mr-2 microphone" /></button>
+                                <button v-if="false"><img src="../../assets/icon/microphone.png" alt="icon" class="mr-2 microphone" /></button>
                               </a-tooltip>
                               <a-tooltip>
                                 <template slot="title">
@@ -1505,7 +1505,7 @@ export default {
                 font-weight: bold;
                 @media (max-width: 990px) {
                   font-size: 12px;
-                  font-weight: normal;
+                  font-weight: bold;
                 }
               }
 
@@ -1585,6 +1585,21 @@ export default {
 
                 .category-name {
                   color: #6059a7;
+                  &::after {
+                    @media(max-width: 992px){
+                      content: "";
+                      width: 100%;
+                      border-bottom: 2px solid #6059a7;
+                      height: 3px;
+                      background-color: red;
+                      position: absolute;
+                      left: 0;
+                      bottom: -10px;
+                    }
+                    @media(min-width: 767px) {
+                      height: 2px;
+                    }
+                  }
                 }
               }
             }
@@ -2113,6 +2128,12 @@ export default {
       flex-direction: column;
       position: relative;
 
+
+      .rounded-circle {
+        min-height: 40px;
+        min-width: 40px;
+      }
+
       .chat-box {
         height: 545px;
         overflow-y: auto;
@@ -2352,8 +2373,8 @@ export default {
               svg {
                 width: 18px;
                 float: left;
-                margin-top: 9px;
-                margin-left: 6px;
+                margin-top: -2px;
+                margin-left: 3px;
 
                 .cls-1 {
                   fill: #fff;
@@ -2447,7 +2468,7 @@ export default {
   display: none;
   @media (min-width: 992px) {
     display: flex;
-    height: calc(100vh - 700px);
+    height: calc(100vh - 200px);
   }
   @media (min-width: 1200px) {
     height: calc(100vh - 200px);
