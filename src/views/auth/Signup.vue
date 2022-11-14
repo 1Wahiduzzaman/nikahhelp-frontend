@@ -462,7 +462,7 @@
               <router-link
                 to="/login"
                 class="
-                  btn btn-sm btn-outline-primary btn-round-sm btn-signinup
+                  btn btn-sm btn-primary btn-round-sm btn-signinup
                   ms-2
                   text-nowrap
                   join-now-btn
@@ -471,12 +471,12 @@
                 Sign in
               </router-link>
             </button>
-            <h4 class="fs-16 pt-3 pl-2 pr-1 text-white">or</h4>
+            <h4 class="fs-16 pt-3 pl-2 pr-1 text-dark">or</h4>
             <button @click="resetData" class="mt-2">
               <router-link
                 to="/signup"
                 class="
-                  btn btn-sm btn-outline-primary btn-round-sm btn-signinup
+                  btn btn-sm btn-primary btn-round-sm btn-signinup
                   ms-2
                   text-nowrap
                   join-now-btn
@@ -852,13 +852,16 @@ $border-width: 2px;
         padding: 16px 15px;
       }
       .error {
-        color: #ffffff;
+        color: #000;
         height: 90px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         border-radius: 8px;
+        background-color: #f5f5ff !important;
+        border: 1px solid $border-primary !important;
+        //background-color: ;
       }
       .logo {
         max-width: 250px;
