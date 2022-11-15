@@ -43,8 +43,8 @@
                     { name: 'Male', value: 1 },
                     { name: 'Female', value: 2 },
                   ]"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  ><template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -152,8 +152,8 @@
                   v-model="personalInformation.essential.per_occupation"
                   label="name"
                   :options="representativeDetails.occupations"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  ><template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
 
               <!-- <a-input
@@ -323,7 +323,6 @@
               <a-form-model-item ref="address_1" prop="address_1">
                 <a-input
                   @blur="onValueChange($event, 'address_1', 'contact')"
-                  id="address_1"
                   v-model="personalInformation.personal.address_1"
                   placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
                 />
@@ -370,7 +369,6 @@
               <a-form-model-item ref="address_2" prop="address_2">
                 <a-input
                   @blur="onValueChange($event, 'address_2', 'contact')"
-                  id="address_2"
                   v-model="personalInformation.personal.address_2"
                   placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
                 />
@@ -420,7 +418,6 @@
               >
                 <a-input
                   @blur="onValueChange($event, 'per_permanent_city', 'contact')"
-                  id="per_permanent_city"
                   v-model="personalInformation.personal.per_permanent_city"
                   placeholder="city"
                 />
@@ -472,7 +469,6 @@
                   @blur="
                     onValueChange($event, 'contact', 'per_permanent_post_code')
                   "
-                  id="per_permanent_post_code"
                   :maxLength="10"
                   placeholder="Post code, e.g. ME1 1BA"
                   v-model="personalInformation.personal.per_permanent_post_code"
@@ -527,14 +523,13 @@
                   @input="
                     onCountryChange($event, 'per_permanent_country', 'contact')
                   "
-                  id="per_permanent_country"
                   placeholder="Select Country"
                   v-model="personalInformation.personal.per_permanent_country"
                   :reduce="(option) => option.name"
                   label="name"
                   :options="representativeDetails.countries"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  ><template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
@@ -579,8 +574,9 @@
                 <vue-tel-input
                   v-model="personalInformation.personal.mobile_number"
                   @onInput="onNumberChange($event)"
-                  id="mobile_number"
+                  :inputOptions="{showDialCode: true}"
                   :validCharactersOnly="true"
+                  class="style-chooser"
                   placeholder="Mobile Number"
                 ></vue-tel-input>
                 <span class="error-number" v-if="!isValidNumber"
@@ -794,7 +790,7 @@ export default {
     onNumberChange(e) {
       this.isValidNumber = e.isValid;
       if (e.isValid) {
-        this.personalInformation.personal.mobile_number = `${e.country.dialCode} ${this.personalInformation.personal.mobile_number}`;
+        // this.personalInformation.personal.mobile_number = `${e.country.dialCode} ${this.personalInformation.personal.mobile_number}`;
         this.save("contact");
       }
     },
@@ -885,5 +881,14 @@ export default {
   border-radius: 20px;
   height: 35px;
 
+}
+
+.style-chooser::v-deep {
+  .vti__dropdown {
+    background-color: transparent !important;
+  }
+  .vti__input {
+    font-size: 1rem;
+  }
 }
 </style>
