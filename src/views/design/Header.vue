@@ -4,13 +4,13 @@
       class="header-content d-flex align-items-center justify-content-between"
     >
       <div class="shrink-none none-mobile">
-        <a href="/" class="navbar-brand">
+        <router-link to="/" class="navbar-brand">
           <img
             width="120"
             src="@/assets/Icons/Logo/SVG/White Logo.svg"
             alt="logo"
           />
-        </a>
+        </router-link>
       </div>
 
       <div
@@ -26,13 +26,13 @@
               
 
             <li class="nav-item shrink-none">
-              <a class="nav-link" aria-current="page" href="/dashboard">
+              <router-link class="nav-link" aria-current="page" to="/dashboard">
                 <img
                   width="25"
                   src="@/assets/icon/house-door-fill-white.svg"
                   alt="img"
                 />
-              </a>
+              </router-link>
             </li>
               
             <li class="nav-item shrink-none">
