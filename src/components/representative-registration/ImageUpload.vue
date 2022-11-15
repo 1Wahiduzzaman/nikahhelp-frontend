@@ -30,30 +30,34 @@
                       <div class="col-md-4 flex text-center">
                         <div>
                           <div class="img-preview mb-2">
-                            <img v-viewer :src="
-                              avatarSrc ? avatarSrc : imageModel.per_avatar_url
-                            " class="contain" v-if="imageModel.per_avatar_url" />
-                            <div class="mt-3">Avatar Image</div>
+                            <img 
+                              v-viewer="{toolbar: false, title: false, navbar: false}"
+                              :src=" avatarSrc ? avatarSrc : imageModel.per_avatar_url" 
+                              class="contain" 
+                              v-if="imageModel.per_avatar_url" 
+                            />
+                            <div class="mt-3" v-if="!imageModel.per_avatar_url">Avatar Image</div>
                             <div class="mt-4" v-if="!imageModel.per_avatar_url">
                               <a-icon type="plus-circle" :style="{ fontSize: '80px', color: '#aaa' }" />
                             </div>
                           </div>
                           <!-- <input
-                      v-if="!imageModel.per_avatar_url"
-                      type="file"
-                      class="input-image"
-                      name="avatar"
-                      @change="getAvatar"
-                    /> -->
-
-                          <!-- <a-button
-                      type="primary"
-                      style="width: 200px"
-                      v-if="imageModel.per_avatar_url"
-                      @click="clearImg('avatar')"
-                    >
-                      Remove
-                    </a-button> -->
+                            v-if="!imageModel.per_avatar_url"
+                            type="file"
+                            class="input-image"
+                            name="avatar"
+                            @change="getAvatar"
+                          /> -->
+                          <label for="input-avatar-image" class="upload-label" v-if="!imageModel.per_avatar_url">
+                            Upload
+                            <input v-if="!imageModel.per_avatar_url" type="file" class="input-image" id="input-avatar-image" name="avatar"
+                            @change="getAvatar" />
+                          </label>
+                          <a-button type="primary" style="width: 200px" v-if="imageModel.per_avatar_url"
+                            @click="clearImg('avatar')"
+                          >
+                            Remove
+                          </a-button>
                         </div>
                       </div>
                     </a-col>
@@ -62,18 +66,22 @@
                       <div class="col-md-4 flex text-center">
                         <div>
                           <div class="img-preview mb-2">
-                            <img v-viewer :src="
-                              mainImageSrc
-                                ? mainImageSrc
-                                : imageModel.per_main_image_url
-                            " class="contain" v-if="imageModel.per_main_image_url" />
-                            <div class="mt-3">Main Profile Image</div>
+                            <img v-viewer="{toolbar: false, title: false, navbar: false}"
+                              :src="mainImageSrc ? mainImageSrc : imageModel.per_main_image_url" 
+                              class="contain" 
+                              v-if="imageModel.per_main_image_url" 
+                            />
+                            <div class="mt-3" v-if="!imageModel.per_main_image_url">Main Profile Image</div>
                             <div class="mt-4" v-if="!imageModel.per_main_image_url">
                               <a-icon type="plus-circle" :style="{ fontSize: '80px', color: '#aaa' }" />
                             </div>
                           </div>
-                          <input v-if="!imageModel.per_main_image_url" type="file" class="input-image" name="mainImage"
+                          
+                          <label for="input-main-image" class="upload-label" v-if="!imageModel.per_main_image_url">
+                            Upload
+                            <input v-if="!imageModel.per_main_image_url" type="file" class="input-image" id="input-main-image" name="mainImage"
                             @change="getMainImage" />
+                          </label>
                           <a-button type="primary" style="width: 200px" v-if="imageModel.per_main_image_url"
                             @click="clearImg('main')">
                             Remove
@@ -208,6 +216,7 @@ export default {
       }
     },
     async deleteImage(data) {
+      this.$emit('disableNextBtn');
       await this.$store.dispatch("deleteRepImage", data);
       this.$emit("valueChange", {
         value: {
@@ -313,6 +322,7 @@ export default {
         .catch((error) => { });
     },
     async saveImages(data) {
+      this.$emit('turnOnBtnLoader');
       await this.$store
         .dispatch("saveRepresentativeImage", data)
         .then((data) => {
@@ -342,6 +352,7 @@ export default {
           this.loadingButton = false;
           console.log(error);
         });
+      this.$emit('turnOffBtnLoader');
     },
   },
 };
@@ -446,26 +457,28 @@ export default {
     height: 34px;
     overflow: hidden;
     border-radius: 5px !important;
+    display: none;
   }
 
-  input[type="file"]:before {
+  .upload-label {
     width: 200px;
     height: 32px;
     font-size: 16px;
     line-height: 32px;
-    content: "Upload";
     display: inline-block;
     color: white;
     background: #8781bd;
     border: 1px solid #98a0e2;
+    border-radius: 5px;
     padding: 0 10px;
     text-align: center;
     font-family: Helvetica, Arial, sans-serif;
+    cursor: pointer;
   }
 
-  input[type="file"]::-webkit-file-upload-button {
-    visibility: hidden;
-  }
+  //input[type="file"]::-webkit-file-upload-button {
+  //  visibility: hidden;
+  //}
 
   .btn-primary {
     margin-bottom: 5px;
