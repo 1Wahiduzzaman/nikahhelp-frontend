@@ -21,17 +21,17 @@
       <v-card class="message" v-if="showConfirmation">
         <div class="container-fluid mb-3 body-container">
           <div class="content-text">
-            <h3 class="mt-3 fw-700 text-black-50 header-text">
-              Candidate Form Submitted.
-            </h3>
-            <h4 class="mt-3 font-weight-bolder congo-text">
-              CONGRATULATIONS !
-            </h4>
             <img
               src="@/assets/icon/check-circle-success.svg"
               alt="icon"
               class=""
             />
+            <h3 class="mt-3 font-weight-bolder congo-text">
+              CONGRATULATIONS !
+            </h3>
+            <h4 class="mt-3 fw-700 text-black-50 header-text">
+              Candidate Form Submitted.
+            </h4>
 
             <p class="mt-4">
               Thank you for submitting your profile details. It will be reviewed
@@ -104,11 +104,12 @@ export default {
   h4 {
     font-family: $body-font;
   }
-  h4 {
+  h3 {
     color: #42bf28;
   }
   img {
     height: 80px;
+    margin: 20px 0px 10px 0px;
   }
   button {
     background-color: $color-secondary;
@@ -118,9 +119,9 @@ export default {
 }
 .header-text {
   font-family: $body-font;
-  font-size: 32px;
+  //font-size: 32px;
   @media (min-width: 768px) {
-    padding: 40px 0;
+   // padding: 40px 0;
   }
 }
 .type-access {
@@ -131,10 +132,14 @@ export default {
 .continue-button {
   height: 36px;
   border-radius: 60px;
+  &:hover {
+    background-color: $color-primary;
+  }
 }
 .congo-text {
+  margin-bottom: 20px;
   @media (min-width: 768px) {
-    padding-bottom: 16px;
+    //padding-bottom: 16px;
   }
 }
 .verify-text {
