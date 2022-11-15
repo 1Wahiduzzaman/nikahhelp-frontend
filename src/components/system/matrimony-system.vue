@@ -9,7 +9,7 @@
     <div class="help-dialog">
       <v-dialog
         transition="dialog-bottom-transition"
-        max-width="600"
+        max-width="700"
         class="d-flex justify-center mb-4 mt-8"
       >
         <template v-slot:activator="{ on, attrs }">
@@ -19,64 +19,59 @@
         </template>
         <template v-slot:default="dialog">
           <v-card class="relative">
+            <div class="w-100 flex justify-content-end">
+              <v-icon 
+                class="m-2"
+                @click="dialog.value = false;"
+              >
+                mdi-close
+              </v-icon>
+            </div>
             
-            <v-toolbar
-              color="violet"
-              class="d-flex justify-center font-weight-bold"
-            >
-              <v-card-text>
-                {{ currentGuide }}. {{ contentTitle }}
-              </v-card-text>
-            </v-toolbar>
-            <v-card-text class="d-flex flex-column align-center">
+            <v-card-text class="d-flex flex-column align-center"> <!-- style="min-height:350px" -->
               <div class="d-flex justify-center w-100">
 
                 <v-container class="d-flex justify-center">
                   <v-img
-                    max-height="200"
-                    max-width="200"
+                    max-height="150"
+                    max-width="150"
                     :src="imageSrc"
-                    class="mt-2"
                     position="cover"
                   ></v-img>
                 </v-container>
               </div>
+              <div class="text-center my-2"><h5>{{ contentTitle }}</h5></div>
               <div class="text-center">{{ contentGuidance }}</div>
             </v-card-text>
-            <v-btn
-                rounded
-                absolute
-                bottom
-                left
-                text
-                class="mb-2"
-                @click="dialog.value = false;"
-              >Skip</v-btn>
+            
+            <v-divider></v-divider>
+
             <v-card-actions class="justify-end">
               
               <v-btn
-                v-if="currentGuide > 0 || currentGuide > 4 "
-                text
-               
+                v-if="currentGuide > 0 && currentGuide <= 5 "
                 @click="changeContentPrev"
-                class="mr-3"
+                rounded="true"
+                color="#6159a7"
+                class="mr-3 text-white"
               >
-              <v-icon
-              color="grey"
-              >
-                mdi-arrow-left-circle
-              </v-icon>
+                prev
               </v-btn>
-                <v-btn
-                  text
-                  @click="changeContent"
-                >
-                <v-icon
-                color="#6159A7"
-                >
-                  mdi-arrow-right-circle
-                </v-icon>
-              
+              <v-btn
+                v-if="currentGuide <= 4"
+                @click="changeContent"
+                rounded="true"
+                color="#6159a7"
+                class="text-white"
+              >
+                next
+              </v-btn>
+
+              <v-btn
+                v-if="currentGuide === 5"
+                @click="goToFirstGuide(); dialog.value=false;"
+              >
+                finish
               </v-btn>
             </v-card-actions>
             <v-card-actions class="justify-end">
@@ -197,6 +192,12 @@ export default {
           break;
        }
     },
+    goToFirstGuide() {
+      this.currentGuide = 0;
+      this.imageSrc = require('@/assets/help_guide_pics/Join_or_create_a_team.svg');
+      this.contentTitle = 'Join or create a team';
+      this.currentGuidance = "Having a team is a must requirement in MartimonyAssist. Someone who is already registered with MatrimonyAssist, can send you an invite link to join their team. Alternatively, you can create a team and generate an invite link and then share it to your potential member(s) to join your team.";
+    }
   },
 
   data() {
@@ -363,10 +364,23 @@ export default {
   background-color: #522e8e;
   width: 5rem;
 
+  @media (max-width: 575px) {
+    top: 13px;
+    right: 35px;
+    height: 0;
+    width: 0;
+  }
+
   .question-mark {
     position: absolute;
     right: 0.7rem;
     top: 0.4rem;
+
+    @media (max-width: 575px) {
+      font-size: 18px !important;
+      background: #522e8e;
+      color: white;
+    }
   }
 }
 </style>
