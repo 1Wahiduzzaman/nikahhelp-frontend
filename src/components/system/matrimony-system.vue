@@ -70,6 +70,9 @@
               <v-btn
                 v-if="currentGuide === 5"
                 @click="goToFirstGuide(); dialog.value=false;"
+                rounded="true"
+                color="#6159a7"
+                class="text-white"
               >
                 finish
               </v-btn>
@@ -196,7 +199,7 @@ export default {
       this.currentGuide = 0;
       this.imageSrc = require('@/assets/help_guide_pics/Join_or_create_a_team.svg');
       this.contentTitle = 'Join or create a team';
-      this.currentGuidance = "Having a team is a must requirement in MartimonyAssist. Someone who is already registered with MatrimonyAssist, can send you an invite link to join their team. Alternatively, you can create a team and generate an invite link and then share it to your potential member(s) to join your team.";
+      this.contentGuidance = "Having a team is a must requirement in MartimonyAssist. Someone who is already registered with MatrimonyAssist, can send you an invite link to join their team. Alternatively, you can create a team and generate an invite link and then share it to your potential member(s) to join your team.";
     }
   },
 
