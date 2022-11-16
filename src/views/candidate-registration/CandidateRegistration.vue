@@ -11,76 +11,73 @@
       <div class="help-dialog">
         <v-dialog
           transition="dialog-bottom-transition"
-          max-width="600"
+          max-width="700"
           class="d-flex justify-center mb-4 mt-8"
         >
-        <template v-slot:activator="{ on, attrs }">
-            <v-icon large v-bind="attrs" v-on="on" class="question-mark" color="white">
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon large  v-bind="attrs" v-on="on" class="question-mark" color="white">
               mdi-help-circle
             </v-icon>
-        </template>
+          </template>
           <template v-slot:default="dialog">
             <v-card class="relative">
-              <v-toolbar
-  
-                color="violet"
-                class="d-flex justify-center  font-weight-bold"
-              >
-              <v-card-text>
-                {{ currentGuide }}. {{ contentTitle }}
-              </v-card-text>
-                </v-toolbar>
-              <v-card-text class="d-flex flex-column align-center">
+              <div class="w-100 flex justify-content-end">
+                <v-icon 
+                  class="m-2"
+                  @click="dialog.value = false;"
+                >
+                  mdi-close
+                </v-icon>
+              </div>
+              
+              <v-card-text class="d-flex flex-column align-center"> <!-- style="min-height:350px" -->
                 <div class="d-flex justify-center w-100">
-
+  
                   <v-container class="d-flex justify-center">
                     <v-img
-                    max-height="200"
-                    max-width="200"
-                    :src="imageSrc"
-                    class="mt-2"
-                    position="cover"
-                    v-if="imageSrc"
+                      max-height="150"
+                      max-width="150"
+                      :src="imageSrc"
+                      position="cover"
                     ></v-img>
                   </v-container>
                 </div>
+                <div class="text-center my-2"><h5>{{ contentTitle }}</h5></div>
                 <div class="text-center">{{ contentGuidance }}</div>
               </v-card-text>
-              <v-btn
-                  rounded
-                  absolute
-                  bottom
-                  left
-                  text
-                  class="mb-2"
-                  @click="dialog.value = false;"
-                >Skip</v-btn>
+              
+              <v-divider></v-divider>
+  
               <v-card-actions class="justify-end">
                 
                 <v-btn
-                  v-if="currentGuide > 0"
-                  text
-                 
+                  v-if="currentGuide > 0 && currentGuide <= 5 "
                   @click="changeContentPrev"
-                  class="mr-3"
+                  rounded="true"
+                  color="#6159a7"
+                  class="mr-3 text-white"
                 >
-              <v-icon
-               color="grey"
-              >
-                mdi-arrow-left-circle
-              </v-icon>
-              </v-btn>
+                  prev
+                </v-btn>
                 <v-btn
-                  text
+                  v-if="currentGuide <= 4"
                   @click="changeContent"
+                  rounded="true"
+                  color="#6159a7"
+                  class="text-white"
                 >
-                <v-icon
-                color="#6159A7"
+                  next
+                </v-btn>
+  
+                <v-btn
+                  v-if="currentGuide === 5"
+                  @click="goToFirstGuide(); dialog.value=false;"
+                  rounded="true"
+                  color="#6159a7"
+                  class="text-white"
                 >
-                  mdi-arrow-right-circle
-                </v-icon>
-              
-              </v-btn>
+                  finish
+                </v-btn>
               </v-card-actions>
               <v-card-actions class="justify-end">
                 
@@ -173,6 +170,9 @@
       <div class="steps-content" v-if="current == 3">
         <UploadProfile
           @valueChange="onDataChange($event)"
+          @disableNextBtn="enabledNextBtn = false"
+          @turnOnBtnLoader="nextBtnLoader=true"
+          @turnOffBtnLoader="nextBtnLoader=false"
           :imageModel="candidateDetails.imageModel"
         />
       </div>
@@ -218,7 +218,8 @@
           @click="next"
         >
           <!--          :style="{'margin-right': current === 0 ? '-15px' : '0'}"-->
-          Next
+          <span v-if="!nextBtnLoader">Next</span>
+          <div v-else class="spinner-border spinner-border-sm text-light" role="status"></div>
         </a-button>
         <a-button
           v-if="current == steps.length - 1"
@@ -327,6 +328,7 @@ export default {
       propsData: { ...createData() },
       current: 0,
       enabledNextBtn: false,
+      nextBtnLoader: false,
       candidateDetails: {
         preferenceData: null,
       },
@@ -978,6 +980,13 @@ export default {
           this.currentGuide = 0;
           break;
       }
+    },
+
+    goToFirstGuide() {
+      this.currentGuide = 0;
+      this.imageSrc = "";
+      this.contentTitle = 'Take a moment to get comfortable';
+      this.contentGuidance = 'We’d like to show you around the steps required to complete this section – it will be fast, promise!';
     },
 
     async saveCandidateUploadDoc() {

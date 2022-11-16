@@ -21,14 +21,14 @@
             />
           </div>
           <div class="row">
-            <div class="col-md-8 mb-3">
+            <div class="col-md-8 mb-3" style="padding-right: 8px !important;">
               <div class="card-custom h-100 shadow-default card-personal">
                 <ul class="personal-ul">
                   <!-- Age -->
                   <li class="flex-between-start">
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
                       >Age</span
-                    ><span class="flex-60 px-2"
+                    ><span class="flex-60 px-2 d-inherit"
                       >:
                       <span class="ml-3 text--secondary text-subtitle-1">
                         {{ candidateData.preference.pre_partner_age_min }}
@@ -92,7 +92,7 @@
                   <li class="flex-between-start">
                     <a-tooltip title="Country and city Blocked">
                       <span class="flex-40 px-2 text--disabled text-subtitle-1">
-                        Not Preferred country
+                        Not Preferred Country
                       </span>
                     </a-tooltip>
                     <span class="flex-60 px-2 d-inherit">
@@ -103,7 +103,7 @@
                         "
                         class="ml-3 text--secondary text-subtitle-1"
                       >
-                        No
+                        None
                       </span>
                       <span
                         v-if="
@@ -128,7 +128,7 @@
                       >Religion</span
                     ><span class="flex-60 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1"
-                        >Islam</span
+                        > {{ candidateData.preference.pre_partner_religion_id[0] }} </span
                       ></span
                     >
                   </li>
@@ -179,7 +179,7 @@
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.preference.pre_preferred_divorcee == 1
                           ? "Yes"
-                          : "NO"
+                          : "No"
                       }}</span></span
                     >
                   </li>
@@ -377,7 +377,7 @@
             />
           </div>
           <div class="row h-100">
-            <div class="col-md-8 mb-3">
+            <div class="col-md-8 mb-3" style="padding-right: 8px !important;">
               <div class="card-custom shadow-default card-personal h-100">
                 <ul class="personal-ul">
                   <li class="flex-between-start">
@@ -709,7 +709,7 @@
             />
           </div>
           <div class="row">
-            <div class="col-md-8 mb-3">
+            <div class="col-md-8 mb-3" style="padding-right: 8px !important;">
               <div class="card-custom h-100 shadow-default">
                 <table>
                   <TableRow
@@ -851,38 +851,34 @@
             />
           </div>
           <div class="row">
-            <div class="col-12 col-md-4 mb-3">
-              <div class="profile-img text-center">
-                <img
-                  v-viewer
-                  :src="candidateData.personal.per_avatar_url"
-                  alt="img"
-                  class="contain"
-                />
-                <p class="text-center">Avatar</p>
-              </div>
-            </div>
-            <div class="col-12 col-md-4 mb-3">
-              <div class="profile-img text-center">
-                <img
-                  v-viewer
-                  :src="candidateData.personal.per_main_image_url"
-                  alt="img"
-                  class="contain"
-                />
-                <p class="text-center">Main image</p>
-              </div>
-            </div>
-
-            <div class="col-12 col-md-4 mb-3">
-              <div class="profile-img text-center">
-                <img
-                  v-viewer
-                  :src="candidateData.other_images"
-                  alt="img"
-                  class="contain"
-                />
-                <p class="text-center">Additional image</p>
+            <div v-viewer="{movable: false, title: false, scalable: false, rotatable: false}" class="col-12 row my-4 ms-1">
+              <div
+                class="col-md-4 mb-sm-0 mb-2 flex flex-column align-items-center profile-img" 
+                v-for="src in [candidateData.personal.per_avatar_url, candidateData.personal.per_main_image_url, candidateData.other_images]" 
+                :key="src"
+              >
+                  <img
+                    :src="src"
+                    class="user-image"
+                    alt="img"
+                    height="250"
+                    width="200"
+                    style="cursor: pointer;"
+                    v-if="src != null"
+                  />
+                  <img
+                    v-else
+                    src="https://talbottinn.com/wp-content/uploads/2013/11/dummy-image-square.jpg"
+                    class="user-image"
+                    alt="img"
+                    height="250"
+                    width="200"
+                    style="cursor: pointer;"
+                  />
+                  <p class="text-center" v-if="src == candidateData.personal.per_avatar_url">Avatar</p>
+                  <p class="text-center" v-if="src == candidateData.personal.per_main_image_url">Main Image</p>
+                  <p class="text-center" v-if="src == candidateData.other_images && src != null">Other Images</p>
+                  <p class="text-center" v-if="src == null">No image provided</p>
               </div>
             </div>
 
@@ -1050,12 +1046,12 @@ export default {
     }
     .profile-img {
       border-radius: 5px;
-      overflow: hidden;
-      width: 200px;
+      //overflow: hidden;
+      //width: 200px;
       height: 200px;
       p {
         font-size: 16px;
-        margin-top: 10px;
+        margin-top: 5px;
         font-weight: bolder;
       }
     }

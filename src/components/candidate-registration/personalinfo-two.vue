@@ -1311,6 +1311,7 @@
               >
               <vue-tel-input
                 @onInput="onNumberChange($event)"
+                :inputOptions="{showDialCode: true}"
                 id="mobile_number"
                 :validCharactersOnly="true"
                 v-model="personalInformation.contact.mobile_number"
@@ -2281,12 +2282,16 @@
                 }}/2000</span
               >
               <div class="image-container text-center">
-                <input
-                  type="file"
-                  class="input-image"
-                  name="avatar"
-                  @change="getResume"
-                />
+                <label for="input-resume" class="upload-label">
+                  upload
+                  <input
+                    type="file"
+                    class="input-image"
+                    id="input-resume"
+                    name="avatar"
+                    @change="getResume"
+                  />
+                </label>
                 <div class="img-preview mb-2">
                   <div class="mt-3 color-primary">
                     {{
@@ -2718,7 +2723,7 @@ export default {
     onNumberChange(e) {
       this.isValidNumber = e.isValid;
       if (e.isValid) {
-        this.personalInformation.contact.mobile_number = `${e.country.dialCode} ${this.personalInformation.contact.mobile_number}`;
+        // this.personalInformation.contact.mobile_number = `${e.country.dialCode} ${this.personalInformation.contact.mobile_number}`;
         this.save("contact");
       }
     },
@@ -2888,9 +2893,7 @@ export default {
 
   .style-chooser::v-deep {
     .vti__dropdown {
-      &:hover {
-        background-color: transparent !important;
-      }
+      background-color: transparent !important;
     }
     .vti__input {
       font-size: 1rem;
@@ -2918,24 +2921,26 @@ input[type="file"] {
   height: 34px;
   overflow: hidden;
   border-radius: 20px !important;
+  display: none;
 }
 .error-number {
   color: red;
   margin: 5px;
 }
-input[type="file"]:before {
+.upload-label {
   width: 100%;
   height: 32px;
   font-size: 16px;
   line-height: 32px;
-  content: "Upload";
   display: inline-block;
   color: white;
   background: #8781bd;
   border: 1px solid #98a0e2;
+  border-radius: 20px !important;
   padding: 0 10px;
   text-align: center;
   font-family: Helvetica, Arial, sans-serif;
+  cursor: pointer;
 }
 .img-preview {
   display: flex;
@@ -2953,9 +2958,9 @@ input[type="file"]:before {
   margin-right: 5px;
 }
 
-input[type="file"]::-webkit-file-upload-button {
-  visibility: hidden;
-}
+//input[type="file"]::-webkit-file-upload-button {
+//  visibility: hidden;
+//}
 .mobile-margin {
   margin-top: 0.5rem;
 }

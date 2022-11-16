@@ -30,7 +30,7 @@
             showDisAgree = true;
             showAgree = false;
           "
-          class="btn ms-2 text-nowrap agree-button"
+          class="btn mb-2 text-nowrap agree-button"
         >
           No
         </button>
@@ -41,12 +41,12 @@
             showAgree = true;
             showDisAgree = false;
           "
-          class="btn ms-2 text-nowrap agree-button"
+          class="btn  text-nowrap agree-button"
         >
           Yes
         </button>
       </div>
-      <br /><br /><br /><br />
+      <!-- <br /><br /><br /><br /> -->
     </div>
   </div>
 </template>
@@ -101,15 +101,30 @@ export default {
   font-size: 32px;
 }
 .agree-button {
-  background-color: #dddae0;
+  //background-color: #dddae0;
+  background-color: #9f9bca;
   padding: 0px 20px;
-  color: #282626;
+  //color: #282626;
+  color: #fff;
   height: 36px;
+  min-width: 50%;
   border-radius: 60px;
   &.active {
     background-color: #6159a7;
     color: #dddae0;
   }
+
+  &:hover {
+    background-color: $bg-secondary;
+    box-shadow: 1px 1px 1px grey;
+    border: 1px solid $bg-secondary;
+  }
+}
+
+.animation {
+  animation-name: pulse;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
 }
 
 .type-access {
@@ -124,7 +139,7 @@ export default {
 
 .actions {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -142,5 +157,14 @@ export default {
 }
 .body-container::-webkit-scrollbar {
   display: none;
+}
+
+@keyframes pulse {
+  50% {
+    transform:  scale(.8);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>

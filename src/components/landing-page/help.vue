@@ -1,32 +1,63 @@
-<template>
+<template ref="links">
   <div>
     <LandingPageHeader />
 
     <div class="main-content">
-      <h3 class="text-header-black">Help & support</h3>
+      <!-- <h3 class="text-header-black">Help & support</h3>
       <br />
       <h5>
         Have a question? We are happy to help. You may check our quick links
         first before contacting us.
-      </h5>
+      </h5> -->
 
       <br />
       <h4>Quick links</h4>
       <div class="quick-links">
         <div class="flex-container">
-          <div><a href="#">I can't login</a></div>
-          <div>How do I sign up?</div>
-          <div>I need help with subscription plan</div>
-          <div>My account is blocked</div>
-          <div>How do I invite a team member?</div>
-        </div>
-
-        <div class="flex-container">
-          <div><a href="#">I can't login</a></div>
-          <div>How do I sign up?</div>
-          <div>I need help with subscription plan</div>
-          <div>My account is blocked</div>
-          <div>How do I invite a team member?</div>
+          <!-- <div><a href="#cannotLogIn">I can't login</a></div>
+          <div><a href="#howToSignUp">How do I sign up?</a></div>
+          <div><a href="#afterSubmit">What happens after submitting a profile?</a></div>
+          <div><a href="#profileVisibility">What aspects of my profile are publicly visible?</a></div> -->
+          <div 
+            class="link"
+            @click="goToLink('cannotLogIn')" 
+            data-toggle="collapse" 
+            data-target="#faqCollapse-2" 
+            data-aria-expanded="true" 
+            data-aria-controls="#faqCollapse-2"
+          >
+            <span>I can't login</span>
+          </div>
+          <div 
+            class="link"
+            @click="goToLink('howToSignUp')"
+            data-toggle="collapse" 
+            data-target="#faqCollapse-1" 
+            data-aria-expanded="true" 
+            data-aria-controls="#faqCollapse-1"
+          >
+            <span>How do I sign up?</span>
+          </div>
+          <div  
+            class="link"
+            @click="goToLink('afterSubmit')"
+            data-toggle="collapse" 
+            data-target="#faqCollapse-4" 
+            data-aria-expanded="true" 
+            data-aria-controls="#faqCollapse-4"
+          >
+            <span>What happens after submitting a profile?</span>
+          </div>
+          <div  
+            class="link"
+            @click="goToLink('profileVisibility')"
+            data-toggle="collapse" 
+            data-target="#faqCollapse-5" 
+            data-aria-expanded="true" 
+            data-aria-controls="#faqCollapse-5"
+          >
+            <span>What aspects of my profile are publicly visible?</span>
+          </div>
         </div>
       </div>
 
@@ -37,259 +68,41 @@
           <div class="row">
             <!-- ***** FAQ Start ***** -->
             <div class="col-sm-12">
-              <div class="faq-title pb-3">
-                <h4>FAQ</h4>
+              <div class="faq-title row">
+                <h4 class="col-12 col-md-6 d-flex align-items-center">Quick Guide</h4>
+                <div class="col-12 col-md-6">
+                  <form action="" @submit.prevent class="d-flex w-100">
+                    <input class="search-input m-0 mr-2" type="text" v-model="searchQuery">
+                    <input class="search-btn btn  m-0" type="submit" value="search">           
+                  </form>
+                </div>
               </div>
             </div>
             <div class="col-sm-12">
               <div class="faq" id="accordion">
-                <div class="card">
-                  <div class="card-header" id="faqHeading-1">
+                <div v-for="(faq, index) in filteredFaqs" :key="index+'sdf'" class="card">
+                  <div class="card-header" :id="'faqHeading-'+index">
                     <div class="mb-0">
                       <h5
                         class="faq-title"
                         data-toggle="collapse"
-                        data-target="#faqCollapse-1"
-                        data-aria-expanded="true"
-                        data-aria-controls="faqCollapse-1"
+                        :data-target="'#faqCollapse-'+index"
+                        :data-aria-expanded="true"
+                        :data-aria-controls="'#faqCollapse-'+index"
+                        :ref="faq.quicklink"
                       >
-                        <span class="badge">1</span>What is MatrimonyAssist?
+                        <span class="badge">{{index+1}}</span>{{faq.title}}
                       </h5>
                     </div>
                   </div>
                   <div
-                    id="faqCollapse-1"
+                    :id="'faqCollapse-'+index"
                     class="collapse"
-                    aria-labelledby="faqHeading-1"
+                    :aria-labelledby="'faqHeading-'+index"
                     data-parent="#accordion"
                   >
-                    <div class="card-body">
-                      <p>
-                        MatrimonyAssist is an online platform designed to facilitate
-                        conversation between families who are seeking marriage
-                        partners for their loved ones. In MatrimonyAssist, both
-                        the candidate and the family jointly play vital role in
-                        finding a prospect. Our goal is simple. We want to
-                        assist as many people as we can finding compatible
-                        marriage partners.
-                      </p>
-                      <p>
-                        MatrimonyAssist is a family and friends matrimonial
-                        introduction service to help you navigate traditions,
-                        sensitivities, keeping true to your values, and finding
-                        someone who is trying to do the same. It is a convenient
-                        and smart way to go about companion hunting, while
-                        involving family and friends on a secure portal, without
-                        too much sweat and stress.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-header" id="faqHeading-2">
-                    <div class="mb-0">
-                      <h5
-                        class="faq-title"
-                        data-toggle="collapse"
-                        data-target="#faqCollapse-2"
-                        data-aria-expanded="false"
-                        data-aria-controls="faqCollapse-2"
-                      >
-                        <span class="badge">2</span> How do I sign up with
-                        MatrimonyAssist?
-                      </h5>
-                    </div>
-                  </div>
-                  <div
-                    id="faqCollapse-2"
-                    class="collapse"
-                    aria-labelledby="faqHeading-2"
-                    data-parent="#accordion"
-                  >
-                    <div class="card-body">
-                      <p>
-                        Joining with MatrimonyAssist is very easy and simple.
-                        You sign up with a valid email address and create your
-                        own password. Once your email is verified, you have full
-                        access to the site to create your profile. Your profile
-                        also goes through a verification process. If everything
-                        is satisfactory, we publish your profile on to the site.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-header" id="faqHeading-3">
-                    <div class="mb-0">
-                      <h5
-                        class="faq-title"
-                        data-toggle="collapse"
-                        data-target="#faqCollapse-3"
-                        data-aria-expanded="false"
-                        data-aria-controls="faqCollapse-3"
-                      >
-                        <span class="badge">3</span>I cannot login to the site.
-                      </h5>
-                    </div>
-                  </div>
-                  <div
-                    id="faqCollapse-3"
-                    class="collapse"
-                    aria-labelledby="faqHeading-3"
-                    data-parent="#accordion"
-                  >
-                    <div class="card-body">
-                      <p>
-                        Please ensure Caps Lock is off. The form fields are case
-                        sensitive. If you receive an error message “Login could
-                        not be completed due to unregistered account”. This
-                        means that either you don't have an online account, or
-                        you made a mistake with your email and/or your password.
-                      </p>
-                      <p>
-                        Please try logging in again ensuring that you have
-                        entered your email and password correctly. If you do not
-                        have a password that would mean you do not have an
-                        online account. If you don't have an online account,
-                        <a href="#">please sign up for an online account</a>. If
-                        you continue to have difficulties logging in, please
-                        contact technical support team by email
-                        support@matrimonyassist.com where they will be happy to
-                        assist you.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-header" id="faqHeading-4">
-                    <div class="mb-0">
-                      <h5
-                        class="faq-title"
-                        data-toggle="collapse"
-                        data-target="#faqCollapse-4"
-                        data-aria-expanded="false"
-                        data-aria-controls="faqCollapse-4"
-                      >
-                        <span class="badge">4</span> Can anyone register on to
-                        MatrimonyAssist site?
-                      </h5>
-                    </div>
-                  </div>
-                  <div
-                    id="faqCollapse-4"
-                    class="collapse"
-                    aria-labelledby="faqHeading-4"
-                    data-parent="#accordion"
-                  >
-                    <div class="card-body">
-                      <p>
-                        MatrimonyAssist is open to families looking for
-                        prospects for their loved ones. Any candidate wants to
-                        join the site, must be aged 18 + and create a team with
-                        family members or a guardian or a representative. To
-                        represent the candidate, a guardian or a representative
-                        must have consent from the candidate to act on their
-                        behalf.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-header" id="faqHeading-5">
-                    <div class="mb-0">
-                      <h5
-                        class="faq-title"
-                        data-toggle="collapse"
-                        data-target="#faqCollapse-5"
-                        data-aria-expanded="false"
-                        data-aria-controls="faqCollapse-5"
-                      >
-                        <span class="badge">5</span> What happens when after
-                        submitting a profile?
-                      </h5>
-                    </div>
-                  </div>
-                  <div
-                    id="faqCollapse-5"
-                    class="collapse"
-                    aria-labelledby="faqHeading-5"
-                    data-parent="#accordion"
-                  >
-                    <div class="card-body">
-                      <p>
-                        MatrimonyAssist team verifies your profile and contact
-                        you if further verification information is required.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-header" id="faqHeading-6">
-                    <div class="mb-0">
-                      <h5
-                        class="faq-title"
-                        data-toggle="collapse"
-                        data-target="#faqCollapse-6"
-                        data-aria-expanded="false"
-                        data-aria-controls="faqCollapse-6"
-                      >
-                        <span class="badge">6</span>What aspects of my profile
-                        are publicly visible?
-                      </h5>
-                    </div>
-                  </div>
-                  <div
-                    id="faqCollapse-6"
-                    class="collapse"
-                    aria-labelledby="faqHeading-6"
-                    data-parent="#accordion"
-                  >
-                    <div class="card-body">
-                      <p>
-                        General public who are not registered with
-                        MatrimonyAssist can see anonymous information of a
-                        candidate. This includes your age, nationality,
-                        ethnicity, religion, and education level. However,
-                        members who are registered and verified by the
-                        MatrimonyAssist can view most of the information except
-                        your date of birth, phone number, email, and home
-                        address. Regarding image, avatar image is viewable to
-                        everyone all time. Your main and other images are
-                        viewable only if you have given permission to view at
-                        image setting of profile completion.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-header" id="faqHeading-7">
-                    <div class="mb-0">
-                      <h5
-                        class="faq-title"
-                        data-toggle="collapse"
-                        data-target="#faqCollapse-7"
-                        data-aria-expanded="false"
-                        data-aria-controls="faqCollapse-7"
-                      >
-                        <span class="badge">7</span> How do I delete my profile
-                        from MatrmonyAssist?
-                      </h5>
-                    </div>
-                  </div>
-                  <div
-                    id="faqCollapse-7"
-                    class="collapse"
-                    aria-labelledby="faqHeading-7"
-                    data-parent="#accordion"
-                  >
-                    <div class="card-body">
-                      <p>
-                        You can delete your profile from the setting menu. This
-                        will stop your profile appearing to the search result.
-                        However, if you want to completely delete profile from
-                        the MatrimonyAssist then you need to us a request at
-                        support@matrimonyassist.com
-                      </p>
+                    <div class="card-body bg-light" v-html="faq.body">
+                      
                     </div>
                   </div>
                 </div>
@@ -316,7 +129,7 @@
         <h4>SEND US AN EMAIL</h4>
         <form action="">
           <label for="query">What is your enquiry regarding?</label>
-          <select id="query" name="query" v-model="query">
+          <select id="query" name="query" v-model="query" class="rounded-pill bg-white">
             <option value="" disabled selected>Please select</option>
             <option value="feedback">Give feedback</option>
             <option value="suggestion">Offer suggestion</option>
@@ -331,6 +144,7 @@
           <label for="message">Your message</label>
           <textarea
             id="message"
+            class="rounded bg-white"
             name="message"
             placeholder="Describe the issue (max. 1000 characters)"
             style="height: 200px"
@@ -344,6 +158,7 @@
           <input
             type="text"
             id="fname"
+            class="rounded-pill bg-white"
             name="firstname"
             placeholder="First name"
             required
@@ -354,6 +169,7 @@
           <input
             type="text"
             id="lname"
+            class="rounded-pill bg-white"
             name="lastname"
             placeholder="Last name"
             required
@@ -366,6 +182,7 @@
           <input
             type="text"
             id="telephone"
+            class="rounded-pill bg-white"
             name="telephone"
             placeholder="Contact number"
             v-model="telephone"
@@ -375,6 +192,7 @@
           <input
             type="text"
             id="email"
+            class="rounded-pill bg-white"
             name="email"
             placeholder="Email address"
             required
@@ -387,10 +205,10 @@
             <a href="">privacy and cookie policy</a>.
           </p>
 
-	        <button type="submit" value="Submit" @click.prevent="save">Submit</button>
+	        <button type="submit" value="Submit" @click.prevent="save" class="rounded-pill">Submit</button>
         </form>
         <br />
-        <p>
+        <p v-if="false">
           To <a href="">unsubscribe from our emails</a>, please follow the link
           and enter your email address.
         </p>
@@ -419,6 +237,113 @@ export default {
 			telephone: '',
 			message: '',
 			query: '',
+      searchQuery: '',
+      faqs: [
+        {
+          id: 1,
+          quicklink: 'whatIsMaast' ,
+          title: 'What is MatrimonyAssist?',
+          body: `MatrimonyAssist is an online platform designed to    facilitate
+              conversation between families who are seeking marriage
+              partners for their loved ones. In MatrimonyAssist, both
+              the candidate and the family jointly play vital role in
+              finding a prospect. Our goal is simple. We want to
+              assist as many people as we can finding compatible
+              marriage partners.
+              
+              MatrimonyAssist is a family and friends matrimonial
+              introduction service to help you navigate traditions,
+              sensitivities, keeping true to your values, and finding
+              someone who is trying to do the same. It is a convenient
+              and smart way to go about companion hunting, while
+              involving family and friends on a secure portal, without
+              too much sweat and stress.
+                `
+        },
+        {
+          id: 2,
+          quicklink: 'howToSignUp',
+          title: `How do I sign up with MatrimonyAssist?`,
+          body: `Joining with MatrimonyAssist is very easy and simple.
+                You sign up with a valid email address and create your
+                own password. Once your email is verified, you have full
+                access to the site to create your profile. Your profile
+                also goes through a verification process. If everything
+                is satisfactory, we publish your profile on to the site.` 
+        },
+        {
+          id: 3,
+          quicklink: 'cannotLogIn',
+          title: 'I cannot login to the site.',
+          body: `<p>
+                Please ensure Caps Lock is off. The form fields are case
+                sensitive. If you receive an error message “Login could
+                not be completed due to unregistered account”. This
+                means that either you don't have an online account, or
+                you made a mistake with your email and/or your password.
+              </p>
+              <p>
+                Please try logging in again ensuring that you have
+                entered your email and password correctly. If you do not
+                have a password that would mean you do not have an
+                online account. If you don't have an online account,
+                <a href="#" class="text-primary">please sign up for an online account</a>. If
+                you continue to have difficulties logging in, please
+                contact technical support team by email
+                support@matrimonyassist.com where they will be happy to
+                assist you.
+              </p>`
+        },
+        {
+          id: 4,
+          title: `Can anyone register on to
+                MatrimonyAssist site?`,
+          body: `<p>
+                MatrimonyAssist is open to families looking for
+                prospects for their loved ones. Any candidate wants to
+                join the site, must be aged 18 + and create a team with
+                family members or a guardian or a representative. To
+                represent the candidate, a guardian or a representative
+                must have consent from the candidate to act on their
+                behalf.
+              </p>`
+        },
+        {
+          id: 5,
+          quicklink: 'afterSubmit',
+          title: `What happens when after
+                submitting a profile?`,
+          body: `MatrimonyAssist team verifies your profile and contact
+                you if further verification information is required.`,
+        },
+        {
+          id: 6,
+          quicklink: 'profileVisibility',
+          title: `What aspects of my profile
+                are publicly visible?`,
+          body: `General public who are not registered with
+                MatrimonyAssist can see anonymous information of a
+                candidate. This includes your age, nationality,
+                ethnicity, religion, and education level. However,
+                members who are registered and verified by the
+                MatrimonyAssist can view most of the information except
+                your date of birth, phone number, email, and home
+                address. Regarding image, avatar image is viewable to
+                everyone all time. Your main and other images are
+                viewable only if you have given permission to view at
+                image setting of profile completion.`
+        },
+        {
+          id: 7,
+          title: 'How do I delete my profile from MatrmonyAssist?',
+          body: `You can delete your profile from the setting menu. This
+                will stop your profile appearing to the search result.
+                However, if you want to completely delete profile from
+                the MatrimonyAssist then you need to us a request at
+                support@matrimonyassist.com`
+        }
+
+      ]
 		};
 	},
 
@@ -436,8 +361,18 @@ export default {
 			}).catch((err) => {
 				console.log(err.message);
 			});
-		}
-	}
+		},
+
+    goToLink(link){
+      let element = this.$refs[link][0];
+      element.scrollIntoView({block:'center', behavior: 'smooth'});
+    }
+	},
+  computed: {
+      filteredFaqs() {
+          return this.faqs.filter(faq => (faq.title.toLowerCase().includes(this.searchQuery.toLowerCase())));
+      }
+  }
 };
 </script>
 
@@ -456,11 +391,30 @@ export default {
   @media (min-width: 320px) and (max-width: 480px) {
     padding: 0 20px;
   }
-}
+} 
 
 .quick-links {
-  background-color: #f1f1f1;
+  background-color: #f5f5ff;
   padding: 15px;
+  width: 100%;
+
+  .link {
+    color: $bg-primary;
+    font-size: 15px;
+    font-weight: 400;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+      box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+    }
+  }
 }
 //Flex container
 * {
@@ -531,7 +485,8 @@ button:hover {
 /* Add a background color and some padding around the form */
 .container1 {
   border-radius: 5px;
-  background-color: #f1f1f1;
+  //background-color: #f1f1f1;
+  background-color: #f5f5ff;
   padding: 20px;
 }
 
@@ -547,6 +502,24 @@ button:hover {
   min-height: 85vh;
   padding: 5vh 0 0;
   width: 100%;
+
+  .search-input {
+    border: 1px solid $border-secondary;
+    border-radius: 32px;
+    background-color: #fff;
+  }
+
+  .search-btn {
+    background-color: #fff;
+    border: 1px solid $border-primary;
+    border-radius: 32px;
+    color: $bg-primary;
+
+    &:hover {
+      background-color: $bg-primary;
+      color: white;
+    }
+  }
 }
 .faq-title h2 {
   position: relative;
@@ -621,12 +594,13 @@ button:hover {
   width: 20px;
   height: 20px;
   line-height: 14px;
-  float: left;
+  //float: left;
   -webkit-border-radius: 100px;
   -moz-border-radius: 100px;
   border-radius: 100px;
   text-align: center;
-  background: #e91e63;
+  //background: #e91e63;
+  background: $color-secondary;
   color: #fff;
   font-size: 12px;
   margin-right: 20px;

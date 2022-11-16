@@ -53,10 +53,10 @@
           </li>
           <li class="flex-between-start">
             <span class="flex-30 label-text">Hobby</span>
-            <span class="flex-70">:
-                        <span class="ml-1"> <a-tooltip :title="candidate.personal ? candidate.personal.per_hobbies_interests : 'N/A'">
-                          <span class="hobby-custom">{{ candidate.personal ? candidate.personal.per_hobbies_interests : "N/A" }}</span>
-                        </a-tooltip> </span>
+            <span class="flex-70">
+                        <a-tooltip :title="candidate.personal ? candidate.personal.per_hobbies_interests : 'N/A'">
+                          <span class="hobby-custom"><span class="mr-1">:</span> {{ candidate.personal ? candidate.personal.per_hobbies_interests : "N/A" }}</span>
+                        </a-tooltip>
                     </span>
           </li>
         </template>

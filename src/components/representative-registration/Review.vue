@@ -83,7 +83,7 @@
                     >
                   </li>
 
-                  <li class="flex-between-start">
+                  <!-- <li class="flex-between-start">
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Current Residance</span
                     ><span class="flex-70 px-2 d-inherit"
@@ -94,7 +94,7 @@
                         }}</span
                       >
                     </span>
-                  </li>
+                  </li> -->
                   <li class="flex-between-start">
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Address Line 1</span
@@ -295,30 +295,22 @@
             />
           </div>
           <div class="row">
-            <div class="col-12 col-md-6 mb-4">
-              <div class="profile-img text-center">
-                <img
-                  v-viewer
-                  :src="representativeDetails.image_upload.per_avatar_url"
-                  class="user-image"
-                  alt="img"
-                  height="250"
-                  width="200"
-                />
-                <p class="text-center">Avatar</p>
-              </div>
-            </div>
-            <div class="col-12 col-md-6 mb-4">
-              <div class="profile-img text-center">
-                <img
-                  v-viewer
-                  :src="representativeDetails.image_upload.per_main_image_url"
-                  class="user-image"
-                  alt="img"
-                  height="250"
-                  width="200"
-                />
-                <p class="text-center">Main image</p>
+            <div v-viewer="{movable: false, title: false, scalable: false, rotatable: false}" class="col-12 row my-4">
+              <div
+                class="col-md-6,mb-sm-0 mb-2 flex flex-column align-items-center profile-img" 
+                v-for="src in [representativeDetails.image_upload.per_avatar_url, representativeDetails.image_upload.per_main_image_url]" 
+                :key="src"
+              >
+                  <img
+                    :src="src"
+                    class="user-image"
+                    alt="img"
+                    height="250"
+                    width="200"
+                    style="cursor: pointer;"
+                  />
+                  <p class="text-center" v-if="src == representativeDetails.image_upload.per_avatar_url">Avatar</p>
+                  <p class="text-center" v-else>Main Image</p>
               </div>
             </div>
           </div>
@@ -397,7 +389,14 @@ export default {
     }
     .profile-img {
       border-radius: 5px;
-      overflow: hidden;
+      //overflow: hidden;
+      //width: 200px;
+      height: 200px;
+      p {
+        font-size: 16px;
+        margin-top: 5px;
+        font-weight: bolder;
+      }
     }
   }
   .ant-input {
@@ -471,8 +470,15 @@ export default {
   height: auto;
 }
 .user-image {
-  width: 100%;
-  height: 300px;
+  //width: 200px;
+  //height: 250px;
+  //object-fit: cover;
+  display: block;
+  max-width: 260px;
+  max-height: 170px;
+  width: auto;
+  height: auto;
+  border-radius: 6px;
 }
 .edit-step {
   width: 20px;
