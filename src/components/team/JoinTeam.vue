@@ -20,7 +20,7 @@
             v-model="invitationLink"
             @keydown.enter="getTheTeamInvitationInfo"
 					>
-            <a-icon slot="prefix" type="snippets" class="input-prefix" />
+            <a-icon slot="prefix" type="snippets" class="input-prefix" @click="pastePassword" />
 <!--            <a-icon slot="suffix" type="caret-right" class="input-suffix"-->
 <!--                    @click="getTheTeamInvitationInfo"-->
 <!--                    :disabled="!invitationLink"-->
@@ -143,9 +143,20 @@ export default {
           this.$emit('cancel_button_click');
       },
 
-  */ onSearch() {
+  */ 
+    onSearch() {
 			console.log("search clicked");
 		},
+    pastePassword () {
+      navigator.clipboard
+      .readText()
+      .then(
+        (clipText) => {
+          document.querySelector(".ant-input").value += clipText;
+          this.invitationLink = document.querySelector(".ant-input").value;
+        }
+      );
+    },
 		onConfirmClick(event) {
       if(this.invitationLink && this.team) {
         let payload = this.team.team;
