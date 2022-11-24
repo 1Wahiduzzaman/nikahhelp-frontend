@@ -44,13 +44,13 @@
 				<div class="d-flex justify-content-center p-2">
 					<div class="d-flex">
 						<div style="margin-right: 20px">
-							<a-button type="primary" style="width: 80px" @click="phase = 2">
+							<a-button type="primary" shape="round" style="width: 80px" @click="phase = 2">
 								Yes
 							</a-button>
 						</div>
 
 						<div style="margin-left: 20px">
-							<a-button type="danger" style="width: 80px" @click="handleCancel">
+							<a-button type="danger" shape="round" style="width: 80px" @click="handleCancel">
 								No
 							</a-button>
 						</div>
@@ -80,7 +80,7 @@
 				<div class="d-flex justify-content-center p-2">
 					<div class="d-flex">
 						<div style="margin-right: 20px">
-							<a-button type="primary" style="width: 80px" @click="handleOk">
+							<a-button type="primary" shape="round" style="width: 80px" @click="handleOk">
 								Next
 							</a-button>
 						</div>
@@ -133,6 +133,7 @@
 				<a-button
 					key="back"
 					type="danger"
+					shape="round"
 					@click="handleCancel"
 					v-if="phase == 3"
 				>
@@ -141,6 +142,7 @@
 				<a-button
 					key="submit"
 					type="primary"
+					shape="round"
 					@click="handleOk"
 					v-if="phase == 3"
 				>
