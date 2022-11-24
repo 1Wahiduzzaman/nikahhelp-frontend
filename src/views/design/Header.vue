@@ -639,6 +639,10 @@ export default {
 }
 .header-nav-icons .nav-item {
   position: relative;
+
+  &:hover {
+    transform: scale(1.3);
+  }
 }
 .mobile-menu {
   width: 100%;
