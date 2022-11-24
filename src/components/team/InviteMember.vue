@@ -8,13 +8,14 @@
       </div>
       <div class="px-4 mt-2 position-relative">
         <div class="position-relative flex flex-column">
+          <label for="" style="color:#fff; margin: 0px 2px;">Role:</label>
           <a-tooltip
               placement="top"
               title="Member role will"
           >
             <a-select
                 placeholder="Role"
-                class="fs-14"
+                class="fs-14 mb-2"
                 v-model="invitationObject.role"
                 :disabled="invitationObject.add_as_a == 'Candidate'"
             >
@@ -24,13 +25,14 @@
             </a-select>
           </a-tooltip>
 
+          <label for="" style="color:#fff; margin: 0px 2px;">Add as a:</label>
           <a-tooltip
               placement="top"
               title="Add as a"
           >
             <a-select
                 placeholder="Add as a"
-                class="fs-14 mt-2"
+                class="fs-14 mb-2"
                 v-model="invitationObject.add_as_a"
                 @change="changedAddAs()"
             >
@@ -39,6 +41,7 @@
             </a-select>
           </a-tooltip>
 
+          <label for="" style="color:#fff; margin: 0px 2px;">Relationship:</label>
           <a-tooltip
               placement="top"
               title="Relationship with candidate is"
@@ -55,24 +58,26 @@
 <!--            </a-select>-->
             <a-select
                 placeholder="Relationship"
-                class="mt-2 fs-14"
+                class="fs-14"
                 v-model="invitationObject.relationship"
                 v-if="invitationObject.add_as_a != 'Candidate'"
             >
               <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
             </a-select>
           </a-tooltip>
-
-          <button class="btn attach-link-btn btn-sm py-2 mb-2 mt-2" @click="showUserBox = true" v-if="!showUserBox">Attach an user</button>
+          
+          <button class="btn invitation-link-btn btn-block btn-sm py-2 mb-2 mt-2" @click="generateLink" v-if="!showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
+          <p class="text-center text-white m-0" v-if="!showUserBox">or</p>
+          <button class="btn attach-link-btn btn-sm py-2 mb-2 mt-2" @click="showUserBox = true" v-if="!showUserBox">Attach a registered user</button>
 <!--          <button class="btn attach-link-btn btn-sm py-2 mt-2" @click="removeAttachedUser()" v-if="showUserBox">Remove attached user</button>-->
-          <button class="btn invitation-link-btn btn-block btn-sm py-2 mb-2" @click="generateLink" v-if="!showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
         </div>
 
         <div class="mt-1" v-if="showUserBox">
 <!--          <h6 class="text-white fs-14">Attach a user to this invitation</h6>-->
+          <label for="" style="color:#fff; margin: 0px 2px;">Email:</label>
           <a-input ref="userNameInput" class="mt-1" placeholder="Search email or user ID" v-model="user_email" @input="searchMember()" medium>
             <a-icon slot="suffix" type="loading" style="color: rgba(0,0,0,.45)" v-if="searchLoading" />
-            <a-icon slot="suffix" type="info-circle" style="color: rgba(0,0,0,.45)" v-if="!searchLoading" />
+            <a-icon slot="suffix" type="close" style="color: rgba(0,0,0,.45); cursor:pointer;" @click="showUserBox=false; removeAttachedUser();" v-if="!searchLoading" />
           </a-input>
         </div>
 <!--        <span class="text-white fs-12 fw-500 ml-2">Invited/Suggested/Searched user</span>-->
