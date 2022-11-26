@@ -17,7 +17,6 @@
       destroyOnClose
       :visible="showModalProp"
       :confirm-loading="confirmLoading"
-      @ok="handleOk"
       class="preference"
       @cancel="handleCancel"
     >
@@ -102,7 +101,14 @@
           name in other messagelist and message team members sent.</span
         >
       </div>
-      <div></div>
+      <template slot="footer">
+        <a-button key="back" shape="round" @click="handleCancel">
+          Cancel
+        </a-button>
+        <a-button key="submit" type="primary" shape="round" @click="handleOk">
+          Ok
+        </a-button>
+      </template>
     </a-modal>
   </div>
 </template>

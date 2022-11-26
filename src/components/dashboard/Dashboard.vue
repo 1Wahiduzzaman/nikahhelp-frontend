@@ -7,60 +7,72 @@
            <div class="flex align-items-center">
              <img :src="getAuthUser && getAuthUser.per_main_image_url ? getAuthUser.per_main_image_url : avatarSrc" alt="image" class="user-img" />
              <div class="intro mx-4 mt-4 border-bottom-white">
-               <h4 class="color-primary fs-18">Welcome Back!</h4>
-               <h6 class="color-primary fs-24 font-weight-bold">{{ getAuthUser ? getAuthUser.full_name : 'N/A' }}</h6>
+               <h4 class="color-primary fs-14">Welcome Back!</h4>
+               <h6 class="color-primary fs-18 font-weight-bold">{{ getAuthUser ? getAuthUser.full_name : 'N/A' }}</h6>
                <p class="color-primary fs-14">Last login 26 Jan 2022</p>
              </div>
            </div>
            <div class="status-div mt-3">
              <p class="fs-14 color-primary status">
                Profile Status:
-               <span class="font-weight-bolder">Not Completed</span>
-               <router-link to="/edit_candidate" class="btn px-2 bg-primary ml-3 color-white profile-btn cursor-pointer fs-12 btn-hover btn-border">Update</router-link>
+               <!-- <span class="font-weight-bolder">Not Completed</span> -->
+               <span class="font-weight-bolder" v-if="userInfo.user">{{ profileStatus }}</span>
+                <span class="ant-spin-loader" v-else><a-spin /></span>
+                <router-link 
+                  to="/edit_candidate" 
+                  class="btn px-2 bg-primary ml-3 color-white profile-btn cursor-pointer fs-12 btn-hover btn-border"
+                  v-if="profileStatus !== 'Fully Completed' && profileStatus !== ''"
+                > 
+                  Update
+                </router-link>
              </p>
              <p class="fs-14 color-primary status">
                Verification Status:
                <span class="font-weight-bolder">{{ userDataFromApi.status == 3 ? 'Verified' : 'Not Verified' }}</span>
-               <router-link to="/settings" class="btn px-2 bg-primary ml-3 color-white profile-btn cursor-pointer fs-12 btn-hover btn-border">Upload ID</router-link>
+               <router-link to="/settings" class="btn px-2 bg-primary ml-3 color-white profile-btn cursor-pointer fs-12 btn-hover btn-border" v-if="userDataFromApi.status != 3">Upload ID</router-link>
              </p>
            </div>
          </div>
          <div class="active-team mt-3 mx-3 flex align-items-center justify-content-center">
-           <h4 class="fs-16 text-center pt-1 text-black-50">Active Team: <span class="text-success">{{ activeTeam && activeTeam.name ? activeTeam.name : 'N/A' }}</span></h4>
+           <h4 class="fs-14 text-center pt-1 text-black-50">Active Team: <span class="text-success">{{ activeTeam && activeTeam.name ? activeTeam.name : 'N/A' }}</span></h4>
          </div>
          <div class="team-short-info" v-if="activeTeam">
-           <div class="profile-overview mt-5">
-             <div class="profile-section flex justify-content-between">
-               <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.suggestion }}</h4>
+           <div class="profile-overview mt-2">
+             <div class="profile-section row">
+               <a-tooltip title="Title will go here" class="col-6 col-md-4">
+                 <h4 class="color-primary fs-18 font-weight-bolder" v-if="teamActivity.suggestion !== ''">{{ teamActivity.suggestion }}</h4>
+                 <h4 v-else><span class="ant-spin-loader"><a-spin /></span></h4>
                  <h4 class="fs-14 text-black-50">Suggestions</h4>
                </a-tooltip>
-               <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.teamlisted }}</h4>
+               <a-tooltip title="Title will go here" class="col-6 col-md-4">
+                 <h4 class="color-primary fs-18 font-weight-bolder" v-if="teamActivity.teamlisted !== ''">{{ teamActivity.teamlisted }}</h4>
+                 <h4 v-else><span class="ant-spin-loader"><a-spin /></span></h4>
                  <h4 class="fs-14 text-black-50">Teamlisted</h4>
                </a-tooltip>
-               <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.shortlisetd }}</h4>
+               <a-tooltip title="Title will go here" class="col-6 col-md-4">
+                 <h4 class="color-primary fs-18 font-weight-bolder" v-if="teamActivity.shortlisted !== ''">{{ teamActivity.shortlisted }}</h4>
+                 <h4 v-else><span class="ant-spin-loader"><a-spin /></span></h4>
                  <h4 class="fs-14 text-black-50">Shortlisted</h4>
                </a-tooltip>
-             </div>
-             <div class="profile-section flex justify-content-between mt-4">
-               <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.connected }}</h4>
+               <a-tooltip title="Title will go here" class="col-6 col-md-4">
+                 <h4 class="color-primary fs-18 font-weight-bolder" v-if="teamActivity.connected !== ''">{{ teamActivity.connected }}</h4>
+                 <h4 v-else><span class="ant-spin-loader"><a-spin /></span></h4>
                  <h4 class="fs-14 text-black-50">Connected</h4>
                </a-tooltip>
-               <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.request_received }}</h4>
+               <a-tooltip title="Title will go here" class="col-6 col-md-4">
+                 <h4 class="color-primary fs-18 font-weight-bolder" v-if="teamActivity.request_received !== ''">{{ teamActivity.request_received }}</h4>
+                 <h4 v-else><span class="ant-spin-loader"><a-spin /></span></h4>
                  <h4 class="fs-14 text-black-50">Request received</h4>
                </a-tooltip>
-               <a-tooltip title="Title will go here" class="w33">
-                 <h4 class="color-primary fs-24 font-weight-bolder">{{ teamActivity.request_sent }}</h4>
+               <a-tooltip title="Title will go here" class="col-6 col-md-4">
+                 <h4 class="color-primary fs-18 font-weight-bolder" v-if="teamActivity.request_sent !== ''">{{ teamActivity.request_sent }}</h4>
+                 <h4 v-else><span class="ant-spin-loader"><a-spin /></span></h4>
                  <h4 class="fs-14 text-black-50">Request sent</h4>
                </a-tooltip>
              </div>
            </div>
-           <div class="team-members-div mt-8" v-if="activeTeam && activeTeam.team_members && activeTeam.team_members.length > 0">
-             <h4 class="fs-18 text-black-50 text-center">Team members</h4>
+           <div class="team-members-div mt-3" v-if="activeTeam && activeTeam.team_members && activeTeam.team_members.length > 0">
+             <h4 class="fs-14 text-black-50 text-center">Team members</h4>
              <div class="flex justify-content-center align-items-center members">
                <a-tooltip v-for="(member, index) in activeTeam.team_members.filter(item => item.user_id != getAuthUser.id && item.user)" :key="index" class="mr-2" :title="getMemberName(member.user)">
                  <img :src="getImage(member.user)" alt="member" class="team-member-img" />
@@ -71,12 +83,18 @@
              </div>
            </div>
            <div class="subscription-div mt-8" v-if="activeTeam">
-             <h4 class="fs-18 text-black-50 text-center">Subscription info</h4>
-             <h4 class="fs-14 text-black-50 mt-5">Last subscription plan: <span class="text-black font-weight-bolder">{{ activeTeam && activeTeam.last_subscription && activeTeam.last_subscription.plans ? activeTeam.last_subscription.plans.title : 'N/A' }} plan</span></h4>
-             <h4 class="fs-14 text-black-50 mt-3">Subscription expire date: <span class="text-black font-weight-bolder">{{ formateDate(activeTeam.subscription_expire_at) }}</span></h4>
-             <div class="btn-div flex justify-content-center mt-5">
-               <v-btn class="renew-btn text-capitalize" :to="{name: 'SubscriptionTeam', params: {id: activeTeam.team_id}}" small>Renew subscription now</v-btn>
+             <!-- <h4 class="fs-14 text-black-50 text-center">Subscription info</h4> -->
+             <div class="subscription-info">
+              <router-link :to="'subscription/' + activeTeam.team_id">
+                <img src="../../assets/icon/renew.svg" alt="Renew Subscription" class="subscription-img" />
+                <span class="ml-2">{{ activeTeam.subscription_expire_at ? 'Renew Subscription' : 'Subscription' }}</span>
+              </router-link>
              </div>
+             <h4 class="fs-12 text-black-50">Last subscription plan: <span class="text-black font-weight-bolder">{{ activeTeam && activeTeam.last_subscription && activeTeam.last_subscription.plans ? activeTeam.last_subscription.plans.title : 'N/A' }} plan</span></h4>
+             <h4 class="fs-12 text-black-50">Subscription expire date: <span class="text-black font-weight-bolder">{{ formateDate(activeTeam.subscription_expire_at) }}</span></h4>
+             <!-- <div class="btn-div flex justify-content-center mt-5">
+               <v-btn class="renew-btn text-capitalize" :to="{name: 'SubscriptionTeam', params: {id: activeTeam.team_id}}" small>Renew subscription now</v-btn>
+             </div> -->
            </div>
          </div>
          <div v-else class="team-all">
@@ -104,6 +122,9 @@
       </div>
       <div class="col-md-8 col-12 none-l-padding">
         <div class="chart-div" id="chart">
+          <div class="overlay-div d-flex justify-content-center align-items-center" v-if="!activeTeam">
+            <div>Activate team to see the total views</div>
+          </div>
           <div class="mobile-flex justify-content-between mx-6 pt-3">
             <h6 class="chart-heading">Total <span class="color-primary">{{ totalCount }}</span> view(s) in last <span class="color-primary">{{ viewType === 0 ? 7 : 1 }}</span> {{ chartRangeText }}</h6>
             <div class="btn-flex">
@@ -112,9 +133,11 @@
               <button class="btn btn-chart-type ml-2" :class="{'active-btn': viewType === 2}" @click="toggleProfileViewType(2)">Year</button>
             </div>
           </div>
-          <highcharts :options="chartOptions"></highcharts>
+          <div class="d-flex flex-column justify-content-center h-75">
+            <highcharts :options="chartOptions"></highcharts>
+          </div>
         </div>
-        <div class="tips-div mt-4">
+        <div class="tips-div mt-4" v-if="false">
           <carousel
               perPage="1"
               paginationActiveColor="#522e8e"
@@ -158,7 +181,7 @@ export default {
     Slide,
   },
   created() {
-    this.getUserInfo()
+    this.getUserInfo();
     this.loadTeams();
     this.loadProfileGraphApi();
     this.getTeamActivity();
@@ -166,6 +189,7 @@ export default {
   data() {
     return {
       userInfo: {},
+      profileStatus: "",
       avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
       teams: [],
       activeTeam: null,
@@ -232,12 +256,12 @@ export default {
         },
       },
       teamActivity: {
-        suggestion: 20,
-        teamlisted: 10,
-        shortlisetd: 4,
-        connected: 5,
-        request_received: 2,
-        request_sent: 3
+        suggestion: '',
+        teamlisted: '',
+        shortlisted: '',
+        connected: '',
+        request_received: '',
+        request_sent: ''
       }
     }
   },
@@ -274,7 +298,29 @@ export default {
   methods: {
     async getUserInfo () {
        let {data} = await ApiService.get("v1/user").then(res => res.data);
-       this.userInfo = data
+       this.userInfo = data;
+       this.profileStatus = this.userInfo.user["account_type"] == 1 && this.userInfo.candidate_information
+                  ? this.userInfo.candidate_information.data_input_status == 0
+                    ? "In-complete"
+                    : this.userInfo.candidate_information.data_input_status > 5 &&
+                      this.userInfo.candidate_information.is_uplaoded_doc == 1
+                    ? "Fully Completed"
+                    : this.userInfo.candidate_information.data_input_status > 5 &&
+                      this.userInfo.candidate_information.is_uplaoded_doc == 0
+                    ? "Completed Without ID"
+                    : "Partially Completed"
+                  : this.userInfo.user["account_type"] == 2 && this.userInfo.representative_information
+                  ? this.userInfo.representative_information.data_input_status == 0
+                    ? "In-complete"
+                    : this.userInfo.representative_information.data_input_status > 2 &&
+                      this.userInfo.representative_information.is_uplaoded_doc == 1
+                    ? "Fully Completed"
+                    : this.userInfo.representative_information.data_input_status > 2 &&
+                      this.userInfo.representative_information.is_uplaoded_doc == 0
+                    ? "Completed Without ID"
+                    : "Partially Completed"
+                  : "In-completed";
+      console.log(this.profileStatus);
     },
     async loadTeams() {
       let activeTeamId = JwtService.getTeamIDAppWide();
@@ -303,8 +349,28 @@ export default {
       }
     },
     async getTeamActivity() {
-      let {data} = await ApiService.get("v1/team-activity").then(res => res.data);
-      this.teamActivity = data;
+      // let {data} = await ApiService.get("v1/team-activity").then(res => res.data);
+      // this.teamActivity = data;
+
+      let {data} = await ApiService.get('v1/candidate-of-team');
+      let candidateId = data.data.user_id;
+      let oppositeGender = data.data.personal.per_gender_id === 1 ? "2" : "1";
+      data = await ApiService.get(`v1/home-searches?gender=${oppositeGender}`).then(res => res.data);
+      this.teamActivity.suggestion = data.data.pagination.total_items;
+
+      if(this.userInfo.user.id === candidateId){
+        await this.$store.dispatch("loadShortListedCandidates");
+        await this.$store.dispatch('loadTeamShortListedCandidates');
+        this.teamActivity.shortlisted = this.$store.getters.shortListedCandidates.length;
+        this.teamActivity.teamlisted = this.$store.getters.teamShortListedCandidates.length;
+      }
+
+      let activeTeamId = JwtService.getTeamIDAppWide();
+      let connectionReport = await ApiService.post('v1/connection-reports?team_id='+activeTeamId).then(res => res.data);
+      this.teamActivity.connected = connectionReport.data.connected_teams;
+      this.teamActivity.request_received = connectionReport.data.request_received;
+      this.teamActivity.request_sent = connectionReport.data.request_sent;
+
     },
     getMemberName(user) {
       if(user && user.full_name) {
@@ -453,6 +519,14 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+
+p {
+  margin-bottom: 3px !important;
+}
+
+h4 {
+  margin-bottom: .2rem !important;
+}
 .db-flex {
   display: flex;
 }
@@ -460,6 +534,11 @@ export default {
   border: 1px solid #c9c9c9;
   border-radius: 12px;
   padding-bottom: 20px;
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+  @media (max-width: 767px) {
+    height: auto;
+  }
   .user-info-div {
     background: rgba(97, 89, 167, 0.2);
     padding: 5px 5px 5px 10px;
@@ -468,8 +547,8 @@ export default {
     .flex {
       .user-img {
         border-radius: 50%;
-        width: 100px;
-        height: 100px;
+        width: 90px;
+        height: 90px;
       }
       .border-bottom-white {
         border-bottom: 1px solid #FFFFFF;
@@ -480,6 +559,11 @@ export default {
         .profile-btn {
           border-radius: 20px;
         }
+        .ant-spin-loader::v-deep {
+          .ant-spin-dot-item {
+            background-color: $bg-primary;
+          }
+        }
       }
     }
   }
@@ -489,6 +573,15 @@ export default {
     border-radius: 12px;
   }
   .team-short-info {
+    .ant-spin-loader::v-deep {
+
+      .ant-spin-dot{
+        font-size: 18px;
+        .ant-spin-dot-item {
+          background-color: $bg-primary;
+        }
+      }
+    }
     .profile-overview {
       padding: 10px 20px;
     }
@@ -496,8 +589,8 @@ export default {
       padding: 0 20px;
       .members {
         .team-member-img {
-          width: 70px;
-          height: 70px;
+          width: 50px;
+          height: 50px;
           border-radius: 50%;
         }
       }
@@ -506,16 +599,30 @@ export default {
           background: #6159a7;
           border-radius: 30px;
           color: #FFFFFF;
+          width: 100%;
         }
       }
     }
     .subscription-div {
       padding: 0 20px;
+
+      .subscription-img {
+        width: 20px;
+      }
+
+      .subscription-info {
+        span {
+          font-size: 12px;
+          color: #e51f76;
+          text-decoration: underline;
+        }
+      }
       .flex {
         .renew-btn {
           border-radius: 20px;
           background: #44ac44;
           color: #FFFFFF;
+          width: 100%;
           &:hover {
             border: 1px solid #FFFFFF;
           }
@@ -528,6 +635,19 @@ export default {
   border: 1px solid #c9c9c9;
   border-radius: 12px;
   padding: 5px 15px 15px 0;
+  height: calc(100vh - 100px);
+  position: relative;
+
+  .overlay-div {
+    position: absolute;
+    top: 0%;
+    z-index: 8;
+    height: 100%;
+    width: 100%;
+    border-radius: 12px;
+    background: #dfdeed;
+    opacity: .91;
+  }
 }
 .tips-div {
   border: 1px solid #c9c9c9;
@@ -538,7 +658,7 @@ export default {
   width: 33.33%;
 }
 .dashboard {
-  height: calc(100vh - 90px);
+  height: calc(100vh - 70px);
   overflow-y: auto;
 }
 .btn-border {
@@ -576,6 +696,10 @@ export default {
   padding-top: 5px !important;
   padding-left: 15px !important;
   padding-right: 0 !important;
+
+  @media (max-width: 768px) {
+    padding-right: 15px !important;
+  }
 }
 .none-l-padding {
   padding-top: 5px !important;

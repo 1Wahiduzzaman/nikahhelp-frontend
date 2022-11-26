@@ -49,12 +49,12 @@
                   /></span> -->
                   <div class="img-preview mb-2">
                     <img
-                      v-viewer
+                      v-viewer="{toolbar: false, title: false}"
                       :src="avatarSrc ? avatarSrc : imageModel.avatar_image_url"
                       class="contain"
                       v-if="imageModel.avatar_image_url"
                     />
-                    <div class="mt-3">Avatar Image</div>
+                    <div class="mt-3" v-if="!imageModel.avatar_image_url">Avatar Image</div>
                     <div
                       class="mt-4 add-icon"
                       v-if="!imageModel.avatar_image_url"
@@ -82,17 +82,12 @@
                       </svg>
                     </div>
                   </div>
-                  <input
-                    type="file"
-                    class="input-image"
-                    v-if="!imageModel.avatar_image_url"
-                    name="avatar"
-                    @change="getAvatar"
-                  />
-                  <a-button
-                    type="primary"
-                    style="width: 200px"
-                    v-if="imageModel.avatar_image_url"
+                  <label for="input-avatar-image" class="upload-label" v-if="!imageModel.avatar_image_url">
+                    Upload
+                    <input v-if="!imageModel.avatar_image_url" type="file" class="input-image" id="input-avatar-image" name="mainImage"
+                    @change="getAvatar" />
+                  </label>
+                  <a-button type="primary" style="width: 200px" v-if="imageModel.avatar_image_url"
                     @click="clearImg('avatar')"
                   >
                     Remove
@@ -109,14 +104,14 @@
                   /></span> -->
                   <div class="img-preview mb-2">
                     <img
-                      v-viewer
+                      v-viewer="{toolbar: false, title: false}"
                       :src="
                         mainImageSrc ? mainImageSrc : imageModel.main_image_url
                       "
                       class="contain"
                       v-if="imageModel.main_image_url"
                     />
-                    <div class="mt-3">Main Profile Image</div>
+                    <div class="mt-3" v-if="!imageModel.main_image_url">Main Profile Image</div>
                     <div
                       class="mt-4 add-icon"
                       v-if="!imageModel.main_image_url"
@@ -144,19 +139,13 @@
                       </svg>
                     </div>
                   </div>
-                  <input
-                    type="file"
-                    class="input-image"
-                    v-if="!imageModel.main_image_url"
-                    name="mainImage"
-                    @change="getMainImage"
-                  />
-                  <a-button
-                    type="primary"
-                    style="width: 200px"
-                    v-if="imageModel.main_image_url"
-                    @click="clearImg('main')"
-                  >
+                  <label for="input-main-image" class="upload-label" v-if="!imageModel.main_image_url">
+                    Upload
+                    <input v-if="!imageModel.main_image_url" type="file" class="input-image" id="input-main-image" name="mainImage"
+                    @change="getMainImage" />
+                  </label>
+                  <a-button type="primary" style="width: 200px" v-if="imageModel.main_image_url"
+                    @click="clearImg('main')">
                     Remove
                   </a-button>
                 </div>
@@ -171,7 +160,7 @@
                   /></span> -->
                   <div class="img-preview mb-2">
                     <img
-                      v-viewer
+                      v-viewer="{toolbar: false, title: false}"
                       :src="
                         additionalImageSrc
                           ? additionalImageSrc
@@ -180,7 +169,7 @@
                       class="contain"
                       v-if="imageModel.additionalImageSrc"
                     />
-                    <div class="mt-3">Additional Image</div>
+                    <div class="mt-3" v-if="!imageModel.additionalImageSrc">Additional Image</div>
                     <div
                       class="mt-4 add-icon"
                       v-if="!imageModel.additionalImageSrc"
@@ -208,19 +197,13 @@
                       </svg>
                     </div>
                   </div>
-                  <input
-                    type="file"
-                    class="input-image"
-                    name="image"
-                    v-if="!imageModel.additionalImageSrc"
-                    @change="getAdditionalImage"
-                  />
-                  <a-button
-                    type="primary"
-                    style="width: 200px"
-                    v-if="imageModel.additionalImageSrc"
-                    @click="clearImg('additional')"
-                  >
+                  <label for="input-aditional-image" class="upload-label" v-if="!imageModel.additionalImageSrc">
+                    Upload
+                    <input v-if="!imageModel.additionalImageSrc" type="file" class="input-image" id="input-aditional-image" name="mainImage"
+                    @change="getAdditionalImage" />
+                  </label>
+                  <a-button type="primary" style="width: 200px" v-if="imageModel.additionalImageSrc"
+                    @click="clearImg('additional')">
                     Remove
                   </a-button>
                 </div>
@@ -334,11 +317,13 @@ export default {
     clearImg(action) {
       switch (action) {
         case "main":
+          this.$emit('disableNextBtn');
           this.mainImageSrc = "";
           this.imageModel.main_image_url = "";
           this.deleteImage(1);
           break;
         case "avatar":
+          this.$emit('disableNextBtn');
           this.avatarSrc = "";
           this.imageModel.avatar_image_url = "";
           this.deleteImage(0);
@@ -500,6 +485,7 @@ export default {
       this.saveImage(formData);
     },
     async saveImage(data) {
+      this.$emit('turnOnBtnLoader');
       await this.$store.dispatch("uploadImages", data).then((data) => {
         if (data.data.status && data.data.status !== "FAIL") {
           let user = JSON.parse(localStorage.getItem("user"));
@@ -521,6 +507,7 @@ export default {
           });
         }
       });
+      this.$emit('turnOffBtnLoader');
     },
   },
 };
@@ -618,26 +605,29 @@ legend {
     height: 34px;
     overflow: hidden;
     border-radius: 5px !important;
+    display: none;
   }
 
-  input[type="file"]:before {
+  .upload-label {
     width: 200px;
     height: 32px;
     font-size: 16px;
     line-height: 32px;
-    content: "Upload";
     display: inline-block;
     color: white;
     background: #8781bd;
     border: 1px solid #98a0e2;
+    border-radius: 5px;
     padding: 0 10px;
     text-align: center;
     font-family: Helvetica, Arial, sans-serif;
+    cursor: pointer;
   }
 
-  input[type="file"]::-webkit-file-upload-button {
-    visibility: hidden;
-  }
+
+  //input[type="file"]::-webkit-file-upload-button {
+  //  visibility: hidden;
+  //}
   .btn-primary {
     margin-bottom: 5px;
   }

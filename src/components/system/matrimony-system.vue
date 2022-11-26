@@ -9,62 +9,73 @@
     <div class="help-dialog">
       <v-dialog
         transition="dialog-bottom-transition"
-        max-width="600"
+        max-width="700"
         class="d-flex justify-center mb-4 mt-8"
       >
-      <template v-slot:activator="{ on, attrs }">
-								<v-icon large  v-bind="attrs" v-on="on" class="question-mark" color="white">
-                  mdi-help-circle
-								</v-icon>
+        <template v-slot:activator="{ on, attrs }">
+          <v-icon large  v-bind="attrs" v-on="on" class="question-mark" color="white">
+            mdi-help-circle
+          </v-icon>
         </template>
         <template v-slot:default="dialog">
           <v-card class="relative">
-            
-            <v-card-text class="d-flex flex-column align-center">
-              <img 
-                class="mt-3"
-                src="@/assets/form.jpg" alt="">
-              <v-card-text class="text-center">
-              {{ currentGuide }}. {{ contentTitle }}
-            </v-card-text>
-              <div class="text-center">{{ contentGuidance }}</div>
-              
-            </v-card-text>
-            <v-btn
-                rounded
-                absolute
-                bottom
-                left
-                text
-                class="mb-2"
+            <div class="w-100 flex justify-content-end">
+              <v-icon 
+                class="m-2"
                 @click="dialog.value = false;"
-              >Skip</v-btn>
+              >
+                mdi-close
+              </v-icon>
+            </div>
+            
+            <v-card-text class="d-flex flex-column align-center"> <!-- style="min-height:350px" -->
+              <div class="d-flex justify-center w-100">
+
+                <v-container class="d-flex justify-center">
+                  <v-img
+                    max-height="150"
+                    max-width="150"
+                    :src="imageSrc"
+                    position="cover"
+                  ></v-img>
+                </v-container>
+              </div>
+              <div class="text-center my-2"><h5>{{ contentTitle }}</h5></div>
+              <div class="text-center">{{ contentGuidance }}</div>
+            </v-card-text>
+            
+            <v-divider></v-divider>
+
             <v-card-actions class="justify-end">
               
               <v-btn
-                v-if="currentGuide > 0 || currentGuide > 4 "
-                text
-               
+                v-if="currentGuide > 0 && currentGuide <= 5 "
                 @click="changeContentPrev"
-                class="mr-3"
+                rounded="true"
+                color="#6159a7"
+                class="mr-3 text-white"
               >
-            <v-icon
-             color="grey"
-            >
-              mdi-arrow-left-circle
-            </v-icon>
-            </v-btn>
+                prev
+              </v-btn>
               <v-btn
-                text
+                v-if="currentGuide <= 4"
                 @click="changeContent"
+                rounded="true"
+                color="#6159a7"
+                class="text-white"
               >
-              <v-icon
-              color="#6159A7"
+                next
+              </v-btn>
+
+              <v-btn
+                v-if="currentGuide === 5"
+                @click="goToFirstGuide(); dialog.value=false;"
+                rounded="true"
+                color="#6159a7"
+                class="text-white"
               >
-                mdi-arrow-right-circle
-              </v-icon>
-            
-            </v-btn>
+                finish
+              </v-btn>
             </v-card-actions>
             <v-card-actions class="justify-end">
               
@@ -109,31 +120,37 @@ export default {
     changeContentPrev() {
        switch (this.currentGuide) {
         case 1:
+          this.imageSrc = require('@/assets/help_guide_pics/Join_or_create_a_team.svg');
           this.contentTitle = 'Join or create a team';
           this.contentGuidance = 'Having a team is a must requirement in MartimonyAssist. Someone who is already registered with MatrimonyAssist, can send you an invite link to join their team. Alternatively, you can create a team and generate an invite link and then share it to your potential member(s) to join your team.';
           this.currentGuide = 0;
           break;
         case 2:
+          this.imageSrc = require('@/assets/help_guide_pics/Chose_a_subscription_plan.svg');
           this.contentTitle = 'Chose a subscription plan';
           this.contentGuidance = 'In MattrimonyAssist subscription is team based. Anyone can pay for subscription and the rest of the members use it for free.';
           this.currentGuide = 1;
           break;
         case 3:
+          this.imageSrc = require('@/assets/help_guide_pics/Search_for_suitable_prospect.svg');
           this.contentTitle = ' Search for suitable prospect';
           this.contentGuidance = 'Here you search according to your search criteria to find prospect of your choice. ';
           this.currentGuide = 2;
           break;
         case 4:
+          this.imageSrc = require('@/assets/help_guide_pics/Shortlist_and_connect_with_prospect’s_team.svg');
           this.contentTitle = 'Shortlist and connect with prospect’s team';
           this.contentGuidance = 'From the search results, you can create your own shortlist of prospects. ';
           this.currentGuide = 3;
           break;
         case 5:
+          this.imageSrc = require('@/assets/help_guide_pics/Chat_and_exchange_information_with_connected_team.svg');
           this.contentTitle = 'Use chat feature of Matrimony Assist to communicate with prospect team and find out more about the prospect. ';
           this.contentyGuidance = 'Chat and exchange information with connected team';  
           this.currentGuide = 4;
           break;    
         default:
+          this.imageSrc = require('@/assets/help_guide_pics/Evaluate_information_and_make_decision.svg');
           this.contentTitle = 'Evaluate information and make decision';
           this.contentGuidance = 'Finally, when you are absolutely confident, only then make decision. ';
           this.currentGuide = 5;
@@ -147,31 +164,43 @@ export default {
       switch (this.currentGuide) {
         case 6:
           this.currentGuide = 0;
+          this.imageSrc = require('@/assets/help_guide_pics/Join_or_create_a_team.svg');
           this.contentTitle = 'Join or create a team';
           this.contentGuidance = 'Having a team is a must requirement in MartimonyAssist. Someone who is already registered with MatrimonyAssist, can send you an invite link to join their team. Alternatively, you can create a team and generate an invite link and then share it to your potential member(s) to join your team.';
           break;
         case 1:
+          this.imageSrc = require('@/assets/help_guide_pics/Chose_a_subscription_plan.svg');
           this.contentTitle = 'Chose a subscription plan';
           this.contentGuidance = 'In MattrimonyAssist subscription is team based. Anyone can pay for subscription and the rest of the members use it for free.';
           break;
         case 2:
+          this.imageSrc = require('@/assets/help_guide_pics/Search_for_suitable_prospect.svg');
           this.contentTitle = ' Search for suitable prospect';
           this.contentGuidance = 'Here you search according to your search criteria to find prospect of your choice. ';
           break;
         case 3:
+          this.imageSrc = require('@/assets/help_guide_pics/Shortlist_and_connect_with_prospect’s_team.svg');
           this.contentTitle = 'Shortlist and connect with prospect’s team';
           this.contentGuidance = 'From the search results, you can create your own shortlist of prospects. ';
           break;
         case 4:
+          this.imageSrc = require('@/assets/help_guide_pics/Chat_and_exchange_information_with_connected_team.svg');
           this.contentTitle = 'Use chat feature of Matrimony Assist to communicate with prospect team and find out more about the prospect. ';
           this.contentGuidance = 'Chat and exchange information with connected team';  
           break;    
         default:
+          this.imageSrc = require('@/assets/help_guide_pics/Evaluate_information_and_make_decision.svg');
           this.contentTitle = 'Evaluate information and make decision';
           this.contentGuidance = 'Finally, when you are absolutely confident, only then make decision. ';
           break;
        }
     },
+    goToFirstGuide() {
+      this.currentGuide = 0;
+      this.imageSrc = require('@/assets/help_guide_pics/Join_or_create_a_team.svg');
+      this.contentTitle = 'Join or create a team';
+      this.contentGuidance = "Having a team is a must requirement in MartimonyAssist. Someone who is already registered with MatrimonyAssist, can send you an invite link to join their team. Alternatively, you can create a team and generate an invite link and then share it to your potential member(s) to join your team.";
+    }
   },
 
   data() {
@@ -179,7 +208,7 @@ export default {
       contentTitle: 'Join or create a team',
       contentGuidance: 'Having a team is a must requirement in MartimonyAssist. Someone who is already registered with MatrimonyAssist, can send you an invite link to join their team. Alternatively, you can create a team and generate an invite link and then share it to your potential member(s) to join your team.',
       currentGuide: 0,
-      imageSrc: '@/assets/form.jpg',
+      imageSrc: require('@/assets/help_guide_pics/Join_or_create_a_team.svg'),
       prevcount: 0
       // notifications: [],
       // chatHistory: [],
@@ -338,10 +367,23 @@ export default {
   background-color: #522e8e;
   width: 5rem;
 
+  @media (max-width: 575px) {
+    top: 13px;
+    right: 35px;
+    height: 0;
+    width: 0;
+  }
+
   .question-mark {
     position: absolute;
     right: 0.7rem;
     top: 0.4rem;
+
+    @media (max-width: 575px) {
+      font-size: 18px !important;
+      background: #522e8e;
+      color: white;
+    }
   }
 }
 </style>

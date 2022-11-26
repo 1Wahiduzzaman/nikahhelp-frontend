@@ -9,95 +9,85 @@
         <p>Please answer all question accurately and in full</p>
       </div>
 
-      <v-dialog
-        transition="dialog-bottom-transition"
-        max-width="600"
-        class="d-flex justify-center mb-4 mt-8"
-      >
-      <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            color="purple"
-            v-bind="attrs"
-            width="400"
-            text
-            outlined
-            v-on="on"
-            center
-            rounded
-            class="mx-auto mb-2 mt-8"
-          > Quick Tour
-          <!-- <v-icon>
-            mdi-help
-          </v-icon> -->
-        </v-btn>
-        </template>
-        <template v-slot:default="dialog">
-          <v-card class="relative">
-            <!-- <v-toolbar
-
-              color="violet"
-              class="d-flex justify-center  font-weight-bold"
-            >
-           
-              </v-toolbar> -->
-            <v-card-text class="d-flex flex-column align-center pt-4">
-              <v-img
-  lazy-src="https://picsum.photos/id/11/10/6"
-  max-height="150"
-  max-width="250"
-  src="https://picsum.photos/id/11/500/300"
-></v-img>
-              <!-- <div class="text-center">{{ contentGuidance }}</div> -->
-            </v-card-text>
-            <v-card-text class="d-flex flex-column align-center">
-              {{ currentGuide }}. {{ contentTitle }}
-            </v-card-text>
-            <v-card-text class="d-flex flex-column align-center">
-              <p>hello world </p>
-
-            </v-card-text>
-            <v-btn
-                rounded
-                absolute
-                bottom
-                left
-                text
-                class="mb-2"
-                @click="dialog.value = false;"
-              >Skip</v-btn>
-            <v-card-actions class="justify-end">
-              
-              <v-btn
-                v-if="currentGuide > 0"
-                text
-               
-                @click="changeContentPrev"
-                class="mr-3"
-              >
-            <v-icon
-             color="grey"
-            >
-              mdi-arrow-left-circle
+      <div class="help-dialog">
+        <v-dialog
+          transition="dialog-bottom-transition"
+          max-width="700"
+          class="d-flex justify-center mb-4 mt-8"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon large  v-bind="attrs" v-on="on" class="question-mark" color="white">
+              mdi-help-circle
             </v-icon>
-            </v-btn>
-              <v-btn
-                text
-                @click="changeContent"
-              >
-              <v-icon
-              color="#6159A7"
-              >
-                mdi-arrow-right-circle
-              </v-icon>
-            
-            </v-btn>
-            </v-card-actions>
-            <v-card-actions class="justify-end">
+          </template>
+          <template v-slot:default="dialog">
+            <v-card class="relative">
+              <div class="w-100 flex justify-content-end">
+                <v-icon 
+                  class="m-2"
+                  @click="dialog.value = false;"
+                >
+                  mdi-close
+                </v-icon>
+              </div>
               
-            </v-card-actions>
-          </v-card>
-        </template>
-      </v-dialog>
+              <v-card-text class="d-flex flex-column align-center"> <!-- style="min-height:350px" -->
+                <div class="d-flex justify-center w-100">
+  
+                  <v-container class="d-flex justify-center">
+                    <v-img
+                      max-height="150"
+                      max-width="150"
+                      :src="imageSrc"
+                      position="cover"
+                    ></v-img>
+                  </v-container>
+                </div>
+                <div class="text-center my-2"><h5>{{ contentTitle }}</h5></div>
+                <div class="text-center">{{ contentGuidance }}</div>
+              </v-card-text>
+              
+              <v-divider></v-divider>
+  
+              <v-card-actions class="justify-end">
+                
+                <v-btn
+                  v-if="currentGuide > 0 && currentGuide <= 5 "
+                  @click="changeContentPrev"
+                  rounded="true"
+                  color="#6159a7"
+                  class="mr-3 text-white"
+                >
+                  prev
+                </v-btn>
+                <v-btn
+                  v-if="currentGuide <= 4"
+                  @click="changeContent"
+                  rounded="true"
+                  color="#6159a7"
+                  class="text-white"
+                >
+                  next
+                </v-btn>
+  
+                <v-btn
+                  v-if="currentGuide === 5"
+                  @click="goToFirstGuide(); dialog.value=false;"
+                  rounded="true"
+                  color="#6159a7"
+                  class="text-white"
+                >
+                  finish
+                </v-btn>
+              </v-card-actions>
+              <v-card-actions class="justify-end">
+                
+              </v-card-actions>
+            </v-card>
+          </template>
+        </v-dialog>
+      </div>
+
 
       <VueFixedHeader
         @change="updateFixedStatus"
@@ -176,6 +166,9 @@
       <div class="steps-content px-2" v-if="current == 1">
         <ImageUpload
           @valueChange="onDataChange($event)"
+          @disableNextBtn="enabledNextBtn=false"
+          @turnOnBtnLoader="nextBtnLoader=true"
+          @turnOffBtnLoader="nextBtnLoader=false"
           :imageModel="representativeDetails.imageModel"
           ref="imageUploadRef"
         />
@@ -213,7 +206,8 @@
           class="mt-3"
           @click="next"
         >
-          Next
+          <span v-if="!nextBtnLoader">Next</span>
+          <div v-else class="spinner-border spinner-border-sm text-light" role="status"></div>
         </a-button>
         <a-button
           v-if="current == steps.length - 1"
@@ -227,8 +221,7 @@
         <a-button
           v-if="current > 0"
           shape="round"
-          style="float: right; margin-right: 10px"
-          class="mt-3"
+          style="float: right; margin-right: 10px; margin-top: 15px;"
           @click="prev"
         >
           Previous
@@ -296,8 +289,8 @@ export default {
   data() {
     return {
       currentGuide: 0,
-      contentTitle: 'Profile & ID completion and getting approval',
-      contentGuidance: 'hello word',
+      contentTitle: 'Take a moment to get comfortable',
+      contentGuidance: 'We’d like to show you around the steps required to complete this section – it will be fast, promise!',
       isLoading: false,
       fixedStatus: {
         headerIsFixed: false,
@@ -305,6 +298,7 @@ export default {
       propsData: { ...createData() },
       current: 0,
       enabledNextBtn: false,
+      nextBtnLoader: false,
       dialog: false,
       showAgreement: false,
       representativeDetails: {
@@ -432,42 +426,34 @@ export default {
     changeContentPrev() {
        switch (this.currentGuide) {
         case 1:
-          this.contentTitle = 'Profile & ID completion and getting approval';
-          this.contentGuidance = 'Profile id';
+          this.imageSrc = "";
+          this.contentTitle = 'Take a moment to get comfortable';
+          this.contentGuidance = 'We’d like to show you around the steps required to complete this section – it will be fast, promise!';
           this.currentGuide = 0;
           break;
         case 2:
-          this.contentTitle = 'Creating or joining a team';
-          this.contentGuidance = 'Team';
+          this.imageSrc = require('@/assets/help_guide_pics/Complete_Your_Profile.svg');
+          this.contentTitle = 'Complete Your Profile';
+          this.contentGuidance = 'More information you provide, higher the chance to appear on the search result.';
           this.currentGuide = 1;
-
           break;
         case 3:
-          this.contentTitle = 'Choosing  a subscription plan';
-          this.contentGuidance = 'subscription';
+          this.imageSrc = require('@/assets/help_guide_pics/Upload_Images.svg');
+          this.contentTitle = 'Upload Images';
+          this.contentGuidance = 'You need one avatar, one main and one additional image. Use Image Share Setting to give permission who can see your images.';
           this.currentGuide = 2;
-
           break;
         case 4:
-          this.contentTitle = 'Search for suitable prospect';
-          this.contentGuidance = 'search';
+          this.imageSrc = require('@/assets/help_guide_pics/Verify_your_ID.svg');
+          this.contentTitle = 'Verify your ID';
+          this.contentGuidance = 'In MatrimonyAssist all candidates must be verified. You can upload your verification documents while completing your profile or you can do it later from user dashboard';
           this.currentGuide = 3;
-
           break; 
         case 5:
-          this.contentTitle = 'Shortlist and Connect with prospect’s team';
-          this.contentGuidance = 'Shortlist and Connect';
+          this.imageSrc = require('@/assets/help_guide_pics/Review_and_Submit.svg');
+          this.contentTitle = 'Review and Submit';
+          this.contentGuidance = 'Please check all the information you provided on the form are correct. Once you are happy, only then press the submit button to complete your registration.';
           this.currentGuide = 4;
-          break;
-        case 6:
-          this.contentTitle = 'Chat and exchange information with connected team';
-          this.contentyGuidance = 'Chat';  
-          this.currentGuide = 5;
-          break;    
-        default:
-          this.contentTitle = 'Evaluate information and make decision';
-          this.contentGuidance = 'Evaluate information';
-          this.currentGuide = 6;
           break;
        }
     },
@@ -477,36 +463,45 @@ export default {
 
       switch (this.currentGuide) {
         case 1:
-          this.contentTitle = 'Creating or joining a team';
-          this.contentGuidance = 'Team';
+          this.imageSrc = require('@/assets/help_guide_pics/Complete_Your_Profile.svg');
+          this.contentTitle = 'Complete Your Profile';
+          this.contentGuidance = 'More information you provide, higher the chance to appear on the search result.';
           break;
       
         case 2:
-          this.contentTitle = 'Choosing  a subscription plan';
-          this.contentGuidance = 'subscription';
+          this.imageSrc = require('@/assets/help_guide_pics/Upload_Images.svg');
+          this.contentTitle = 'Upload Images';
+          this.contentGuidance = 'You need one avatar, one main and one additional image. Use Image Share Setting to give permission who can see your images.';
           break; 
         case 3:
-          this.contentTitle = 'Search for suitable prospect';
-          this.contentGuidance = 'search';
+          this.imageSrc = require('@/assets/help_guide_pics/Verify_your_ID.svg');
+          this.contentTitle = 'Verify your ID';
+          this.contentGuidance = 'In MatrimonyAssist all candidates must be verified. You can upload your verification documents while completing your profile or you can do it later from user dashboard';
           break;  
         case 4:
-          this.contentTitle = 'Shortlist and Connect with prospect’s team';
-          this.contentGuidance = 'Shortlist and Connect';
+          this.imageSrc = require('@/assets/help_guide_pics/Review_and_Submit.svg');
+          this.contentTitle = 'Review and Submit';
+          this.contentGuidance = 'Please check all the information you provided on the form are correct. Once you are happy, only then press the submit button to complete your registration.';
           break;
         case 5:
-          this.contentTitle = 'Chat and exchange information with connected team';
-          this.contentyGuidance = 'Chat';    
-          break;
-        case 6:
-          this.contentTitle = 'Evaluate information and make decision';
-          this.contentGuidance = 'Evaluate information';
+          this.imageSrc = require('@/assets/help_guide_pics/Shortlist_and_connect_with_prospect’s_team.svg');
+          this.contentTitle = 'What happens next?';
+          this.contentGuidance = '\u2713 Wait for the approval of your registration. \u2713 You’ll receive access to a user dashboard to create or join a team and pay subscription';
           break;
         default:
-          this.contentTitle = 'Profile & ID completion and getting approval';
-          this.contentGuidance = 'Profile id';
+          this.imageSrc = "";
+          this.contentTitle = 'Take a moment to get comfortable';
+          this.contentGuidance = 'We’d like to show you around the steps required to complete this section – it will be fast, promise!';
           this.currentGuide = 0;
           break;
       }
+    },
+
+    goToFirstGuide() {
+      this.currentGuide = 0;
+      this.imageSrc = "";
+      this.contentTitle = 'Take a moment to get comfortable';
+      this.contentGuidance = 'We’d like to show you around the steps required to complete this section – it will be fast, promise!';
     },
 
     getRepresentativeInitialInfo: async function () {
@@ -888,6 +883,23 @@ export default {
   }
 }
 
+.help-dialog {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  // margin-right: 4rem;
+  z-index: 15;
+  border-radius: 60% 0 0 0;
+  background-color: #522e8e;
+  width: 5rem;
+
+  .question-mark {
+    position: absolute;
+    right: 0.7rem;
+    top: 0.4rem;
+  }
+}
+
 .step-bar.vue-fixed-header--isFixed {
   position: fixed;
   top: 10px;
@@ -905,6 +917,10 @@ export default {
 }
 .bottom-padding {
   padding: 0 2rem;
+    
+  @media(max-width: 992px){
+    margin-bottom: 2rem;
+  }
 }
 .mobile-step {
   background-color: #b7b7b7;

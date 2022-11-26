@@ -20,13 +20,25 @@
         <h4 class="fs-18 color-primary">Team Password</h4>
         <a-row class="mt-1">
           <a-col :span="24" class="mt-4">
-            <a-input-password
+            <!-- <a-input-password
                 placeholder="Enter Password"
                 size="large"
                 class="team-password"
                 @change="invitationPassword = $event.target.value"
             >
-            </a-input-password>
+            </a-input-password> -->
+            <div class="d-flex justify-content-around">
+              <input v-for="i in 4" ref="teamPassword" :key="i" type="password" class="password-input-box text-center" maxlength="1" @keydown.prevent="handlePasswordInput($event, i, 'teamPassword')">
+              <div 
+                class="password-input-box d-flex justify-content-center align-items-center" 
+                style="cursor: pointer; background-color: #6159a7;"
+                @click="showPassword =! showPassword; handleShowPassword('teamPassword');"
+              >
+                <v-icon color="#fff" v-if="!showPassword" small>mdi-eye-outline</v-icon>
+                <v-icon color="#fff" v-else small>mdi-eye-off-outline</v-icon>
+              </div>
+            </div>
+            <span class="fs-12 text-danger ml-2 fs-12" v-if="showPasswordError">Password must be a number</span>
           </a-col>
         </a-row>
       </div>
@@ -63,8 +75,10 @@ export default {
 			user: {},
 			is_verified: 1,
 			invitationPassword: "",
-      success: false,
-      loading: false
+			success: false,
+			loading: false,
+			showPassword: false,
+			showPasswordError: false,
 		};
 	},
 	created() {},
@@ -75,60 +89,95 @@ export default {
 	methods: {
 		async onConfirmClick() {
 			if (this.invitationPassword.length > 0) {
-        if(this.team.password.toString() === this.invitationPassword.toString()) {
-          this.loading = true;
+				if(this.team.password.toString() === this.invitationPassword.toString()) {
+					this.loading = true;
 
-          let originalLink = this.team.invitation_link.split('?invitation=');
-          let link = this.invitationLink;
-          if (originalLink.length > 1) {
-            link = originalLink[1];
-          }
+					let originalLink = this.team.invitation_link.split('?invitation=');
+					let link = this.invitationLink;
+					if (originalLink.length > 1) {
+						link = originalLink[1];
+					}
 
-          let payload = {
-            team_id: this.team.team_id,
-            invitation_link: link,
-            team_password: this.invitationPassword
-          };
+					let payload = {
+						team_id: this.team.team_id,
+						invitation_link: link,
+						team_password: this.invitationPassword
+					};
 
-          const self = this
-          await ApiService.post("v1/join-team-by-invitation", payload).then((res) => {
-            this.loading = false;
-            if(res && res.data && res.data.data) {
-              let receivers = this.team.team_members.map(opt => opt.user_id);
-              let socketData = {
-                receivers: receivers,
-                team_id: this.team.id,
-                title: `joined ${this.team.name} team as ${this.team.role}`,
-                team_temp_name: this.team.name
-              };
-              self.$emit("socketNotification", socketData);
-              self.success = true;
-              self.$success({
-                title: "Success",
-                content: "Successfully joined to the team",
-                onOk() {
-                  // setTimeout(() => self.$emit("loadTeams"), 100);
-                  setTimeout(() => {
-                    self.$emit("loadTeams");
-                    self.$emit("cancel_button");
-                  }, 1000);
-                },
-              });
-            }
-          }).catch((e) => {
-            console.log(e);
-          });
-        } else {
-          this.$error({
-            title: "Password does not match",
-            center: true,
-          });
-        }
+					const self = this
+					await ApiService.post("v1/join-team-by-invitation", payload).then((res) => {
+						this.loading = false;
+						if(res && res.data && res.data.data) {
+							let receivers = this.team.team_members.map(opt => opt.user_id);
+							let socketData = {
+								receivers: receivers,
+								team_id: this.team.id,
+								title: `joined ${this.team.name} team as ${this.team.role}`,
+								team_temp_name: this.team.name
+							};
+							self.$emit("socketNotification", socketData);
+							self.success = true;
+							self.$success({
+								title: "Success",
+								content: "Successfully joined to the team",
+								onOk() {
+									// setTimeout(() => self.$emit("loadTeams"), 100);
+									setTimeout(() => {
+										self.$emit("loadTeams");
+										self.$emit("cancel_button");
+									}, 1000);
+								},
+							});
+            			}
+          			}).catch((e) => {
+            			console.log(e);
+         			});
+        		} else {
+          			this.$error({
+            			title: "Password does not match",
+            			center: true,
+          			});
+        		}
 			}
 		},
-    closeSuccess() {
-      this.$emit('cancel_button');
-    }
+    	closeSuccess() {
+      		this.$emit('cancel_button');
+    	},
+		handlePasswordInput(e, i, passwordType){
+			let allowedChars = '1234567890';
+			if(e.key === "Backspace") {
+				if(this.$refs[passwordType][i-1].value) {
+					this.$refs[passwordType][i-1].value = "";
+				} else if(i >= 2) {
+					this.$refs[passwordType][i-2].focus();
+				}
+			} else if (allowedChars.includes(e.key)) {
+				this.$refs[passwordType][i-1].value = e.key;
+				if(i < 4) {
+					this.$refs[passwordType][i].focus();
+				}
+			} else if(!allowedChars.includes(e.key)){
+				this.showPasswordError = true;
+				setTimeout(() => {
+					this.showPasswordError = false;
+				}, 1500);
+			}
+
+			let isPasswordCompleted = this.$refs[passwordType].every(element => element.value !== "");
+			if(isPasswordCompleted) {
+				if(passwordType === 'teamPassword'){
+					this.invitationPassword = "";
+					this.$refs[passwordType].forEach(element => {
+						this.invitationPassword += element.value;
+					});
+				}
+			}
+		},
+		handleShowPassword(passwordType) {
+			this.$refs[passwordType].forEach(element => {
+				element.type = element.type == 'text' ? 'password' : 'text';
+			})
+		},
 	},
 };
 </script>
@@ -141,6 +190,18 @@ export default {
 	border: 1px solid #6158a7 !important;
 	border-color: #6158a7 !important;
 	border-radius: 25px !important;
+}
+.password-input-box {
+	height: 40px;
+	//width: 100px;
+	width: 40px;
+	border: 1px solid #8f8f8f;
+	border-radius: 5px;
+  
+	&:hover {
+	  border-color: #b7deff;
+	}
+	
 }
 .card-container {
 	padding: 15px;

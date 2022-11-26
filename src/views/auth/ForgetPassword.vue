@@ -74,6 +74,15 @@
               {{ message }}
             </p>
             <div class="button-container">
+              <router-link
+                role="button"
+                class="btn btn-primary-outlined w-50 mr-2"
+                to="/login"
+                :class="{ 'flex justify-content-center': message }"
+              >
+                &#xab; <span>Sign in</span>
+              </router-link>
+              
               <button
                 :disabled="disabled"
                 v-if="!message"
@@ -83,15 +92,6 @@
               >
                 Get Password Reset Link
               </button>
-
-              <router-link
-                role="button"
-                class="btn btn-primary w-50 text-white"
-                to="/login"
-                :class="{ 'flex justify-content-center': message }"
-              >
-                &#xab; Sign in
-              </router-link>
             </div>
           </div>
         </form>
@@ -218,6 +218,21 @@ export default {
       .button-container {
         width: 100%;
         display: flex;
+        .btn-primary-outlined {
+          box-shadow: none !important;
+          border: none;
+          
+          &:hover{
+            background-color: transparent !important;
+            color: #522e8e;
+          }
+
+          span {
+            &:hover {
+              border-bottom: 1px solid #522e8e;
+            }
+          }
+        }
       }
       .warning {
         color: red;

@@ -40,4 +40,8 @@ export default {
   width: 100%;
   height: 100%;
 }
+
+.v-application {
+  font-family: $body-font-family, 'sans-serif';
+}
 </style>

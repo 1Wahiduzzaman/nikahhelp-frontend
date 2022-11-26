@@ -7,9 +7,9 @@
       </div>
     </div>
     <div class="profile text-center pt-3">
-      <img src="https://picsum.photos/200/300?random=1" alt="profile" class="profile-img">
+      <img :src="profileActive.email || profileActive.user !== undefined ? 'https://picsum.photos/200/300?random=1' : require('@/assets/no-image-available.jpg')" alt="profile" class="profile-img">
       <h4 class="fs-16 text-white pt-4" v-if="profileActive.profile_from_type === 'member'">{{ profileActive.user && profileActive.user.full_name ? profileActive.user.full_name : profileActive.user.email }}</h4>
-      <h4 class="fs-16 text-white pt-2" v-else>{{ profileActive.email ? profileActive.email : 'N/A' }}</h4>
+      <h4 class="fs-16 text-white pt-2" v-else>{{ profileActive.email ? profileActive.email : 'Not joined yet' }}</h4>
       <div class="d-flex justify-content-center mb-2 mt-4">
         <div class="role-section position-relative">
           <button class="btn btn-sm text-white role-btn"
@@ -46,7 +46,7 @@
             <td class="fs-14 text-white opacity-60">:</td>
             <td class="fs-14 text-white ml-3">{{ profileActive.role.replace('+', ' & ') }}</td>
           </tr>
-          <tr>
+          <!-- <tr v-if="profileActive.link !== undefined">
             <td class="fs-14 text-white opacity-60">Invitation Link</td>
             <td class="fs-14 text-white opacity-60">:</td>
             <td class="fs-14 text-white ml-3 cursor-pointer" @click="copyToken">
@@ -57,13 +57,21 @@
                 {{ profileActive.link }}
               </a-tooltip>
             </td>
-          </tr>
+          </tr> -->
 <!--          <tr>-->
 <!--            <td class="fs-12 text-white opacity-60">Permission</td>-->
 <!--            <td class="fs-12 text-white opacity-60">:</td>-->
 <!--            <td class="fs-14 text-white ml-3">None</td>-->
 <!--          </tr>-->
         </table>
+
+        <div class="link-box px-4 position-absolute w-full" v-if="profileActive.link !== undefined">
+          <div class="w-full mt-2">
+            <input type="text" class="form-control invite-link text-white fs-12 py-5" id="copyInput" :value="invitationLink" disabled />
+            <button class="copy-button position-absolute px-2" @click="copyToken">{{ copyBtnText }}</button>
+          </div>
+          <p class="fs-10 text-white text-start mt-2">Send this link through email or any messaging platform <br> Only one member can use this link once</p>
+        </div>
       </div>
 <!--      <router-link :to="{name: 'Profile', query: { user_id: profileActive.user_id }}" v-if="profileActive.profile_from_type === 'member'">-->
 <!--        <button class="btn btn-sm fs-14 text-white bg-primary mt-1 py-1 prof-detail">Profile Details</button>-->
@@ -83,7 +91,8 @@ export default {
   data() {
     return {
       roleChangeBox: false,
-      copyBtnText: 'Click to copy the link'
+      copyBtnText: 'Copy',
+      invitationLink: window.location.host + '/manageteam?invitation=' + this.profileActive.link,
     }
   },
   computed: {
@@ -150,8 +159,16 @@ export default {
       return link;
     },
     copyToken() {
-      navigator.clipboard.writeText(this.getInvitationLink());
-      this.copyBtnText = 'Link copied to clipboard';
+      this.copyBtnText = 'Copied';
+      let copyText = document.getElementById("copyInput");
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(copyText.value);
+
+      const self = this;
+      setTimeout(() => {
+        self.copyBtnText = 'Copy'
+      }, 2000);
     },
     viewProfile() {
       this.$router.push(
@@ -233,6 +250,27 @@ export default {
     .prof-detail {
       border: 2px solid $color-white;
       border-radius: 20px;
+    }
+  }
+}
+
+.link-box {
+  //bottom: -136px;
+  bottom: 0;
+  background: #3A3092;
+  border-radius: 14px;
+  .w-full {
+    .invite-link {
+      background: #3A3092;
+      padding-right: 60px;
+      border-radius: 4px;
+    }
+    .copy-button {
+      top: 14px;
+      right: 22px;
+      height: 30px;
+      border-radius: 4px;
+      background: $bg-white;
     }
   }
 }

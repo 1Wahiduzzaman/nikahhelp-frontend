@@ -55,8 +55,9 @@
                     { name: 'Male', value: 1 },
                     { name: 'Female', value: 2 },
                   ]"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -172,8 +173,8 @@
                   :options="heightTV"
                   ><template #open-indicator> <a-icon type="down" /> </template>
                   <template v-slot:option="option">
-                    <div v-html="option.label"></div> </template
-                ></v-select>
+                    <div v-html="option.label"></div> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -230,8 +231,9 @@
                   v-model="personalInformation.essential.per_religion_id"
                   label="name"
                   :options="candidateDetails.religions"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -291,8 +293,9 @@
                   v-model="personalInformation.essential.per_education_level_id"
                   label="name"
                   :options="candidateDetails.studylevels"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -353,8 +356,9 @@
                   v-model="personalInformation.essential.per_employment_status"
                   label="name"
                   :options="employment_Statuses"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -412,8 +416,9 @@
                   v-model="personalInformation.essential.per_occupation"
                   label="name"
                   :options="candidateDetails.occupations"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -498,8 +503,9 @@
                   v-model="personalInformation.general.per_ethnicity"
                   label="name"
                   :options="candidateDetails.ethnicities"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
                 <!-- <a-select
                   @change="onValueChange($event, 'general')"
                   id="per_ethnicity"
@@ -582,8 +588,9 @@
                   v-model="personalInformation.general.per_mother_tongue"
                   label="name"
                   :options="candidateDetails.languages"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -639,8 +646,9 @@
                   v-model="personalInformation.general.per_nationality"
                   label="name"
                   :options="candidateDetails.countries"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -701,8 +709,9 @@
                   v-model="personalInformation.general.per_country_of_birth"
                   label="name"
                   :options="candidateDetails.countries"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -1246,9 +1255,10 @@
                       :reduce="(option) => option.id"
                       label="name"
                       :options="candidateDetails.countries"
-                      ><template #open-indicator>
-                        <a-icon type="down" /> </template
-                    ></v-select>
+                      >
+                      <template #open-indicator>
+                        <a-icon type="down" /> </template>
+                    </v-select>
                   </a-form-model-item>
                 </div>
               </div>
@@ -1301,6 +1311,7 @@
               >
               <vue-tel-input
                 @onInput="onNumberChange($event)"
+                :inputOptions="{showDialCode: true}"
                 id="mobile_number"
                 :validCharactersOnly="true"
                 v-model="personalInformation.contact.mobile_number"
@@ -1470,8 +1481,9 @@
                       value: 'divorced_with_children',
                     },
                   ]"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -1555,8 +1567,9 @@
 
                     { name: 'Other', value: 'Other' },
                   ]"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -1634,8 +1647,9 @@
                       value: 3,
                     },
                   ]"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                    <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -1699,8 +1713,9 @@
 
                     { name: `Former smoker`, value: 3 },
                   ]"
-                  ><template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  >
+                    <template #open-indicator> <a-icon type="down" /> </template>
+                  </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -1769,8 +1784,8 @@
                   label="name"
                   :options="[...candidateDetails.languages]"
                 >
-                  <template #open-indicator> <a-icon type="down" /> </template
-                ></v-select>
+                  <template #open-indicator> <a-icon type="down" /> </template>
+                </v-select>
               </a-form-model-item>
             </div>
             <div class="col-12 none-padding mobile-margin mobile-help">
@@ -2267,12 +2282,16 @@
                 }}/2000</span
               >
               <div class="image-container text-center">
-                <input
-                  type="file"
-                  class="input-image"
-                  name="avatar"
-                  @change="getResume"
-                />
+                <label for="input-resume" class="upload-label">
+                  upload
+                  <input
+                    type="file"
+                    class="input-image"
+                    id="input-resume"
+                    name="avatar"
+                    @change="getResume"
+                  />
+                </label>
                 <div class="img-preview mb-2">
                   <div class="mt-3 color-primary">
                     {{
@@ -2704,7 +2723,7 @@ export default {
     onNumberChange(e) {
       this.isValidNumber = e.isValid;
       if (e.isValid) {
-        this.personalInformation.contact.mobile_number = `${e.country.dialCode} ${this.personalInformation.contact.mobile_number}`;
+        // this.personalInformation.contact.mobile_number = `${e.country.dialCode} ${this.personalInformation.contact.mobile_number}`;
         this.save("contact");
       }
     },
@@ -2872,6 +2891,15 @@ export default {
     }
   }
 
+  .style-chooser::v-deep {
+    .vti__dropdown {
+      background-color: transparent !important;
+    }
+    .vti__input {
+      font-size: 1rem;
+    }
+  }
+
   .text-box {
     border-color: $color-secondary;
     border-radius: 5px;
@@ -2893,24 +2921,26 @@ input[type="file"] {
   height: 34px;
   overflow: hidden;
   border-radius: 20px !important;
+  display: none;
 }
 .error-number {
   color: red;
   margin: 5px;
 }
-input[type="file"]:before {
+.upload-label {
   width: 100%;
   height: 32px;
   font-size: 16px;
   line-height: 32px;
-  content: "Upload";
   display: inline-block;
   color: white;
   background: #8781bd;
   border: 1px solid #98a0e2;
+  border-radius: 20px !important;
   padding: 0 10px;
   text-align: center;
   font-family: Helvetica, Arial, sans-serif;
+  cursor: pointer;
 }
 .img-preview {
   display: flex;
@@ -2928,9 +2958,9 @@ input[type="file"]:before {
   margin-right: 5px;
 }
 
-input[type="file"]::-webkit-file-upload-button {
-  visibility: hidden;
-}
+//input[type="file"]::-webkit-file-upload-button {
+//  visibility: hidden;
+//}
 .mobile-margin {
   margin-top: 0.5rem;
 }

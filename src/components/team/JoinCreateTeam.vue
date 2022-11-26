@@ -8,8 +8,8 @@
 							class="group-logo"
 							src="@/assets/Icons/Join a team or Create a team.svg"
 							alt=""
-							width="200"
-							height="200"
+							width="300"
+							height="300"
 						/>
 					</a-col>
 				</a-col>
@@ -20,22 +20,41 @@
 					
 					<div class="space-align-block">
 						<a-space align="center">
-						<a-button class="confirm-button" v-on:click="$emit('joinATeam')"
-								>Join a team
+							<a-button class="join-button" v-on:click="$emit('joinATeam')">
+								Join a team
 							</a-button>
 						</a-space>
-<p>[Have an invite link, click here to join a team.]</p>
+						<!-- <v-icon right small @click="showInfo1=!showInfo1">mdi-information-outline</v-icon>
+						 -->
 					</div>
 
-				<p class="text-center pb-1">or</p>
+					<p class="text-center pb-1" style="margin: 0px;">or</p>
 
 					<div class="space-align-block">
-												<a-space align="center">
-							<a-button class="confirm-button" v-on:click="$emit('createATeam')"
-								>Create a team
+						<a-space align="center">
+							<a-button class="create-button" v-on:click="$emit('createATeam')">
+								Create a team
 							</a-button>
 						</a-space>
-						<p>[If you do not have invite link, then you need to create a team and generate an invite link and then share it to your potential member(s) to join your team.]</p>
+					</div>
+					<span class="mt-2" style="cursor:pointer; text-decoration:underline;" @click="showInfo=!showInfo">
+						Need Help?
+					</span>
+					<!-- <v-icon 
+						right 
+						small 
+						style="margin-left: 1.5px; margin-bottom: 1.5px;"
+						@click="showInfo=!showInfo"
+					>
+						mdi-information-outline
+					</v-icon> -->
+					<div v-if="showInfo" class="mt-4">
+						<div class="mb-2" style="background-color: #6159a7; color: #fff; padding: 8px; border-radius: 10px;">
+							<p class="fs-14 mb-0">Have an invite link, <a style="text-decoration: underline;" @click="$emit('joinATeam')">click here</a> to join a team.</p>
+						</div>
+						<div style="background-color: #3ab549; color: #fff; padding: 8px; border-radius: 10px;">
+							<p class="fs-14 mb-0">If you do not have invite link, then you need to create a team and generate an invite link and then share it to your potential member(s) to join your team.</p>
+						</div>
 					</div>
 				</div>
 		
@@ -45,8 +64,19 @@
 	</div>
 </template>
 
+<script>
+export default {
+	data() {
+		return {
+			showInfo: false,
+		}
+	}
+}
+</script>
+
 
 <style scoped lang='scss'>
+@import "@/styles/base/_variables.scss";
 .input-controls > input {
 	height: 50px;
 	margin-top: 10px;
@@ -63,9 +93,9 @@
 }
 
 .group-logo {
-	width: 80px;
-  height: 120px;
-	margin-bottom: 10px;
+	width: 120px;
+  	height: 120px;
+	margin-bottom: 20px;
 }
 
 .card-title {
@@ -102,7 +132,33 @@
 	border-radius: 10px;
 	background-color: #ffffff;
 	box-shadow: 0px 0px 10px 1px rgba(63, 6, 17, 0.3);
-  text-align: center;
+	text-align: center;
+	
+	.join-button {
+		background-color: $bg-primary;
+		color: #FFFFFF !important;
+		border: none;
+		border-radius: 20px;
+	}
+
+	.join-button:hover {
+		color: $bg-primary !important;
+		border: 1px solid $bg-primary;
+		background: #FFFFFF;
+	}
+
+	.create-button {
+		background-color: $bg-success;
+		color: #FFFFFF;
+		border: #FFFFFF;
+		border-radius: 20px;
+	}
+
+	.create-button:hover {
+		background-color: #FFFFFF;
+		color: $bg-success;
+		border: 1px solid $bg-success;
+	}
 
 	.team-card-header {
 		background-color: #ffffff;

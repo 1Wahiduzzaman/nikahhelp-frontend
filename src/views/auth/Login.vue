@@ -44,7 +44,7 @@
             <a-form-model-item ref="password" prop="password">
               <a-input-password
                 type="password"
-                class="form-control fs-16"
+                class="fs-16"
                 id="password"
                 v-model="signinModel.password"
                 placeholder="Password"

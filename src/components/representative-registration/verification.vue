@@ -402,8 +402,8 @@
                   <div style="display: flex; flex-direction: column">
                     <span class="mr-2 fs-16 fw-700">Personal reference</span>
                     <!-- <span class="mr-2 fw-500">This section is optional. </span> -->
-                    <span class="mr-2 fw-500"
-                      >We may request this information anytime in case we need
+                    <span class="mr-2 fw-500">
+                      We may request this information anytime in case we need
                       to do ID checks.
                     </span>
                   </div>
@@ -488,20 +488,20 @@
                     @blur="onValueChange($event, 'ver_recommender_address')"
                   />
                 </a-form-model-item>
-                <a-form-model-item
-                >
+                <a-form-model-item>
                   <vue-tel-input
                     v-model="verification.ver_recommender_mobile_no"
                     @onInput="
                       onNumberChange($event, 'ver_recommender_mobile_no')
                     "
+                    :inputOptions="{showDialCode: true}"
                     id="ver_recommender_mobile_no"
+                    class="style-chooser"
                     :validCharactersOnly="true"
                     placeholder="Mobile Number"
                   ></vue-tel-input>
                   <span class="error-number" v-if="!isValidNumber"
-                    >Please write a valid mobile number</span
-                  >
+                    >Please write a valid mobile number</span>
                 </a-form-model-item>
                 <a-form-model-item
                   ref="ver_recommender_email"
@@ -585,8 +585,8 @@
         </span>
         <span
           >We accept photo/scans of a driving license, passport, national ID
-          card or residence permit issued in European Economic Are (EEA).</span
-        >
+          card or residence permit issued in European Economic Are (EEA).
+        </span>
       </div>
     </div>
     <div class="verification-msg" v-if="userData && userData.status == '3'">
@@ -606,8 +606,8 @@
         </span>
         <span
           >We accept photo/scans of a driving license, passport, national ID
-          card or residence permit issued in European Economic Are (EEA).</span
-        >
+          card or residence permit issued in European Economic Are (EEA).
+        </span>
       </div>
     </div>
   </div>
@@ -676,7 +676,7 @@ export default {
     onNumberChange(e) {
       this.isValidNumber = e.isValid;
       if (e.isValid) {
-        this.verification.ver_recommender_mobile_no = `${e.country.dialCode} ${this.verification.ver_recommender_mobile_no}`;
+        //this.verification.ver_recommender_mobile_no = `${e.country.dialCode} ${this.verification.ver_recommender_mobile_no}`;
         this.saveVerificationInfo();
       }
     },
@@ -1010,5 +1010,14 @@ input[type="file"]::-webkit-file-upload-button {
   border-radius: 20px;
   height: 35px;
 
+}
+
+.style-chooser::v-deep {
+  .vti__dropdown {
+    background-color: transparent !important;
+  }
+  .vti__input {
+    font-size: 1rem;
+  }
 }
 </style>

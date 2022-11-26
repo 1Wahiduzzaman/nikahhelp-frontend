@@ -695,7 +695,7 @@
                   v-model.lazy="preferenceData.pre_employment_status"
                   label="name"
                   :options="[
-                    { value: 'other', name: `Don't Mind` },
+                    { value: 'Don\'t Mind', name: `Don't Mind` },
                     ...employment_Statuses,
                   ]"
                 >
