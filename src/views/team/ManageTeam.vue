@@ -47,7 +47,7 @@
             />
             <JoinCreateTeam
               v-if="joinCreateTeamShow && teams.length < 5"
-              style="margin-bottom: 20px"
+              style="margin-bottom: 20px; padding: 12px 8px;"
               @joinATeam="
                 joinCreateTeamShow = false;
                 joinTeamShow = true;
@@ -59,6 +59,7 @@
             />
             <JoinTeam
               v-if="joinTeamShow"
+              style="padding: 12px 8px;"
               @cancel_button="
                 joinCreateTeamShow = true;
                 joinTeamShow = false;
@@ -67,6 +68,7 @@
             />
             <JoinTeamPassword
               v-if="joinTeamPassword"
+              style="padding: 12px 8px;"
               :team="joinTeamInfo"
               @cancel_button="cancelJoinButton()"
               @loadTeams="loadTeams"
@@ -75,6 +77,7 @@
             <CreateTeamPage1
                 id="create-container"
                 v-if="createTeamShow"
+              style="padding: 12px 8px;"
                 :addAs="addAs"
                 :teamCount="teams.length"
                 :joinedAsCandidate="joinedAsCandidate"

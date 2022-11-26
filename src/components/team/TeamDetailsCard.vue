@@ -95,7 +95,7 @@
 									/>
 								</div>
 								<div class="browse-btn">
-									<span class="file-input btn btn-file">
+									<span class="file-input  btn-file">
 										Browse
 										<input
 											type="file"
@@ -134,10 +134,10 @@
 						</div>
 
             <template slot="footer">
-              <a-button key="back" @click="edit_button_flag = false">
+              <a-button key="back" shape="round" @click="edit_button_flag = false">
                 Cancel
               </a-button>
-              <a-button key="submit" type="primary" :loading="teamUpdating" @click="handleTeamInfoChange">
+              <a-button key="submit" type="primary" shape="round" :loading="teamUpdating" @click="handleTeamInfoChange">
                 Update
               </a-button>
             </template>
@@ -207,7 +207,30 @@
 						/></span> -->
 					</button>
 				</div>
-				<div class="info-content">
+				<div class="info-content" style="cursor: pointer;" @click="showTeamInfo = true">
+					<a-modal 
+						:visible="showTeamInfo" 
+						closable="true" 
+						title="Team Info" 
+						@ok="showTeamInfo = false" 
+						@cancel="showTeamInfo = false" 
+						:ok-button-props="{ disabled: true }"
+						:cancel-button-props="{ disabled: true }"
+						>
+						<span class="fw-600">Team</span> <br> {{ teamData.name }} <br><br>
+						<span class="fw-600">Description</span> <br> {{ teamData.description }} <br><br>
+						<span class="fw-600">Team created by</span><br>
+						<span class="text-truncate"> {{ teamData && teamData.created_by ? teamData.created_by.full_name : '' }}</span>
+
+						<template slot="footer">
+							<a-button key="back" shape="round" @click="showTeamInfo=false">
+							  Cancel
+							</a-button>
+							<a-button key="submit" type="primary" shape="round" @click="showTeamInfo = false">
+							  Ok
+							</a-button>
+						</template>
+					</a-modal>
 					<!-- Team Name -->
 					<div class="member-name">
 						<p class="fw-600">{{ teamData.name }}</p>
@@ -223,10 +246,10 @@
 					<!-- Team Description -->
 					<div class="member-desc">
 						<a-tooltip :title="teamData.description">
-              <p class="break-long-words">
-                {{ teamData.description.substring(0, 80) }}
-              </p>
-            </a-tooltip>
+							<p class="break-long-words" style="max-width: 200px;">
+								{{ teamData.description.substring(0, 80) }}
+							</p>
+            			</a-tooltip>
 						<!-- Edit Button for team description -->
 						<!-- <button v-if="edit_button_flag">
 							<img
@@ -237,9 +260,9 @@
 						</button> -->
 					</div>
 					<!-- Team Created By -->
-					<div class="creator">
+					<div class="creator" style="max-width: 150px;">
 						Team Created by
-						<span class="fw-600"> {{ teamData && teamData.created_by ? teamData.created_by.full_name : '' }}</span>
+						<span class="fw-600 text-truncate"> {{ teamData && teamData.created_by ? teamData.created_by.full_name : '' }}</span>
 					</div>
 					<!-- Message Button for team -->
 					<!-- <div class="creator">
@@ -298,9 +321,9 @@
 			<!-- Add or Remove Member Button -->
 			<div class="member-action">
 				<div class="add-remove" :class="{'disabled-team': !turnOn && !tempActive}">
-					<button class="add-member" @click="handleAddMemberclick">
+					<!-- <button class="add-member" @click="handleAddMemberclick">
 						<img src="../../assets/icon/add.svg" alt="add" /> Add member
-					</button>
+					</button> -->
 <!--					<a-tooltip placement="top" title="Show team invitations">-->
 <!--						<img-->
 <!--							src="@/assets/icon/link-genarate-share.svg"-->
@@ -504,6 +527,9 @@
           </div>
         </div>
 
+				<button class="add-member" @click="handleAddMemberclick">
+					<img src="../../assets/icon/add.svg" alt="add" /> Add member
+				</button>
 				<a-tooltip placement="top" title="Click save to save your changes">
 					<button
 						class="btn btn-sm btn-success"
@@ -668,7 +694,7 @@ export default {
 			avatarSrc: "",
 
 			showTeamInvitation: false,
-
+	  		showTeamInfo: false,
 			memberInvitation: false,
 
 			changeRoleEnabled: false,
@@ -1925,7 +1951,11 @@ export default {
 				padding-right: 5px;
 				img {
 					width: 25px;
+					&:hover {
+						transform: scale(1.3);
+					}
 				}
+
 			}
 			.logo {
 				.img-logo {
@@ -2271,6 +2301,15 @@ export default {
 		}
 	}
 }
+.add-member {
+	display: flex;
+	color: #6159a8;
+	margin: 25px auto;
+	img {
+		width: 20px;
+		margin-right: 10px;
+	}
+}
 .member-name-td {
   width: 60%;
   @media (min-width: 992px) {
@@ -2354,6 +2393,12 @@ export default {
       text-decoration: underline;
     }
   }
+}
+
+.btn-file {
+	background: $bg-secondary !important;
+	color: white !important;
+	cursor: pointer !important;
 }
 .break-long-words {
   width: 190px;

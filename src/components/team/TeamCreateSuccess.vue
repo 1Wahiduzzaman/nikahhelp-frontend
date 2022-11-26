@@ -9,7 +9,7 @@
               alt=""
           />
           <a-col :span="24">
-            <span class="create-team-message">Done, You're successfully create a team</span>
+            <span class="create-team-message mt-2">Done, You're successfully create a team</span>
           </a-col>
         </a-col>
       </a-row>
@@ -26,7 +26,7 @@
         <a-col :span="24">
           <button class="sub-btn">
 							<span class="sub-btn-label"
-              ><a :href="link" class="text-white">Subscribe Now</a></span
+              ><a :href="link" class="text-white">Subscribe Now</a></span 
               >
           </button>
         </a-col>
@@ -48,14 +48,14 @@
             >
         </a-col>
       </a-row>
-      <a-row class="text-center mt-2">
+      <!-- <a-row class="text-center mt-2">
         <a-col :span="24">
 						<span class="disclaimer"
             >* Without choosing any plan this team will be automatically
 							deleted after <strong>3 days</strong></span
             >
         </a-col>
-      </a-row>
+      </a-row> -->
     </div>
   </div>
 </template>
@@ -110,6 +110,7 @@ export default {
 }
 
 .sub-btn {
+  background: #e22077;
   width: 200px;
   height: 40px;
   color: #e22077;
@@ -120,6 +121,7 @@ export default {
 .sub-btn:hover {
   background-color: #e22077;
   color: #FFFFFF;
+  transform: scale(1.1);
 }
 .sub-btn-label {
   color: white;

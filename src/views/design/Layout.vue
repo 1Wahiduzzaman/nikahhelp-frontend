@@ -14,7 +14,7 @@
         :trigger="null"
         collapsible
         :collapsedWidth="28"
-        width="210"
+        width="250"
         breakpoint="sm"
         @breakpoint="responsiveToggle"
       >

@@ -1,13 +1,5 @@
 <template>
   <div class="mt-4 box">
-    <div class="px-4">
-      <h4 class="fs-14">Team ID: #{{ team.team_id }}</h4>
-      <div class="d-flex align-items-center">
-        <h4 class="fs-16">To activate team add a member</h4>
-        <a-icon type="info-circle" class="ml-2 fs-12" />
-      </div>
-    </div>
-
 <!--    <div class="dropdowns d-flex mt-4 justify-content-center">-->
 <!--      <a-tooltip-->
 <!--          placement="top"-->
@@ -69,11 +61,19 @@
 <!--      </a-dropdown>-->
 <!--    </div>-->
 
-    <div class="mt-4 px-4">
-      <h6 class="text-header-black">Now you can add member to your team</h6>
+    <div class="px-4" style="margin-top:180px;">
+      <h6 style="color: #aaaaaa;">Now you can add member to your team</h6>
       <button class="btn add-member" @click="toggleAddMemberbox()" :disabled="isSuccess">
         Add member
       </button>
+    </div>
+
+    <div class="px-4" style="margin-top: 150px;">
+      <h4 style="font-size: 9px !important; color: #aaaaaa;">Team ID: #{{ team.team_id }}</h4>
+      <!-- <div class="d-flex align-items-center">
+        <h4 class="fs-12">To activate team add a member</h4>
+        <a-icon type="info-circle" class="ml-2 fs-12" />
+      </div> -->
     </div>
 
     <div class="position">
@@ -268,15 +268,15 @@ export default {
 .box {
   min-height: 420px;
   .px-4 {
-    .fs-14 {
+    .fs-10 {
       color: #aaaaaa;
     }
     .d-flex {
-      .fs-16 {
+      .fs-12 {
         color: #aaaaaa;
       }
       .fs-12 {
-        margin-top: -6px;
+        margin-top: 6px;
       }
     }
   }
@@ -326,14 +326,14 @@ export default {
   display: flex;
   justify-content: center;
   width: 100%;
-  background: #522e8e;
+  background: $bg-success;
   color: #FFFFFF;
   border-radius: 30px;
   border: 1px solid #FFFFFF;
   &:hover {
     background: #FFFFFF;
-    color: #522e8e;
-    border: 1px solid #522e8e;
+    color: $bg-success;
+    border: 1px solid $bg-success;
   }
   &:focus {
     outline: none;

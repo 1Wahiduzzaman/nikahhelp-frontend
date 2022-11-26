@@ -277,12 +277,16 @@ export default {
     .list-item > a {
       padding: 8px 15px;
       display: block;
-      transition: all 0.4s;
+      transition: all 0.4s, box-shadow 0s;
+      margin-bottom: 5px;
+      border: 1px solid #fff;
+      border-radius: 20px;
 
       &:hover {
         background: $bg-secondary;
         color: $color-white;
         text-decoration: none;
+        box-shadow: 1.5px 1.5px 1.5px rgb(177, 171, 171, 0.5);
         img {
           filter: brightness(0) invert(1);
         }
@@ -296,6 +300,7 @@ export default {
       background: $bg-secondary;
       color: $color-white;
       text-decoration: none;
+      box-shadow: 1.5px 1.5px 1.5px rgb(177, 171, 171, 0.7);
       img {
         filter: brightness(0) invert(1);
       }

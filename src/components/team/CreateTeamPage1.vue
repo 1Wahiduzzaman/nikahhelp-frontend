@@ -25,9 +25,11 @@
             <span class="text-danger fs-12" v-if="in_progress && !file">Please upload team logo</span>
           </a-col>
           <a-col :span="24" class="mt-2">
+            <label for="team-name" class="input-label fs-10">Team name:</label>
             <a-input
                 v-model="team.name"
                 size="large"
+                id="team-name"
                 class="team-name-input"
                 placeholder="Team name"
                 autoComplete="nope"
@@ -35,7 +37,9 @@
             <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.name">Team name required</span>
           </a-col>
           <a-col class="mt-2" :span="24">
+            <label for="team-description" class="input-label fs-10">Team description:</label>
             <a-textarea
+                id="team-description"
                 class="team-description team-name-input resize-none fs-16"
                 placeholder="Team description"
                 :auto-size="{ minRows: 3, maxRows: 5 }"
@@ -45,7 +49,7 @@
             />
             <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.description">Team description required</span>
           </a-col>
-          <a-col class="mt-2" :span="24">
+          <!-- <a-col class="mt-2" :span="24">
             <a-input
                 v-model="team.password"
                 size="large"
@@ -69,12 +73,44 @@
             />
             <span class="text-danger mt-2 ml-2 fs-12" v-if="team.password && team.confirm_password && team.password !== team.confirm_password">Password doesn't match.</span>
             <span v-if="team.confirm_password && team.confirm_password.length !== 4" class="fs-12 text-danger ml-2">Password must be 4 digits</span>
+          </a-col> -->
+          <a-col class="mt-2" :span="24">
+            <label for="" class="input-label fs-10">Type team password:</label>
+            <div class="d-flex justify-content-around">
+              <input v-for="i in 4" ref="teamPassword" :key="i" type="password" class="password-input-box text-center" maxlength="1" @keydown.prevent="handlePasswordInput($event, i, 'teamPassword')">
+              <div 
+                class="password-input-box d-flex justify-content-center align-items-center" 
+                style="cursor: pointer; background-color: #6159a7;"
+                @click="showPassword =! showPassword; handleShowPassword('teamPassword');"
+              >
+                <v-icon color="#fff" v-if="!showPassword" small>mdi-eye-outline</v-icon>
+                <v-icon color="#fff" v-else small>mdi-eye-off-outline</v-icon>
+              </div>
+            </div>
+            <span class="fs-12 text-danger ml-2 fs-12" v-if="showPasswordError">Password must be a number</span>
           </a-col>
           <a-col class="mt-2" :span="24">
-            <a-tooltip>
+            <label for="" class="input-label  fs-10">Re-type team password:</label>
+            <div class="d-flex justify-content-around">
+              <input v-for="i in 4" ref="reTeamPassword" :key="i" type="password" class="password-input-box text-center" maxlength="1" @keydown.prevent="handlePasswordInput($event, i, 'reTeamPassword')">
+              <div 
+                class="password-input-box d-flex justify-content-center align-items-center" 
+                style="cursor: pointer; background-color: #6159a7;"
+                @click="showRePassword =! showRePassword; handleShowPassword('reTeamPassword');"
+              >
+                <v-icon color="#fff" v-if="!showRePassword" small>mdi-eye-outline</v-icon>
+                <v-icon color="#fff" v-else small>mdi-eye-off-outline</v-icon>
+              </div>
+            </div>
+            <span class="text-danger mt-2 ml-2 fs-12" v-if="team.password && team.confirm_password && team.password !== team.confirm_password">Password doesn't match.</span>
+            <span class="fs-12 text-danger ml-2 fs-12" v-if="showPasswordError">Password must be a number</span>
+          </a-col>
+          <a-col class="mt-2" :span="24">
+            <a-tooltip style="width:100%;">
               <template slot="title">
                 Joining as
               </template>
+              <label for="" class="input-label  fs-10">Joining as:</label>
               <a-select
                   size="large"
                   placeholder="Add as a"
@@ -91,10 +127,11 @@
             </a-tooltip>
           </a-col>
           <a-col class="mt-2" :span="24" v-if="addAs != 'Candidate'">
-            <a-tooltip>
+            <a-tooltip style="width:100%;">
               <template slot="title">
                 Relationship with candidate
               </template>
+              <label for="" class="input-label  fs-10">Relationship with candidate:</label>
               <a-select
                   size="large"
                   placeholder="Relationship with candidate"
@@ -132,13 +169,13 @@
         <img :src="logoBobUrl" v-if="logoBobUrl" alt="info image" class="bob-logo" />
         <img src="../../assets/info-img.png" v-else alt="info image" />
         <p class="mt-2">
-          You can choose an avatar or <br> browse an image from local drive
+          You can <!--choose an avatar or <br>--> browse an image from local drive
         </p>
         <div class="d-flex justify-content-center">
-          <a-button type="primary" class="bg-brand br-20">
+          <!-- <a-button type="primary" class="bg-brand br-20">
             Avatar
-          </a-button>
-          <a-button type="primary" class="ml-4 bg-primary br-20" @click="uploadFile()">
+          </a-button> -->
+          <a-button type="primary" class="bg-primary br-20" @click="uploadFile()">
             Browse
           </a-button>
           <input
@@ -176,6 +213,9 @@ export default {
         password: '',
         confirm_password: ''
       },
+      showPassword: false,
+      showRePassword: false,
+      showPasswordError: false,
       in_progress: false,
       file: '',
       logoBobUrl: null,
@@ -264,6 +304,47 @@ export default {
 			}
 			return validation_status;
 		},
+    handlePasswordInput(e, i, passwordType){
+      let allowedChars = '1234567890';
+      if(e.key === "Backspace") {
+        if(this.$refs[passwordType][i-1].value) {
+          this.$refs[passwordType][i-1].value = "";
+        } else if(i >= 2) {
+          this.$refs[passwordType][i-2].focus();
+        }
+      } else if (allowedChars.includes(e.key)) {
+        this.$refs[passwordType][i-1].value = e.key;
+        if(i < 4) {
+          this.$refs[passwordType][i].focus();
+        }
+      } else if(!allowedChars.includes(e.key)){
+        this.showPasswordError = true;
+        setTimeout(() => {
+          this.showPasswordError = false;
+        }, 1500);
+      }
+
+      let isPasswordCompleted = this.$refs[passwordType].every(element => element.value !== "");
+      if(isPasswordCompleted) {
+        if(passwordType === 'teamPassword'){
+          this.team.password = "";
+          this.$refs[passwordType].forEach(element => {
+            this.team.password += element.value;
+          });
+          console.log(this.team.password, 'password');
+        } else {
+          this.team.confirm_password = "";
+          this.$refs[passwordType].forEach(element => {
+            this.team.confirm_password += element.value;
+          });
+        }
+      }
+    },
+    handleShowPassword(passwordType) {
+      this.$refs[passwordType].forEach(element => {
+        element.type = element.type == 'text' ? 'password' : 'text';
+      })
+    },
 		goNext() {
       // this.step = 2;
 			// let validation_status = this.validate();
@@ -356,6 +437,29 @@ export default {
 }
 .bg-brand {
   background: #E51F76 !important;
+  border: 1px solid $border-brand !important;
+
+  &:hover {
+    border: 1px solid $border-brand !important;
+  }
+}
+
+.bg-primary {
+  background: $bg-primary !important;
+
+  &:hover {
+    background: $bg-primary !important;
+    opacity: 0.9 !important;
+  }
+
+  &:focus {
+    background: $bg-primary !important;
+  }
+}
+
+.input-label {
+  margin: 0px 0px 1px 2px; 
+  color: rgb(0, 0, 0, 0.5);
 }
 .fs-33 {
   font-size: 33px;
@@ -899,6 +1003,19 @@ export default {
 }
 .resize-none {
   resize: none;
+}
+
+.password-input-box {
+  height: 40px;
+  //width: 100px;
+  width: 40px;
+  border: 1px solid #8f8f8f;
+  border-radius: 5px;
+
+  &:hover {
+    border-color: #b7deff;
+  }
+  
 }
 .add-team-image:hover {
   color: $color-brand;
