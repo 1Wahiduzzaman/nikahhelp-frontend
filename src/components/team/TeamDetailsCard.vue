@@ -1991,6 +1991,9 @@ export default {
 						margin-top: 7px;
 						background: url("~@/assets/three-dots.png") no-repeat right center;
 					}
+					&:hover {
+						transform: scale(1.2);
+					}
 				}
 
 				.dropdown-menu {
