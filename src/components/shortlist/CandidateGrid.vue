@@ -236,7 +236,7 @@ export default {
       );
     },
     actionShortlist() {
-      // let loggedUser = JSON.parse(localStorage.getItem("user"));
+      let loggedUser = JSON.parse(localStorage.getItem("user"));
       if(parseInt(loggedUser.status) !== 3) {
         this.showError("Your account is not verified");
         return;
