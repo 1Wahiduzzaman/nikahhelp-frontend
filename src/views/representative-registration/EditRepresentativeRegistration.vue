@@ -107,12 +107,13 @@
 						@agree="onAgree($event)"
 						v-if="!showAgreement"
 						ref="VerificationAgreement"
+						class="mb-6"
 				/>
 			</div>
 			<!-- <div class="steps-content" v-if="current == 3">
 				<Review :showAgreement="showAgreement" @toggleStep="toggleStep" />
 			</div> -->
-			<div class="steps-action text-right pb-5 clearfix bottom-padding">
+			<div class="steps-action text-right pb-5 mt-6 clearfix bottom-padding">
 				<a-button
 						:disabled="!enabledNextBtn"
 						:class="{
@@ -421,7 +422,7 @@ export default {
 				}).every((x) => x !== undefined && x !== null && x !== "");
 				if (
 						!this.showAgreement &&
-						response.data.data.user.is_uplaoded_doc == "0"
+						response.data.data.is_uplaoded_doc == "0"
 				) {
 					this.representativeDetails.verification = {
 						...this.representativeDetails.verification,
@@ -530,7 +531,7 @@ export default {
 					let {
 						mobile_country_code,
 						mobile_number,
-						per_current_residence_country,
+						// per_current_residence_country,
 						address_1,
 						address_2,
 						per_permanent_country,
@@ -541,7 +542,7 @@ export default {
 					let personal = {
 						mobile_country_code,
 						mobile_number,
-						per_current_residence_country,
+						// per_current_residence_country,
 						address_1,
 						address_2,
 						per_permanent_country,
