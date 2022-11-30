@@ -112,11 +112,11 @@
         </div>
 
         <div class="container2">
-          <h5>Still need help? Can't find what you're looking for?</h5>
+          <h5 style="text-decoration: underline; cursor: pointer;" v-if="!showContactForm" @click="showContactForm=true">Still need help? Can't find what you're looking for?</h5>
           <br />
 
-          <h4>Contact the MatrimonyAssist team</h4>
-          <p>
+          <h4 v-if="showContactForm">Contact the MatrimonyAssist team</h4>
+          <p v-if="showContactForm">
             Please use the form below to get in touch. Please provide as much
             detail as you can. We aim to get back to you within two working
             days. However, at busy times this may take a little longer.
@@ -125,7 +125,7 @@
       </section>
 
       <!-- Contact form  -->
-      <div class="container1">
+      <div class="container1" v-if="showContactForm">
         <h4>SEND US AN EMAIL</h4>
         <form action="">
           <label for="query">What is your enquiry regarding?</label>
@@ -231,6 +231,7 @@ export default {
 
 	data() {
 		return {
+      showContactForm: false,
 			firstname: '',
 			lastname: '',
 			email: '',
