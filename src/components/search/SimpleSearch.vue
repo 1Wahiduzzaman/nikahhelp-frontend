@@ -349,7 +349,7 @@
 								<div>
 									<a id="topper" class="d-noe" ref="top" href="#top"></a>
 									<slot :search="resetSearch"></slot>
-									<button @click="$refs.advDiag.openDiag()" class="btn-adv-search">Advanced Search</button>
+									<button v-if="false" @click="$refs.advDiag.openDiag()" class="btn-adv-search">Advanced Search</button>
 								</div>
 							</div>
 							<select-team-modal
