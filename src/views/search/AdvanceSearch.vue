@@ -110,6 +110,7 @@ import JwtService from "@/services/jwt.service";
 import { createModalMixin, openModalRoute } from "@/plugins/modal/modal.mixin";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import TeamOffRedirection from "../../components/redirection/TeamOffRedirection";
+import ApiService from '../../services/api.service';
 
 export default {
   name: "AdvanceSearch",
@@ -143,6 +144,7 @@ export default {
       error: null,
       collapsed: false,
       componentName: "CandidateProfiles",
+      redirection: false,
     };
   },
 
@@ -247,6 +249,9 @@ export default {
             removePrevious: true
           }       
         );
+        if(res.data.data.length) {
+          this.sendSiteVisitData(res.data.data);
+        }
         this.setLoading(false);
         if (res == undefined) {
           this.setProfiles([]);
@@ -259,6 +264,16 @@ export default {
         this.setLoading(false);
         console.log(err);
       }
+    },
+    async sendSiteVisitData(viewedCandidates) {
+      console.log(viewedCandidates, 'frm sendsite visit data');
+      let teamsArray = [];
+      viewedCandidates.forEach(i => teamsArray.push(i.team_id));
+      let payload = {
+        "from_team_id": JwtService.getTeamIDAppWide(),
+        "to_team_id": teamsArray
+      }
+      await ApiService.post('v1/site-visit', payload);
     },
     responsiveToggle() {
       this.collapsed = false;
