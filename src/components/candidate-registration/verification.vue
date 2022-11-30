@@ -316,13 +316,20 @@
                       />
                     </div>
                   </div>
-                  <input
+                  <!-- <input
                     type="file"
                     class="input-image"
                     name="avatar"
                     v-if="!verification.ver_image_front"
                     @change="getFrontPage"
-                  />
+                  /> -->
+                  <label for="upload-front-side" class="upload-label" v-if="!verification.ver_image_front">
+                    Upload
+                    <input
+                     v-if="!verification.ver_image_front"
+                     type="file" class="input-image" id="upload-front-side" name="avatar"
+                    @change="getFrontPage" />
+                  </label>
                   <a-button
                     type="primary"
                     style="width: 185px"
@@ -398,13 +405,18 @@
                       />
                     </div>
                   </div>
-                  <input
+                  <!-- <input
                     type="file"
                     class="input-image"
                     v-if="!verification.ver_image_back"
                     name="avatar"
                     @change="getBackPage"
-                  />
+                  /> -->
+                  <label for="upload-back-side" class="upload-label" v-if="!verification.ver_image_back">
+                    Upload
+                    <input v-if="!verification.ver_image_back" type="file" class="input-image" id="upload-back-side" name="avatar"
+                    @change="getBackPage" />
+                  </label>
                   <a-button
                     type="primary"
                     style="width: 185px"
@@ -610,9 +622,11 @@ export default {
         .catch((error) => {});
     },
     saveImageVerificationInfo(image) {
+      this.$emit('turnOnBtnLoader');
       this.$store
         .dispatch("saveImageVerificationInfo", image)
         .then((data) => {
+          this.$emit('turnOffBtnLoader');
           this.verification.ver_image_back =
             data.data.data.verification.ver_image_back;
           this.verification.ver_image_front =
@@ -680,6 +694,7 @@ export default {
     clearImg(action) {
       switch (action) {
         case "back":
+          this.$emit('disableNextBtn');
           this.imageBack = "";
           this.verification.ver_image_back = "";
           this.$emit("valueChange", {
@@ -688,6 +703,7 @@ export default {
           });
           break;
         case "font":
+          this.$emit('disableNextBtn');
           this.imageFont = "";
           this.verification.ver_image_front = "";
           this.$emit("valueChange", {
@@ -746,21 +762,23 @@ input[type="file"] {
   height: 34px;
   overflow: hidden;
   border-radius: 5px !important;
+  display: none;
 }
 
-input[type="file"]:before {
+.upload-label {
   width: 180px;
   height: 32px;
   font-size: 16px;
   line-height: 32px;
-  content: "Upload";
   display: inline-block;
   color: white;
   background: #8781bd;
   border: 1px solid #98a0e2;
+  border-radius: 5px;
   padding: 0 10px;
   text-align: center;
   font-family: Helvetica, Arial, sans-serif;
+  cursor: pointer;
 }
 
 #checkIcon {
@@ -768,9 +786,9 @@ input[type="file"]:before {
   margin-right: 5px;
 }
 
-input[type="file"]::-webkit-file-upload-button {
-  visibility: hidden;
-}
+//input[type="file"]::-webkit-file-upload-button {
+//  visibility: hidden;
+//}
 .close-icon {
   display: grid;
   place-content: center;
