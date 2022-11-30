@@ -778,7 +778,7 @@ div[data-unique="second_one"] >  .ant-select-selection{
 .cancel-button:hover {
     background-color: $bg-brand;
     color: #FFFFFF !important;
-    border: 1px solid #FFFFFF;
+    border: 1px solid $border-brand !important;
 }
 .support-tab > .v-item-group {
     width: 100% !important;
