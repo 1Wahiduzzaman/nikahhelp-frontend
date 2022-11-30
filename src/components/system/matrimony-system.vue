@@ -13,7 +13,7 @@
         class="d-flex justify-center mb-4 mt-8"
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-icon large  v-bind="attrs" v-on="on" class="question-mark" color="white">
+          <v-icon large  v-bind="attrs" v-on="on" class="question-mark" color="#6159a7">
             mdi-help-circle
           </v-icon>
         </template>
@@ -44,41 +44,52 @@
               <div class="text-center">{{ contentGuidance }}</div>
             </v-card-text>
             
-            <v-divider></v-divider>
+            <!-- <v-divider light></v-divider> -->
+            <div class="w-75 text-center mx-auto"><hr class="divider" style="margin: 14px auto;"></div>
 
-            <v-card-actions class="justify-end">
+            <v-card-actions class="justify-content-between">
+              <div>
+                <v-btn
+                  rounded="true"
+                  color="#E51F76"
+                  class="text-white"
+                >
+                  Watch tutorial
+                </v-btn>
+                <v-card-actions></v-card-actions>
+              </div>
               
-              <v-btn
-                v-if="currentGuide > 0 && currentGuide <= 5 "
-                @click="changeContentPrev"
-                rounded="true"
-                color="#6159a7"
-                class="mr-3 text-white"
-              >
-                prev
-              </v-btn>
-              <v-btn
-                v-if="currentGuide <= 4"
-                @click="changeContent"
-                rounded="true"
-                color="#6159a7"
-                class="text-white"
-              >
-                next
-              </v-btn>
-
-              <v-btn
-                v-if="currentGuide === 5"
-                @click="goToFirstGuide(); dialog.value=false;"
-                rounded="true"
-                color="#6159a7"
-                class="text-white"
-              >
-                finish
-              </v-btn>
-            </v-card-actions>
-            <v-card-actions class="justify-end">
-              
+              <div>
+                <v-btn
+                  v-if="currentGuide > 0 && currentGuide <= 5 "
+                  @click="changeContentPrev"
+                  rounded="true"
+                  color="#6159a7"
+                  class="mr-2 text-white"
+                >
+                  prev
+                </v-btn>
+                <v-btn
+                  v-if="currentGuide <= 4"
+                  @click="changeContent"
+                  rounded="true"
+                  color="#6159a7"
+                  class="text-white"
+                >
+                  next
+                </v-btn>
+  
+                <v-btn
+                  v-if="currentGuide === 5"
+                  @click="goToFirstGuide(); dialog.value=false;"
+                  rounded="true"
+                  color="#3ab549"
+                  class="text-white"
+                >
+                  finish
+                </v-btn>
+                <v-card-actions></v-card-actions>
+              </div>
             </v-card-actions>
           </v-card>
         </template>
@@ -363,9 +374,9 @@ export default {
   right: 0;
   // margin-right: 4rem;
   z-index: 9;
-  border-radius: 60% 0 0 0;
-  background-color: #522e8e;
-  width: 5rem;
+  //border-radius: 60% 0 0 0;
+  //background-color: #522e8e;
+  //width: 5rem;
 
   @media (max-width: 575px) {
     top: 13px;
@@ -376,14 +387,19 @@ export default {
 
   .question-mark {
     position: absolute;
-    right: 0.7rem;
-    top: 0.4rem;
-
+    right: 0.5em;
+    top: -.5rem;
+    box-shadow: 0 0 4px 1.3px rgb(0 0 0 / 30%);
+    border-radius: 50%;
     @media (max-width: 575px) {
       font-size: 18px !important;
-      background: #522e8e;
-      color: white;
+      right: 0.9rem;
+      top: 0.4rem;
+      color: white !important;
     }
   }
+}
+.divider {
+  border-top: 1px solid rgb(0, 0, 0, 0.06);
 }
 </style>
