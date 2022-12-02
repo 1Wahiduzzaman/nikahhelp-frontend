@@ -16,36 +16,92 @@
           <v-container fluid>
             <v-row>
               <v-col cols="12">
-                <div class="flex justify-center">
+                <div class="d-flex justify-content-between align-items-center buttons-div">
+                  <OutlinedButton
+                    class="mobile-margin w-auto buttons-lg"
+                    :name="copyProfileText"
+                    customEvent="onClickCopyText"
+                    @onClickCopyText="onClickCopyText"
+                  />
+                  <OutlinedButton
+                    class="mobile-margin w-auto buttons-lg"
+                    name="Team Info"
+                    customEvent="onClickTeamDetail"
+                    @onClickTeamDetail="onClickTeamDetail"
+                  />
                   <ButtonComponent
-                    class="mr-2"
+								    class="mobile-margin"
                     iconHeight="14px"
                     :isSmall="true"
                     title="Gallery"
                     icon="/assets/icon/gallery.svg"
                     customEvent="openGallery"
-                    :isBlock="false"
+                    :isBlock="true"
+                    :responsive="false"
                     @onClickButton="onClickButton"
                   />
                   <ButtonComponent
-                    class="mr-2"
+                    class="mobile-margin"
                     iconHeight="14px"
                     :isSmall="true"
                     title="EditProfile"
                     icon="/assets/icon/edit_step.svg"
                     customEvent="editProfile"
-                    :isBlock="false"
+                    :isBlock="true"
+                    :responsive="false"
                     @onClickButton="onClickButton"
                   />
                   <ButtonComponent
+                    class="mobile-margin"
                     iconHeight="14px"
                     :isSmall="true"
                     title="View as public"
                     icon="/assets/icon/edit_step.svg"
                     customEvent="viewAsPublic"
-                    :isBlock="false"
+                    :isBlock="true"
+                    :responsive="false"
                     @onClickButton="onClickButton"
                   />
+                  <OutlinedButton
+                    class="mobile-margin w-auto buttons-md"
+                    :name="copyProfileText"
+                    customEvent="onClickCopyText"
+                    @onClickCopyText="onClickCopyText"
+                  />
+                  <OutlinedButton
+                    class="mobile-margin w-auto buttons-md"
+                    style="margin-bottom: 0px !important;"
+                    name="Team Info"
+                    customEvent="onClickTeamDetail"
+                    @onClickTeamDetail="onClickTeamDetail"
+                  />
+
+                  <div class="text-center custom-divider mb-2"><hr style="margin: 6px auto; width: 250px;"></div>
+
+                  <div class="d-flex">
+                    <a
+                      class="navigate mobile-margin"
+                      href="#family-information"
+                    >
+                      <div class="navigate-name text-center">
+                        Family Info
+                        <img src="/assets/icon/navigate-bottom.svg" alt="">
+                      </div>
+                    </a>
+                  </div>
+
+                  <div class="d-flex">
+                    <a
+                      class="navigate mobile-margin"
+                      href="#my-partner-pref"
+                    >
+                      <div class="navigate-name text-center">
+                        My Pref
+                        <img src="/assets/icon/navigate-bottom.svg" alt="">
+                      </div>
+                    </a>
+                  </div>
+
                 </div>
               </v-col>
               <!-- <v-col>
@@ -59,40 +115,6 @@
                       @onClickButton="onClickButton"
                     />
                   </v-col> -->
-            </v-row>
-          </v-container>
-          <!-- Team name and profile link -->
-          <v-container fluid>
-            <v-row class="pt-5">
-              <v-col cols="12" md="6" class="pt-0">
-                <div class="d-flex justify-space-between d-md-none">
-                  <OutlinedButton
-                    :name="copyProfileText"
-                    customEvent="onClickCopyText"
-                    @onClickCopyText="onClickCopyText"
-                  />
-                  <OutlinedButton
-                    name="Team Information"
-                    customEvent="onClickTeamDetail"
-                    @onClickTeamDetail="onClickTeamDetail"
-                  />
-                </div>
-                <div class="d-none d-md-flex">
-                  <OutlinedButton
-                    :name="copyProfileText"
-                    customEvent="onClickCopyText"
-                    @onClickCopyText="onClickCopyText"
-                  />
-                  <OutlinedButton
-                    name="Team Information"
-                    customEvent="onClickTeamDetail"
-                    @onClickTeamDetail="onClickTeamDetail"
-                  />
-                </div>
-              </v-col>
-              <v-col class="pt-0" cols="12" md="6">
-                <Scroller />
-              </v-col>
             </v-row>
           </v-container>
           <v-container fluid>
@@ -328,11 +350,11 @@
               </v-col>
             </v-row>
           </v-container>
-          <v-container fluid>
+          <v-container fluid v-if="false">
             <div class="review-edit mt-5">
               <div class="review-edit-label">My Uploaded Image</div>
               <div class="row">
-                <div class="col-12 col-md-6 mb-4">
+                <!-- <div class="col-12 col-md-6 mb-4">
                   <div class="profile-img text-center">
                     <img
                       v-viewer
@@ -352,6 +374,24 @@
                       class="contain"
                     />
                     <p class="text-center">Main image</p>
+                  </div>
+                </div> -->
+
+                <div v-viewer="{movable: false, title: false, scalable: false, rotatable: false}" class="col-12 row my-4 ms-1">
+                  <div
+                    class="col-md-6 mb-sm-0 mb-2 flex flex-column align-items-center profile-img" 
+                    v-for="src in [candidateData.personal.per_avatar_url, candidateData.personal.per_main_image_url]" 
+                    :key="src"
+                  >
+                      <img
+                        :src="src"
+                        alt="img"
+                        height="250"
+                        width="200"
+                        style="cursor: pointer;"
+                      />
+                      <p class="text-center" v-if="src == candidateData.personal.per_avatar_url">Avatar</p>
+                      <p class="text-center" v-if="src == candidateData.personal.per_main_image_url">Main Image</p>
                   </div>
                 </div>
 
@@ -493,9 +533,9 @@ export default {
     },
     openGallery() {
       this.images = [];
-      let images = this.candidateData.other_images;
+      let images = [this.candidateData.other_images, this.candidateData.personal.per_avatar_url, this.candidateData.personal.per_main_image_url]
       if (images && images.length > 0) {
-        images.map((i) => this.images.push(i.image_path));
+        images.map((i) => this.images.push(i));
         this.show();
       } else {
         this.$error({
@@ -805,5 +845,93 @@ ul {
     margin-top: 10px;
     font-weight: bolder;
   }
+}
+
+.buttons-div::v-deep {
+  .v-btn:not(.v-btn--round).v-size--small {
+    min-width: 155px;
+  }
+
+  @media(max-width: 1400px) {
+    flex-direction: column;
+
+    .mobile-margin {
+			margin-bottom: 6px !important;
+			min-width: 250px !important;
+		}
+  }
+
+  .mobile-margin {
+    min-width: 155px;
+  }
+
+  .custom-divider {
+    margin: 3px 0px !important;
+    
+    @media (min-width: 1400px) {
+      display: none;
+    }
+
+    hr {
+			border-top: 1px solid rgb(0, 0, 0, 0.3);
+		}
+  }
+  .navigate {
+    background: #6158a7;
+    color: #fff !important;
+    border-radius: 20px;
+    border: 1px solid #6158a7;
+    font-size: 12px;
+    height: 27px;
+    padding: 4px 5px;
+    transition: .5s;
+
+    .navigate-name {
+      color: white;
+    }
+
+    img {
+      margin-bottom: 1px;
+      height: 13px;
+    }
+    &:hover {
+      box-shadow: 0px 1px 6px #787474;
+      border: 1px solid white;
+      background: #6158a7;
+    }
+  }
+  .navigate + .navigate {
+    margin-left: 0px;
+  }
+
+  .v-custom {
+    text-transform: capitalize;
+    background: #6158a7;
+    color: #fff !important;
+    img {
+      filter: brightness(0) invert(1);
+    }
+    &:hover {
+        box-shadow: 0px 1px 6px #787474;
+        border: 1px solid white !important;
+    }
+  }
+
+  @media(min-width: 1400px) {
+    .v-btn:not(.v-btn--round).v-size--small {
+      margin: 2px 0px;
+    }
+  }
+
+  @media(min-width: 1400px) {
+		.buttons-md {
+		  display: none !important;
+		}
+	}
+	@media(max-width: 1400px) {
+		.buttons-lg {
+		  display: none !important;
+		}
+	}
 }
 </style>

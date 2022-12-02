@@ -14,65 +14,73 @@
 						"
 					/>
 					<div class="flex justify-space-between flex-wrap mt-10">
-						<div v-if="isOwnProfile" class="flex justify-content-center">
-							<ButtonComponent
-								class="mb-3 mr-2"
-								iconHeight="14px"
-								:isSmall="true"
-								title="Gallery"
-								customEvent="openGallery"
-								icon="/assets/icon/gallery.svg"
-								@onClickButton="onClickButton"
-							/>
-							<ButtonComponent
-								class="mb-3"
-								iconHeight="14px"
-								:isSmall="true"
-								title="Close public view"
-								icon="/assets/icon/close.svg"
-								@onClickButton="goBackToProfileView"
-							/>
+						<div 
+							class="d-flex align-items-center justify-content-center close-public-view mobile-margin mb-2 w-100"
+							@click="goBackToProfileView"
+							v-if="isOwnProfile"
+						>
+							<v-icon color="#E51F76" small>mdi-close</v-icon> <span style="text-decoration: underline;">Close Public View</span>
 						</div>
-						
+						<div class="buttons-div flex justify-content-between align-items-center">
+							<OutlinedButton
+								class="mobile-margin w-auto buttons-lg"
+								:name="copyProfileText"
+								customEvent="onClickCopyText"
+								@onClickCopyText="onClickCopyText"
+							/>
+							<OutlinedButton 
+								class="mobile-margin w-auto buttons-lg"
+								name="Team Info"
+								customEvent="onClickTeamDetail"
+								@onClickTeamDetail="onClickTeamDetail"
+							/>
 
-						<template v-else>
 							<ButtonComponent
-								class="mb-3 mr-2"
+								class="mobile-margin"
 								iconHeight="14px"
 								:isSmall="true"
 								title="Gallery"
 								customEvent="openGallery"
+								:responsive="false"
 								icon="/assets/icon/gallery.svg"
 								@onClickButton="onClickButton"
 							/>
 							<ButtonComponent
+								class="mobile-margin"
+								backgroundColor="#3ab549"
 								iconHeight="14px"
 								:isSmall="true"
 								:title="candidateData.status.is_connect ? 'Disconnect' : 'Connect'"
 								icon="/assets/icon/connect-s.svg"
 								:customEvent="candidateData.status.is_connect ? 'removeConnection' : 'addConnection'"
+								:responsive="false"
 								@onClickButton="onClickButton"
 							/>
 							<ButtonComponent
+								class="mobile-margin"
 								iconHeight="14px"
 								:isSmall="true"
 								:title="candidateData.status.is_short_listed ? 'Unlist' : 'ShortList'"
 								icon="/assets/icon/star-fill-secondary.svg"
 								:customEvent="candidateData.status.is_short_listed ? 'removeShortList' : 'addShortList'"
+								:responsive="false"
 								@onClickButton="onClickButton"
 							/>
 							<ButtonComponent
+								class="mobile-margin"
 								iconHeight="14px"
 								:isSmall="true"
 								:title="candidateData.status.is_teamListed ? 'Unlist Team' : 'TeamList'"
 								icon="/assets/icon/team.svg"
 								:customEvent="candidateData.status.is_teamListed ? 'removeTeam' : 'addTeam'"
+								:responsive="false"
 								@onClickButton="onClickButton"
 							/>
 							<ButtonComponent
+								class="mobile-margin"
 								iconHeight="14px"
 								:isSmall="true"
-								:responsive="true"
+								:responsive="false"
 								:title="candidateData.status.is_block_listed ? 'Unblock' : 'Block'"
 								:icon="candidateData.status.is_block_listed ? '/assets/icon/block-secondary.svg' : '/assets/icon/block.svg'"
 								:customEvent="candidateData.status.is_block_listed ? 'removeBlock' : 'block'"
@@ -80,41 +88,53 @@
 								:titleColor="candidateData.status.is_block_listed ? '' : 'white'"
 								@onClickButton="onClickButton"
 							/>
-						</template>
-					</div>
-
-					<div>
-						<v-row class="mt-5">
-							<v-col class="pt-0" cols="12" md="6">
-								<div class="d-flex justify-space-between d-md-none">
-									<OutlinedButton
-										:name="copyProfileText"
-										customEvent="onClickCopyText"
-										@onClickCopyText="onClickCopyText"
-									/>
-									<OutlinedButton 
-										name="Team Information"
-										customEvent="onClickTeamDetail"
-										@onClickTeamDetail="onClickTeamDetail"
-									/>
-								</div>
-								<div class="d-none d-md-flex">
-									<OutlinedButton
-										:name="copyProfileText"
-										customEvent="onClickCopyText"
-										@onClickCopyText="onClickCopyText"
-									/>
-									<OutlinedButton 
-										name="Team Information"
-										customEvent="onClickTeamDetail"
-										@onClickTeamDetail="onClickTeamDetail"
-									/>
-								</div>
-							</v-col>
-							<v-col class="pt-0" cols="12" md="6">
-								<Scroller />
-							</v-col>
-						</v-row>
+							<!-- <ButtonComponent
+								iconHeight="14px"
+								:isSmall="true"
+								title="Close public view"
+								icon="/assets/icon/close.svg"
+								@onClickButton="goBackToProfileView"
+								:responsive="false"
+							/> -->
+							<!-- <Scroller /> -->
+							<OutlinedButton
+								class="mobile-margin w-auto buttons-md"
+								:name="copyProfileText"
+								customEvent="onClickCopyText"
+								@onClickCopyText="onClickCopyText"
+							/>
+							<OutlinedButton 
+								class="mobile-margin w-auto buttons-md"
+								style="margin-bottom: 0px !important;"
+								name="Team Info"
+								customEvent="onClickTeamDetail"
+								@onClickTeamDetail="onClickTeamDetail"
+							/>
+							<div class="text-center custom-divider mb-2"><hr style="margin: 6px auto; width: 250px;"></div>
+							<div class="d-flex">
+								<a
+								  class="navigate mobile-margin"
+								  href="#family-information"
+								>
+								  <div class="navigate-name text-center">
+									Family Info
+									<img src="/assets/icon/navigate-bottom.svg" alt="">
+								  </div>
+								</a>
+							</div>
+		
+							<div class="d-flex">
+								<a
+									class="navigate mobile-margin"
+									href="#my-partner-pref"
+								>
+									<div class="navigate-name text-center">
+										My Pref
+										<img src="/assets/icon/navigate-bottom.svg" alt="">
+									</div>
+								</a>
+							</div>
+						</div>
 					</div>
 
 					<div>
@@ -126,7 +146,7 @@
 										<v-container fluid class="pt-0 px-5">
 											<v-row dense>
 												<v-col class="pt-1" cols="12" md="8">
-													<PersonalInformationTable :data="candidateData"/>
+													<PersonalInformationTable :data="candidateInfo"/>
 												</v-col>
 												<v-col ref="family-information" class="pt-1" cols="12" md="4">
 													<MoreAbout 
@@ -349,6 +369,7 @@ import MoreAbout from '@/components/search/personal-information/MoreAbout.vue'
 import Scroller from  '@/components/atom/Scroller'
 import ButtonComponent from '@/components/atom/ButtonComponent'
 import JwtService from "@/services/jwt.service";
+import ApiService from '@/services/api.service';
 
 import OutlinedButton from '@/components/atom/OutlinedButton'
 import ComingSoonModal from "@/components/search/ComingSoonModal"
@@ -377,8 +398,12 @@ export default {
 			avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
 			conversations: [],
 			profile: '',
-			improveMyselfThings
+			improveMyselfThings,
+			candidateInfo: null
 		};
+	},
+	created() {
+		this.fetchCandidate();
 	},
 
 	computed: {
@@ -405,6 +430,9 @@ export default {
 			return this.candidateData.user_id === loggedInUserId
 
 			
+		},
+		domain() {
+			return window.location.origin;
 		}
 	},
 	methods: {
@@ -499,23 +527,39 @@ export default {
 				return
 			}
             if(eventData.event == 'addConnection') {
-                this.connectCandidate();
+				if(this.isOwnProfile) {
+					this.showError('You cannot connect to yourself');
+				} else {	
+					this.connectCandidate();
+				}
             }
             if(eventData.event == 'block') {
-                this.handleBlockCandidate('post', true, 'v1/store-block-list');
+				if(this.isOwnProfile) {
+					this.showError('You cannot block yourself');
+				} else {	
+					this.handleBlockCandidate('post', true, 'v1/store-block-list');
+				}
             }
             if(eventData.event == 'removeBlock') {
                 this.handleBlockCandidate('delete', false, 'v1/unblock-by-candidate');
             }
             if(eventData.event == 'addShortList') {
-                this.addShortList();
+				if(this.isOwnProfile) {
+					this.showError('You cannot shortlist yourself');
+				} else {	
+					this.addShortList();
+				}
             }
             if(eventData.event == 'removeShortList') {
 				console.log('......s.....')
                 this.removeFroShortList();
             }
             if(eventData.event == 'addTeam') {
-                this.addTeamList();
+				if(this.isOwnProfile) {
+					this.showError('You cannot add your team');
+				} else {	
+					this.addTeamList();
+				}
             }
             if(eventData.event == 'removeTeam') {
                 this.removeFromTeamList();
@@ -661,14 +705,34 @@ export default {
         },
 
         async fetchCandidate() {
-            let url = `v1/candidate/info/${this.profile.user_id}`
-            try {
-                await this.fetchProfileDetail(url)
-            } catch (e) {
-                if(e.response) {
-                    this.showError(e.response.data.message)
-                }
-            }
+            // let url = `v1/candidate/info/${this.profile.user_id}`
+            // try {
+            //     await this.fetchProfileDetail(url)
+            // } catch (e) {
+            //     if(e.response) {
+            //         this.showError(e.response.data.message)
+            //     }
+            // }
+			try {
+				this.isLoading = true;
+				const response = await ApiService.get(`v1/candidate/info/${this.candidateData.user_id}`);
+				if (response.status === 200) {
+				this.isLoading = false;
+				this.candidateInfo = {
+					...response.data.data,
+					preference: {
+					...response.data.data.preference,
+					pre_occupation: JSON.parse(
+						response.data.data.preference.pre_occupation
+					),
+					},
+				};
+				}
+			} catch (error) {
+				this.isLoading = false;
+				console.log(error);
+				//alert(this.error);
+			}
         },
         async handleBlockCandidate(actionType, value, url) {
 			 if(this.role != 'Admin' && this.role != 'Owner & Admin') {
@@ -707,9 +771,9 @@ export default {
         },
         openGallery() {
             this.images= [];
-            let images = this.candidateData.other_images
+            let images = [this.candidateInfo.other_images, this.candidateData.personal.per_avatar_url, this.candidateData.personal.per_main_image_url];
             if(images && images.length > 0) {
-                images.map(i => this.images.push(i.image_path));
+                images.map(i => this.images.push(i));
                 this.show();
             } else {
                 this.$error({
@@ -735,6 +799,93 @@ export default {
 #wrap-div {
 	.container--fluid {
 		max-width: 100% !important;
+	}
+}
+
+.close-public-view {
+	font-size: .75rem;
+	text-align: center;
+	color: #E51F76; 
+	font-family: 'Poppins', sans-serif; 
+	max-width: auto !important; 
+	padding: 5px; 
+	letter-spacing: .0892857143em; 
+	cursor: pointer;
+}
+
+.buttons-div::v-deep {
+	@media (max-width: 1400px) {
+		flex-direction: column;
+
+		.mobile-margin {
+			margin-bottom: 6px !important;
+			min-width: 250px !important;
+		}
+	}
+	.mobile-margin {
+		min-width: 120px;
+	}
+	.v-custom {
+		text-transform: capitalize;
+		background: #6158a7;
+		color: #fff !important;
+		img {
+			filter: brightness(0) invert(1);
+		}
+		&:hover {
+			box-shadow: 0px 1px 6px #787474;
+			border: 1px solid white !important;
+		}
+	}
+	.custom-divider {
+		margin: 3px 0px !important;
+		
+		@media (min-width: 1400px) {
+		  display: none;
+		}
+
+		hr {
+			border-top: 1px solid rgb(0, 0, 0, 0.3);
+		}
+	}
+
+	.navigate {
+		background: #6158a7;
+		color: #fff !important;
+		border-radius: 20px;
+		border: 1px solid #6158a7;
+		font-size: 12px;
+		height: 27px;
+		padding: 4px 5px;
+		transition: .5s;
+	
+		.navigate-name {
+		  color: white;
+		}
+	
+		img {
+		  margin-bottom: 1px;
+		  height: 13px;
+		}
+		&:hover {
+		  box-shadow: 0px 1px 6px #787474;
+		  border: 1px solid white;
+		  background: #6158a7;
+		}
+	}
+	.navigate + .navigate {
+		margin: 0px;
+	}
+
+	@media(min-width: 1400px) {
+		.buttons-md {
+		  display: none !important;
+		}
+	}
+	@media(max-width: 1400px) {
+		.buttons-lg {
+		  display: none !important;
+		}
 	}
 }
 

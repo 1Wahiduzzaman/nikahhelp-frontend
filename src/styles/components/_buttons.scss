@@ -9,6 +9,7 @@
         color: $color-white;
         background-color: $bg-primary;
         border: 1px solid $border-primary;
+        border-radius: 20px;
         &:hover,
         &:active {
             background-color: $bg-primary;

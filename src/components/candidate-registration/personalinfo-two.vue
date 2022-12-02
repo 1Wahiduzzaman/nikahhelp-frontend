@@ -2281,7 +2281,7 @@
                     : 0
                 }}/2000</span
               >
-              <div class="image-container text-center">
+              <div v-if="false" class="image-container text-center">
                 <label for="input-resume" class="upload-label">
                   upload
                   <input

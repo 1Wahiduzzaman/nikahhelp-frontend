@@ -813,11 +813,12 @@
                 </table>
               </div>
             </div>
-            <div class="col-12 col-md-6 mb-4">
+            <!-- <div class="col-12 col-md-6 mb-4">
               <div class="profile-img text-center">
                 <img
                   v-viewer
                   :src="candidateData.verification.ver_image_front"
+                  class="user-image"
                   alt="img"
                   height="250"
                   width="200"
@@ -830,11 +831,30 @@
                 <img
                   v-viewer
                   :src="candidateData.verification.ver_image_back"
+                  class="user-image"
                   alt="img"
                   height="250"
                   width="200"
                 />
                 <p class="text-center">Back Side</p>
+              </div>
+            </div> -->
+            <div v-viewer="{movable: false, title: false, scalable: false, rotatable: false}" class="col-12 row my-4 ms-1">
+              <div
+                class="col-md-6 mb-sm-0 mb-2 flex flex-column align-items-center profile-img" 
+                v-for="src in [candidateData.verification.ver_image_front, candidateData.verification.ver_image_back]" 
+                :key="src"
+              >
+                  <img
+                    :src="src"
+                    class="user-image"
+                    alt="img"
+                    height="250"
+                    width="200"
+                    style="cursor: pointer;"
+                  />
+                  <p class="text-center" v-if="src == candidateData.verification.ver_image_front">Front side</p>
+                  <p class="text-center" v-if="src == candidateData.verification.ver_image_back">Back side</p>
               </div>
             </div>
           </div>

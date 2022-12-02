@@ -311,7 +311,7 @@ export const RULESPERSONALINFO = {
     },],
     mobile_number: [{
         required: true,
-        message: "Write your mobile number",
+        //message: "Write your mobile number",
         trigger: "blur",
     },
     { validator: validateNumber, trigger: "change" },
@@ -420,7 +420,7 @@ export const RULESPERSONALINFO = {
     mobile_number: [
         {
             required: true,
-            message: "Write your mobile number",
+            //message: "Write your mobile number",
             trigger: "blur",
         },
     ],
