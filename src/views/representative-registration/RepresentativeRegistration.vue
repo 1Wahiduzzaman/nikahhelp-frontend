@@ -1,4 +1,3 @@
-
 <template>
   <div class="r-registration-container">
     <Header />
@@ -9,6 +8,7 @@
         <p>Please answer all question accurately and in full</p>
       </div>
 
+
       <div class="help-dialog">
         <v-dialog
           transition="dialog-bottom-transition"
@@ -16,7 +16,7 @@
           class="d-flex justify-center mb-4 mt-8"
         >
           <template v-slot:activator="{ on, attrs }">
-            <v-icon large  v-bind="attrs" v-on="on" class="question-mark" color="white">
+            <v-icon large  v-bind="attrs" v-on="on" class="question-mark" color="#6159a7">
               mdi-help-circle
             </v-icon>
           </template>
@@ -47,41 +47,52 @@
                 <div class="text-center">{{ contentGuidance }}</div>
               </v-card-text>
               
-              <v-divider></v-divider>
+              <!-- <v-divider></v-divider> -->
+              <div class="w-75 text-center mx-auto"><hr class="divider" style="margin: 14px auto;"></div>
   
-              <v-card-actions class="justify-end">
+              <v-card-actions class="justify-content-between">
+                <div>
+                  <v-btn
+                    rounded="true"
+                    color="#E51F76"
+                    class="text-white"
+                  >
+                    Watch tutorial
+                  </v-btn>
+                  <v-card-actions></v-card-actions>
+                </div>
                 
-                <v-btn
-                  v-if="currentGuide > 0 && currentGuide <= 5 "
-                  @click="changeContentPrev"
-                  rounded="true"
-                  color="#6159a7"
-                  class="mr-3 text-white"
-                >
-                  prev
-                </v-btn>
-                <v-btn
-                  v-if="currentGuide <= 4"
-                  @click="changeContent"
-                  rounded="true"
-                  color="#6159a7"
-                  class="text-white"
-                >
-                  next
-                </v-btn>
-  
-                <v-btn
-                  v-if="currentGuide === 5"
-                  @click="goToFirstGuide(); dialog.value=false;"
-                  rounded="true"
-                  color="#6159a7"
-                  class="text-white"
-                >
-                  finish
-                </v-btn>
-              </v-card-actions>
-              <v-card-actions class="justify-end">
-                
+                <div>
+                  <v-btn
+                    v-if="currentGuide > 0 && currentGuide <= 5 "
+                    @click="changeContentPrev"
+                    rounded="true"
+                    color="#6159a7"
+                    class="mr-2 text-white"
+                  >
+                    prev
+                  </v-btn>
+                  <v-btn
+                    v-if="currentGuide <= 4"
+                    @click="changeContent"
+                    rounded="true"
+                    color="#6159a7"
+                    class="text-white"
+                  >
+                    next
+                  </v-btn>
+    
+                  <v-btn
+                    v-if="currentGuide === 5"
+                    @click="goToFirstGuide(); dialog.value=false;"
+                    rounded="true"
+                    color="#3ab549"
+                    class="text-white"
+                  >
+                    finish
+                  </v-btn>
+                  <v-card-actions></v-card-actions>
+                </div>
               </v-card-actions>
             </v-card>
           </template>
@@ -175,10 +186,10 @@
       </div>
       <div class="steps-content px-2" v-if="current == 2">
         <Verification
-        
-          @cancel="cancelVerification"
           :representativeDetails="representativeDetails"
           @valueChange="onDataChange($event)"
+          @turnOnBtnLoader="nextBtnLoader=true"
+          @turnOffBtnLoader="nextBtnLoader=false"
           :verification="representativeDetails.verification"
           ref="VerificationRef"
         />
@@ -202,8 +213,7 @@
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
-          style="float: right"
-          class="mt-3"
+          style="float: right; margin-top: 15px;"
           @click="next"
         >
           <span v-if="!nextBtnLoader">Next</span>
@@ -231,12 +241,11 @@
           v-if="current < steps.length - 1"
           shape="round"
           type="primary"
-          style="float: left"
+          style="float: left; margin-top: 15px;"
           :class="{
             'first-save-btn': current === 0,
             'save-btn': current !== 0,
           }"
-          class="mt-3"
           @click="saveExit"
         >
           Save & Exit
@@ -384,10 +393,6 @@ export default {
     },
     toggleStep(step) {
       this.current = step;
-      this.checkExistData();
-    },
-    cancelVerification(e) {
-      this.showAgreement = false;
       this.checkExistData();
     },
     onAgree(value) {
@@ -739,7 +744,24 @@ export default {
               ver_document_backside,
             }).every((x) => x !== undefined && x !== null && x !== "");
           } else {
-            isEnabled = true;
+            const {
+              ver_recommender_title,
+              ver_recommender_first_name,
+              ver_recommender_last_name,
+              ver_recommender_occupation,
+              ver_recommender_address,
+              ver_recommender_mobile_no,
+              ver_recommender_email
+            } = this.representativeDetails.verification;
+            isEnabled = Object.values({
+              ver_recommender_title,
+              ver_recommender_first_name,
+              ver_recommender_last_name,
+              ver_recommender_occupation,
+              ver_recommender_address,
+              ver_recommender_mobile_no,
+              ver_recommender_email
+            }).every((x) => x !== undefined && x !== null && x !== "");
           }
 
           break;
@@ -889,15 +911,17 @@ export default {
   right: 0;
   // margin-right: 4rem;
   z-index: 15;
-  border-radius: 60% 0 0 0;
-  background-color: #522e8e;
-  width: 5rem;
 
   .question-mark {
-    position: absolute;
-    right: 0.7rem;
-    top: 0.4rem;
+    right: 0.3em;
+    top: 1.8rem;
+    box-shadow: 0 0 4px 1.3px rgb(0 0 0 / 30%);
+    border-radius: 50%;
   }
+}
+
+.divider {
+  border-top: 1px solid rgb(0, 0, 0, 0.06);
 }
 
 .step-bar.vue-fixed-header--isFixed {
