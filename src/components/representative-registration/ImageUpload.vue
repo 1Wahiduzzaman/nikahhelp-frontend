@@ -53,7 +53,7 @@
                             <input v-if="!imageModel.per_avatar_url" type="file" class="input-image" id="input-avatar-image" name="avatar"
                             @change="getAvatar" />
                           </label>
-                          <a-button type="primary" style="width: 200px" v-if="imageModel.per_avatar_url"
+                          <a-button type="primary" style="width: 200px; border-radius: 5px;" v-if="imageModel.per_avatar_url"
                             @click="clearImg('avatar')"
                           >
                             Remove
@@ -82,7 +82,7 @@
                             <input v-if="!imageModel.per_main_image_url" type="file" class="input-image" id="input-main-image" name="mainImage"
                             @change="getMainImage" />
                           </label>
-                          <a-button type="primary" style="width: 200px" v-if="imageModel.per_main_image_url"
+                          <a-button type="primary" style="width: 200px; border-radius: 5px;" v-if="imageModel.per_main_image_url"
                             @click="clearImg('main')">
                             Remove
                           </a-button>
