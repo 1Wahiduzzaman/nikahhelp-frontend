@@ -267,12 +267,15 @@ export default {
     },
     async sendSiteVisitData(viewedCandidates) {
       console.log(viewedCandidates, 'frm sendsite visit data');
+      let fromTeamId = parseInt(localStorage.getItem('teamid'));
       let teamsArray = [];
-      viewedCandidates.forEach(i => teamsArray.push(i.team_id));
+      viewedCandidates.forEach(i => teamsArray.push(i.team.team_id));
+      console.log(fromTeamId);
       let payload = {
-        "from_team_id": JwtService.getTeamIDAppWide(),
+        "from_team_id": fromTeamId,
         "to_team_id": teamsArray
       }
+      console.log(payload, 'payload from search');
       await ApiService.post('v1/site-visit', payload);
     },
     responsiveToggle() {
@@ -315,11 +318,11 @@ export default {
       setTimeout(() =>{
         if(data.pre_partner_age_max) {
           this.query += `&max_age=${data.pre_partner_age_max}`
-          this.$refs.simpleSearch.setAttr('max_age', data.pre_partner_age_max);
+          // this.$refs.simpleSearch.setAttr('max_age', data.pre_partner_age_max);
         }
         if(data.pre_partner_age_min) {
           this.query += `&min_age=${data.pre_partner_age_min}`
-          this.$refs.simpleSearch.setAttr('min_age', data.pre_partner_age_min);
+          // this.$refs.simpleSearch.setAttr('min_age', data.pre_partner_age_min);
         }
         // if(data.pre_ethnicities) {
         //   this.$refs.simpleSearch.setAttr('ethnicity', data.pre_ethnicities);
