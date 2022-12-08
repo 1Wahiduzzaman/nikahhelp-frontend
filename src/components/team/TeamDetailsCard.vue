@@ -210,7 +210,7 @@
 				<div class="info-content" style="cursor: pointer;" @click="showTeamInfo = true">
 					<a-modal 
 						:visible="showTeamInfo" 
-						closable="true" 
+						:closable="true"
 						title="Team Info" 
 						@ok="showTeamInfo = false" 
 						@cancel="showTeamInfo = false" 
