@@ -10,7 +10,8 @@
 						</div>
 
 						<!-- Age Slider -->
-						<div class="mt-4 px-3">
+						<div class="mt-2 px-3">
+							<label for="" class="search-label">Age:</label>
 							<SelectGroup
 								style="margin-left: 5px;"
 								@selected="onDropdownChange"
@@ -23,7 +24,8 @@
 								:values="[min_age, max_age]"
 							/>
 						</div>
-						<div class="mt-4 px-3">
+						<div class="mt-2 px-3">
+							<label for="" class="search-label">Height:</label>
 							<SelectGroup
 								style="margin-left: 5px;"
 								@selected="onDropdownChange"
@@ -39,6 +41,7 @@
 					</div>
 					<!-- Select Religion -->
 					<div class="">
+						<label for="" class="search-label">Religion:</label>
 						<a-select
 							id="religion"
 							v-model="religion"
@@ -65,7 +68,8 @@
 						</a-select>
 					</div>
 					<!-- Select County -->
-					<div class=" mt-4">
+					<div class=" mt-2">
+						<label for="" class="search-label">Country:</label>
 						<a-select
 							id="country"
 							v-model="country"
@@ -92,7 +96,8 @@
 						</a-select>
 					</div>
 					<!-- Select Ethnicity -->
-					<div class=" mt-4">
+					<div class=" mt-2">
+						<label for="" class="search-label">Ethnicity:</label>
 						<a-select
 							id="ethnicity"
 							v-model="ethnicity"
@@ -119,7 +124,8 @@
 						</a-select>
 					</div>
 					<!-- Select Maritial Status -->
-					<div class="mt-4">
+					<div class="mt-2">
+						<label for="" class="search-label">Marital status:</label>
 						<a-select
 							id="ethnicity"
 							v-model="maritalStatus"
@@ -139,7 +145,8 @@
 							</template>
 						</a-select>
 					</div>
-					<div class="mt-4">
+					<div class="mt-2">
+						<label for="" class="search-label">Employment status:</label>
 						<a-select
 							id="ethnicity"
 							v-model="employmentStatus"
@@ -167,7 +174,8 @@
 							</template>
 						</a-select>
 					</div>
-					<div class="mt-4">
+					<div class="mt-2">
+						<label for="" class="search-label">Nationality:</label>
 						<a-select
 							id="country"
 							v-model="nationality"
@@ -194,7 +202,7 @@
 						</a-select>
 					</div>
 					<template v-if="showMoreSearch">
-						<!-- <div class="mt-4">
+						<!-- <div class="mt-2">
 							<div class="select-box">
 								<select class="custom-select" v-model="motherTongue">
 									<option :value="undefined">Select Mother Tongue</option>
@@ -208,7 +216,7 @@
 								</select>
 							</div>
 						</div> -->
-						<div class="mt-4">
+						<div class="mt-2">
 							<div class="select-box">
 								<select class="custom-select" v-model="employmentStatus">
 									<option :value="undefined">Select Employment Status</option>
@@ -220,7 +228,7 @@
 								</select>
 							</div>
 						</div>
-						<!-- <div class="mt-4">
+						<!-- <div class="mt-2">
 							<div class="select-box">
 								<select class="custom-select" v-model="occupation">
 									<option :value="undefined">Select Occupation</option>
@@ -234,7 +242,7 @@
 								</select>
 							</div>
 						</div> -->
-						<div class="mt-4">
+						<div class="mt-2">
 							<div class="select-box">
 								<select class="custom-select" v-model="nationality">
 									<option :value="undefined">Select Nationality</option>
@@ -248,7 +256,7 @@
 								</select>
 							</div>
 						</div>
-						<!-- <div class="mt-4">
+						<!-- <div class="mt-2">
 							<div class="select-box">
 								<select class="custom-select" v-model="countryOfBirth">
 									<option :value="undefined">Select Country of Birth</option>
@@ -262,7 +270,7 @@
 								</select>
 							</div>
 						</div> -->
-						<!-- <div class="mt-4">
+						<!-- <div class="mt-2">
 							<div class="select-box">
 								<select class="custom-select" v-model="currentResidence">
 									<option :value="undefined">Select Current Residence</option>
@@ -276,7 +284,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="mt-4">
+						<div class="mt-2">
 							<div class="select-box">
 								<select class="custom-select" v-model="currentlyLivingWith">
 									<option :value="undefined">Select Currently Living With</option>
@@ -292,7 +300,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="mt-4">
+						<div class="mt-2">
 							<div class="select-box">
 								<select class="custom-select" v-model="hobbiesAndInterest">
 									<option :value="undefined">Select Hobbies & interests</option>
@@ -306,7 +314,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="mt-4">
+						<div class="mt-2">
 							<div class="select-box">
 								<select class="custom-select" v-model="smokingStatus">
 									<option :value="0">Select Smoking Status</option>
@@ -402,8 +410,10 @@ export default {
 			showMoreSearch: false,
 			ageTV: AGES,
       		heightTv: HEIGHTS,
-			min_age: this.user?.candidate_information?.preference?.pre_partner_age_min,
-        	max_age: this.user?.candidate_information?.preference?.pre_partner_age_max,
+			// min_age: this.user?.candidate_information?.preference?.pre_partner_age_min,
+        	// max_age: this.user?.candidate_information?.preference?.pre_partner_age_max,
+			min_age: undefined,
+			max_age: undefined,
 			age: [20, 40],
 			heightMin: undefined,
 			heightMax: undefined,
@@ -661,8 +671,8 @@ export default {
 			this.heightMin = undefined
 			this.heightMax = undefined
 			this.heightMax = undefined
-			// this.min_age = undefined
-			// this.max_age = undefined
+			this.min_age = undefined
+			this.max_age = undefined
 			this.religion = undefined
 			this.country = undefined
 			this.ethnicity = undefined
@@ -806,5 +816,12 @@ export default {
 .tagsStyle {
 	text-align: center;
 	color: #6159a7;
+}
+
+.search-label {
+	font-size: 14px;
+	margin-left: 8px;
+	margin-bottom: 2px;
+	opacity: 0.3;
 }
 </style>

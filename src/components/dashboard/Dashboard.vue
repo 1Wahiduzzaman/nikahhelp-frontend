@@ -82,7 +82,7 @@
                <v-btn class="profile-btn text-capitalize btn-hover" small :to="{name: 'ProfileView', params: {id: getCandidate}}">View this team's candidate profile</v-btn>
              </div>
            </div>
-           <div class="subscription-div mt-8" v-if="activeTeam">
+           <div class="subscription-div" v-if="activeTeam">
              <!-- <h4 class="fs-14 text-black-50 text-center">Subscription info</h4> -->
              <div class="subscription-info">
               <router-link :to="'subscription/' + activeTeam.team_id">
@@ -207,7 +207,7 @@ export default {
         },
         xAxis: {
           type: 'month',
-          categories: [],
+          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Ma', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
         },
         yAxis: {
           title: {
@@ -243,7 +243,7 @@ export default {
         },
         series: [{
           name: 'Month',
-          data: []
+          data: [10, 10, 10, 12, 14, 14, 23, 142, 34, 2, 23, 4]
         }],
         legend: {
           enabled: false
@@ -329,8 +329,10 @@ export default {
       this.activeTeam = this.teams.find((item) => item.team_id == activeTeamId);
     },
     async loadProfileGraphApi() {
-      let {data} = await ApiService.get("v1/site-visit-graph").then(res => res.data);
+      let teamIntId = localStorage.getItem('teamid');
+      let {data} = await ApiService.get(`v1/site-visit-graph/${teamIntId}`).then(res => res.data);
       if(data) {
+        console.log(data, 'site-visit-graph');
         this.chartOptions.xAxis.categories = data.date;
         let views = data.view.map(item => parseInt(item));
 
@@ -531,6 +533,7 @@ h4 {
   display: flex;
 }
 .team-info-div {
+  position: relative;
   border: 1px solid #c9c9c9;
   border-radius: 12px;
   padding-bottom: 20px;
@@ -605,6 +608,8 @@ h4 {
     }
     .subscription-div {
       padding: 0 20px;
+      position: absolute;
+      bottom: 10px;
 
       .subscription-img {
         width: 20px;

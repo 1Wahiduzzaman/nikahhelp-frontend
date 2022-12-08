@@ -21,6 +21,16 @@
 							:isBlock="false"
 							@onClickButton="onClickButton"
 						/>
+						<ButtonComponent
+							iconHeight="14px"
+							:isSmall="true"
+							title="Gallery"
+							icon="/assets/icon/gallery.svg"
+							customEvent="openGallery"
+							:isBlock="true"
+							:responsive="false"
+							@onClickButton="onClickButton"
+						/>
                     </div>
                   </v-col>
 				</v-row>
@@ -96,6 +106,21 @@
 												:value="representativeData.screen_name"
 											/>
 											<TableRow 
+												title="Address Line 1"
+												textClass="text-subtitle-1"
+												:value="personal.address_1"
+											/>
+											<TableRow 
+												title="Address Line 2"
+												textClass="text-subtitle-1"
+												:value="personal.address_2"
+											/>
+											<TableRow 
+												title="City"
+												textClass="text-subtitle-1"
+												:value="personal.per_permanent_city"
+											/>
+											<TableRow 
 												title="Mobile"
 												textClass="text-subtitle-1"
 												:value="personal.mobile_number"
@@ -119,6 +144,51 @@
 												title="Current Residence"
 												textClass="text-subtitle-1"
 												:value="personal.per_permanent_country"
+											/>
+										</table>
+									</v-card>
+								</v-col>
+							</v-row>
+						</v-container>
+					</fieldset>
+				</v-col>
+				<v-col cols="12">
+					<fieldset class="">
+						<legend class="ml-8 px-1"><span>Verification & reference</span></legend>
+						<v-container fluid class="pt-0 px-5">
+							<v-row dense>
+								<v-col class="pt-1" cols="12">
+									<v-card class="p-3" style="height: 100%">
+        								<table>
+											<TableRow 
+												title="Title"
+												textClass="text-subtitle-1"
+												:value="representativeData.verification.ver_recommender_title"
+											/>
+											<TableRow 
+												title="Name"
+												textClass="text-subtitle-1"
+												:value="representativeData.verification.ver_recommender_first_name + ' ' + representativeData.verification.ver_recommender_last_name"
+											/>
+											<TableRow 
+												title="Occupation"
+												textClass="text-subtitle-1"
+												:value="representativeData.verification.ver_recommender_occupation"
+											/>
+											<TableRow 
+												title="Address"
+												textClass="text-subtitle-1"
+												:value="representativeData.verification.ver_recommender_address"
+											/>
+											<TableRow 
+												title="Mobile no"
+												textClass="text-subtitle-1"
+												:value="representativeData.verification.ver_recommender_mobile_no"
+											/>
+											<TableRow 
+												title="Email"
+												textClass="text-subtitle-1"
+												:value="representativeData.verification.ver_recommender_email"
 											/>
 										</table>
 									</v-card>
@@ -155,6 +225,7 @@ export default {
 			conversations: [],
 			candidateData: null,
 			isLoading: false,
+			viewerImages: [],
 		};
 	},
 	computed : {
@@ -176,7 +247,26 @@ export default {
 	methods: {
 		getAge,
 		onClickButton(data) {
-			if(data.event == 'editProfile') this.$router.push('/edit_representative')
+			if(data.event == 'editProfile') this.$router.push('/edit_representative');
+			if (data.event == "openGallery") this.openGallery();
+		},
+		openGallery() {
+			this.viewerImages = [];
+			let images = [this.representativeData.image_upload.per_avatar_url, this.representativeData.image_upload.per_main_image_url]
+			if (images && images.length > 0) {
+				images.map((i) => this.viewerImages.push(i));
+				this.show();
+			} else {
+				this.$error({
+				title: "No image found",
+				center: true,
+				});
+			}
+		},
+		show() {
+			this.$viewerApi({
+				images: this.viewerImages,
+			});
 		},
 		async getCandidateData() {
 			// console.log(JSON.parse(localStorage.getItem("user")), '>>>>>>>>ddd>>>>')
@@ -231,7 +321,7 @@ legend {
 @import "@/styles/base/_variables.scss";
 .rep-profile {
 	padding: 10px;
-	.profile-heading {
+	.profile-heading::v-deep {
 		margin-bottom: 20px;
 		.cover-img {
 			width: 100%;
@@ -265,6 +355,19 @@ legend {
 				padding: 0 15px;
 			}
 		}
+
+		.v-custom {
+			text-transform: capitalize;
+			background: #6158a7;
+			color: #fff !important;
+			img {
+			  filter: brightness(0) invert(1);
+			}
+			&:hover {
+				box-shadow: 0px 1px 6px #787474;
+				border: 1px solid white !important;
+			}
+		  }
 	}
 
 	.review {

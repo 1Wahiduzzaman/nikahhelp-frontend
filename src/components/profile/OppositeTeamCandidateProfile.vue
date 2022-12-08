@@ -377,7 +377,7 @@ import {mapActions} from 'vuex'
 
 export default {
 	name: "CandidateProfile",
-	props: ["candidateData", "userId", "role"],
+	props: ["candidateData", "userId", "role", 'teams'],
 	components: { 
 		RatingComponent, 
 		// Footer,
@@ -399,7 +399,8 @@ export default {
 			conversations: [],
 			profile: '',
 			improveMyselfThings,
-			candidateInfo: null
+			candidateInfo: null,
+			images: []
 		};
 	},
 	created() {
@@ -423,9 +424,6 @@ export default {
 			}
 		},
 		isOwnProfile() {
-			// let loggedInUserId = JSON.parse(localStorage.getItem('userInfo'))
-			// return this.candidateData.user_id === loggedInUserId
-
 			let loggedInUserId = JSON.parse(localStorage.getItem('user')).id
 			return this.candidateData.user_id === loggedInUserId
 
@@ -433,6 +431,15 @@ export default {
 		},
 		domain() {
 			return window.location.origin;
+		}, 
+		getAllTeamMembers() {
+			let allMembers = [];
+			this.teams.forEach(team => {
+				team.team_members.forEach(member => {
+					allMembers.push(member.user_id);
+				})
+			})
+			return allMembers
 		}
 	},
 	methods: {
@@ -524,11 +531,16 @@ export default {
 			let userInfo = JSON.parse(localStorage.getItem("user"))
 			if(userInfo.status != 3) {
 				this.showError('Your account is not verified')
-				return
+				return;
+			}
+			if(this.getAllTeamMembers.includes(this.candidateData.user_id)) {
+				this.showError('You cannot do that to your team member.')
+				return;
 			}
             if(eventData.event == 'addConnection') {
 				if(this.isOwnProfile) {
 					this.showError('You cannot connect to yourself');
+					return;
 				} else {	
 					this.connectCandidate();
 				}
@@ -536,6 +548,7 @@ export default {
             if(eventData.event == 'block') {
 				if(this.isOwnProfile) {
 					this.showError('You cannot block yourself');
+					return;
 				} else {	
 					this.handleBlockCandidate('post', true, 'v1/store-block-list');
 				}
@@ -546,6 +559,7 @@ export default {
             if(eventData.event == 'addShortList') {
 				if(this.isOwnProfile) {
 					this.showError('You cannot shortlist yourself');
+					return;
 				} else {	
 					this.addShortList();
 				}
@@ -557,6 +571,7 @@ export default {
             if(eventData.event == 'addTeam') {
 				if(this.isOwnProfile) {
 					this.showError('You cannot add your team');
+					return;
 				} else {	
 					this.addTeamList();
 				}
@@ -634,9 +649,9 @@ export default {
                 url: 'v1/delete-short-listed-by-candidates ',
                 value: false,
                 actionType: 'delete',
-                user_id: this.profile.user_id,
+                user_id: this.candidateData.user_id,
                 payload: {
-                    user_id: this.profile.user_id
+                    user_id: this.candidateData.user_id
                 }
             }
             try {
@@ -656,10 +671,10 @@ export default {
                 url: `v1/team-short-listed-candidates/store`,
                 value: true,
                 actionType: 'post',
-                user_id: this.profile.user_id,
+                user_id: this.candidateData.user_id,
                 payload: {
                     team_listed_by: JwtService.getUserId(),
-                    user_id: this.profile.user_id
+                    user_id: this.candidateData.user_id
                 }
             }
             try {
@@ -770,10 +785,17 @@ export default {
             this.$emit('switchComponent', 'CandidateProfiles')
         },
         openGallery() {
-            this.images= [];
-            let images = [this.candidateInfo.other_images, this.candidateData.personal.per_avatar_url, this.candidateData.personal.per_main_image_url];
-            if(images && images.length > 0) {
-                images.map(i => this.images.push(i));
+			let userId = localStorage.getItem('user').id;
+			if(this.candidateData.personal.anybody_can_see == 1) {
+				this.images = [this.candidateInfo.other_images, this.candidateData.personal.per_avatar_url, this.candidateData.personal.per_main_image_url];
+			} else if(this.candidateData.personal.only_team_can_see == 1 && this.getAllTeamMembers.includes(userId)) {
+				this.images = [this.candidateInfo.other_images, this.candidateData.personal.per_avatar_url, this.candidateData.personal.per_main_image_url];
+			} else {
+				this.images = [this.candidateData.personal.per_avatar_url];
+			}
+			console.log(this.images, 'images')
+
+            if(this.images && this.images.length > 0) {
                 this.show();
             } else {
                 this.$error({
