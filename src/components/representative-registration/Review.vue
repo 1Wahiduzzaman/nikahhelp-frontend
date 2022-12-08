@@ -167,7 +167,7 @@
             </div>
           </div>
         </div>
-        <div v-if="showAgreement" class="review-edit mt-5">
+        <div  class="review-edit mt-5">
           <div class="review-edit-label">
             Verification & Reference
             <img
@@ -181,7 +181,7 @@
             <div class="col-md-12 mb-3">
               <div class="card-custom h-100 shadow-default">
                 <table>
-                  <TableRow
+                  <!-- <TableRow
                     title="ID document issuing country"
                     textClass="text-subtitle-1"
                     :value="representativeDetails.verification.ver_country"
@@ -192,7 +192,7 @@
                     :value="
                       representativeDetails.verification.ver_document_type
                     "
-                  />
+                  /> -->
                   <TableRow
                     title="Title"
                     textClass="text-subtitle-1"
@@ -251,7 +251,7 @@
                 </table>
               </div>
             </div>
-            <div class="col-12 col-md-6 mb-4">
+            <div v-if="showAgreement" class="col-12 col-md-6 mb-4">
               <div class="profile-img text-center">
                 <img
                   v-viewer
@@ -266,7 +266,7 @@
                 <p class="text-center">Front Side</p>
               </div>
             </div>
-            <div class="col-12 col-md-6 mb-4">
+            <div v-if="showAgreement" class="col-12 col-md-6 mb-4">
               <div class="profile-img text-center">
                 <img
                   v-viewer
