@@ -237,7 +237,8 @@ export default {
 			this.queries = this.updatedResult.reduce((acc, curr) => {
 				const query = {
 					gender: curr.per_gender,
-					location: curr.per_nationality,
+					// location: curr.per_nationality,
+					location: curr.contact.per_permanent_country_name,
 					age: this.url.split('&').map(item => {
 						return item.split('_').pop().split('=').pop();
 					}).filter((item, i) => i < 2).join('-'),
