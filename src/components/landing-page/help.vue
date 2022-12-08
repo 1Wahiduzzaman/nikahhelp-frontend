@@ -72,7 +72,7 @@
                 <h4 class="col-12 col-md-6 d-flex align-items-center">Quick Guide</h4>
                 <div class="col-12 col-md-6">
                   <form action="" @submit.prevent class="d-flex w-100">
-                    <input class="search-input m-0 mr-2" type="text" v-model="searchQuery">
+                    <input class="search-input m-0 mr-1" type="text" v-model="searchQuery">
                     <input class="search-btn btn  m-0" type="submit" value="search">           
                   </form>
                 </div>
@@ -111,22 +111,20 @@
           </div>
         </div>
 
-        <div class="container2">
-          <h5 style="text-decoration: underline; cursor: pointer;" v-if="!showContactForm" @click="showContactForm=true">Still need help? Can't find what you're looking for?</h5>
-          <br />
-
-          <h4 v-if="showContactForm">Contact the MatrimonyAssist team</h4>
-          <p v-if="showContactForm">
-            Please use the form below to get in touch. Please provide as much
-            detail as you can. We aim to get back to you within two working
-            days. However, at busy times this may take a little longer.
-          </p>
+        <div class="container2 mt-12">
+          <h5>Still need help? Can't find what you're looking for? <span style="text-decoration: underline; cursor: pointer;" @click="showContactForm=true"><a href="#send-us-email-header" id="go-to-contact-form" @click="goToContactForm">Contact the MatrimonyAssist team</a></span></h5>
         </div>
       </section>
 
-      <!-- Contact form  -->
-      <div class="container1" v-if="showContactForm">
+      <!-- Contact form  --> 
+      <div v-show="showContactForm" class="container1" id="send-us-email-header">
         <h4>SEND US AN EMAIL</h4>
+        <p>
+          Please provide as much
+          detail as you can. We aim to get back to you within two working
+          days. However, at busy times this may take a little longer.
+        </p>
+        <v-divider></v-divider>
         <form action="">
           <label for="query">What is your enquiry regarding?</label>
           <select id="query" name="query" v-model="query" class="rounded-pill bg-white">
@@ -154,7 +152,7 @@
             v-model="message"
           ></textarea>
 
-          <label for="fname">What is your first name?</label>
+          <!-- <label for="fname">What is your first name?</label>
           <input
             type="text"
             id="fname"
@@ -174,10 +172,24 @@
             placeholder="Last name"
             required
             v-model="lastname"
+          /> -->
+
+          <label for="fullname">What is your name?</label>
+          <input
+            type="text"
+            id="fullname"
+            class="rounded-pill bg-white"
+            name="fullanme"
+            placeholder="Full name"
+            required
+            v-model="fullname"
           />
 
-          <label for="telephone"
+          <!-- <label for="telephone"
             >What is your preferred contact telephone number? (Optional)</label
+          > -->
+          <label for="telephone"
+            >What is your contact number? (Optional)</label
           >
           <input
             type="text"
@@ -201,11 +213,16 @@
 
           <p>
             By clicking 'Submit' you are agreeing to our
-            <a href="">terms & conditions</a> and
-            <a href="">privacy and cookie policy</a>.
+            <router-link to="terms_condition">terms & conditions</router-link> and
+            <router-link to="privacy-cookie-policy">privacy and cookie policy</router-link>.
           </p>
-
-	        <button type="submit" value="Submit" @click.prevent="save" class="rounded-pill">Submit</button>
+          
+          <div id="g-recaptcha"></div>
+          <br/>
+          <div v-if="showErrorMsg" class="text-danger my-3">Please provide all required information and complete the captcha.</div>
+	        <button v-if="!submitBtnLoader" type="submit" value="Submit" @click.prevent="save" class="rounded-pill px-12 submit-btn" :disabled="reCaptchaNotCompleted">Submit</button>
+	        <button v-else type="submit" value="Submit" @click.prevent="" class="rounded-pill px-12 submit-btn" :disabled="reCaptchaNotCompleted">Submit <span class="spinner-border spinner-border-sm text-light" role="status"></span></button>
+          <!-- <div v-else class="spinner-border spinner-border-sm text-light" role="status"></div> -->
         </form>
         <br />
         <p v-if="false">
@@ -222,6 +239,8 @@
 import Footer from "@/components/auth/Footer.vue";
 import LandingPageHeader from "@/components/landing-page/LandingPageHeader.vue";
 import ApiService from "@/services/api.service";
+
+
 export default {
   name: "Help",
   components: {
@@ -232,13 +251,16 @@ export default {
 	data() {
 		return {
       showContactForm: false,
-			firstname: '',
-			lastname: '',
+			// firstname: '',
+			// lastname: '',
+      fullname: '',
 			email: '',
 			telephone: '',
 			message: '',
 			query: '',
       searchQuery: '',
+      showErrorMsg: false,
+      submitBtnLoader: false,
       faqs: [
         {
           id: 1,
@@ -344,29 +366,96 @@ export default {
                 support@matrimonyassist.com`
         }
 
-      ]
+      ],
+      reCaptchaNotCompleted: true,
 		};
 	},
 
+  created() {
+    this.initializeReCaptcha();
+    window.enableSubmitButton = this.enableSubmitButton;
+  },
+  mounted() {
+    console.log(window,'window')
+  },
+
+
 	methods: {
 		save() {
-			ApiService.post('v1/feed-back', {
-				firstname: this.firstname,
-				lastname: this.lastname,
-				email: this.email,
-				telephone: this.telephone,
-				message: this.message,
-				query: this.query,
-			}).then((data) => {
-				console.log(data);
-			}).catch((err) => {
-				console.log(err.message);
-			});
+      console.log('submit was clicked');
+      this.submitBtnLoader = true;
+      setTimeout(() => {
+        console.log('timeout for 10 sec')
+      }, 10000)
+      if (this.fullname !== '' && 
+        this.email !== '' && 
+        this.message !== '' && 
+        this.query !== '' && 
+        grecaptcha.getResponse().length !== 0 &&
+        this.reCaptchaNotCompleted !== true) {
+          ApiService.post('v1/feed-back', {
+            // firstname: this.firstname,
+            // lastname: this.lastname,
+            name: this.fullname,
+            email: this.email,
+            telephone: this.telephone,
+            message: this.message,
+            query: this.query,
+          }).then((data) => {
+            console.log(data);
+            this.$success ({
+              title: "Message sent successfully!",
+              content: "Your message is sent. You'll be contacted through email",
+              center: true,
+            });
+            this.fullname = '';
+            this.email = '';
+            this.telephone = '';
+            this.message = '';
+            this.query = '';
+          }).catch((err) => {
+            console.log(err.message);
+          });
+        } else {
+          this.showErrorMsg = true;
+        }
+        this.submitBtnLoader = false;
 		},
+    initializeReCaptcha() {
+      const recaptchaScript = document.createElement("script");
+      recaptchaScript.setAttribute(
+        "src",
+        "https://www.google.com/recaptcha/api.js"
+      );
+      document.head.appendChild(recaptchaScript);
+  
+      let checkInterval = setInterval(function () {
+        if (grecaptcha !== undefined) {
+          clearInterval(checkInterval);
+          console.log('recaptcha is ready');
+          grecaptcha.ready(function () {
+            grecaptcha.render("g-recaptcha", {
+              sitekey: "6LcfI0ojAAAAAIUgZwZrXgDriDRSgKBYeKzmqMo6",
+              callback: "enableSubmitButton"
+            });
+          });
+        }
+        console.log('rener completed outside');
+      }, 500);
+    },
+
+    enableSubmitButton(response) {
+      console.log('enablesubmit button called', response);
+      this.reCaptchaNotCompleted = false;
+    },
 
     goToLink(link){
       let element = this.$refs[link][0];
       element.scrollIntoView({block:'center', behavior: 'smooth'});
+    },
+
+    goToContactForm() {
+      document.getElementById('go-to-contact-form').click();
     }
 	},
   computed: {
@@ -469,7 +558,8 @@ label {
 
 /* Style the submit button with a specific background color etc */
 button {
-  background-color: #04aa6d;
+  background-color: #3ab549;
+  border: 1px solid #3ab549 !important;
   color: white;
   padding: 12px 20px;
   font-size: 20px;
@@ -480,7 +570,15 @@ button {
 
 /* When moving the mouse over the submit button, add a darker green color */
 button:hover {
-  background-color: #45a049;
+  background-color: white;
+  color: #3ab549;
+}
+
+button:disabled {
+  background-color: #3ab549;
+  color: white;
+  opacity: .5;
+  cursor: not-allowed;
 }
 
 /* Add a background color and some padding around the form */
@@ -506,19 +604,21 @@ button:hover {
 
   .search-input {
     border: 1px solid $border-secondary;
-    border-radius: 32px;
+    border-radius: 10px;
+    height: 2.5rem;
     background-color: #fff;
   }
 
   .search-btn {
-    background-color: #fff;
+    background-color: $bg-primary;
     border: 1px solid $border-primary;
-    border-radius: 32px;
-    color: $bg-primary;
+    border-radius: 10px;
+    color: white;
+    box-shadow: 0px 1px 6px #787474;
 
     &:hover {
-      background-color: $bg-primary;
-      color: white;
+      background-color: white;
+      color: $bg-primary;
     }
   }
 }
@@ -621,6 +721,10 @@ button:hover {
 
 .faq .card .card-body p {
   margin-bottom: 14px;
+}
+
+.submit-btn {
+  box-shadow: 0px 1px 6px #787474;
 }
 
 @media (max-width: 991px) {
