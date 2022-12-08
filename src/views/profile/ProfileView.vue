@@ -2,12 +2,14 @@
   <div>
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div fluid v-else>
-      <div v-if="user.account_type == 1">
+      <!-- <div v-if="user.account_type == 1"> -->
+      <div v-if="(userProfile.account_type == 1)">
         <!-- Opposite Candidate Profile Component goes here -->
         <candidate-profile
           :role="teamRole"
           @onFetchUserInfo="loadUserProfile"
           :candidateData="candidateProfileInfo"
+          :teams="teams"
         ></candidate-profile>
       </div>
       <div v-else>
@@ -101,6 +103,7 @@ export default {
     async loadTeams() {
       let {data} = await ApiService.get("v1/team-list").then(res => res.data);
       this.teams = data;
+      console.log('this.teams', this.teams)
 
       let activeTeamId = JwtService.getTeamIDAppWide();
       let from_team = null;
