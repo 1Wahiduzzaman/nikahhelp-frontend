@@ -549,20 +549,20 @@
               <a-button
                 shape="round"
                 type="primary"
-                style="float: right; margin-right: 10px"
-                class="mt-5"
-                @click="cancel"
-              >
-                Cancel
-              </a-button>
-              <a-button
-                shape="round"
-                type="primary"
                 style="float: right; margin-bottom: 0.5rem; margin-right: -15px"
                 class="mt-5"
                 @click="handleSubmitFormOne"
+                :class="{
+                  disabled: !(verification.ver_recommender_title &&
+                  verification.ver_recommender_first_name &&
+                  verification.ver_recommender_last_name &&
+                  verification.ver_recommender_occupation &&
+                  verification.ver_recommender_address &&
+                  verification.ver_recommender_mobile_no &&
+                  verification.ver_recommender_email)
+                }"
               >
-                Save
+                Save and continue
               </a-button>
             </div>
           </a-form-model>
@@ -715,6 +715,7 @@ export default {
       });
     },
     saveVerificationInfo() {
+      this.$emit('turnOnBtnLoader');
       const {
         ver_country,
         ver_document_type,
@@ -743,6 +744,7 @@ export default {
             value: this.verification,
             current: 2,
           });
+          this.$emit('turnOffBtnLoader');
         })
         .catch((error) => {});
     },
@@ -758,42 +760,6 @@ export default {
             value: this.verification,
             current: 1,
           });
-        })
-        .catch((error) => {});
-    },
-    cancel() {
-      this.verification = {
-        ver_country: "",
-        ver_document_type: "",
-        ver_recommender_address: "",
-        ver_recommender_first_name: "",
-        ver_recommender_last_name: "",
-        ver_recommender_occupation: "",
-        ver_recommender_title: "",
-        ver_recommender_mobile_no: "",
-        ver_document_frontside: "",
-        ver_document_backside: "",
-        ver_recommender_email: "",
-      };
-
-      this.$store
-        .dispatch("saveRepresentativeVerificationInfo", {
-          ver_country: "",
-          ver_document_type: "",
-          ver_recommender_address: "",
-          ver_recommender_first_name: "",
-          ver_recommender_last_name: "",
-          ver_recommender_occupation: "",
-          ver_recommender_title: "",
-          ver_recommender_mobile_no: "",
-          ver_recommender_email: "",
-        })
-        .then((data) => {
-          this.$emit("valueChange", {
-            value: this.verification,
-            current: 2,
-          });
-          this.$emit("cancel", false);
         })
         .catch((error) => {});
     },
@@ -1010,6 +976,11 @@ input[type="file"]::-webkit-file-upload-button {
   border-radius: 20px;
   height: 35px;
 
+}
+
+.error-number {
+  color: red;
+  margin: 5px;
 }
 
 .style-chooser::v-deep {
