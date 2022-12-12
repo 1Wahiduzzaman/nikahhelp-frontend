@@ -2,7 +2,7 @@
   <div class="signup-container font-poppins main-container">
     <div class="signin-inner desktop-padding header-container text-center">
       <a class="logo" href="/"
-        ><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo"
+        ><img src="@/assets/Icons/Logo/SVG/White Logo.svg" alt="logo" class="mat-logo"
       /></a>
     </div>
     
@@ -10,7 +10,7 @@
       <div class="type-selection" v-if="showMemberTypeForm && !errorMessage">
         <div class="content mb-5">
           <h3 class="mt-3 text-header-black font-weight-bolder">
-            Welcome To <span class="logo-text">Matrimony Assist</span> Signup
+            Welcome To <span class="logo-text">MatrimonyAssist</span> Signup
           </h3>
           <!-- <div class="mx-auto" style="width: 80%; padding-right: 3rem; padding-left: 3rem;">
                 <p>Depends on your requirement and eligibility, you can join MatrimonyAssist either as a candidate or a representative of a candidate or a matchmaker if this is your profession. </p>
@@ -69,7 +69,7 @@
 
             <a-row :gutter="16" class="desktop-view">
               <a-col :span="8">
-                <a-card class="br-card shadow type-card">
+                <a-card class="br-card shadow type-card" :class="{ 'active-card': signupModel.account_type == 1}" @click="onSelectAccountType(1)" style="cursor: pointer;">
                   <button
                     @click="onSelectAccountType(1)"
                     class="btn no-shadow p-2 fs-20 br-30 btn-type"
@@ -87,7 +87,7 @@
                 </a-card>
               </a-col>
               <a-col :span="8">
-                <a-card class="br-card shadow type-card">
+                <a-card class="br-card shadow type-card" :class="{ 'active-card': signupModel.account_type == 2}" @click="onSelectAccountType(2)" style="cursor: pointer;">
                   <button
                     @click="onSelectAccountType(2)"
                     class="btn no-shadow p-2 fs-20 br-30 btn-type"
@@ -105,7 +105,7 @@
                 </a-card>
               </a-col>
               <a-col :span="8">
-                <a-card class="br-card shadow type-card">
+                <a-card class="br-card shadow type-card" style="cursor: not-allowed;">
                   <button
                     class="btn no-shadow disabled p-2 fs-20 br-30 btn-type"
                   >
@@ -146,7 +146,7 @@
             </div>
           </div>
           <p class="flex-center-center mt-3 bottom-text font-poppins">
-            Already on <span class="logo-text ml-2"> Matrimony Assist? </span>
+            Already on <span class="logo-text ml-2"> MatrimonyAssist? </span>
 
             <router-link
               to="/login"
@@ -166,7 +166,7 @@
 <!--      <div class="type-selection" v-if="showMemberFormType && !errorMessage">-->
 <!--        <div class="content mb-5">-->
 <!--          <h3 class="mt-3 text-header-black font-weight-bolder">-->
-<!--            Welcome To <span class="logo-text">Matrimony Assist</span> Signup-->
+<!--            Welcome To <span class="logo-text">MatrimonyAssist</span> Signup-->
 <!--          </h3>-->
 <!--          <div class="type mx-auto">-->
 <!--            <p class="text-center py-2">How would you like to complete the registration form?</p>-->
@@ -239,7 +239,7 @@
 <!--            </div>-->
 <!--          </div>-->
 <!--          <p class="flex-center-center mt-3 bottom-text font-poppins">-->
-<!--            Already on <span class="logo-text ml-2"> Matrimony Assist? </span>-->
+<!--            Already on <span class="logo-text ml-2"> MatrimonyAssist? </span>-->
 
 <!--            <router-link-->
 <!--                to="/login"-->
@@ -260,7 +260,7 @@
         v-if="!showMemberTypeForm && !showMemberFormType"
         class="mt-6 text-header-black font-weight-bolder text-center"
       >
-        Welcome To <span class="logo-text">Matrimony Assist</span> Signup
+        Welcome To <span class="logo-text">MatrimonyAssist</span> Signup
       </h3>
 
       <div v-if="showMemberForm && !errorMessage" class="signup-inner">
@@ -338,7 +338,7 @@
           </div>
         </a-form-model>
         <p class="flex-center-center mt-3 bottom-text">
-          Already on <span class="logo-text ml-2"> Matrimony Assist? </span>
+          Already on <span class="logo-text ml-2"> MatrimonyAssist? </span>
 
           <router-link
             to="/login"
@@ -427,7 +427,7 @@
             <!--            </div>-->
 
             <span class="fs-12 mt-2 text-white"
-              >By clicking Agree & Join, you agree to Matrimony Assist
+              >By clicking Agree & Join, you agree to MatrimonyAssist
               <a class="link" href="/user-agreement">User Agreement, </a>
               <a class="link" href="/privacy-cookie-policy"
                 >Privacy and Cookie Policy</a
@@ -436,7 +436,7 @@
           </div>
         </a-form-model>
         <p class="flex-center-center mt-3 bottom-text">
-          Already on <span class="logo-text"> Matrimony Assist? </span>
+          Already on <span class="logo-text"> MatrimonyAssist? </span>
 
           <router-link
             to="/login"
@@ -539,7 +539,7 @@ export default {
         email: "",
         password: "",
         confirmPassword: "",
-        account_type: 0,
+        account_type: 1,
         form_type: 1,
       },
       instructions: [
@@ -999,6 +999,8 @@ $border-width: 2px;
       .active {
         background: $bg-secondary !important;
         color: $color-white;
+        box-shadow: 2px 2px 2px #999 !important;
+
       }
       .btn-active {
         //background: $bg-success;
@@ -1015,6 +1017,10 @@ $border-width: 2px;
       }
     }
   }
+}
+
+.active-card {
+  transform: scale(1.05);
 }
 .join-now-btn {
   //color: #ffffff;
