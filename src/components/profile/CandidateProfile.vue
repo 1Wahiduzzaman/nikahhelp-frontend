@@ -908,11 +908,13 @@ ul {
     text-transform: capitalize;
     background: #6158a7;
     color: #fff !important;
+    box-shadow: none !important;
+    border: none !important;
     img {
-      filter: brightness(0) invert(1);
+      filter: brightness(0) invert(1) !important;
     }
     &:hover {
-        box-shadow: 0px 1px 6px #787474;
+        box-shadow: 0px 1px 6px #787474 !important;
         border: 1px solid white !important;
     }
   }
