@@ -9,11 +9,14 @@
       <div class="container">
         <div class="flex flex-direction justify-content-center align-items-center">
           <div>
-            <h2 class="color-white" style="margin-bottom: 12px">
+            <!-- <h2 class="color-white" style="margin-bottom: 12px">
               Someone must be searching for you
-            </h2>
-            <p id="p-tag font-poppins">
+            </h2> -->
+            <h3 class="color-white" style="margin-bottom: 12px; font-family: 'Elsie Swash Caps';">
               The first friends and family based matromonial introduction service
+            </h3>
+            <p id="p-tag font-poppins">
+              Benefit from their collective wisdom & experience
             </p>
           </div>
           <div class="ml-5">
