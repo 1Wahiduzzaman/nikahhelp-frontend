@@ -17,7 +17,11 @@ export default {
 
 
       });
-      router.push({ name: 'root' });
+      if(router.history._startLocation === '/login') {
+        router.push({ name: 'root' });
+      } else {
+        router.push({ path: `${router.history._startLocation}`});
+      }
     }).catch((e) => {
       console.log('message', e.message)
       context.commit("setErrorMessage", {
