@@ -5,7 +5,7 @@
 		</header>
 		<div class="content">
 			<h3 class="mt-3">
-				Welcome to <span class="logo-text">Matrimony Assist</span>
+				Welcome to <span class="logo-text">MatrimonyAssist</span>
 			</h3>
 			<div class="type mx-auto">
 				<p>Let's get started. Please select, you are registering as</p>

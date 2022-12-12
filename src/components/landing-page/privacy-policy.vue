@@ -7,7 +7,7 @@
 
       <h5>Who are we?</h5>
       
-      <P>Matrimony Assist (hereinafter "matrimonyassist.com" or "us" or "we" as the context requires) is operated by HMS Global Business Limited, a private limited company, registered in the UK (Reg No 07212488). We are a leading online service company. </P>
+      <P>MatrimonyAssist (hereinafter "matrimonyassist.com" or "us" or "we" as the context requires) is operated by HMS Global Business Limited, a private limited company, registered in the UK (Reg No 07212488). We are a leading online service company. </P>
     <h5>This Policy</h5>
     <p>This Privacy and Cookie Policy governs your access to and use of any matrimonyassist.com website, applications, widgets, tools or other materials operated or otherwise provided by matrimonyassist.com (the " matrimonyassist.com Services"). The matrimonyassist.com  is committed to protecting and respecting your privacy and we make it our highest priority to safeguard the confidentiality of any and all personal details you provide to us. As a visitor to or user of the matrimonyassist.com services you have the right to know and understand our information privacy practices prior to providing us with any of your personal details.</p>
     <p>This document explains our Privacy and Cookie Policy. This policy (together with our Terms and Condition of Services and any other applicable terms and conditions or documents referred to therein) sets out the basis on which any personal data we collect from you, or that you provide to us, will be processed by us.</p>
@@ -69,7 +69,7 @@
      <p>If you would like to find out more about the specific cookies we use, please contact us through help page.</p>
 
      <h5>Your right to refuse cookies and what happens if you refuse them</h5>
-<p>When visiting the Matrimony Assist website [https://matrimonyassist.com/] for the first time on a device, you will see a cookies banner explaining that we use cookies, why we use them and providing a link to this document.</p>
+<p>When visiting the MatrimonyAssist website [https://matrimonyassist.com/] for the first time on a device, you will see a cookies banner explaining that we use cookies, why we use them and providing a link to this document.</p>
     <p>This banner gives you a settings option for our websites. If you click on this, you can turn certain cookies on and off.</p>
     <p>You can access these settings and change your choices at any time in the future by clicking on the Cookies Settings link at the bottom of our website pages.</p>
     <p>You can also control cookies by activating relevant settings on your browser. Please see below for more information on browser controls.</p>
@@ -170,7 +170,7 @@
 to ensure that content from our websites and other matrimonyassist.com services is presented in the most effective manner for you and for your computer, mobile phone or other electronic device.
 
 </li>
-<li>
+
   <li>
     to provide you with information, products or services that you request from us or which we feel may interest you.
   </li>

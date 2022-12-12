@@ -155,11 +155,10 @@
       <div class="details-modal p-3">
         <h3 class="fs-18 text-header-black">We have found several matches for you</h3>
         <p class="fs-14">
-          Register for free and start in no time by exploring Matrimony
-          Assist with a candidate and rep profile.
+          Register for free and start in no time by exploring MatrimonyAssist with a candidate and rep profile.
         </p>
         <p class="fs-14">
-          We request all users on Matrimony Assist to verify their email and
+          We request all users on MatrimonyAssist to verify their email and
           mobile number to help build and maintain trust.
         </p>
         <div>

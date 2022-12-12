@@ -156,7 +156,7 @@ export default {
           break;
         case 5:
           this.imageSrc = require('@/assets/help_guide_pics/Chat_and_exchange_information_with_connected_team.svg');
-          this.contentTitle = 'Use chat feature of Matrimony Assist to communicate with prospect team and find out more about the prospect. ';
+          this.contentTitle = 'Use chat feature of MatrimonyAssist to communicate with prospect team and find out more about the prospect. ';
           this.contentyGuidance = 'Chat and exchange information with connected team';  
           this.currentGuide = 4;
           break;    
@@ -196,7 +196,7 @@ export default {
           break;
         case 4:
           this.imageSrc = require('@/assets/help_guide_pics/Chat_and_exchange_information_with_connected_team.svg');
-          this.contentTitle = 'Use chat feature of Matrimony Assist to communicate with prospect team and find out more about the prospect. ';
+          this.contentTitle = 'Use chat feature of MatrimonyAssist to communicate with prospect team and find out more about the prospect. ';
           this.contentGuidance = 'Chat and exchange information with connected team';  
           break;    
         default:

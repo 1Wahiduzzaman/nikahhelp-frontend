@@ -3,7 +3,7 @@
       <div class="container">
          <h2 class="color-primary text-center mb-4">Find the right marrige partner with</h2>
          <div class="panel brb-0">
-            <h2 class="text-center color-white mb-0">Matrimony Assist</h2>
+            <h2 class="text-center color-white mb-0">MatrimonyAssist</h2>
          </div>
 
          <div class="card-facility-wrapper">
