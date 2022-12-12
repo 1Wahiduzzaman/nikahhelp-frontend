@@ -3,7 +3,7 @@
     <div class="reset-password">
       <div class="signin-inner">
         <a class="logo" href="/"
-          ><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo"
+          ><img src="@/assets/Icons/Logo/SVG/White Logo.svg" alt="logo" class="mat-logo"
         /></a>
       </div>
       <h3 class="welcome-back-tag text-center text-black-50">

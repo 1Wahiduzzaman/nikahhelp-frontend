@@ -2,7 +2,7 @@
   <div class="row header-text">
     <div class="col-md-12 text-center">
       <router-link to="/"
-        ><img style="margin-top: 12px" class="logoimage" src="@/assets/logo.png" alt=""
+        ><img style="margin-top: 12px" class="logoimage" src="@/assets/Icons/Logo/1x/White logo.png" alt=""
       /></router-link>
     </div>
   </div>

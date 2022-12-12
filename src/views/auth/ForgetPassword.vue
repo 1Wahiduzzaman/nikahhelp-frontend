@@ -4,7 +4,7 @@
       <div class="inner">
         <div class="signin-inner desktop-padding">
           <a class="logo" href="/"
-            ><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo"
+            ><img src="@/assets/Icons/Logo/SVG/White Logo.svg" alt="logo" class="mat-logo"
           /></a>
           <h3 id="welcome-back-tag" class="welcome-back-tag">
             <b>{{
