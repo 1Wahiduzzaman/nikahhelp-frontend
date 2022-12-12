@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div style="height: 20px" class="top flex justify-space-between mt-2 align-center px-3">
+        <div style="height: 20px" class="top flex justify-space-between mt-2 align-center">
             <v-btn
-                class="d-none d-md-block mt-1 text-capitalize"
+                class="d-none d-md-block mt-1 text-capitalize default-btn"
                 rounded
                 color="#6158a7"
                 dark
@@ -14,7 +14,7 @@
                 </div>
             </v-btn>
             <v-btn
-                class="mt-1 z-9 d-block d-md-none text-capitalize"
+                class="mt-1 z-9 d-block d-md-none text-capitalize default-btn"
                 rounded
                 absolute
                 small
@@ -30,14 +30,14 @@
             <v-btn-toggle rounded dense class="d-none d-md-block">
                 <v-btn
                     style="border-right: 2px solid white !important;"
-                    class="mt-1 text-capitalize"
+                    class="mt-1 text-capitalize mr-1 default-btn"
                     color="deep-purple darken-3"
                     @click="$emit('navigateProfile', {userId: profileDetails.user_id, type: 'previous'})"
                 >
                     <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-left-solid.svg" alt="">
                 </v-btn>
                 <v-btn
-                    class="mt-1 text-capitalize"
+                    class="mt-1 text-capitalize default-btn"
                     rounded
                     color="deep-purple darken-3"
                     @click="$emit('navigateProfile', {userId: profileDetails.user_id, type: 'next'})"
@@ -50,7 +50,7 @@
         <!-- mobile profile next button -->
         <div class="d-block d-md-none px-3">
             <v-btn
-                class="mt-1 text-capitalize z-9"
+                class="mt-1 text-capitalize z-9 default-btn"
                 rounded
                 small
                 absolute
@@ -64,7 +64,7 @@
                 </div>
             </v-btn>
              <v-btn
-                class="mt-1 text-capitalize z-9"
+                class="mt-1 text-capitalize z-9 default-btn"
                 rounded
                 small
                 absolute
@@ -90,44 +90,52 @@
         />
 
         <!-- button section -->
-        <div class="flex justify-space-between flex-wrap mt-10">
+        <div class="buttons-div flex justify-space-between flex-wrap mt-10">
             <ButtonComponent
-                class="mb-3"
+                class="mb-3 mobile-margin"
                 iconHeight="14px"
                 :isSmall="true"
                 title="Gallery"
                 customEvent="openGallery"
+                :responsive="false"
                 icon="/assets/icon/gallery.svg"
                 @onClickButton="onClickButton"
             />
             <ButtonComponent
+                class="connect-button mobile-margin"
                 iconHeight="14px"
                 :isSmall="true"
                 :title="profile.is_connect ? 'Cancel' : 'Connect'"
                 icon="/assets/icon/connect-s.svg"
                 :customEvent="profile.is_connect ? 'removeConnection' : 'addConnection'"
+                :responsive="false"
                 @onClickButton="onClickButton"
             />
             <ButtonComponent
+                class="mobile-margin"
                 iconHeight="14px"
                 :isSmall="true"
                 :title="profile.is_short_listed ? 'Unlist' : 'ShortList'"
                 icon="/assets/icon/star-fill-secondary.svg"
                 :customEvent="profile.is_short_listed ? 'removeShortList' : 'addShortList'"
+                :responsive="false"
                 @onClickButton="onClickButton"
             />
             <ButtonComponent
+                class="mobile-margin"
                 iconHeight="14px"
                 :isSmall="true"
                 :title="profile.is_teamListed ? 'Unlist Team' : 'TeamList'"
                 icon="/assets/icon/team.svg"
                 :customEvent="profile.is_teamListed ? 'removeTeam' : 'addTeam'"
+                :responsive="false"
                 @onClickButton="onClickButton"
             />
             <ButtonComponent
+                class="block-button mobile-margin"
                 iconHeight="14px"
                 :isSmall="true"
-                :responsive="true"
+                :responsive="false"
                 :title="profile.is_block_listed ? 'Unblock' : 'Block'"
                 :icon="profile.is_block_listed ? '/assets/icon/block-secondary.svg' : '/assets/icon/block.svg'"
                 :customEvent="profile.is_block_listed ? 'removeBlock' : 'block'"
@@ -412,6 +420,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "@/styles/base/_variables.scss";
 .z-9 {
     z-index: 9;
 }
@@ -424,6 +433,64 @@ export default {
 }
 .v-btn--absolute.v-btn--right, .v-btn--fixed.v-btn--right {
     right: 29px;
+}
+
+.buttons-div::v-deep {
+	@media (max-width: 1400px) {
+		flex-direction: column;
+
+		.mobile-margin {
+			margin-bottom: 6px !important;
+			min-width: 250px !important;
+		}
+	}
+	.mobile-margin {
+		min-width: 120px;
+	}
+}
+
+.block-button::v-deep {
+    .v-custom:hover {
+      background: #fff !important;
+      color: #d81b60 !important;
+      border: 1px solid #d81b60 !important;
+  
+      img {
+        filter: none !important;
+      }
+    }
+}
+  .connect-button::v-deep {
+    .v-custom {
+        background: $bg-success;
+        color: #fff;
+        border: 1px solid $bg-success;
+    }
+    .v-custom:hover {
+      background: #fff !important;
+      color: $bg-success !important;
+      border: 1px solid $bg-success !important;
+  
+      img {
+        filter: none !important;
+      }
+    }
+}
+
+.default-btn {
+    img {
+        filter: brightness(0) invert(1) !important;
+    }
+}
+.default-btn:hover {
+    background: #fff !important;
+    color: $bg-primary !important;
+    border-color: $bg-primary !important;
+    border: 1px solid $bg-primary !important;
+    img {
+        filter: None !important;
+    }
+
 }
 
 </style>
