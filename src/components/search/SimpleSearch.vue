@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="ml-1 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="">
-					<div class="row mb-5">
+					<div class="row mb-2">
 						<div class="w-full text-center mt-2">
 							
 						</div>
