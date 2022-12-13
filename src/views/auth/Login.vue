@@ -2,7 +2,7 @@
   <div class="signin login-main-container">
     <div class="signin-inner desktop-padding login-header-container">
       <a class="logo" href="/"
-        ><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo"
+        ><img src="@/assets/Icons/Logo/SVG/White Logo.svg" alt="logo" class="mat-logo"
       /></a>
       <h3 id="welcome-back-tag" class="welcome-back-tag">
         <b>Welcome Back</b>
@@ -55,7 +55,8 @@
           <button
             type="button"
             @click="handleSubmit"
-            class="btn signin-btn h-32 w-100 pt-1 mt-1"
+            class="btn signin-btn h-32 w-100 mt-1"
+            style="padding: 0px !important; line-height: 1.3 !important;"
           >
             <a-icon type="loading" class="mr-2 fs-20" v-if="isLoading" />
             Sign in
@@ -71,7 +72,7 @@
 
       <div class="join-now pb-4">
         <p class="flex-center-center mt-3 text-white bottom-link-text">
-          New to <span class="logo-text"> Matrimony Assist? </span>
+          New to <span class="logo-text"> MatrimonyAssist? </span>
 
           <router-link
             to="/signup"
@@ -85,7 +86,7 @@
 
       <div class="welcome-back">
         <p class="welcome-back-text">
-          <strong id="name">Matrimony Assist</strong>
+          <strong id="name">MatrimonyAssist</strong>
           is team based, the candidate is never alone
         </p>
       </div>
@@ -354,15 +355,16 @@ export default {
   }
 }
 .signin-btn {
-  border: 1px solid #3a3092;
-  color: #3a3092;
+  border: 1px solid $color-success;
+  background: $color-success;
+  color: #ffffff;
+  box-shadow: 1px 1px 1px #999;
   border-radius: 20px;
   font-size: 16px;
 }
 .signin-btn:hover {
-  background: #3a3092;
-  color: #ffffff;
-  box-shadow: 2px 2px 2px #999;
+  background: #fff;
+  color: $color-success;
 }
 .signin-btn:focus {
   outline: none;

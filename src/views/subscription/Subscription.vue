@@ -8,7 +8,7 @@
           Choose a Subscription Plan that Works for You
         </h4>
         <p class="font-weight-bold sub-heading">
-          Matrimony Assist Subscription is Team Based. Only
+          MatrimonyAssist Subscription is Team Based. Only
           <b>ONE</b> member pays
           <br />
           the rest of the members use the platform for <b>FREE</b> of charge.
@@ -139,7 +139,7 @@
               </div>
               <div class="">
                 <p class="text-center text-white px-4 fs-14">
-                  In Matrimony Assist, All subscribing teams have full access to
+                  In MatrimonyAssist, All subscribing teams have full access to
                   platform and features. The only difference is time limit
                 </p>
               </div>

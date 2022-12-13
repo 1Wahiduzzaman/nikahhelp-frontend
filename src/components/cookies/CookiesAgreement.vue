@@ -14,7 +14,7 @@
       </div>
       
       <div class="docText">
-        <p>Matrimony Assist (hereinafter "matrimonyassist.com" or "us" or "we" as the context requires) is operated by HMS Global Business Limited, a private limited company, registered in the UK (Reg No 07212488). 
+        <p>MatrimonyAssist (hereinafter "matrimonyassist.com" or "us" or "we" as the context requires) is operated by HMS Global Business Limited, a private limited company, registered in the UK (Reg No 07212488). 
           We are a leading online service company. 
         </p>
       </div>
@@ -162,7 +162,7 @@
       <div class="docText">
         <div class="spacing">
           <p>
-            When visiting the Matrimony Assist website [<a href="https://matrimonyassist.com/">https://matrimonyassist.com/</a>] for the first time on a device, you will see a cookies banner explaining that we use cookies, 
+            When visiting the MatrimonyAssist website [<a href="https://matrimonyassist.com/">https://matrimonyassist.com/</a>] for the first time on a device, you will see a cookies banner explaining that we use cookies, 
             why we use them and providing a link to this document.</p>
           <p>This banner gives you a settings option for our websites. If you click on this, you can turn certain cookies on and off.</p>
           <p>You can access these settings and change your choices at any time in the future by clicking on the Cookies Settings link at the bottom of our website pages.</p>

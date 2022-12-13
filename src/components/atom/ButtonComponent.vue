@@ -107,18 +107,38 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.v-custom{
+@import "@/styles/base/_variables.scss";
+//.v-custom{
+//    text-transform: capitalize;
+//    &:hover {
+//        box-shadow: 0px 1px 6px #787474;
+//        border: 1px solid white !important;
+//        background: #6158a7;
+//        color: #fff !important;
+//        img {
+//          filter: brightness(0) invert(1);
+//        }
+//    }
+//}
+.v-custom {
     text-transform: capitalize;
+    background: #6158a7;
+    color: #fff !important;
+    border: 1px solid white !important;
+    box-shadow: 0px 1px 6px #787474;
+    img {
+        filter: brightness(0) invert(1);
+    }
     &:hover {
-        box-shadow: 0px 1px 6px #787474;
-        border: 1px solid white !important;
-        background: #6158a7;
-        color: #fff !important;
+        background: #fff;
+        color: $bg-primary !important;
+        border: 1px solid $bg-primary !important;
         img {
-          filter: brightness(0) invert(1);
+            filter: none !important;
         }
     }
 }
+
 .v-custom-m{
     border:'1px solid #6158a7';
     &:hover {

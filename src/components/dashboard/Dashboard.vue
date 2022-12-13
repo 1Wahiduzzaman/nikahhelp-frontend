@@ -146,7 +146,7 @@
             <slide v-for="(tip, index) in maTips" :key="index">
               <div class="flex justify-content-between tips-direction">
                 <div class="w-slide-1">
-                  <h5 class="text-black-50 font-weight-bold">Matrimony Assist Tips</h5>
+                  <h5 class="text-black-50 font-weight-bold">MatrimonyAssist Tips</h5>
                   <p class="tipsDetailsDesign pl-4 text-black-50">
                     Lorem Ipsum is simply dummy text of the printing and typesetting
                     industry. Lorem Ipsum has been the industry's standard dummy

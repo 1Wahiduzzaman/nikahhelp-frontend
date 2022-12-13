@@ -87,7 +87,7 @@
                     <input v-if="!imageModel.avatar_image_url" type="file" class="input-image" id="input-avatar-image" name="mainImage"
                     @change="getAvatar" />
                   </label>
-                  <a-button type="primary" style="width: 200px" v-if="imageModel.avatar_image_url"
+                  <a-button type="primary" style="width: 200px; border-radius: 5px;" v-if="imageModel.avatar_image_url"
                     @click="clearImg('avatar')"
                   >
                     Remove
@@ -144,7 +144,7 @@
                     <input v-if="!imageModel.main_image_url" type="file" class="input-image" id="input-main-image" name="mainImage"
                     @change="getMainImage" />
                   </label>
-                  <a-button type="primary" style="width: 200px" v-if="imageModel.main_image_url"
+                  <a-button type="primary" style="width: 200px; border-radius: 5px;" v-if="imageModel.main_image_url"
                     @click="clearImg('main')">
                     Remove
                   </a-button>
@@ -202,7 +202,7 @@
                     <input v-if="!imageModel.additionalImageSrc" type="file" class="input-image" id="input-aditional-image" name="mainImage"
                     @change="getAdditionalImage" />
                   </label>
-                  <a-button type="primary" style="width: 200px" v-if="imageModel.additionalImageSrc"
+                  <a-button type="primary" style="width: 200px; border-radius: 5px;" v-if="imageModel.additionalImageSrc"
                     @click="clearImg('additional')">
                     Remove
                   </a-button>

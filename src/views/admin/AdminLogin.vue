@@ -2,7 +2,7 @@
   <div class="signin login-main-container">
     <div class="signin-inner desktop-padding login-header-container">
       <a class="logo" href="/"
-        ><img src="@/assets/ma_logo_white.svg" alt="logo" class="mat-logo"
+        ><img src="@/assets/Icons/Logo/SVG/White Logo.svg" alt="logo" class="mat-logo"
       /></a>
       <h3 id="welcome-back-tag" class="welcome-back-tag">
         <b>Welcome Back</b>
@@ -71,7 +71,7 @@
 
       <div class="join-now pb-4">
         <p class="flex-center-center mt-3 text-white bottom-link-text">
-          New to <span class="logo-text"> Matrimony Assist? </span>
+          New to <span class="logo-text"> MatrimonyAssist? </span>
 
           <router-link
             to="/signup"
@@ -85,7 +85,7 @@
 
       <div class="welcome-back">
         <p class="welcome-back-text">
-          <strong id="name">Matrimony Assist</strong>
+          <strong id="name">MatrimonyAssist</strong>
           is team based, the candidate is never alone
         </p>
       </div>

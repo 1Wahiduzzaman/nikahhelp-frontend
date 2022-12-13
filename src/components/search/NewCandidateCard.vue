@@ -3,7 +3,6 @@
     @click="showDetailRightSide"
     :loading="loading"
     class="mx-auto"
-    max-width="374"
   >
     <template slot="progress">
       <v-progress-linear
@@ -72,6 +71,7 @@
         @onClickButton="onClickButton"
       />
       <ButtonComponent
+        class="connect-button"
         wrapperWidth="49%"
         iconHeight="14px"
         :isSmall="true"
@@ -79,6 +79,7 @@
         :title="connectionTitle"
         icon="/assets/icon/connect-s.svg"
         :customEvent="candidate.is_connect ? 'removeConnection' : 'addConnection'"
+        :backgroundColor="candidate.is_connect ? '' : '#3ab549'"
         @onClickButton="onClickButton"
       />
     </div>
@@ -94,6 +95,7 @@
         @onClickButton="onClickButton"
       />
       <ButtonComponent
+        class="block-button"
         wrapperWidth="49%"
         iconHeight="14px"
         :isSmall="true"
@@ -481,11 +483,35 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "@/styles/base/_variables.scss";
 .truncate {
     white-space: nowrap;
     text-overflow: ellipsis;
     width: 100px;
     overflow: hidden;
+}
+
+.block-button::v-deep {
+  .v-custom:hover {
+    background: #fff !important;
+    color: #d81b60 !important;
+    border: 1px solid #d81b60 !important;
+
+    img {
+      filter: none !important;
+    }
+  }
+}
+.connect-button::v-deep {
+  .v-custom:hover {
+    background: #fff !important;
+    color: $bg-success !important;
+    border: 1px solid $bg-success !important;
+
+    img {
+      filter: none !important;
+    }
+  }
 }
 </style>

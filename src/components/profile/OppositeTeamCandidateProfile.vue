@@ -852,7 +852,7 @@ export default {
 		background: #6158a7;
 		color: #fff !important;
 		img {
-			filter: brightness(0) invert(1);
+			filter: brightness(0) invert(1) !important;
 		}
 		&:hover {
 			box-shadow: 0px 1px 6px #787474;

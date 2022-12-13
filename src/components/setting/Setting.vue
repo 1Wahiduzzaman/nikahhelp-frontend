@@ -128,7 +128,7 @@
       <div class="content">
         <h4>Notification Preferences</h4>
         <div class="password-details">
-          <span>Receive marketing communication from Matrimony Assist</span>
+          <span>Receive marketing communication from MatrimonyAssist</span>
           <v-switch v-model="switch1"></v-switch>
         </div>
       </div>

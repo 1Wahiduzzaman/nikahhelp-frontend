@@ -398,7 +398,7 @@ export default {
 
 	data() {
 		return {
-			representativeData: {},
+			// representativeData: {},
 			avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
 			conversations: [],
 			candidateData: null,

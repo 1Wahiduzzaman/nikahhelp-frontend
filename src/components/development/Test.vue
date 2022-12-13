@@ -392,7 +392,7 @@
 			<div class="col-lg-6 col-xl-4">
 				<!-- start box card component -->
 				<div class="imporve-suggetion-form">
-					<h1>Any suggetions to improve Matrimony Assist</h1>
+					<h1>Any suggetions to improve MatrimonyAssist</h1>
 					<form action="#">
 						<div class="top">
 							<div class="form-group">

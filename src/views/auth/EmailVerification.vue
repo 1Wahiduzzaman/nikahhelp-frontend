@@ -27,10 +27,10 @@
             <p>
               For user safety we need to ensure that only genuine and identifiable
               <br />
-              users are on Matrimony Assist.
+              users are on MatrimonyAssist.
             </p>
             <p>
-              To help us do that all users of the Matrimony Assist Platform will need
+              To help us do that all users of the MatrimonyAssist Platform will need
               to
               <br />
               verify their registration email.

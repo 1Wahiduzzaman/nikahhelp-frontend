@@ -3,7 +3,7 @@
         <v-card :style="{height: height}" class="p-3">
             <div class="flex justify-space-between">
                 <p class="text--disabled text-subtitle-1">{{ title }}</p>
-                <ButtonComponent
+                <!-- <ButtonComponent
                     v-if="showDownloadBtn"
                     iconHeight="14px"
                     :isSmall="true"
@@ -12,7 +12,7 @@
                     customEvent="editProfile"
                     :isBlock="false"
                     @onClickButton="$emit('onClickDownload')"
-                />
+                /> -->
             </div>
             <p class="text--secondary text-subtitle-1">
                 {{ detail }}

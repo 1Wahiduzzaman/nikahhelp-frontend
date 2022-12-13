@@ -102,7 +102,7 @@
             paginationColor="#b7b7b7"
           >
             <slide>
-              <h5 class="tipsDesign">Matrimony Assist Tips</h5>
+              <h5 class="tipsDesign">MatrimonyAssist Tips</h5>
               <img
                 class="img-tips my-2"
                 src="@/assets/icon/person-fill-gray.svg"
@@ -119,7 +119,7 @@
             </slide>
 
             <slide>
-              <h5 class="tipsDesign">Matrimony Assist Tips</h5>
+              <h5 class="tipsDesign">MatrimonyAssist Tips</h5>
               <img
                 class="img-tips my-2"
                 src="@/assets/icon/person-fill-gray.svg"

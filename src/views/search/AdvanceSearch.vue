@@ -75,7 +75,7 @@
                   v-bind:is="currentTabComponent"
                 >
                 </component>
-                <Observer @intersect="onIntersect"/>
+                <!-- <Observer @intersect="onIntersect"/> -->
               </div>
               <div class="main-content-2">
                 <component v-bind:is="rightSideComponentName"></component>
@@ -229,9 +229,9 @@ export default {
         this.$socket.emit('notification', payload);
       }
     },
-    onIntersect() {
-      this.$refs.simpleSearch.handlePaginate();
-    },
+    // onIntersect() {
+    //   this.$refs.simpleSearch.handlePaginate();
+    // },
     showError(message) {
       this.$error({
         title: message,
@@ -364,7 +364,7 @@ export default {
 				};
 				const oppositeGender = gender[personal.per_gender_id];
         this.query += `&gender=${oppositeGender}`
-        this.$refs.simpleSearch.setAttr('gender', oppositeGender); //have to set depending on candidate
+        //this.$refs.simpleSearch.setAttr('gender', oppositeGender); //have to set depending on candidate
          this.fetchInitialCandidate();
       },1000)
     },

@@ -20,11 +20,20 @@
           <div class="item flex-between-center ml-2 mr-2">
             <div class="item-img custom-size">
               <img class="item-img"
+					v-if="user.image !== null"
                    @error="imgLoad(recIndex, user)"
                    :ref="`avatar-${recIndex}`"
                    :src="user.image"
                    alt="img"
                    style="border: 1px solid white;"/>
+
+              <img class="item-img"
+					v-else
+                   :ref="`avatar-${recIndex}`"
+                   :src="require('../../assets/no-image-available.jpg')"
+                   alt="img"
+                   style="border: 1px solid white;"/>
+				
             </div>
             <div class="item-content">
               <div>{{ getUserGender(user) }}, {{ user.age ? getAge(user.age) + ' years' : 'N/A' }}</div>
