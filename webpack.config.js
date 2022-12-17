@@ -4,7 +4,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 const PrerenderSPAPlugin = require('prerender-spa-plugin')
 const Renderer = PrerenderSPAPlugin.PuppeteerRenderer
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const CompressionPlugin = require("compression-webpack-plugin");
+// const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -69,7 +69,7 @@ module.exports = {
 
   plugins: [
     new VueLoaderPlugin(),
-    new CompressionPlugin(),
+    // new CompressionPlugin(),
   ]
 }
 
@@ -102,10 +102,10 @@ if (process.env.NODE_ENV === 'production') {
       })
     }),
 
-    new CompressionPlugin({
-      algorithm: 'gzip',
-      test: /\.js(\?.*)?$/i,
-    })
+    // new CompressionPlugin({
+    //   algorithm: 'gzip',
+    //   test: /\.js(\?.*)?$/i,
+    // })
   ])
 } else {
   // NODE_ENV === 'development'
