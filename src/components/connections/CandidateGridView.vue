@@ -144,26 +144,52 @@
       </div>
       <div class="flip-card-back text-center">
         <v-card class="mx-auto shadow-default shortlist-card flipped position-relative">
-          <h6 class="pt-4">This Profile Connection Overview</h6>
+          <div style="cursor: pointer;" @click="showProfileConnectionOverview = true">
+            <h6 class="mt-5 py-2 bg-primary text-white">This Profile Connection Overview</h6>
+  
+            <div class="">
+              <h6 class="fs-14 fw-300">Connection Status</h6>
+              <h6 class="text-capitalize fs-16">{{ connection.connection }}</h6>
+            </div>
+  
+            <div>
+              <h6 class="fs-14 fw-300">Connected date</h6>
+              <h6 class="text-capitalize fs-16">{{ dateFromDateTime(connection.responded_at) }}</h6>
+            </div>
+  
+            <div>
+              <h6 class="fs-14 fw-300">Connection requested by</h6>
+              <h6 class="text-capitalize fs-16">{{ connection.requested_by.full_name }}</h6>
+            </div>
+  
+            <div>
+              <h6 class="fs-14 fw-300">Request Date</h6>
+              <h6 class="text-capitalize fs-16">{{ dateFromDateTime(connection.requested_at) }}</h6>
+            </div>
 
-          <div class="">
-            <h6 class="fs-14 fw-300">Connection Status</h6>
-            <h6 class="text-capitalize fs-16">{{ connection.connection }}</h6>
-          </div>
+            <a-modal 
+              :visible="showProfileConnectionOverview" 
+              :closable="true"
+              title="This Profile Connection Overview" 
+              @ok="showProfileConnectionOverview = false" 
+              @cancel="showProfileConnectionOverview = false" 
+              :ok-button-props="{ disabled: true }"
+              :cancel-button-props="{ disabled: true }"
+              >
+              <span class="fw-600">Connection Status</span> <br> {{ connection.connection }} <br><br>
+              <span class="fw-600">Connected Date</span> <br> {{ connection.responded_at }} <br><br>
+              <span class="fw-600">Connection Requested By</span><br> {{ connection.requested_by.full_name }} <br><br>
+              <span class="fw-600">Request Date</span><br> {{ dateFromDateTime(connection.requested_at) }}
 
-          <div>
-            <h6 class="fs-14 fw-300">Connected date</h6>
-            <h6 class="text-capitalize fs-16">{{ dateFromDateTime(connection.responded_at) }}</h6>
-          </div>
-
-          <div>
-            <h6 class="fs-14 fw-300">Connection requested by</h6>
-            <h6 class="text-capitalize fs-16">{{ connection.requested_by.full_name }}</h6>
-          </div>
-
-          <div>
-            <h6 class="fs-14 fw-300">Request Date</h6>
-            <h6 class="text-capitalize fs-16">{{ dateFromDateTime(connection.requested_at) }}</h6>
+              <template slot="footer">
+                <a-button key="back" shape="round" @click="showProfileConnectionOverview=false">
+                  Cancel
+                </a-button>
+                <a-button key="submit" type="primary" shape="round" @click="showProfileConnectionOverview = false">
+                  Ok
+                </a-button>
+              </template>
+            </a-modal>
           </div>
 
 <!--          <table class="table table-borderless overview-table">-->
@@ -188,27 +214,62 @@
 <!--              <td>{{ dateFromDateTime(connection.requested_at) }}</td>-->
 <!--            </tr>-->
 <!--          </table>-->
+        
+          <div @click="showProfileTeamOverview = true" style="cursor: pointer">
+            <h6 class="mt-3 py-2 bg-primary text-white">This Profile Team Overview</h6>
+  
+            <div>
+              <h6 class="fs-14 fw-300">Team name</h6>
+              <h6 class="text-capitalize fs-16 break-long-words">{{ connection.to_team_name }}</h6>
+            </div>
+  
+            <div>
+              <h6 class="fs-14 fw-300">Team members</h6>
+              <h6 class="text-capitalize fs-16">{{ connection.total_teamMember }}</h6>
+            </div>
+  
+            <div>
+              <h6 class="fs-14 fw-300">Team creation date</h6>
+              <h6 class="text-capitalize fs-16">{{ dateFromTimeStamp(connection.team_created_date) }}</h6>
+            </div>
+  
+            <div>
+              <h6 class="fs-14 fw-300">Team created by</h6>
+              <h6 class="text-capitalize fs-16">{{ connection.team_created_by }}</h6>
+            </div>
 
-          <h6 class="pt-3">This Profile Team Overview</h6>
+            <a-modal 
+              :visible="showProfileTeamOverview" 
+              :closable="true"
+              title="This Profile Connection Overview" 
+              @ok="showProfileTeamOverview = false" 
+              @cancel="showProfileTeamOverview = false" 
+              :ok-button-props="{ disabled: true }"
+              :cancel-button-props="{ disabled: true }"
+              >
+              <span class="fw-600">Team Name</span> <br> {{ connection.to_team_name }} <br><br>
+              <span class="fw-600">Team Members</span> <br> {{ connection.total_teamMember }} <br><br>
+              <span class="fw-600">Team Creation Date</span><br> {{ dateFromDateTime(connection.team_created_date) }} <br><br>
+              <span class="fw-600">Team Created By</span><br> {{ connection.team_created_by }}
 
-          <div>
-            <h6 class="fs-14 fw-300">Team name</h6>
-            <h6 class="text-capitalize fs-16">{{ connection.to_team_name }}</h6>
+              <template slot="footer">
+                <a-button key="back" shape="round" @click="showProfileTeamOverview=false">
+                  Cancel
+                </a-button>
+                <a-button key="submit" type="primary" shape="round" @click="showProfileTeamOverview = false">
+                  Ok
+                </a-button>
+              </template>
+            </a-modal>
           </div>
-
           <div>
-            <h6 class="fs-14 fw-300">Team members</h6>
-            <h6 class="text-capitalize fs-16">{{ connection.total_teamMember }}</h6>
-          </div>
-
-          <div>
-            <h6 class="fs-14 fw-300">Team creation date</h6>
-            <h6 class="text-capitalize fs-16">{{ dateFromTimeStamp(connection.team_created_date) }}</h6>
-          </div>
-
-          <div>
-            <h6 class="fs-14 fw-300">Team created by</h6>
-            <h6 class="text-capitalize fs-16">{{ connection.team_created_by }}</h6>
+            <ButtonComponent
+								iconHeight="14px"
+								:isSmall="true"
+								title="Back"
+								:responsive="false"
+								@onClickButton="rotated = !rotated"
+							/>
           </div>
 
 <!--          <table class="table table-borderless overview-table">-->
@@ -253,17 +314,20 @@
 import {getAge, dateFromDateTime, dateFromTimeStamp} from "@/common/helpers.js";
 import JwtService from "@/services/jwt.service";
 import GridButtons from "./GridButtons";
+import ButtonComponent from '@/components/atom/ButtonComponent';
 
 export default {
   name: "CandidateGridView",
-  components: {GridButtons},
+  components: {GridButtons, ButtonComponent},
   props: ["connection", "active_team_id"],
   data() {
     return {
       avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
       conversations: [],
       type: this.connection.connection_type,
-      rotated: false
+      rotated: false,
+      showProfileConnectionOverview: false,
+      showProfileTeamOverview: false,
     };
   },
   mounted() {
@@ -295,7 +359,7 @@ export default {
         return {
           received: this.type,
         };
-      } else if (this.type == "Request send") {
+      } else if (this.type == "Request sent") {
         return {
           "request-sent": this.type,
         };
@@ -314,7 +378,7 @@ export default {
         return 'green';
       } else if (this.type == "Request received") {
         return 'info';
-      } else if (this.type == "Request send") {
+      } else if (this.type == "Request sent") {
         return 'warning';
       } else if (this.type == "we declined") {
         return 'error';
@@ -888,6 +952,12 @@ export default {
   @media (min-width: 1200px) {
     max-width: 374px;
   }
+}
+
+.break-long-words {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .flipped {
   padding: 15px 10px;
