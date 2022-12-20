@@ -10,6 +10,7 @@
           @onFetchUserInfo="loadUserProfile"
           :candidateData="candidateProfileInfo"
           :teams="teams"
+          :profile="fullProfileInfo"
         ></candidate-profile>
       </div>
       <div v-else>
@@ -98,6 +99,7 @@ export default {
       profileId: null,
       candidateProfileInfo: {},
       representativeProfileInfo: {},
+      fullProfileInfo: {},
     };
   },
   mounted() {
@@ -130,10 +132,10 @@ export default {
           from_team = activeTeam.id;
         }
       }
-      let payload = {
-        from_team_id: from_team
-      };
-      await ApiService.post("v1/site-visit", payload).then(res => res.data);
+      // let payload = {
+      //   from_team_id: from_team
+      // };
+      // await ApiService.post("v1/site-visit", payload).then(res => res.data);
     },
     async loadUserProfile() {
       this.isLoading = true;
@@ -147,6 +149,7 @@ export default {
         const response = await this.$store.dispatch("getUserProfile", payload);
         console.log(response);
         this.userProfile = response.data.user;
+        this.fullProfileInfo = response.data;
         if (response.data.user.account_type == 1) {
           this.candidateProfileInfo = response.data.candidate_information;
           //console.log(this.candidateProfileInfo);
