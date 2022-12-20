@@ -146,7 +146,7 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.5);
     padding: 15px 0;
     //@media (min-width: 768px) {
     //  bottom: 40px !important;
@@ -246,7 +246,7 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.5);
     padding: 15px 0;
   }
   .slider-handle {
