@@ -5,8 +5,68 @@
         ><img src="@/assets/Icons/Logo/SVG/White Logo.svg" alt="logo" class="mat-logo"
       /></a>
     </div>
+
+    <div v-if="!showSignUpPage" class="container signup-text-container">
+      <section class="section-1 mt-4">
+        <h3>Welcome to MatrimonyAssist Signup</h3>
+        <p>To use MatrimonyAssist App, you are required to create at least two profiles, one for the candidate and the other for a representative of the candidate. In MatrimonyAssist, the candidate and the representative(s) jointly play a vital role in finding prospects.</p>
+        <p>Depending on your requirement and eligibility, you join MatrimonyAssist either as a candidate or a representative or a matchmaker if this is your profession. </p>
+        <p>To sign up and register with MatrimonyAssist, you will need a valid email address, a mobile number, an avatar, a main and an additional image.</p>
+
+        <div style="padding-left: 15px; border-left: 10px solid #b1b4b6">
+          If you are a candidate, you will also need:
+          <ul style="list-style-type: disc !important;">
+            <li>proof of identity (such as national ID, passport, driving licence)</li>
+            <li>proof of address (randomly requested and checked by MatrimonyAssist) </li>
+          </ul>         
+        </div>
+        <br> <br>
+        <div style="padding-left: 15px; border-left: 10px solid #b1b4b6">
+          And if you are a representative of a candidate, you will also need: 
+          <ul style="list-style-type: disc !important;">
+            <li>consent from your candidate to represent them on MatrimonyAssist platform</li>
+            <li>name of a referee (a person with community standing who could provide reference about you at request)</li>
+          </ul>         
+        </div>
+
+        <ButtonComponent
+          style="width: 250px; margin-top: 35px; height: 100px;"
+          class="connect-button"
+          :isSmall="false"
+          title="Join now"
+          :isBlock="true"
+          :responsive="false"
+          backgroundColor="#3ab549"
+          @onClickButton="showSignUpPage = true"
+        />
+      </section>
+
+      <section class="section-2">
+        <h4>After the Registration</h4>
+        <p>After the registration you need to create a team that must include a candidate and a representative who have already completed their respective registration forms. Maximum of up to 4 representatives can join in a team. Once the team is formed, you then make a subscription payment for the team. In MatrimonyAssist, payment is team based. One member pays, the rest use it for free. </p>
+      </section>
+
+      <section class="section-3 mt-4">
+        <h4>What you need to know</h4>
+        <p>Once your registration form is completed and submitted, it will go through a verification and approval process. MatrimonyAssist will usually make a decision within 24 hours. However, if there are any compliance issues, MatrimonyAssist shall contact you through notification and customer support/personal settings section.</p>
+      </section>
+
+      <section class="section-4 mt-4">
+        <h4>If your application is refused</h4>
+        <p>MatrimonyAsssist team will tell you why your application is refused.</p>
+        <p>You can ask us to reconsider your case if you do not think all the important information you provided was taken into account.</p>
+      </section>
+
+      <section class="section-5 mt-4">
+        <h4>If you need help</h4>
+        <p>For questions about sign up and registration you may <router-link to="/help">contact</router-link> the MatrimonyAssist Team.</p>
+      </section>
+
+
     
-    <div class="signup body-container">
+    </div>
+    
+    <div class="signup body-container" v-if="showSignUpPage">
       <div class="type-selection" v-if="showMemberTypeForm && !errorMessage">
         <div class="content mb-5">
           <h3 class="mt-3 text-header-black font-weight-bolder">
@@ -271,7 +331,7 @@
           class="form-signup br-card"
         >
           <div>
-            <h4 class="fs-16 text-white fw-400">Type your name</h4>
+            <!-- <h4 class="fs-16 text-white fw-400">Type your name</h4> -->
             <div class="mb-3">
               <a-form-model-item ref="first_name" prop="first_name">
                 <a-input
@@ -365,7 +425,7 @@
           class="form-signup"
         >
           <div>
-            <h4 class="fs-16 text-white fw-400">Type your email & password</h4>
+            <!-- <h4 class="fs-16 text-white fw-400">Type your email & password</h4> -->
             <div class="mb-3">
               <a-form-model-item ref="email" prop="email">
                 <a-input
@@ -498,6 +558,7 @@ import Footer from "@/components/auth/Footer.vue";
 import Spinner from "@/components/ui/Spinner.vue";
 import InputPassword from "@/components/ui/InputPassword";
 import { CapitalizeFirstLetter } from "../../models/utilities";
+import ButtonComponent from "@/components/atom/ButtonComponent";
 
 export default {
   name: "Signup",
@@ -505,6 +566,7 @@ export default {
     Footer,
     Spinner,
     InputPassword,
+    ButtonComponent
   },
   data() {
     let validatePass = (rule, value, callback) => {
@@ -577,6 +639,7 @@ export default {
       showMemberFormType: false,
       isLoading: false,
       isConfirm: false,
+      showSignUpPage: false,
       rules: {
         email: [
           {
@@ -936,6 +999,13 @@ $border-width: 2px;
     }
   }
 }
+.signup-text-container {
+  h3 {
+      text-align: left !important;
+      font-weight: bolder;
+      font-size: 28px;
+  }
+}
 .type-selection {
   display: flex;
   flex-direction: row;
@@ -1079,6 +1149,18 @@ h3 {
     font-weight: 100;
   }
 }
+.connect-button::v-deep {
+  .v-custom:hover {
+    background: #fff !important;
+    color: $bg-success !important;
+    border: 1px solid $bg-success !important;
+
+    img {
+      filter: none !important;
+    }
+  }
+}
+
 .no-shadow {
   box-shadow: none !important;
 }
