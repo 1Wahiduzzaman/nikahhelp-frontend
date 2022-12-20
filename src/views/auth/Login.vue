@@ -28,7 +28,7 @@
         </p>
         <div v-else>
           <div class="">
-            <h4 class="fs-16 text-black-50">Type your email & password</h4>
+            <!-- <h4 class="fs-16 text-black-50">Type your email & password</h4> -->
             <a-form-model-item ref="email" prop="email">
               <a-input
                 type="email"
@@ -86,7 +86,7 @@
 
       <div class="welcome-back">
         <p class="welcome-back-text">
-          <strong id="name">MatrimonyAssist</strong>
+          <span id="name" style="font-weight: 200;">MatrimonyAssist</span>
           is team based, the candidate is never alone
         </p>
       </div>
