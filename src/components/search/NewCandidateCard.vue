@@ -90,12 +90,13 @@
         :isSmall="true"
         :responsive="false"
         :title="candidate.is_teamListed ? 'Unlist Team' : 'TeamList'"
-        icon="/assets/icon/team.svg"
+        icon="/assets/icon/teamlist.svg"
         :customEvent="candidate.is_teamListed ? 'removeTeam' : 'addTeam'"
         @onClickButton="onClickButton"
       />
       <ButtonComponent
         class="block-button"
+        :class="candidate.is_block_listed ? 'unblock-button' : ''"
         wrapperWidth="49%"
         iconHeight="14px"
         :isSmall="true"
@@ -509,6 +510,18 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
     color: $bg-success !important;
     border: 1px solid $bg-success !important;
 
+    img {
+      filter: none !important;
+    }
+  }
+}
+
+.unblock-button::v-deep {
+  .v-custom:hover {
+    background: #fff !important;
+    color: $bg-primary !important;
+    border : 1px solid $bg-primary !important;
+    
     img {
       filter: none !important;
     }
