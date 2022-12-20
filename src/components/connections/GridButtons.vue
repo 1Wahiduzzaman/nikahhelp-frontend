@@ -3,11 +3,11 @@
     <div v-if="type == 'connected'">
       <div class="flex flex-wrap justify-space-between px-4">
         <v-btn
-            class="text-capitalize btn-connection color-primary"
+            class="text-capitalize btn-connection disconnect-button"
             rounded
             outlined
             small
-            style="width: 47%"
+            style="width: 49%"
             dark
             @click="$emit('disconnectTeam')"
         >
@@ -18,8 +18,8 @@
         </v-btn>
 
         <v-btn
-            class="text-capitalize btn-connection color-primary"
-            style="width: 47%"
+            class="text-capitalize btn-connection block-button"
+            style="width: 49%"
             rounded
             outlined
             small
@@ -28,7 +28,7 @@
             @click="$emit('block')"
         >
           <div class="flex justify-center align-center">
-            <a-icon type="block" class="mr-2" />
+            <a-icon type="stop" class="mr-2" />
             Block
           </div>
         </v-btn>
@@ -36,7 +36,7 @@
       <div class="flex flex-wrap justify-space-between px-4 mt-3">
         <v-btn
             class="text-capitalize btn-connection color-primary"
-            style="width: 47%"
+            style="width: 49%"
             rounded
             small
             outlined
@@ -52,7 +52,7 @@
 
         <v-btn
             class="text-capitalize btn-connection color-primary"
-            style="width: 47%"
+            style="width: 49%"
             rounded
             outlined
             small
@@ -71,7 +71,7 @@
       <div class="flex flex-wrap justify-space-between px-4">
         <v-btn
             class="text-capitalize btn-connection color-primary"
-            style="width: 47%"
+            style="width: 49%"
             rounded
             small
             outlined
@@ -87,7 +87,7 @@
 
         <v-btn
             class="text-capitalize btn-connection color-primary"
-            style="width: 47%"
+            style="width: 49%"
             rounded
             small
             outlined
@@ -103,8 +103,8 @@
       </div>
       <div class="flex flex-wrap justify-space-between px-4 mt-3">
         <v-btn
-            class="text-capitalize btn-connection color-primary"
-            style="width: 47%"
+            class="text-capitalize btn-connection block-button"
+            style="width: 49%"
             rounded
             outlined
             small
@@ -113,14 +113,14 @@
             @click="$emit('block')"
         >
           <div class="flex justify-center align-center">
-            <a-icon type="block" class="mr-2" />
+            <a-icon type="stop" class="mr-2" />
             Block
           </div>
         </v-btn>
 
         <v-btn
             class="text-capitalize btn-connection color-primary"
-            style="width: 47%"
+            style="width: 49%"
             rounded
             outlined
             small
@@ -135,11 +135,11 @@
         </v-btn>
       </div>
     </div>
-    <div v-if="type == 'Request send'">
+    <div v-if="type == 'Request sent'">
       <div class="flex flex-wrap justify-space-between px-4">
         <v-btn
             class="text-capitalize btn-connection color-primary"
-            style="width: 47%"
+            style="width: 49%"
             rounded
             outlined
             small
@@ -154,8 +154,8 @@
         </v-btn>
 
         <v-btn
-            class="text-capitalize btn-connection color-primary"
-            style="width: 47%"
+            class="text-capitalize btn-connection block-button"
+            style="width: 49%"
             rounded
             outlined
             small
@@ -164,7 +164,7 @@
             @click="$emit('block')"
         >
           <div class="flex justify-center align-center">
-            <a-icon type="block" class="mr-2" />
+            <a-icon type="stop" class="mr-2" />
             Block
           </div>
         </v-btn>
@@ -200,12 +200,12 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
-.block-button {
-  background: $bg-brand;
-}
-.block-button:hover {
-  background: $bg-brand;
-}
+//.block-button {
+//  background: $bg-brand;
+//}
+//.block-button:hover {
+//  background: $bg-brand;
+//}
 
 .grid-action-btn {
   border-color: #f9f9f9;
@@ -233,10 +233,40 @@ export default {
 .btn-info:hover {
   background: #1bb9c2;
 }
-.btn-connection:hover {
-  box-shadow: 0 1px 6px #787474;
+.btn-connection {
+  box-shadow: 0 1px 6px #b2aaaa;
   border: 1px solid white !important;
   background: $bg-primary;
   color: $color-white !important;
 }
+
+.btn-connection:hover {
+  background: #fff;
+  color: $bg-primary !important;
+  border: 1px solid $bg-primary !important;
+}
+
+.block-button {
+  background: #d81b60;
+  color: #fff;
+  border: 1px solid #fff;
+}
+
+.block-button:hover {
+  background: #fff !important;
+  color: #d81b60 !important;
+  border: 1px solid #d81b60 !important;
+}
+.disconnect-button {
+  background: #454141;
+  color: #fff;
+  border: 1px solid #454141;
+}
+
+.disconnect-button:hover {
+  background: #fff !important;
+  color: #454141 !important;
+  border: 1px solid #454141 !important;
+}
+
 </style>
