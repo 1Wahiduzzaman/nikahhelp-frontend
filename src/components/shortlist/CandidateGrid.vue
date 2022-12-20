@@ -69,7 +69,7 @@
     </div>
     <v-divider class="mx-4"></v-divider>
 
-    <div class="flex flex-wrap justify-space-between px-4">
+    <!-- <div class="flex flex-wrap justify-space-between px-4">
       <v-btn
           class="text-capitalize btn-connection color-primary"
           style="width:47%"
@@ -152,6 +152,81 @@
           View Profile
         </div>
       </v-btn>
+    </div> -->
+    <!-- <div class="px-4 pb-4 mt-4">
+      <v-btn
+          class="mt-1 text-capitalize btn-connection color-primary"
+          block
+          rounded
+          outlined
+          color=""
+          dark
+          @click="viewProfile"
+      >
+        <div class="flex justify-center align-center">
+          <a-icon type="user" class="mr-2" />
+          View Profile
+        </div>
+      </v-btn>
+    </div> -->
+    <div class="flex flex-wrap justify-space-between px-4">
+      <ButtonComponent
+        wrapperWidth="49%"
+        iconHeight="14px"
+        :isSmall="true"
+        :responsive="false"
+        :title="shortlisted ? 'Unlist' : 'ShortList'"
+        icon="/assets/icon/star-fill-secondary.svg"
+        :customEvent="shortlisted ? 'removeShortList' : 'addShortList'"
+        @onClickButton="actionShortlist"
+      />
+      <ButtonComponent
+        class="connect-button"
+        wrapperWidth="49%"
+        iconHeight="14px"
+        :isSmall="true"
+        :responsive="false"
+        :title="item.is_connect ? 'Disconnect' : 'Connect'"
+        icon="/assets/icon/connect-s.svg"
+        :customEvent="item.is_connect ? 'removeConnection' : 'addConnection'"
+        :backgroundColor="item.is_connect ? '' : '#3ab549'"
+        @onClickButton="actionConnection"
+      />
+    </div>
+    <div class="mt-3 px-4 flex flex-wrap justify-space-between">
+      <ButtonComponent
+        wrapperWidth="49%"
+        iconHeight="14px"
+        :isSmall="true"
+        :responsive="false"
+        :title="teamlisted ? 'Unlist Team' : 'TeamList'"
+        icon="/assets/icon/teamlist.svg"
+        :customEvent="teamlisted ? 'removeTeam' : 'addTeam'"
+        @onClickButton="actionTeamlist"
+      />
+      <ButtonComponent
+        class="block-button"
+        wrapperWidth="49%"
+        iconHeight="14px"
+        :isSmall="true"
+        :responsive="false"
+        :title="item.is_block_listed ? 'Unblock' : 'Block'"
+        :icon="item.is_block_listed ? '/assets/icon/block-secondary.svg' : '/assets/icon/block.svg'"
+        :customEvent="item.is_block_listed ? 'removeBlock' : 'block'"
+        :backgroundColor="item.is_block_listed ? '' : '#d81b60'"
+        :titleColor="item.is_block_listed ? '' : 'white'"
+        @onClickButton="actionBlock"
+      />
+    </div>
+    <div class="px-4 pb-4 mt-4">
+      <ButtonComponent
+        :responsive="false"
+        title="View Profile"
+        iconHeight="14px"
+        icon="/assets/icon/person-fill-secondary.svg"
+        customEvent="viewProfileDetail"
+        @onClickButton="viewProfile"
+      />
     </div>
   </v-card>
 </template>
@@ -160,6 +235,8 @@
 import ApiService from '@/services/api.service';
 import JwtService from "@/services/jwt.service";
 import Notification from "@/common/notification.js";
+import ButtonComponent from '@/components/atom/ButtonComponent'
+
 
 export default {
   name: "CandidateGrid",
@@ -170,6 +247,9 @@ export default {
     ping: function (data) {
       console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
     }
+  },
+  components: {
+      ButtonComponent
   },
   props: ['item', 'shortListedIds', 'teamListedIds'],
   data() {
@@ -345,7 +425,7 @@ export default {
 
         let payload = {
           from_team_id: myTeamId,
-          to_team_id: this.item.team.team_id
+          to_team_id: this.item.team_id
         }
         ApiService.post(`/v1/send-connection-request`, payload)
             .then(res => {
@@ -383,12 +463,12 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
-.shortlist-card {
-  max-width: 300px;
-  @media (min-width: 1200px) {
-    max-width: 374px;
-  }
-}
+//.shortlist-card {
+//  max-width: 300px;
+//  @media (min-width: 1200px) {
+//    max-width: 374px;
+//  }
+//}
 .btn-connection:hover {
   box-shadow: 0 1px 6px #787474;
   border: 1px solid white !important;
@@ -397,6 +477,29 @@ export default {
   div {
     img {
       filter: brightness(0) invert(1);
+    }
+  }
+}
+
+.block-button::v-deep {
+  .v-custom:hover {
+    background: #fff !important;
+    color: #d81b60 !important;
+    border: 1px solid #d81b60 !important;
+
+    img {
+      filter: none !important;
+    }
+  }
+}
+.connect-button::v-deep {
+  .v-custom:hover {
+    background: #fff !important;
+    color: $bg-success !important;
+    border: 1px solid $bg-success !important;
+
+    img {
+      filter: none !important;
     }
   }
 }

@@ -60,7 +60,7 @@ export const VERIFICATION_RULES = {
     
     ver_recommender_mobile_no:  {
         required: true,
-        message: "Enter your mobile number",
+        // message: "Enter your mobile number",
         trigger: "blur",
     },
     

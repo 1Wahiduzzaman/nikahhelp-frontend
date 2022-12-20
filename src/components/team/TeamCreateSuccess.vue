@@ -15,14 +15,14 @@
       </a-row>
     </div>
 
-    <div class="bottom-half flex justify-content-center align-items-center flex-column">
+    <div class="bottom-half flex align-items-center flex-column">
       <a-row>
         <a-col :span="24">
 						<h4 class="sub-msg text-center">To activate this team, You have to <br> choose a subscription plan</h4>
         </a-col>
       </a-row>
 
-      <a-row class="text-center">
+      <a-row class="text-center mt-8">
         <a-col :span="24">
           <button class="sub-btn">
 							<span class="sub-btn-label"
@@ -32,7 +32,7 @@
         </a-col>
       </a-row>
 
-      <a-row class="text-center mt-2">
+      <a-row class="text-center mt-2" v-if="false">
         <a-col :span="24">
 						<span class="promo"
             >get <span class="free-day">1 free day</span></span
@@ -40,7 +40,7 @@
         </a-col>
       </a-row>
 
-      <a-row class="text-center mt-2">
+      <a-row class="text-center mt-2" v-if="false">
         <a-col :span="24">
 						<span class="disclaimer"
             >* You can do <strong>1 free day</strong> subscription plan for
@@ -105,13 +105,13 @@ export default {
 
 .sub-msg {
   color: white;
-  font-weight: 300;
-  font-size: 14px;
+  font-weight: 200;
+  font-size: 15px;
 }
 
 .sub-btn {
   background: #e22077;
-  width: 200px;
+  width: 250px;
   height: 40px;
   color: #e22077;
   border: 3px solid #FFFFFF;

@@ -29,7 +29,7 @@
 
             <v-btn-toggle rounded dense class="d-none d-md-block">
                 <v-btn
-                    style="border-right: 2px solid white !important;"
+                    style="border: 1px solid #6159a7 !important;"
                     class="mt-1 text-capitalize mr-1 default-btn"
                     color="deep-purple darken-3"
                     @click="$emit('navigateProfile', {userId: profileDetails.user_id, type: 'previous'})"
@@ -37,6 +37,7 @@
                     <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-left-solid.svg" alt="">
                 </v-btn>
                 <v-btn
+                    style="border: 1px solid #6159a7 !important"
                     class="mt-1 text-capitalize default-btn"
                     rounded
                     color="deep-purple darken-3"

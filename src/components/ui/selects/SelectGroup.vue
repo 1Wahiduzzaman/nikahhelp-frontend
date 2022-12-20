@@ -40,7 +40,7 @@
         <img src="@/assets/select-arrow-big.png" alt="" />
       </template>
     </a-select>
-    <div class="mx-2 color-primary">To</div>
+    <div class="mx-2 customize-color" style="color: #7e7e7e">To</div>
     <!-- <v-select
       class="style-chooser"
       label="name"

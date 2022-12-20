@@ -41,7 +41,7 @@
             </a-select>
           </a-tooltip>
 
-          <label for="" style="color:#fff; margin: 0px 2px;">Relationship:</label>
+          <label for="" style="color:#fff; margin: 0px 2px;" v-if="invitationObject.add_as_a != 'Candidate'">Relationship:</label>
           <a-tooltip
               placement="top"
               title="Relationship with candidate is"
@@ -457,7 +457,7 @@ export default {
 }
 .from-data-card {
   width: 97%;
-  top: 12px;
+  top: 8px;
   left: -1px;
   height: 650px;
   border-radius: 10px;

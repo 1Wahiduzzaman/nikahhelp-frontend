@@ -19,8 +19,8 @@
 		<!-- start advanced search -->
 		<div class="row mt-2">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-				<div class="row">
-					<div v-for="(profile, n) in  profiles" :key="n" class="col-sm-12 col-md-6 col-lg-4">
+				<div class="row px-2">
+					<div v-for="(profile, n) in  profiles" :key="n" class="col-sm-12 col-md-6 col-lg-4 px-2">
 						<CandidateGrid
 							:candidate="profile"
 							:role="role"

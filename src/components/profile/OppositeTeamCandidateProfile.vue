@@ -46,13 +46,13 @@
 								@onClickButton="onClickButton"
 							/>
 							<ButtonComponent
-								class="mobile-margin"
+								class="mobile-margin connect-button"
 								backgroundColor="#3ab549"
 								iconHeight="14px"
 								:isSmall="true"
-								:title="candidateData.status.is_connect ? 'Disconnect' : 'Connect'"
+								:title="candidateData.status.is_connect.length > 0 ? 'Disconnect' : 'Connect'"
 								icon="/assets/icon/connect-s.svg"
-								:customEvent="candidateData.status.is_connect ? 'removeConnection' : 'addConnection'"
+								:customEvent="candidateData.status.is_connect.length > 0 ? 'removeConnection' : 'addConnection'"
 								:responsive="false"
 								@onClickButton="onClickButton"
 							/>
@@ -71,13 +71,14 @@
 								iconHeight="14px"
 								:isSmall="true"
 								:title="candidateData.status.is_teamListed ? 'Unlist Team' : 'TeamList'"
-								icon="/assets/icon/team.svg"
+								icon="/assets/icon/teamlist.svg"
 								:customEvent="candidateData.status.is_teamListed ? 'removeTeam' : 'addTeam'"
 								:responsive="false"
 								@onClickButton="onClickButton"
 							/>
 							<ButtonComponent
-								class="mobile-margin"
+								class="mobile-margin block-button"
+								:class="candidateData.status.is_block_listed ? 'unblock-button' : ''"
 								iconHeight="14px"
 								:isSmall="true"
 								:responsive="false"
@@ -345,10 +346,33 @@
 					<!-- <div class="profile-footer">
 						<Footer></Footer>
 					</div> -->
-					<ComingSoonModal
+					<!-- <ComingSoonModal
 						title="Team details quick view"
 						ref="advDiag"
-					/>
+					/> -->
+					<a-modal 
+						:visible="showTeamInfo" 
+						:closable="true"
+						title="Team Info" 
+						@ok="showTeamInfo = false" 
+						@cancel="showTeamInfo = false" 
+						:ok-button-props="{ disabled: true }"
+						:cancel-button-props="{ disabled: true }"
+					>
+						<span class="fw-600">Team Name</span> <br> {{ profile.team.team_name }} <br><br>
+						<span class="fw-600">Team Members</span> <br> {{ profile.team.member }} <br><br>
+						<span class="fw-600">Team Creation Date</span><br> {{ dateFromDateTime(profile.team.created_at) }} <br><br>
+						<span class="fw-600">Team Created By</span><br> {{ profile.team.created_by.full_name }}
+
+						<template slot="footer">
+							<a-button key="back" shape="round" @click="showTeamInfo=false">
+							Cancel
+							</a-button>
+							<a-button key="submit" type="primary" shape="round" @click="showProfileTeamOverview = false">
+							Ok
+							</a-button>
+						</template>
+            		</a-modal>
 				</v-col>
 			</v-row>
 		</v-container>
@@ -358,6 +382,8 @@
 <script>
 import RatingComponent from "./RatingComponent.vue";
 import improveMyselfThings from '@/common/improveMyselfThings'
+import { dateFromDateTime } from "@/common/helpers.js";
+
 // import Footer from "@/components/auth/Footer.vue";
 
 import ProfileBanner from "@/components/atom/ProfileBanner";
@@ -377,7 +403,7 @@ import {mapActions} from 'vuex'
 
 export default {
 	name: "CandidateProfile",
-	props: ["candidateData", "userId", "role", 'teams'],
+	props: ["candidateData", "userId", "role", 'teams', 'profile'],
 	components: { 
 		RatingComponent, 
 		// Footer,
@@ -397,10 +423,10 @@ export default {
 			copyProfileText: 'Copy Profile URL',
 			avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
 			conversations: [],
-			profile: '',
 			improveMyselfThings,
 			candidateInfo: null,
-			images: []
+			images: [],
+			showTeamInfo: false,
 		};
 	},
 	created() {
@@ -440,9 +466,22 @@ export default {
 				})
 			})
 			return allMembers
+		},
+		getConnectionTitle() {
+			let connection = this.candidateData.status.is_connect[0];
+			if(this.candidateData.status.is_connect.length === 0) {
+				return 'Connect';
+			} else {
+				if(connection.connection_status === "1") {
+					return 'Disconnect'
+				} else if (connection.connection_status === "0") {
+					return 'Accept'
+				}
+			}
 		}
 	},
 	methods: {
+		dateFromDateTime,
 		...mapActions({
             connectToCandidate: 'search/connectCandidate',
             blockACandidate: 'search/blockCandidate',
@@ -462,7 +501,8 @@ export default {
             }
         },
 		onClickTeamDetail() {
-            this.$refs.advDiag.openDiag()
+            // this.$refs.advDiag.openDiag()
+			this.showTeamInfo = true;
         },
 		 onClickCopyText() {
             this.copyProfileText = 'Copy successful'
@@ -847,16 +887,37 @@ export default {
 	.mobile-margin {
 		min-width: 120px;
 	}
-	.v-custom {
-		text-transform: capitalize;
-		background: #6158a7;
-		color: #fff !important;
-		img {
-			filter: brightness(0) invert(1) !important;
+	.block-button {
+		.v-custom:hover {
+			background: #fff !important;
+			color: #d81b60 !important;
+			border: 1px solid #d81b60 !important;
+
+			img {
+			filter: none !important;
+			}
 		}
-		&:hover {
-			box-shadow: 0px 1px 6px #787474;
-			border: 1px solid white !important;
+	}
+	.unblock-button {
+		.v-custom:hover {
+			background: #fff !important;
+			color: $bg-primary !important;
+			border : 1px solid $bg-primary !important;
+			
+			img {
+			filter: none !important;
+			}
+		}
+	}
+	.connect-button {
+		.v-custom:hover {
+			background: #fff !important;
+			color: $bg-success !important;
+			border: 1px solid $bg-success !important;
+
+			img {
+			filter: none !important;
+			}
 		}
 	}
 	.custom-divider {
@@ -870,29 +931,33 @@ export default {
 			border-top: 1px solid rgb(0, 0, 0, 0.3);
 		}
 	}
-
 	.navigate {
 		background: #6158a7;
-		color: #fff !important;
+		color: #fff;
 		border-radius: 20px;
-		border: 1px solid #6158a7;
 		font-size: 12px;
 		height: 27px;
 		padding: 4px 5px;
-		transition: .5s;
-	
+		border: 1px solid white;
+		box-shadow: 0px 1px 6px #B1aaaa;
+		transition: none !important;
+
 		.navigate-name {
-		  color: white;
+			color: inherit;
+			transition: none !important;
+			&:hover {
+				color: inherit;
+			}
 		}
-	
+
 		img {
-		  margin-bottom: 1px;
-		  height: 13px;
+			margin-bottom: 1px;
+			height: 13px;
 		}
 		&:hover {
-		  box-shadow: 0px 1px 6px #787474;
-		  border: 1px solid white;
-		  background: #6158a7;
+			background: #fff;
+			border: 1px solid #6158a7 !important;
+			color: #6158a7 !important;
 		}
 	}
 	.navigate + .navigate {
