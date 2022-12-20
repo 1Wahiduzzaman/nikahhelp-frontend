@@ -7,16 +7,22 @@
       <TeamOffRedirection v-if="redirection" />
       <div class="shortlist-content-wrapper">
         <div class="main-content-1">
-          <v-tabs color="indigo accent-4" class="w-full d-flex justify-content-between support-tab">
-            <v-tab href="#tab-1" @click="tab = 'tab-1'" class="font-weight-bold">All</v-tab>
-            <v-tab href="#tab-2" @click="tab = 'tab-2'" class="font-weight-bold">Shortlisted Candidate</v-tab>
-            <v-tab href="#tab-3" @click="tab = 'tab-3'" class="font-weight-bold">Team listed Candidate</v-tab>
+          <v-tabs 
+            color="indigo accent-4" 
+            active-class="active-v-tab" 
+            class="w-full d-flex justify-content-between support-tab" 
+            :vertical="$vuetify.breakpoint.name === 'xs'" 
+            :grow="$vuetify.breakpoint.name === 'xs'"
+          >
+            <v-tab href="#tab-1" @click="tab = 'tab-1'" class="font-weight-bold">All ({{ fullData.length }})</v-tab>
+            <v-tab href="#tab-2" @click="tab = 'tab-2'" class="font-weight-bold">Shortlisted Candidate ({{ shortlistedData.length }})</v-tab>
+            <v-tab href="#tab-3" @click="tab = 'tab-3'" class="font-weight-bold">Team listed Candidate ({{ teamlistedData.length }})</v-tab>
           </v-tabs>
 
           <v-tabs-items v-model="tab">
             <v-tab-item value="tab-1">
               <div class="row mt-2 mb-4">
-                <div class="col-12 col-md-6 col-lg-3" v-for="(shortlist, findex) in fullData" :key="findex">
+                <div class="col-12 col-md-6 col-lg-3 px-2" v-for="(shortlist, findex) in fullData" :key="findex">
                   <candidate-grid :item="shortlist"
                                   :shortListedIds="shortListedIds"
                                   :teamListedIds="teamListedIds"
@@ -27,7 +33,7 @@
             </v-tab-item>
             <v-tab-item value="tab-2">
               <div class="row mt-2 mb-4">
-                <div class="col-12 col-md-6 col-lg-3" v-for="(shortlist, sindex) in shortlistedData" :key="sindex">
+                <div class="col-12 col-md-6 col-lg-3 px-2" v-for="(shortlist, sindex) in shortlistedData" :key="sindex">
                   <candidate-grid :item="shortlist"
                                   :shortListedIds="shortListedIds"
                                   :teamListedIds="teamListedIds"
@@ -38,7 +44,7 @@
             </v-tab-item>
             <v-tab-item value="tab-3">
               <div class="row mt-2 mb-4">
-                <div class="col-12 col-md-6 col-lg-3" v-for="(shortlist, tindex) in teamlistedData" :key="tindex">
+                <div class="col-12 col-md-6 col-lg-3 px-2" v-for="(shortlist, tindex) in teamlistedData" :key="tindex">
                   <candidate-grid :item="shortlist"
                                   :shortListedIds="shortListedIds"
                                   :teamListedIds="teamListedIds"
@@ -679,7 +685,7 @@ export default {
 
     getCandidateTeamId(candidateTeamId) {
       this.candidateTeamId = candidateTeamId;
-      console.log(this.candidateTeamId);
+      console.log(this.candidateTeamId, 'get candidate team id');
       // if (!this.$store.state.team.teamInfo) {
       // 	this.selectTeamForConnect = true;
       // } else {
@@ -750,14 +756,29 @@ export default {
 .shortlist-content-wrapper {
   flex-wrap: wrap;
   margin-top: 4px;
-  .main-content-1 {
+  .main-content-1::v-deep {
     width: 100%;
-    margin: 4px 10px 20px;
+    //margin: 4px 10px 20px;
+    padding: 10px;
     //margin-left: 260px;
     //margin-right: -800px;
     //@media (max-width: 1024px) {
     //  width: calc(100% - 270px);
     //}
+
+    .active-v-tab {
+      background: #6159a7;
+      color: #fff;
+      border-radius: 5px;
+    }
+  
+    .v-tabs-slider-wrapper {
+      height: 3px !important;
+  
+      .v-tabs-slider {
+        background-image: linear-gradient(#fff 50%, #6159a7 50%);
+      }
+    }
     .item {
       display: inline-block;
       button {
