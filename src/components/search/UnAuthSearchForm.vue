@@ -26,6 +26,7 @@
       </div>
       <div class="my-4">
         <SelectGroup
+          class="age-group"
           @selected="onDropdownChange"
           :uniqueNames="['min_age', 'max_age']"
           :size="'large'"
@@ -363,6 +364,12 @@ export default {
   width: 100%;
   @media (min-width: 768px) {
     flex-direction: row;
+  }
+}
+
+.age-group::v-deep {
+  .customize-color {
+    color: $bg-primary !important;
   }
 }
 </style>
