@@ -1,7 +1,7 @@
 <template>
   <div class="success-message font-poppins main-container">
     <header class="header-container text-center">
-      <a href="/"><img src="@/assets/logo.png" alt="" /></a>
+      <a href="/"><img src="@/assets/Icons/Logo/SVG/White Logo.svg" alt="" /></a>
     </header>
     <div class="container-fluid mb-3 body-container">
       <div class="row">
@@ -14,12 +14,20 @@
             Please now press continue button  to complete the <span class="type-access">{{ getUserType }}</span> registration form.
           </p>
 
-          <button
+          <!-- <button
               @click="handleClick"
               class="btn btn-block ms-2 text-nowrap continue-button mb-4"
           >
             Continue
-          </button>
+          </button> -->
+          <ButtonComponent
+            class="mb-4"
+            :isSmall="true"
+            title="Continue"
+            :responsive="false"
+            :isBlock="true"
+            @onClickButton="handleClick"
+          />
         </div>
       </div>
     </div>
@@ -31,11 +39,13 @@
 
 <script>
 import Footer from "@/components/auth/Footer";
+import ButtonComponent from '@/components/atom/ButtonComponent'
 
 export default {
   name: "Success",
   components: {
     Footer,
+    ButtonComponent
   },
   computed: {
     getUserType() {

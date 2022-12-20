@@ -1,7 +1,7 @@
 <template>
   <div class="email-verification font-poppins main-container">
     <header class="header-container">
-      <a href="/"><img src="@/assets/logo.png" alt="" /></a>
+      <a href="/"><img src="@/assets/Icons/Logo/SVG/White Logo.svg" alt="" /></a>
     </header>
 
     <div class="container-fluid body-container">
