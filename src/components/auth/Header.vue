@@ -61,6 +61,9 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+.container {
+  flex-wrap: nowrap !important;
+}
 .top-menu {
   position: fixed;
   top: 0;
