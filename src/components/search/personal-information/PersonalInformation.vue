@@ -2,33 +2,75 @@
     <div class="mt-10 pb-5">
         <v-row class="mb-5">
             <v-col class="pt-0" cols="12" md="6">
-                <div class="d-flex justify-space-between d-md-none">
+                <div class="d-flex justify-space-between d-md-none buttons-div">
                     <OutlinedButton
                         :name="copyProfileText"
                         customEvent="onClickCopyText"
                         @onClickCopyText="onClickCopyText"
                     />
                     <OutlinedButton 
-                        name="Team Information"
+                        name="Team Infor"
                         customEvent="onClickTeamDetail"
                         @onClickTeamDetail="onClickTeamDetail"
                     />
                 </div>
-                <div class="d-none d-md-flex">
+                <div class="d-none d-md-flex buttons-div">
                     <OutlinedButton
+                        class="mr-2"
                         :name="copyProfileText"
                         customEvent="onClickCopyText"
                         @onClickCopyText="onClickCopyText"
                     />
                     <OutlinedButton 
-                        name="Team Information"
+                        name="Team Info"
                         customEvent="onClickTeamDetail"
                         @onClickTeamDetail="onClickTeamDetail"
                     />
                 </div>
             </v-col>
-            <v-col class="pt-0" cols="12" md="6">
-                <Scroller />
+            <v-col class="pt-0 buttons-div flex justify-end" cols="12" md="6">
+                <!-- <Scroller /> -->
+                <div class="d-none d-md-flex justify-end">
+                    <a
+                        class="navigate mobile-margin mr-2"
+                        href="#family-information"
+                    >
+                        <div class="navigate-name text-center">
+                        Family Info
+                        <img src="/assets/icon/navigate-bottom.svg" alt="">
+                        </div>
+                    </a>
+                    <a
+                        class="navigate mobile-margin"
+                        href="#my-partner-pref"
+                    >
+                        <div class="navigate-name text-center">
+                            My Pref
+                            <img src="/assets/icon/navigate-bottom.svg" alt="">
+                        </div>
+                    </a>
+                </div>
+
+                <div class="d-flex d-md-none flex justify-space-between">
+                     <a
+                        class="navigate mobile-margin mr-2"
+                        href="#family-information"
+                    >
+                        <div class="navigate-name text-center">
+                        Family Info
+                        <img src="/assets/icon/navigate-bottom.svg" alt="">
+                        </div>
+                    </a>
+                    <a
+                        class="navigate mobile-margin"
+                        href="#my-partner-pref"
+                    >
+                        <div class="navigate-name text-center">
+                            My Pref
+                            <img src="/assets/icon/navigate-bottom.svg" alt="">
+                        </div>
+                    </a>
+                </div>
             </v-col>
         </v-row>
         <!-- <div class="flex flex-wrap ">
@@ -352,6 +394,42 @@ legend {
 }
 .bg-white {
     background: white;
+}
+
+.buttons-div::v-deep {
+    .navigate {
+		background: #6158a7;
+		color: #fff;
+		border-radius: 20px;
+		font-size: 12px;
+        width: 150px;
+		height: 27px;
+		padding: 4px 5px;
+		border: 1px solid white;
+		box-shadow: 0px 1px 6px #B1aaaa;
+		transition: none !important;
+
+		.navigate-name {
+            color: inherit;
+            transition: none !important;
+            &:hover {
+                color: inherit;
+            }
+		}
+
+		img {
+            margin-bottom: 1px;
+            height: 13px;
+		}
+		&:hover {
+            background: #fff;
+            border: 1px solid #6158a7 !important;
+            color: #6158a7 !important;
+		}
+	}
+	.navigate + .navigate {
+		margin: 0px;
+	}
 }
 </style>
 
