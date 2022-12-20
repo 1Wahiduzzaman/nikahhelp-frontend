@@ -192,8 +192,9 @@ export default {
     max-width: 374px;
   }
 }
-.btn-connection:hover {
-  box-shadow: 0 1px 6px #787474;
+
+.btn-connection {
+  box-shadow: 0 1px 6px #b2aaaa;
   border: 1px solid white !important;
   background: $bg-primary;
   color: $color-white !important;
@@ -203,4 +204,16 @@ export default {
     }
   }
 }
+
+.btn-connection:hover {
+  background: #fff;
+  color: $bg-primary !important;
+  border: 1px solid $bg-primary !important;
+  div {
+    img {
+      filter: none;
+    }
+  }
+}
+
 </style>
