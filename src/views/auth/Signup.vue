@@ -8,7 +8,7 @@
 
     <div v-if="!showSignUpPage" class="container signup-text-container">
       <section class="section-1 mt-4">
-        <h3>Welcome to MatrimonyAssist Signup</h3>
+        <h3 class="text-header-black">Welcome to MatrimonyAssist Signup</h3>
         <p>To use MatrimonyAssist App, you are required to create at least two profiles, one for the candidate and the other for a representative of the candidate. In MatrimonyAssist, the candidate and the representative(s) jointly play a vital role in finding prospects.</p>
         <p>Depending on your requirement and eligibility, you join MatrimonyAssist either as a candidate or a representative or a matchmaker if this is your profession. </p>
         <p>To sign up and register with MatrimonyAssist, you will need a valid email address, a mobile number, an avatar, a main and an additional image.</p>
@@ -69,9 +69,11 @@
     <div class="signup body-container" v-if="showSignUpPage">
       <div class="type-selection" v-if="showMemberTypeForm && !errorMessage">
         <div class="content mb-5">
-          <h3 class="mt-3 text-header-black font-weight-bolder">
-            Welcome To <span class="logo-text">MatrimonyAssist</span> Signup
-          </h3>
+          <!-- <h3 class="mt-3 text-header-black font-weight-bolder">
+            
+            Welcome to  <span class="logo-text">MatrimonyAssist</span> Signup 
+          </h3> -->
+          <h3 class="mt-3 text-header-black font-weight-bolder">Let's get started</h3>
           <!-- <div class="mx-auto" style="width: 80%; padding-right: 3rem; padding-left: 3rem;">
                 <p>Depends on your requirement and eligibility, you can join MatrimonyAssist either as a candidate or a representative of a candidate or a matchmaker if this is your profession. </p>
                 <p>For this, you will need a valid email address, an avatar, a main and an additional image.
@@ -90,7 +92,7 @@
           </div> -->
           <div class="type mx-auto">
             <p class="text-center py-2">
-              Let's get started. Please select your account type, you are
+               Please select your account type, you are
               registering as a
             </p>
 
