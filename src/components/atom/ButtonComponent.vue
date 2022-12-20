@@ -108,24 +108,12 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
-//.v-custom{
-//    text-transform: capitalize;
-//    &:hover {
-//        box-shadow: 0px 1px 6px #787474;
-//        border: 1px solid white !important;
-//        background: #6158a7;
-//        color: #fff !important;
-//        img {
-//          filter: brightness(0) invert(1);
-//        }
-//    }
-//}
 .v-custom {
     text-transform: capitalize;
     background: #6158a7;
     color: #fff !important;
     border: 1px solid white !important;
-    box-shadow: 0px 1px 6px #787474;
+    box-shadow: 0px 1px 6px #B2aaaa;
     img {
         filter: brightness(0) invert(1);
     }
