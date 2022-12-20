@@ -42,13 +42,19 @@
 <!--                </div>-->
 <!--              </div>-->
 
-              <v-tabs color="indigo accent-4" class="w-full d-flex justify-content-between support-tab ml-2">
-                <v-tab href="#tab-1" @click="tab = 'tab-1', connection_type_choosed = 'all'" class="font-weight-bold">All</v-tab>
-                <v-tab href="#tab-2" @click="tab = 'tab-2', connection_type_choosed = 'connected'" class="font-weight-bold">Connected </v-tab>
-                <v-tab href="#tab-3" @click="tab = 'tab-3', connection_type_choosed = 'Request received'" class="font-weight-bold">Received </v-tab>
-                <v-tab href="#tab-4" @click="tab = 'tab-4', connection_type_choosed = 'Request send'" class="font-weight-bold">Sent </v-tab>
-                <v-tab href="#tab-5" @click="tab = 'tab-5', connection_type_choosed = 'we declined'" class="font-weight-bold">We declined </v-tab>
-                <v-tab href="#tab-6" @click="tab = 'tab-6', connection_type_choosed = 'they declined'" class="font-weight-bold">They declined </v-tab>
+              <v-tabs 
+                color="indigo accent-4" 
+                active-class="active-v-tab" 
+                class="w-full d-flex justify-content-between support-tab ml-sm-3"
+                :vertical="$vuetify.breakpoint.name === 'xs'" 
+                :grow="$vuetify.breakpoint.name === 'xs'"
+              >
+                <v-tab href="#tab-1" @click="tab = 'tab-1', connection_type_choosed = 'all'" class="font-weight-bold">All ({{ connectionReports.result.length }})</v-tab>
+                <v-tab href="#tab-2" @click="tab = 'tab-2', connection_type_choosed = 'connected'" class="font-weight-bold">Connected ({{connectionReports.connected_teams }}) </v-tab>
+                <v-tab href="#tab-3" @click="tab = 'tab-3', connection_type_choosed = 'Request received'" class="font-weight-bold">Received ({{ connectionReports.request_received }})</v-tab>
+                <v-tab href="#tab-4" @click="tab = 'tab-4', connection_type_choosed = 'Request sent'" class="font-weight-bold">Sent ({{ connectionReports.request_sent }})</v-tab>
+                <v-tab href="#tab-5" @click="tab = 'tab-5', connection_type_choosed = 'we declined'" class="font-weight-bold">We declined ({{ connectionReports.we_declined}})</v-tab>
+                <v-tab href="#tab-6" @click="tab = 'tab-6', connection_type_choosed = 'they declined'" class="font-weight-bold">They declined ({{ connectionReports.they_declined }})</v-tab>
               </v-tabs>
 
               <v-tabs-items v-model="tab" class="mt-4">
@@ -694,6 +700,7 @@ export default {
         response
           .then((data) => {
             this.connectionReports = data.data.data;
+            console.log(this.connectionReports, 'this.connection repors')
             this.isLoading = false;
           })
           .catch((error) => {
@@ -965,13 +972,27 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
-.main-content-1 {
+.main-content-1::v-deep {
   width: 100%;
-  margin: 4px 0 20px;
+  //margin: 4px 0 20px;
+  padding: 10px;
   //margin-left: 260px;
   //@media (max-width: 1024px) {
   //  width: calc(100% - 270px);
   //}
+  .active-v-tab {
+    background: #6159a7;
+    color: #fff;
+    border-radius: 5px;
+  }
+
+  .v-tabs-slider-wrapper {
+    height: 3px !important;
+
+    .v-tabs-slider {
+      background-image: linear-gradient(#fff 50%, #6159a7 50%);
+    }
+  }
 }
 .main-content-2 {
   margin: 15px;
@@ -1073,6 +1094,7 @@ export default {
 }
 .mobile-margin {
   margin-left: -10px;
+  padding: 0 8px;
   @media (min-width: 768px) {
     margin-left: 0;
   }
