@@ -14,7 +14,7 @@
                      <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"> <span>Avoid romance scams</span></li>
                      <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Verified Candidate IDs to ensure all profiles are genuine</span></li>
                      <li class="item"><img src= "@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Facility to involve family and friends</span></li>
-                     <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Benefit from their collective wisdom & experience</span></li>
+                     <!-- <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Benefit from their collective wisdom & experience</span></li> -->
                      <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Shortlist candidates using over 100 information points</span></li>
                      <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>Get to know prospects & their family well before any face to face meeting</span></li>
                      <li class="item"><img src="@/assets/icon/tick_2.svg" alt="icon" id = "checkIcon"><span>If you are looking for someone to date, not here I am afraid</span></li>
