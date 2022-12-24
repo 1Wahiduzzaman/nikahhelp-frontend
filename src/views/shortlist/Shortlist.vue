@@ -7,7 +7,14 @@
       <TeamOffRedirection v-if="redirection" />
       <div class="shortlist-content-wrapper">
         <div class="main-content-1">
+          <div 
+            v-if="$vuetify.breakpoint.name === 'xs'" 
+            class="w-100 text-center connection-filter-button"
+            @click="showVTabs = !showVTabs">
+            Connection Filter
+          </div>
           <v-tabs 
+            v-if="$vuetify.breakpoint.name !== 'xs'" 
             color="indigo accent-4" 
             active-class="active-v-tab" 
             class="w-full d-flex justify-content-between support-tab" 
@@ -19,10 +26,26 @@
             <v-tab href="#tab-3" @click="tab = 'tab-3'" class="font-weight-bold">Team listed Candidate ({{ teamlistedData.length }})</v-tab>
           </v-tabs>
 
+          <transition name="shrink">
+            <v-tabs 
+              color="indigo accent-4" 
+              active-class="active-v-tab" 
+              class="w-full d-flex justify-content-between support-tab mt-2 mobile-v-tabs" 
+              :vertical="$vuetify.breakpoint.name === 'xs'" 
+              :grow="$vuetify.breakpoint.name === 'xs'"
+              v-if="showVTabs"
+              v-model="tab"
+            >
+              <v-tab href="#tab-1" @click="tab = 'tab-1'; showVTabs = !showVTabs" class="font-weight-bold">All ({{ fullData.length }})</v-tab>
+              <v-tab href="#tab-2" @click="tab = 'tab-2'; showVTabs = !showVTabs" class="font-weight-bold">Shortlisted Candidate ({{ shortlistedData.length }})</v-tab>
+              <v-tab href="#tab-3" @click="tab = 'tab-3'; showVTabs = !showVTabs" class="font-weight-bold">Team listed Candidate ({{ teamlistedData.length }})</v-tab>
+            </v-tabs>
+          </transition>
+
           <v-tabs-items v-model="tab">
             <v-tab-item value="tab-1">
-              <div class="row mt-2 mb-4">
-                <div class="col-12 col-md-6 col-lg-3 px-2" v-for="(shortlist, findex) in fullData" :key="findex">
+              <div class="row mt-2 mb-4 pl-sm-2">
+                <div class="col-12 col-md-6 col-lg-3 px-sm-2" v-for="(shortlist, findex) in fullData" :key="findex">
                   <candidate-grid :item="shortlist"
                                   :shortListedIds="shortListedIds"
                                   :teamListedIds="teamListedIds"
@@ -388,6 +411,7 @@ export default {
       redirection: false,
       isLoading: false,
       loadingSpinner: false,
+      showVTabs: false,
       user: {},
       is_verified: 1,
       error: null,
@@ -766,10 +790,29 @@ export default {
     //  width: calc(100% - 270px);
     //}
 
+    .connection-filter-button {
+      border-radius: 5px; 
+      background: #6159a7; 
+      color: white; 
+      height: 48px; 
+      line-height: 48px; 
+      font-weight: bold; 
+      cursor: pointer;
+
+      &:hover {
+        background: #6159a780;
+      }
+    }
+
     .active-v-tab {
       background: #6159a7;
       color: #fff;
       border-radius: 5px;
+    }
+
+    .mobile-v-tabs {
+      position: fixed;
+      z-index: 1050;
     }
   
     .v-tabs-slider-wrapper {
@@ -813,5 +856,16 @@ export default {
       height: 100%;
     }
   }
+}
+.shrink-enter-active {
+  transition: all .3s ease;
+}
+.shrink-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.shrink-enter, .shrink-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translatey(-288px);
+  opacity: 0;
 }
 </style>
