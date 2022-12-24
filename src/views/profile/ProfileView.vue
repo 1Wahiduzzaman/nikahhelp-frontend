@@ -3,7 +3,7 @@
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div fluid v-else>
       <!-- <div v-if="user.account_type == 1"> -->
-      <div v-if="(userProfile.account_type == 1)">
+      <div v-if="(userProfile.account_type == 1 && user.status == 3)">
         <!-- Opposite Candidate Profile Component goes here -->
         <candidate-profile
           :role="teamRole"
@@ -104,6 +104,7 @@ export default {
   },
   mounted() {
     this.user = JSON.parse(localStorage.getItem("user"));
+    this.checkUserVerification();
   },
   created() {
     this.loadTeams();
@@ -187,7 +188,19 @@ export default {
 				})
 			})
 			return allMembers
-		}
+		},
+    checkUserVerification() {
+      if(this.user.status == 3) {
+        return;
+      } else {
+        this.$error({
+          title: "You are not verified",
+          content: "You must be verified to view this profile",
+          center: true,
+        });
+        return;
+      }
+    }
   },
 };
 </script>
