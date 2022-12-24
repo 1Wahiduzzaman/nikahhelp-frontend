@@ -4,7 +4,7 @@
       <Loader v-if="isLoading" :isLoading="isLoading" />
       <div v-else>
         <TeamOffRedirection v-if="redirection" />
-        <div class="row" :class="{'loader-opacity pointer-events-none': innerLoading}">
+        <div v-else class="row" :class="{'loader-opacity pointer-events-none': innerLoading}">
           <div class="col-12">
             <div class="main-content-1">
 <!--              <div-->
@@ -42,12 +42,20 @@
 <!--                </div>-->
 <!--              </div>-->
 
+              <div 
+                v-if="$vuetify.breakpoint.name === 'xs'" 
+                class="w-100 text-center connection-filter-button"
+                @click="showVTabs = !showVTabs">
+                Connection Filter
+              </div>
+
               <v-tabs 
                 color="indigo accent-4" 
                 active-class="active-v-tab" 
                 class="w-full d-flex justify-content-between support-tab ml-sm-3"
                 :vertical="$vuetify.breakpoint.name === 'xs'" 
                 :grow="$vuetify.breakpoint.name === 'xs'"
+                v-if="$vuetify.breakpoint.name !== 'xs'"
               >
                 <v-tab href="#tab-1" @click="tab = 'tab-1', connection_type_choosed = 'all'" class="font-weight-bold">All ({{ connectionReports.result.length }})</v-tab>
                 <v-tab href="#tab-2" @click="tab = 'tab-2', connection_type_choosed = 'connected'" class="font-weight-bold">Connected ({{connectionReports.connected_teams }}) </v-tab>
@@ -56,12 +64,63 @@
                 <v-tab href="#tab-5" @click="tab = 'tab-5', connection_type_choosed = 'we declined'" class="font-weight-bold">We declined ({{ connectionReports.we_declined}})</v-tab>
                 <v-tab href="#tab-6" @click="tab = 'tab-6', connection_type_choosed = 'they declined'" class="font-weight-bold">They declined ({{ connectionReports.they_declined }})</v-tab>
               </v-tabs>
+              <transition name="shrink">
+                <v-tabs 
+                  color="indigo accent-4" 
+                  active-class="active-v-tab" 
+                  class="w-full d-flex justify-content-between support-tab ml-sm-3 mt-2 mobile-v-tabs"
+                  :vertical="$vuetify.breakpoint.name === 'xs'" 
+                  :grow="$vuetify.breakpoint.name === 'xs'"
+                  v-model="tab"
+                  v-if="showVTabs"
+                >
+                  <v-tab 
+                    href="#tab-1" 
+                    @click="tab = 'tab-1', connection_type_choosed = 'all'; showVTabs = !showVTabs" 
+                    class="font-weight-bold"
+                  >
+                    All ({{ connectionReports.result.length }})
+                  </v-tab>
+                  <v-tab 
+                    href="#tab-2" 
+                    @click="tab = 'tab-2', connection_type_choosed = 'connected'; showVTabs = !showVTabs" 
+                    class="font-weight-bold"
+                  >
+                    Connected ({{connectionReports.connected_teams }}) 
+                  </v-tab>
+                  <v-tab 
+                    href="#tab-3" 
+                    @click="tab = 'tab-3', connection_type_choosed = 'Request received'; showVTabs = !showVTabs" 
+                    class="font-weight-bold"
+                  >
+                    Received ({{ connectionReports.request_received }})
+                  </v-tab>
+                  <v-tab 
+                    href="#tab-4" @click="tab = 'tab-4', connection_type_choosed = 'Request sent'; showVTabs = !showVTabs" 
+                    class="font-weight-bold"
+                  >
+                    Sent ({{ connectionReports.request_sent }})
+                  </v-tab>
+                  <v-tab 
+                    href="#tab-5" @click="tab = 'tab-5', connection_type_choosed = 'we declined'; showVTabs = !showVTabs" 
+                    class="font-weight-bold"
+                  >
+                    We declined ({{ connectionReports.we_declined}})
+                  </v-tab>
+                  <v-tab 
+                    href="#tab-6" @click="tab = 'tab-6', connection_type_choosed = 'they declined'; showVTabs = !showVTabs" 
+                    class="font-weight-bold"
+                  >
+                    They declined ({{ connectionReports.they_declined }})
+                  </v-tab>
+                </v-tabs>
+              </transition>
 
               <v-tabs-items v-model="tab" class="mt-4">
                 <v-tab-item value="tab-1">
-                  <div class="row px-3">
+                  <div class="row px-3" style="margin-top: 1px;">
                     <div
-                        class="col-12 col-md-4 col-xl-3 mobile-margin"
+                        class="col-12 col-md-4 col-xl-3 px-2 py-0"
                         v-for="(connection, connecIndex) in getFilteredConnections"
                         :key="connecIndex"
                     >
@@ -88,7 +147,7 @@
                 <v-tab-item value="tab-2">
                   <div class="row px-3">
                     <div
-                        class="col-12 col-md-4 col-xl-3 mobile-margin"
+                        class="col-12 col-md-4 col-xl-3 px-2 py-0"
                         v-for="(connection, connecIndex) in getFilteredConnections"
                         :key="connecIndex"
                     >
@@ -114,7 +173,7 @@
                 <v-tab-item value="tab-3">
                   <div class="row px-3">
                     <div
-                        class="col-12 col-md-4 col-xl-3 mobile-margin"
+                        class="col-12 col-md-4 col-xl-3 px-2 py-0"
                         v-for="(connection, connecIndex) in getFilteredConnections"
                         :key="connecIndex"
                     >
@@ -140,7 +199,7 @@
                 <v-tab-item value="tab-4">
                   <div class="row px-3">
                     <div
-                        class="col-12 col-md-4 col-xl-3 mobile-margin"
+                        class="col-12 col-md-4 col-xl-3 px-2 py-0"
                         v-for="(connection, connecIndex) in getFilteredConnections"
                         :key="connecIndex"
                     >
@@ -166,7 +225,7 @@
                 <v-tab-item value="tab-5">
                   <div class="row px-3">
                     <div
-                        class="col-12 col-md-4 col-xl-3 mobile-margin"
+                        class="col-12 col-md-4 col-xl-3 px-2 py-0"
                         v-for="(connection, connecIndex) in getFilteredConnections"
                         :key="connecIndex"
                     >
@@ -192,7 +251,7 @@
                 <v-tab-item value="tab-6">
                   <div class="row px-3">
                     <div
-                        class="col-12 col-md-4 col-xl-3 mobile-margin"
+                        class="col-12 col-md-4 col-xl-3 px-2 py-0"
                         v-for="(connection, connecIndex) in getFilteredConnections"
                         :key="connecIndex"
                     >
@@ -279,7 +338,7 @@
 <!--              <div v-if="connectionReports" class="shortlist-wrapper">-->
 <!--                <div class="row px-3">-->
 <!--                  <div-->
-<!--                    class="col-12 col-md-4 col-xl-3 mobile-margin"-->
+<!--                    class="col-12 col-md-4 col-xl-3 px-2 py-0"-->
 <!--                    v-for="(connection, connecIndex) in getFilteredConnections"-->
 <!--                    :key="connecIndex"-->
 <!--                  >-->
@@ -551,7 +610,8 @@ export default {
       displayMode: "grid",
       connection_type_choosed: "all",
       active_team_id: null,
-      innerLoading: false
+      innerLoading: false,
+      showVTabs: false,
     };
   },
   computed: {
@@ -980,10 +1040,28 @@ export default {
   //@media (max-width: 1024px) {
   //  width: calc(100% - 270px);
   //}
+  .connection-filter-button {
+    border-radius: 5px; 
+    background: #6159a7; 
+    color: white; 
+    height: 48px; 
+    line-height: 48px; 
+    font-weight: bold; 
+    cursor: pointer;
+
+    &:hover {
+      background: #6159a780;
+    }
+  }
   .active-v-tab {
     background: #6159a7;
     color: #fff;
     border-radius: 5px;
+  }
+
+  .mobile-v-tabs {
+    position: fixed;
+    z-index: 1050;
   }
 
   .v-tabs-slider-wrapper {
@@ -1092,13 +1170,13 @@ export default {
 .they-declined {
   background-color: #522e8e !important;
 }
-.mobile-margin {
-  margin-left: -10px;
-  padding: 0 8px;
-  @media (min-width: 768px) {
-    margin-left: 0;
-  }
-}
+// .mobile-margin {
+//   margin-left: -10px;
+//   padding: 0 8px;
+//   @media (min-width: 768px) {
+//     margin-left: 0;
+//   }
+// }
 .connect-heading-text {
   font-size: 14px;
   @media (min-width: 768px) {
@@ -1107,5 +1185,17 @@ export default {
 }
 .loader-opacity {
   opacity: 0.4;
+}
+
+.shrink-enter-active {
+  transition: all .3s ease;
+}
+.shrink-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.shrink-enter, .shrink-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translatey(-288px);
+  opacity: 0;
 }
 </style>

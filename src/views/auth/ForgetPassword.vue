@@ -8,7 +8,7 @@
           /></a>
           <h3 id="welcome-back-tag" class="welcome-back-tag">
             <b>{{
-              message ? "Reset password link sent" : "Forget your password?"
+              message ? "Reset password link sent" : "Forgot your password?"
             }}</b>
           </h3>
         </div>
@@ -83,7 +83,7 @@
                 &#xab; <span>Sign in</span>
               </router-link>
               
-              <button
+              <!-- <button
                 :disabled="disabled"
                 v-if="!message"
                 type="submit"
@@ -91,7 +91,17 @@
                 @click="handleSubmit"
               >
                 Get Password Reset Link
-              </button>
+              </button> -->
+              <ButtonComponent
+                    v-if="!message"
+                    class="w-100 connect-button"
+                    backgroundColor="#3ab549"
+                    :isSmall="true"
+                    :isDisabled="disabled"
+                    title="Get Password Reset Link"
+                    :isBlock="true"
+                    @onClickButton="handleSubmit"
+              />
             </div>
           </div>
         </form>
@@ -104,11 +114,14 @@
 <script>
 import Footer from "@/components/auth/Footer.vue";
 import Spinner from "@/components/ui/Spinner.vue";
+import ButtonComponent from '@/components/atom/ButtonComponent';
+
 export default {
   name: "ForgetPassword",
   components: {
     Footer,
     Spinner,
+    ButtonComponent
   },
   data() {
     return {
@@ -215,7 +228,7 @@ export default {
       justify-content: center;
       margin-top: 36px;
 
-      .button-container {
+      .button-container::v-deep {
         width: 100%;
         display: flex;
         .btn-primary-outlined {
@@ -233,6 +246,22 @@ export default {
             }
           }
         }
+        .connect-button {
+          .v-custom {
+            height: 33px;
+            font-size: 14px;
+            letter-spacing: 0px;
+          }
+          .v-custom:hover {
+            background: #fff !important;
+            color: $bg-success !important;
+            border: 1px solid $bg-success !important;
+
+            img {
+            filter: none !important;
+            }
+          }
+	      }
       }
       .warning {
         color: red;

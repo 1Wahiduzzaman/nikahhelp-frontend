@@ -1,5 +1,5 @@
 <template>
-  <div class="m-2 flip-card" :class="{'flip-card-toggle': rotated}">
+  <div class="m-sm-2 my-sm-1 my-2 flip-card" :class="{'flip-card-toggle': rotated}">
     <div class="flip-card-inner">
       <div class="flip-card-front ">
 <!--        <div class="col-12" id="flex-container">-->
@@ -83,16 +83,16 @@
               :src="connection.candidateInfo && connection.candidateInfo.candidate_image ? connection.candidateInfo.candidate_image : avatarSrc"
           ></v-img>
 
-          <v-card-title>
-            {{ connection.candidateInfo ? connection.candidateInfo.candidate_fname : 'Not found' }} {{ connection.candidateInfo ? connection.candidateInfo.candidate_lname : '' }}
             <v-chip
-                class="ma-2"
+                class="ma-2 chip-position"
                 :color="getTypeColor"
                 text-color="white"
                 small
             >
               {{ type }}
             </v-chip>
+          <v-card-title>
+            {{ connection.candidateInfo ? connection.candidateInfo.candidate_fname : 'Not found' }} {{ connection.candidateInfo ? connection.candidateInfo.candidate_lname : '' }}
           </v-card-title>
 
           <div class="px-4">
@@ -138,138 +138,90 @@
                         @viewProfile="viewProfile"
                         @acceptRequest="acceptRequest"
                         @declineRequest="declineRequest"
-                        @gotoChat="gotoChat" />
+                        @gotoChat="gotoChat" 
+                        @connect="connectRequest"
+                        />
         </v-card>
 
       </div>
       <div class="flip-card-back text-center">
         <v-card class="mx-auto shadow-default shortlist-card flipped position-relative">
-          <div style="cursor: pointer;" @click="showProfileConnectionOverview = true">
-            <h6 class="mt-5 py-2 bg-primary text-white">This Profile Connection Overview</h6>
-  
-            <div class="">
-              <h6 class="fs-14 fw-300">Connection Status</h6>
-              <h6 class="text-capitalize fs-16">{{ connection.connection }}</h6>
-            </div>
-  
+          <div class="flex flex-column justify-content-center h-100">
             <div>
-              <h6 class="fs-14 fw-300">Connected date</h6>
-              <h6 class="text-capitalize fs-16">{{ dateFromDateTime(connection.responded_at) }}</h6>
-            </div>
-  
-            <div>
-              <h6 class="fs-14 fw-300">Connection requested by</h6>
-              <h6 class="text-capitalize fs-16">{{ connection.requested_by.full_name }}</h6>
-            </div>
-  
-            <div>
-              <h6 class="fs-14 fw-300">Request Date</h6>
-              <h6 class="text-capitalize fs-16">{{ dateFromDateTime(connection.requested_at) }}</h6>
+              <ButtonComponent
+                :isSmall="true"
+                title="This Profile Connection Overview"
+                :responsive="false"
+                @onClickButton="showProfileConnectionOverview = true"
+              />
+              <a-modal 
+                :visible="showProfileConnectionOverview" 
+                :closable="true"
+                title="This Profile Connection Overview" 
+                @ok="showProfileConnectionOverview = false" 
+                @cancel="showProfileConnectionOverview = false" 
+                :ok-button-props="{ disabled: true }"
+                :cancel-button-props="{ disabled: true }"
+                >
+                <span class="fw-600">Connection Status</span> <br> {{ connection.connection }} <br><br>
+                <span class="fw-600">Connected Date</span> <br> {{ dateFromDateTime(connection.responded_at) }} <br><br>
+                <span class="fw-600">Connection Requested By</span><br> {{ connection.requested_by.full_name }} <br><br>
+                <span class="fw-600">Request Date</span><br> {{ dateFromDateTime(connection.requested_at) }}
+
+                <template slot="footer">
+                  <a-button key="back" shape="round" @click="showProfileConnectionOverview=false">
+                    Cancel
+                  </a-button>
+                  <a-button key="submit" type="primary" shape="round" @click="showProfileConnectionOverview = false">
+                    Ok
+                  </a-button>
+                </template>
+              </a-modal>
             </div>
 
-            <a-modal 
-              :visible="showProfileConnectionOverview" 
-              :closable="true"
-              title="This Profile Connection Overview" 
-              @ok="showProfileConnectionOverview = false" 
-              @cancel="showProfileConnectionOverview = false" 
-              :ok-button-props="{ disabled: true }"
-              :cancel-button-props="{ disabled: true }"
-              >
-              <span class="fw-600">Connection Status</span> <br> {{ connection.connection }} <br><br>
-              <span class="fw-600">Connected Date</span> <br> {{ connection.responded_at }} <br><br>
-              <span class="fw-600">Connection Requested By</span><br> {{ connection.requested_by.full_name }} <br><br>
-              <span class="fw-600">Request Date</span><br> {{ dateFromDateTime(connection.requested_at) }}
+            <div @click="showProfileTeamOverview = true" style="cursor: pointer">
+              <ButtonComponent
+                class="mt-2"
+                :isSmall="true"
+                title="This Profile Team Overview"
+                :responsive="false"
+                @onClickButton="showProfileTeamOverview = true"
+              />
 
-              <template slot="footer">
-                <a-button key="back" shape="round" @click="showProfileConnectionOverview=false">
-                  Cancel
-                </a-button>
-                <a-button key="submit" type="primary" shape="round" @click="showProfileConnectionOverview = false">
-                  Ok
-                </a-button>
-              </template>
-            </a-modal>
-          </div>
+              <a-modal 
+                :visible="showProfileTeamOverview" 
+                :closable="true"
+                title="This Profile Connection Overview" 
+                @ok="showProfileTeamOverview = false" 
+                @cancel="showProfileTeamOverview = false" 
+                :ok-button-props="{ disabled: true }"
+                :cancel-button-props="{ disabled: true }"
+                >
+                <span class="fw-600">Team Name</span> <br> {{ connection.to_team_name }} <br><br>
+                <span class="fw-600">Team Members</span> <br> {{ connection.total_teamMember }} <br><br>
+                <span class="fw-600">Team Creation Date</span><br> {{ dateFromDateTime(connection.team_created_date) }} <br><br>
+                <span class="fw-600">Team Created By</span><br> {{ connection.team_created_by }}
 
-<!--          <table class="table table-borderless overview-table">-->
-<!--            <tr>-->
-<!--              <td class="td-60">Connection Status</td>-->
-<!--              <td class="text-end">:</td>-->
-<!--              <td class="text-capitalize">{{ connection.connection }}</td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--              <td class="td-60">Connected date</td>-->
-<!--              <td class="text-end">:</td>-->
-<!--              <td>{{ dateFromDateTime(connection.responded_at) }}</td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--              <td class="td-60">Connection requested by</td>-->
-<!--              <td class="text-end">:</td>-->
-<!--              <td>{{ connection.requested_by.full_name }}</td>-->
-<!--            </tr>-->
-<!--            <tr>-->
-<!--              <td class="td-60">Request Date</td>-->
-<!--              <td class="text-end">:</td>-->
-<!--              <td>{{ dateFromDateTime(connection.requested_at) }}</td>-->
-<!--            </tr>-->
-<!--          </table>-->
-        
-          <div @click="showProfileTeamOverview = true" style="cursor: pointer">
-            <h6 class="mt-3 py-2 bg-primary text-white">This Profile Team Overview</h6>
-  
-            <div>
-              <h6 class="fs-14 fw-300">Team name</h6>
-              <h6 class="text-capitalize fs-16 break-long-words">{{ connection.to_team_name }}</h6>
+                <template slot="footer">
+                  <a-button key="back" shape="round" @click="showProfileTeamOverview=false">
+                    Cancel
+                  </a-button>
+                  <a-button key="submit" type="primary" shape="round" @click="showProfileTeamOverview = false">
+                    Ok
+                  </a-button>
+                </template>
+              </a-modal>
             </div>
-  
             <div>
-              <h6 class="fs-14 fw-300">Team members</h6>
-              <h6 class="text-capitalize fs-16">{{ connection.total_teamMember }}</h6>
+              <ButtonComponent
+                class="mt-2"
+                iconHeight="14px"
+                :isSmall="true"
+                title="Back"
+                :responsive="false"
+                @onClickButton="rotated = !rotated"
+              />
             </div>
-  
-            <div>
-              <h6 class="fs-14 fw-300">Team creation date</h6>
-              <h6 class="text-capitalize fs-16">{{ dateFromTimeStamp(connection.team_created_date) }}</h6>
-            </div>
-  
-            <div>
-              <h6 class="fs-14 fw-300">Team created by</h6>
-              <h6 class="text-capitalize fs-16">{{ connection.team_created_by }}</h6>
-            </div>
-
-            <a-modal 
-              :visible="showProfileTeamOverview" 
-              :closable="true"
-              title="This Profile Connection Overview" 
-              @ok="showProfileTeamOverview = false" 
-              @cancel="showProfileTeamOverview = false" 
-              :ok-button-props="{ disabled: true }"
-              :cancel-button-props="{ disabled: true }"
-              >
-              <span class="fw-600">Team Name</span> <br> {{ connection.to_team_name }} <br><br>
-              <span class="fw-600">Team Members</span> <br> {{ connection.total_teamMember }} <br><br>
-              <span class="fw-600">Team Creation Date</span><br> {{ dateFromDateTime(connection.team_created_date) }} <br><br>
-              <span class="fw-600">Team Created By</span><br> {{ connection.team_created_by }}
-
-              <template slot="footer">
-                <a-button key="back" shape="round" @click="showProfileTeamOverview=false">
-                  Cancel
-                </a-button>
-                <a-button key="submit" type="primary" shape="round" @click="showProfileTeamOverview = false">
-                  Ok
-                </a-button>
-              </template>
-            </a-modal>
-          </div>
-          <div>
-            <ButtonComponent
-								iconHeight="14px"
-								:isSmall="true"
-								title="Back"
-								:responsive="false"
-								@onClickButton="rotated = !rotated"
-							/>
           </div>
 
 <!--          <table class="table table-borderless overview-table">-->
@@ -377,11 +329,11 @@ export default {
       if (this.type == "connected") {
         return 'green';
       } else if (this.type == "Request received") {
-        return 'info';
+        return '#2196f3';
       } else if (this.type == "Request sent") {
-        return 'warning';
+        return '#fb8c00';
       } else if (this.type == "we declined") {
-        return 'error';
+        return '#ff5252';
       } else {
         return 'indigo';
       }
@@ -446,7 +398,7 @@ export default {
       notifyObject.title = `sent you a connection request`;
 
       if (this.connection.from_team_id != teamId) {
-        this.$emit("connect-request", this.connection.from_team_id);
+        this.$emit("connect-request", this.connection.from_team_id, notifyObject);
       } else {
         this.$emit("connect-request", this.connection.to_team_id, notifyObject);
       }
@@ -541,6 +493,13 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+
+.chip-position {
+  position: absolute !important;
+  top: 0;
+  right: 0;
+  border: 1px solid !important;
+}
 
 .card {
   @media (max-width: 558px) {
@@ -895,7 +854,7 @@ export default {
 .flip-card {
   background-color: #FFFFFF;
   width: 100%;
-  height: 580px;
+  height: 520px;
   //height: 510px;
   perspective: 1000px;
 }
@@ -917,6 +876,9 @@ export default {
 .flip-card-back {
   color: white;
   transform: rotateY(180deg);
+}
+.flipped {
+  height: 512px;
 }
 .icon-rotate-box {
   left: 12px;
@@ -949,9 +911,9 @@ export default {
 .shortlist-card {
   //max-width: 300px;
   width: 100%;
-  @media (min-width: 1200px) {
-    max-width: 374px;
-  }
+  // @media (min-width: 1200px) {
+  //   max-width: 374px;
+  // }
 }
 
 .break-long-words {
