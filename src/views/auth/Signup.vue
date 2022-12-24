@@ -30,8 +30,7 @@
         </div>
 
         <ButtonComponent
-          style="width: 250px; margin-top: 35px; height: 100px;"
-          class="connect-button"
+          class="btn-join-now"
           :isSmall="false"
           title="Join now"
           :isBlock="true"
@@ -1149,7 +1148,10 @@ h3 {
     font-weight: 100;
   }
 }
-.connect-button::v-deep {
+.btn-join-now::v-deep {
+  width: 250px; 
+  margin-top: 35px; 
+  height: 100px;
   .v-custom:hover {
     background: #fff !important;
     color: $bg-success !important;
@@ -1158,6 +1160,10 @@ h3 {
     img {
       filter: none !important;
     }
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
   }
 }
 
