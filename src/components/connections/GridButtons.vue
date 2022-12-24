@@ -188,6 +188,115 @@
         </v-btn>
       </div>
     </div>
+
+    <div v-if="type == 'we declined'">
+      <div class="flex flex-wrap justify-space-between px-4">
+        <v-btn
+            class="text-capitalize btn-connection color-primary connect-button"
+            style="width: 49%"
+            rounded
+            outlined
+            small
+            color=""
+            dark
+            @click="$emit('connect')"
+        >
+          <div class="flex justify-center align-center">
+            <!-- <a-icon type="cross" class="mr-2" /> -->
+            <img src="/assets/icon/connect-s.svg" alt="" height="14px" class="mr-2">
+            Connect
+          </div>
+        </v-btn>
+
+        <v-btn
+            class="text-capitalize btn-connection block-button"
+            style="width: 49%"
+            rounded
+            outlined
+            small
+            color=""
+            dark
+            @click="$emit('block')"
+        >
+          <div class="flex justify-center align-center">
+            <a-icon type="stop" class="mr-2" />
+            Block
+          </div>
+        </v-btn>
+      </div>
+
+      <div class="flex flex-wrap justify-space-between px-4 mt-3">
+        <v-btn
+            class="text-capitalize btn-connection color-primary"
+            block
+            rounded
+            outlined
+            small
+            color=""
+            dark
+            @click="$emit('viewProfile')"
+        >
+          <div class="flex justify-center align-center">
+            <a-icon type="user" class="mr-2" />
+            View Profile
+          </div>
+        </v-btn>
+      </div>
+    </div>
+    <div v-if="type == 'they declined'">
+      <div class="flex flex-wrap justify-space-between px-4">
+        <v-btn
+            class="text-capitalize btn-connection color-primary connect-button"
+            style="width: 49%"
+            rounded
+            outlined
+            small
+            color=""
+            dark
+            @click="$emit('connect')"
+        >
+          <div class="flex justify-center align-center">
+            <!-- <a-icon type="cross" class="mr-2" /> -->
+            <img src="/assets/icon/connect-s.svg" alt="" height="14px" class="mr-2">
+            Connect
+          </div>
+        </v-btn>
+
+        <v-btn
+            class="text-capitalize btn-connection block-button"
+            style="width: 49%"
+            rounded
+            outlined
+            small
+            color=""
+            dark
+            @click="$emit('block')"
+        >
+          <div class="flex justify-center align-center">
+            <a-icon type="stop" class="mr-2" />
+            Block
+          </div>
+        </v-btn>
+      </div>
+
+      <div class="flex flex-wrap justify-space-between px-4 mt-3">
+        <v-btn
+            class="text-capitalize btn-connection color-primary"
+            block
+            rounded
+            outlined
+            small
+            color=""
+            dark
+            @click="$emit('viewProfile')"
+        >
+          <div class="flex justify-center align-center">
+            <a-icon type="user" class="mr-2" />
+            View Profile
+          </div>
+        </v-btn>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -267,6 +376,25 @@ export default {
   background: #fff !important;
   color: #454141 !important;
   border: 1px solid #454141 !important;
+}
+
+.connect-button {
+  background: #3ab549;
+  color: #fff;
+  border: 1px solid #3ab549;
+  img {
+    filter: brightness(0) invert(1);
+  }
+}
+
+.connect-button:hover {
+  background: #fff !important;
+  color: #3ab549 !important;
+  border: 1px solid #3ab549 !important;
+
+  img {
+    filter: none !important;
+  }
 }
 
 </style>
