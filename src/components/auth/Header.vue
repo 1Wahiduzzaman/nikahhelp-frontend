@@ -10,23 +10,23 @@
         /></div>
       </router-link>
       <div class="login">
-        <div>
-          <router-link to="/login"
+        <div class="flex">
+          <router-link to="/login" class="d-flex flex-row mobile-margin"
             ><img
               src="@/assets/Icons/sign in.svg"
               alt=""
               class="signinBtnDesign"
             />
-            Sign in
+            <span>Sign in</span> 
           </router-link>
 
-          <router-link to="/signup"
+          <router-link to="/signup" class="d-flex flex-row mobile-margin"
             ><img
               src="@/assets/Icons/join now.svg"
               alt=""
               class="signinBtnDesign"
             />
-            Join Now
+            <span>Join Now</span> 
           </router-link>
         </div>
       </div>
@@ -61,9 +61,6 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
-.container {
-  flex-wrap: nowrap !important;
-}
 .top-menu {
   position: fixed;
   top: 0;
@@ -113,5 +110,11 @@ export default {
 
 .signinBtnDesign {
   height: 15px;
+}
+
+.mobile-margin {
+  @media (max-width: 320px) {
+    flex-direction: column !important;
+  }
 }
 </style>
