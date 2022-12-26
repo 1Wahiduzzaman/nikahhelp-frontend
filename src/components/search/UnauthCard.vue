@@ -25,7 +25,7 @@
         <li class="flex-between-start">
           <span class="flex-30 label-text">Location</span>
           <span class="flex-70">:
-                    <span class="ml-1">{{ candidate.contact.per_permanent_country_name }}
+                    <span class="ml-1">{{ candidate.per_permanent_country_name }}
                     </span>
                 </span>
         </li>
