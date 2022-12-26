@@ -141,7 +141,7 @@
 				<!--				</div>-->
 			</div>
 
-			<Observer @intersect="onIntersect"/>
+			<!-- <Observer @intersect="onIntersect"/> -->
 		</div>
 		<!-- <un-auth-search-modal
 				v-model="searchModalVisible"
@@ -237,7 +237,7 @@ export default {
 				const query = {
 					gender: curr.per_gender,
 					// location: curr.per_nationality,
-					location: curr.contact.per_permanent_country_name,
+					location: curr.per_permanent_country_name,
 					age: this.url.split('&').map(item => {
 						return item.split('_').pop().split('=').pop();
 					}).filter((item, i) => i < 2).join('-'),
@@ -296,15 +296,15 @@ export default {
 						// this.updatedResult = [];
 					});
 		},
-		onIntersect() {
-			let payload = {
-				page: this.pagination && this.pagination.current_page ? this.pagination.current_page + 1 : 1,
-				per_page: 10
-			}
-			if(!this.isLoading) {
-				this.handleSearch(this.url, payload);
-			}
-		},
+		// onIntersect() {
+		// 	let payload = {
+		// 		page: this.pagination && this.pagination.current_page ? this.pagination.current_page + 1 : 1,
+		// 		per_page: 10
+		// 	}
+		// 	if(!this.isLoading) {
+		// 		this.handleSearch(this.url, payload);
+		// 	}
+		// },
 	},
 };
 </script>
