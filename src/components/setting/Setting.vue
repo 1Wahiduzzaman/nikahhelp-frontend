@@ -161,7 +161,31 @@
           <span>Verified</span>
         </div>
         <div
-          v-if="!verification"
+          v-else-if="
+            !verification && checkStatus('2')
+          "
+          class="identity"
+        >
+          <img
+            src="@/assets/icon/dots-horizontal-circle.svg"
+            alt="icon"
+            style="width: 200px; height: 230px"
+          />
+          <span>In Review</span>
+        </div>
+        <div
+          v-else-if="!verification && checkStatus('4')"
+          class="identity"
+        >
+          <img
+            src="@/assets/rejected.jpg"
+            alt="icon"
+            style="width: 200px; height: 230px"
+          />
+          <span>Rejected</span>
+        </div>
+        <div
+          v-else-if="!verification"
           class="identity"
         >
           <img
@@ -177,33 +201,8 @@
             Verify
           </v-btn>
         </div>
-
         <div
-          v-if="
-            !verification && checkStatus('2')
-          "
-          class="identity"
-        >
-          <img
-            src="@/assets/icon/dots-horizontal-circle.svg"
-            alt="icon"
-            style="width: 200px; height: 230px"
-          />
-          <span>In Review</span>
-        </div>
-        <div
-          v-if="checkStatus('4') && !verification"
-          class="identity"
-        >
-          <img
-            src="@/assets/rejected.jpg"
-            alt="icon"
-            style="width: 200px; height: 230px"
-          />
-          <span>Rejected</span>
-        </div>
-        <div
-          v-if="checkStatus('9')"
+          v-else-if="checkStatus('9')"
           class="identity"
         >
           <img
@@ -214,7 +213,7 @@
           <span>Suspended</span>
         </div>
         <div
-          v-if="checkStatus('0')"
+          v-else-if="checkStatus('0')"
           class="identity"
         >
           <img
@@ -328,16 +327,7 @@ export default {
     },
 
     checkStatus(index) {
-        const status = [
-          '1',
-          '2',
-          '3',
-          '4',
-          '9',
-          '0' 
-    ];
-
-        return status[this.userInfo?.user?.status] == index;
+      return this.userInfo?.user?.status == index;
     },
 
     openDialog(e) {
