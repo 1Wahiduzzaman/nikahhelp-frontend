@@ -17,6 +17,7 @@
         >
             <div class="flex justify-center align-center">
                 <img 
+                    v-if="icon !== ''"
                     :style="{height: iconHeight, marginRight: '10px'}" 
                     :src="icon" 
                     alt=""
