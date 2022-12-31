@@ -1,6 +1,7 @@
 <template>
 	<div class="card-input">
 		<div v-if="!this.payment_method" class="card-input form-group">
+			<h6 class="text-center validate-text text-white pb-2">Validate Your Card</h6>
 			<div class="form-group mt-3">
 				<label for="name" class="text-white ml-2">Name on Card</label>
 				<input
@@ -54,16 +55,16 @@
 					/>
 				</div>
 			</div>
-			<label class="text-white ml-2 mt-3">Card Number</label>
+			<label class="text-white ml-2 mt-3 mobile-screen-label">Card Number</label>
 			<div ref="card" class="form-control rounded-pill px-4 cspt-9"></div>
-			<div class="mt-5 mb-3 text-right">
+			<div class="mt-5 mb-3 text-right mobile-margin">
 				<button class="btn btn-success btn-block validate-button br-30 py-2" @click.prevent="submitPayment">
-          <a-icon type="loading" class="" v-if="loading" /> Check Card Validity
+          <a-icon type="loading" class="mr-2" v-if="loading" /> Check Card Validity
 				</button>
 			</div>
 		</div>
 		<div v-else class="text-center mt-5">
-			<h4 class="text-white">
+			<h4 class="text-white successful-validation-text">
 				Your card has been validated successfully, click "Agree and Subscribe"
 				to complete the payment.
 			</h4>
@@ -236,5 +237,26 @@ input:active{
 }
 .input-round {
   border-radius: 40px;
+}
+@media (max-width: 768px) {
+	.mobile-margin {
+		margin-top: -15px !important;
+	}
+	label {
+		margin-bottom: .2rem !important;
+	}
+	.mobile-screen-label {
+		margin-top: 0px !important;
+	}
+	.validate-button {
+		font-size: 12px;
+	}
+	.successful-validation-text {
+		font-size: 16px;
+		margin-top: 150px;
+	}
+}
+.form-control {
+	height: 38px !important;
 }
 </style>

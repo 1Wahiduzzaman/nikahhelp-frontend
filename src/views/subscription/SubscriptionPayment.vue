@@ -1,10 +1,12 @@
 <template>
   <div>
     <div>
-      <div class="container-fluid mt-5 section-padding-payment">
+      <div v-if="desktopView" class="container-fluid mt-5 section-padding-payment">
         <div class="d-flex flex-mb-direction">
           <div class="w-d-50 bg-1 col-flex position-relative shadow-default"
-               :class="{'mobile-block': activeStep !== 1, 'custom-height': cardStat}">
+            :class="{'mobile-block': activeStep !== 1, 'custom-height': cardStat}"
+            style="height: 85vh; min-height: 680px;"
+          >
             <div class="div-1">
               <div class="section-heading">
                 <h4 class="heading-title-payment">Team Subscription & Payment</h4>
@@ -57,12 +59,13 @@
                 </div>
                 <div class="cart-description">
                   <div class="d-flex justify-content-between fs-18">
-                    <h6 class="text-white border-bottom pb-2">{{ subscriptionName }} Subscription Plan</h6>
+                    <h6 class="text-white border-bottom pb-2">{{ subscriptionName }} <!-- Subscription Plan --></h6>
                     <h6 class="text-white">£ {{ $store.state.team.originalAmount.toFixed(2) }}</h6>
                   </div>
                   <p class="pt-2 fs-16 pl-4">
                     Discount
-                    <span style="float: right">£ {{ $store.state.team.discountedAmount.toFixed(2) }}</span>
+                    <!-- <span style="float: right">£ {{ $store.state.team.discountedAmount.toFixed(2) }}</span> -->
+                    <span style="float: right">Applied</span>
                   </p>
                   <!--
                   <p>
@@ -81,7 +84,7 @@
                   <p class="details fs-18">Details:</p>
                   <br/>
                   <div class="d-flex justify-content-between fs-18">
-                    <h6 class="text-white">{{ subscriptionName }} Subscription Plan for Team -<b> {{ teamName }}</b></h6>
+                    <h6 class="text-white">{{ subscriptionName }} <!-- Subscription Plan --> for Team -<b> {{ teamName }}</b></h6>
                     <h6 class="text-white"></h6>
                   </div>
                 </div>
@@ -90,13 +93,13 @@
                 <p class="mt-1 agreement-text">
                   By clicking "Agree and Subscribe", you agree:
                   <b
-                  >You will be charged UK £{{ $store.state.team.originalAmount.toFixed(2) }} daily and at the end of
+                  >You will be charged UK £{{ $store.state.team.originalAmount.toFixed(2) }} yearly and <!-- at the end of
                     your plan, your subscription will automatically renew
                     monthly until cancel(price subject to change). Cancel
                     anytime via Manage team > Team Setting > Subscription
-                    details or <router-link to="/support">Customer Support</router-link>.
+                    details or <router-link to="/support">Customer Support</router-link>. -->
                   </b>
-                  You also agree to the <span class="link-color">Terms of Use</span> and the <span class="link-color">Subscription
+                  you also agree to the <span class="link-color"><a href="/terms_condition" target="_blank">Terms of Use</a></span> and the <span class="link-color">Subscription
                   and Cancellation Terms</span>.
                 </p>
                 <div class="text-center pb-4">
@@ -104,9 +107,10 @@
                   <button
                       v-if="agree"
                       class="btn bg-success text-white agree-button br-30 btn-block"
+                      style="position: relative;"
                       @click="subscribe"
                   >
-                    <a-icon type="loading" class="fs-24" v-if="isLoading" /> Agree and Subscribe
+                    <a-icon type="loading" class="fs-24" style="position:absolute; left: 135px; top: 4px;" v-if="isLoading" /> Agree and Subscribe
                   </button>
                 </div>
               </div>
@@ -114,6 +118,136 @@
             <div class="position-absolute buttons-position">
               <div class="d-flex">
                 <button class="btn bg-danger px-4 py-2 text-white br-20 w-full" @click="nextStep(1)">Back</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div v-if="!desktopView" class="container-fluid mt-2 section-padding-payment">
+        <div class="d-flex flex-mb-direction">
+          <div class="w-d-50 bg-1 col-flex position-relative shadow-default"
+            :class="{'mobile-block': activeStep !== 1, 'custom-height': cardStat}"
+            style="height: 90vh; max-height: 560px;"
+          >
+            <div class="div-1">
+              <div class="card-info-div" :class="{'successful-page': successfulPage}">
+                <div class="card-info-form">
+                  <card-input
+                      ref="card_input"
+                      :clientSecret="clientSecret"
+                      @get-payment-method="setPaymentMethod"
+                  ></card-input>
+                  <div v-if="agree" class="flex mt-16">
+                    <ButtonComponent
+                      class="w-50 mr-1"
+                      backgroundColor="#fa4942"
+                      :isSmall="true"
+                      title="Back"
+                      :responsive="false"
+                      @onClickButton="paymentScreen(), successfulPage = false, agree = false"
+                    />
+                    <ButtonComponent
+                      class="w-50"
+                      backgroundColor="#3ab549"
+                      :isSmall="true"
+                      title="Continue"
+                      :responsive="false"
+                      @onClickButton="cartScreen"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="w-d-50 desktop-non-margin col-flex shadow-default border-right position-relative"
+               :class="{'mobile-block': activeStep !== 2, 'mobile-mode': activeStep === 2}">
+            <div class="div-2 desktop-pl">
+              <div class="section-heading"
+                   v-if="subscriptionName == 'Free 1 day Subscription Plan'"
+              >
+                <h6 class="title-signup">It's free to Signup!</h6>
+                <hr/>
+              </div>
+              <div class="description fs-14"
+                   v-if="subscriptionName == 'Free 1 day Subscription Plan'"
+              >
+                Why do we need a credit card for a free 1 day plan?
+                <br/>
+                It helps us prevent spammers from signing up, which means
+                better deliverablity for you and everyone else. You won't be
+                charged unless you choose to take up a monthly plan.
+                <br/>
+                <h6 class="mt-4">This is a secure 256-bit SSL encrypted from. You're safe. </h6>
+              </div>
+
+              <div class="cart px-4">
+                <div class="cart-heading">
+                  <h5 class="fs-18">Item in Cart</h5>
+                  <hr/>
+                </div>
+                <div class="cart-description">
+                  <div class="d-flex justify-content-between fs-18">
+                    <h6 class="text-white border-bottom pb-2">{{ subscriptionName }} <!-- Subscription Plan --></h6>
+                    <h6 class="text-white">£ {{ $store.state.team.originalAmount.toFixed(2) }}</h6>
+                  </div>
+                  <p class="pt-2 fs-16 pl-4">
+                    Discount
+                    <!-- <span style="float: right">£ {{ $store.state.team.discountedAmount.toFixed(2) }}</span> -->
+                    <span style="float: right">Applied</span>
+                  </p>
+                  <!--
+                  <p>
+                    Discount 0%
+                    <span style="float: right">£ 0.0</span>
+                  </p>  -->
+                  <hr/>
+                  <p class="fs-18">
+												<span style="float: right">
+													Total Pay
+													<span class="ml-5">£ {{ subscriptionAmount.toFixed(2) }} </span>
+												</span>
+                  </p>
+                  <br/>
+                  <br/>
+                  <p class="details fs-18">Details:</p>
+                  <br/>
+                  <div class="d-flex justify-content-between fs-18">
+                    <h6 class="text-white">{{ subscriptionName }} <!-- Subscription Plan --> for Team -<b> {{ teamName }}</b></h6>
+                    <h6 class="text-white"></h6>
+                  </div>
+                </div>
+              </div>
+              <div class="agree-terms mt-2">
+                <p class="mt-1 agreement-text">
+                  By clicking "Agree and Subscribe", you agree:
+                  <b
+                  >You will be charged UK £{{ $store.state.team.originalAmount.toFixed(2) }} yearly and <!-- at the end of
+                    your plan, your subscription will automatically renew
+                    monthly until cancel(price subject to change). Cancel
+                    anytime via Manage team > Team Setting > Subscription
+                    details or <router-link to="/support">Customer Support</router-link>. -->
+                  </b>
+                  you also agree to the <span class="link-color"><a href="/terms_condition" target="_blank">Terms of Use</a></span> and the <span class="link-color">Subscription
+                  and Cancellation Terms</span>.
+                </p>
+                <div class="text-center py-2">
+<!--                  <spinner v-if="isLoading"></spinner>-->
+                  <button
+                      v-if="agree"
+                      class="btn bg-success text-white agree-button br-30 btn-block"
+                      style="position: relative;"
+                      @click="subscribe"
+                  >
+                    <a-icon type="loading" class="fs-24" style="position:absolute; left: 135px; top: 4px;" v-if="isLoading" /> Agree and Subscribe
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="position-absolute buttons-position">
+              <div class="d-flex">
+                <button class="btn bg-danger px-4 py-2 text-white br-20 w-full" @click="nextStep(1); successfulPage = false; agree = false">Back</button>
               </div>
             </div>
           </div>
@@ -129,6 +263,7 @@ import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import Footer from "@/components/auth/Footer.vue";
 import CardInput from "@/components/subscription/CardInput.vue";
 import Spinner from "@/components/ui/Spinner.vue";
+import ButtonComponent from "@/components/atom/ButtonComponent";
 import ApiService from "../../services/api.service";
 import Notification from "@/common/notification.js";
 
@@ -140,6 +275,7 @@ export default {
     Footer,
     CardInput,
     Spinner,
+    ButtonComponent
   },
   data() {
     return {
@@ -155,7 +291,9 @@ export default {
       teamId: null,
       agree: false,
       activeStep: 1,
-      cardStat: false
+      cardStat: false,
+      successfulPage: false,
+      desktopView: true
     };
   },
   created() {
@@ -170,7 +308,14 @@ export default {
       this.$router.push({ name: 'Subscription' });
     }
   },
-
+  mounted() {
+    this.initialInfoModal();
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize);
+  },
   methods: {
     socketNotification(payload) {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -196,6 +341,7 @@ export default {
     },
     setPaymentMethod(paymentMethod) {
       this.agree = true;
+      this.successfulPage = true;
       this.cardStat = paymentMethod;
       let myDeviceWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
       if(myDeviceWidth >= 768) {
@@ -285,6 +431,24 @@ export default {
       // }
       // console.log(this.subscriptionName);
     },
+    initialInfoModal() {
+      this.$info({
+          title: "Team Subscription & Payment",
+          content: `We don't want people to be looking for someone for too
+                  long.
+                  The sooner you find someone suitable, we feel we have
+                  achieved both your and our goal`,
+          center: true,
+        });
+    },
+    handleResize () {
+      // console.log(window.innerWidth, 'wndow inneriwt', typeof window.innerWidth, this.desktopView)
+      if (window.innerWidth > 768) {
+        this.desktopView = true;
+      } else {
+        this.desktopView = false;
+      }
+    }
   },
 };
 </script>
@@ -322,6 +486,7 @@ export default {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   padding: 20px;
+  //height: 90%;
 
   .section-heading {
     h4 {
@@ -338,10 +503,14 @@ export default {
 
   .card-info-div {
     border-radius: 5px;
-    height: 77%;
+    //height: 77%;
+    height: 535px;
     @media (min-width: 768px) {
       padding: 15px;
       background-color: white;
+    }
+    @media (max-width: 768px) {
+      max-height: 450px;
     }
 
     .card-info-form {
@@ -427,6 +596,10 @@ export default {
     border-radius: 5px;
     padding: 10px;
 
+    @media (max-width: 768px) {
+      margin-right: 0px;
+    }
+
     .cart-heading {
       line-height: 0.2;
 
@@ -445,6 +618,10 @@ export default {
       padding-top: 16px;
       line-height: 0.5;
       color: white;
+
+      @media (max-width: 768px) {
+        padding-top: 0px;
+      }
 
       p {
         font-size: 14px;
@@ -466,6 +643,10 @@ export default {
     margin-top: 10px;
     margin-right: 20px;
     text-align: justify;
+    @media (max-width: 768px) {
+      margin-right: 0px;
+      margin: 2px;
+    }
 
     p {
       line-height: 1.1;
@@ -488,10 +669,16 @@ export default {
   outline-color: #cfcece;
   font-size: 16px;
   margin-top: 46px;
+  @media (max-width: 768px) {
+    margin-top: 0px !important;
+  }
 }
 
 .border-right {
   border-right: 20px solid $border-primary !important;
+  @media (max-width: 768px) {
+    border-right: none !important;
+  }
 }
 
 .w-d-50 {
@@ -643,6 +830,10 @@ export default {
             border-radius: 5px;
             padding: 10px;
 
+            @media (max-width: 768px) {
+              margin-right: 0px;
+            }
+
             .cart-heading {
               width: 45%;
               line-height: 0.2;
@@ -699,6 +890,9 @@ export default {
 
 .details {
   margin-top: 30px;
+  @media (max-width: 768px) {
+    margin-top: 25px !important;
+  }
 }
 
 .title-signup {
@@ -712,15 +906,16 @@ export default {
   display: none;
 }
 .mobile-mode {
-  margin-top: 40px;
-  @media (min-width: 768px) {
+  //margin-top: 40px;
+  @media (max-width: 768px) {
     margin-top: 0;
   }
 }
 .buttons-position {
-  top: -44px;
-  left: 8px;
+  //top: -44px;
+  //left: 8px;
   //z-index: 9;
+  bottom: -50px;
   width: 100%
 }
 
@@ -766,9 +961,9 @@ export default {
   .buttons-position {
     display: none;
   }
-  .section-padding-payment {
-    padding: 0 1.5rem;
-  }
+  //.section-padding-payment {
+  //  padding: 0 1.5rem;
+  //}
   .heading-title-payment {
     font-size: 30px;
   }
@@ -804,5 +999,28 @@ export default {
 .link-color {
   color: #1976d2;
   font-weight: bold;
+}
+
+.card-info-form::v-deep {
+  @media (max-width: 768px) {
+    .form-group {
+      padding-top: 0px !important;
+      margin-top: 0px !important;
+    }
+  }
+}
+
+.successful-page {
+  max-height: 300px !important;
+}
+
+.mobile-view {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  p {
+    margin-bottom: 0px !important;
+  }
 }
 </style>

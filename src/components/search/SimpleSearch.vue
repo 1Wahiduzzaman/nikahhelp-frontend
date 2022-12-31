@@ -137,9 +137,16 @@
 							notFoundContent="Marital Status not found"
 						>
 							<a-select-option :value="undefined">Select Marital Status</a-select-option>
-							<a-select-option value="single">Single</a-select-option>
+							<!-- <a-select-option value="single">Single</a-select-option>
 							<a-select-option value="married">Married</a-select-option>
-							<a-select-option value="divorced">Divorced</a-select-option>
+							<a-select-option value="divorced">Divorced</a-select-option> -->
+							<a-select-option value="single never married">Single, never married</a-select-option>
+							<a-select-option value="widow">Widow</a-select-option>
+							<a-select-option value="widow with children">Widow with children</a-select-option>
+							<a-select-option value="widower">Widower</a-select-option>
+							<a-select-option value="widower with children">Widower with children</a-select-option>
+							<a-select-option value="divorcee">Divorcee</a-select-option>
+							<a-select-option value="divorcee with children">Divorcee with children</a-select-option>
 							<template #suffixIcon>
 								<img src="@/assets/select-arrow-big.png" alt="icon" />
 							</template>

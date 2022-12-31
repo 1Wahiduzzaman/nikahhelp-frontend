@@ -12,7 +12,7 @@
             <!-- <h2 class="color-white" style="margin-bottom: 12px">
               Someone must be searching for you
             </h2> -->
-            <h3 class="color-white" style="margin-bottom: 12px; font-family: 'Elsie Swash Caps';">
+            <h3 class="color-white" style="margin-bottom: 12px; font-family: 'Elsie Swash Caps'; font-weight: 500 !important;">
               The first friends and family based matromonial introduction service
             </h3>
             <p id="p-tag font-poppins">
@@ -52,6 +52,7 @@ export default {
 @import "@/styles/base/_variables.scss";
 .banner {
   background: url("~@/assets/Top image.jpg") no-repeat center center / cover;
+  background-size: 100% 100%;
   color: $color-white;
   text-align: center;
   position: relative;
@@ -86,7 +87,7 @@ export default {
   }
   &::before {
     content: "";
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.2);
     width: 100%;
     height: 100%;
     position: absolute;
@@ -184,7 +185,7 @@ export default {
   //}
   &::before {
     content: "";
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.2);
     width: 100%;
     height: 100%;
     position: absolute;
