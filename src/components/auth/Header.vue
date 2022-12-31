@@ -2,7 +2,7 @@
   <nav class="top-menu navbar justify-content-between" ref="nav">
     <div class="container">
       <router-link to="/">
-        <div class="navbar-brand"
+        <div class="navbar-brand  mr-0"
           ><img
             class="logo"
             src="@/assets/Icons/Logo/SVG/White Logo.svg"
@@ -20,7 +20,7 @@
             <span>Sign in</span> 
           </router-link>
 
-          <router-link to="/signup" class="d-flex flex-row mobile-margin"
+          <router-link to="/signup" class="d-flex flex-row mobile-margin ml-2"
             ><img
               src="@/assets/Icons/join now.svg"
               alt=""
@@ -97,7 +97,7 @@ export default {
     a {
       display: inline-flex;
       align-items: center;
-      margin-left: 15px;
+      //margin-left: 15px;
       @media (max-width: 575px) {
         font-size: 14px;
       }
@@ -113,7 +113,7 @@ export default {
 }
 
 .mobile-margin {
-  @media (max-width: 320px) {
+  @media (max-width: 360px) {
     flex-direction: column !important;
   }
 }
