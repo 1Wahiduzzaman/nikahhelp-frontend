@@ -34,7 +34,7 @@
               <v-card-text class="d-flex flex-column align-center"> <!-- style="min-height:350px" -->
                 <div class="d-flex justify-center w-100">
   
-                  <v-container class="d-flex justify-center">
+                  <v-container v-if="!playTutorial" class="d-flex justify-center">
                     <v-img
                       max-height="150"
                       max-width="150"
@@ -43,8 +43,10 @@
                     ></v-img>
                   </v-container>
                 </div>
-                <div class="text-center my-2"><h5>{{ contentTitle }}</h5></div>
-                <div class="text-center">{{ contentGuidance }}</div>
+                <div v-if="!playTutorial" class="text-center my-2"><h5>{{ contentTitle }}</h5></div>
+                <div v-if="!playTutorial" class="text-center">{{ contentGuidance }}</div>
+                <iframe v-if="playTutorial && dialog.value" style="z-index:5;" width="560" height="315" src=" https://www.youtube-nocookie.com/embed/R1ZFSHX_1bQ?rel=0 " title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div style="position: absolute; top: 40%;"><span v-if="playTutorial" class="ant-spin-loader"><a-spin /></span></div>
               </v-card-text>
               
               <!-- <v-divider></v-divider> -->
@@ -56,8 +58,10 @@
                     rounded="true"
                     color="#E51F76"
                     class="text-white"
+                    @click="playTutorial = !playTutorial"
                   >
-                    Watch tutorial
+                    <span v-if="!playTutorial">Watch tutorial</span>
+                    <span v-else>Close tutorial</span>
                   </v-btn>
                   <v-card-actions></v-card-actions>
                 </div>
@@ -310,6 +314,7 @@ export default {
       nextBtnLoader: false,
       dialog: false,
       showAgreement: false,
+      playTutorial: false,
       representativeDetails: {
         imageModel: {},
         showAgreement: false,
