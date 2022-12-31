@@ -357,6 +357,10 @@ export default {
   font-weight: 500;
   letter-spacing: .0125em;
   line-height: 2rem;
+
+  @media (max-width: 400px) {
+    font-size: 1.8rem;
+  }
 }
 .search-flex {
   display: flex;
