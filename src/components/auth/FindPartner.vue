@@ -24,7 +24,8 @@
             </div>
          </div>
          <div class="panel brt-0 d-flex flex-column justify-content-between flex-md-row align-items-center">
-            <h3 class="text-center color-white mb-md-1" id="search-begin" >Let your companion search begin</h3>
+            <!-- <h3 class="text-center color-white mb-md-1" id="search-begin" >Let your companion search begin</h3> -->
+            <h3 class="text-center color-white mb-md-1" id="search-begin" >Someone must be searching for you</h3>
             <button class="btn btn-round btn-parter-search" id="startBtn" onclick="location.href = '/signup';"><span>Start here</span></button>
          </div>
       </div>
