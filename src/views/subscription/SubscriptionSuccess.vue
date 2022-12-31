@@ -22,15 +22,15 @@
           />
         </div>
         <div class="col-12 mt-2">
-          <p class="fs-28">Done, your payment successful</p>
-          <p class="fs-22">
+          <p class="fs-22">Done, your payment successful</p>
+          <p class="fs-18">
             You team <b>{{ team }}</b> has successfully subscribed
             <b>{{ subscriptionName }}</b
             >.
           </p>
 
           <div class="col-12 text-center mt-4 btn-border-radius">
-            <a href="/manageteam" class="btn btn-primary fs-18 team-btn-primary btn-lg px-5"
+            <a href="/manageteam" class="btn btn-primary fs-18 team-btn-primary btn-lg px-5 btn-block"
             >Manage Team
               <span class="fs-20">&#8594;</span>
             </a>
@@ -47,9 +47,9 @@
         </div>
         <div class="col-12 col-md-6 offset-md-3 text-center mt-5">
           For more information visit Our
-          <a href="" class="fs-14 text-blue">FAQ</a> page. <br />
-          Any other queries? Please contact out
-          <a href="" class="text-blue fs-14">Customer support</a>
+          <a href="/help" class="fs-14 text-blue">FAQ</a> page. <br />
+          Any other queries? Please
+          <a href="/help" class="text-blue fs-14">Contact us</a>
         </div>
 <!--        <div class="col-12 text-center mt-4 mobile-btn-block">-->
 <!--          <a href="/manageteam" class="btn btn-primary fs-18 team-btn-primary"-->
@@ -119,10 +119,15 @@ export default {
   right: 10px;
 }
 .team-btn-primary {
-  border: 2px solid $color-white;
-  outline-style: solid;
-  outline-color: #cfcece;
+  border: 1px solid $color-white;
   border-radius: 30px !important;
+  box-shadow: 0px 1px 6px #B2aaaa !important;
+
+  &:hover {
+    background: #fff !important;
+    color: $bg-primary !important;
+    border: 1px solid $bg-primary !important;
+  }
 }
 .check-icon {
   width: 100px;

@@ -3,7 +3,7 @@
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else>
       <!-- Heading -->
-      <div class="section-header text-center heading-text px-2 font-poppins">
+      <div class="section-header text-center heading-text px-2 font-poppins" v-if="false">
         <h4 class="heading color-primary font-weight-bolder">
           Choose a Subscription Plan that Works for You
         </h4>
@@ -15,10 +15,10 @@
         </p>
       </div>
       <!-- Subscription details -->
-      <div class="subscription-details container-fluid mt-4 font-poppins">
+      <div class="subscription-details container-fluid mt-4 font-poppins desktop-view">
         <div class="row" :class="{ 'mobile-section': activeStep > 1 }">
           <div
-            class="col-12 col-md-4 col-xl-4 font-poppins"
+            class="col-12 col-md-4 col-xl-4 font-poppins px-2"
             :class="{ 'mobile-block': activeStep !== 1 }"
           >
             <!-- Card 1 -->
@@ -34,7 +34,7 @@
               "
             >
               <div
-                class="div-1 background-design text-center px-2 pb-2 br-top-10"
+                class="div-1 background-design text-center px-2 pb-2 br-top-10 mb-1"
               >
                 <h3 class="text-white">Choose Plan</h3>
               </div>
@@ -49,13 +49,14 @@
                     align-items-center
                     justify-content-center
                     border-bottom
+                    mb-1
                   "
                   :class="{
                     'bg-brand-gradient':
                       choosedPlan && choosedPlan.id == plan.id,
                     'border-top': pIndex === 0,
                   }"
-                  @click="setPlan(plan)"
+                  @click="setPlan(plan); nextStep(2);"
                   v-for="(plan, pIndex) in plans"
                   :key="pIndex"
                 >
@@ -65,13 +66,14 @@
                     v-if="choosedPlan && choosedPlan.id == plan.id"
                     class="mr-4"
                   />
+                  <div v-else style="height: 24px; width: 24px; background: #fff; border: 1px solid #000; margin-right: 16px;"></div>
                   <h4
                     class="duration"
                     :class="{
                       selected: choosedPlan && choosedPlan.id == plan.id,
                     }"
                   >
-                    {{ plan.title }}
+                    {{ plan.title }} <span style="font-size: 14px;" class="ml-3">(£{{ plan.price }})</span>
                   </h4>
                 </div>
               </div>
@@ -85,14 +87,14 @@
                 </h3>
                 <p class="text-center fs-12 text-white">
                   {{
-                    "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni eius at expedita? Explicabo laboriosam ipsa commod"
+                    choosedPlan.description
                   }}
                 </p>
               </div>
             </div>
           </div>
           <div
-            class="col-12 col-md-4 col-xl-4 position-relative font-poppins"
+            class="col-12 col-md-4 col-xl-4 position-relative font-poppins px-2"
             :class="{ 'mobile-block': activeStep !== 2 }"
           >
             <!-- Card 2 -->
@@ -116,7 +118,7 @@
               >
                 <span style="font-size: 50px">&#127881;</span>
                 <h1 class="text-white">Launch Offer</h1>
-                <span style="font-size: 50px">&#127881;</span>
+                <span style="font-size: 50px; transform: rotate(-90deg);">&#127881;</span>
               </div>
               <div
                 class="
@@ -163,7 +165,7 @@
             </div>
           </div>
           <div
-            class="col-12 col-md-4 col-xl-4 font-poppins"
+            class="col-12 col-md-4 col-xl-4 font-poppins px-2"
             :class="{ 'mobile-block': activeStep !== 3 }"
           >
             <!-- Card 3 -->
@@ -185,6 +187,7 @@
                   class="w-100 custom-select fs-18"
                   v-model="teamSelected"
                   @change="setActiveTeam"
+                  style="cursor: pointer;"
                 >
                   <option
                     v-for="(team, teamIndex) in teams"
@@ -364,6 +367,363 @@
           </div>
         </div>
       </div>
+
+      <div class="subscription-details container-fluid mt-4 font-poppins mobile-view">
+        <div class="row">
+          <div
+            class="col-12 col-md-4 col-xl-4 position-relative font-poppins px-2 py-0"
+            :class="{ 'mobile-block': activeStep !== 1 }"
+          >
+            <!-- Card 1 -->
+            <div
+              style="padding: 30px 0"
+              class="
+                custom-card
+                card-2
+                shadow-default
+                background-design-middle
+                height-1
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+                class="div-1 text-center"
+              >
+                <span style="font-size: 50px">&#127881;</span>
+                <h1 class="text-white">Launch Offer</h1>
+                <span style="font-size: 50px; transform: rotate(-90deg);">&#127881;</span>
+              </div>
+              <div
+                class="
+                  div-2
+                  text-center text-white
+                  font-weight-bolder
+                  desktop-py
+                "
+              >
+                <h3 class="price text-white font-weight-bolder">
+                  £ {{ amount.toFixed(2) }}
+                </h3>
+                <p class="price-text text-white font-weight-bolder">
+                  <!--                  Saved {{ savedAmount }} £-->
+                  For the whole year
+                </p>
+              </div>
+              <div class="">
+                <p class="price-tag text-center px-4">Regular Price £ 120</p>
+              </div>
+              <div class="">
+                <p class="text-center text-white px-4 fs-14">
+                  In MatrimonyAssist, All subscribing teams have full access to
+                  platform and features. The only difference is time limit
+                </p>
+              </div>
+            </div>
+
+            <ButtonComponent
+              class="mt-2"
+              backgroundColor="#3ab549"
+              :isSmall="true"
+              title="Continue"
+              :responsive="false"
+              :isBlock="true"
+              @onClickButton="nextStep(2)"
+            />
+          </div>
+          <div
+            class="col-12 col-md-4 col-xl-4 font-poppins px-2 py-0"
+            :class="{ 'mobile-block': activeStep !== 2 }"
+          >
+            <!-- Card 2 -->
+            <div
+              class="
+                custom-card
+                card-1
+                shadow-default
+                background-design-cardfooter
+                br-10
+                position-relative
+                height-1
+              "
+            >
+              <div
+                class="div-1 background-design text-center px-2 pb-2 br-top-10 mb-1"
+              >
+                <h3 class="text-white">Choose Plan</h3>
+              </div>
+              <div class="div-2 position-relative bg-white">
+                <div
+                  class="
+                    d-flex
+                    cursor-pointer
+                    py-4
+                    px-5
+                    item-duration
+                    align-items-center
+                    justify-content-center
+                    border-bottom
+                    mb-1
+                  "
+                  :class="{
+                    'bg-brand-gradient':
+                      choosedPlan && choosedPlan.id == plan.id,
+                    'border-top': pIndex === 0,
+                  }"
+                  @click="setPlan(plan);"
+                  v-for="(plan, pIndex) in plans"
+                  :key="pIndex"
+                >
+                  <img
+                    src="@/assets/icon/subscription_check.svg"
+                    alt="icon"
+                    v-if="choosedPlan && choosedPlan.id == plan.id"
+                    class="mr-4"
+                  />
+                  <div v-else style="height: 24px; width: 24px; background: #fff; border: 1px solid #000; margin-right: 16px;"></div>
+                  <h4
+                    class="duration"
+                    :class="{
+                      selected: choosedPlan && choosedPlan.id == plan.id,
+                    }"
+                  >
+                    {{ plan.title }} <span style="font-size: 14px;" class="ml-3">(£{{ plan.price }})</span>
+                  </h4>
+                </div>
+              </div>
+              <div
+                v-if="activeStepIndex == 1"
+                style="height: 200px"
+                class="div-3 bg-primary-gradient"
+              >
+                <h3 class="text-center text-white font-weight-bolder">
+                  Plan Description
+                </h3>
+                <p class="text-center fs-12 text-white">
+                  {{
+                    choosedPlan.description
+                  }}
+                </p>
+              </div>
+            </div>
+            <div class="flex">
+
+              <ButtonComponent
+                class="mt-2 w-50 mr-1"
+                backgroundColor="#fa4942"
+                :isSmall="true"
+                title="Back"
+                :responsive="false"
+                @onClickButton="nextStep(1)"
+              />
+              <ButtonComponent
+                v-if="choosedPlan !== null"
+                class="mt-2 w-50"
+                backgroundColor="#3ab549"
+                :isSmall="true"
+                title="Continue"
+                :responsive="false"
+                @onClickButton="nextStep(3)"
+              />
+            </div>
+          </div>
+          <div
+            class="col-12 col-md-4 col-xl-4 font-poppins px-2 py-0"
+            :class="{ 'mobile-block': activeStep !== 3 }"
+          >
+            <!-- Card 3 -->
+            <div
+              class="
+                custom-card
+                card-3
+                shadow-default
+                background-design-rightcard
+                height-2
+              "
+            >
+              <h1 class="px-4 text-white pt-2 fs-24 text-center">
+                Select Team
+              </h1>
+
+              <div class="form-group px-4">
+                <select
+                  class="w-100 custom-select fs-18"
+                  v-model="teamSelected"
+                  @change="setActiveTeam"
+                  style="cursor: pointer;"
+                >
+                  <option
+                    v-for="(team, teamIndex) in teams"
+                    :value="team"
+                    :key="team.id"
+                  >
+                    Team {{ teamIndex + 1 }}
+                  </option>
+                </select>
+              </div>
+
+              <div>
+                <div
+                  class="
+                    d-flex
+                    align-items-center
+                    justify-content-between
+                    bg-white
+                    px-4
+                    cursor-pointer
+                  "
+                  @click="setContentType('details')"
+                >
+                  <h4 class="fs-14 pt-1">This team details</h4>
+                  <!--                  <a-icon-->
+                  <!--                    type="up"-->
+                  <!--                    :class="{ 'rotate-180': contentShow == 'details' }"-->
+                  <!--                  />-->
+                </div>
+                <div class="team-details mt-2 px-4 d-block text-white mb-2">
+                  <li class="flex-between-start">
+                    <span class="flex-45 px-2">Name </span>
+                    <span class="flex-55 px-2" v-if="teamSelected">
+                      :<span class="ml-2">{{ teamSelected.name }}</span></span
+                    >
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-45 px-2">ID</span>
+                    <span class="flex-55 px-2" v-if="teamSelected">
+                      :<span class="ml-2">{{
+                        teamSelected.team_id.substr(0, 8)
+                      }}</span></span
+                    >
+                  </li>
+                  <!--                  <li class="flex-between-start">-->
+                  <!--                    <span class="flex-45 px-2">Team Status </span>-->
+                  <!--                    <span class="flex-55 px-2" v-if="teamSelected">-->
+                  <!--                      :<span class="ml-2"-->
+                  <!--                        >{{ teamSelected.status == 1 ? "Active" : "Inactive" }},-->
+                  <!--                        {{-->
+                  <!--                          teamSelected.member_count > 1 ? "Valid" : "Invalid"-->
+                  <!--                        }}, Verified</span-->
+                  <!--                      ></span-->
+                  <!--                    >-->
+                  <!--                  </li>-->
+                  <li class="flex-between-start">
+                    <span class="flex-45 px-2">Creation Date </span>
+                    <span class="flex-55 px-2" v-if="teamSelected">
+                      :<span class="ml-2">{{ teamCreationDate }}</span></span
+                    >
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-45 px-2">Created By </span>
+                    <span class="flex-55 px-2" v-if="teamSelected">
+                      :<span class="ml-2">{{ teamCreatedBy }}</span></span
+                    >
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-45 px-2">My Role </span>
+                    <span class="flex-55 px-2" v-if="teamSelected">
+                      :<span class="ml-2">{{
+                        selfMember ? selfMember.role : ""
+                      }}</span></span
+                    >
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-45 px-2">Participated As </span>
+                    <span class="flex-55 px-2" v-if="teamSelected">
+                      :<span class="ml-2">{{
+                        selfMember ? selfMember.user_type : ""
+                      }}</span></span
+                    >
+                  </li>
+                </div>
+              </div>
+
+              <div class="mt-1">
+                <div
+                  class="
+                    d-flex
+                    align-items-center
+                    justify-content-between
+                    bg-white
+                    px-4
+                    cursor-pointer
+                  "
+                  @click="setContentType('subscription')"
+                >
+                  <h4 class="fs-14 pt-1">
+                    This team's last subscription details
+                  </h4>
+                  <!--                  <a-icon-->
+                  <!--                    type="up"-->
+                  <!--                    :class="{ 'rotate-180': contentShow == 'subscription' }"-->
+                  <!--                  />-->
+                </div>
+                <div class="px-4 d-block mt-1">
+                  <small class="text-white">{{
+                    teamSelected &&
+                    teamSelected.last_subscription &&
+                    teamSelected.last_subscription.created_at
+                      ? messageCreatedAt(
+                          teamSelected.last_subscription.created_at
+                        )
+                      : ""
+                  }}</small>
+                  <h4 class="fs-12 text-white mt-2">
+                    Subscribed
+                    <b
+                      >{{
+                        teamSelected &&
+                        teamSelected.last_subscription &&
+                        teamSelected.last_subscription.plans
+                          ? teamSelected.last_subscription.plans.title
+                          : ""
+                      }}
+                      Plan</b
+                    >
+                    by -
+                    <b>{{
+                      teamSelected &&
+                      teamSelected.last_subscription &&
+                      teamSelected.last_subscription.user
+                        ? teamSelected.last_subscription.user.full_name
+                        : ""
+                    }}</b>
+                  </h4>
+                  <small class="text-white"
+                    >Team Expire period extended to the date of -
+                    {{
+                      teamSelected && teamSelected.subscription_expire_at
+                        ? formateDate(teamSelected.subscription_expire_at)
+                        : ""
+                    }}</small
+                  >
+                </div>
+              </div>
+            </div>
+            
+            <div class="flex">
+              <ButtonComponent
+                class="mt-2 w-50 mr-1"
+                backgroundColor="#fa4942"
+                :isSmall="true"
+                title="Back"
+                :responsive="false"
+                @onClickButton="nextStep(2)"
+              />
+              <ButtonComponent
+                class="mt-2 w-50"
+                backgroundColor="#3ab549"
+                :isSmall="true"
+                title="Continue"
+                :responsive="false"
+                @onClickButton="handleContinue"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <a-modal v-model="freeModal" title="Dou you have any cupon?">
@@ -383,6 +743,7 @@
 import Header from "@/components/dashboard/layout/Header.vue";
 import Sidebar from "@/components/dashboard/layout/Sidebar.vue";
 import Footer from "@/components/auth/Footer.vue";
+import ButtonComponent from '@/components/atom/ButtonComponent'
 import ApiService from "../../services/api.service";
 import { format } from "timeago.js";
 
@@ -392,6 +753,7 @@ export default {
     Header,
     Sidebar,
     Footer,
+    ButtonComponent
   },
   data() {
     return {
@@ -418,6 +780,7 @@ export default {
     this.loadPlans();
     this.loadTeams();
     this.getSelectedTeam();
+    this.initialInfoModal();
   },
   computed: {
     teamCreationDate() {
@@ -521,7 +884,7 @@ export default {
       this.savedAmount = item.discount;
       this.$store.state.team.subscriptionAmount = this.amount;
       this.$store.state.team.legalSubscription = true;
-      this.nextStep(2);
+      // this.nextStep(2);
     },
     handleContinue() {
       if (this.teamSelected == null) {
@@ -645,6 +1008,15 @@ export default {
         `/subscription/payment/${this.teamSelected.name}/${this.teamSelected.id}/${this.choosedPlan.id}?name=${this.choosedPlan.title}`
       );
     },
+    initialInfoModal() {
+      this.$info({
+          title: "Choose a Subscription Plan that Works for You",
+          content: `MatrimonyAssist Subscription is Team Based. Only
+          ONE member pays,
+          the rest of the members use the platform for FREE of charge.`,
+          center: true,
+        });
+    }
   },
 };
 </script>
@@ -1037,10 +1409,13 @@ export default {
 }
 @media (min-width: 768px) {
   .subscription-details {
-    padding: 0 2rem;
+    padding: 0 20px;
   }
   .desktop-py {
     padding: 16px 0;
+  }
+  .mobile-view {
+    display: none;
   }
   .heading {
     font-size: 30px;
@@ -1065,6 +1440,24 @@ export default {
   }
   .row {
     margin: -12px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .background-design-cardfooter {
+    margin-top: 4px;
+  }
+  .background-design-middle {
+    margin-top: 4px;
+  }
+  .background-design-rightcard {
+    margin-top: 4px;
+  }
+  .height-2 {
+    height: 450px;
+  }
+  .desktop-view {
+    display: none;
   }
 }
 
