@@ -259,7 +259,7 @@
         </a-button>
 
         <a-button
-          v-if="current < steps.length - 1"
+          v-if="current <= steps.length - 1"
           shape="round"
           type="primary"
           style="float: left"
