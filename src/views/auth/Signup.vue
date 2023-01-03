@@ -29,6 +29,8 @@
           </ul>         
         </div>
 
+        <p class="my-6">If you want to join as a matchmaker, you will have to go through a slightly different registration process. Currently this option is only available through direct contact with the MatrimonyAssist Team. </p>
+
         <ButtonComponent
           class="btn-join-now"
           :isSmall="false"
