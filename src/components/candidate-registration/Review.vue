@@ -419,7 +419,7 @@
                   </li>
                   <li class="flex-between-start">
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
-                      >Date of Birth</span
+                      >Date of Birth (private)</span
                     ><span class="flex-60 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">
                         {{ candidateData.personal.dob }}
@@ -539,7 +539,7 @@
                   </li> -->
                   <li class="flex-between-start">
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
-                      >Address Line 1</span
+                      >Address Line 1 (private)</span
                     ><span class="flex-60 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.contact.address_1
@@ -548,7 +548,7 @@
                   </li>
                   <li class="flex-between-start">
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
-                      >Address Line 2</span
+                      >Address Line 2 (private)</span
                     ><span class="flex-60 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.contact.address_2
@@ -566,7 +566,7 @@
                   </li>
                   <li class="flex-between-start">
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
-                      >Post Code</span
+                      >Post Code (private)</span
                     ><span class="flex-60 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.contact.per_permanent_post_code
@@ -584,7 +584,7 @@
                   </li>
                   <li class="flex-between-start">
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
-                      >Mobile No</span
+                      >Mobile No (private)</span
                     ><span class="flex-60 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">
                         {{ candidateData.contact.mobile_number }}</span
@@ -593,7 +593,7 @@
                   </li>
                   <li class="flex-between-start">
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
-                      >Email</span
+                      >Email (private)</span
                     ><span class="flex-60 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.contact.per_email

@@ -15,8 +15,11 @@
             <h3 class="color-white" style="margin-bottom: 12px; font-family: 'Elsie Swash Caps'; font-weight: 500 !important;">
               The first friends and family based matromonial introduction service
             </h3>
-            <p id="p-tag font-poppins">
+            <!-- <p id="p-tag font-poppins">
               Benefit from their collective wisdom & experience
+            </p> -->
+            <p id="p-tag font-poppins">
+              MatrimonyAssist is team based. Here, the candidate is never alone.
             </p>
           </div>
           <div class="ml-5">

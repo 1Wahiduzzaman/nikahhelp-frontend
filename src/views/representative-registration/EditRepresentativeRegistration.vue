@@ -96,19 +96,19 @@
 			</div>
 			<div class="steps-content px-2" v-if="current == 2">
 				<Verification
-						v-if="showAgreement"
+						v-if="true"
 						@cancel="cancelVerification"
 						:representativeDetails="representativeDetails"
 						@valueChange="onDataChange($event)"
 						:verification="representativeDetails.verification"
 						ref="VerificationRef"
 				/>
-				<VerificationAgreement
+				<!-- <VerificationAgreement
 						@agree="onAgree($event)"
 						v-if="!showAgreement"
 						ref="VerificationAgreement"
 						class="mb-6"
-				/>
+				/> -->
 			</div>
 			<!-- <div class="steps-content" v-if="current == 3">
 				<Review :showAgreement="showAgreement" @toggleStep="toggleStep" />
