@@ -569,16 +569,16 @@
         </a-collapse-panel>
       </a-collapse>
     </div>
-    <div class="verification-msg" v-if="userData && userData.status == '2'">
+    <!-- <div class="verification-msg" v-if="userData && userData.status == '2'">
       <div class="identity">
         <img
-          src="@/assets/icon/dots-horizontal-circle.svg"
+          src="@/assets/Verification_Icons/Icon/SVG/Pending.svg"
           alt="icon"
           style="width: 200px; height: 230px"
         />
         <span>In Review</span>
       </div>
-      <div class="identity-footer">
+      <div class="identity-footer mt-4">
         <span
           >To keep your account safe, we need to verify your identity. This is a
           legal requirement that help us to keep your account secure.
@@ -599,7 +599,7 @@
         &nbsp;
         <span>Verified</span>
       </div>
-      <div class="identity-footer">
+      <div class="identity-footer mt-4">
         <span
           >To keep your account safe, we need to verify your identity. This is a
           legal requirement that help us to keep your account secure.
@@ -609,7 +609,7 @@
           card or residence permit issued in European Economic Are (EEA).
         </span>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -879,6 +879,15 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+
+.verification-msg {
+  .identity {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
 .image-container {
   display: flex;
   flex-direction: column;
