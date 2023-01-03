@@ -98,7 +98,7 @@
                   v-if="personalInformation.essential.dob"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />What is your date of birth?
+                />What is your date of birth? (private)
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -1005,7 +1005,7 @@
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
                 />
-                Address Line 1
+                Address Line 1 (private)
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -1057,7 +1057,7 @@
                   v-if="personalInformation.contact.address_2"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Address Line 2
+                />Address Line 2 (private)
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -1161,7 +1161,7 @@
                   v-if="personalInformation.contact.per_permanent_post_code"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Post Code
+                />Post Code (private)
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -1301,7 +1301,7 @@
                   v-if="personalInformation.contact.mobile_number"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Mobile number
+                />Mobile number (private)
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
@@ -1360,7 +1360,7 @@
                   v-if="personalInformation.contact.per_email"
                   class="color-success mr-2 fs-18 fw-500"
                   type="check"
-                />Email address
+                />Email address (private)
               </div>
             </div>
             <div class="col-12 col-md-6 mobile-margin">
