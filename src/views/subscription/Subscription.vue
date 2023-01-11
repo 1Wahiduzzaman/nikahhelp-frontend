@@ -15,6 +15,7 @@
         </p>
       </div>
       <!-- Subscription details -->
+      <!-- Big screen -->
       <div class="subscription-details container-fluid mt-4 font-poppins desktop-view">
         <div class="row" :class="{ 'mobile-section': activeStep > 1 }">
           <div
@@ -34,7 +35,7 @@
               "
             >
               <div
-                class="div-1 background-design text-center px-2 pb-2 br-top-10 mb-1"
+                class="div-1 background-design text-center px-2 pb-2 br-top-10 mb-5"
               >
                 <h3 class="text-white">Choose Plan</h3>
               </div>
@@ -49,7 +50,7 @@
                     align-items-center
                     justify-content-center
                     border-bottom
-                    mb-1
+                    mb-5
                   "
                   :class="{
                     'bg-brand-gradient':
@@ -66,14 +67,15 @@
                     v-if="choosedPlan && choosedPlan.id == plan.id"
                     class="mr-4"
                   />
-                  <div v-else style="height: 24px; width: 24px; background: #fff; border: 1px solid #000; margin-right: 16px;"></div>
+                  <div v-else style="height: 24px; width: 24px; background: #fff; margin-right: 16px; border-radius: 36% / 36%;
+                  box-shadow: inset 0 0 0 1.5px #bbbbc1;"></div>
                   <h4
                     class="duration"
                     :class="{
                       selected: choosedPlan && choosedPlan.id == plan.id,
                     }"
                   >
-                    {{ plan.title }} <span style="font-size: 14px;" class="ml-3">(£{{ plan.price }})</span>
+                    {{ plan.title }}
                   </h4>
                 </div>
               </div>
@@ -117,7 +119,7 @@
                 class="div-1 text-center"
               >
                 <span style="font-size: 50px">&#127881;</span>
-                <h1 class="text-white">Launch Offer</h1>
+                <h1 class="text-white" style="font-size: 2rem !important;">Launch Offer</h1>
                 <span style="font-size: 50px; transform: rotate(-90deg);">&#127881;</span>
               </div>
               <div
@@ -136,11 +138,11 @@
                   For the whole year
                 </p>
               </div>
-              <div class="">
+              <div class="" v-if="activeStepIndex === 1">
                 <p class="price-tag text-center px-4">Regular Price £ 120</p>
               </div>
               <div class="">
-                <p class="text-center text-white px-4 fs-14">
+                <p class="text-center text-white px-4 fs-14" style="margin-top: 50px;">
                   In MatrimonyAssist, All subscribing teams have full access to
                   platform and features. The only difference is time limit
                 </p>
@@ -219,22 +221,22 @@
                 </div>
                 <div class="team-details mt-2 px-4 d-block text-white mb-2">
                   <li class="flex-between-start">
-                    <span class="flex-45 px-2">Team Name </span>
-                    <span class="flex-55 px-2" v-if="teamSelected">
+                    <span class="fles-45 px-2">Name </span>
+                    <span class="fles-55 px-2" v-if="teamSelected">
                       :<span class="ml-2">{{ teamSelected.name }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-45 px-2">Team ID</span>
-                    <span class="flex-55 px-2" v-if="teamSelected">
+                    <span class="fles-45 px-2">ID</span>
+                    <span class="fles-55 px-2" v-if="teamSelected">
                       :<span class="ml-2">{{
                         teamSelected.team_id.substr(0, 8)
                       }}</span></span
                     >
                   </li>
                   <!--                  <li class="flex-between-start">-->
-                  <!--                    <span class="flex-45 px-2">Team Status </span>-->
-                  <!--                    <span class="flex-55 px-2" v-if="teamSelected">-->
+                  <!--                    <span class="fles-45 px-2">Team Status </span>-->
+                  <!--                    <span class="fles-55 px-2" v-if="teamSelected">-->
                   <!--                      :<span class="ml-2"-->
                   <!--                        >{{ teamSelected.status == 1 ? "Active" : "Inactive" }},-->
                   <!--                        {{-->
@@ -244,28 +246,28 @@
                   <!--                    >-->
                   <!--                  </li>-->
                   <li class="flex-between-start">
-                    <span class="flex-45 px-2">Team Creation Date </span>
-                    <span class="flex-55 px-2" v-if="teamSelected">
+                    <span class="fles-45 px-2">Creation Date </span>
+                    <span class="fles-55 px-2" v-if="teamSelected">
                       :<span class="ml-2">{{ teamCreationDate }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-45 px-2">Team Created By </span>
-                    <span class="flex-55 px-2" v-if="teamSelected">
+                    <span class="fles-45 px-2">Created By </span>
+                    <span class="fles-55 px-2" v-if="teamSelected">
                       :<span class="ml-2">{{ teamCreatedBy }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-45 px-2">My Role </span>
-                    <span class="flex-55 px-2" v-if="teamSelected">
+                    <span class="fles-45 px-2">My Role </span>
+                    <span class="fles-55 px-2" v-if="teamSelected">
                       :<span class="ml-2">{{
                         selfMember ? selfMember.role : ""
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-45 px-2">Participated As </span>
-                    <span class="flex-55 px-2" v-if="teamSelected">
+                    <span class="fles-45 px-2">Participated As </span>
+                    <span class="fles-55 px-2" v-if="teamSelected">
                       :<span class="ml-2">{{
                         selfMember ? selfMember.user_type : ""
                       }}</span></span
@@ -294,7 +296,7 @@
                   <!--                    :class="{ 'rotate-180': contentShow == 'subscription' }"-->
                   <!--                  />-->
                 </div>
-                <div class="px-4 d-block mt-1">
+                <div class="px-4 d-block mt-1" style="overflow-y: auto;">
                   <small class="text-white">{{
                     teamSelected &&
                     teamSelected.last_subscription &&
@@ -334,25 +336,26 @@
                     }}</small
                   >
                 </div>
+                <button
+                  @click="handleContinue"
+                  class="
+                    btn
+                    bg-success
+                    btn-payment
+                    w-100
+                    text-white
+                    d-flex
+                    align-items-center
+                    justify-content-center
+                    br-10
+                  "
+                  style="width: 90% !important; margin: 1rem auto;   position: absolute; bottom: 1rem; right: 5%;"
+                >
+                  Continue to payment
+                  <a-icon type="arrow-right" class="ml-2 mt-1" />
+                </button>
               </div>
             </div>
-            <button
-              @click="handleContinue"
-              class="
-                btn
-                bg-success
-                btn-payment
-                w-100
-                text-white
-                d-flex
-                align-items-center
-                justify-content-center
-                br-10
-              "
-            >
-              Continue to payment
-              <a-icon type="arrow-right" class="ml-2 mt-1" />
-            </button>
 
             <div class="position-absolute buttons-position">
               <div class="d-flex justify-content-between">
@@ -368,13 +371,109 @@
         </div>
       </div>
 
+      <!-- small screen -->
       <div class="subscription-details container-fluid mt-4 font-poppins mobile-view">
         <div class="row">
           <div
-            class="col-12 col-md-4 col-xl-4 position-relative font-poppins px-2 py-0"
+            class="col-12 col-md-4 col-xl-4 font-poppins px-2 py-0"
             :class="{ 'mobile-block': activeStep !== 1 }"
           >
             <!-- Card 1 -->
+            <div
+              class="
+                custom-card
+                card-1
+                shadow-default
+                background-design-cardfooter
+                br-10
+                position-relative
+                height-1
+              "
+            >
+              <div
+                class="div-1 background-design text-center px-2 pb-2 br-top-10 mb-5"
+              >
+                <h3 class="text-white">Choose Plan</h3>
+              </div>
+              <div class="div-2 position-relative bg-white">
+                <div
+                  class="
+                    d-flex
+                    cursor-pointer
+                    py-4
+                    px-5
+                    item-duration
+                    align-items-center
+                    justify-content-center
+                    border-bottom
+                    mb-5
+                  "
+                  :class="{
+                    'bg-brand-gradient':
+                      choosedPlan && choosedPlan.id == plan.id,
+                    'border-top': pIndex === 0,
+                  }"
+                  @click="setPlan(plan);"
+                  v-for="(plan, pIndex) in plans"
+                  :key="pIndex"
+                >
+                  <img
+                    src="@/assets/icon/subscription_check.svg"
+                    alt="icon"
+                    v-if="choosedPlan && choosedPlan.id == plan.id"
+                    class="mr-4"
+                  />
+                  <div 
+                    v-else 
+                    style="height: 24px; 
+                          width: 24px; 
+                          background: #fff; 
+                          margin-right: 16px; 
+                          border-radius: 36% / 36%;
+                          box-shadow: inset 0 0 0 1.5px #bbbbc1;
+                    "
+                  ></div>
+                  <h4
+                    class="duration"
+                    :class="{
+                      selected: choosedPlan && choosedPlan.id == plan.id,
+                    }"
+                  >
+                    {{ plan.title }}
+                  </h4>
+                </div>
+              </div>
+              <div
+                v-if="activeStepIndex == 1"
+                style="height: 200px"
+                class="div-3 bg-primary-gradient"
+              >
+                <h3 class="text-center text-white font-weight-bolder">
+                  Plan Description
+                </h3>
+                <p class="text-center fs-12 text-white">
+                  {{
+                    choosedPlan.description
+                  }}
+                </p>
+              </div>
+            </div>
+            <ButtonComponent
+              v-if="choosedPlan !== null"
+              class="mt-2 w-100"
+              backgroundColor="#3ab549"
+              :isSmall="true"
+              minHeight="35px"
+              title="Continue"
+              :responsive="false"
+              @onClickButton="nextStep(2)"
+            />
+          </div>
+          <div
+            class="col-12 col-md-4 col-xl-4 position-relative font-poppins px-2 py-0"
+            :class="{ 'mobile-block': activeStep !== 2 }"
+          >
+            <!-- Card 2 -->
             <div
               style="padding: 30px 0"
               class="
@@ -423,113 +522,30 @@
                 </p>
               </div>
             </div>
-
-            <ButtonComponent
-              class="mt-2"
-              backgroundColor="#3ab549"
-              :isSmall="true"
-              title="Continue"
-              :responsive="false"
-              :isBlock="true"
-              @onClickButton="nextStep(2)"
-            />
-          </div>
-          <div
-            class="col-12 col-md-4 col-xl-4 font-poppins px-2 py-0"
-            :class="{ 'mobile-block': activeStep !== 2 }"
-          >
-            <!-- Card 2 -->
-            <div
-              class="
-                custom-card
-                card-1
-                shadow-default
-                background-design-cardfooter
-                br-10
-                position-relative
-                height-1
-              "
-            >
-              <div
-                class="div-1 background-design text-center px-2 pb-2 br-top-10 mb-1"
-              >
-                <h3 class="text-white">Choose Plan</h3>
-              </div>
-              <div class="div-2 position-relative bg-white">
-                <div
-                  class="
-                    d-flex
-                    cursor-pointer
-                    py-4
-                    px-5
-                    item-duration
-                    align-items-center
-                    justify-content-center
-                    border-bottom
-                    mb-1
-                  "
-                  :class="{
-                    'bg-brand-gradient':
-                      choosedPlan && choosedPlan.id == plan.id,
-                    'border-top': pIndex === 0,
-                  }"
-                  @click="setPlan(plan);"
-                  v-for="(plan, pIndex) in plans"
-                  :key="pIndex"
-                >
-                  <img
-                    src="@/assets/icon/subscription_check.svg"
-                    alt="icon"
-                    v-if="choosedPlan && choosedPlan.id == plan.id"
-                    class="mr-4"
-                  />
-                  <div v-else style="height: 24px; width: 24px; background: #fff; border: 1px solid #000; margin-right: 16px;"></div>
-                  <h4
-                    class="duration"
-                    :class="{
-                      selected: choosedPlan && choosedPlan.id == plan.id,
-                    }"
-                  >
-                    {{ plan.title }} <span style="font-size: 14px;" class="ml-3">(£{{ plan.price }})</span>
-                  </h4>
-                </div>
-              </div>
-              <div
-                v-if="activeStepIndex == 1"
-                style="height: 200px"
-                class="div-3 bg-primary-gradient"
-              >
-                <h3 class="text-center text-white font-weight-bolder">
-                  Plan Description
-                </h3>
-                <p class="text-center fs-12 text-white">
-                  {{
-                    choosedPlan.description
-                  }}
-                </p>
-              </div>
-            </div>
             <div class="flex">
-
+              <!-- <ButtonComponent
+                  class="mt-2 w-50 mr-1"
+                  style="color"
+                  backgroundColor="#fff"
+                  :isSmall="true"
+                  title="Back"
+                  :responsive="false"
+                  @onClickButton="nextStep(1)"
+                /> -->
+              <button class="mt-2 text-button w-25" style="color: #6159a7" @click="nextStep(1)">Back</button>
+  
               <ButtonComponent
-                class="mt-2 w-50 mr-1"
-                backgroundColor="#fa4942"
-                :isSmall="true"
-                title="Back"
-                :responsive="false"
-                @onClickButton="nextStep(1)"
-              />
-              <ButtonComponent
-                v-if="choosedPlan !== null"
-                class="mt-2 w-50"
+                class="mt-2 w-75"
                 backgroundColor="#3ab549"
                 :isSmall="true"
+                minHeight="35px"
                 title="Continue"
                 :responsive="false"
+                :isBlock="true"
                 @onClickButton="nextStep(3)"
               />
             </div>
-          </div>
+          </div> 
           <div
             class="col-12 col-md-4 col-xl-4 font-poppins px-2 py-0"
             :class="{ 'mobile-block': activeStep !== 3 }"
@@ -585,22 +601,22 @@
                 </div>
                 <div class="team-details mt-2 px-4 d-block text-white mb-2">
                   <li class="flex-between-start">
-                    <span class="flex-45 px-2">Name </span>
-                    <span class="flex-55 px-2" v-if="teamSelected">
+                    <span class="fles-45 px-2">Name </span>
+                    <span class="fles-55 px-2" v-if="teamSelected">
                       :<span class="ml-2">{{ teamSelected.name }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-45 px-2">ID</span>
-                    <span class="flex-55 px-2" v-if="teamSelected">
+                    <span class="fles-45 px-2">ID</span>
+                    <span class="fles-55 px-2" v-if="teamSelected">
                       :<span class="ml-2">{{
                         teamSelected.team_id.substr(0, 8)
                       }}</span></span
                     >
                   </li>
                   <!--                  <li class="flex-between-start">-->
-                  <!--                    <span class="flex-45 px-2">Team Status </span>-->
-                  <!--                    <span class="flex-55 px-2" v-if="teamSelected">-->
+                  <!--                    <span class="fles-45 px-2">Team Status </span>-->
+                  <!--                    <span class="fles-55 px-2" v-if="teamSelected">-->
                   <!--                      :<span class="ml-2"-->
                   <!--                        >{{ teamSelected.status == 1 ? "Active" : "Inactive" }},-->
                   <!--                        {{-->
@@ -610,28 +626,28 @@
                   <!--                    >-->
                   <!--                  </li>-->
                   <li class="flex-between-start">
-                    <span class="flex-45 px-2">Creation Date </span>
-                    <span class="flex-55 px-2" v-if="teamSelected">
+                    <span class="fles-45 px-2">Creation Date </span>
+                    <span class="fles-55 px-2" v-if="teamSelected">
                       :<span class="ml-2">{{ teamCreationDate }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-45 px-2">Created By </span>
-                    <span class="flex-55 px-2" v-if="teamSelected">
+                    <span class="fles-45 px-2">Created By </span>
+                    <span class="fles-55 px-2" v-if="teamSelected">
                       :<span class="ml-2">{{ teamCreatedBy }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-45 px-2">My Role </span>
-                    <span class="flex-55 px-2" v-if="teamSelected">
+                    <span class="fles-45 px-2">My Role </span>
+                    <span class="fles-55 px-2" v-if="teamSelected">
                       :<span class="ml-2">{{
                         selfMember ? selfMember.role : ""
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-45 px-2">Participated As </span>
-                    <span class="flex-55 px-2" v-if="teamSelected">
+                    <span class="fles-45 px-2">Participated As </span>
+                    <span class="fles-55 px-2" v-if="teamSelected">
                       :<span class="ml-2">{{
                         selfMember ? selfMember.user_type : ""
                       }}</span></span
@@ -660,7 +676,7 @@
                   <!--                    :class="{ 'rotate-180': contentShow == 'subscription' }"-->
                   <!--                  />-->
                 </div>
-                <div class="px-4 d-block mt-1">
+                <div class="px-4 d-block mt-1" style="overflow-y: auto;">
                   <small class="text-white">{{
                     teamSelected &&
                     teamSelected.last_subscription &&
@@ -708,6 +724,7 @@
                 class="mt-2 w-50 mr-1"
                 backgroundColor="#fa4942"
                 :isSmall="true"
+                minHeight="35px"
                 title="Back"
                 :responsive="false"
                 @onClickButton="nextStep(2)"
@@ -716,6 +733,7 @@
                 class="mt-2 w-50"
                 backgroundColor="#3ab549"
                 :isSmall="true"
+                minHeight="35px"
                 title="Continue"
                 :responsive="false"
                 @onClickButton="handleContinue"
@@ -1023,6 +1041,14 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+
+.fles-45 {
+  flex: 0 0 45%;
+}
+.fles-55 {
+  flex: 0 0 55%;
+}
+  
 .main-content-wrapper {
   .main-content {
     width: 100%;
@@ -1185,7 +1211,7 @@ export default {
 }
 .background-design-cardfooter {
   //background-image: linear-gradient(to right, #8859a7, #6159a7);
-  margin-top: 18px;
+  margin-top: -1px;
 }
 
 .background-design-middle {
@@ -1211,7 +1237,7 @@ export default {
     #d31f7b,
     #e02076
   );
-  margin-top: 18px;
+  margin-top: -1px;
 }
 
 .background-design-rightcard {
@@ -1231,7 +1257,7 @@ export default {
     #d31f7b,
     #e02076
   );
-  margin-top: 18px;
+  margin-top: -1px;
 }
 
 .br-20 {
@@ -1361,10 +1387,12 @@ export default {
   margin-top: 30px;
 }
 .height-1 {
-  height: 450px;
+  //height: 450px;
+  height: calc(95vh - 90px);
 }
 .height-2 {
-  height: 510px;
+  //height: 510px;
+  height: calc(95vh - 90px);
 }
 .btn-back {
   width: 50%;
@@ -1412,7 +1440,7 @@ export default {
     padding: 0 20px;
   }
   .desktop-py {
-    padding: 16px 0;
+    padding: 16px 0 0 0;
   }
   .mobile-view {
     display: none;
@@ -1426,12 +1454,12 @@ export default {
   .buttons-position {
     display: none;
   }
-  .height-1 {
-    height: 665px;
-  }
-  .height-2 {
-    height: 600px;
-  }
+  //.height-1 {
+  //  height: 665px;
+  //}
+  //.height-2 {
+  //  height: 600px;
+  //}
   .heading-text {
     margin-top: 2rem;
   }
@@ -1453,11 +1481,18 @@ export default {
   .background-design-rightcard {
     margin-top: 4px;
   }
-  .height-2 {
-    height: 450px;
-  }
+  //.height-2 {
+  //  //height: 450px;
+  //  height: 85vh;
+  //}
   .desktop-view {
     display: none;
+  }
+}
+
+@media (max-height: 568px) {
+  .height-1, .height-2 {
+    height: 78vh !important;
   }
 }
 
@@ -1465,24 +1500,28 @@ export default {
   .btn-payment {
     margin-top: 0.5rem;
   }
-  .height-1 {
-    height: 555px;
-  }
-  .height-2 {
-    height: 510px;
-  }
+  //.height-1 {
+  //  //height: 555px;
+  //  height: calc(95vh - 70px);
+  //}
+  //.height-2 {
+  //  //height: 510px;
+  //  height: calc(95vh - 70px);
+  //}
 }
 
 @media (min-width: 1300px) {
   .btn-payment {
     margin-top: 0.5rem;
   }
-  .height-1 {
-    height: 520px;
-  }
-  .height-2 {
-    height: 475px;
-  }
+  //.height-1 {
+  //  //height: 520px;
+  //  height: calc(95vh - 70px);
+  //}
+  //.height-2 {
+  //  //height: 475px;
+  //  height: calc(95vh - 70px);
+  //}
 }
 
 .duration {
