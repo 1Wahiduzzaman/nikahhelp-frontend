@@ -5,7 +5,8 @@
             class="v-custom"
             :style="{   
                 background: backgroundColor,
-                color: titleColor
+                color: titleColor,
+                minHeight: minHeight
             }"
             :loading="loading"
             :block="isBlock"
@@ -102,6 +103,9 @@ export default {
         },
         isDisabled: {
             default: false
+        },
+        minHeight: {
+            default: '28px'
         }
     }
 }
