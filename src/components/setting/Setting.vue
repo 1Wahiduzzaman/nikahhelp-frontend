@@ -7,27 +7,51 @@
       @ok="handleOk"
       @cancel="handleCancel"
     >
+      <label class="ml-1 mb-0 input-label">Old Password:</label>
       <a-input-password
         placeholder="Input Old Password"
         @change="onOldPassChange"
         style="margin-top: 5px; margin-bottom: 5px"
       />
+
+      <label class="ml-1 mb-0 input-label">New Password:</label>
       <a-input-password
         placeholder="Input New Password"
         @change="onNewPassChange"
+        @blur="onNewPassBlur"
         style="margin-top: 5px; margin-bottom: 5px"
       />
+      <span class="text-center" style="color: red; display: block;">{{ newPassValidationError }}</span>
+
+      <label class="ml-1 mb-0 input-label">Retype New Password:</label>
       <a-input-password
         placeholder="Retype New Password"
         @change="onRetypePassChange"
+        @blur="onRetypePassBlur"
+      />
+      <span class="text-center" style="color: red; display: block;">{{ retypePassValidationError }}</span>
+    </a-modal>
+    <a-modal
+      title="Confirm your Password"
+      :visible="isDeletionModalVisible"
+      :confirm-loading="confirmLoading"
+      @ok="handleDeleteAccount"
+      @cancel="isDeletionModalVisible = !isDeletionModalVisible"
+    >
+      <label class="ml-1 mb-0 input-label"> Type Your Password:</label>
+      <a-input-password
+        placeholder="Type Your Password"
+        style="margin-top: 5px; margin-bottom: 5px"
+        @change="onConfirmPassBeforeDeleteChange"
       />
     </a-modal>
     <div class="panel-content border-content">
       <div class="content">
         <div class="header-content">
-          <h4>Contact Details</h4>
+          <h4 style="margin-bottom: 0px;">Contact Details</h4>
           <v-btn
             @click="openDialog"
+            class="mr-1"
             style="background-color: #0aa3e1; color: #fff; border-radius: 25px"
             small
           >
@@ -70,7 +94,7 @@
               style="width: 20px"
               src="@/assets/icon/account.svg"
               alt="img"
-            />&nbsp; {{ userData.full_name }}</span
+            />&nbsp; {{ userData.full_name }} <span v-if="userData.accountType == 1">({{ userInfo.candidate_information.screen_name }})</span> <span v-if="userData.accountType == 2">({{ userInfo.representative_information.screen_name }})</span></span
           >
           <span>
             <img
@@ -79,14 +103,14 @@
               alt="img"
             />&nbsp; {{ userData.email }}</span
           >
-          <span
-            ><img
+          <span>
+            <img
               style="width: 20px"
               src="@/assets/icon/home-outline.svg"
               alt="img"
-            />&nbsp;{{
-              userData.address ? userData.address : "Ex:UK,London"
-            }}</span
+            />
+            &nbsp; {{ userData.address ? userData.address : "Ex:UK,London" }}
+          </span
           >
           <span
             ><img
@@ -100,19 +124,22 @@
         </div>
       </div>
       <div class="content">
-        <h4>Password</h4>
-        <div class="password-details">
-          <span>*****</span>
+        <div class="flex justify-content-between">
+          <h4 style="margin-bottom: 0px;">Password</h4>
           <v-btn
             @click="handleClickPassword"
+            class="mr-1"
             style="background-color: #0aa3e1; color: #fff; border-radius: 25px"
             small
-          >
+            >
             Change
           </v-btn>
         </div>
+        <div class="password-details">
+          <span>*****</span>
+        </div>
       </div>
-      <div class="content">
+      <div v-if="false" class="content">
         <h4>Switch Member Type</h4>
         <div class="password-details">
           <span>Change member category to</span>
@@ -125,7 +152,7 @@
           </v-btn>
         </div>
       </div>
-      <div class="content">
+      <div v-if="false" class="content">
         <h4>Notification Preferences</h4>
         <div class="password-details">
           <span>Receive marketing communication from MatrimonyAssist</span>
@@ -133,32 +160,35 @@
         </div>
       </div>
       <div class="content">
-        <h4>Delete Account</h4>
-        <div style="border-bottom: none" class="password-details">
-          <span>Do you want to delete Account?</span>
+        <div class="flex justify-content-between">
+          <h4>Delete Account</h4>
           <v-btn
-            @click="handleDeleteAccount"
+            @click="isDeletionModalVisible = true"
+            class="mr-1"
             style="background-color: red; color: #fff; border-radius: 25px"
             small
           >
             Delete
           </v-btn>
         </div>
+        <div style="border-bottom: none" class="password-details">
+          <span>Do you want to delete Account?</span>
+        </div>
       </div>
     </div>
     <div v-if="showIdentity" class="panel-content">
       <div class="content-identity">
-        <h4>Identity Verification</h4>
+        <h4 style="font-weight: 500;">Identity Verification</h4>
         <div
           v-if="verification"
           class="identity"
         >
           <img
-            src="@/assets/icon/varified.svg"
+            src="@/assets/Verification_Icons/Icon/SVG/Verified.svg"
             alt="icon"
             style="width: 200px; height: 230px"
           />
-          <span>Verified</span>
+          <span class="font-weight: bold">Verified</span>
         </div>
         <div
           v-else-if="
@@ -167,11 +197,11 @@
           class="identity"
         >
           <img
-            src="@/assets/icon/dots-horizontal-circle.svg"
+            src="@/assets/Verification_Icons/Icon/SVG/Pending.svg"
             alt="icon"
             style="width: 200px; height: 230px"
           />
-          <span>In Review</span>
+          <span style="font-weight: bold;">In Review</span>
         </div>
         <div
           v-else-if="!verification && checkStatus('4')"
@@ -182,7 +212,14 @@
             alt="icon"
             style="width: 200px; height: 230px"
           />
-          <span>Rejected</span>
+          <ButtonComponent
+            style="width: 150px"
+            :isSmall="true"
+            title="Resubmit ID"
+            :isBlock="true"
+            :responsive="false"
+            @onClickButton="openVerifyForm"
+          />
         </div>
         <div
           v-else-if="!verification"
@@ -193,13 +230,21 @@
             alt="icon"
             style="width: 200px; height: 230px"
           />
-          <v-btn
+          <!-- <v-btn
             @click="openVerifyForm"
             style="background-color: #0aa3e1; color: #fff; border-radius: 25px"
             small
           >
             Verify
-          </v-btn>
+          </v-btn> -->
+          <ButtonComponent
+            style="width: 150px"
+            :isSmall="true"
+            title="Verify"
+            :isBlock="true"
+            :responsive="false"
+            @onClickButton="openVerifyForm"
+          />
         </div>
         <div
           v-else-if="checkStatus('9')"
@@ -224,7 +269,7 @@
           <span>Deleted</span>
         </div>
         <div class="identity-footer">
-          <span
+          <!-- <span
             >To keep your account safe, we need to verify your identity. This is
             a legal requirement that help us to keep your account secure.
           </span>
@@ -232,7 +277,8 @@
             >We accept photo/scans of a driving license, passport, national ID
             card or residence permit issued in European Economic Are
             (EEA).</span
-          >
+          > -->
+          <span>MatrimonyAssist is a platform for genuine and verified users. To prevent fraud and risk, and increase trust and safety, we verify  identity of our users.</span>
         </div>
       </div>
     </div>
@@ -265,6 +311,7 @@ import ApiService from "@/services/api.service";
 import VerificationRepresentative from "@/components/setting/Verification-Representative.vue";
 import VerificationCandidate from "@/components/setting/Verification-Candidate.vue";
 import EditContactModal from "@/components/setting/EditContactModal.vue";
+import ButtonComponent from "@/components/atom/ButtonComponent";
 import jwtService from "@/services/jwt.service";
 export default {
   name: "Setting",
@@ -272,6 +319,7 @@ export default {
     VerificationRepresentative,
     VerificationCandidate,
     EditContactModal,
+    ButtonComponent,
   },
   data() {
     return {
@@ -280,6 +328,7 @@ export default {
       candidateDetails: null,
       ModalText: "Change Password",
       visible: false,
+      isDeletionModalVisible: false,
       confirmLoading: false,
       isLoading: false,
       loadingSwitch: false,
@@ -287,6 +336,9 @@ export default {
       oldPass: "",
       newPass: "",
       retypePass: "",
+      confirmPassBeforeDelete: "",
+      newPassValidationError: "",
+      retypePassValidationError: "",
       accountType: "Account Type loading",
       userData: null,
       switch1: true,
@@ -462,9 +514,32 @@ export default {
       console.log(e.target.value);
       this.newPass = e.target.value;
     },
+    onConfirmPassBeforeDeleteChange(e) {
+      this.confirmPassBeforeDelete = e.target.value;
+    },
+    onNewPassBlur(e) {
+      let regex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+      if (e.target.value  === "") {
+        this.newPassValidationError = 'Enter a password'
+      }
+      else if (!regex.test(e.target.value)) {
+        this.newPassValidationError = "Your password must contain at least 8 characters including a symbol, upper and lower case letters and a number."
+      } else {
+        this.newPassValidationError = ""
+      }
+    },
     onRetypePassChange(e) {
       console.log(e.target.value);
       this.retypePass = e.target.value;
+    },
+    onRetypePassBlur(e) {
+      if (e.target.value === "") {
+        this.retypePassValidationError = "Enter password again";
+      } else if (e.target.value !== this.newPass) {
+        this.retypePassValidationError = "Password doesn't match";
+      } else {
+        this.retypePassValidationError = "";
+      }
     },
     showModal() {
       this.visible = true;
@@ -545,6 +620,11 @@ export default {
     },
     handleDeleteAccount() {
       const vm = this;
+      console.log(typeof this.confirmPassBeforeDelete, 'type of password');
+      let payload = {
+        password: this.confirmPassBeforeDelete
+      }
+      console.log(payload, 'payload')
       this.$confirm({
         title: "Are you sure?",
         content: "You want to delete account?",
@@ -552,7 +632,10 @@ export default {
         okType: "danger",
         cancelText: "No",
         async onOk() {
-          ApiService.get("v1/delete-account").then((data) => {
+          // console.log('ok clicked indeleteion', this.isDeletionModalVisible)
+          // console.log('ok clicked indeleteion');
+          // this.isDeletionModalVisible = false;
+          ApiService.post("v1/delete-account", payload).then((data) => {
             console.log("Account deleted Succesfully");
             jwtService.destroyTokenAndUser();
             vm.$router.push("/login");
@@ -575,6 +658,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.input-label {
+  font-size: 12px;
+  color: rgb(0, 0, 0, .5);
+}
 .panel-container {
   display: flex;
   flex-direction: row;
@@ -613,12 +700,13 @@ export default {
       padding-right: 5px;
     }
     flex-direction: column;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     height: 100%;
-    margin: 8px;
+    //margin: 8px;
     @media (min-width: 320px) and (max-width: 600px) {
       overflow: hidden;
-      margin: 8px;
+      //margin: 8px;
     }
     .content-identity {
       margin: 5px;
@@ -643,7 +731,9 @@ export default {
       //color: #b7b5b5;
       font-weight: 600;
       font-size: 14px;
-      padding-top: 100px;
+      padding-top: 50px;
+      text-align: center;
+      width: 85%;
     }
     .content {
       margin: 5px;
