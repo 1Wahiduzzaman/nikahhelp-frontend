@@ -11,7 +11,7 @@
         <template #expandIcon="props">
           <a-icon type="caret-down" :rotate="props.isActive ? 180 : 0" />
         </template>
-        <a-collapse-panel key="1" header="1. Essential Information">
+        <a-collapse-panel key="1" header="1. Referee Information">
           <a-form-model
             v-if="verification"
             ref="verification"
@@ -45,7 +45,7 @@
                 people.
               </p> -->
 
-              <p>Follow these tips to make sure your document is accepted:</p>
+              <p>We may request this information anytime in case we need to do ID checks.</p>
               <!-- <ul>
                 <li class="flex-start-center">
                   <img
@@ -403,8 +403,7 @@
                     <span class="mr-2 fs-16 fw-700">Personal reference</span>
                     <!-- <span class="mr-2 fw-500">This section is optional. </span> -->
                     <span class="mr-2 fw-500">
-                      We may request this information anytime in case we need
-                      to do ID checks.
+                      The referee should be someone who knows you and can help prove you are who you say you are. Your referee must have known you for at least three years.
                     </span>
                   </div>
                 </div>
@@ -540,7 +539,7 @@
                   id="Needver_recommender_title"
                 >
                   <div class="card card-body bubble">
-                    Please provide tooltip texts so we can place it here
+                    A referee can be a person of community standing who know you. 
                   </div>
                 </div>
               </div>

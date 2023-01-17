@@ -157,12 +157,13 @@
 
       <div class="text-center mt-5" v-if="current == 1">
         <h5 class="color-brand fs-20">Image Upload</h5>
-        <p class="color-brand fs-18">Details about you</p>
+        <p class="color-brand fs-18"> you</p>
       </div>
       <div class="text-center mt-5" v-if="current == 2">
         <h5 class="color-brand fs-20">Reference</h5>
-        <p class="color-brand fs-18">Details about you</p>
-        <p>lorem ipsum</p>
+        <p class="color-brand fs-18">Details about your referee</p>
+        <p>We ask all representatives to provide the name of a referee. We do this additional level of check in order to promote greater trust and confidence in MatrimonyAssist.
+</p>
       </div>
       <div class="text-center mt-5" v-if="current == 3">
         <h5 class="color-brand fs-20">Review & Publish</h5>
