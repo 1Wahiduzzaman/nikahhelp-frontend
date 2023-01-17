@@ -70,8 +70,8 @@
 				<p class="color-brand fs-18">Details about you</p>
 			</div>
 			<div class="text-center mt-5" v-if="current == 2">
-				<h5 class="color-brand fs-20">Verification Information</h5>
-				<p class="color-brand fs-18">Details about you</p>
+				<h5 class="color-brand fs-20">Verification and Reference</h5>
+				<p class="color-brand fs-18">Details about your referee</p>
 			</div>
 			<div class="text-center mt-5" v-if="current == 3">
 				<h5 class="color-brand fs-20">Review & Publish</h5>
