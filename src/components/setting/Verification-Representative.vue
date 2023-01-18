@@ -22,7 +22,7 @@
             card or residense permit issued in European Economic Are (EEA)
           </p> -->
 
-          <p>Follow these tips to make sure your document is accepted:</p>
+          <p>We may request this information anytime in case we need to do ID checks.</p>
           <ul>
             <li class="flex-start-center">
               <img src="@/assets/Icons/tick 2.svg" alt="icon" id="checkIcon" />
