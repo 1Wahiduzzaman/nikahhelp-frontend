@@ -9,7 +9,7 @@
     <div v-if="!showSignUpPage" class="container signup-text-container">
       <section class="section-1 mt-4">
         <h3 class="text-header-black">Welcome to MatrimonyAssist Signup</h3>
-        <p>To use MatrimonyAssist App, you are required to create at least two profiles, one for the candidate and the other for a representative of the candidate. In MatrimonyAssist, the candidate and the representative(s) jointly play a vital role in finding prospects.</p>
+        <p>To use MatrimonyAssist App, you are required to create at least <b>two profiles</b>, one for the candidate and the other for a representative of the candidate. In MatrimonyAssist, the candidate and the representative(s) jointly play a vital role in finding prospects.</p>
         <p>Depending on your requirement and eligibility, you join MatrimonyAssist either as a candidate or a representative or a matchmaker if this is your profession. </p>
         <p>To sign up and register with MatrimonyAssist, you will need a valid email address, a mobile number, an avatar, a main and an additional image.</p>
 

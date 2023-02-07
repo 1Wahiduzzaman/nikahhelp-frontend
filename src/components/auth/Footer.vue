@@ -12,48 +12,48 @@
       </div>
       <ul class="footer-menu mt-3">
         <li>
-          <a href="javascript:void()"
+          <a href=""
             ><router-link to="/about" class="color-primary">
               About
             </router-link></a
           >
         </li>
         <li>
-          <a href="javascript:void()">
+          <a href="">
             <router-link to="/privacy-cookie-policy" class="color-primary">
               Privacy & Cookie Policy
             </router-link></a
           >
         </li>
         <li>
-          <a href="javascript:void()"
+          <a href=""
             ><router-link to="/terms_condition" class="color-primary">
               Terms & Conditions
             </router-link></a
           >
         </li>
         <li>
-          <a href="javascript:void()"
+          <a href=""
             ><router-link to="/safety_guidance" class="color-primary">
               Safety & Guidance
             </router-link></a
           >
         </li>
         <li>
-          <a href="javascript:void()"
+          <a href=""
             ><router-link to="/user-agreement" class="color-primary">
               User Agreement
             </router-link></a
           >
         </li>
         <li>
-          <a href="javascript:void()"
+          <a href=""
             ><router-link to="/help" class="color-primary">
               Help & Support
             </router-link></a
           >
         </li>
-      </ul>
+       </ul>
     </div>
   </footer>
 </template>
