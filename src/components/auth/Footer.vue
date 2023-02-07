@@ -53,7 +53,7 @@
             </router-link></a
           >
         </li>
-      </ul>
+       </ul>
     </div>
   </footer>
 </template>
