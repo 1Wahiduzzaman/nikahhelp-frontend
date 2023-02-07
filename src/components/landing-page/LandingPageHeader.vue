@@ -12,7 +12,7 @@
     >
       <div class="container">
         <router-link to="/">
-          <a href="javascript:void()" class="navbar-brand"
+          <a href="" class="navbar-brand"
             ><img
               class="logo"
               src="@/assets/Icons/Logo/SVG/White Logo.svg"
