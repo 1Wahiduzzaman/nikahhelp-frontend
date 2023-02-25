@@ -87,7 +87,7 @@ if (process.env.NODE_ENV === 'production') {
       template: 'index.html',
       filename: path.resolve(__dirname, 'dist/index.html'),
       favicon: 'favicon.ico',
-
+      scriptLoading: "defer"
     }),
 
     new PrerenderSPAPlugin({
