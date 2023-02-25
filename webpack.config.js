@@ -5,7 +5,7 @@ const PrerenderSPAPlugin = require('prerender-spa-plugin')
 const Renderer = PrerenderSPAPlugin.PuppeteerRenderer
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const CompressionPlugin = require("compression-webpack-plugin");
-
+const TerserPlugin = require("terser-webpack-plugin");
 module.exports = {
   mode: process.env.NODE_ENV,
   entry: './src/main.js',
@@ -70,7 +70,12 @@ module.exports = {
   plugins: [
     new VueLoaderPlugin(),
     new CompressionPlugin(),
-  ]
+  ],
+
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
 }
 
 if (process.env.NODE_ENV === 'production') {
