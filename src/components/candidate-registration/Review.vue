@@ -150,12 +150,17 @@
                       >Nationality</span
                     ><span class="flex-60 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">
-                        <div
-                          v-for="nationality in candidateData.preference
-                            .preferred_nationality"
-                          :key="nationality.id"
-                        >
-                          {{ nationality.name }}
+                        <div v-if="candidateData.preference.preferred_nationality.length > 0">
+                          <div
+                            v-for="nationality in candidateData.preference
+                              .preferred_nationality"
+                            :key="nationality.id"
+                          >
+                            {{ nationality.name }}
+                          </div>
+                        </div>
+                        <div v-else>
+                          Don't Mind
                         </div>
                       </span></span
                     >
