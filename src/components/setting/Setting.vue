@@ -351,8 +351,8 @@ export default {
         return  (this.userInfo?.user?.status == 3 &&
               this.userInfo?.candidate_information &&
               this.userInfo?.candidate_information.is_uplaoded_doc == 1) ||
-            (this.userInfo?.user?.status == 3 && this.userInfo?.representative_information &&
-              (this.userInfo?.representative_information.is_uplaoded_doc == '0' || this.userInfo?.representative_information.is_uplaoded_doc == 1))
+            (this.userInfo?.user?.status == 3 && this.userInfo?.representative_information.length >= 1 &&
+              (this.userInfo?.representative_information[0].is_uplaoded_doc == 0 || this.userInfo?.representative_information[0].is_uplaoded_doc == 1))
          
     }
   },
