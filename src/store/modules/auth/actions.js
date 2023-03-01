@@ -26,7 +26,8 @@ export default {
       console.log('message', e.message)
       context.commit("setErrorMessage", {
         // errorMessage: e.response.status == 403 ? 'Your account is deleted': 'No account',
-        errorMessage: e.response.status == 403 ? e.response.message : 'No account'
+        // errorMessage: e.response.data.status_code == 403 ? e.response.data.message : 'No account'
+        errorMessage: e.response.data.status_code == 403 ? 'Invalid email or password' : 'No account'
       });
     });
   },
