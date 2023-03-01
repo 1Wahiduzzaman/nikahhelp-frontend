@@ -290,7 +290,7 @@ export default {
             if(res.data.status != "FAIL") {
               self.isSuccess = true;
               self.$success({
-                title: "Invited successfully",
+                title: "Invitation link generated successfully",
                 center: true,
               });
 
