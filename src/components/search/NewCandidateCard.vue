@@ -309,6 +309,7 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
             team_id: this.candidate.team_id
           };
           this.$emit("socketNotification", payload);
+          this.$emit('removeCandidateFromResult', this.candidate.user_id);
         } catch (e) {
           if(e.response) {
             this.showError(e.response.data.message)

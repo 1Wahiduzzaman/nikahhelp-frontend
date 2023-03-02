@@ -23,7 +23,7 @@
             </p>
           </div>
           <div class="ml-5">
-            <button class="btn btn-round banner-btn-parter-search" id="bannerstartBtn" onclick="location.href = '/signup';"><span>Start here</span></button>
+            <button class="btn btn-round banner-btn-parter-search" id="bannerstartBtn" @click="goToSignUpPage"><span>Start here</span></button>
           </div>
         </div>
       </div>
@@ -46,6 +46,9 @@ export default {
             params: { url: _payload },
           });
     },
+    goToSignUpPage() {
+      this.$router.push('/signup');
+    }
   },
 };
 </script>

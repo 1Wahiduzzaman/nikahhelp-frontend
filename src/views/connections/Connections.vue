@@ -118,7 +118,7 @@
 
               <v-tabs-items v-model="tab" class="mt-4">
                 <v-tab-item value="tab-1">
-                  <div class="row px-3" style="margin-top: 1px;">
+                  <div class="row px-3 tab-margin-top">
                     <div
                         class="col-12 col-md-4 col-xl-3 px-2 py-0"
                         v-for="(connection, connecIndex) in getFilteredConnections"
@@ -145,7 +145,7 @@
                 </v-tab-item>
 
                 <v-tab-item value="tab-2">
-                  <div class="row px-3">
+                  <div class="row px-3 tab-margin-top">
                     <div
                         class="col-12 col-md-4 col-xl-3 px-2 py-0"
                         v-for="(connection, connecIndex) in getFilteredConnections"
@@ -171,7 +171,7 @@
                 </v-tab-item>
 
                 <v-tab-item value="tab-3">
-                  <div class="row px-3">
+                  <div class="row px-3 tab-margin-top">
                     <div
                         class="col-12 col-md-4 col-xl-3 px-2 py-0"
                         v-for="(connection, connecIndex) in getFilteredConnections"
@@ -197,7 +197,7 @@
                 </v-tab-item>
 
                 <v-tab-item value="tab-4">
-                  <div class="row px-3">
+                  <div class="row px-3 tab-margin-top">
                     <div
                         class="col-12 col-md-4 col-xl-3 px-2 py-0"
                         v-for="(connection, connecIndex) in getFilteredConnections"
@@ -223,7 +223,7 @@
                 </v-tab-item>
 
                 <v-tab-item value="tab-5">
-                  <div class="row px-3">
+                  <div class="row px-3 tab-margin-top">
                     <div
                         class="col-12 col-md-4 col-xl-3 px-2 py-0"
                         v-for="(connection, connecIndex) in getFilteredConnections"
@@ -249,7 +249,7 @@
                 </v-tab-item>
 
                 <v-tab-item value="tab-6">
-                  <div class="row px-3">
+                  <div class="row px-3 tab-margin-top">
                     <div
                         class="col-12 col-md-4 col-xl-3 px-2 py-0"
                         v-for="(connection, connecIndex) in getFilteredConnections"
@@ -336,7 +336,7 @@
               </div>
 
 <!--              <div v-if="connectionReports" class="shortlist-wrapper">-->
-<!--                <div class="row px-3">-->
+<!--                <div class="row px-3 tab-margin-top">-->
 <!--                  <div-->
 <!--                    class="col-12 col-md-4 col-xl-3 px-2 py-0"-->
 <!--                    v-for="(connection, connecIndex) in getFilteredConnections"-->
@@ -1145,6 +1145,9 @@ export default {
 }
 .td-60 {
   width: 60%;
+}
+.tab-margin-top {
+  margin-top: 1px;
 }
 .overview-table td,
 .overview-table th {

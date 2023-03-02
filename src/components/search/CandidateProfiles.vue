@@ -25,6 +25,7 @@
 							:candidate="profile"
 							:role="role"
               				@socketNotification="socketNotification"
+							@removeCandidateFromResult="removeCandidateFromResult"
 							@switchComponent="()=>$emit('switchComponent', 'ProfileDetail')"
 						/>
 					</div>
@@ -38,7 +39,7 @@
 <script>
 import CandidateGrid from '@/components/search/NewCandidateCard.vue';
 // import Tag from '@/components/atom/Tag'
-import {mapGetters} from 'vuex';
+import {mapGetters, mapMutations} from 'vuex';
 
 export default {
 	name: 'CandidateProfiles',
@@ -58,7 +59,6 @@ export default {
 			queryArr: 'search/getQueryArr',
 			isSearched: 'search/getSearchStatus'
 		}),
-
 		limitedProfiles() {
 			return this.profiles.slice(0,10);
 		},
@@ -72,12 +72,22 @@ export default {
 				return this.queryArr.slice(0,5);
 			}
 			return this.queryArr
-		}
+		},
 	},
 	methods: {
-    socketNotification(data) {
-      this.$emit('socketNotification', data);
-    }
+		...mapMutations({
+			clearProfiles: 'search/clearProfiles',
+			setProfiles: 'search/setProfiles',
+		}),
+    	socketNotification(data) {
+			this.$emit('socketNotification', data);
+		},
+		removeCandidateFromResult(userId) {
+			let profiles = this.profiles.filter(item => item.user_id!== userId);
+			this.clearProfiles();
+			this.setProfiles(profiles);
+
+		}
 	}
 };
 </script>

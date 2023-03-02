@@ -1520,7 +1520,7 @@ export default {
 									content: "Selected Team Activated. Please note all the feature related information (chat, search, connection etc) will changed to this team is that you just activated. ",
 									onOk() {
 										vm.$emit("customLoad");
-										setTimeout(() => vm.$router.go(), 100);
+										setTimeout(() => vm.$router.push('/dashboard'), 100);
 									},
 								});
 								return true;

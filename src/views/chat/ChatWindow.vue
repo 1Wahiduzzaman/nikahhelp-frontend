@@ -251,16 +251,22 @@
                           </div>
                         </div>
                         <button class="btn btn-primary btn-submit js-msg-send">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.68 18.77">
-                            <g id="Layer_2" data-name="Layer 2">
-                              <g id="middle" fill="white">
-                                <polygon class="cls-1" points="8.6 12.29 7.06 13.34 6.86 11.05 8.6 12.29"/>
-                                <polygon class="cls-1" points="0 6.23 25.68 0 17.75 18.77 0 6.23"/>
-                                <polygon class="cls-2" points="6.86 11.05 24.95 0.57 8.6 12.29 6.86 11.05"/>
-                              </g>
-                            </g>
-                          </svg>
-                          Send
+                          <div class="flex">
+                            <div class="flex">
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.68 18.77">
+                                <g id="Layer_2" data-name="Layer 2">
+                                  <g id="middle" fill="white">
+                                    <polygon class="cls-1" points="8.6 12.29 7.06 13.34 6.86 11.05 8.6 12.29"/>
+                                    <polygon class="cls-1" points="0 6.23 25.68 0 17.75 18.77 0 6.23"/>
+                                    <polygon class="cls-2" points="6.86 11.05 24.95 0.57 8.6 12.29 6.86 11.05"/>
+                                  </g>
+                                </g>
+                              </svg>
+                            </div>
+                            <div>
+                              Send
+                            </div>
+                          </div>
                         </button>
                       </div>
                     </form>
