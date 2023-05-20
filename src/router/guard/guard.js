@@ -82,8 +82,8 @@ export const InitAdminRoute = (to, from, next) => {
 }
 
 export function lazyLoadView(folderName, view) {
-    return () => import(`@/views/${folderName}/${view}.vue`)
+    return () => import(`@/views/${folderName}/${view}.vue`  /* webpackChunkName: "[request]" */)
 }
 export function lazyLoadComponent(folderName, component) {
-    return () => import(`@/components/${folderName}/${component}.vue`)
+    return () => import(`@/components/${folderName}/${component}.vue` /* webpackChunkName: "[request]" */)
 }
