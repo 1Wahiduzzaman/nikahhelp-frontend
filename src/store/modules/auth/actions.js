@@ -1,11 +1,9 @@
-// import Vue from "vue";
+import Vue from "vue";
 import axios from "axios";
-import ImgService from "../../../services/imageservice";
 import JwtService from "../../../services/jwt.service";
 import router from '../../../router';
 export default {
   async login(context, payload) {
-    console.log(axios.defaults.baseURL, 'axios.baseurl');
     await axios.post("v1/login", payload).then(response => {
       const token = response.data.data.token.access_token;
       let data = { token: token };
@@ -32,16 +30,7 @@ export default {
         errorMessage: e.response.data.status_code == 403 ? 'Invalid email or password' : 'No account'
       });
     });
-
-    await ImgService.post("v1/login", payload).then(response => {
-      const token = response.data.data.token.access_token;
-      let data = { token: token };
-      JwtService.saveImgToken(data);
-    }).catch((e) => {
-      console.log('message', e.message)
-    });
   },
-  
   async signup(context, payload) {
     const response = await axios.post("v1/register", payload);
     if (response.data.status_code === 200) {
