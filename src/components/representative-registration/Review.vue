@@ -334,6 +334,7 @@ export default {
   },
   mounted() {
     this.getRepresentativeInfo();
+    // this.getRelatedImages();
   },
   methods: {
     async getRepresentativeInfo() {
@@ -351,6 +352,17 @@ export default {
         })
         .catch((error) => {});
     },
+   // async getRelatedImages() {
+   //  const imageToken = localStorage.getItem('tokenImage');
+   //       await fetch(`https://chobi.arranzed.com/api/`, {
+   //    headers: {
+   //          'Authorization': `Bearer ${imageToken}`, // notice the Bearer before your token
+   //    }
+   //  }).then(e => e.json()).then(e => {
+   //    // localStorage.setItem('tokenImage', e.data.token);
+   //    resolve(e.data)
+   //  }).catch(e => console.log(e));
+   //  }
   },
   computed: {},
 };

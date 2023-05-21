@@ -244,9 +244,9 @@ async saveCandidateUploadDoc(_, payload) {
     return new Promise( async (resolve, reject) => {
       let user = JSON.parse(localStorage.getItem("user"));
           const imageToken =  localStorage.getItem('tokenImage');
-     await fetch(`https://chobi.arranzed.com/api/img/${user.id}`, {
+     await fetch(`https://chobi.arranzed.com/api/img/${user.id}${payload.folder}`, {
       method: 'POST',
-      body: payload,
+      body: payload.image,
       headers: {
             'Authorization': `Bearer ${imageToken}`, // notice the Bearer before your token
       }

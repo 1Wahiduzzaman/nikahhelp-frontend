@@ -398,8 +398,8 @@ export default {
       }
       this.imageModel.avatar_image_url = e.target.files[0];
       let formData = new FormData();
-      formData.append("per_avatar_url", this.imageModel.avatar_image_url);
-      this.saveImage(formData);
+      formData.append("image", this.imageModel.avatar_image_url);
+      this.saveImage(formData, '_per_avatar_url');
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
@@ -416,8 +416,8 @@ export default {
       }
       this.imageModel.main_image_url = e.target.files[0];
       let formData = new FormData();
-      formData.append("per_main_image_url", this.imageModel.main_image_url);
-      this.saveImage(formData);
+      formData.append("image", this.imageModel.main_image_url);
+      this.saveImage(formData, '_per_main_image_url');
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
@@ -433,10 +433,10 @@ export default {
       }
       this.imageModel.additionalImageSrc = e.target.files[0];
       let formData = new FormData();
-      formData.append("other_images", e.target.files[0]);
+      formData.append("image", e.target.files[0]);
 
 
-      this.saveImage(formData);
+      this.saveImage(formData, '_additional_image');
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
@@ -482,31 +482,30 @@ export default {
         "team_connection_can_see",
         this.team_connection_can_see ? 1 : 0
       );
-      this.saveImage(formData);
+      this.saveImage(formData, '_per_avatar_url');
     },
-    async saveImage(data) {
+    async saveImage(data, folder) {
       this.$emit('turnOnBtnLoader');
-      await this.$store.dispatch("uploadImages", data).then((data) => {
-        // if (data.data.status && data.data.status !== "FAIL") {
-        //   let user = JSON.parse(localStorage.getItem("user"));
-        //   if (user) {
-        //     user.per_main_image_url = data.data.data.main_image_url;
-        //     localStorage.removeItem("user");
-        //     localStorage.setItem("user", JSON.stringify(user));
-        //   }
+      await this.$store.dispatch("uploadImages", {folder: folder, image: data}).then((data) => {
+          let user = JSON.parse(localStorage.getItem("user"));
+          if (user) {
+            user.per_main_image_url = folder === '_per_main_image_url' ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0] : '';
+            localStorage.removeItem("user");
+            localStorage.setItem("user", JSON.stringify(user));
+          }
 
-        //   this.$emit("valueChange", {
-        //     value: {
-        //       avatar_image_url: data.data.data.avatar_image_url,
-        //       main_image_url: data.data.data.main_image_url,
-        //       additionalImageSrc:
-        //         data.data.data.other_images.length > 0
-        //           ? data.data.data.other_images
-        //           : this.additionalImageSrc,
-        //     },
-        //     current: 3,
-        //   });
-        // }
+          this.$emit("valueChange", {
+            value: {
+              avatar_image_url: folder === '_per_avatar_url' ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0] : '',
+              main_image_url: folder === '_per_main_image_url' ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0] : '',
+              additionalImageSrc:
+                folder === '_additional_image' 
+                  ? process.env.VUE_APP_IMAGE + Object.values(data)[0]
+                  : this.additionalImageSrc,
+            },
+            current: 3,
+          });
+        
       });
       this.$emit('turnOffBtnLoader');
     },
