@@ -487,25 +487,26 @@ export default {
     async saveImage(data) {
       this.$emit('turnOnBtnLoader');
       await this.$store.dispatch("uploadImages", data).then((data) => {
-        if (data.data.status && data.data.status !== "FAIL") {
-          let user = JSON.parse(localStorage.getItem("user"));
-          if (user) {
-            user.per_main_image_url = data.data.data.main_image_url;
-            localStorage.removeItem("user");
-            localStorage.setItem("user", JSON.stringify(user));
-          }
-          this.$emit("valueChange", {
-            value: {
-              avatar_image_url: data.data.data.avatar_image_url,
-              main_image_url: data.data.data.main_image_url,
-              additionalImageSrc:
-                data.data.data.other_images.length > 0
-                  ? data.data.data.other_images
-                  : this.additionalImageSrc,
-            },
-            current: 3,
-          });
-        }
+        // if (data.data.status && data.data.status !== "FAIL") {
+        //   let user = JSON.parse(localStorage.getItem("user"));
+        //   if (user) {
+        //     user.per_main_image_url = data.data.data.main_image_url;
+        //     localStorage.removeItem("user");
+        //     localStorage.setItem("user", JSON.stringify(user));
+        //   }
+
+        //   this.$emit("valueChange", {
+        //     value: {
+        //       avatar_image_url: data.data.data.avatar_image_url,
+        //       main_image_url: data.data.data.main_image_url,
+        //       additionalImageSrc:
+        //         data.data.data.other_images.length > 0
+        //           ? data.data.data.other_images
+        //           : this.additionalImageSrc,
+        //     },
+        //     current: 3,
+        //   });
+        // }
       });
       this.$emit('turnOffBtnLoader');
     },

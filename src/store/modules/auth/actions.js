@@ -1,10 +1,24 @@
 import Vue from "vue";
 import axios from "axios";
+// import ImgService from "../../../services/imageservice";
 import JwtService from "../../../services/jwt.service";
 import router from '../../../router';
 export default {
   async login(context, payload) {
-    await axios.post("v1/login", payload).then(response => {
+    console.log(axios.defaults.baseURL, 'axios.baseurl');
+    
+    const form = new FormData();
+    form.append('email', payload.email);
+    form.append('password', payload.password);
+
+    
+
+    await axios.post('/v1/login', {
+      email: payload.email, password: payload.password
+    }).then((e) => e.json()).catch((e) => console.log(e));
+
+
+    await axios.post("v1/login", payload).then( async (response) => {
       const token = response.data.data.token.access_token;
       let data = { token: token };
       JwtService.saveTokenAndUser(data);
@@ -17,6 +31,14 @@ export default {
 
 
       });
+
+      await fetch('https://chobi.arranzed.com/api/v1/login', {
+      method: 'POST',
+      body: form
+    }).then(e => e.json()).then(e => {
+      localStorage.setItem('tokenImage', e.data.token.access_token);
+    }).catch(e => console.log(e));
+
       if(router.history._startLocation === '/login') {
         router.push({ name: 'root' });
       } else {
@@ -30,8 +52,20 @@ export default {
         errorMessage: e.response.data.status_code == 403 ? 'Invalid email or password' : 'No account'
       });
     });
+
+    // await ImgService.post("v1/login", payload).then(response => {
+    //   const token = response.data.data.token.access_token;
+    //   let data = { token: token };
+    //   JwtService.saveImgToken(data);
+    // }).catch((e) => {
+    //   console.log('message', e.message)
+    // });
   },
   async signup(context, payload) {
+  //   await fetch('http://bioscope.test/api/v1/register', {method: 'Post', body:  JSON.stringify({email: payload.email, password: payload.password}), headers: {'Content-Type': 'application/json'}}).
+  //     then(response => response.json()).catch((e) => {
+  //       console.log(e.message);
+  // })   
     const response = await axios.post("v1/register", payload);
     if (response.data.status_code === 200) {
       const token = response.data.data.token.access_token;
@@ -42,6 +76,17 @@ export default {
       context.commit("setUser", {
         token: response.data.data.access_token,
       });
+
+      const form = new FormData();
+    form.append('email', payload.email);
+    form.append('password', payload.password);
+       await fetch('https://chobi.arranzed.com/api/v1/login', {
+      method: 'POST',
+      body: form
+    }).then(e => e.json()).then(e => {
+      localStorage.setItem('tokenImage', e.data.token.access_token);
+    }).catch(e => console.log(e));
+
       if (token) {
         router.push({
           name: "EmailVerification",

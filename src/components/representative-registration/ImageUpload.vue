@@ -326,27 +326,31 @@ export default {
       await this.$store
         .dispatch("saveRepresentativeImage", data)
         .then((data) => {
-          if (data.data.status && data.data.status !== "FAIL") {
-            let user = JSON.parse(localStorage.getItem("user"));
-            if (user) {
-              user.per_main_image_url =
-                data.data.data.gallery.per_main_image_url;
-              localStorage.removeItem("user");
-              localStorage.setItem("user", JSON.stringify(user));
-            }
-            this.$emit("valueChange", {
-              value: {
-                per_avatar_url: data.data.data.gallery.per_avatar_url,
-                per_main_image_url: data.data.data.gallery.per_main_image_url,
-              },
-              current: 1,
-            });
-          }
-          if (data.data.status && data.data.status == "FAIL") {
-            const errorMessage = JSON.stringify(data.data.data);
-            this.showError(errorMessage);
-            this.loadingButton = false;
-          }
+          // if (data.data.status && data.data.status !== "FAIL") {
+          //   let user = JSON.parse(localStorage.getItem("user"));
+          //   if (user) {
+          //     user.per_main_image_url =
+          //       data.data.data.gallery.per_main_image_url;
+          //     localStorage.removeItem("user");
+          //     localStorage.setItem("user", JSON.stringify(user));
+          //   }
+
+              
+      
+
+          //   this.$emit("valueChange", {
+          //     value: {
+          //       per_avatar_url: data.data.data.gallery.per_avatar_url,
+          //       per_main_image_url: data.data.data.gallery.per_main_image_url,
+          //     },
+          //     current: 1,
+          //   });
+          // }
+          // if (data.data.status && data.data.status == "FAIL") {
+          //   const errorMessage = JSON.stringify(data.data.data);
+          //   this.showError(errorMessage);
+          //   this.loadingButton = false;
+          // }
         })
         .catch((error) => {
           this.loadingButton = false;

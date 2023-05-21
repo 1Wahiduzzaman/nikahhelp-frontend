@@ -241,14 +241,19 @@ async saveCandidateUploadDoc(_, payload) {
   },
   async uploadImages(_, payload) {
     
-    return new Promise((resolve, reject) => {
-      ApiService.post("v1/candidate/image-upload", payload)
-        .then((data) => {
-          resolve(data);
-        })
-        .catch((error) => {
-          reject(error);
-        });
+    return new Promise( async (resolve, reject) => {
+      let user = JSON.parse(localStorage.getItem("user"));
+          const imageToken =  localStorage.getItem('tokenImage');
+     await fetch(`https://chobi.arranzed.com/api/img/${user.id}`, {
+      method: 'POST',
+      body: payload,
+      headers: {
+            'Authorization': `Bearer ${imageToken}`, // notice the Bearer before your token
+      }
+    }).then(e => e.json()).then(e => {
+      resolve(e.data);
+      // localStorage.setItem('tokenImage', e.data.token);
+    }).catch(e => console.log(e));
     });
   },
   async deleteImage(_, payload) {

@@ -48,14 +48,19 @@ export default {
     });
   },
   async saveRepresentativeImage(_, payload) {
-    return new Promise((resolve, reject) => {
-      ApiService.post("v1/representative/image/upload", payload)
-        .then((data) => {
-          resolve(data);
-        })
-        .catch((error) => {
-          reject(error);
-        });
+    return new Promise( async (resolve, reject) => {
+       const imageToken =  localStorage.getItem('tokenImage');
+       let user = JSON.parse(localStorage.getItem("user"));
+     await fetch(`https://chobi.arranzed.com/api/img/${user.id}`, {
+      method: 'POST',
+      body: payload,
+      headers: {
+            'Authorization': `Bearer ${imageToken}`, // notice the Bearer before your token
+      }
+    }).then(e => e.json()).then(e => {
+      // localStorage.setItem('tokenImage', e.data.token);
+      resolve(e.data)
+    }).catch(e => console.log(e));
     });
   },
   async saveRepresentativeImageCondition(_, payload) {
