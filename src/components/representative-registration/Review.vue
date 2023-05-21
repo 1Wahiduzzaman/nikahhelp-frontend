@@ -342,6 +342,7 @@ export default {
         .dispatch("getRepresentativeInfo")
         .then((data) => {
           let user = JSON.parse(localStorage.getItem("user"));
+          const imageModel = this.representativeDetails.imageModel
           this.representativeDetails = {
             ...data.data.data,
             personal: {
@@ -349,6 +350,12 @@ export default {
               per_email: user.email,
             },
           };
+
+          this.representativeDetails = {
+            ...this.representativeDetails,
+            imageModel: imageModel,
+            
+          }
         })
         .catch((error) => {});
     },

@@ -344,8 +344,8 @@ export default {
 
             this.$emit("valueChange", {
               value: {
-                per_avatar_url: filename === '_per_avatar_url' ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0] : '',
-                per_main_image_url: filename === '_per_main_image_url' ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0] : ''
+                per_avatar_url: filename === '_per_avatar_url' ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0] : this.imageModel.per_avatar_url,
+                per_main_image_url: filename === '_per_main_image_url' ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0] : this.imageModel.per_main_image_url
               },
               current: 1,
             });
