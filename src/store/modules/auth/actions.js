@@ -11,11 +11,6 @@ export default {
     form.append('email', payload.email);
     form.append('password', payload.password);
 
-    
-
-    await axios.post('/v1/login', {
-      email: payload.email, password: payload.password
-    }).then((e) => e.json()).catch((e) => console.log(e));
 
 
     await axios.post("v1/login", payload).then( async (response) => {
@@ -80,7 +75,7 @@ export default {
       const form = new FormData();
     form.append('email', payload.email);
     form.append('password', payload.password);
-       await fetch('https://chobi.arranzed.com/api/v1/login', {
+       await fetch('https://chobi.arranzed.com/api/v1/register', {
       method: 'POST',
       body: form
     }).then(e => e.json()).then(e => {
