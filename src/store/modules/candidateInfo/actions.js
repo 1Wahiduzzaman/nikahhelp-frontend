@@ -251,8 +251,9 @@ async saveCandidateUploadDoc(_, payload) {
             'Authorization': `Bearer ${imageToken}`, // notice the Bearer before your token
       }
     }).then(e => e.json()).then(e => {
-      resolve(e.data);
+      resolve(e);
       // localStorage.setItem('tokenImage', e.data.token);
+      console.log(e, 'image upload response')
     }).catch(e => console.log(e));
     });
   },

@@ -130,6 +130,9 @@ export default {
           cityArr.push(city.name);
         });
       }
+      if (cityArr.length < 1) {
+          cityArr.push("Don't Mind");
+      }
       return cityArr.join(", ");
     },
   },

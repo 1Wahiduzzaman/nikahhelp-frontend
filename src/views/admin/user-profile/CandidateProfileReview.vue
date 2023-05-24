@@ -38,7 +38,7 @@
             Reinstate
           </v-btn>
           <v-btn class="mr-2" v-if="userStatus != 4 && userStatus != 3" :loading="loadingReject"
-            @click="openDialog(item)" style="background-color: rgb(191 20 67); color: #fff" small>
+            @click="openDialog()" style="background-color: rgb(191 20 67); color: #fff" small>
             Reject
           </v-btn>
 
@@ -702,6 +702,8 @@ import ApiService from "@/services/api.service";
 import TableRow from "@/components/atom/TableRow";
 import FieldsetCard from "@/components/atom/FieldsetCard";
 import { AGES, HEIGHTS, Employment_Statuses } from "@/models/data";
+import Notification from "@/common/notification.js";
+
 export default {
   name: "ReviewCandidate",
   components: {
@@ -758,6 +760,21 @@ export default {
     this.getDocumentInfo();
   },
   methods: {
+    socketNotification(payload) {
+      console.log('socketNotification from candidate profile review')
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.sender = loggedUser.id;
+      Notification.storeNotification(payload);
+      payload.created_at = new Date();
+      payload.seen = 0;
+      payload.sender = loggedUser;
+      if(payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map(item => {
+          return item.toString();
+        });
+        this.$socket.emit('notification', payload);
+      }
+    },
     getNationality() {
       let nationArr = [];
       this.candidateData.preference?.preferred_nationality.map((i) => {
@@ -775,9 +792,9 @@ export default {
       this.dialog = false;
     },
 
-    openDialog(item) {
+    openDialog() {
       this.dialog = true;
-      this.selectedItem = item;
+      // this.selectedItem = item;
     },
 
     async save(note) {
@@ -787,9 +804,12 @@ export default {
         note: note,
       };
       this.cancelLoading = true;
+      this.cancel(null);
+      this.loadingReject = true;
       await this.$store
         .dispatch("updateUserVerifyOrReject", data)
         .then((data) => {
+          
           this.saveCandidateUploadDoc();
           this.cancelLoading = false;
           console.log(data, "rejected");
@@ -797,10 +817,21 @@ export default {
             this.candidateData.user.status = 4;
           }
 
-          this.cancel(null);
+          this.loadingReject = false;
+          let receivers = [this.candidateData.user.id];
+          console.log(receivers, "receivers")
+          let payload = {
+            receivers: receivers,
+            title: `Your id has been rejected`,
+            description: note,
+          };
+          console.log('before sending notification', payload);
+          this.socketNotification(payload);
+          console.log('after sending notification')
         })
         .catch((error) => {
           this.cancelLoading = false;
+          console.log(error, 'error from reject');
         });
     },
     async saveCandidateUploadDoc() {

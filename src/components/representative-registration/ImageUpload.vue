@@ -32,7 +32,7 @@
                           <div class="img-preview mb-2">
                             <img 
                               v-viewer="{toolbar: false, title: false, navbar: false}"
-                              :src=" avatarSrc ? avatarSrc : imageModel.per_avatar_url" 
+                              :src=" avatarSrc ? avatarSrc : imageModel.per_avatar_url + `?token=${tokenImage}`" 
                               class="contain" 
                               v-if="imageModel.per_avatar_url" 
                             />
@@ -48,16 +48,46 @@
                             name="avatar"
                             @change="getAvatar"
                           /> -->
-                          <label for="input-avatar-image" class="upload-label" v-if="!imageModel.per_avatar_url">
+                          <label for="input-avatar-image" class="upload-label" v-if="!imageModel.per_avatar_url" @click="showAvatarSelectionMenu=true">
                             Upload
-                            <input v-if="!imageModel.per_avatar_url" type="file" class="input-image" id="input-avatar-image" name="avatar"
-                            @change="getAvatar" />
+                            <!-- <input v-if="!imageModel.per_avatar_url" type="file" class="input-image" id="input-avatar-image" name="avatar"
+                            @change="getAvatar" /> -->
                           </label>
                           <a-button type="primary" style="width: 200px; border-radius: 5px;" v-if="imageModel.per_avatar_url"
                             @click="clearImg('avatar')"
                           >
                             Remove
                           </a-button>
+                          <a-modal 
+                            :visible="showAvatarSelectionMenu" 
+                            :closable="true"
+                            title="Select Avatar" 
+                            @ok="showAvatarSelectionMenu = false" 
+                            @cancel="showAvatarSelectionMenu = false" 
+                            :ok-button-props="{ disabled: true }"
+                            :cancel-button-props="{ disabled: true }"
+                          >
+                            <div class="d-flex flex-wrap">
+                              <div class="" v-for="image in images" :key="image.pathShort">
+                                <img 
+                                  :ref="image.pathShort.substring(2, image.pathShort.length-4)" 
+                                  class="circle" 
+                                  :src="require(`@/assets/avatar/${image.pathShort.substring(2, image.pathShort.length)}`)"
+                                  @click="setAvatar(image.pathShort.substring(2, image.pathShort.length-4))"
+                                >
+                              </div>
+                              
+                            </div>
+
+                            <template slot="footer">
+                              <a-button key="back" shape="round" @click="showAvatarSelectionMenu=false">
+                              Cancel
+                              </a-button>
+                              <a-button key="submit" type="primary" shape="round" @click="showAvatarSelectionMenu = false">
+                              Ok
+                              </a-button>
+                            </template>
+                          </a-modal>
                         </div>
                       </div>
                     </a-col>
@@ -67,7 +97,7 @@
                         <div>
                           <div class="img-preview mb-2">
                             <img v-viewer="{toolbar: false, title: false, navbar: false}"
-                              :src="mainImageSrc ? mainImageSrc : imageModel.per_main_image_url" 
+                              :src="mainImageSrc ? mainImageSrc : imageModel.per_main_image_url + `?token=${tokenImage}`" 
                               class="contain" 
                               v-if="imageModel.per_main_image_url" 
                             />
@@ -174,6 +204,7 @@
 
 <script>
 import Loader from '../../plugins/loader/loader.vue';
+import axios from "axios";
 export default {
   name: "ImageUpload",
 
@@ -192,15 +223,28 @@ export default {
       avatarSrc: "",
       mainImage: "",
       mainImageSrc: "",
+      images: [],
       additionalImage: "",
+      showAvatarSelectionMenu: false,
       additionalImageSrc: "",
-      loading: false
+      loading: false,
+      tokenImage: "",
     };
   },
 
-  async mounted() { },
+  created() {
+    this.importAll(require.context('../../assets/avatar/', true, /\.png$/));
+    this.getTokenImage();
+  },
 
   methods: {
+    getTokenImage() {
+      this.tokenImage = localStorage.getItem("tokenImage");
+    },
+    importAll(r) {
+      r.keys().forEach(key => (this.images.push({ pathShort: key })));
+      console.log(this.images);
+    },
     clearImg(action) {
       switch (action) {
         case "main":
@@ -240,13 +284,13 @@ export default {
 
     getAvatar(e) {
       this.loading = true;
-      let file = e.target.files[0];
+      let file = e;
       if (!this.imageSizeCheck(file)) {
         file = "";
         return;
       }
 
-      this.imageModel.per_avatar_url = e.target.files[0];
+      this.imageModel.per_avatar_url = file;
       let formData = new FormData();
       formData.append("image", this.imageModel.per_avatar_url);
       this.saveImages(formData, '_per_avatar_url');
@@ -256,6 +300,40 @@ export default {
         this.avatarSrc = e.target.result;
         this.loading = false
       };
+    },
+    async setAvatar(avatarNo) {
+      // console.log(this.$refs, 'this.refs', this.$refs.length);
+      for(let i=0; i < this.images.length; i++) {
+        this.$refs[i+1][0].classList.remove('selected');
+        // console.log(this.$refs[i+1], 'this.refs[i]');
+      }
+      this.$refs[avatarNo][0].classList.add('selected');
+      // this.imageModel.avatar_image_url = avatarNo;
+      // const 
+      let avatarImage = require(`@/assets/avatar/${avatarNo}.png`); 
+      // // let avatarImage = require(`@/assets/avatar/${avatarNo}.png`); 
+      // console.log(avatarImage, 'avatarIMage', typeof avatarImage);
+      // let file = new File(avatarImage, 'avatar.png', {type: 'image/png'});
+      // console.log(file, 'file from avatar ');
+      // require(`@/assets/avatar/${image.pathShort.substring(2, image.pathShort.length)}`
+      // this.avatarSrc = `@/assets/avatar/${this.images[avatarNo-1].pathShort.substring(2, image.pathShort.length)}`;
+      // this.getAvatar(avatarImage);
+     
+
+      let avatarImgFile;
+      await this.urltoFile(avatarImage, 'avatar.png')
+          .then(function(file){
+              console.log(file);
+              avatarImgFile = file;
+          })
+      this.getAvatar(avatarImgFile);
+    },
+    urltoFile(url, filename, mimeType){
+      mimeType = mimeType || (url.match(/^data:([^;]+);/)||'')[1];
+      return (fetch(url)
+          .then(function(res){return res.arrayBuffer();})
+          .then(function(buf){return new File([buf], filename, {type:mimeType});})
+      );
     },
     getMainImage(e) {
       this.loading = true;
@@ -321,20 +399,34 @@ export default {
         .then((data) => { })
         .catch((error) => { });
     },
-    async saveImages(data, filename) {
+    async saveImages(data, folder) {
       this.$emit('turnOnBtnLoader');
-      const imageData = {
-        image: data,
-        fileName: filename
-      };
+
       await this.$store
-        .dispatch("saveRepresentativeImage", {folder: filename, image: data})
-        .then((data) => {
+        .dispatch("saveRepresentativeImage", {folder: folder, image: data})
+        .then(async (data) => {
           console.log(data);
+          let payload = {};
+          if(folder === '_per_main_image_url') {
+            payload = {
+              per_main_image_url: process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0]
+            };
+          } else if(folder === '_per_avatar_url') {
+            payload = {
+              per_avatar_url: process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0]
+            }
+          }
+          if(Object.keys(payload).length > 0) {
+            await axios.post('v1/representative/image/upload', payload).then(response => {
+              console.log(response);
+            }).catch(error => {
+              console.log(error);
+            });
+          }
 
             let user = JSON.parse(localStorage.getItem("user"));
             if (user) {
-              user.per_main_image_url = filename === '_per_main_image_url' ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0] : '';
+              user.per_main_image_url = folder === '_per_main_image_url' ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0] : '';
               localStorage.removeItem("user");
               localStorage.setItem("user", JSON.stringify(user));
             }
@@ -344,8 +436,8 @@ export default {
 
             this.$emit("valueChange", {
               value: {
-                per_avatar_url: filename === '_per_avatar_url' ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0] : this.imageModel.per_avatar_url,
-                per_main_image_url: filename === '_per_main_image_url' ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0] : this.imageModel.per_main_image_url
+                per_avatar_url: folder === '_per_avatar_url' ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0] : this.imageModel.per_avatar_url,
+                per_main_image_url: folder === '_per_main_image_url' ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0] : this.imageModel.per_main_image_url
               },
               current: 1,
             });
@@ -367,7 +459,17 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+.circle {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 3px solid rgb(200, 189, 189);
+  margin: 5px;
+}
 
+.selected {
+  border: 3px solid $bg-secondary !important;
+}
 .contain {
   height: 123px;
   width: 220px;

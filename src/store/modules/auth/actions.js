@@ -1,12 +1,9 @@
 import Vue from "vue";
 import axios from "axios";
-// import ImgService from "../../../services/imageservice";
 import JwtService from "../../../services/jwt.service";
 import router from '../../../router';
 export default {
   async login(context, payload) {
-    console.log(axios.defaults.baseURL, 'axios.baseurl');
-    
     const form = new FormData();
     form.append('email', payload.email);
     form.append('password', payload.password);
@@ -47,14 +44,6 @@ export default {
         errorMessage: e.response.data.status_code == 403 ? 'Invalid email or password' : 'No account'
       });
     });
-
-    // await ImgService.post("v1/login", payload).then(response => {
-    //   const token = response.data.data.token.access_token;
-    //   let data = { token: token };
-    //   JwtService.saveImgToken(data);
-    // }).catch((e) => {
-    //   console.log('message', e.message)
-    // });
   },
   async signup(context, payload) {
   //   await fetch('http://bioscope.test/api/v1/register', {method: 'Post', body:  JSON.stringify({email: payload.email, password: payload.password}), headers: {'Content-Type': 'application/json'}}).

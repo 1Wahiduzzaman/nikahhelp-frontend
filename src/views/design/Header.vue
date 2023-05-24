@@ -134,7 +134,7 @@
               <img
                 v-if="loggedUser.per_main_image_url"
                 class="avatar-image"
-                :src="loggedUser.per_main_image_url"
+                :src="loggedUser.per_main_image_url + `?token=${tokenImage}`"
                 alt=""
               />
               <img
@@ -449,13 +449,15 @@ export default {
   created() {
     this.loadNotifications();
     this.loadTeams();
+    this.getTokenImage();
   },
   data() {
     return {
      
       activeTeamId: null,
       teamsForHeader: [],
-      teamsOriginal: []
+      teamsOriginal: [],
+      tokenImage: "",
     };
   },
   computed: {
@@ -545,7 +547,9 @@ export default {
     }
   },
   methods: {
-   
+    getTokenImage() {
+      this.tokenImage = localStorage.getItem("tokenImage");
+    },
 
     responsiveToggle() {
       this.collapsed = false;
