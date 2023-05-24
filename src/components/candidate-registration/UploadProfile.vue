@@ -50,7 +50,7 @@
                   <div class="img-preview mb-2">
                     <img
                       v-viewer="{toolbar: false, title: false}"
-                      :src="avatarSrc ? avatarSrc : imageModel.avatar_image_url"
+                      :src="avatarSrc ? avatarSrc : imageModel.avatar_image_url + `?token=${tokenImage}`"
                       class="contain"
                       v-if="imageModel.avatar_image_url"
                     />
@@ -82,16 +82,44 @@
                       </svg>
                     </div>
                   </div>
-                  <label for="input-avatar-image" class="upload-label" v-if="!imageModel.avatar_image_url">
+                  <label for="input-avatar-image" class="upload-label" v-if="!imageModel.avatar_image_url" @click="showAvatarSelectionMenu=true">
                     Upload
-                    <input v-if="!imageModel.avatar_image_url" type="file" class="input-image" id="input-avatar-image" name="mainImage"
-                    @change="getAvatar" />
                   </label>
                   <a-button type="primary" style="width: 200px; border-radius: 5px;" v-if="imageModel.avatar_image_url"
                     @click="clearImg('avatar')"
                   >
                     Remove
                   </a-button>
+                  <a-modal 
+                    :visible="showAvatarSelectionMenu" 
+                    :closable="true"
+                    title="Select Avatar" 
+                    @ok="showAvatarSelectionMenu = false" 
+                    @cancel="showAvatarSelectionMenu = false" 
+                    :ok-button-props="{ disabled: true }"
+                    :cancel-button-props="{ disabled: true }"
+                  >
+                    <div class="d-flex flex-wrap">
+                      <div class="" v-for="image in images" :key="image.pathShort">
+                        <img 
+                          :ref="image.pathShort.substring(2, image.pathShort.length-4)" 
+                          class="circle" 
+                          :src="require(`@/assets/avatar/${image.pathShort.substring(2, image.pathShort.length)}`)"
+                          @click="setAvatar(image.pathShort.substring(2, image.pathShort.length-4))"
+                        >
+                      </div>
+                      
+                    </div>
+
+                    <template slot="footer">
+                      <a-button key="back" shape="round" @click="showAvatarSelectionMenu=false">
+                      Cancel
+                      </a-button>
+                      <a-button key="submit" type="primary" shape="round" @click="showAvatarSelectionMenu = false">
+                      Ok
+                      </a-button>
+                    </template>
+                  </a-modal>
                 </div>
               </div>
               <div class="col-12 col-md-4 mobile-margin">
@@ -106,7 +134,7 @@
                     <img
                       v-viewer="{toolbar: false, title: false}"
                       :src="
-                        mainImageSrc ? mainImageSrc : imageModel.main_image_url
+                        mainImageSrc ? mainImageSrc : imageModel.main_image_url + `?token=${tokenImage}`
                       "
                       class="contain"
                       v-if="imageModel.main_image_url"
@@ -164,7 +192,7 @@
                       :src="
                         additionalImageSrc
                           ? additionalImageSrc
-                          : imageModel.additionalImageSrc
+                          : imageModel.additionalImageSrc + `?token=${tokenImage}`
                       "
                       class="contain"
                       v-if="imageModel.additionalImageSrc"
@@ -278,9 +306,9 @@
 </template>
 
 <script>
-import Vue from "vue";
+// import Vue from "vue";
 import Loader from "../../plugins/loader/loader.vue";
-
+import axios from "axios";
 export default {
   name: "UploadProfile",
 
@@ -297,7 +325,9 @@ export default {
       activeKey: ["1"],
       avatarSrc: "",
       mainImageSrc: "",
+      images: [],
       additionalImageSrc: "",
+      showAvatarSelectionMenu: false,
       anyoneFlag: false,
       onlyTeamFlag: false,
       onlyTeamConnectionsFlag: false,
@@ -305,15 +335,24 @@ export default {
       anybody_can_see: false,
       only_team_can_see: false,
       team_connection_can_see: false,
-      loading: false
+      loading: false,
+      tokenImage: "",
     };
   },
 
   created() {
     this.getImageSharingSettings();
+    this.importAll(require.context('../../assets/avatar/', true, /\.png$/));
+    this.getTokenImage();
   },
-
   methods: {
+    getTokenImage() {
+      this.tokenImage = localStorage.getItem("tokenImage");
+    },
+    importAll(r) {
+      r.keys().forEach(key => (this.images.push({ pathShort: key })));
+      console.log(this.images);
+    },
     clearImg(action) {
       switch (action) {
         case "main":
@@ -390,13 +429,14 @@ export default {
     },
     getAvatar(e) {
       this.loading = true;
-      let file = e.target.files[0];
+      // let file = e.target.files[0];
+      let file = e;
       console.log(file);
       if (!this.imageSizeCheck(file)) {
         file = "";
         return;
       }
-      this.imageModel.avatar_image_url = e.target.files[0];
+      this.imageModel.avatar_image_url = file;
       let formData = new FormData();
       formData.append("image", this.imageModel.avatar_image_url);
       this.saveImage(formData, '_per_avatar_url');
@@ -406,6 +446,40 @@ export default {
         this.avatarSrc = e.target.result;
         this.loading = false;
       };
+    },
+    async setAvatar(avatarNo) {
+      // console.log(this.$refs, 'this.refs', this.$refs.length);
+      for(let i=0; i < this.images.length; i++) {
+        this.$refs[i+1][0].classList.remove('selected');
+        // console.log(this.$refs[i+1], 'this.refs[i]');
+      }
+      this.$refs[avatarNo][0].classList.add('selected');
+      // this.imageModel.avatar_image_url = avatarNo;
+      // const 
+      let avatarImage = require(`@/assets/avatar/${avatarNo}.png`); 
+      // // let avatarImage = require(`@/assets/avatar/${avatarNo}.png`); 
+      // console.log(avatarImage, 'avatarIMage', typeof avatarImage);
+      // let file = new File(avatarImage, 'avatar.png', {type: 'image/png'});
+      // console.log(file, 'file from avatar ');
+      // require(`@/assets/avatar/${image.pathShort.substring(2, image.pathShort.length)}`
+      // this.avatarSrc = `@/assets/avatar/${this.images[avatarNo-1].pathShort.substring(2, image.pathShort.length)}`;
+      // this.getAvatar(avatarImage);
+     
+
+      let avatarImgFile;
+      await this.urltoFile(avatarImage, 'avatar.png')
+          .then(function(file){
+              console.log(file);
+              avatarImgFile = file;
+          })
+      this.getAvatar(avatarImgFile);
+    },
+    urltoFile(url, filename, mimeType){
+      mimeType = mimeType || (url.match(/^data:([^;]+);/)||'')[1];
+      return (fetch(url)
+          .then(function(res){return res.arrayBuffer();})
+          .then(function(buf){return new File([buf], filename, {type:mimeType});})
+      );
     },
     getMainImage(e) {
       this.loading = true;
@@ -474,7 +548,7 @@ export default {
       }
       this.onChangeCheckBox();
     },
-    onChangeCheckBox() {
+    async onChangeCheckBox() {
       let formData = new FormData();
       formData.append("anybody_can_see", this.anybody_can_see ? 1 : 0);
       formData.append("only_team_can_see", this.only_team_can_see ? 1 : 0);
@@ -482,11 +556,40 @@ export default {
         "team_connection_can_see",
         this.team_connection_can_see ? 1 : 0
       );
-      this.saveImage(formData, '_per_avatar_url');
+      // this.saveImage(formData, '_per_avatar_url');
+      await axios.post('v1/candidate/image-upload', formData).then(response => {
+        console.log(response);
+      }).catch(error => {
+        console.log(error);
+      });
     },
     async saveImage(data, folder) {
       this.$emit('turnOnBtnLoader');
-      await this.$store.dispatch("uploadImages", {folder: folder, image: data}).then((data) => {
+      await this.$store.dispatch("uploadImages", {folder: folder, image: data}).then(async (data) => {
+        console.log(data, 'image response afer saving image');
+
+        let payload = {};
+        if(folder === '_per_main_image_url') {
+          payload = {
+            per_main_image_url: process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0]
+          };
+        } else if(folder === '_per_avatar_url') {
+          payload = {
+            per_avatar_url: process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0]
+          }
+        } else if(folder === '_additional_image') {
+          payload = {
+            other_images: process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0]
+          }
+        }
+        if(Object.keys(payload).length > 0) {
+          await axios.post('v1/candidate/image-upload', payload).then(response => {
+            console.log(response);
+          }).catch(error => {
+            console.log(error);
+          });
+        }
+
           let user = JSON.parse(localStorage.getItem("user"));
           if (user) {
             user.per_main_image_url = folder === '_per_main_image_url' ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0] : '';
@@ -534,6 +637,17 @@ legend {
   object-fit: cover;
 }
 @import "@/styles/base/_variables.scss";
+.circle {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 3px solid rgb(200, 189, 189);
+  margin: 5px;
+}
+
+.selected {
+  border: 3px solid $bg-secondary !important;
+}
 .upload-profile-image {
   .section-heading {
     text-align: center;
