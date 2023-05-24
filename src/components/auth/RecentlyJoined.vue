@@ -92,7 +92,7 @@ export default {
 
 		imgLoad(index, user) {
 			let img = this.$refs[`avatar-${index}`][0];
-			img.src = `https://ui-avatars.com/api/?name=${user.name}background=b5b5b5&color=fff`;
+			img.src = `https://ui-avatars.com/api/?name=${user.name}&background=b5b5b5&color=fff`;
 		}
 	},
 };
