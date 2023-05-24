@@ -1,9 +1,9 @@
 <template>
   <div class="signin login-main-container">
     <div class="signin-inner desktop-padding login-header-container">
-      <a class="logo" href="/"
+      <router-link class="logo" to="/"
         ><img src="@/assets/Icons/Logo/SVG/White Logo.svg" alt="logo" class="mat-logo"
-      /></a>
+      /></router-link>
       <h3 id="welcome-back-tag" class="welcome-back-tag">
         <b>Welcome Back</b>
       </h3>

@@ -2,13 +2,13 @@
   <footer>
     <div class="container py-3">
       <div class="text-center">
-        <a href="/">
+        <router-link to="/">
           <img
             src="@/assets/Icons/Logo/1x/black-logo.png"
             height="50"
             alt="logo"
           />
-        </a>
+        </router-link>
       </div>
       <ul class="footer-menu mt-3">
         <li>

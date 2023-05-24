@@ -1,9 +1,9 @@
 <template>
   <div class="signup-container font-poppins main-container">
     <div class="signin-inner desktop-padding header-container text-center">
-      <a class="logo" href="/"
+      <router-link class="logo" to="/"
         ><img src="@/assets/Icons/Logo/SVG/White Logo.svg" alt="logo" class="mat-logo"
-      /></a>
+      /></router-link>
     </div>
 
     <div v-if="!showSignUpPage" class="container signup-text-container">
