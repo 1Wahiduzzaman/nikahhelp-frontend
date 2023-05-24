@@ -23,7 +23,7 @@
       >
 			<div style="overflow-y:scroll; height: 500px; overflow-x:hidden">
 
-        <CookiesPreference />
+        <CookiesPreference @allowAllCookies="allowAllCookies" />
 			</div>
       </a-modal>
     </div>
@@ -54,8 +54,8 @@
         <button type="submit" @click="handleOk" class="acceptButton">
           Accept
         </button>
-        <button type="submit" @click="handleDecline" class="acceptButton">
-          Decline
+        <button type="submit" @click="preferenceModalVisible = true" class="acceptButton">
+          Preferences
         </button>
 
       </div>
@@ -82,10 +82,15 @@
         JwtService.saveCookies(1);
         this.adVisible = false;
       },
-      handleDecline() {
-        JwtService.saveCookies(0);
+      // handleDecline() {
+      //   JwtService.saveCookies(0);
+      //   this.adVisible = false;
+      // },
+      allowAllCookies() {
+        JwtService.saveCookies(1);
         this.adVisible = false;
-      },
+        this.preferenceModalVisible = false;
+      }
     },
     computed: {
       cookiesDataExists() {

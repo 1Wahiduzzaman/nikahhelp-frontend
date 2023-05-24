@@ -8,7 +8,7 @@
         <div class="docText">
           <p>We use cookies to ensure our website works properly. To help us improve our service, we collect data to understand how people use our site. Click on the categories below to learn more about their purposes. You may choose which types of cookies to allow and can change your preferences at any time. Please note disabling cookies may affect your experience on the website. You can learn more about how we use cookies by visiting our <router-link to="/privacy-cookie-policy">Cookie and Privacy Policy.</router-link>
           </p>
-          <v-btn style="margin: 20px 0px 20px 0px; color: #fff;" color="#6158a7">Allow All Cookies</v-btn>
+          <v-btn style="margin: 20px 0px 20px 0px; color: #fff;" color="#6158a7" @click="$emit('allowAllCookies')">Allow All Cookies</v-btn>
         </div>
 
   
