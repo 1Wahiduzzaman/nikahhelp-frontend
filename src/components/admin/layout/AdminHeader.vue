@@ -4,13 +4,13 @@
       class="header-content d-flex align-items-center justify-content-between"
     >
       <div class="shrink-none none-mobile">
-        <a href="/" class="navbar-brand">
+        <router-link to="/" class="navbar-brand">
           <img
             width="120"
             src="@/assets/Icons/Logo/SVG/White Logo.svg"
             alt="logo"
           />
-        </a>
+        </router-link>
       </div>
 
       <div
