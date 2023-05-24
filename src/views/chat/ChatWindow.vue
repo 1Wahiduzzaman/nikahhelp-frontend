@@ -194,7 +194,7 @@
                            :class="{'conv-mb': chats.length !== cIndex + 1}"
                            v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))" >
                         <div class="text-right">
-                          <img :src="getAuthUser && getAuthUser.per_main_image_url ? getAuthUser.per_main_image_url : getImage()" class="rounded-circle mr-1" alt="" width="40" height="40">
+                          <img :src="getAuthUser && getAuthUser.per_main_image_url ? getAuthUser.per_main_image_url + `?token=${tokenImage}` : getImage()" class="rounded-circle mr-1" alt="" width="40" height="40">
                         </div>
                         <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-break text-white br-10 w100" v-html="item.body">
                         </div>
@@ -360,6 +360,7 @@ export default {
       connectedTeamChats: [],
 	    notify: 0,
       newMessage: false,
+      tokenImage: ""
     }
   },
 
@@ -471,7 +472,8 @@ export default {
     this.getActiveTeamId();
     if(this.$route.query.connection_id) {
       this.setChatTab('Connected');
-    }
+    };
+    this.getTokenImage();
   },
 
   mounted() {
@@ -530,6 +532,9 @@ export default {
     }
   },
   methods: {
+    getTokenImage() {
+      this.tokenImage = localStorage.getItem("tokenImage");
+    },
     socketNotification(payload) {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       payload.sender = loggedUser.id;
