@@ -353,6 +353,7 @@
 import FileUploadOne from "@/components/shared/FileUploadOne.vue";
 import vSelect from "vue-select";
 import { VERIFICATION } from "./models/candidate";
+import axios from 'axios';
 export default {
   name: "Verification",
   props: {
