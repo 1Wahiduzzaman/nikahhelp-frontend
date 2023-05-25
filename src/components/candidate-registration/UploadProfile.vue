@@ -603,7 +603,7 @@ export default {
               main_image_url: folder === '_per_main_image_url' ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0] : this.imageModel.main_image_url,
               additionalImageSrc:
                 folder === '_additional_image' 
-                  ? process.env.VUE_APP_IMAGE + Object.values(data)[0]
+                  ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0]
                   : this.additionalImageSrc,
             },
             current: 3,
