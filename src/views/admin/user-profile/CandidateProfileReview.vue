@@ -780,11 +780,9 @@ export default {
       }
     },
     getNationality() {
-      let nationArr = [];
-      this.candidateData.preference?.preferred_nationality.map((i) => {
-        nationArr.push(i.name);
-      });
-      return nationArr.join(", ");
+      let nationalityId = this.candidateData.personal?.per_nationality;
+      // console.log(this.candidateDetails.countries[nationalityId-1].name, 'nationality form admin');
+      return this.candidateDetails.countries[nationalityId-1].name;
     },
     getReligion() {
       return this.candidateData.preference?.pre_partner_religion_id.join(", ");
