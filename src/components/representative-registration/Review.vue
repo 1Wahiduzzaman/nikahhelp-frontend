@@ -256,7 +256,7 @@
                 <img
                   v-viewer
                   :src="
-                    representativeDetails.verification.ver_document_frontside
+                    representativeDetails.verification.ver_document_frontside + `?token=${tokenImage}`
                   "
                   class="user-image"
                   alt="img"
@@ -271,7 +271,7 @@
                 <img
                   v-viewer
                   :src="
-                    representativeDetails.verification.ver_document_backside
+                    representativeDetails.verification.ver_document_backside + `?token=${tokenImage}`
                   "
                   class="user-image"
                   alt="img"
@@ -298,7 +298,7 @@
             <div v-viewer="{movable: false, title: false, scalable: false, rotatable: false}" class="col-12 row my-4">
               <div
                 class="col-md-6,mb-sm-0 mb-2 flex flex-column align-items-center profile-img" 
-                v-for="src in [representativeDetails.image_upload.per_avatar_url, representativeDetails.image_upload.per_main_image_url]" 
+                v-for="src in [representativeDetails.image_upload.per_avatar_url + `?token=${tokenImage}`, representativeDetails.image_upload.per_main_image_url + `?token=${tokenImage}`]" 
                 :key="src"
               >
                   <img
@@ -330,7 +330,13 @@ export default {
   },
   props: ["showAgreement"],
   data() {
-    return { representativeDetails: null };
+    return { 
+      representativeDetails: null,  
+      tokenImage: "",
+    };
+  },
+  created() {
+    localStorage.getItem('tokenImage');
   },
   mounted() {
     this.getRepresentativeInfo();
