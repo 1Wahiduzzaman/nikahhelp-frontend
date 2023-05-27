@@ -1,6 +1,6 @@
 <template>
   <div class="review-publish px-2">
-    <CandidateProfileReview  v-if="userType == 1"/>
+    <CandidateProfileReview :candidateDetails="candidateDetails"  v-if="userType == 1"/>
     <RepresentativeProfileReview  v-if="userType == 2" />
   </div>
 </template>
