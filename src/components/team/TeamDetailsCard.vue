@@ -84,7 +84,7 @@
 									<img
 										class="modal-logo"
 										v-if="!avatarSrc"
-										:src="teamData.logo"
+										:src="teamData.logo + `?token=${tokenImage}`"
 										alt="info image"
 									/>
 									<img
@@ -134,7 +134,7 @@
 						</div>
 
             <template slot="footer">
-              <a-button key="back" shape="round" @click="edit_button_flag = false">
+              <a-button key="back2" shape="round" @click="edit_button_flag = false">
                 Cancel
               </a-button>
               <a-button key="submit" type="primary" shape="round" :loading="teamUpdating" @click="handleTeamInfoChange">
@@ -201,7 +201,7 @@
 				<div class="img mt-2">
 					<button>
 						<!-- <img src="../../assets/info-img.png" alt="info image" /> -->
-						<img class="img-logo" :src="teamData.logo" alt="info image" />
+						<img class="img-logo" :src="teamData.logo + `?token=${tokenImage}`" alt="info image" />
 						<!-- <span v-if="edit_button_flag"
 							><img src="../../assets/img-edit.png" alt="info edit"
 						/></span> -->
@@ -644,6 +644,7 @@ export default {
   },
 	data() {
 		return {
+			tokenImage: "",
       deleteTeamLoading: false,
 			invitation_link: [],
 			invitation_link_show: [],
@@ -707,6 +708,7 @@ export default {
 	},
 	created() {
 		this.teamInfo = this.teamData;
+		this.tokenImage = localStorage.getItem("tokenImage");
 
 	},
 	computed: {
