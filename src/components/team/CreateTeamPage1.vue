@@ -161,7 +161,7 @@
         <a-button key="back" @click="hideImageModal">
           Cancel
         </a-button>
-        <a-button key="back" type="primary" @click="hideImageModal">
+        <a-button key="back2" type="primary" @click="hideImageModal">
           Ok
         </a-button>
       </template>
@@ -388,14 +388,16 @@ export default {
         this.team.user_type = this.addAs;
         this.team.relationship = this.addAs == 'Candidate' ? 'Candidate' : this.selfRole.relationship;
         let formData = new FormData();
-        formData.append('logo', this.file);
+        // console.log(this.file, 'this fiel from team');
+        formData.append('logo', this.file.name);
         Object.keys(this.team).map(data =>{
           formData.append(data, this.team[data]);
         });
 
         await ApiService.post('/v1/team', formData).then(res => {
-          this.loading = false;
+          // this.loading = false;
           if(res && res.data && res.data.status != 'FAIL') {
+            // console.log(res, 'team data');
             res.data.data.add_as_a = this.addAs;
             let team_members = {
               user_type: this.addAs,
@@ -405,14 +407,40 @@ export default {
             res.data.data.team_members = [team_members];
             res.data.data.team_invited_members = [];
             this.updateTeamData(res.data.data);
-            this.goNextStep(2);
+            // this.goNextStep(2);
           } else {
             this.$message.error("Something went wrong");
+            return;
           }
+        });
+
+        formData = new FormData();
+        formData.append('image', this.file);
+        await this.$store.dispatch("uploadImages", {folder: `_${this.team.id}_team_logo_url`, image: formData}).then(async (data) => {
+          // console.log(data, 'image response afer saving image');
+
+          let  payload = {
+            logo: process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0]
+          };
+          
+          await ApiService.post(`v1/team-update/${this.team.id}`, payload).then(res => {
+            // console.log(res, 'team data');
+            this.loading = false;
+            if(res && res.data && res.data.status != 'FAIL') {
+              this.$message.success("Team created successfully");
+              this.updateTeamData(res.data.data);
+              this.goNextStep(2);
+
+            } else {
+              this.$message.error("Something went wrong");
+              return;
+            }
+          });
         });
       } else {
         this.$message.error("Please fill all the fields");
-      }
+        return;
+      }      
     },
     socketNotification(data) {
       this.$emit("socketNotification", data);
