@@ -7,7 +7,11 @@ import router from '../../../router';
 import ApiService from "../../../services/api.service";
 export default {
   async adminLogin(context, payload) {
-    await axios.post("v1/admin/login", payload).then(response => {
+    const form = new FormData();
+    form.append('email', payload.email);
+    form.append('password', payload.password);
+    
+    await axios.post("v1/admin/login", payload).then(async (response) => {
       const token = response.data.data.token.access_token;
       let data = { token: token };
        JwtService.saveTokenAndUser(data);
@@ -18,6 +22,14 @@ export default {
       context.commit("setUser", {
         token: response.data.data.access_token,
       });
+
+      await fetch('https://chobi.arranzed.com/api/v1/login', {
+        method: 'POST',
+        body: form
+      }).then(e => e.json()).then(e => {
+        localStorage.setItem('tokenImage', e.data.token.access_token);
+      }).catch(e => console.log(e));
+
       router.push({ name: 'AdminUsers' });
     }).catch((e) => {
       console.log('message', e.message)
