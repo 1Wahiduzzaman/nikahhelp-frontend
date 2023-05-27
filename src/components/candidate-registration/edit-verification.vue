@@ -510,6 +510,7 @@ export default {
     //     .catch((error) => { });
     // },
     async saveImageVerificationInfo(data, folder) {
+      this.$emit('turnOnBtnLoader')
       await this.$store.dispatch("uploadImages", {folder: folder, image: data}).then(async (data) => {
         console.log(data, 'image response afer saving image');
 
@@ -525,7 +526,7 @@ export default {
         }
         if(Object.keys(payload).length > 0) {
           await axios.post('v1/candidate/personal-verification-info', payload).then(response => {
-
+            this.$emit('turnOffBtnLoader');
             this.verification.ver_image_back = response.data.data.verification.ver_image_back;
             this.verification.ver_image_front = response.data.data.verification.ver_image_front;
             this.$emit("valueChange", {
@@ -594,12 +595,22 @@ export default {
     clearImg(action) {
       switch (action) {
         case "back":
+          this.$emit('disableNextBtn');
           this.imageBack = "";
           this.verification.ver_image_back = "";
+          this.$emit("valueChange", {
+            value: this.verification,
+            current: 4,
+          });
           break;
         case "font":
+          this.$emit('disableNextBtn');
           this.imageFont = "";
           this.verification.ver_image_front = "";
+          this.$emit("valueChange", {
+            value: this.verification,
+            current: 4,
+          });
           break;
       }
     },
