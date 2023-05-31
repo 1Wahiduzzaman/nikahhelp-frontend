@@ -73,7 +73,7 @@
                                   :ref="image.pathShort.substring(2, image.pathShort.length-4)" 
                                   class="circle" 
                                   :src="require(`@/assets/avatar/${image.pathShort.substring(2, image.pathShort.length)}`)"
-                                  @click="setAvatar(image.pathShort.substring(2, image.pathShort.length-4))"
+                                  @click="avatarNo = image.pathShort.substring(2, image.pathShort.length-4); setAvatar(avatarNo)"
                                 >
                               </div>
                               
@@ -83,7 +83,7 @@
                               <a-button key="back" shape="round" @click="showAvatarSelectionMenu=false">
                               Cancel
                               </a-button>
-                              <a-button key="submit" type="primary" shape="round" @click="showAvatarSelectionMenu = false">
+                              <a-button key="submit" type="primary" shape="round" @click="showAvatarSelectionMenu = false; saveAvatar(avatarNo)">
                               Ok
                               </a-button>
                             </template>
@@ -226,6 +226,7 @@ export default {
       images: [],
       additionalImage: "",
       showAvatarSelectionMenu: false,
+      avatarNo: 0,
       additionalImageSrc: "",
       loading: false,
       tokenImage: "",
@@ -256,12 +257,29 @@ export default {
           this.avatarSrc = "";
           this.imageModel.per_avatar_url = "";
           this.deleteImage(0);
+          this.avatarNo = 0;
           break;
       }
     },
     async deleteImage(data) {
       this.$emit('disableNextBtn');
-      await this.$store.dispatch("deleteRepImage", data);
+      // await this.$store.dispatch("deleteRepImage", data).then(async (_) => {
+      //   let user_id = JSON.parse(localStorage.getItem('user')).id;
+      //   let img_name;
+      //   if(data === 0) {
+      //     img_name = '_per_avatar_url'
+      //   } else {
+      //     img_name = '_per_main_image_url'
+      //   }
+      //   console.log(user_id, img_name, 'img_name.date')
+      //   // await axios.delete(`/img/${user_id}/${img_name}`)
+      //   await fetch(`https://chobi.arranzed.com/api/img/${user_id}/${img_name}`, {
+      //     method: 'DELETE',
+      //     headers: {
+      //           'Authorization': `Bearer ${this.tokenImage}`, // notice the Bearer before your token
+      //     }
+      //   })
+      // });
       this.$emit("valueChange", {
         value: {
           ...this.imageModel,
@@ -303,6 +321,9 @@ export default {
     },
     async setAvatar(avatarNo) {
       // console.log(this.$refs, 'this.refs', this.$refs.length);
+      if (avatarNo == 0) {
+        return;
+      }
       for(let i=0; i < this.images.length; i++) {
         this.$refs[i+1][0].classList.remove('selected');
         // console.log(this.$refs[i+1], 'this.refs[i]');
@@ -310,16 +331,12 @@ export default {
       this.$refs[avatarNo][0].classList.add('selected');
       // this.imageModel.avatar_image_url = avatarNo;
       // const 
-      let avatarImage = require(`@/assets/avatar/${avatarNo}.png`); 
-      // // let avatarImage = require(`@/assets/avatar/${avatarNo}.png`); 
-      // console.log(avatarImage, 'avatarIMage', typeof avatarImage);
-      // let file = new File(avatarImage, 'avatar.png', {type: 'image/png'});
-      // console.log(file, 'file from avatar ');
-      // require(`@/assets/avatar/${image.pathShort.substring(2, image.pathShort.length)}`
-      // this.avatarSrc = `@/assets/avatar/${this.images[avatarNo-1].pathShort.substring(2, image.pathShort.length)}`;
-      // this.getAvatar(avatarImage);
-     
-
+    },
+    async saveAvatar() {
+      if(this.avatarNo == 0) {
+        return;
+      }
+      let avatarImage = require(`@/assets/avatar/${this.avatarNo}.png`); 
       let avatarImgFile;
       await this.urltoFile(avatarImage, 'avatar.png')
           .then(function(file){
