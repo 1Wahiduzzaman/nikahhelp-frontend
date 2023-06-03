@@ -381,10 +381,8 @@
                 <img
                   v-viewer
                   :src="representativeDetails.image_upload.per_avatar_url + `?token=${tokenImage}`"
-                  class="user-image"
+                  class="contain"
                   alt="img"
-                  height="250"
-                  width="200"
                 />
                 <p class="text-center">Avatar</p>
               </div>
@@ -394,10 +392,8 @@
                 <img
                   v-viewer
                   :src="representativeDetails.image_upload.per_main_image_url + `?token=${tokenImage}`"
-                  class="user-image"
+                  class="contain"
                   alt="img"
-                  height="250"
-                  width="200"
                 />
                 <p class="text-center">Main image</p>
               </div>
@@ -406,7 +402,7 @@
         </div>
       </div>
 
-      <div v-if="representativeDetails.data_input_status > 2">
+      <!-- <div v-if="representativeDetails.data_input_status > 2">
         <div class="mt-5">
           <div>
             <h4>Document Preview</h4>
@@ -444,18 +440,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </fieldset>
 
-    <div class="jumbotron">
-  <h1 class="display-4">Hello, world!</h1>
-  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-  <hr class="my-4">
-  <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-  <p class="lead">
-    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-  </p>
-</div>
     <NoteModal @save="save" @cancel="cancel" :dialog="dialog" />
   </div>
 </template>
@@ -649,6 +636,11 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+.contain {
+  height: 100%;
+  width: 220px;
+  object-fit: cover;
+}
 .review-publish {
   .review {
     font-size: 14px;
