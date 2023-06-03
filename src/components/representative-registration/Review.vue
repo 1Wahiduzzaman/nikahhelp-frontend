@@ -336,7 +336,7 @@ export default {
     };
   },
   created() {
-    localStorage.getItem('tokenImage');
+    this.tokenImage = localStorage.getItem('tokenImage');
   },
   mounted() {
     this.getRepresentativeInfo();
@@ -347,6 +347,8 @@ export default {
       await this.$store
         .dispatch("getRepresentativeInfo")
         .then((data) => {
+          this.representativeDetails = data.data.data;
+
           let user = JSON.parse(localStorage.getItem("user"));
           const imageModel = this.representativeDetails.imageModel
           this.representativeDetails = {
