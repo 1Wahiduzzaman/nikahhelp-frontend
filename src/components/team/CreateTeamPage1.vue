@@ -428,9 +428,8 @@ export default {
             this.loading = false;
             if(res && res.data && res.data.status != 'FAIL') {
               this.$message.success("Team created successfully");
-              this.updateTeamData(res.data.data);
+              this.team.logo = res.data.data.logo;
               this.goNextStep(2);
-
             } else {
               this.$message.error("Something went wrong");
               return;
