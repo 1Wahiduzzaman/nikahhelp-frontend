@@ -170,7 +170,7 @@
             </li>
 
             <li>
-              <router-link to="/privacy-policy"
+              <router-link to="/privacy-cookie-policy"
                 >Privacy & Cookie Policy</router-link
               >
             </li>
