@@ -9,7 +9,7 @@
               alt=""
           />
           <a-col :span="24">
-            <span class="create-team-message mt-2">Done, You're successfully create a team</span>
+            <span class="create-team-message mt-2">Done, You've successfully created a team</span>
           </a-col>
         </a-col>
       </a-row>
@@ -101,6 +101,7 @@ export default {
   /*margin-bottom: -8px;*/
   position: absolute;
   bottom: 0;
+  width: 100%;
 }
 
 .sub-msg {
