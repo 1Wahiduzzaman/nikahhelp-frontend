@@ -4,7 +4,7 @@
 		<div class="row no-gutters p-1">
 			<div class="col-12" id="flex-container">
 				<img
-					:src="candidate.image ? candidate.image : avatarSrc"
+					:src="candidate.image ? candidate.image + `?token=${tokenImage}` : avatarSrc"
 					alt=""
 					id="card-image"
 				/>
@@ -78,10 +78,14 @@
 <script>
 export default {
 	props: ["candidate"],
+	created() {
+		this.tokenImage = localStorage.getItem("tokenImage");
+	},
 	data() {
 		return {
 			visible: false,
 			avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
+			tokenImage: "",
 		};
 	},
 	methods: {

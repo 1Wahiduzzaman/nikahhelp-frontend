@@ -80,7 +80,7 @@
           </template>
           <v-img
               height="250"
-              :src="connection.candidateInfo && connection.candidateInfo.candidate_image ? connection.candidateInfo.candidate_image : avatarSrc"
+              :src="connection.candidateInfo && connection.candidateInfo.candidate_image ? connection.candidateInfo.candidate_image + `?token=${tokenImage}` : avatarSrc"
           ></v-img>
 
             <v-chip
@@ -272,6 +272,9 @@ export default {
   name: "CandidateGridView",
   components: {GridButtons, ButtonComponent},
   props: ["connection", "active_team_id"],
+  created() {
+    this.tokenImage = localStorage.getItem("tokenImage");
+  },
   data() {
     return {
       avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
@@ -280,6 +283,7 @@ export default {
       rotated: false,
       showProfileConnectionOverview: false,
       showProfileTeamOverview: false,
+      tokenImage: ""
     };
   },
   mounted() {

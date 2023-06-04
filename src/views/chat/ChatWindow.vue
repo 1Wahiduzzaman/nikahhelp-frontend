@@ -134,7 +134,7 @@
                   <div class="top">
                     <h4 class="cursor-pointer btn-mobile-back" @click="backToTabList()">&#8592;</h4>
                     <div class="item-img conv-head-logo">
-                      <img :src="chatheadopen.logo ? chatheadopen.logo : getImage()" alt="info image">
+                      <img :src="chatheadopen.logo ? chatheadopen.logo + `?token=${tokenImage}` : getImage()" alt="info image">
                     </div>
                     <div class="chat-info">
                       <div class="chat-group bg-primary">{{ chatheadopen.label }}</div>
@@ -1285,7 +1285,7 @@ export default {
     getConversationUserImage(id) {
       let imageObj = this.chatListedImage.find(item => item.user_id == id);
       if(imageObj) {
-        return imageObj.logo;
+        return imageObj.logo + `?token=${this.tokenImage}`;
       } else {
         return this.getImage();
       }

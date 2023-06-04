@@ -5,11 +5,11 @@
 				<li>
 					<a href="#"> <img src="@/assets/logo-black.png" alt="logo" /> </a>
 				</li>
-				<li class="linkToPage"><a href="#">About</a></li>
-				<li class="linkToPage"><a href="/privacy-policy">Privacy Policy and Cookie Policy</a></li>
-				<li class="linkToPage"><a href="#">Terms and Conditation</a></li>
-				<li class="linkToPage"><a href="#">Safety and Guidance</a></li>
-				<li class="linkToPage"><a href="#">Help</a></li>
+				<li class="linkToPage"><router-link to="#">About</router-link></li>
+				<li class="linkToPage"><router-link to="/privacy-cookie-policy">Privacy Policy and Cookie Policy</router-link></li>
+				<li class="linkToPage"><router-link to="#">Terms and Conditation</router-link></li>
+				<li class="linkToPage"><router-link to="#">Safety and Guidance</router-link></li>
+				<li class="linkToPage"><router-link to="#">Help</router-link></li>
 			</ul>
 		</div>
 	</footer>
