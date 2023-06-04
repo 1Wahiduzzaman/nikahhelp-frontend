@@ -443,7 +443,7 @@ export default {
 
             let user = JSON.parse(localStorage.getItem("user"));
             if (user) {
-              user.per_main_image_url = folder === '_per_main_image_url' ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0] : '';
+              user.per_main_image_url = folder === '_per_main_image_url' ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0] : user.per_main_image_url;
               localStorage.removeItem("user");
               localStorage.setItem("user", JSON.stringify(user));
             }
