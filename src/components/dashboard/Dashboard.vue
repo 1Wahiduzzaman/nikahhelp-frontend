@@ -5,7 +5,7 @@
        <div class="team-info-div">
          <div class="user-info-div">
            <div class="flex align-items-center">
-             <img :src="getAuthUser && getAuthUser.per_main_image_url ? getAuthUser.per_main_image_url : avatarSrc" alt="image" class="user-img" />
+             <img :src="getAuthUser && getAuthUser.per_main_image_url  ? getAuthUser.per_main_image_url + `?token=${tokenImage}` : avatarSrc" alt="image" class="user-img" />
              <div class="intro mx-4 mt-4 border-bottom-white">
                <h4 class="color-primary fs-14">Welcome Back!</h4>
                <h6 class="color-primary fs-18 font-weight-bold">{{ getAuthUser ? getAuthUser.full_name : 'N/A' }}</h6>
@@ -183,8 +183,9 @@ export default {
   created() {
     this.getUserInfo();
     this.loadTeams();
-    this.loadProfileGraphApi();
+    this.loadProfileGraphApi(2);
     this.getTeamActivity();
+    this.tokenImage = localStorage.getItem("tokenImage");
   },
   data() {
     return {
@@ -193,8 +194,9 @@ export default {
       avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
       teams: [],
       activeTeam: null,
-      viewType: 1,
+      viewType: 2,
       totalCount: 0,
+      siteVisitData: null,
       maTips: [
         { id: 1, title: '', image: '' },
         { id: 2, title: '', image: '' },
@@ -243,7 +245,7 @@ export default {
         },
         series: [{
           name: 'Month',
-          data: [10, 10, 10, 12, 14, 14, 23, 142, 34, 2, 23, 4]
+          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         }],
         legend: {
           enabled: false
@@ -262,7 +264,8 @@ export default {
         connected: '',
         request_received: '',
         request_sent: ''
-      }
+      },
+      tokenImage: "",
     }
   },
   computed: {
@@ -328,26 +331,65 @@ export default {
       this.teams = data;
       this.activeTeam = this.teams.find((item) => item.team_id == activeTeamId);
     },
-    async loadProfileGraphApi() {
-      let teamIntId = localStorage.getItem('teamid');
-      let {data} = await ApiService.get(`v1/site-visit-graph/${teamIntId}`).then(res => res.data);
-      if(data) {
-        console.log(data, 'site-visit-graph');
-        this.chartOptions.xAxis.categories = data.date;
-        let views = data.view.map(item => parseInt(item));
 
-        let dataCount = 0;
-        views.forEach(item => {
-          dataCount += item;
-        });
-        this.totalCount = dataCount;
+    async loadProfileGraphApi(viewType) {
+      if(this.siteVisitData == null) {
+        let teamIntId = localStorage.getItem('teamid');
+        let {data} = await ApiService.get(`v1/site-visit-graph/${teamIntId}`).then(res => res.data);
+        this.siteVisitData = data;
+      }
+      let today = new Date();
+      let viewsInLastYear = this.siteVisitData.filter(item => (today - new Date(item.updated_at)) <= 31536000000);
+      let viewsInLastMonth = viewsInLastYear.filter(item => (today - new Date(item.updated_at)) <= 2419200000);
+      let viewsInLastWeek = viewsInLastMonth.filter(item => (today - new Date(item.updated_at)) <= 604800000);
 
-        this.chartOptions.series = [
-          {
-            name: 'Month',
-            data: views
-          }
-        ];
+      console.log(viewsInLastYear);
+      if(this.siteVisitData) {
+        if(viewType == 2) {
+          console.log(this.siteisitData, 'site-visit-graph');
+          this.totalCount = viewsInLastYear.length;
+          this.chartOptions.xAxis.categories = ['Jan', 'Feb', 'Mar', 'Apr', 'Ma', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];        
+          this.chartOptions.series = [
+            {
+              name: 'Month',
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            }
+          ];
+          viewsInLastYear.forEach(view => {
+            this.chartOptions.series[0].data[new Date(view.updated_at).getMonth()] += 1;
+          })
+          // this.chartOptions.series = [
+          //   {
+          //     name: 'Month',
+          //     data: views
+          //   }
+          // ];
+
+        } else if (viewType == 1) {
+          this.totalCount = viewsInLastMonth.length;
+          this.chartOptions.xAxis.categories = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
+          this.chartOptions.series = [
+            {
+              name: 'Day',
+              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            }
+          ];
+          viewsInLastMonth.forEach(view => {
+            this.chartOptions.series[0].data[new Date(view.updated_at).getDate()-1] += 1;
+          })
+        } else {
+          this.totalCount = viewsInLastWeek.length;
+          this.chartOptions.xAxis.categories = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+          this.chartOptions.series = [
+            {
+              name: 'Day',
+              data: [0, 0, 0, 0, 0, 0, 0]
+            }
+          ];
+          viewsInLastWeek.forEach(view => {
+            this.chartOptions.series[0].data[new Date(view.updated_at).getDay()] += 1;
+          })
+        }
       }
     },
     async getTeamActivity() {
@@ -357,8 +399,15 @@ export default {
       let {data} = await ApiService.get('v1/candidate-of-team');
       let candidateId = data.data.user_id;
       let oppositeGender = data.data.personal.per_gender_id === 1 ? "2" : "1";
-      data = await ApiService.get(`v1/home-searches?gender=${oppositeGender}`).then(res => res.data);
-      this.teamActivity.suggestion = data.data.pagination.total_items;
+      await ApiService.get(`v1/home-searches?gender=${oppositeGender}`)
+        .then(res => {
+          data = res.data;
+          this.teamActivity.suggestion = data.data.pagination.total_items;
+        })
+        .catch(err => {
+          // console.log(err);
+          this.teamActivity.suggestion = 0;
+        });
 
       if(this.userInfo.user.id === candidateId){
         await this.$store.dispatch("loadShortListedCandidates");
@@ -381,13 +430,15 @@ export default {
       return 'N/A';
     },
     getImage(user) {
+      console.log(user, 'user form dashboard')
       if(user && user.candidate_info && user.candidate_info.per_main_image_url) {
-        return user.candidate_info.per_main_image_url;
+        return user.candidate_info.per_main_image_url + `?token=${tokenImage}`;
       }
       return this.avatarSrc;
     },
     toggleProfileViewType(type) {
       this.viewType = type;
+      this.loadProfileGraphApi(type);
     },
     formateDate(date) {
       if (date == null || date == undefined) {
