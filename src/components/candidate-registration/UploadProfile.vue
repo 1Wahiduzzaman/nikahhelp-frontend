@@ -605,7 +605,7 @@ export default {
               additionalImageSrc:
                 folder === '_additional_image' 
                   ? process.env.VUE_APP_IMAGE + '/' + Object.values(data)[0]
-                  : this.additionalImageSrc,
+                  : this.imageModel.additionalImageSrc,
             },
             current: 3,
           });
