@@ -123,9 +123,9 @@ export default {
     // this.card = elements?.create("card", style);
     // this.card.mount(this.$refs.card);
 	},
-	// beforeDestroy() {
-	// 	// this.card.destroy(this.$refs.card);
-	// },
+	beforeDestroy() {
+		this.card.destroy(this.$refs.card);
+	},
 	methods: {
     setValidationFalse() {
       this.payment_method = false;
