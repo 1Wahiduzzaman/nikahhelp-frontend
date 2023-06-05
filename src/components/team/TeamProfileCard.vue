@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="profile text-center pt-3">
-      <img :src="profileActive.email || profileActive.user !== undefined ? 'https://picsum.photos/200/300?random=1' : require('@/assets/no-image-available.jpg')" alt="profile" class="profile-img">
+      <img :src="profileActive.email || profileActive.user !== undefined && profileActive.user.account_type == 1 ? profileActive.user.candidate_info.per_avatar_url + `?token=${tokenImage}` : require('@/assets/no-image-available.jpg')" alt="profile" class="profile-img">
       <h4 class="fs-16 text-white pt-4" v-if="profileActive.profile_from_type === 'member'">{{ profileActive.user && profileActive.user.full_name ? profileActive.user.full_name : profileActive.user.email }}</h4>
       <h4 class="fs-16 text-white pt-2" v-else>{{ profileActive.email ? profileActive.email : 'Not joined yet' }}</h4>
       <div class="d-flex justify-content-center mb-2 mt-4">
@@ -93,7 +93,11 @@ export default {
       roleChangeBox: false,
       copyBtnText: 'Copy',
       invitationLink: window.location.host + '/manageteam?invitation=' + this.profileActive.link,
+      tokenImage: ""
     }
+  },
+  created() {
+    this.tokenImage = localStorage.getItem('tokenImage');
   },
   computed: {
     checkIsOwnerAdmin() {
