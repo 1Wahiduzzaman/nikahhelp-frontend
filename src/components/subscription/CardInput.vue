@@ -1,7 +1,7 @@
 <template>
 	<div class="card-input">
 		<div v-if="!this.payment_method" class="card-input form-group">
-			<h6 class="text-center validate-text text-white pb-2">Validate Your Card</h6>
+			<!-- <h6 class="text-center validate-text text-white pb-2">Validate Your Card</h6> -->
 			<div class="form-group mt-3">
 				<label for="name" class="text-white ml-2">Name on Card</label>
 				<input

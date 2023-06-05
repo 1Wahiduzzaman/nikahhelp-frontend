@@ -40,7 +40,7 @@
     >
       <label class="ml-1 mb-0 input-label"> Type Your Password:</label>
       <a-input-password
-        placeholder="Type Your Password"
+        placeholder="Password"
         style="margin-top: 5px; margin-bottom: 5px"
         @change="onConfirmPassBeforeDeleteChange"
       />
