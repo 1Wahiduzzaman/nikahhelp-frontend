@@ -30,7 +30,7 @@
           </p>
 
           <div class="col-12 text-center mt-4 btn-border-radius">
-            <a href="/manageteam" class="btn btn-primary fs-18 team-btn-primary btn-lg px-5 btn-block"
+            <a href="/manageteam" class="btn btn-primary fs-18 team-btn-primary btn-lg px-5 btn-block-50"
             >Manage Team
               <span class="fs-20">&#8594;</span>
             </a>
@@ -128,6 +128,10 @@ export default {
     color: $bg-primary !important;
     border: 1px solid $bg-primary !important;
   }
+}
+
+.btn-block-50 {
+  width: 50%;
 }
 .check-icon {
   width: 100px;
