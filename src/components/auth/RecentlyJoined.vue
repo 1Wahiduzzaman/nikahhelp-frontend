@@ -20,10 +20,10 @@
           <div class="item flex-between-center ml-2 mr-2">
             <div class="item-img custom-size">
               <img class="item-img"
-					v-if="user.image !== null"
+					v-if="user.gender !== null"
                    @error="imgLoad(recIndex, user)"
                    :ref="`avatar-${recIndex}`"
-                   :src="user.image"
+                   :src="user.gender === 2 ? require('../../assets/recently_joined_avatars/Female.png') : require('../../assets/recently_joined_avatars/Male.png')"
                    alt="img"
                    style="border: 1px solid white;"/>
 
@@ -92,7 +92,8 @@ export default {
 
 		imgLoad(index, user) {
 			let img = this.$refs[`avatar-${index}`][0];
-			img.src = `https://ui-avatars.com/api/?name=${user.name}&background=b5b5b5&color=fff`;
+			// img.src = `https://ui-avatars.com/api/?name=${user.name}&background=b5b5b5&color=fff`;
+			img.src = require("../../assets/no-image-available.jpg");
 		}
 	},
 };
