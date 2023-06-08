@@ -82,7 +82,7 @@
 						</div>
 
 						<template slot="footer">
-							<a-button key="back2" shape="round" @click="edit_button_flag = false">
+							<a-button key="back2" type="danger" shape="round" @click="edit_button_flag = false">
 								Cancel
 							</a-button>
 							<a-button key="submit" type="primary" shape="round" :loading="teamUpdating"

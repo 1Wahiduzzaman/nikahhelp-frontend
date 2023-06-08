@@ -9,7 +9,7 @@
 						:name="candidateData.first_name + ' ' + candidateData.last_name"
 						:image="
 						candidateData.personal.per_avatar_url
-							? candidateData.personal.per_avatar_url
+							? candidateData.personal.per_avatar_url + `?token=${tokenImage}`
 							: avatarSrc
 						"
 					/>
@@ -50,9 +50,21 @@
 								backgroundColor="#3ab549"
 								iconHeight="14px"
 								:isSmall="true"
-								:title="candidateData.status.is_connect.length > 0 ? 'Disconnect' : 'Connect'"
+								:title="candidateData.status.is_connect != null && candidateData.status.is_connect.length > 0 ? getConnectionTitleAndAction[0] : 'Connect'"
 								icon="/assets/icon/connect-s.svg"
-								:customEvent="candidateData.status.is_connect.length > 0 ? 'removeConnection' : 'addConnection'"
+								:customEvent="candidateData.status.is_connect != null && candidateData.status.is_connect.length > 0 ? 'removeConnection' : 'addConnection'"
+								:responsive="false"
+								@onClickButton="onClickButton"
+							/>
+							<ButtonComponent
+								v-if="declineButton"
+								class="mobile-margin connect-button"
+								backgroundColor="#d81b60"
+								iconHeight="14px"
+								:isSmall="true"
+								title="Decline"
+								icon="/assets/icon/connect-s.svg"
+								:customEvent="candidateData.status.is_connect != null && candidateData.status.is_connect.length > 0 ? 'removeConnection' : 'addConnection'"
 								:responsive="false"
 								@onClickButton="onClickButton"
 							/>
@@ -427,10 +439,14 @@ export default {
 			candidateInfo: null,
 			images: [],
 			showTeamInfo: false,
+			declineButton: false,
+			tokenImage: "",
 		};
 	},
 	created() {
 		this.fetchCandidate();
+		this.tokenImage = localStorage.getItem('tokenImage');
+		console.log(this.profile, 'this.profiel')
 	},
 
 	computed: {
@@ -467,15 +483,22 @@ export default {
 			})
 			return allMembers
 		},
-		getConnectionTitle() {
-			let connection = this.candidateData.status.is_connect[0];
-			if(this.candidateData.status.is_connect.length === 0) {
-				return 'Connect';
+		getConnectionTitleAndAction() {
+			console.log('getconnecijsdnfldjskl')
+			if(this.candidateData.status.is_connect == null || this.candidateData.status.is_connect.length === 0) {
+				return ['Connect', 'addConnection'];
 			} else {
+				let connection = this.candidateData.status.is_connect[0];
+				console.log(connection, 'connection from opposite team profile')
 				if(connection.connection_status === "1") {
-					return 'Disconnect'
+					return ['Disconnect', 'removeConnection']
 				} else if (connection.connection_status === "0") {
-					return 'Accept'
+					if (connection.requested_by == JwtService.getTeamIDAppWide) {
+						return ['Cancel', 'cancelRequest']
+					} else {
+						this.declineButton = true;
+						return ['Accept', 'acceptRequest']
+					}
 				}
 			}
 		}
@@ -833,6 +856,9 @@ export default {
 			} else {
 				this.images = [this.candidateData.personal.per_avatar_url];
 			}
+			this.images.forEach((image, index) => {
+					this.images[index] += `?token=${this.tokenImage}`
+			})
 			console.log(this.images, 'images')
 
             if(this.images && this.images.length > 0) {
@@ -876,7 +902,7 @@ export default {
 }
 
 .buttons-div::v-deep {
-	@media (max-width: 1400px) {
+	@media (max-width: 1500px) {
 		flex-direction: column;
 
 		.mobile-margin {
