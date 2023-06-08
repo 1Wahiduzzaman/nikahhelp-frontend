@@ -106,11 +106,10 @@
 <!--                  <spinner v-if="isLoading"></spinner>-->
                   <button
                       v-if="agree"
-                      class="btn bg-success text-white agree-button br-30 btn-block"
-                      style="position: relative;"
+                      class="btn bg-success d-flex justify-content-center text-white agree-button br-30 btn-block"
                       @click="subscribe"
                   >
-                    <a-icon type="loading" class="fs-24" style="position:absolute; left: 135px; top: 4px;" v-if="isLoading" /> Agree and Subscribe
+                    <a-icon type="loading" class="mr-2 line-height-icon" v-if="isLoading" /> <span>Agree and Subscribe</span>
                   </button>
                 </div>
               </div>
@@ -235,12 +234,11 @@
                 <div class="text-center py-2">
 <!--                  <spinner v-if="isLoading"></spinner>-->
                   <button
-                      v-if="agree"
-                      class="btn bg-success text-white agree-button br-30 btn-block"
-                      style="position: relative;"
-                      @click="subscribe"
+                    v-if="agree"
+                    class="btn bg-success d-flex justify-content-center text-white agree-button br-30 btn-block"
+                    @click="subscribe"
                   >
-                    <a-icon type="loading" class="fs-24" style="position:absolute; left: 135px; top: 4px;" v-if="isLoading" /> Agree and Subscribe
+                    <a-icon type="loading" class="mr-2 line-height-icon" v-if="isLoading" /> <span>Agree and Subscribe</span>
                   </button>
                 </div>
               </div>
@@ -672,6 +670,10 @@ export default {
   @media (max-width: 768px) {
     margin-top: 0px !important;
   }
+}
+
+.line-height-icon {
+  line-height: 1.4;
 }
 
 .border-right {
