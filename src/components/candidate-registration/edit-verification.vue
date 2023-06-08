@@ -446,6 +446,7 @@ export default {
       this.$refs.verification.validate((valid) => {
         if (valid) {
           this.activeKey = null;
+          this.saveCandidateUploadDoc();
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
@@ -471,6 +472,34 @@ export default {
           f.onFieldBlur();
         }
       });
+    },
+    async saveCandidateUploadDoc() {
+      const {
+        ver_country,
+        ver_document_type,
+        ver_image_back,
+        ver_image_front,
+      } = this.verification;
+      const isComplete = Object.values({
+        ver_country,
+        ver_document_type,
+        ver_image_back,
+        ver_image_front,
+      }).every((x) => x !== undefined && x !== null && x !== "");
+      let user = JSON.parse(localStorage.getItem("user"));
+      const data = {
+        id: user.id,
+        is_uplaoded_doc: isComplete ? "1" : "0",
+      };
+      await this.$store
+        .dispatch("saveCandidateUploadDoc", data)
+        .then((data) => {
+          user.is_uplaoded_doc = isComplete ? "1" : "0";
+          // localStorage.setItem(JSON.stringify(user));
+          this.$emit("valueChange", true);
+          console.log('sss')
+        })
+        .catch((error) => { });
     },
     saveVerificationInfo() {
       const {
