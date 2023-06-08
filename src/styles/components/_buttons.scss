@@ -1,4 +1,5 @@
 .ant-btn {
+    border-radius: 20px;
     &:hover,
     &:focus,
     &:active {
@@ -12,10 +13,19 @@
         border-radius: 20px;
         &:hover,
         &:active {
-            background-color: $bg-primary;
+            background-color: $color-white;
             border: 1px solid $border-primary;
-            opacity: 0.9;
-            color: #ccc;
+            // opacity: 0.9;
+            color: $color-primary;
+        }
+    }
+    &.ant-btn-danger {
+        color: $color-white;
+        background-color: $bg-brand;
+        border: 1px solid $border-brand;
+        &:hover {
+            background-color: $bg-white;
+            color: $color-brand;
         }
     }
 }
