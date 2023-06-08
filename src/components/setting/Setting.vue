@@ -49,18 +49,15 @@
       <div class="content">
         <div class="header-content">
           <h4 style="margin-bottom: 0px;">Contact Details</h4>
-          <v-btn
-            @click="openDialog"
+          <ButtonComponent
             class="mr-1"
-            style="background-color: #0aa3e1; color: #fff; border-radius: 25px"
-            small
-          >
-            <img
-              style="width: 20px"
-              src="@/assets/icon/pencil.svg"
-              alt="img"
-            />Edit
-          </v-btn>
+            iconHeight="20px"
+            :isSmall="true"
+            title="EDIT"
+            :responsive="false"
+            :icon="require('@/assets/icon/pencil.svg')"
+            @onClickButton="openDialog"
+          />
           <!-- <v-tooltip bottom color="warning">
             <template v-slot:activator="{ on, attrs }">
               <v-btn
@@ -126,14 +123,13 @@
       <div class="content">
         <div class="flex justify-content-between">
           <h4 style="margin-bottom: 0px;">Password</h4>
-          <v-btn
-            @click="handleClickPassword"
+          <ButtonComponent
             class="mr-1"
-            style="background-color: #0aa3e1; color: #fff; border-radius: 25px"
-            small
-            >
-            Change
-          </v-btn>
+            :isSmall="true"
+            title="CHANGE"
+            :responsive="false"
+            @onClickButton="handleClickPassword"
+          />
         </div>
         <div class="password-details">
           <span>*****</span>
@@ -162,14 +158,14 @@
       <div class="content">
         <div class="flex justify-content-between">
           <h4>Delete Account</h4>
-          <v-btn
-            @click="isDeletionModalVisible = true"
-            class="mr-1"
-            style="background-color: red; color: #fff; border-radius: 25px"
-            small
-          >
-            Delete
-          </v-btn>
+          <ButtonComponent
+            class="mr-1 block-button"
+            backgroundColor="#d81b60"
+            :isSmall="true"
+            title="DELETE"
+            :responsive="false"
+            @onClickButton="handleClickPassword"
+          />
         </div>
         <div style="border-bottom: none" class="password-details">
           <span>Do you want to delete Account?</span>
@@ -192,7 +188,7 @@
         </div>
         <div
           v-else-if="
-            !verification && checkStatus('2')
+            !verification && checkStatus('2') && hasUploadedDoc
           "
           class="identity"
         >
@@ -354,6 +350,10 @@ export default {
             (this.userInfo?.user?.status == 3 && this.userInfo?.representative_information.length >= 1 &&
               (this.userInfo?.representative_information[0].is_uplaoded_doc == 0 || this.userInfo?.representative_information[0].is_uplaoded_doc == 1))
          
+    },
+    hasUploadedDoc() {
+      return (this.userInfo?.candidate_information && this.userInfo?.candidate_information.is_uplaoded_doc == 1) ||
+              (this.userInfo?.representative_information.length >= 1 && this.userInfo?.representative_information[0].is_uplaoded_doc == 1)
     }
   },
 
@@ -690,7 +690,7 @@ export default {
     margin: 5px;
     //border-left: 1px solid #b7b5b5;
   }
-  .panel-content {
+  .panel-content::v-deep {
     display: flex;
     width: 100%;
     justify-content: flex-start;
@@ -759,6 +759,18 @@ export default {
         align-items: center;
         border-bottom: 1px solid #cbbfbf;
         padding-bottom: 10px;
+      }
+
+      .block-button {
+        .v-custom:hover {
+          background: #fff !important;
+          color: #d81b60 !important;
+          border: 1px solid #d81b60 !important;
+    
+          img {
+          filter: none !important;
+          }
+        }
       }
     }
   }
