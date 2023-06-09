@@ -150,7 +150,7 @@
             </td>
 
             <td class="status">
-              {{ getStatus(item) }}
+              <span :style="{color: getStatusColor(item)}">{{ getStatus(item) }}</span>
             </td>
 
             <td class="email">
@@ -370,6 +370,19 @@ export default {
         4: "Rejected",
         9: "Suspended",
         0: "Deleted",
+      };
+
+      return status[item.status];
+    },
+    getStatusColor(item) {
+      const status = {
+        0: "red",
+        1: "orange",
+        2: "orange",
+        3: "#2acd64",
+        4: "red",
+        9: "red",
+        0: "red",
       };
 
       return status[item.status];
