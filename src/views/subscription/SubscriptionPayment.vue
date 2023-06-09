@@ -377,7 +377,7 @@ export default {
             let receivers = subscribedTeam.team_members.filter(item => item.user_id != loggedUser.id).map(opt => opt.user_id);
             let payload = {
               receivers: receivers,
-              title: `buy a subscription`,
+              title: `bought a subscription`,
               team_temp_name: subscribedTeam.name,
               team_id: subscribedTeam.id
             };
