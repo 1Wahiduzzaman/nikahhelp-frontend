@@ -432,7 +432,7 @@ export default {
     getImage(user) {
       console.log(user, 'user form dashboard')
       if(user && user.candidate_info && user.candidate_info.per_main_image_url) {
-        return user.candidate_info.per_main_image_url + `?token=${tokenImage}`;
+        return user.candidate_info.per_main_image_url + `?token=${this.tokenImage}`;
       }
       return this.avatarSrc;
     },
