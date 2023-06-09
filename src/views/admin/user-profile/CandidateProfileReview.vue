@@ -37,7 +37,7 @@
             style="background-color: rgb(61 185 156); color: #fff" small>
             Reinstate
           </v-btn>
-          <v-btn class="mr-2" v-if="userStatus != 4 && userStatus != 3" :loading="loadingReject"
+          <v-btn class="mr-2" v-if="userStatus != 4 && userStatus != 3 && userStatus != 9" :loading="loadingReject"
             @click="openDialog()" style="background-color: rgb(191 20 67); color: #fff" small>
             Reject
           </v-btn>
@@ -885,6 +885,9 @@ export default {
           this.loadingReject = false;
           this.loadingSuspend = false;
           this.loadingReinstate = false;
+          if(data.status == 'suspend') {
+            this.candidateData.user.status = '9';
+          }
         });
     },
 
