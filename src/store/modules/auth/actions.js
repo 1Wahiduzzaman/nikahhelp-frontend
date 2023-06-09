@@ -1,4 +1,3 @@
-import Vue from "vue";
 import axios from "axios";
 import JwtService from "../../../services/jwt.service";
 import router from '../../../router';
@@ -37,19 +36,18 @@ export default {
         router.push({ path: `${router.history._startLocation}`});
       }
     }).catch((e) => {
-      console.log('message', e.message)
+      let errorMessage;
+      if(e.response.data.message.includes('Suspended') || e.response.data.message.includes('deleted')) {
+        errorMessage = "Account suspended! Please contact MatrimonyAssist team through the help page.";
+      } else {
+        errorMessage = 'Invalid email or password';
+      }
       context.commit("setErrorMessage", {
-        // errorMessage: e.response.status == 403 ? 'Your account is deleted': 'No account',
-        // errorMessage: e.response.data.status_code == 403 ? e.response.data.message : 'No account'
-        errorMessage: e.response.data.status_code == 403 ? 'Invalid email or password' : 'No account'
+        errorMessage: errorMessage
       });
     });
   },
   async signup(context, payload) {
-  //   await fetch('http://bioscope.test/api/v1/register', {method: 'Post', body:  JSON.stringify({email: payload.email, password: payload.password}), headers: {'Content-Type': 'application/json'}}).
-  //     then(response => response.json()).catch((e) => {
-  //       console.log(e.message);
-  // })   
     const response = await axios.post("v1/register", payload);
     if (response.data.status_code === 200) {
       const token = response.data.data.token.access_token;
