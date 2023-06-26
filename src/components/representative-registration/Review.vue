@@ -369,7 +369,7 @@ export default {
     },
    // async getRelatedImages() {
    //  const imageToken = localStorage.getItem('tokenImage');
-   //       await fetch(`https://chobi.arranzed.com/api/`, {
+   //       await fetch(`https://chobi.nikahhelp.com/api/`, {
    //    headers: {
    //          'Authorization': `Bearer ${imageToken}`, // notice the Bearer before your token
    //    }
