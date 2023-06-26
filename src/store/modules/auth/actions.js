@@ -23,7 +23,7 @@ export default {
 
       });
 
-      await fetch('https://chobi.arranzed.com/api/v1/login', {
+      await fetch('https://chobi.nikahhelp.com/api/v1/login', {
       method: 'POST',
       body: form
     }).then(e => e.json()).then(e => {
@@ -62,7 +62,7 @@ export default {
       const form = new FormData();
     form.append('email', payload.email);
     form.append('password', payload.password);
-       await fetch('https://chobi.arranzed.com/api/v1/register', {
+       await fetch('https://chobi.nikahhelp.com/api/v1/register', {
       method: 'POST',
       body: form
     }).then(e => e.json()).then(e => {
