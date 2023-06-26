@@ -273,7 +273,7 @@ export default {
       //   }
       //   console.log(user_id, img_name, 'img_name.date')
       //   // await axios.delete(`/img/${user_id}/${img_name}`)
-      //   await fetch(`https://chobi.arranzed.com/api/img/${user_id}/${img_name}`, {
+      //   await fetch(`https://chobi.nikahhelp.com/api/img/${user_id}/${img_name}`, {
       //     method: 'DELETE',
       //     headers: {
       //           'Authorization': `Bearer ${this.tokenImage}`, // notice the Bearer before your token
