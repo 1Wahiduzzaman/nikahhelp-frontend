@@ -23,7 +23,7 @@ export default {
         token: response.data.data.access_token,
       });
 
-      await fetch('https://chobi.arranzed.com/api/v1/login', {
+      await fetch('https://chobi.nikahhelp.com/api/v1/login', {
         method: 'POST',
         body: form
       }).then(e => e.json()).then(e => {

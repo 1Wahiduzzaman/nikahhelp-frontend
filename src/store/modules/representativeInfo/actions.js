@@ -51,7 +51,7 @@ export default {
     return new Promise( async (resolve, reject) => {
        const imageToken =  localStorage.getItem('tokenImage');
        let user = JSON.parse(localStorage.getItem("user"));
-     await fetch(`https://chobi.arranzed.com/api/img/${user.id}${payload.folder}`, {
+     await fetch(`https://chobi.nikahhelp.com/api/img/${user.id}${payload.folder}`, {
       method: 'POST',
       body: payload.image,
       headers: {

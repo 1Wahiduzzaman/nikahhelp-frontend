@@ -50,7 +50,7 @@ Vue.use(TextareaAutosize)
 
 import VueSocketIO from 'vue-socket.io'
 import SocketIO from 'socket.io-client'
-const socketConnection = SocketIO('https://biya.arranzed.com:4009');
+const socketConnection = SocketIO('https://biya.nikahhelp.com:4008');
 // const socketConnection = SocketIO('http://localhost:4009');
 
 Vue.use(new VueSocketIO({
