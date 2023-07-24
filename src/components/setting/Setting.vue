@@ -188,7 +188,7 @@
         </div>
         <div
           v-else-if="
-            !verification && checkStatus('2') && hasUploadedDoc
+            (!verification && checkStatus('2') && hasUploadedDoc) || (!verification && userInfo.user.account_type === 2)
           "
           class="identity"
         >
