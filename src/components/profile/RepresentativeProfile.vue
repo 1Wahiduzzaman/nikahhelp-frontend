@@ -4,7 +4,7 @@
 		<div class="profile-heading" >
 			<ProfileBanner
 				class="px-2 mt-2"
-				:image="images.per_avatar_url ? images.per_avatar_url : ''"
+				:image="images.per_avatar_url ? images.per_avatar_url + `?token=${tokenImage}` : ''"
 				:name="representativeData.first_name + ' ' + representativeData.last_name"
 			/>
 			<v-container fluid>
@@ -226,6 +226,7 @@ export default {
 			candidateData: null,
 			isLoading: false,
 			viewerImages: [],
+			tokenImage: ""
 		};
 	},
 	computed : {
@@ -242,6 +243,7 @@ export default {
 
 	created() {
 		this.getCandidateData();
+		this.tokenImage = localStorage.getItem("tokenImage");
 	},
 
 	methods: {
