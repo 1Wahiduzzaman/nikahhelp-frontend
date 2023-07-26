@@ -92,6 +92,7 @@
 </template>
 
 <script>
+import { notificationMixin } from "../../mixins/notification";
 import Notification from "@/components/notification/Notification.vue";
 import JwtService from "@/services/jwt.service";
 import ApiService from "@/services/api.service";
@@ -111,6 +112,7 @@ export default {
   components: {
     Notification,
   },
+  mixins: [notificationMixin],
   data() {
     return {
       isLoading: false,
@@ -179,18 +181,6 @@ export default {
     changeTeam(data) {
       this.teamId = data;
     },
-    async markAllAsRead() {
-      this.$store.state.notification.notifications.forEach(item => {
-        item.seen = 1;
-      });
-      await ApiService.get("v1/seen-notification").then(response => {
-        console.log(response);
-        // this.loadNotifications();
-      }).catch(e => {
-        console.log(e);
-        self.$message.error("Something went wrong");
-      });
-    }
   },
 };
 </script>

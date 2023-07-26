@@ -38,8 +38,10 @@ export default {
         return '';
       },
       clickOnNotification() {
-        this.item.seen = 1;
-        ApiService.post(`/v1/seen-notification/${this.item.id}`);
+        if(this.item.seen == 0) {
+            this.item.seen = 1;
+            ApiService.get(`/v1/seen-notification/${this.item.id}`);
+        }
       }
     }
 }
