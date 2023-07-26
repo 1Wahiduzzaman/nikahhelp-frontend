@@ -4,8 +4,14 @@
        'team-wrapper': useFor == 'team',
        'shortlist-wrapper': useFor == 'shortlist',}">
     <div>
-      <div class="dropdownNotify-title py-2 d-flex align-items-center">
+      <div class="dropdownNotify-title py-2 d-flex align-items-center justify-content-between">
         <strong class="text-capitalize">{{ label }}</strong>
+        <ButtonComponent
+          :isSmall="true"
+          title="Mark all as read"
+          :responsive="false"
+          @onClickButton="markAllAsRead"
+        />
         <!--                <span v-if="count > 0" class="ml-2 count">{{ count }}</span>-->
       </div>
     </div>
@@ -19,7 +25,7 @@
           :data-source="[{title: 'user one'}]"
           style="border-bottom: 1px solid rgb(235, 235, 235);"
       >
-        <a-list-item slot="renderItem" slot-scope="item">
+        <a-list-item slot="renderItem" slot-scope="item" class="notification-item" :class="{'notification-seen' : itemObj.seen}">
           <slot name="item" :item="item">
             <component :is="componentName" :item="itemObj" :index="index"></component>
           </slot>
@@ -72,13 +78,14 @@
 </template>
 
 <script>
-
+import { notificationMixin } from "../../mixins/notification";
 import NotificationChatItem from "./NotificationChatItem";
 import NotificationListItem from "./NotificationListItem";
 import ShortListItem from "./ShortListItem";
 import TeamListItem from "./TeamListItem";
 import ChatListItem from "./ChatListItem";
 import ConnectedTeamChat from "../chat/ConnectedTeamChat";
+import ButtonComponent from "../atom/ButtonComponent";
 
 const selectComponent = {
   chat: {
@@ -129,8 +136,10 @@ export default {
     TeamListItem,
     NotificationChatItem,
     ChatListItem,
-    ConnectedTeamChat
+    ConnectedTeamChat,
+    ButtonComponent
   },
+  mixins: [notificationMixin],
   computed: {
     componentName() {
       return selectComponent[this.useFor].component;
@@ -195,6 +204,16 @@ export default {
 .notification__items {
   overflow-y: scroll;
   max-height: 350px;
+
+  .notification-item {
+    background-color:rgb(82, 46, 142, 0.1); 
+    border-radius: 15px; 
+    margin-bottom: 2px;
+  }
+
+  .notification-seen {
+    background-color: #fff;
+  }
 }
 
 .count {
