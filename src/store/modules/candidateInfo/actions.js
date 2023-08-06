@@ -240,21 +240,15 @@ async saveCandidateUploadDoc(_, payload) {
     });
   },
   async uploadImages(_, payload) {
-    
     return new Promise( async (resolve, reject) => {
       let user = JSON.parse(localStorage.getItem("user"));
-          const imageToken =  localStorage.getItem('tokenImage');
-     await fetch(`https://chobi.nikahhelp.com/api/img/${user.id}${payload.folder}`, {
-      method: 'POST',
-      body: payload.image,
-      headers: {
-            'Authorization': `Bearer ${imageToken}`, // notice the Bearer before your token
-      }
-    }).then(e => e.json()).then(e => {
-      resolve(e);
-      // localStorage.setItem('tokenImage', e.data.token);
-      console.log(e, 'image upload response')
-    }).catch(e => console.log(e));
+        ApiService.post(`img/${user.id}${payload.folder}`, payload.image)
+        .then(data => data.data)
+        .then(data => {
+            console.log(data, 'image upload response')
+            resolve(data)
+        }).
+      catch(data => console.log(data));
     });
   },
   async deleteImage(_, payload) {
@@ -268,7 +262,18 @@ async saveCandidateUploadDoc(_, payload) {
         });
     });
   },
-
+  async deleteImageDir(_, payload) {
+    return new Promise((resolve, reject) => {
+      let user = JSON.parse(localStorage.getItem("user"));
+      ApiService.delete(`img/${user.id}/${payload.folder}`)
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  },
   async getCandidateAllInfo(context, _) {
     const response = await ApiService.get(
       `v1/candidate/info/${JwtService.getUserId()}`
