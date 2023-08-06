@@ -370,6 +370,7 @@
 						@cancel="showTeamInfo = false" 
 						:ok-button-props="{ disabled: true }"
 						:cancel-button-props="{ disabled: true }"
+						v-if="profile.team"
 					>
 						<span class="fw-600">Team Name</span> <br> {{ profile.team.team_name }} <br><br>
 						<span class="fw-600">Team Members</span> <br> {{ profile.team.member }} <br><br>
@@ -525,7 +526,14 @@ export default {
         },
 		onClickTeamDetail() {
             // this.$refs.advDiag.openDiag()
-			this.showTeamInfo = true;
+			if(this.profile.team !== "") {
+				this.showTeamInfo = true;
+			} else {
+				this.$error({
+					title: 'This Candidate has no team!',
+					center: true,
+                });
+			}
         },
 		 onClickCopyText() {
             this.copyProfileText = 'Copy successful'
