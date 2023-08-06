@@ -409,12 +409,11 @@ export default {
           this.teamActivity.suggestion = 0;
         });
 
-      if(this.userInfo.user.id === candidateId){
-        await this.$store.dispatch("loadShortListedCandidates");
-        await this.$store.dispatch('loadTeamShortListedCandidates');
-        this.teamActivity.shortlisted = this.$store.getters.shortListedCandidates.length;
-        this.teamActivity.teamlisted = this.$store.getters.teamShortListedCandidates.length;
-      }
+      // fetch shortlisted and team shortlisted count
+      await this.$store.dispatch("loadShortListedCandidates");
+      await this.$store.dispatch('loadTeamShortListedCandidates');
+      this.teamActivity.shortlisted = this.$store.getters.shortListedCandidates.length;
+      this.teamActivity.teamlisted = this.$store.getters.teamShortListedCandidates.length;
 
       let activeTeamId = JwtService.getTeamIDAppWide();
       let connectionReport = await ApiService.post('v1/connection-reports?team_id='+activeTeamId).then(res => res.data);
