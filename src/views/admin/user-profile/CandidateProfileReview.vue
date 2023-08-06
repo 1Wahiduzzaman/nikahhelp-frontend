@@ -621,7 +621,7 @@
             </div>
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
-                <img v-viewer :src="candidateData.personal.per_main_image_url + `?token=${tokenImage}`" alt="img" class="contain" />
+                <img v-if="documentInfo.candidate_info" v-viewer :src="documentInfo.candidate_info.per_main_image_url + `?token=${tokenImage}`" alt="img" class="contain" />
                 <p class="text-center">Main image</p>
               </div>
             </div>
