@@ -32,7 +32,7 @@
                           <div class="img-preview mb-2">
                             <img 
                               v-viewer="{toolbar: false, title: false, navbar: false}"
-                              :src=" avatarSrc ? avatarSrc : imageModel.per_avatar_url + `?token=${tokenImage}`" 
+                              :src=" avatarSrc ? avatarSrc : imageModel.per_avatar_url + `?token=${token}`" 
                               class="contain" 
                               v-if="imageModel.per_avatar_url" 
                             />
@@ -97,7 +97,7 @@
                         <div>
                           <div class="img-preview mb-2">
                             <img v-viewer="{toolbar: false, title: false, navbar: false}"
-                              :src="mainImageSrc ? mainImageSrc : imageModel.per_main_image_url + `?token=${tokenImage}`" 
+                              :src="mainImageSrc ? mainImageSrc : imageModel.per_main_image_url + `?token=${token}`" 
                               class="contain" 
                               v-if="imageModel.per_main_image_url" 
                             />
@@ -229,18 +229,18 @@ export default {
       avatarNo: 0,
       additionalImageSrc: "",
       loading: false,
-      tokenImage: "",
+      token: "",
     };
   },
 
   created() {
     this.importAll(require.context('../../assets/avatar/', true, /\.png$/));
-    this.getTokenImage();
+    this.getToken();
   },
 
   methods: {
-    getTokenImage() {
-      this.tokenImage = localStorage.getItem("tokenImage");
+    getToken() {
+      this.token = JSON.parse(localStorage.getItem("token"));
     },
     importAll(r) {
       r.keys().forEach(key => (this.images.push({ pathShort: key })));

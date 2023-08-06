@@ -70,7 +70,7 @@ export default {
   methods: {
     async loadUser() {
       this.isLoading = true;
-      const token = localStorage.getItem("token");
+      const token = JSON.parse(localStorage.getItem("token"));
       if (!token) {
         this.$router.push("/login");
         return;

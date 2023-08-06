@@ -5,7 +5,7 @@
        <div class="team-info-div">
          <div class="user-info-div">
            <div class="flex align-items-center">
-             <img :src="getAuthUser && getAuthUser.per_main_image_url  ? getAuthUser.per_main_image_url + `?token=${tokenImage}` : avatarSrc" alt="image" class="user-img" />
+             <img :src="getAuthUser && getAuthUser.per_main_image_url  ? getAuthUser.per_main_image_url + `?token=${token}` : avatarSrc" alt="image" class="user-img" />
              <div class="intro mx-4 mt-4 border-bottom-white">
                <h4 class="color-primary fs-14">Welcome Back!</h4>
                <h6 class="color-primary fs-18 font-weight-bold">{{ getAuthUser ? getAuthUser.full_name : 'N/A' }}</h6>
@@ -185,7 +185,7 @@ export default {
     this.loadTeams();
     this.loadProfileGraphApi(2);
     this.getTeamActivity();
-    this.tokenImage = localStorage.getItem("tokenImage");
+    this.token = JSON.parse(localStorage.getItem("token"));
   },
   data() {
     return {
@@ -265,7 +265,7 @@ export default {
         request_received: '',
         request_sent: ''
       },
-      tokenImage: "",
+      token: "",
     }
   },
   computed: {
@@ -431,7 +431,7 @@ export default {
     getImage(user) {
       console.log(user, 'user form dashboard')
       if(user && user.candidate_info && user.candidate_info.per_main_image_url) {
-        return user.candidate_info.per_main_image_url + `?token=${this.tokenImage}`;
+        return user.candidate_info.per_main_image_url + `?token=${this.token}`;
       }
       return this.avatarSrc;
     },

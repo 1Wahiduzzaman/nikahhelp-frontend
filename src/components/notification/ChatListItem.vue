@@ -3,7 +3,7 @@
     <div class="flex position-relative">
       <div class="avatar-area">
         <img class="avatar" width="45" height="45"
-             :src="item.logo ? item.logo + `?token=${tokenImage}` : getImage()" alt="">
+             :src="item.logo ? item.logo + `?token=${token}` : getImage()" alt="">
         <span :class="{'online-icon-avatar': isOnline()}"></span>
       </div>
       <div class="content">
@@ -64,11 +64,11 @@ export default {
 
   data() {
     return {
-      tokenImage: "",
+      token: "",
     }
   },
   created() {
-    this.tokenImage = localStorage.getItem('tokenImage');
+    this.token = localStorage.getItem('token');
   },
   computed: {
    

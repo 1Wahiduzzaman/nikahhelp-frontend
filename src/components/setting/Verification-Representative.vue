@@ -129,7 +129,7 @@
               <span @click="clearImg('font')" class="close-icon mt-2" v-if="verification.ver_document_frontside"><img
                   src="@/assets/icon/close.svg" alt="img" /></span>
               <div class="img-preview mb-2">
-                <img :src="imageFont ? imageFont : verification.ver_document_frontside + `?token=${tokenImage}`
+                <img :src="imageFont ? imageFont : verification.ver_document_frontside + `?token=${token}`
                   " width="180" height="200" v-if="verification.ver_document_frontside" />
                 <div class="mt-3">Front Page</div>
                 <div class="mt-4" v-if="!verification.ver_document_frontside">
@@ -173,7 +173,7 @@
               <span @click="clearImg('back')" class="close-icon mt-2" v-if="verification.ver_document_backside"><img
                   src="@/assets/icon/close.svg" alt="img" /></span>
               <div class="img-preview mb-2">
-                <img :src="imageBack ? imageBack : verification.ver_document_backside + `?token=${tokenImage}`
+                <img :src="imageBack ? imageBack : verification.ver_document_backside + `?token=${token}`
                   " width="180" height="200" v-if="verification.ver_document_backside" />
 
                 <div class="mt-3">Back Page</div>

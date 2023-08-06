@@ -22,7 +22,7 @@
 		<div class="bottom">
 			<div class="user-img">
 				<img
-					:src="candidate.image ? candidate.image + `?token=${tokenImage}` : avatarSrc"
+					:src="candidate.image ? candidate.image + `?token=${token}` : avatarSrc"
 					alt=""
 					class="avatar-img"
 				/>
@@ -148,11 +148,11 @@ export default {
 	data() {
 		return {
 			avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
-			tokenImage: "",
+			token: "",
 		};
 	},
 	created() {
-    	this.tokenImage = localStorage.getItem("tokenImage");
+    	this.token = JSON.parse(localStorage.getItem("token"));
   	},
 	computed: {
 		country() {

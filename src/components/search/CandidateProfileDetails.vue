@@ -85,7 +85,7 @@
             :name="profileDetails.first_name + ' ' + profileDetails.last_name"
             :image="
             profileDetails.personal.per_main_image_url
-                ? profileDetails.personal.per_main_image_url + `?token=${tokenImage}`
+                ? profileDetails.personal.per_main_image_url + `?token=${token}`
                 : avatarSrc
             "
         />
@@ -166,7 +166,7 @@ export default {
     data: () => ({
         btnData,
         images: [],
-        tokenImage: ""
+        token: ""
     }),
     props: ['role'],
     components: {
@@ -175,7 +175,7 @@ export default {
         PersonalInformation
     },
     created() {
-        this.tokenImage = localStorage.getItem("tokenImage");
+        this.token = JSON.parse(localStorage.getItem("token"));
     },
     computed: {
         ...mapGetters({

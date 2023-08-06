@@ -217,7 +217,7 @@
                     4 mb</span>
 
                   <div class="img-preview mb-2">
-                    <img v-viewer :src="imageFont ? imageFont : verification.ver_image_front + `?token=${tokenImage}`
+                    <img v-viewer :src="imageFont ? imageFont : verification.ver_image_front + `?token=${token}`
                       " width="180" height="200" v-if="verification.ver_image_front" />
                     <div class="mt-3">Front Page</div>
                     <div class="mt-4" v-if="!verification.ver_image_front">
@@ -274,7 +274,7 @@
                     4 mb</span>
 
                   <div class="img-preview mb-2">
-                    <img v-viewer :src="imageBack ? imageBack : verification.ver_image_back + `?token=${tokenImage}`"
+                    <img v-viewer :src="imageBack ? imageBack : verification.ver_image_back + `?token=${token}`"
                       width="180" height="200" v-if="verification.ver_image_back" />
 
                     <div class="mt-3">Back Page</div>
@@ -394,12 +394,12 @@ export default {
       imageFont: null,
       activeKey: 1,
       loading: false,
-      tokenImage: "",
+      token: "",
     };
   },
   created() {
     this.userData = JSON.parse(localStorage.getItem("user"));
-    this.tokenImage = localStorage.getItem('tokenImage');
+    this.token = localStorage.getItem('token');
   },
   mounted() { },
 

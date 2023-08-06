@@ -256,7 +256,7 @@
                 <img
                   v-viewer
                   :src="
-                    representativeDetails.verification.ver_document_frontside + `?token=${tokenImage}`
+                    representativeDetails.verification.ver_document_frontside + `?token=${token}`
                   "
                   class="user-image"
                   alt="img"
@@ -271,7 +271,7 @@
                 <img
                   v-viewer
                   :src="
-                    representativeDetails.verification.ver_document_backside + `?token=${tokenImage}`
+                    representativeDetails.verification.ver_document_backside + `?token=${token}`
                   "
                   class="user-image"
                   alt="img"
@@ -298,7 +298,7 @@
             <div v-viewer="{movable: false, title: false, scalable: false, rotatable: false}" class="col-12 row my-4">
               <div
                 class="col-md-6,mb-sm-0 mb-2 flex flex-column align-items-center profile-img" 
-                v-for="src in [representativeDetails.image_upload.per_avatar_url + `?token=${tokenImage}`, representativeDetails.image_upload.per_main_image_url + `?token=${tokenImage}`]" 
+                v-for="src in [representativeDetails.image_upload.per_avatar_url + `?token=${token}`, representativeDetails.image_upload.per_main_image_url + `?token=${token}`]" 
                 :key="src"
               >
                   <img
@@ -332,11 +332,11 @@ export default {
   data() {
     return { 
       representativeDetails: null,  
-      tokenImage: "",
+      token: "",
     };
   },
   created() {
-    this.tokenImage = localStorage.getItem('tokenImage');
+    this.token = localStorage.getItem('token');
   },
   mounted() {
     this.getRepresentativeInfo();
@@ -368,13 +368,13 @@ export default {
         .catch((error) => {});
     },
    // async getRelatedImages() {
-   //  const imageToken = localStorage.getItem('tokenImage');
+   //  const imageToken = localStorage.getItem('token');
    //       await fetch(`https://chobi.nikahhelp.com/api/`, {
    //    headers: {
    //          'Authorization': `Bearer ${imageToken}`, // notice the Bearer before your token
    //    }
    //  }).then(e => e.json()).then(e => {
-   //    // localStorage.setItem('tokenImage', e.data.token);
+   //    // localStorage.setItem('token', e.data.token);
    //    resolve(e.data)
    //  }).catch(e => console.log(e));
    //  }

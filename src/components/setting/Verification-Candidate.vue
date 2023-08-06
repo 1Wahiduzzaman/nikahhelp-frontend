@@ -186,7 +186,7 @@
             <div class="img-preview mb-2">
               <span @click="clearImg('font')" class="close-icon" v-if="verification.ver_image_front"><img
                   src="@/assets/icon/close.svg" alt="img" /></span>
-              <img :src="imageFont ? imageFont : verification.ver_image_front + `?token=${tokenImage}`" width="180"
+              <img :src="imageFont ? imageFont : verification.ver_image_front + `?token=${token}`" width="180"
                 height="200" v-if="verification.ver_image_front" />
               <div class="mt-3">Front Page</div>
               <div class="mt-4" v-if="!verification.ver_image_front">
@@ -232,7 +232,7 @@
             <div class="img-preview mb-2">
               <span @click="clearImg('back')" class="close-icon" v-if="verification.ver_image_back"><img
                   src="@/assets/icon/close.svg" alt="img" /></span>
-              <img :src="imageBack ? imageBack : verification.ver_image_back + `?token=${tokenImage}`" width="180"
+              <img :src="imageBack ? imageBack : verification.ver_image_back + `?token=${token}`" width="180"
                 height="200" v-if="verification.ver_image_back" />
 
               <div class="mt-3">Back Page</div>
@@ -299,7 +299,7 @@ export default {
   },
 
   created() {
-    this.tokenImage = localStorage.getItem("tokenImage");
+    this.token = JSON.parse(localStorage.getItem("token"));
   },
   mounted() { },
   data() {
@@ -326,7 +326,7 @@ export default {
       imageBack: null,
       imageFont: null,
       activeKey: 1,
-      tokenImage: "",
+      token: "",
     };
   },
 

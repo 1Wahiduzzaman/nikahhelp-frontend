@@ -92,7 +92,6 @@ export default {
     console.log("Logging Out");
     localStorage.removeItem("token");
     localStorage.removeItem("id");
-    localStorage.removeItem("tokenImage");
     // localStorage.removeItem("chat_currentconv");
     // localStorage.removeItem("chat_conversations");
     // localStorage.removeItem("chat_msgs");

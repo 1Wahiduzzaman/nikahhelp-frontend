@@ -337,7 +337,7 @@
                 <img
                   v-viewer
                   :src="
-                    representativeDetails.verification.ver_document_frontside + `?token=${tokenImage}`
+                    representativeDetails.verification.ver_document_frontside + `?token=${token}`
                   "
                   class="user-image"
                   alt="img"
@@ -352,7 +352,7 @@
                 <img
                   v-viewer
                   :src="
-                    representativeDetails.verification.ver_document_backside + `?token=${tokenImage}`
+                    representativeDetails.verification.ver_document_backside + `?token=${token}`
                   "
                   class="user-image"
                   alt="img"
@@ -380,7 +380,7 @@
               <div class="profile-img text-center">
                 <img
                   v-viewer
-                  :src="representativeDetails.image_upload.per_avatar_url + `?token=${tokenImage}`"
+                  :src="representativeDetails.image_upload.per_avatar_url + `?token=${token}`"
                   class="contain"
                   alt="img"
                 />
@@ -391,7 +391,7 @@
               <div class="profile-img text-center">
                 <img
                   v-viewer
-                  :src="representativeDetails.image_upload.per_main_image_url + `?token=${tokenImage}`"
+                  :src="representativeDetails.image_upload.per_main_image_url + `?token=${token}`"
                   class="contain"
                   alt="img"
                 />
@@ -411,7 +411,7 @@
                 <div class="profile-img text-center">
                   <img
                     :src="
-                      documentInfo.candidate_info.ver_image_front + `?token=${tokenImage}`
+                      documentInfo.candidate_info.ver_image_front + `?token=${token}`
                     "
                     v-viewer
                     class=""
@@ -427,7 +427,7 @@
                   <img
                     v-viewer
                     :src="
-                      documentInfo.candidate_info.ver_image_back + `?token=${tokenImage}`
+                      documentInfo.candidate_info.ver_image_back + `?token=${token}`
                     "
                     class=""
                     alt="img"
@@ -481,11 +481,11 @@ export default {
         { key: 0, name: "Deleted" },
       ],
       representativeDetails: null,
-      tokenImage: "",
+      token: "",
     };
   },
   created() {
-    this.tokenImage = localStorage.getItem("tokenImage");
+    this.token = JSON.parse(localStorage.getItem("token"));
   },
   mounted() {
     this.getRepresentativeInfo();

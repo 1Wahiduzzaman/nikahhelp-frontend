@@ -50,7 +50,7 @@
                   <div class="img-preview mb-2">
                     <img
                       v-viewer="{toolbar: false, title: false}"
-                      :src="avatarSrc ? avatarSrc : imageModel.avatar_image_url + `?token=${tokenImage}`"
+                      :src="avatarSrc ? avatarSrc : imageModel.avatar_image_url + `?token=${token}`"
                       class="contain"
                       v-if="imageModel.avatar_image_url"
                     />
@@ -134,7 +134,7 @@
                     <img
                       v-viewer="{toolbar: false, title: false}"
                       :src="
-                        mainImageSrc ? mainImageSrc : imageModel.main_image_url + `?token=${tokenImage}`
+                        mainImageSrc ? mainImageSrc : imageModel.main_image_url + `?token=${token}`
                       "
                       class="contain"
                       v-if="imageModel.main_image_url"
@@ -192,7 +192,7 @@
                       :src="
                         additionalImageSrc
                           ? additionalImageSrc
-                          : imageModel.additionalImageSrc + `?token=${tokenImage}`
+                          : imageModel.additionalImageSrc + `?token=${token}`
                       "
                       class="contain"
                       v-if="imageModel.additionalImageSrc"
@@ -337,18 +337,18 @@ export default {
       only_team_can_see: false,
       team_connection_can_see: false,
       loading: false,
-      tokenImage: "",
+      token: "",
     };
   },
 
   created() {
     this.getImageSharingSettings();
     this.importAll(require.context('../../assets/avatar/', true, /\.png$/));
-    this.getTokenImage();
+    this.getToken();
   },
   methods: {
-    getTokenImage() {
-      this.tokenImage = localStorage.getItem("tokenImage");
+    getToken() {
+      this.token = JSON.parse(localStorage.getItem("token"));
     },
     importAll(r) {
       r.keys().forEach(key => (this.images.push({ pathShort: key })));
