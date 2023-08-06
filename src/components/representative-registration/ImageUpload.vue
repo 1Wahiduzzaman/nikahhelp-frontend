@@ -263,23 +263,16 @@ export default {
     },
     async deleteImage(data) {
       this.$emit('disableNextBtn');
-      // await this.$store.dispatch("deleteRepImage", data).then(async (_) => {
-      //   let user_id = JSON.parse(localStorage.getItem('user')).id;
-      //   let img_name;
-      //   if(data === 0) {
-      //     img_name = '_per_avatar_url'
-      //   } else {
-      //     img_name = '_per_main_image_url'
-      //   }
-      //   console.log(user_id, img_name, 'img_name.date')
-      //   // await axios.delete(`/img/${user_id}/${img_name}`)
-      //   await fetch(`https://chobi.nikahhelp.com/api/img/${user_id}/${img_name}`, {
-      //     method: 'DELETE',
-      //     headers: {
-      //           'Authorization': `Bearer ${this.tokenImage}`, // notice the Bearer before your token
-      //     }
-      //   })
-      // });
+      await this.$store.dispatch("deleteRepImage", data);
+      let payload = {
+        folder : ""
+      };
+      if(data == 1) {
+        payload.folder = "_per_main_image_url"
+      } else if(data == 0) {
+        payload.folder = "_per_avatar_url"
+      }
+      await this.$store.dispatch("deleteImageDir", payload);
       this.$emit("valueChange", {
         value: {
           ...this.imageModel,
@@ -331,6 +324,7 @@ export default {
       this.$refs[avatarNo][0].classList.add('selected');
       // this.imageModel.avatar_image_url = avatarNo;
       // const 
+      this.avatarNo = avatarNo;
     },
     async saveAvatar() {
       if(this.avatarNo == 0) {

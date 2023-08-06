@@ -378,6 +378,17 @@ export default {
     },
     async deleteImage(data) {
       await this.$store.dispatch("deleteImage", data);
+      let payload = {
+        folder : ""
+      };
+      if(data == 1) {
+        payload.folder = "_per_main_image_url"
+      } else if(data == 0) {
+        payload.folder = "_per_avatar_url"
+      } else if(data == 9) {
+        payload.folder = "_additional_image"
+      }
+      await this.$store.dispatch("deleteImageDir", payload);
       this.$emit("valueChange", {
         value: {
           ...this.imageModel,
@@ -461,6 +472,7 @@ export default {
       this.$refs[avatarNo][0].classList.add('selected');
       // this.imageModel.avatar_image_url = avatarNo;
       // const 
+      this.avatarNo = avatarNo;
     },
     async saveAvatar() {
       if(this.avatarNo == 0) {
