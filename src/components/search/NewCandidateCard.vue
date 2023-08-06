@@ -13,7 +13,7 @@
     </template>
     <v-img
       height="250"
-      :src="candidate.image + `?token=${tokenImage}`"
+      :src="candidate.image + `?token=${token}`"
     ></v-img>
 
     <v-card-title>{{ candidate.first_name }} {{ candidate.last_name }}</v-card-title>
@@ -154,11 +154,11 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
       loading: false,
       selection: 1,
       onceMore: true,
-      tokenImage: "",
+      token: "",
     }),
     created() {
-      this.tokenImage = localStorage.getItem('tokenImage');
-      // this.candidate.image = process.env.VUE_APP_IMAGE + '/' + this.candidate.image + '?token=' + this.tokenImage;
+      this.token = localStorage.getItem('token');
+      // this.candidate.image = process.env.VUE_APP_IMAGE + '/' + this.candidate.image + '?token=' + this.token;
     },
     computed: {
       ...mapGetters({

@@ -23,12 +23,6 @@ export default {
 
       });
 
-      await fetch('https://chobi.nikahhelp.com/api/v1/login', {
-      method: 'POST',
-      body: form
-    }).then(e => e.json()).then(e => {
-      localStorage.setItem('tokenImage', e.data.token.access_token);
-    }).catch(e => console.log(e));
 
       if(router.history._startLocation === '/login') {
         router.push({ name: 'root' });
@@ -59,15 +53,6 @@ export default {
         token: response.data.data.access_token,
       });
 
-      const form = new FormData();
-    form.append('email', payload.email);
-    form.append('password', payload.password);
-       await fetch('https://chobi.nikahhelp.com/api/v1/register', {
-      method: 'POST',
-      body: form
-    }).then(e => e.json()).then(e => {
-      localStorage.setItem('tokenImage', e.data.token.access_token);
-    }).catch(e => console.log(e));
 
       if (token) {
         router.push({
@@ -107,7 +92,6 @@ export default {
     console.log("Logging Out");
     localStorage.removeItem("token");
     localStorage.removeItem("id");
-    localStorage.removeItem("tokenImage");
     // localStorage.removeItem("chat_currentconv");
     // localStorage.removeItem("chat_conversations");
     // localStorage.removeItem("chat_msgs");

@@ -47,7 +47,7 @@
 							<div class="col-4 mt-3">
 								<!-- Styling for this modal logo and browse button are in the  -->
 								<div class="logo">
-									<img class="modal-logo" v-if="!avatarSrc" :src="teamData.logo + `?token=${tokenImage}`"
+									<img class="modal-logo" v-if="!avatarSrc" :src="teamData.logo + `?token=${token}`"
 										alt="info image" />
 									<img class="modal-logo" v-if="avatarSrc" :src="avatarSrc" alt="info image" />
 								</div>
@@ -139,7 +139,7 @@
 				<div class="img mt-2">
 					<button>
 						<!-- <img src="../../assets/info-img.png" alt="info image" /> -->
-						<img class="img-logo" :src="teamData.logo + `?token=${tokenImage}`" alt="info image" />
+						<img class="img-logo" :src="teamData.logo + `?token=${token}`" alt="info image" />
 						<!-- <span v-if="edit_button_flag"
 							><img src="../../assets/img-edit.png" alt="info edit"
 						/></span> -->
@@ -519,7 +519,7 @@ export default {
 	},
 	data() {
 		return {
-			tokenImage: "",
+			token: "",
 			deleteTeamLoading: false,
 			invitation_link: [],
 			invitation_link_show: [],
@@ -583,7 +583,7 @@ export default {
 	},
 	created() {
 		this.teamInfo = this.teamData;
-		this.tokenImage = localStorage.getItem("tokenImage");
+		this.token = JSON.parse(localStorage.getItem("token"));
 
 	},
 	computed: {

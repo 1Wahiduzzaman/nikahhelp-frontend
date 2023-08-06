@@ -9,7 +9,7 @@
 						:name="candidateData.first_name + ' ' + candidateData.last_name"
 						:image="
 						candidateData.personal.per_avatar_url
-							? candidateData.personal.per_avatar_url + `?token=${tokenImage}`
+							? candidateData.personal.per_avatar_url + `?token=${token}`
 							: avatarSrc
 						"
 					/>
@@ -440,12 +440,12 @@ export default {
 			images: [],
 			showTeamInfo: false,
 			declineButton: false,
-			tokenImage: "",
+			token: "",
 		};
 	},
 	created() {
 		this.fetchCandidate();
-		this.tokenImage = localStorage.getItem('tokenImage');
+		this.token = localStorage.getItem('token');
 		console.log(this.profile, 'this.profiel')
 	},
 
@@ -859,7 +859,7 @@ export default {
 			}
 
 			this.images.forEach((image, index) => {
-					this.images[index] += `?token=${this.tokenImage}`
+					this.images[index] += `?token=${this.token}`
 			})
 			console.log(this.images, 'images')
 

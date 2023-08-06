@@ -49,18 +49,14 @@ export default {
   },
   async saveRepresentativeImage(_, payload) {
     return new Promise( async (resolve, reject) => {
-       const imageToken =  localStorage.getItem('tokenImage');
-       let user = JSON.parse(localStorage.getItem("user"));
-     await fetch(`https://chobi.nikahhelp.com/api/img/${user.id}${payload.folder}`, {
-      method: 'POST',
-      body: payload.image,
-      headers: {
-            'Authorization': `Bearer ${imageToken}`, // notice the Bearer before your token
-      }
-    }).then(e => e.json()).then(e => {
-      // localStorage.setItem('tokenImage', e.data.token);
-      resolve(e)
-    }).catch(e => console.log(e));
+      let user = JSON.parse(localStorage.getItem("user"));
+        ApiService.post(`img/${user.id}${payload.folder}`, payload.image)
+        .then(data => data.data)
+        .then(data => {
+            console.log(data, 'image upload response')
+            resolve(data)
+        }).
+      catch(data => console.log(data));
     });
   },
   async saveRepresentativeImageCondition(_, payload) {

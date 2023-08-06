@@ -11,7 +11,7 @@
     </template>
     <v-img
         height="250"
-        :src="item.image ? item.image + `?token=${tokenImage}` : avatarSrc + `?token=${tokenImage}`"
+        :src="item.image ? item.image + `?token=${token}` : avatarSrc + `?token=${token}`"
     ></v-img>
 
     <v-card-title>
@@ -255,11 +255,11 @@ export default {
   data() {
     return {
       avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
-      tokenImage: '',
+      token: '',
     }
   },
   created() {
-    this.tokenImage = localStorage.getItem("tokenImage");
+    this.token = JSON.parse(localStorage.getItem("token"));
   },
   computed: {
     loggedUser() {

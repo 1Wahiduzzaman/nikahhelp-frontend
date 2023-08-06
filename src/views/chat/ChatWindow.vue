@@ -134,7 +134,7 @@
                   <div class="top">
                     <h4 class="cursor-pointer btn-mobile-back" @click="backToTabList()">&#8592;</h4>
                     <div class="item-img conv-head-logo">
-                      <img :src="chatheadopen.logo ? chatheadopen.logo + `?token=${tokenImage}` : getImage()" alt="info image">
+                      <img :src="chatheadopen.logo ? chatheadopen.logo + `?token=${token}` : getImage()" alt="info image">
                     </div>
                     <div class="chat-info">
                       <div class="chat-group bg-primary">{{ chatheadopen.label }}</div>
@@ -194,7 +194,7 @@
                            :class="{'conv-mb': chats.length !== cIndex + 1}"
                            v-if="(parseInt(item.senderId) == parseInt(getAuthUserId)) || (parseInt(item.sender) == parseInt(getAuthUserId))" >
                         <div class="text-right">
-                          <img :src="getAuthUser && getAuthUser.per_main_image_url ? getAuthUser.per_main_image_url + `?token=${tokenImage}` : getImage()" class="rounded-circle mr-1" alt="" width="40" height="40">
+                          <img :src="getAuthUser && getAuthUser.per_main_image_url ? getAuthUser.per_main_image_url + `?token=${token}` : getImage()" class="rounded-circle mr-1" alt="" width="40" height="40">
                         </div>
                         <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-break text-white br-10 w100" v-html="item.body">
                         </div>
@@ -397,7 +397,7 @@ export default {
       connectedTeamChats: [],
 	    notify: 0,
       newMessage: false,
-      tokenImage: "",
+      token: "",
       search: '',
     }
   },
@@ -512,7 +512,7 @@ export default {
     if(this.$route.query.connection_id) {
       this.setChatTab('Connected');
     };
-    this.getTokenImage();
+    this.getToken();
   },
 
   mounted() {
@@ -578,8 +578,8 @@ export default {
     },
   },
   methods: {
-    getTokenImage() {
-      this.tokenImage = localStorage.getItem("tokenImage");
+    getToken() {
+      this.token = JSON.parse(localStorage.getItem("token"));
     },
     socketNotification(payload) {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -679,7 +679,7 @@ export default {
           user_id: item.user_id,
           state: 'seen',
           name: item.user?.full_name || 'user name',
-          logo: item.user && item.user.candidate_info && item.user.candidate_info.per_avatar_url ? item.user.candidate_info.per_main_image_url + `?token=${this.tokenImage}` : require('../../assets/info-img.png'),
+          logo: item.user && item.user.candidate_info && item.user.candidate_info.per_avatar_url ? item.user.candidate_info.per_main_image_url + `?token=${this.token}` : require('../../assets/info-img.png'),
           other_mate_id: item.user_id,
           typing_status: 0,
           typing_text: '',
@@ -721,7 +721,7 @@ export default {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       let opositeUser = loggedUser.id == item.sender ? item.private_receiver_data : item.private_sender_data;
       if(opositeUser && opositeUser.candidate_info && opositeUser.candidate_info.per_main_image_url) {
-        return opositeUser.candidate_info.per_main_image_url + `?token=${this.tokenImage}`;
+        return opositeUser.candidate_info.per_main_image_url + `?token=${this.token}`;
       }
       return require('../../assets/info-img.png');
     },
@@ -934,8 +934,8 @@ export default {
       this.chatListedImage = [];
       if(this.chatheadopen.label == 'Group chat') {
         this.chatheadopen.team_members.forEach(member => {
-          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url + `?token=${this.tokenImage}` : '';
-					let repPhoto = member && member.user && member.user.representative_info ? member.user.representative_info.per_main_image_url + `?token=${this.tokenImage}` : '';
+          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url + `?token=${this.token}` : '';
+					let repPhoto = member && member.user && member.user.representative_info ? member.user.representative_info.per_main_image_url + `?token=${this.token}` : '';
 
 					if (!member.user.candidate_info) {
 						this.chatListedImage.push({
@@ -951,7 +951,7 @@ export default {
         });
       } else if(this.chatheadopen.label == 'Connected Team') {
         this.chatheadopen.from_team.team_members.forEach(member => {
-          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url + `?token=${this.tokenImage}` : '';
+          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url + `?token=${this.token}` : '';
           this.chatListedImage.push({
             user_id: member.user_id,
             logo: candidateLogo
@@ -959,7 +959,7 @@ export default {
         });
 
         this.chatheadopen.to_team.team_members.forEach(member => {
-          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url + `?token=${this.tokenImage}` : '';
+          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url + `?token=${this.token}` : '';
           this.chatListedImage.push({
             user_id: member.user_id,
             logo: candidateLogo
@@ -1276,7 +1276,7 @@ export default {
       for (var i = 0; i < this.$store.state.chat.user_info.length; i++) {
         // console.log(user_id,this.$store.state.chat.user_info[i].user_id);
         if (this.$store.state.chat.user_info[i].user_id == user_id) {
-          return this.$store.state.chat.user_info[i].per_main_image_url + `?token=${this.tokenImage}`
+          return this.$store.state.chat.user_info[i].per_main_image_url + `?token=${this.token}`
         }
       }
       return '../../assets/info-img.png';
@@ -1331,7 +1331,7 @@ export default {
     getConversationUserImage(id) {
       let imageObj = this.chatListedImage.find(item => item.user_id == id);
       if(imageObj) {
-        return imageObj.logo + `?token=${this.tokenImage}`;
+        return imageObj.logo + `?token=${this.token}`;
       } else {
         return this.getImage();
       }

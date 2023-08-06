@@ -152,7 +152,7 @@ export default {
 			bodyFormData.append("logo", this.avatar);
 
 			// console.log(bodyFormData);
-			// let token = localStorage.getItem("token");
+			// let token = JSON.parse(localStorage.getItem("token"));
 			// console.log(token);
 			let self = this;
 

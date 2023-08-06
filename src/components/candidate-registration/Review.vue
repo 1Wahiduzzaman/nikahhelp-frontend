@@ -847,7 +847,7 @@
             <div v-viewer="{movable: false, title: false, scalable: false, rotatable: false}" class="col-12 row my-4 ms-1">
               <div
                 class="col-md-6 mb-sm-0 mb-2 flex flex-column align-items-center profile-img" 
-                v-for="src in [candidateData.verification.ver_image_front + `?token=${tokenImage}`, candidateData.verification.ver_image_back + `?token=${tokenImage}`]" 
+                v-for="src in [candidateData.verification.ver_image_front + `?token=${token}`, candidateData.verification.ver_image_back + `?token=${token}`]" 
                 :key="src"
               >
                   <img
@@ -879,7 +879,7 @@
             <div v-viewer="{movable: false, title: false, scalable: false, rotatable: false}" class="col-12 row my-4 ms-1">
               <div
                 class="col-md-4 mb-sm-0 mb-2 flex flex-column align-items-center profile-img" 
-                v-for="src in [candidateData.personal.per_avatar_url + `?token=${tokenImage}`, candidateData.personal.per_main_image_url + `?token=${tokenImage}`, candidateData.other_images + `?token=${tokenImage}`]" 
+                v-for="src in [candidateData.personal.per_avatar_url + `?token=${token}`, candidateData.personal.per_main_image_url + `?token=${token}`, candidateData.other_images + `?token=${token}`]" 
                 :key="src"
               >
                   <img
@@ -990,18 +990,18 @@ export default {
     return {
       candidateData: {},
       heightTV: HEIGHTS,
-      tokenImage: "",
+      token: "",
     };
   },
   created() {
-    this.getTokenImage();
+    this.getToken();
   },
   mounted() {
     this.getCandidateData();
   },
   methods: {
-    getTokenImage() {
-      this.tokenImage = localStorage.getItem("tokenImage");
+    getToken() {
+      this.token = JSON.parse(localStorage.getItem("token"));
     },
     async getCandidateData() {
       try {

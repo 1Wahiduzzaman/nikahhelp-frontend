@@ -615,20 +615,20 @@
           <div class="row">
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
-                <img v-viewer :src="candidateData.personal.per_avatar_url + `?token=${tokenImage}`" alt="img" class="contain" />
+                <img v-viewer :src="candidateData.personal.per_avatar_url + `?token=${token}`" alt="img" class="contain" />
                 <p class="text-center">Avatar</p>
               </div>
             </div>
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
-                <img v-if="documentInfo.candidate_info" v-viewer :src="documentInfo.candidate_info.per_main_image_url + `?token=${tokenImage}`" alt="img" class="contain" />
+                <img v-if="documentInfo.candidate_info" v-viewer :src="documentInfo.candidate_info.per_main_image_url + `?token=${token}`" alt="img" class="contain" />
                 <p class="text-center">Main image</p>
               </div>
             </div>
 
             <div class="col-12 col-md-4 mb-3">
               <div class="profile-img text-center">
-                <img v-viewer :src="candidateData.other_images + `?token=${tokenImage}`" alt="img" class="contain" />
+                <img v-viewer :src="candidateData.other_images + `?token=${token}`" alt="img" class="contain" />
                 <p class="text-center">Additional image</p>
               </div>
             </div>
@@ -674,7 +674,7 @@
               <div class="col-12 col-md-6 mb-4">
                 <div class="profile-img text-center">
                   <img :src="
-                    documentInfo.candidate_info.ver_image_front + `?token=${tokenImage}`
+                    documentInfo.candidate_info.ver_image_front + `?token=${token}`
                   " v-viewer class="" alt="img" height="250" width="200" />
                   <p class="text-center">Font Side</p>
                 </div>
@@ -682,7 +682,7 @@
               <div class="col-12 col-md-6 mb-4">
                 <div class="profile-img text-center">
                   <img v-viewer :src="
-                    documentInfo.candidate_info.ver_image_back + `?token=${tokenImage}`
+                    documentInfo.candidate_info.ver_image_back + `?token=${token}`
                   " class="" alt="img" height="250" width="200" />
                   <p class="text-center">Back Side</p>
                 </div>
@@ -753,11 +753,11 @@ export default {
       ],
       candidateData: {},
       heightTV: HEIGHTS,
-      tokenImage: "",
+      token: "",
     };
   },
   created() {
-    this.tokenImage = localStorage.getItem("tokenImage");
+    this.token = JSON.parse(localStorage.getItem("token"));
   },
   mounted() {
     this.getCandidateData();

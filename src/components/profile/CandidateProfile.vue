@@ -9,7 +9,7 @@
             :name="candidateData.first_name + ' ' + candidateData.last_name"
             :image="
               candidateData.personal.per_main_image_url
-                ? candidateData.personal.per_main_image_url + `?token=${tokenImage}`
+                ? candidateData.personal.per_main_image_url + `?token=${token}`
                 : avatarSrc
             "
           />
@@ -464,12 +464,12 @@ export default {
       conversations: [],
       candidateData: null,
       isLoading: false,
-      tokenImage: "",
+      token: "",
     };
   },
   created() {
     this.getCandidateData();
-    this.getTokenImage();
+    this.getToken();
   },
   computed: {
     domain() {
@@ -492,8 +492,8 @@ export default {
     },
   },
   methods: {
-    getTokenImage() {
-      this.tokenImage = localStorage.getItem("tokenImage");
+    getToken() {
+      this.token = JSON.parse(localStorage.getItem("token"));
     },
     onClickTeamDetail() {
       this.$refs.advDiag.openDiag();
@@ -538,7 +538,7 @@ export default {
     },
     openGallery() {
       this.images = [];
-      let images = [this.candidateData.other_images + `?token=${this.tokenImage}`, this.candidateData.personal.per_avatar_url + `?token=${this.tokenImage}`, this.candidateData.personal.per_main_image_url + `?token=${this.tokenImage}`]
+      let images = [this.candidateData.other_images + `?token=${this.token}`, this.candidateData.personal.per_avatar_url + `?token=${this.token}`, this.candidateData.personal.per_main_image_url + `?token=${this.token}`]
       if (images && images.length > 0) {
         images.map((i) => this.images.push(i));
         this.show();

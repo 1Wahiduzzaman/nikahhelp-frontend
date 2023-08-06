@@ -80,7 +80,7 @@
           </template>
           <v-img
               height="250"
-              :src="connection.candidateInfo && connection.candidateInfo.candidate_image ? connection.candidateInfo.candidate_image + `?token=${tokenImage}` : avatarSrc"
+              :src="connection.candidateInfo && connection.candidateInfo.candidate_image ? connection.candidateInfo.candidate_image + `?token=${token}` : avatarSrc"
           ></v-img>
 
             <v-chip
@@ -273,7 +273,7 @@ export default {
   components: {GridButtons, ButtonComponent},
   props: ["connection", "active_team_id"],
   created() {
-    this.tokenImage = localStorage.getItem("tokenImage");
+    this.token = JSON.parse(localStorage.getItem("token"));
   },
   data() {
     return {
@@ -283,7 +283,7 @@ export default {
       rotated: false,
       showProfileConnectionOverview: false,
       showProfileTeamOverview: false,
-      tokenImage: ""
+      token: ""
     };
   },
   mounted() {
