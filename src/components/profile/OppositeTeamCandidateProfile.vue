@@ -587,8 +587,10 @@ export default {
 		
         onClickButton(eventData) {
 			console.log(eventData)
-            if(eventData.event == 'openGallery') this.openGallery();
-
+            if(eventData.event == 'openGallery') {
+				this.openGallery();
+				return;
+			}
 			// let userInfo = JSON.parse(localStorage.getItem("userInfo"))
 
 			let userInfo = JSON.parse(localStorage.getItem("user"))
@@ -848,14 +850,14 @@ export default {
             this.$emit('switchComponent', 'CandidateProfiles')
         },
         openGallery() {
-			let userId = localStorage.getItem('user').id;
-			if(this.candidateData.personal.anybody_can_see == 1) {
-				this.images = [this.candidateInfo.other_images, this.candidateData.personal.per_avatar_url, this.candidateData.personal.per_main_image_url];
-			} else if(this.candidateData.personal.only_team_can_see == 1 && this.getAllTeamMembers.includes(userId)) {
-				this.images = [this.candidateInfo.other_images, this.candidateData.personal.per_avatar_url, this.candidateData.personal.per_main_image_url];
-			} else {
-				this.images = [this.candidateData.personal.per_avatar_url];
+			this.images = [this.candidateData.personal.per_avatar_url];
+			if (this.candidateData.personal.per_main_image_url !== "") {
+				this.images.push(this.candidateData.personal.per_main_image_url);
 			}
+			if (this.candidateInfo.other_images.length) {
+				this.images.push(this.candidateInfo.other_images);
+			}
+
 			this.images.forEach((image, index) => {
 					this.images[index] += `?token=${this.tokenImage}`
 			})
