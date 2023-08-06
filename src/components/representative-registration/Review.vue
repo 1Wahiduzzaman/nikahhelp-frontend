@@ -336,7 +336,7 @@ export default {
     };
   },
   created() {
-    this.token = localStorage.getItem('token');
+    this.token = JSON.parse(localStorage.getItem('token'));
   },
   mounted() {
     this.getRepresentativeInfo();
@@ -368,7 +368,7 @@ export default {
         .catch((error) => {});
     },
    // async getRelatedImages() {
-   //  const imageToken = localStorage.getItem('token');
+   //  const imageToken = JSON.parse(localStorage.getItem('token'));
    //       await fetch(`https://chobi.nikahhelp.com/api/`, {
    //    headers: {
    //          'Authorization': `Bearer ${imageToken}`, // notice the Bearer before your token

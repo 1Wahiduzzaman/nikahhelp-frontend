@@ -68,7 +68,7 @@ export default {
     }
   },
   created() {
-    this.token = localStorage.getItem('token');
+    this.token = JSON.parse(localStorage.getItem('token'));
   },
   computed: {
    
