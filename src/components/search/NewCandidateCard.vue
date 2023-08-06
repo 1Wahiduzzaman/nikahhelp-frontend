@@ -157,7 +157,7 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
       token: "",
     }),
     created() {
-      this.token = localStorage.getItem('token');
+      this.token = JSON.parse(localStorage.getItem('token'));
       // this.candidate.image = process.env.VUE_APP_IMAGE + '/' + this.candidate.image + '?token=' + this.token;
     },
     computed: {

@@ -399,7 +399,7 @@ export default {
   },
   created() {
     this.userData = JSON.parse(localStorage.getItem("user"));
-    this.token = localStorage.getItem('token');
+    this.token = JSON.parse(localStorage.getItem('token'));
   },
   mounted() { },
 

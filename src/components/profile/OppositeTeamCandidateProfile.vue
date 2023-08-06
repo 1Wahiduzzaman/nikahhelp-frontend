@@ -445,7 +445,7 @@ export default {
 	},
 	created() {
 		this.fetchCandidate();
-		this.token = localStorage.getItem('token');
+		this.token = JSON.parse(localStorage.getItem('token'));
 		console.log(this.profile, 'this.profiel')
 	},
 
