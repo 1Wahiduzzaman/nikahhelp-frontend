@@ -14,7 +14,7 @@
     </template>
     <v-img
         height="250"
-        :src="candidate.image"
+        :src="avatarImg"
     ></v-img>
 
     <v-card-title>{{ candidate.screen_name }}</v-card-title>
@@ -172,7 +172,7 @@ import ButtonComponent from '@/components/atom/ButtonComponent';
 import Modal from '@/components/ui/Modal';
 export default {
   name: 'UnauthCard',
-  props: ["candidate"],
+  props: ["candidate", "avatarImg"],
   components: {
     ButtonComponent,
     Modal
