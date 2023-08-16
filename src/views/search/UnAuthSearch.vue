@@ -109,6 +109,7 @@
 						<div v-for="(candidate, n) in  updatedResult" :key="n" class="col-sm-12 col-md-6 col-lg-4" v-else>
 							<candidate-grid
 									:candidate="candidate"
+									:avatarImg="require(`@/assets/avatar/${getRandomAvatar()}`)"
 							></candidate-grid>
 						</div>
 					</div>
@@ -204,9 +205,11 @@ export default {
 			updatedResult: [],
 			landingLoading: false,
 			searchResult: false,
+			searchedGender: "",
 			isLoading: false,
 			pagination: {},
-			queries: {}
+			queries: {},
+			avatars: [],
 		};
 	},
 
@@ -215,6 +218,7 @@ export default {
 	}, 
 
 	created() {
+		this.importAll(require.context('../../assets/avatar/', true, /\.png$/));
 		let pagination = {
 			page: 1,
 			per_page: 10
@@ -243,6 +247,7 @@ export default {
 					}).filter((item, i) => i < 2).join('-'),
 					religion: curr.per_religion
 				}
+				this.searchedGender = curr.per_gender;
 				acc.push(query);
 				return acc;
 			}, []);
@@ -251,9 +256,25 @@ export default {
 		}
 	},
 	methods: {
+		importAll(r) {
+			r.keys().forEach(key => (this.avatars.push({ pathShort: key })));
+			console.log(this.avatars);
+		},
+		getRandomAvatar() {
+			if(this.searchedGender === 'Male') {
+				let random = Math.floor(Math.random() * this.avatars.length / 2);
+				console.log(random, 'random');
+				return this.avatars[random].pathShort.substring(2, this.avatars[random].pathShort.length);
+			} else {
+				let random = Math.floor(Math.random() * (this.avatars.length - (this.avatars.length / 2)) + this.avatars.length / 2);
+				console.log(random, 'random');
+				return this.avatars[random].pathShort.substring(2, this.avatars[random].pathShort.length);
+
+			}
+		},
 		onCancel() {
-      this.searchModalVisible = false;
-    },
+			this.searchModalVisible = false;
+		},
 		setSearchModalVisible() {
 			this.searchModalVisible = true;
 		},
