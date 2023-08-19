@@ -108,7 +108,7 @@
                 :isSmall="true"
                 :title="profile.is_connect ? 'Cancel' : 'Connect'"
                 icon="/assets/icon/connect-s.svg"
-                :customEvent="profile.is_connect ? 'removeConnection' : 'addConnection'"
+                :customEvent="profile.is_connect ? 'cancelRequest' : 'addConnection'"
                 :responsive="false"
                 @onClickButton="onClickButton"
             />
@@ -154,6 +154,7 @@
 </template>
 
 <script>
+import jwtService from '@/services/jwt.service'
 import PersonalInformation from '@/components/search/personal-information/PersonalInformation'
 import {btnData} from '@/data/candidate.button'
 import ButtonComponent from '@/components/atom/ButtonComponent'
@@ -166,7 +167,13 @@ export default {
     data: () => ({
         btnData,
         images: [],
-        token: ""
+        token: "",
+        connection: {
+            id: "",
+            from_team_id: "",
+            to_team_id: "",
+        },
+        activeTeamId: "",
     }),
     props: ['role'],
     components: {
@@ -176,6 +183,7 @@ export default {
     },
     created() {
         this.token = JSON.parse(localStorage.getItem("token"));
+        this.activeTeamId = jwtService.getTeamIDAppWide();
     },
     computed: {
         ...mapGetters({
@@ -206,6 +214,9 @@ export default {
             }
             if(eventData.event == 'addConnection') {
                 this.connectCandidate();
+            }
+            if(eventData.event == 'cancelRequest') {
+                this.cancelRequest();
             }
             if(eventData.event == 'block') {
                 this.handleBlockCandidate('post', true, 'v1/store-block-list');
@@ -252,18 +263,56 @@ export default {
                 }
             }
             try {
-            let res = await this.connectToCandidate(data)
+                let res = await this.connectToCandidate(data);
+                console.log(res.data.id, res.data);
+                this.connection.id = res.data.id;
+                this.connection.from_team_id = myTeamId;
+                this.connection.to_team_id = this.profile.team_id;
                 this.$success({
-                title: "Connection Request Sent Successfully!",
-                content: res.message,
-                centered: true,
-            });
+                    title: "Connection Request Sent Successfully!",
+                    content: res.message,
+                    centered: true,
+                });
             } catch (e) {
                 if(e.response) {
                     this.showError(e.response.data.message)
                 }
             }
             
+        },
+
+        async cancelRequest() {
+            let data = {
+                request_id: this.connection.id
+            };
+            if(this.connection.from_team_id == this.activeTeamId) {
+                data.connection_status = '10';
+            } else {
+                data.connection_status = '2';
+            }
+
+            this.innerLoading = true;
+            const response = this.$store.dispatch("respondToRequest", data);
+            response
+                .then((data) => {
+                    this.innerLoading = false;
+
+                    this.profile.is_connect = null;
+                    const vm = this;
+                    this.$success({
+                        title: "Success",
+                        content: data.message,
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.innerLoading = false;
+                    this.$error({
+                        title: 'Something went wrong',
+                        center: true,
+                    });
+
+                });
         },
 
         async addShortList() {
