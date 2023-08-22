@@ -1,6 +1,6 @@
 <template>
 	<div id="wrap-div">
-		<Loader v-if="$store.state.search.isLoading" :isLoading="isLoading" />
+		<Loader  :isLoading="isLoading" />
 		<v-container fluid>
 			<v-row >
 				<v-col cols="12">
@@ -46,25 +46,25 @@
 								@onClickButton="onClickButton"
 							/>
 							<ButtonComponent
-								class="mobile-margin connect-button"
-								backgroundColor="#3ab549"
+								:class="{'mobile-margin' : true, 'block-button' : getConnectionTitleAndAction[4] == 'block-button', 'connect-button' : getConnectionTitleAndAction[4] == 'connect-button'}"
+								:backgroundColor="getConnectionTitleAndAction[3]"
 								iconHeight="14px"
 								:isSmall="true"
-								:title="candidateData.status.is_connect != null && candidateData.status.is_connect.length > 0 ? getConnectionTitleAndAction[0] : 'Connect'"
-								icon="/assets/icon/connect-s.svg"
-								:customEvent="candidateData.status.is_connect != null && candidateData.status.is_connect.length > 0 ? 'removeConnection' : 'addConnection'"
+								:title="connectionStatus != null && connectionStatus.length > 0 ? getConnectionTitleAndAction[0] : 'Connect'"
+								:icon="getConnectionTitleAndAction[2]"
+								:customEvent="connectionStatus != null && connectionStatus.length > 0 ? getConnectionTitleAndAction[1] : 'addConnection'"
 								:responsive="false"
 								@onClickButton="onClickButton"
 							/>
 							<ButtonComponent
 								v-if="declineButton"
-								class="mobile-margin connect-button"
+								class="mobile-margin block-button"
 								backgroundColor="#d81b60"
 								iconHeight="14px"
 								:isSmall="true"
 								title="Decline"
-								icon="/assets/icon/connect-s.svg"
-								:customEvent="candidateData.status.is_connect != null && candidateData.status.is_connect.length > 0 ? 'removeConnection' : 'addConnection'"
+								icon="/assets/icon/disconnect.svg"
+								:customEvent="connectionStatus != null && connectionStatus.length > 0 ? 'declineRequest' : 'addConnection'"
 								:responsive="false"
 								@onClickButton="onClickButton"
 							/>
@@ -409,6 +409,7 @@ import Scroller from  '@/components/atom/Scroller'
 import ButtonComponent from '@/components/atom/ButtonComponent'
 import JwtService from "@/services/jwt.service";
 import ApiService from '@/services/api.service';
+import Notification from "@/common/notification.js";
 
 import OutlinedButton from '@/components/atom/OutlinedButton'
 import ComingSoonModal from "@/components/search/ComingSoonModal"
@@ -431,23 +432,36 @@ export default {
 		OutlinedButton,
 		ComingSoonModal
 	},
+	sockets: {
+		connect: function () {
+			console.log("socket connected");
+		},
+		ping: function (data) {
+			console.log(
+				'this method was fired by the socket server. eg: io.emit("customEmit", data)'
+			);
+		},
+	},
 	data() {
 		return {
 			copyProfileText: 'Copy Profile URL',
 			avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
+			isLoading: false,
 			conversations: [],
 			improveMyselfThings,
 			candidateInfo: null,
 			images: [],
 			showTeamInfo: false,
-			declineButton: false,
+			// declineButton: false,
+			connectionStatus: null,
 			token: "",
 		};
 	},
 	created() {
 		this.fetchCandidate();
 		this.token = JSON.parse(localStorage.getItem('token'));
-		console.log(this.profile, 'this.profiel')
+		// this.connectionStatus = this.candidateData.status.is_connect;
+		this.fetchConnectionStatus();
 	},
 
 	computed: {
@@ -485,24 +499,47 @@ export default {
 			return allMembers
 		},
 		getConnectionTitleAndAction() {
+			// returns title, action, icon, color, class
 			console.log('getconnecijsdnfldjskl')
-			if(this.candidateData.status.is_connect == null || this.candidateData.status.is_connect.length === 0) {
-				return ['Connect', 'addConnection'];
+			if(this.connectionStatus == null || this.connectionStatus.length === 0) {
+				return ['Connect', 'addConnection', '/assets/icon/connect-s.svg', '#3ab549', 'connect-button'];
 			} else {
-				let connection = this.candidateData.status.is_connect[0];
-				console.log(connection, 'connection from opposite team profile')
+				let connection = this.connectionStatus[0];
 				if(connection.connection_status === "1") {
-					return ['Disconnect', 'removeConnection']
+					console.log(connection, 'connection from opposite team profile');
+					return ['Disconnect', 'disconnectTeam', '/assets/icon/disconnect.svg', '#d81b60', 'block-button']
 				} else if (connection.connection_status === "0") {
-					if (connection.requested_by == JwtService.getTeamIDAppWide) {
-						return ['Cancel', 'cancelRequest']
+					console.log('inside connection status 0')
+					if (connection.from_team_id == JwtService.getTeamIDAppWide()) {
+						console.log('inside from team id')
+						return ['Cancel', 'declineRequest', '/assets/icon/close.svg', '#d81b60', 'block-button']
 					} else {
-						this.declineButton = true;
-						return ['Accept', 'acceptRequest']
+						// this.declineButton = true;
+						return ['Accept', 'acceptRequest', '/assets/icon/check.svg', '#3ab549', 'connect-button']
 					}
+				} else {
+					return ['Connect', 'addConnection', '/assets/icon/connect-s.svg', '#3ab549', 'connect-button'];
 				}
 			}
-		}
+		},
+		declineButton() {
+			if(this.connectionStatus == null || this.connectionStatus.length === 0) {
+				return false;
+			} else {
+				let connection = this.connectionStatus[0];
+				if(connection.connection_status === "1") {
+					return false;
+				} else if (connection.connection_status === "0") {
+					if (connection.from_team_id == JwtService.getTeamIDAppWide()) {
+						return false;
+					} else {
+						return true;
+					}
+				} else {
+					return false;
+				}
+			}
+		},
 	},
 	methods: {
 		dateFromDateTime,
@@ -512,6 +549,20 @@ export default {
             shortListCandidate: 'search/shortListCandidate',
             teamListCandidate: 'search/teamListCandidate',
         }),
+		socketNotification(payload) {
+			let loggedUser = JSON.parse(localStorage.getItem('user'));
+			payload.sender = loggedUser.id;
+			Notification.storeNotification(payload);
+			payload.created_at = new Date();
+			payload.seen = 0;
+			payload.sender = loggedUser;
+			if(payload && payload.receivers.length > 0) {
+				payload.receivers = payload.receivers.map(item => {
+				return item.toString();
+				});
+				this.$socket.emit('notification', payload);
+			}
+		},
 		onClickDownload() {
             if(this.candidateData.more_about?.per_additional_info_doc == null) {
                 this.$error({
@@ -618,6 +669,16 @@ export default {
 					this.connectCandidate();
 				}
             }
+			if(eventData.event == 'acceptRequest') {
+				this.acceptRequest();
+			}
+			if(eventData.event == 'disconnectTeam') {
+				this.disconnectTeam();
+			}
+			if(eventData.event == 'declineRequest') {
+				console.log('decline request')
+				this.declineRequest();
+			}
             if(eventData.event == 'block') {
 				if(this.isOwnProfile) {
 					this.showError('You cannot block yourself');
@@ -674,18 +735,120 @@ export default {
                 }
             }
             try {
-            let res = await this.connectToCandidate(data)
+				this.isLoading = true;
+            	let res = await this.connectToCandidate(data)
                 this.$success({
-                title: "Connection Request Sent Successfully!",
-                content: res.message,
-                centered: true,
-            });
+					title: "Connection Request Sent Successfully!",
+					content: res.message,
+					centered: true,
+				});
+				// this.connectionStatus = [{
+				// 	connection_status: "0",
+				// 	requested_by: myTeamId
+				// }];
+				this.fetchConnectionStatus();
+				this.isLoading = false;
             } catch (e) {
+				this.isLoading = false;
                 if(e.response) {
                     this.showError(e.response.data.message)
                 }
             }
             
+        },
+
+		acceptRequest() {
+			let connection = this.connectionStatus[0];
+            let data = {
+                request_id: connection.connection_id,
+				connection_status: '1'
+            };
+
+            this.isLoading = true;
+            const response = this.$store.dispatch("respondToRequest", data);
+            response
+                .then((data) => {
+					// this.declineButton = false;
+					this.fetchConnectionStatus();
+                    this.isLoading = false;
+                    this.profile.is_connect = null;
+                    this.$success({
+                        title: "Success",
+                        content: data.message,
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+					this.fetchConnectionStatus();
+                    this.isLoading = false;
+                    this.$error({
+                        title: 'Something went wrong',
+                        center: true,
+                    });
+
+                });
+        },
+
+		disconnectTeam() {
+			const payload = {
+				connection_id: this.connectionStatus[0].connection_id,
+			};
+			console.log(payload);
+			//return;
+			this.isLoading = true;
+			const response = this.$store.dispatch("disconnectTeam", payload);
+			response
+				.then((data) => {
+					console.log(data);
+					this.fetchConnectionStatus();
+					this.isLoading = false;
+					this.$success({
+						title: "Success",
+						content: data.message,
+					});
+					//this.$message.success("Team Disconnected successfully!");
+				})
+				.catch((error) => {
+					console.log(error);
+					this.fetchConnectionStatus();
+					this.isLoading = false;
+				});
+		},
+
+		declineRequest() {
+			let connection = this.connectionStatus[0];
+            let data = {
+                request_id: connection.connection_id,
+            };
+            if(connection.from_team_id == JwtService.getTeamIDAppWide()) {
+                data.connection_status = '10';
+            } else {
+                data.connection_status = '2';
+            }
+
+            this.isLoading = true;
+            const response = this.$store.dispatch("respondToRequest", data);
+            response
+                .then((data) => {
+					// this.declineButton = false;
+					this.fetchConnectionStatus();
+                    this.isLoading = false;
+                    this.profile.is_connect = null;
+                    this.$success({
+                        title: "Success",
+                        content: data.message,
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+					this.fetchConnectionStatus();
+                    this.isLoading = false;
+                    this.$error({
+                        title: 'Something went wrong',
+                        center: true,
+                    });
+
+                });
         },
 
         async addShortList() {
@@ -822,6 +985,57 @@ export default {
 				//alert(this.error);
 			}
         },
+		// async fetchConnectionStatus() {
+		// 	try {
+		// 		const id = this.$route.params.id;
+		// 		this.profileId = id;
+		// 		const payload = {
+		// 			id,
+		// 		};
+		// 		const response = await this.$store.dispatch("getUserProfile", payload);
+		// 		console.log(response);
+		// 		if (response.data.user.account_type == 1) {
+		// 			this.connectionStatus = response.data.candidate_information.status.is_connect;
+		// 			//console.log(this.candidateProfileInfo);
+		// 		} else {
+		// 			this.representativeProfileInfo =
+		// 			response.data.representative_information[0];
+		// 		}
+		// 	} catch (error) {
+		// 		this.error = error.message || "Something went wrong";
+		// 		//alert(this.error);
+		// 		this.$error({
+		// 			title: "Error!",
+		// 			content: this.error,
+		// 		});
+		// 	}
+		// },
+		fetchConnectionStatus() {
+			const teamId = JwtService.getTeamIDAppWide();
+			this.isLoading = true;
+			try {
+				const response = this.$store.dispatch("loadConnectionReports", teamId);
+				response
+				.then((data) => {
+					this.connectionStatus = data.data.data.result.filter((item) => {
+						return item.to_team_id == this.profile.team_id || item.from_team_id == this.profile.team_id;
+					});
+					console.log(this.connectionStatus, 'connection repors')
+					this.isLoading = false;
+
+					// if(connectionReports.length > 0) {
+					// 	this.connectionStatus = ;
+					// }
+				})
+				.catch((error) => {
+					console.log(error.response.data.message);
+					this.isLoading = false;
+				});
+			} catch (error) {
+				console.log(error.message);
+				this.isLoading = false;
+			}
+		},
         async handleBlockCandidate(actionType, value, url) {
 			 if(this.role != 'Admin' && this.role != 'Owner & Admin') {
                 this.showError("You don't have permission.")
@@ -930,7 +1144,7 @@ export default {
 			border: 1px solid #d81b60 !important;
 
 			img {
-			filter: none !important;
+				filter: none !important;
 			}
 		}
 	}
@@ -941,7 +1155,7 @@ export default {
 			border : 1px solid $bg-primary !important;
 			
 			img {
-			filter: none !important;
+				filter: none !important;
 			}
 		}
 	}
@@ -952,7 +1166,7 @@ export default {
 			border: 1px solid $bg-success !important;
 
 			img {
-			filter: none !important;
+				filter: none !important;
 			}
 		}
 	}
