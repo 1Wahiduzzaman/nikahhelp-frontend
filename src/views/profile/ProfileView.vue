@@ -103,18 +103,27 @@ export default {
     };
   },
   mounted() {
-    this.user = JSON.parse(localStorage.getItem("user"));
     this.checkUserVerification();
   },
   created() {
-    this.loadTeams();
-    this.loadUserProfile();
-    this.$store.dispatch("getCountries");
-    this.$store.dispatch("getStudyLevelOptions");
-    this.$store.dispatch("getReligionOptions");
-    this.$store.dispatch("getOccupations");
-    this.checkTurnedOnSwitch();
-    // this.checkRepresentativeInTeam();
+    this.user = JSON.parse(localStorage.getItem("user"));
+    if(JwtService.getTeamIDAppWide() == null && this.$route.params.id != this.user.id) {
+      this.$error({
+        title: "No team selected",
+        content: "Please select a team to view this profile",
+        center: true,
+      });
+      this.$router.push("/manageteam");
+    } else {
+      this.loadTeams();
+      this.loadUserProfile();
+      this.$store.dispatch("getCountries");
+      this.$store.dispatch("getStudyLevelOptions");
+      this.$store.dispatch("getReligionOptions");
+      this.$store.dispatch("getOccupations");
+      this.checkTurnedOnSwitch();
+      // this.checkRepresentativeInTeam();
+    }
   },
   methods: {
     checkTurnedOnSwitch() {
