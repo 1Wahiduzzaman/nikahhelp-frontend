@@ -563,6 +563,21 @@ export default {
 				this.$socket.emit('notification', payload);
 			}
 		},
+		prepareNotifyData() {
+			const teamId = JwtService.getTeamIDAppWide();
+			let connection = this.connectionStatus[0];
+			let teamMembers = [...connection.from_team_members, ...connection.to_team_members];
+			let loggedUser = JSON.parse(localStorage.getItem('user'));
+			teamMembers = teamMembers.filter(item => item !== loggedUser.id);
+			let my_team = connection.from_team_id == teamId ? connection.to_team_name : connection.from_team_name;
+			let my_team_id = connection.from_team_id == teamId ? connection.to_team_table_id : connection.from_team_table_id;
+			let notifyObj = {
+				receivers: teamMembers,
+				team_id: my_team_id,
+				team_temp_name: my_team
+			};
+			return notifyObj;
+		},
 		onClickDownload() {
             if(this.candidateData.more_about?.per_additional_info_doc == null) {
                 this.$error({
@@ -736,19 +751,21 @@ export default {
             }
             try {
 				this.isLoading = true;
-            	let res = await this.connectToCandidate(data)
+            	let res = await this.connectToCandidate(data);
+				await this.fetchConnectionStatus();
+				let notifyObj = this.prepareNotifyData();
+				notifyObj.title = `sent you a connection request`;
+				this.socketNotification(notifyObj);
+
                 this.$success({
 					title: "Connection Request Sent Successfully!",
 					content: res.message,
 					centered: true,
 				});
-				// this.connectionStatus = [{
-				// 	connection_status: "0",
-				// 	requested_by: myTeamId
-				// }];
-				this.fetchConnectionStatus();
+
 				this.isLoading = false;
             } catch (e) {
+				console.log(e, 'error')
 				this.isLoading = false;
                 if(e.response) {
                     this.showError(e.response.data.message)
@@ -757,7 +774,7 @@ export default {
             
         },
 
-		acceptRequest() {
+		async acceptRequest() {
 			let connection = this.connectionStatus[0];
             let data = {
                 request_id: connection.connection_id,
@@ -765,57 +782,63 @@ export default {
             };
 
             this.isLoading = true;
-            const response = this.$store.dispatch("respondToRequest", data);
-            response
-                .then((data) => {
-					// this.declineButton = false;
-					this.fetchConnectionStatus();
-                    this.isLoading = false;
-                    this.profile.is_connect = null;
-                    this.$success({
-                        title: "Success",
-                        content: data.message,
-                    });
-                })
-                .catch((error) => {
-                    console.log(error);
-					this.fetchConnectionStatus();
-                    this.isLoading = false;
-                    this.$error({
-                        title: 'Something went wrong',
-                        center: true,
-                    });
 
-                });
+			try {
+				const response = await this.$store.dispatch("respondToRequest", data);
+
+				await this.fetchConnectionStatus();
+				let notifyObj = this.prepareNotifyData();
+				notifyObj.title = `accepted your connection request`;
+				this.socketNotification(notifyObj);
+
+				this.isLoading = false;
+				this.profile.is_connect = null;
+				this.$success({
+					title: "Success",
+					content: response.message,
+				});
+			} catch (error) {
+				console.log(error);
+				await this.fetchConnectionStatus();
+				this.isLoading = false;
+				this.$error({
+					title: 'Something went wrong',
+					center: true,
+				});
+            };
         },
 
-		disconnectTeam() {
+		async disconnectTeam() {
 			const payload = {
 				connection_id: this.connectionStatus[0].connection_id,
 			};
 			console.log(payload);
 			//return;
 			this.isLoading = true;
-			const response = this.$store.dispatch("disconnectTeam", payload);
-			response
-				.then((data) => {
-					console.log(data);
-					this.fetchConnectionStatus();
-					this.isLoading = false;
-					this.$success({
-						title: "Success",
-						content: data.message,
-					});
-					//this.$message.success("Team Disconnected successfully!");
-				})
-				.catch((error) => {
-					console.log(error);
-					this.fetchConnectionStatus();
-					this.isLoading = false;
+			try {
+				const response = await this.$store.dispatch("disconnectTeam", payload);
+				let notifyObj = this.prepareNotifyData();
+				notifyObj.title = `disconnected you from connection`;
+				this.socketNotification(notifyObj);
+				await this.fetchConnectionStatus();
+				this.isLoading = false;
+				this.$success({
+					title: "Success",
+					content: response.message,
 				});
+				//this.$message.success("Team Disconnected successfully!");
+			} catch(error) {
+				console.log(error);
+				await this.fetchConnectionStatus();
+				this.isLoading = false;
+				this.$error({
+					title: 'Something went wrong',
+					center: true,
+				});
+			};
 		},
 
-		declineRequest() {
+		async declineRequest() {
 			let connection = this.connectionStatus[0];
             let data = {
                 request_id: connection.connection_id,
@@ -826,29 +849,31 @@ export default {
                 data.connection_status = '2';
             }
 
-            this.isLoading = true;
-            const response = this.$store.dispatch("respondToRequest", data);
-            response
-                .then((data) => {
-					// this.declineButton = false;
-					this.fetchConnectionStatus();
-                    this.isLoading = false;
-                    this.profile.is_connect = null;
-                    this.$success({
-                        title: "Success",
-                        content: data.message,
-                    });
-                })
-                .catch((error) => {
-                    console.log(error);
-					this.fetchConnectionStatus();
-                    this.isLoading = false;
-                    this.$error({
-                        title: 'Something went wrong',
-                        center: true,
-                    });
-
-                });
+			try {
+				this.isLoading = true;
+				const response = await this.$store.dispatch("respondToRequest", data);
+				// this.declineButton = false;
+				if (data.connection_status == '2') {
+					let notifyObj = this.prepareNotifyData();
+					notifyObj.title = `declined your connection request`;
+					this.socketNotification(notifyObj);
+				}
+				await this.fetchConnectionStatus();
+				this.isLoading = false;
+				this.profile.is_connect = null;
+				this.$success({
+					title: "Success",
+					content: response.message,
+				});
+			} catch(error)  {
+				console.log(error);
+				await this.fetchConnectionStatus();
+				this.isLoading = false;
+				this.$error({
+					title: 'Something went wrong',
+					center: true,
+				});
+			};
         },
 
         async addShortList() {
@@ -985,52 +1010,17 @@ export default {
 				//alert(this.error);
 			}
         },
-		// async fetchConnectionStatus() {
-		// 	try {
-		// 		const id = this.$route.params.id;
-		// 		this.profileId = id;
-		// 		const payload = {
-		// 			id,
-		// 		};
-		// 		const response = await this.$store.dispatch("getUserProfile", payload);
-		// 		console.log(response);
-		// 		if (response.data.user.account_type == 1) {
-		// 			this.connectionStatus = response.data.candidate_information.status.is_connect;
-		// 			//console.log(this.candidateProfileInfo);
-		// 		} else {
-		// 			this.representativeProfileInfo =
-		// 			response.data.representative_information[0];
-		// 		}
-		// 	} catch (error) {
-		// 		this.error = error.message || "Something went wrong";
-		// 		//alert(this.error);
-		// 		this.$error({
-		// 			title: "Error!",
-		// 			content: this.error,
-		// 		});
-		// 	}
-		// },
-		fetchConnectionStatus() {
+		async fetchConnectionStatus() {
 			const teamId = JwtService.getTeamIDAppWide();
 			this.isLoading = true;
 			try {
-				const response = this.$store.dispatch("loadConnectionReports", teamId);
-				response
-				.then((data) => {
-					this.connectionStatus = data.data.data.result.filter((item) => {
-						return item.to_team_id == this.profile.team_id || item.from_team_id == this.profile.team_id;
-					});
-					console.log(this.connectionStatus, 'connection repors')
-					this.isLoading = false;
-
-					// if(connectionReports.length > 0) {
-					// 	this.connectionStatus = ;
-					// }
-				})
-				.catch((error) => {
-					console.log(error.response.data.message);
-					this.isLoading = false;
+				const response = await this.$store.dispatch("loadConnectionReports", teamId);
+				this.connectionStatus = response.data.data.result.filter((item) => {
+					return item.to_team_id == this.profile.team_id || item.from_team_id == this.profile.team_id;
 				});
+				console.log(this.connectionStatus, 'connection repors')
+				this.isLoading = false;
+
 			} catch (error) {
 				console.log(error.message);
 				this.isLoading = false;
