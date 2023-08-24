@@ -363,7 +363,7 @@ export default {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       teamMembers = teamMembers.filter(item => item !== loggedUser.id);
       let my_team = this.connection.from_team_id == teamId ? this.connection.from_team_name : this.connection.to_team_name;
-      let my_team_id = this.connection.from_team_id == teamId ? this.connection.from_team_table_id : this.connection.to_team_table_id;
+      let my_team_id = this.connection.from_team_id == teamId ? this.connection.to_team_table_id : this.connection.from_team_table_id;
       let notifyObj = {
         receivers: teamMembers,
         team_id: my_team_id,

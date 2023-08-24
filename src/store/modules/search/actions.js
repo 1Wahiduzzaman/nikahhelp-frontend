@@ -130,7 +130,7 @@ export default {
       ApiService.post(payload.url, payload.payload)
         .then((data) => {
           context.commit('setLoading', false)
-          context.commit('updateCandidateAfterConnect', {userId: payload.userId, value: true})
+          // context.commit('updateCandidateAfterConnect', {userId: payload.userId, value: true})
           resolve(data.data);
         })
         .catch((err) => {
