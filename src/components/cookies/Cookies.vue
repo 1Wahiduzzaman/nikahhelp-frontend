@@ -19,7 +19,8 @@
         title="Cookies Preference"
         width="575px"
         centered
-        @ok="preferenceModalVisible = false"
+        @ok="preferenceModalVisible = false; handleOk()"
+        :ok-text="'Accept'"
       >
 			<div style="overflow-y:scroll; height: 500px; overflow-x:hidden">
 
