@@ -52,10 +52,10 @@
 
       <div class="buttons">
         <button type="submit" @click="handleOk" class="acceptButton">
-          Accept all cookies
+          Necessary cookies only
         </button>
         <button type="submit" @click="preferenceModalVisible = true" class="acceptButton">
-          Necessary cookies only
+          Preferences
         </button>
 
       </div>
