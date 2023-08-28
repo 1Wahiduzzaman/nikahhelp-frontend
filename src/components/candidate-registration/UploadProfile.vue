@@ -480,9 +480,8 @@ export default {
       }
       let avatarImage = require(`@/assets/avatar/${this.avatarNo}.png`); 
       let avatarImgFile;
-      await this.urltoFile(avatarImage, 'avatar.png')
+      await this.urltoFile(avatarImage, `avatar${this.avatarNo}.png`)
           .then(function(file){
-              console.log(file);
               avatarImgFile = file;
           })
       this.getAvatar(avatarImgFile);
