@@ -372,10 +372,23 @@
 						:cancel-button-props="{ disabled: true }"
 						v-if="profile.team"
 					>
-						<span class="fw-600">Team Name</span> <br> {{ profile.team.team_name }} <br><br>
-						<span class="fw-600">Team Members</span> <br> {{ profile.team.member }} <br><br>
-						<span class="fw-600">Team Creation Date</span><br> {{ dateFromDateTime(profile.team.created_at) }} <br><br>
-						<span class="fw-600">Team Created By</span><br> {{ profile.team.created_by.full_name }}
+						<div class="row">
+							<div class="col-12 col-md-6 d-flex justify-conent-center align-items-center">
+								<v-img
+									style="border: 2px solid white; background-size: cover;"
+									class="white--text align-end rounded mx-auto"
+									max-width="150px"
+									max-height="150px"
+									:src="profile.team.logo + `?token=${token}`"
+								></v-img>
+							</div>
+							<div class="col-12 col-md-6">
+								<span class="fw-600">Team Name</span> <br> {{ profile.team.team_name }} <br><br>
+								<span class="fw-600">Team Members</span> <br> {{ profile.team.member }} <br><br>
+								<span class="fw-600">Team Creation Date</span><br> {{ dateFromDateTime(profile.team.created_at) }} <br><br>
+								<span class="fw-600">Team Created By</span><br> {{ profile.team.created_by.full_name }}
+							</div>
+						</div>
 
 						<template slot="footer">
 							<a-button key="back" shape="round" @click="showTeamInfo=false">

@@ -409,10 +409,43 @@
               </div>
             </div>
           </v-container>
-          <ComingSoonModal
-            title="Team details quick view"
-            ref="advDiag"
-          />
+          <a-modal 
+						:visible="showTeamInfo" 
+						:closable="true"
+						title="Team Info" 
+						@ok="showTeamInfo = false" 
+						@cancel="showTeamInfo = false" 
+						:ok-button-props="{ disabled: true }"
+						:cancel-button-props="{ disabled: true }"
+						v-if="profile.team"
+					>
+            <div class="row">
+              <div class="col-12 col-md-6 d-flex justify-conent-center align-items-center">
+                <v-img
+                  style="border: 2px solid white; background-size: cover;"
+                  class="white--text align-end rounded mx-auto"
+                  max-width="150px"
+                  max-height="150px"
+                  :src="profile.team.logo + `?token=${token}`"
+                ></v-img>
+              </div>
+              <div class="col-12 col-md-6">
+                <span class="fw-600">Team Name</span> <br> {{ profile.team.team_name }} <br><br>
+                <span class="fw-600">Team Members</span> <br> {{ profile.team.member }} <br><br>
+                <span class="fw-600">Team Creation Date</span><br> {{ dateFromDateTime(profile.team.created_at) }} <br><br>
+                <span class="fw-600">Team Created By</span><br> {{ profile.team.created_by.full_name }}
+              </div>
+            </div>
+
+						<template slot="footer">
+							<a-button key="back" shape="round" @click="showTeamInfo=false">
+							Cancel
+							</a-button>
+							<a-button key="submit" type="primary" shape="round" @click="showTeamInfo = false">
+							Ok
+							</a-button>
+						</template>
+          </a-modal>
         </div>
       </v-col>
     </v-row>
@@ -435,7 +468,7 @@ import ApiService from "@/services/api.service";
 import OutlinedButton from "@/components/atom/OutlinedButton";
 import ComingSoonModal from "@/components/search/ComingSoonModal";
 import improveMyselfThings from "@/common/improveMyselfThings";
-
+import { dateFromDateTime } from "@/common/helpers.js";
 export default {
   name: "CandidateProfile",
   components: {
@@ -465,10 +498,13 @@ export default {
       candidateData: null,
       isLoading: false,
       token: "",
+      profile: {},
+      showTeamInfo: false,
     };
   },
   created() {
     this.getCandidateData();
+    this.loadUserProfile();
     this.getToken();
   },
   computed: {
@@ -492,11 +528,19 @@ export default {
     },
   },
   methods: {
+    dateFromDateTime,
     getToken() {
       this.token = JSON.parse(localStorage.getItem("token"));
     },
     onClickTeamDetail() {
-      this.$refs.advDiag.openDiag();
+      if(this.profile.team !== "") {
+				this.showTeamInfo = true;
+			} else {
+				this.$error({
+					title: 'This Candidate has no team!',
+					center: true,
+        });
+			}
       // alert('coming soon')
     },
     onClickDownload() {
@@ -596,6 +640,28 @@ export default {
         this.isLoading = false;
         //alert(this.error);
       }
+    },
+    async loadUserProfile() {
+      this.isLoading = true;
+
+      try {
+        const id = JSON.parse(localStorage.getItem("user")).id;
+        const payload = {
+          id,
+        };
+        const response = await this.$store.dispatch("getUserProfile", payload);
+        console.log(response);
+        // this.userProfile = response.data.user;
+        this.profile = response.data;
+      } catch (error) {
+        this.error = error.message || "Something went wrong";
+        //alert(this.error);
+        this.$error({
+          title: "Error!",
+          content: this.error,
+        });
+      }
+      this.isLoading = false;
     },
     startConversation() {},
     returnCategoryId(type, id1, id2) {
