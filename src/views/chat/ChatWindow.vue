@@ -103,7 +103,7 @@
                           @socketNotification="socketNotification"
                           :online="notify"
                           class="w-full pr-3 cursor-pointer"
-                          :key="item"
+                          :key="item.id"
                       />
                     </div>
                   </div>
@@ -395,7 +395,7 @@ export default {
       active_team_id: null,
       chatListedImage: [],
       connectedTeamChats: [],
-	    notify: 0,
+	    notify: false,
       newMessage: false,
       token: "",
       search: '',
@@ -942,20 +942,32 @@ export default {
 							user_id: member.user_id,
 							logo: repPhoto
 						});
-					}
 
-					this.chatListedImage.push({
-            user_id: member.user_id,
-            logo: candidateLogo
-          });
+					} else {
+            this.chatListedImage.push({
+              user_id: member.user_id,
+              logo: candidateLogo
+            });
+          }
+
         });
       } else if(this.chatheadopen.label == 'Connected Team') {
         this.chatheadopen.from_team.team_members.forEach(member => {
           let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url + `?token=${this.token}` : '';
-          this.chatListedImage.push({
-            user_id: member.user_id,
-            logo: candidateLogo
-          });
+					let repPhoto = member && member.user && member.user.representative_info ? member.user.representative_info.per_main_image_url + `?token=${this.token}` : '';
+
+          if (!member.user.candidate_info) {
+						this.chatListedImage.push({
+							user_id: member.user_id,
+							logo: repPhoto
+						});
+
+					} else {
+            this.chatListedImage.push({
+              user_id: member.user_id,
+              logo: candidateLogo
+            });
+          }
         });
 
         this.chatheadopen.to_team.team_members.forEach(member => {
@@ -1331,7 +1343,7 @@ export default {
     getConversationUserImage(id) {
       let imageObj = this.chatListedImage.find(item => item.user_id == id);
       if(imageObj) {
-        return imageObj.logo + `?token=${this.token}`;
+        return imageObj.logo;
       } else {
         return this.getImage();
       }
