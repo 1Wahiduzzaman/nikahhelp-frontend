@@ -62,6 +62,14 @@ export default {
 			type: Boolean
 	  }
   },
+  data () {
+    return {
+      token: "",
+    }
+  },
+  created(){
+    this.token = JSON.parse(localStorage.getItem('token'));
+  },
   computed: {
     ifOnline() {
       if(this.item.label === 'Group chat') {
@@ -80,9 +88,9 @@ export default {
     },
     getTeamImage() {
       if(this.item.from_team_id == this.activeTeam) {
-        return this.item.to_team && this.item.to_team.logo ? this.item.to_team.logo : require('../../assets/info-img.png');
+        return this.item.to_team && this.item.to_team.logo ? this.item.to_team.logo + `?token=${this.token}` : require('../../assets/info-img.png');
       } else {
-        return this.item.from_team && this.item.from_team.logo ? this.item.from_team.logo : require('../../assets/info-img.png');
+        return this.item.from_team && this.item.from_team.logo ? this.item.from_team.logo + `?token=${this.token}` : require('../../assets/info-img.png');
       }
     }
   },
