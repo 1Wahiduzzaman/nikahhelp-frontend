@@ -2961,8 +2961,11 @@ input[type="file"] {
 //input[type="file"]::-webkit-file-upload-button {
 //  visibility: hidden;
 //}
-.mobile-margin {
+.mobile-margin::v-deep {
   margin-top: 0.5rem;
+  .ant-form-explain {
+    margin-left: 0.3rem;
+  }
 }
 .mobile-center {
   text-align: center;
