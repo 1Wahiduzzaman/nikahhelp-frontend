@@ -90,7 +90,7 @@
                 <span class="ml-2">{{ activeTeam.subscription_expire_at ? 'Renew Subscription' : 'Subscription' }}</span>
               </router-link>
              </div>
-             <h4 class="fs-12 text-black-50">Last subscription plan: <span class="text-black font-weight-bolder">{{ activeTeam && activeTeam.last_subscription && activeTeam.last_subscription.plans ? activeTeam.last_subscription.plans.title : 'N/A' }} plan</span></h4>
+             <h4 class="fs-12 text-black-50">Last subscription plan: <span class="text-black font-weight-bolder">{{ activeTeam && activeTeam.last_subscription && activeTeam.last_subscription.plans ? activeTeam.last_subscription.plans.title : 'N/A' }}</span></h4>
              <h4 class="fs-12 text-black-50">Subscription expire date: <span class="text-black font-weight-bolder">{{ formateDate(activeTeam.subscription_expire_at) }}</span></h4>
              <!-- <div class="btn-div flex justify-content-center mt-5">
                <v-btn class="renew-btn text-capitalize" :to="{name: 'SubscriptionTeam', params: {id: activeTeam.team_id}}" small>Renew subscription now</v-btn>

@@ -316,7 +316,7 @@
                           ? teamSelected.last_subscription.plans.title
                           : ""
                       }}
-                      Plan</b
+                      </b
                     >
                     by -
                     <b>{{
@@ -696,7 +696,7 @@
                           ? teamSelected.last_subscription.plans.title
                           : ""
                       }}
-                      Plan</b
+                      </b
                     >
                     by -
                     <b>{{
