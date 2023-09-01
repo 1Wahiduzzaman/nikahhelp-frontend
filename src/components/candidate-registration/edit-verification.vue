@@ -662,6 +662,20 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .identity {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+
+    span {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+  }
 }
 
 .section-heading {

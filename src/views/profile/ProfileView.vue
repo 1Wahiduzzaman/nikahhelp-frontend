@@ -3,7 +3,7 @@
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div fluid v-else>
       <!-- <div v-if="user.account_type == 1"> -->
-      <div v-if="(userProfile.account_type == 1 && user.status == 3)">
+      <div v-if="(userProfile.account_type == 1 && (user.status == 3 || user.id === parseInt($route.params.id)))">
         <!-- Opposite Candidate Profile Component goes here -->
         <candidate-profile
           :role="teamRole"
@@ -199,7 +199,7 @@ export default {
 			return allMembers
 		},
     checkUserVerification() {
-      if(this.user.status == 3) {
+      if(this.user.status == 3 || this.user.id === parseInt(this.$route.params.id)){
         return;
       } else {
         this.$error({

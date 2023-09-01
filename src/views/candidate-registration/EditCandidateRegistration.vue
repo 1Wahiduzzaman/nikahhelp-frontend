@@ -927,7 +927,7 @@ export default {
   }
 }
 .last-prev-btn {
-  margin-right: -15px;
+  margin-right: 10px;
   @media (min-width: 992px) {
     margin-right: 0;
   }
