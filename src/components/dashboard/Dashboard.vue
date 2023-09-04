@@ -320,8 +320,10 @@ export default {
                     ? "Fully Completed"
                     : this.userInfo.representative_information.data_input_status > 2 &&
                       this.userInfo.representative_information.is_uplaoded_doc == 0
-                    ? "Completed Without ID"
-                    : "Partially Completed"
+                    // ? "Completed Without ID"
+                    // : "Partially Completed"
+                    ? "Fully Completed"
+                    : "Fully Completed"
                   : "In-completed";
       console.log(this.profileStatus);
     },

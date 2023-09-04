@@ -196,7 +196,7 @@
                         <div class="text-right">
                           <img :src="getAuthUser && getAuthUser.per_main_image_url ? getAuthUser.per_main_image_url + `?token=${token}` : getImage()" class="rounded-circle mr-1" alt="" width="40" height="40">
                         </div>
-                        <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-break text-white br-10 w100" v-html="item.body">
+                        <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-break text-white br-10" v-html="item.body">
                         </div>
                         <div class="text-muted small text-nowrap px-3 mt-2 position-absolute msg-right-created-at">
                           {{ messageCreatedAt(item.created_at) }}<span>, Me</span>
@@ -209,7 +209,7 @@
                         <div class="text-left">
                           <img :src="getConversationUserImage(item.sender.id)" class="rounded-circle mr-1" width="40" height="40">
                         </div>
-                        <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 text-break br-10 w100" v-html="item.body">
+                        <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 text-break br-10" v-html="item.body">
                         </div>
                         <div class="text-muted small text-nowrap px-3 mt-2 position-absolute msg-left-created-at">
                           {{ messageCreatedAt(item.created_at) }}<span>, {{ item.sender ? item.sender.full_name : '' }}</span>
@@ -226,9 +226,9 @@
                       <div class="left flex justify-content-end align-items-end">
                         <div class="message-box">
                           <a-tooltip>
-                            <template slot="title">
+                            <!-- <template slot="title">
                               Coming soon
-                            </template>
+                            </template> -->
                             <!-- <button class="btn-emoji px-2" title="Coming soon">&#128578;</button> -->
                             <div class="wrapper">
 
@@ -247,7 +247,7 @@
                                 <div slot="emoji-picker" slot-scope="{ emojis, insert }">
                                   <div class="emoji-picker" :style="{ top: -310 + 'px', left: 32 + 'px' }">
                                     <div class="emoji-picker__search">
-                                      <input type="text" v-model="search" v-focus>
+                                      <input class="p-3" type="text" v-model="search" v-focus>
                                     </div>
                                     <div>
                                       <div v-for="(emojiGroup, category) in emojis" :key="category">
