@@ -99,7 +99,7 @@
          </div>
          <div v-else class="team-all">
            <div class="db-flex mt-4" v-for="(item, teamIndex) in teams" :key="teamIndex">
-             <img class="avatar" width="45" height="45" :src="item.logo"
+             <img class="avatar" width="45" height="45" :src="item.logo + `?token=${token}`"
                   alt="image" />
              <div class="content">
                <h4 class="mt-1">{{ item.name }}</h4>
@@ -432,8 +432,9 @@ export default {
       console.log(user, 'user form dashboard')
       if(user && user.candidate_info && user.candidate_info.per_main_image_url) {
         return user.candidate_info.per_main_image_url + `?token=${this.token}`;
+      } else {
+        return user.representative_info.per_main_image_url ? user.representative_info.per_main_image_url + `?token=${this.token}` : this.avatarSrc;
       }
-      return this.avatarSrc;
     },
     toggleProfileViewType(type) {
       this.viewType = type;

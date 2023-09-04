@@ -40,9 +40,16 @@
               notification and customer support/personal settings section.
             </p>
 
-            <button @click="submit" class="btn btn-block ms-2 text-nowrap continue-button mb-4">
+            <!-- <button @click="submit" class="btn btn-block ms-2 text-nowrap continue-button mb-4">
               Continue
-            </button>
+            </button> -->
+            <ButtonComponent
+              class="mb-4 ms-2 btn btn-block text-nowrap"
+              title="Continue"
+              :responsive="false"
+              :isBlock="true"
+              @onClickButton="submit"
+            />
           </div>
         </div>
       </v-card>
@@ -51,8 +58,11 @@
 </template>
 
 <script>
+import ButtonComponent from "@/components/atom/ButtonComponent";
 export default {
-  components: {},
+  components: {
+    ButtonComponent,
+  },
   props: ["dialog"],
   data() {
     return { showConfirmation: false };

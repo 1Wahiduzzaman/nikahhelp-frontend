@@ -22,7 +22,6 @@
           </button> -->
           <ButtonComponent
             class="mb-4"
-            :isSmall="true"
             title="Continue"
             :responsive="false"
             :isBlock="true"
