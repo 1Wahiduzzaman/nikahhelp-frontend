@@ -45,7 +45,7 @@
                   <span class="link-text ml-2"> a team</span>
                 </div>
                 <h4 class="info-text color-white font-poppins ml-2 mt-10">
-                  * To learn more about the  ‘ Turn ON a team ‘  <span class="text-decoration-underline font-weight-bold cursor-pointer learn-text italic">click here</span>
+                  * To learn more about the  ‘ Turn ON a team ‘  <span class="text-decoration-underline font-weight-bold cursor-pointer learn-text italic"><router-link class="manage-team-link" to="/help">Click here</router-link></span>
                 </h4>
               </div>
             </div>
