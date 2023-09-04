@@ -25,7 +25,7 @@
         <v-col class="mb-4">
           <v-btn
             :loading="loading"
-            v-if="userStatus < 3 && dataInputStatus > 2"
+            v-if="userStatus < 3 && dataInputStatus == 2"
             class="mr-2"
             :class="statusBtnColor"
             @click="updateUserVerifyOrReject('verified')"
@@ -332,7 +332,7 @@
                 </table>
               </div>
             </div>
-            <div class="col-12 col-md-6 mb-4">
+            <div v-if="!showAgreement" class="col-12 col-md-6 mb-4">
               <div class="profile-img text-center">
                 <img
                   v-viewer
@@ -347,7 +347,7 @@
                 <p class="text-center">Front Side</p>
               </div>
             </div>
-            <div class="col-12 col-md-6 mb-4">
+            <div v-if="!showAgreement" class="col-12 col-md-6 mb-4">
               <div class="profile-img text-center">
                 <img
                   v-viewer
