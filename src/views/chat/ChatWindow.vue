@@ -679,7 +679,7 @@ export default {
           user_id: item.user_id,
           state: 'seen',
           name: item.user?.full_name || 'user name',
-          logo: item.user && item.user.candidate_info && item.user.candidate_info.per_avatar_url ? item.user.candidate_info.per_main_image_url + `?token=${this.token}` : require('../../assets/info-img.png'),
+          logo: item.user && item.user.candidate_info && item.user.candidate_info.per_avatar_url ? item.user.candidate_info.per_avatar_url + `?token=${this.token}` : require('../../assets/info-img.png'),
           other_mate_id: item.user_id,
           typing_status: 0,
           typing_text: '',
@@ -720,8 +720,8 @@ export default {
     getPrivateChatLogo(item) {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       let opositeUser = loggedUser.id == item.sender ? item.private_receiver_data : item.private_sender_data;
-      if(opositeUser && opositeUser.candidate_info && opositeUser.candidate_info.per_main_image_url) {
-        return opositeUser.candidate_info.per_main_image_url + `?token=${this.token}`;
+      if(opositeUser && opositeUser.candidate_info && opositeUser.candidate_info.per_avatar_url) {
+        return opositeUser.candidate_info.per_avatar_url + `?token=${this.token}`;
       }
       return require('../../assets/info-img.png');
     },
@@ -934,8 +934,8 @@ export default {
       this.chatListedImage = [];
       if(this.chatheadopen.label == 'Group chat') {
         this.chatheadopen.team_members.forEach(member => {
-          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url + `?token=${this.token}` : '';
-					let repPhoto = member && member.user && member.user.representative_info ? member.user.representative_info.per_main_image_url + `?token=${this.token}` : '';
+          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_avatar_url + `?token=${this.token}` : '';
+					let repPhoto = member && member.user && member.user.representative_info ? member.user.representative_info.per_avatar_url + `?token=${this.token}` : '';
 
 					if (!member.user.candidate_info) {
 						this.chatListedImage.push({
@@ -953,8 +953,8 @@ export default {
         });
       } else if(this.chatheadopen.label == 'Connected Team') {
         this.chatheadopen.from_team.team_members.forEach(member => {
-          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url + `?token=${this.token}` : '';
-					let repPhoto = member && member.user && member.user.representative_info ? member.user.representative_info.per_main_image_url + `?token=${this.token}` : '';
+          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_avatar_url + `?token=${this.token}` : '';
+					let repPhoto = member && member.user && member.user.representative_info ? member.user.representative_info.per_avatar_url + `?token=${this.token}` : '';
 
           if (!member.user.candidate_info) {
 						this.chatListedImage.push({
@@ -971,7 +971,7 @@ export default {
         });
 
         this.chatheadopen.to_team.team_members.forEach(member => {
-          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url + `?token=${this.token}` : '';
+          let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_avatar_url + `?token=${this.token}` : '';
           this.chatListedImage.push({
             user_id: member.user_id,
             logo: candidateLogo
@@ -1288,7 +1288,7 @@ export default {
       for (var i = 0; i < this.$store.state.chat.user_info.length; i++) {
         // console.log(user_id,this.$store.state.chat.user_info[i].user_id);
         if (this.$store.state.chat.user_info[i].user_id == user_id) {
-          return this.$store.state.chat.user_info[i].per_main_image_url + `?token=${this.token}`
+          return this.$store.state.chat.user_info[i].per_avatar_url + `?token=${this.token}`
         }
       }
       return '../../assets/info-img.png';
