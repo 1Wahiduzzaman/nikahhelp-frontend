@@ -414,6 +414,7 @@ export default {
       this.$emit(
           "block-candidate",
           this.connection.candidateInfo.candidate_userid,
+          this.connection,
           notifyObject
       );
     },
