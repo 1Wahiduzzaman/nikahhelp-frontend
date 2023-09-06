@@ -934,7 +934,7 @@ export default {
           this.innerLoading = false;
         });
     },
-    blockCandidate(candidateId, notifyObj) {
+    blockCandidate(candidateId, connection, notifyObj) {
       const vm = this;
       this.$confirm({
         title: "Are you sure?",
@@ -951,6 +951,9 @@ export default {
           vm.innerLoading = true;
           await vm.$store.dispatch("blockCandidate", payload);
           //vm.$message.success("Candidate block listed successfully");
+          const response = await vm.$store.dispatch("disconnectTeam", {
+            connection_id: connection.connection_id,
+          });
           vm.innerLoading = false;
 
           vm.socketNotification(notifyObj);
@@ -966,7 +969,7 @@ export default {
         },
         onCancel() {
           console.log("Cancel");
-          this.innerLoading = false;
+          vm.innerLoading = false;
         },
       });
     },

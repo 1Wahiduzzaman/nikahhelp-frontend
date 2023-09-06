@@ -1056,6 +1056,9 @@ export default {
             try {
                 let res = await this.blockACandidate(data)
 				if(res.status == "SUCCESS") {
+					if(this.connectionStatus && this.connectionStatus.length > 0) {
+						await this.disconnectTeam();
+					}
 					this.$emit('onFetchUserInfo')
 				}
             } catch (e) {
