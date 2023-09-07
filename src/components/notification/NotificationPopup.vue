@@ -7,6 +7,7 @@
       <div class="dropdownNotify-title py-2 d-flex align-items-center justify-content-between">
         <strong class="text-capitalize">{{ label }}</strong>
         <ButtonComponent
+          v-if="label == 'notification'"
           :isSmall="true"
           title="Mark all as read"
           :responsive="false"
