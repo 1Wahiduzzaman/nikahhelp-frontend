@@ -222,7 +222,7 @@
                 <div class="footer">
                    <div class="footer-top"><strong>{{ chatheadopen.typer_name }}</strong> {{ chatheadopen.typing_text }}</div>
                   <div class="footer-bottom">
-                    <form action="#" @submit.prevent="sendMsg">
+                    <form action="#" @submit.prevent>
                       <div class="left flex justify-content-end align-items-end">
                         <div class="message-box">
                           <a-tooltip>
@@ -286,7 +286,7 @@
                             </div>
                           </div>
                         </div>
-                        <button class="btn btn-primary btn-submit js-msg-send">
+                        <button class="btn btn-primary btn-submit js-msg-send" @click="sendMsg">
                           <div class="flex">
                             <div class="flex">
                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.68 18.77">
@@ -1164,7 +1164,7 @@ export default {
 
       this.connectedTeamChats.push(payload);
       teamMembers.splice(selfIndex, 1);
-      this.msg_text = null;
+      this.msg_text = '';
       this.notifyKeyboardStatus();
       await ApiService.post(`/v1/send-message-team-to-team`, payload).then(res => res.data);
       this.chatheadopen.message = {
