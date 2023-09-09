@@ -134,7 +134,7 @@ export default {
       this.currentGuide = this.currentGuide > 0 ? this.currentGuide - 1 : 0;
 
       if(this.currentGuide == 0) {
-        this.imageSrc = require('@/assets/Icons/Logo/1x/black-logo.png');
+        this.imageSrc = require('@/assets/Icons/MA logo for start modal.svg');
         this.contentTitle = 'Welcome to MatrimonyAssist';
         this.contentGuidance = "Here you can create team, invite family and friends, shortlist potential candidates and connect and chat with respective teams."
       } else if(this.currentGuide == 1) {
@@ -168,7 +168,7 @@ export default {
       this.currentGuide = this.currentGuide < 6 ? this.currentGuide + 1 : 0;
       
       if(this.currentGuide == 0) {
-        this.imageSrc = require('@/assets/Icons/Logo/1x/black-logo.png');
+        this.imageSrc = require('@/assets/Icons/MA logo for start modal.svg');
         this.contentTitle = 'Welcome to MatrimonyAssist';
         this.contentGuidance = "Here you can create team, invite family and friends, shortlist potential candidates and connect and chat with respective teams."
       } else if(this.currentGuide == 1) {
@@ -199,7 +199,7 @@ export default {
     },
     goToFirstGuide() {
       this.currentGuide = 0;
-      this.imageSrc = require('@/assets/Icons/Logo/1x/black-logo.png');
+      this.imageSrc = require('@/assets/Icons/MA logo for start modal.svg');
       this.contentTitle = 'Welcome to MatrimonyAssist';
       this.contentGuidance = "Here you can create team, invite family and friends, shortlist potential candidates and connect and chat with respective teams."
     }
@@ -207,7 +207,7 @@ export default {
 
   data() {
     return {
-      imageSrc: require('@/assets/Icons/Logo/1x/black-logo.png'),
+      imageSrc: require('@/assets/Icons/MA logo for start modal.svg'),
       contentTitle: 'Welcome to MatrimonyAssist',
       contentGuidance: "Here you can create team, invite family and friends, shortlist potential candidates and connect and chat with respective teams.",
       currentGuide: 0,
