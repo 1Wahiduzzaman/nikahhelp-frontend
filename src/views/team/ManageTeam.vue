@@ -5,7 +5,7 @@
       <div v-else>
         <div class="mt-3">
           <!--teams.length == 0 && !joinTeamShow && !createTeamShow-->
-          <a-modal v-model="welcomeModal" @ok="hideWelcomeModal">
+          <!-- <a-modal v-model="welcomeModal" @ok="hideWelcomeModal">
             <div
               class="
                 d-flex
@@ -34,7 +34,7 @@
             <template slot="footer">
               <a-button key="back" @click="hideWelcomeModal"> Close </a-button>
             </template>
-          </a-modal>
+          </a-modal> -->
           <Banner v-if="1 !== 1" />
           <div class="row mx-0 team-container" id="team-container">
             <TeamDetailsCard
@@ -256,6 +256,7 @@ export default {
         this.teams = data;
         if (this.teams.length <= 0) {
           this.welcomeModal = true;
+          this.$emit('openSystemHelpDialog');
         }
         this.isLoading = false;
         // await this.$store
