@@ -14,7 +14,7 @@
     </template>
     <v-img
         height="250"
-        :src="avatarImg"
+        :src="require(`@/assets/avatar/${getRandomAvatar()}`)"
     ></v-img>
 
     <v-card-title>{{ candidate.screen_name }}</v-card-title>
@@ -172,7 +172,7 @@ import ButtonComponent from '@/components/atom/ButtonComponent';
 import Modal from '@/components/ui/Modal';
 export default {
   name: 'UnauthCard',
-  props: ["candidate", "avatarImg"],
+  props: ["candidate"],
   components: {
     ButtonComponent,
     Modal
@@ -182,8 +182,13 @@ export default {
     selection: 1,
     onceMore: true,
     moreText: false,
-    modalVisibility: false
+    modalVisibility: false,
+			avatars: [],
   }),
+  created() {
+		this.importAll(require.context('../../assets/avatar/', true, /\.png$/));
+    
+  },
   methods: {
     ...mapMutations({
       setComponent: 'search/setComponent',
@@ -197,6 +202,22 @@ export default {
       fetchProfileDetail: 'search/fetchProfileDetail',
 
     }),
+    importAll(r) {
+			r.keys().forEach(key => (this.avatars.push({ pathShort: key })));
+			console.log(this.avatars);
+		},
+		getRandomAvatar() {
+			if(this.candidate.per_gender === 'Male') {
+				let random = Math.floor(Math.random() * this.avatars.length / 2);
+				console.log(random, 'random');
+				return this.avatars[random].pathShort.substring(2, this.avatars[random].pathShort.length);
+			} else {
+				let random = Math.floor(Math.random() * (this.avatars.length - (this.avatars.length / 2)) + this.avatars.length / 2);
+				console.log(random, 'random');
+				return this.avatars[random].pathShort.substring(2, this.avatars[random].pathShort.length);
+
+			}
+		},
     onClickButton(eventData) {
       if(eventData.event == 'viewProfileDetail') {
         this.ViewProfileDetail()
