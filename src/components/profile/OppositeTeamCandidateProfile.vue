@@ -1027,6 +1027,10 @@ export default {
 			const teamId = JwtService.getTeamIDAppWide();
 			this.isLoading = true;
 			try {
+				if(teamId == this.profile.team_id) {
+					this.isLoading = false;
+					return;
+				}
 				const response = await this.$store.dispatch("loadConnectionReports", teamId);
 				this.connectionStatus = response.data.data.result.filter((item) => {
 					return item.to_team_id == this.profile.team_id || item.from_team_id == this.profile.team_id;
