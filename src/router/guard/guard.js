@@ -10,7 +10,10 @@ export const InitRoute =  (to, from, next) => {
     //             debugger;
     //             return to.name == 'Login' ? next() : next({ name: 'Login' });
     //         })
-    if (!token && to.name == 'Signup') {
+    if((!token && to.name == 'VerifyEmail') || (token && to.name == 'VerifyEmail' && user.is_verified == 0)) {
+        return next();
+    }
+    else if (!token && to.name == 'Signup') {
         return next();
     }
     else if (!token && to.name == 'Home') {
@@ -18,6 +21,9 @@ export const InitRoute =  (to, from, next) => {
     }
     else if (!token) {
         return to.name == 'Login' ? next() : next({ name: 'Login' });
+    }
+    else if(user && token && user.is_verified == 1 && to.name == 'VerifyEmail') {
+        return next({ name: 'ManageTeam' });
     }
     else if (user && !user.account_type) {
         next({ name: 'AdminDashboard' });

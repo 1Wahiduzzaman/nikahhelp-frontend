@@ -10,8 +10,11 @@
           <h4 class="mt-3 font-weight-bolder congo-text">CONGRATULATIONS !</h4>
           <img src="@/assets/icon/check-circle-success.svg" alt="icon" class="" />
           <p class="mt-5 verify-text fs-20">Your email has been verified successfully.</p>
-          <p class="mt-4">
+          <!-- <p class="mt-4">
             Please now press continue button  to complete the <span class="type-access">{{ getUserType }}</span> registration form.
+          </p> -->
+          <p class="mt-4">
+            Please <router-link class="type-access" to="/login">login</router-link> to complete the <span class="type-access">{{ getUserType }}</span> registration form.
           </p>
 
           <!-- <button
@@ -22,7 +25,7 @@
           </button> -->
           <ButtonComponent
             class="mb-4"
-            title="Continue"
+            title="Login"
             :responsive="false"
             :isBlock="true"
             @onClickButton="handleClick"
@@ -60,12 +63,13 @@ export default {
   },
   methods: {
     handleClick() {
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (user.account_type == 1) {
-        this.$router.push("/candidate-registration");
-      } else {
-        this.$router.push("/representative-registration");
-      }
+      // const user = JSON.parse(localStorage.getItem("user"));
+      // if (user.account_type == 1) {
+      //   this.$router.push("/candidate-registration");
+      // } else {
+      //   this.$router.push("/representative-registration");
+      // }
+      this.$router.push("/login");
     },
   },
 };

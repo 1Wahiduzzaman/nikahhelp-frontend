@@ -23,8 +23,7 @@ export default {
 
       });
 
-
-      if(router.history._startLocation === '/login') {
+      if(router.history._startLocation === '/login' || router.history._startLocation.includes('/emailVerify/') || router.history._startLocation.includes('/email-verification-success')) {
         router.push({ name: 'root' });
       } else {
         router.push({ path: `${router.history._startLocation}`});

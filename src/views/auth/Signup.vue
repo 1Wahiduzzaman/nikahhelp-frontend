@@ -591,7 +591,7 @@ export default {
       if (value === "") {
         callback(new Error("Enter password again"));
       } else if (value !== this.signupModel.password) {
-        callback(new Error("Password don't match!"));
+        callback(new Error("Passwords didn't match!"));
       } else {
         callback();
       }
