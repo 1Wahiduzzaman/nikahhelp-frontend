@@ -527,6 +527,7 @@ const AppRouter = new VueRouter({
             name: "VerifyEmail",
             // component: VerifyEmail,
             component: lazyLoadView('auth', 'VerifyEmail'),
+            beforeEnter: InitRoute,
 
         },
         {
