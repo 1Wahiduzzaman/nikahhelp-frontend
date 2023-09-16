@@ -51,13 +51,21 @@
                         <span class="ml-1">{{ candidate.per_ethnicity }} </span>
                     </span>
           </li>
-          <li class="flex-between-start">
+          <!-- <li class="flex-between-start">
             <span class="flex-30 label-text">Hobby</span>
             <span class="flex-70">
-                        <a-tooltip :title="candidate.personal ? candidate.personal.per_hobbies_interests : 'N/A'">
-                          <span class="hobby-custom"><span class="mr-1">:</span> {{ candidate.personal ? candidate.personal.per_hobbies_interests : "N/A" }}</span>
-                        </a-tooltip>
-                    </span>
+                <a-tooltip :title="candidate ? candidate.per_hobbies_interests : 'N/A'">
+                  <span class="hobby-custom"><span class="mr-1">:</span> {{ candidate ? candidate.per_hobbies_interests : "N/A" }}</span>
+                </a-tooltip>
+            </span>
+          </li> -->
+          <li class="flex-between-start">
+            <span class="flex-30 label-text">Occupation</span>
+            <span class="flex-70">
+                <a-tooltip :title="candidate ? candidate.per_occupation : 'N/A'">
+                  <span class="hobby-custom"><span class="mr-1">:</span> {{ candidate ? candidate.per_occupation : "N/A" }}</span>
+                </a-tooltip>
+            </span>
           </li>
         </template>
       </ul>
