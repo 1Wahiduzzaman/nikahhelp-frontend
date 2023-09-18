@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="profile text-center pt-3">
-      <img :src="profileActive.email || profileActive.user !== undefined && profileActive.user.account_type == 1 ? profileActive.user.candidate_info.per_avatar_url + `?token=${token}` : require('@/assets/no-image-available.jpg')" alt="profile" class="profile-img">
+      <img :src="getTeamMemberImg" alt="profile" class="profile-img">
       <h4 class="fs-16 text-white pt-4" v-if="profileActive.profile_from_type === 'member'">{{ profileActive.user && profileActive.user.full_name ? profileActive.user.full_name : profileActive.user.email }}</h4>
       <h4 class="fs-16 text-white pt-2" v-else>{{ profileActive.email ? profileActive.email : 'Not joined yet' }}</h4>
       <div class="d-flex justify-content-center mb-2 mt-4">
@@ -115,6 +115,15 @@ export default {
         return true;
       }
       return false;
+    },
+    getTeamMemberImg () {
+      if(this.profileActive.user !== undefined && this.profileActive.user.account_type == 1) {
+        return this.profileActive.user.candidate_info.per_main_image_url + `?token=${this.token}`;
+      } else if(this.profileActive.user !== undefined && this.profileActive.user.account_type == 2) {
+        return this.profileActive.user.representative_info.per_main_image_url + `?token=${this.token}`;
+      } else {
+        return require('@/assets/no-image-available.jpg');
+      }
     }
   },
   methods: {
