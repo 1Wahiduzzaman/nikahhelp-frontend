@@ -61,6 +61,13 @@ export default {
       return '';
     }
   },
+  created() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const token = localStorage.getItem("token");
+    if(user && token) {
+      this.$router.push("/dashboard");
+    }
+  },
   methods: {
     handleClick() {
       // const user = JSON.parse(localStorage.getItem("user"));

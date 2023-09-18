@@ -78,6 +78,9 @@ export default {
       try {
         this.user = JSON.parse(localStorage.getItem("user"));
         this.is_verified = this.user.is_verified;
+        if (this.is_verified) {
+          this.$router.push("/manageteam");
+        }
       } catch (error) {
         this.error = error.message || "Something went wrong";
         alert(this.error);
