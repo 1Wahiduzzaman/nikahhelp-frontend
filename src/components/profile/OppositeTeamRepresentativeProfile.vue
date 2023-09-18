@@ -191,7 +191,7 @@
 			<div class="profile-heading" >
 				<ProfileBanner
 					class="px-2 mt-2"
-					:image="representativeData.per_avatar_url ? representativeData.per_avatar_url : ''"
+					:image="representativeData.per_avatar_url ? representativeData.per_avatar_url  + `?token=${token}`: ''"
 					:name="representativeData.first_name + ' ' + representativeData.last_name"
 				/>
 				<v-container fluid>
@@ -404,7 +404,11 @@ export default {
 			candidateData: null,
 			isLoading: false,
 			viewerImages: [],
+			token: "",
 		};
+	},
+	created() {
+		this.token = JSON.parse(localStorage.getItem("token"));
 	},
 	computed : {
 	// 	personal () {
@@ -439,7 +443,7 @@ export default {
 		},
 		openGallery() {
 			this.viewerImages = [];
-			let images = [this.representativeData.per_avatar_url, this.representativeData.per_main_image_url]
+			let images = [this.representativeData.per_avatar_url + `?token=${this.token}`, this.representativeData.per_main_image_url + `?token=${this.token}`]
 			if (images && images.length > 0) {
 				images.map((i) => this.viewerImages.push(i));
 				this.show();
