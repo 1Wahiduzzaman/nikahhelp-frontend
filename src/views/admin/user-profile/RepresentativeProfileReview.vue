@@ -25,7 +25,7 @@
         <v-col class="mb-4">
           <v-btn
             :loading="loading"
-            v-if="userStatus < 3 && dataInputStatus == 2"
+            v-if="userStatus < 3 && dataInputStatus > 2"
             class="mr-2"
             :class="statusBtnColor"
             @click="updateUserVerifyOrReject('verified')"
