@@ -19,6 +19,13 @@
             User status: <strong>{{ getStatus }}</strong>
           </div>
         </v-col>
+        <v-col></v-col>
+        <v-col>
+          <v-btn @click="getBackToUserList">
+            <v-icon> arrow_back_ios </v-icon>
+            Back to user list
+          </v-btn>
+        </v-col>
       </v-row>
 
       <v-row>
@@ -603,8 +610,9 @@ export default {
           this.loadingReinstate = false;
         });
     },
-
-    
+    getBackToUserList() {
+      this.$router.push({ name: "Users" });
+    },
   },
   computed: {
     getStatus() {
