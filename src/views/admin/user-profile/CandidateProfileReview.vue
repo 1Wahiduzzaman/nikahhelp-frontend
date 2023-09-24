@@ -782,7 +782,7 @@ export default {
     getNationality() {
       let nationalityId = this.candidateData.personal?.per_nationality;
       // console.log(this.candidateDetails.countries[nationalityId-1].name, 'nationality form admin');
-      return this.candidateDetails.countries[nationalityId-1].name;
+      return this.candidateDetails?.countries[nationalityId-1]?.name;
     },
     getReligion() {
       return this.candidateData.preference?.pre_partner_religion_id.join(", ");
