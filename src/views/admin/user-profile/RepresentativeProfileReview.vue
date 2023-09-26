@@ -577,7 +577,7 @@ export default {
     },
     async updateUserVerifyOrReject(status) {
       switch (status) {
-        case "completed":
+        case "verified":
           this.loading = true;
           break;
         case "suspend":
@@ -598,7 +598,7 @@ export default {
         .dispatch("updateUserVerifyOrReject", data)
         .then((data) => {
           if (data.status) {
-            this.candidateData.user.status = data.status;
+            this.representativeDetails.user.status = data.status;
           }
         })
         .catch((error) => {})
@@ -636,7 +636,7 @@ export default {
       return this.representativeDetails?.data_input_status;
     },
     userStatus() {
-      return this.representativeDetails?.user?.status;
+      return parseInt(this.representativeDetails?.user?.status);
     },
   },
 };
