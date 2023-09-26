@@ -852,7 +852,7 @@ export default {
     },
     async updateUserVerifyOrReject(status) {
       switch (status) {
-        case "completed":
+        case "verified":
           this.loading = true;
           break;
         case "suspend":
