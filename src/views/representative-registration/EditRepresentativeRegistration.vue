@@ -503,7 +503,7 @@ export default {
 				}
 			}
 			this.checkExistData();
-			this.saveDataInputStatus(this.current);
+			// this.saveDataInputStatus(this.current);
 		},
 		prev() {
 			this.current--;
