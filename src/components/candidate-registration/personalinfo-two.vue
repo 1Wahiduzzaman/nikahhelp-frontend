@@ -39,7 +39,7 @@
                 />What is your gender?
               </div>
             </div>
-            <div class="col-12 col-md-6 mobile-margin">
+            <div class="col-12 col-md-6 mobile-margin" :class="{ 'disabled' : activeRouteName !== 'CandidateRegistration'}">
               <a-form-model-item ref="per_gender" prop="per_gender">
                 <v-select
                   :disabled="activeRouteName !== 'CandidateRegistration'"
@@ -101,7 +101,7 @@
                 />What is your date of birth? (private)
               </div>
             </div>
-            <div class="col-12 col-md-6 mobile-margin">
+            <div class="col-12 col-md-6 mobile-margin" :class="{ 'disabled' : activeRouteName !== 'CandidateRegistration'}">
               <a-form-model-item ref="dob" prop="dob" class="dob-select">
                 <DropdownDatePicker
                   id="dob"
@@ -2878,6 +2878,12 @@ export default {
 </script>
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.4;
+    cursor: not-allowed !important;
+}
 .personal-info {
   padding: 0 0.75rem;
   .section-heading {
