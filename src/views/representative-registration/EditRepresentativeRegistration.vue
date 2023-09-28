@@ -71,8 +71,8 @@
 			</div>
 			<div class="text-center mt-5" v-if="current == 2">
 				<h5 class="color-brand fs-20">Verification and Reference</h5>
-				<p class="color-brand fs-18">Details about your referee</p>
-				<p>We ask all representatives to provide the name of a referee. We do this additional level of check in order to promote greater trust and confidence in MatrimonyAssist.
+				<p class="color-brand fs-18" v-if="activeRouteName == 'RepresentativeRegistration'">Details about your referee</p>
+				<p v-if="activeRouteName == 'RepresentativeRegistration'">We ask all representatives to provide the name of a referee. We do this additional level of check in order to promote greater trust and confidence in MatrimonyAssist.
 				</p>
 			</div>
 			<div class="text-center mt-5" v-if="current == 3">
@@ -249,7 +249,16 @@ export default {
 			activeKey: 1,
 
 			agreementChecked: false,
+			activeRouteName: "RepresentativeRegistration"
 		};
+	},
+	watch: {
+		$route: {
+		immediate: true,
+		handler: function (to, from) {
+			this.activeRouteName = this.$route.name;
+		},
+		},
 	},
 	created() {},
 	mounted() {
