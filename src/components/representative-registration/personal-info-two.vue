@@ -28,9 +28,10 @@
                 />What is your gender?
               </div>
             </div>
-            <div class="col-12 col-md-6 mobile-margin">
+            <div class="col-12 col-md-6 mobile-margin" :class="{ 'disabled' : activeRouteName !== 'RepresentativeRegistration'}">
               <a-form-model-item ref="per_gender" prop="per_gender">
                 <v-select
+                :disabled="activeRouteName !== 'RepresentativeRegistration'"
                   :clearable="false"
                   class="style-chooser"
                   @input="onValueChange($event, 'per_gender', 'essential')"
@@ -87,7 +88,7 @@
                 />What is your date of birth?
               </div>
             </div>
-            <div class="col-12 col-md-6 mobile-margin">
+            <div class="col-12 col-md-6 mobile-margin" :class="{ 'disabled' : activeRouteName !== 'RepresentativeRegistration'}">
               <a-form-model-item ref="dob" prop="dob">
                 <DropdownDatePicker
                   id="dob"
@@ -707,7 +708,17 @@ export default {
       default_date: null,
       phoneNumber: undefined,
       isValidNumber: true,
+      activeRouteName: "RepresentativeRegistration",
     };
+  },
+
+  watch: {
+    $route: {
+      immediate: true,
+      handler: function (to, from) {
+        this.activeRouteName = this.$route.name;
+      },
+    },
   },
 
   async mounted() {},
@@ -840,6 +851,12 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 @import "@/styles/base/_generic.scss";
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.4;
+  cursor: not-allowed !important;
+}
 .anticon {
   color: #b3b2b2;
 }
