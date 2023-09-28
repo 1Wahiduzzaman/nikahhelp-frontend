@@ -13,7 +13,7 @@
         </template>
         <a-collapse-panel key="1" header="1. Referee Information">
           <a-form-model
-            v-if="verification"
+            v-if="verification && activeRouteName == 'RepresentativeRegistration'"
             ref="verification"
             :model="verification"
             :rules="rules"
@@ -567,6 +567,31 @@
           </a-form-model>
         </a-collapse-panel>
       </a-collapse>
+
+      <div class="verification-msg" v-if="(userData.status == '1' || userData.status == '2')
+      ">
+        <div class="identity">
+          <img src="@/assets/icon/dots-horizontal-circle.svg" alt="icon" style="width: 200px; height: 230px" />
+          <span> <strong>In Review</strong></span>
+        </div>
+        <div class="identity-footer mt-4">
+          <span>To keep your account safe, we need to verify your identity. This is a
+            legal requirement that help us to keep your account secure.
+          </span>
+        </div>
+      </div>
+      <div class="verification-msg" v-if="userData && userData.status == '3'">
+        <div class="identity">
+          <img src="@/assets/icon/varified.svg" alt="icon" style="width: 200px; height: 230px" />
+          &nbsp;
+          <span> <strong>Verified</strong></span>
+        </div>
+        <div class="identity-footer mt-4">
+          <span>To keep your account safe, we need to verify your identity. This is a
+            legal requirement that help us to keep your account secure.
+          </span>
+        </div>
+      </div>
     </div>
     <!-- <div class="verification-msg" v-if="userData && userData.status == '2'">
       <div class="identity">
@@ -668,7 +693,16 @@ export default {
       userData: null,
       loading: false,
       isValidNumber: true,
+      ativerRouteName: 'RepresentativeRegistration'
     };
+  },
+  watch: {
+    $route: {
+      immediate: true,
+      handler: function (to, from) {
+        this.activeRouteName = this.$route.name;
+      },
+    },
   },
 
   methods: {
