@@ -832,6 +832,11 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.$error({
+            title: 'Something went wrong',
+            content: error.response.data.message,
+            center: true,
+          })
           this.innerLoading = false;
         });
     },
@@ -863,7 +868,12 @@ export default {
           //this.$message.success("Team Disconnected successfully!");
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data.message);
+          this.$error({
+            title: 'Something went wrong',
+            content: error.response.data.message,
+            center: true,
+          })
           this.innerLoading = false;
         });
     },
@@ -895,6 +905,7 @@ export default {
           this.innerLoading = false;
           this.$error({
             title: 'Something went wrong',
+            content: error.response.data.message,
             center: true,
           });
 
@@ -949,22 +960,43 @@ export default {
             type: "single",
           };
           vm.innerLoading = true;
-          await vm.$store.dispatch("blockCandidate", payload);
+          try {
+            const response = await vm.$store.dispatch("disconnectTeam", {
+              connection_id: connection.connection_id,
+            });
+            vm.innerLoading = false;
+  
+            vm.socketNotification(notifyObj);
+  
+            vm.$success({
+              title: "Success",
+              content: "Candidate block listed successfully",
+              onOk() {
+                vm.$router.go();
+              },
+            });
+          } catch(error) {
+            vm.$error({
+              title: 'Something went wrong',
+              content: error.response.data.message.slice(0, -1) + " or to block team.",
+              center: true,
+            });
+            vm.innerLoading = false;
+            return;
+          }
+
+          try {
+            await vm.$store.dispatch("blockCandidate", payload);
+          } catch(error) {
+            vm.$error({
+              title: 'Something went wrong',
+              content: error.response.data.message,
+              center: true,
+
+            });
+            vm.innerLoading = false;
+          }
           //vm.$message.success("Candidate block listed successfully");
-          const response = await vm.$store.dispatch("disconnectTeam", {
-            connection_id: connection.connection_id,
-          });
-          vm.innerLoading = false;
-
-          vm.socketNotification(notifyObj);
-
-          vm.$success({
-            title: "Success",
-            content: "Candidate block listed successfully",
-            onOk() {
-              vm.$router.go();
-            },
-          });
           //vm.$router.go();
         },
         onCancel() {
