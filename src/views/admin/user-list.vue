@@ -143,7 +143,7 @@
                     ? "Fully Completed"
                     : item.representative_info.data_input_status > 2 &&
                       item.representative_info.is_uplaoded_doc == 0
-                    ? "Completed Without ID"
+                    ? "Completed"
                     : "Partially Completed"
                   : "In-completed"
               }}
