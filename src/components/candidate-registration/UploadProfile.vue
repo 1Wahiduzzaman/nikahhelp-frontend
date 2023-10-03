@@ -103,7 +103,7 @@
                       <div class="" v-for="image in images" :key="image.pathShort">
                         <img 
                           :ref="image.pathShort.substring(2, image.pathShort.length-4)" 
-                          class="circle" 
+                          class="circle contain" 
                           :src="require(`@/assets/avatar/${image.pathShort.substring(2, image.pathShort.length)}`)"
                           @click="avatarNo = image.pathShort.substring(2, image.pathShort.length-4); setAvatar(avatarNo)"
                         >
@@ -351,6 +351,11 @@ export default {
     },
     importAll(r) {
       r.keys().forEach(key => (this.images.push({ pathShort: key })));
+      this.images.sort((a, b) => {
+        let aNum = parseInt(a.pathShort.substring(2, a.pathShort.length-4));
+        let bNum = parseInt(b.pathShort.substring(2, b.pathShort.length-4));
+        return aNum - bNum;
+      });
       console.log(this.images);
     },
     clearImg(action) {
@@ -628,6 +633,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "@/styles/base/_variables.scss";
 fieldset {
   border: 1px solid #522e8e;
   border-radius: 10px;
@@ -647,7 +653,6 @@ legend {
   width: 220px;
   object-fit: cover;
 }
-@import "@/styles/base/_variables.scss";
 .circle {
   height: 50px;
   width: 50px;
