@@ -267,7 +267,7 @@
                 Share my images with anyone who searches on MatrimonyAssist
               </span>
             </div>
-            <div class="d-flex align-items-baseline mt-4">
+            <!-- <div class="d-flex align-items-baseline mt-4">
               <a-switch
                 @change="onConfirmationSwitchChnaged2"
                 v-model="only_team_can_see"
@@ -279,7 +279,7 @@
                 Do not share my images with anybody at the moment (my own team
                 can see still)
               </span>
-            </div>
+            </div> -->
             <div class="d-flex align-items-baseline mt-4">
               <a-switch
                 @change="onConfirmationSwitchChnaged3"
@@ -289,8 +289,7 @@
                 <a-icon slot="unCheckedChildren" type="close" />
               </a-switch>
               <span class="ml-3 switch-text">
-                Share my images with the connected teams (only if I or they
-                accept connect request)
+                Share my images with the connected teams
               </span>
             </div>
             <br />
@@ -334,7 +333,7 @@ export default {
       onlyTeamConnectionsFlag: false,
       loadingButton: false,
       anybody_can_see: false,
-      only_team_can_see: false,
+      // only_team_can_see: false,
       team_connection_can_see: false,
       loading: false,
       token: "",
@@ -431,8 +430,8 @@ export default {
         .then((data) => {
           this.anybody_can_see =
             data.data.data.personal.anybody_can_see == 1 ? true : false;
-          this.only_team_can_see =
-            data.data.data.personal.only_team_can_see == 1 ? true : false;
+          // this.only_team_can_see =
+            // data.data.data.personal.only_team_can_see == 1 ? true : false;
           this.team_connection_can_see =
             data.data.data.personal.team_connection_can_see == 1 ? true : false;
         })
@@ -531,31 +530,31 @@ export default {
     },
     onConfirmationSwitchChnaged1(checked) {
       if (this.anybody_can_see) {
-        this.only_team_can_see = false;
+        // this.only_team_can_see = false;
         this.team_connection_can_see = false;
       } else {
-        this.only_team_can_see = true;
+        // this.only_team_can_see = true;
         this.team_connection_can_see = false;
       }
 
       this.onChangeCheckBox();
     },
-    onConfirmationSwitchChnaged2(checked) {
-      if (this.only_team_can_see) {
-        this.anybody_can_see = false;
-        this.team_connection_can_see = false;
-      } else {
-        this.anybody_can_see = true;
-        this.team_connection_can_see = false;
-      }
-      this.onChangeCheckBox();
-    },
+    // onConfirmationSwitchChnaged2(checked) {
+    //   if (this.only_team_can_see) {
+    //     this.anybody_can_see = false;
+    //     this.team_connection_can_see = false;
+    //   } else {
+    //     this.anybody_can_see = true;
+    //     this.team_connection_can_see = false;
+    //   }
+    //   this.onChangeCheckBox();
+    // },
     onConfirmationSwitchChnaged3(checked) {
       if (this.team_connection_can_see) {
         this.anybody_can_see = false;
-        this.only_team_can_see = false;
+        // this.only_team_can_see = false;
       } else {
-        this.only_team_can_see = false;
+        // this.only_team_can_see = false;
         this.anybody_can_see = true;
       }
       this.onChangeCheckBox();
@@ -563,7 +562,7 @@ export default {
     async onChangeCheckBox() {
       let formData = new FormData();
       formData.append("anybody_can_see", this.anybody_can_see ? 1 : 0);
-      formData.append("only_team_can_see", this.only_team_can_see ? 1 : 0);
+      // formData.append("only_team_can_see", this.only_team_can_see ? 1 : 0);
       formData.append(
         "team_connection_can_see",
         this.team_connection_can_see ? 1 : 0

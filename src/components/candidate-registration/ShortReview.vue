@@ -265,7 +265,7 @@
                     plarform</span
                   >
                 </div>
-                <div class="d-flex">
+                <!-- <div class="d-flex">
                   <a-icon
                     v-if="candidateData.personal.only_team_can_see == 0"
                     class="color-danger mt-2 mr-2 fs-16 fw-500"
@@ -279,7 +279,7 @@
                   <span class="fs-16"
                     >I would like to share all my images with my team</span
                   >
-                </div>
+                </div> -->
                 <div class="d-flex">
                   <a-icon
                     v-if="candidateData.personal.team_connection_can_see == 0"

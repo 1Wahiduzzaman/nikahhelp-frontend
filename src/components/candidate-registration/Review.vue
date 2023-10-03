@@ -926,7 +926,7 @@
                     MatrimonyAssist</span
                   >
                 </div>
-                <div class="d-flex align-items-baseline">
+                <!-- <div class="d-flex align-items-baseline">
                   <a-icon
                     v-if="candidateData.personal.only_team_can_see == 0"
                     class="color-danger mt-2 mr-2 fs-14 fw-500"
@@ -940,7 +940,7 @@
                   <span class="fs-16">
                     Do not share my images with anyone at the moment</span
                   >
-                </div>
+                </div> -->
                 <div class="d-flex align-items-baseline">
                   <a-icon
                     v-if="candidateData.personal.team_connection_can_see == 0"

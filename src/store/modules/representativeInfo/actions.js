@@ -145,7 +145,7 @@ export default {
         delete profileData["id"];
         delete profileData["user_id"];
         delete profileData["anybody_can_see"];
-        delete profileData["only_team_can_see"];
+        // delete profileData["only_team_can_see"];
         delete profileData["team_connection_can_see"];
         delete profileData["is_agree"];
         delete profileData["created_at"];
