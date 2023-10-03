@@ -568,10 +568,9 @@
         </a-collapse-panel>
       </a-collapse>
 
-      <div class="verification-msg" v-if="(userData.status == '1' || userData.status == '2')
-      ">
+      <div class="verification-msg" v-if="(userData.status == '1' || userData.status == '2') && activeRouteName != 'RepresentativeRegistration'">
         <div class="identity">
-          <img src="@/assets/icon/dots-horizontal-circle.svg" alt="icon" style="width: 200px; height: 230px" />
+          <img src="@/assets/Verification_Icons/Icon/SVG/Pending.svg" alt="icon" style="width: 200px; height: 230px" />
           <span> <strong>In Review</strong></span>
         </div>
         <div class="identity-footer mt-4">

@@ -71,7 +71,7 @@
                               <div class="" v-for="image in images" :key="image.pathShort">
                                 <img 
                                   :ref="image.pathShort.substring(2, image.pathShort.length-4)" 
-                                  class="circle" 
+                                  class="circle contain" 
                                   :src="require(`@/assets/avatar/${image.pathShort.substring(2, image.pathShort.length)}`)"
                                   @click="avatarNo = image.pathShort.substring(2, image.pathShort.length-4); setAvatar(avatarNo)"
                                 >
@@ -244,6 +244,12 @@ export default {
     },
     importAll(r) {
       r.keys().forEach(key => (this.images.push({ pathShort: key })));
+      // sort this.images
+      this.images.sort((a, b) => {
+        let aNum = parseInt(a.pathShort.substring(2, a.pathShort.length-4));
+        let bNum = parseInt(b.pathShort.substring(2, b.pathShort.length-4));
+        return aNum - bNum;
+      });
       console.log(this.images);
     },
     clearImg(action) {
@@ -481,8 +487,8 @@ export default {
   border: 3px solid $bg-secondary !important;
 }
 .contain {
-  height: 123px;
-  width: 220px;
+  // height: 123px;
+  // width: 220px;
   object-fit: cover;
 }
 
