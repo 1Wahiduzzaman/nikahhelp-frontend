@@ -367,7 +367,7 @@ export default {
     onConfirmationSwitchChnaged1(checked) {
       console.log(checked);
       if (checked) {
-        this.imageModel.only_team_can_see = false;
+        // this.imageModel.only_team_can_see = false;
         this.imageModel.team_connection_can_see = false;
       }
       checked == true
@@ -377,15 +377,15 @@ export default {
         anybody_can_see: this.imageModel.anybody_can_see,
       });
     },
-    onConfirmationSwitchChnaged2(checked) {
-      console.log(checked);
-      checked == true
-        ? (this.imageModel.only_team_can_see = 1)
-        : (this.imageModel.only_team_can_see = 0);
-      this.saveRepresentativeImageCondition({
-        only_team_can_see: this.imageModel.only_team_can_see,
-      });
-    },
+    // onConfirmationSwitchChnaged2(checked) {
+    //   console.log(checked);
+    //   checked == true
+    //     ? (this.imageModel.only_team_can_see = 1)
+    //     : (this.imageModel.only_team_can_see = 0);
+    //   this.saveRepresentativeImageCondition({
+    //     only_team_can_see: this.imageModel.only_team_can_see,
+    //   });
+    // },
     onConfirmationSwitchChnaged3(checked) {
       console.log(checked);
       checked == true
