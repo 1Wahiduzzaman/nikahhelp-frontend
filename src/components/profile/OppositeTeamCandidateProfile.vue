@@ -816,6 +816,7 @@ export default {
 				this.isLoading = false;
 				this.$error({
 					title: 'Something went wrong',
+					content: error.response.data.message,
 					center: true,
 				});
             };
