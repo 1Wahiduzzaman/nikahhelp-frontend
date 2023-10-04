@@ -1030,6 +1030,7 @@ input[type="file"]::-webkit-file-upload-button {
   }
   .vti__input {
     font-size: 1rem;
+    border-radius: 0px 30px 30px 0px !important;
   }
 }
 </style>
