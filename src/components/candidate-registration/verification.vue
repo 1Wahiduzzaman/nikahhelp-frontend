@@ -236,7 +236,7 @@
                     <input v-if="!verification.ver_image_front" type="file" class="input-image" id="upload-front-side"
                       name="avatar" @change="getFrontPage" />
                   </label>
-                  <a-button type="primary" style="width: 185px" v-if="verification.ver_image_front"
+                  <a-button type="primary" style="width: 185px; border-radius: 5px;" v-if="verification.ver_image_front"
                     @click="clearImg('font')">
                     Remove
                   </a-button>
@@ -294,7 +294,7 @@
                     <input v-if="!verification.ver_image_back" type="file" class="input-image" id="upload-back-side"
                       name="avatar" @change="getBackPage" />
                   </label>
-                  <a-button type="primary" style="width: 185px" v-if="verification.ver_image_back"
+                  <a-button type="primary" style="width: 185px; border-radius: 5px;" v-if="verification.ver_image_back"
                     @click="clearImg('back')">
                     Remove
                   </a-button>
