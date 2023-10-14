@@ -3,6 +3,17 @@ import JwtService from "../../../services/jwt.service";
 import router from '../../../router';
 export default {
   async login(context, payload) {
+
+    // clear twoFAMessage
+    context.commit("setTwoFAMessage", {
+      twoFAMessage: null,
+    });
+
+    // clear errorMessage
+    context.commit("setErrorMessage", {
+      errorMessage: null,
+    });
+
     const form = new FormData();
     form.append('email', payload.email);
     form.append('password', payload.password);
@@ -10,23 +21,29 @@ export default {
 
 
     await axios.post("v1/login", payload).then( async (response) => {
-      const token = response.data.data.token.access_token;
-      let data = { token: token };
-      JwtService.saveTokenAndUser(data);
-      JwtService.setUser(response.data.data.user);
-      context.commit("setErrorMessage", {
-        errorMessage: null,
-      });
-      context.commit("setUser", {
-        token: response.data.data.access_token,
-
-
-      });
-
-      if(router.history._startLocation === '/login' || router.history._startLocation.includes('/emailVerify/') || router.history._startLocation.includes('/email-verification-success')) {
-        router.push({ name: 'root' });
-      } else {
-        router.push({ path: `${router.history._startLocation}`});
+      try {
+        const token = response.data.data.token.access_token;
+        let data = { token: token };
+        JwtService.saveTokenAndUser(data);
+        JwtService.setUser(response.data.data.user);
+        context.commit("setUser", {
+          token: response.data.data.access_token,
+  
+  
+        });
+  
+        if(router.history._startLocation === '/login' || router.history._startLocation.includes('/emailVerify/') || router.history._startLocation.includes('/email-verification-success')) {
+          router.push({ name: 'root' });
+        } else {
+          router.push({ path: `${router.history._startLocation}`});
+        }
+      } catch (e) {
+        if(response.data.data.includes("A verification code was sent to your email.")) {
+          console.log(response.data.data, 'error');
+          context.commit("setTwoFAMessage", {
+            twoFAMessage: response.data.data,
+          });
+        }
       }
     }).catch((e) => {
       let errorMessage;
