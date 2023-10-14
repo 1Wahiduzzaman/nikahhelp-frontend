@@ -6,7 +6,8 @@ export default {
   state() {
     return {
       token: localStorage.getItem("token") || null,
-      errorMessage:null
+      errorMessage:null,
+      twoFAMessage:null,
     };
   },
   mutations,

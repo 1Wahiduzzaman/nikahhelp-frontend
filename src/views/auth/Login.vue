@@ -16,8 +16,35 @@
         :rules="rules"
         class="form-signin pb-1px shadow"
       >
+        <div class="" v-if="verifyTwoFactor">
+          <p class="fs-16 text-black-50">{{ verifyTwoFactroMsg }}</p>
+          <a-form-model-item>
+            <a-input
+              type="text"
+              class="fs-16"
+              id="verficationCode"
+              v-model="signinModel.twoFACode"
+              placeholder="Verfication Code"
+            />
+          </a-form-model-item>
+          <button
+            type="button"
+            @click="verify2fa(signinModel)"
+            class="btn signin-btn h-32 w-100 mt-1"
+            style="padding: 0px !important; line-height: 1.3 !important;"
+          >
+            <a-icon type="loading" class="mr-2 fs-20" v-if="isLoading" />
+            Verify
+          </button>
+
+          <p class="ms-2 text-nowrap mt-3">
+            <div class="resend-code" @click="handleResend">
+              Resend code?
+            </div>
+          </p>
+        </div>
         <!-- <Spinner v-if="isLoading" /> -->
-        <p v-if="error">
+        <p v-else-if="error">
           {{ error }}
           <router-link
             to="/login"
@@ -100,6 +127,10 @@
 import Footer from "@/components/auth/Footer.vue";
 import Spinner from "@/components/ui/Spinner.vue";
 import InputPassword from "@/components/ui/InputPassword";
+import JwtService from "../../services/jwt.service";
+import axios from "axios";
+import router from "../../router";
+
 export default {
   name: "Login",
   components: {
@@ -112,6 +143,7 @@ export default {
       signinModel: {
         email: "",
         password: "",
+        twoFACode: "",
       },
       isLoading: false,
       error: null,
@@ -129,6 +161,8 @@ export default {
 
         password: [{ required: true, message: "Please input your password" }],
       },
+      verifyTwoFactor: false,
+      verifyTwoFactroMsg: ""
     };
   },
   methods: {
@@ -146,14 +180,19 @@ export default {
         if (valid) {
           try {
             this.isLoading = true;
-            this.$store.dispatch("login", this.signinModel).then((response) => {
-               this.isLoading = false;
+            let res = this.$store.dispatch("login", this.signinModel).then((response) => {
+              this.isLoading = false;
               if (this.$store.state.auth.errorMessage) {
                 this.$error({
                   title: this.$store.state.auth.errorMessage,
                   centered: true,
                 });
               }
+              if(this.$store.state.auth.twoFAMessage){
+                this.verifyTwoFactroMsg = this.$store.state.auth.twoFAMessage;
+                this.verifyTwoFactor = true;
+              }
+              console.log(response, 'rest');
             });
           } catch (error) {
            
@@ -165,7 +204,40 @@ export default {
         }
       });
     },
-
+    async verify2fa(payload) {
+      try {
+        let response = await axios.post('v1/verify-2fa', payload);
+        console.log(response, 'data');
+        if(response.data.message === "A verification code was sent to your email.") {
+          this.$success({
+            title: "A new verification code was sent to your email.",
+            centered: true,
+          });
+        } else if(response.data.message === "Logged in successfully!") {
+          const token = response.data.data.token.access_token;
+          let data = { token: token };
+          JwtService.saveTokenAndUser(data);
+          JwtService.setUser(response.data.data.user);
+    
+          if(router.history._startLocation === '/login' || router.history._startLocation.includes('/emailVerify/') || router.history._startLocation.includes('/email-verification-success')) {
+            router.push({ name: 'root' });
+          } else {
+            router.push({ path: `${router.history._startLocation}`});
+          }
+        }
+      } catch (error) {
+        console.log(error, 'error');
+        this.$error({
+          title: error.response.data.message,
+          centered: true,
+        });
+      }
+    },
+    async handleResend() {
+      this.signinModel.isResend = true;
+      this.verify2fa(this.signinModel);
+      this.signinModel.isResend = false;
+    },
     refreshLogin() {
       this.isLoading = false;
       this.error = "";
@@ -301,6 +373,14 @@ export default {
   &:hover {
     color: #ec1fab;
     border-bottom: 1px solid #ec1fab;
+  }
+}
+
+.resend-code {
+  color: #ec1fab;
+  cursor: pointer;
+  &:hover {
+    color: #ec1fab;
   }
 }
 .pb-1px {
