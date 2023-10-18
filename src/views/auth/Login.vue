@@ -226,7 +226,7 @@ export default {
         });
         return;
       }
-
+      this.isLoading = true;
       try {
         let response = await axios.post('v1/verify-2fa', payload);
         console.log(response, 'data');
@@ -254,6 +254,7 @@ export default {
           centered: true,
         });
       }
+      this.isLoading = false;
     },
     async handleResend() {
       this.signinModel.isResend = true;
