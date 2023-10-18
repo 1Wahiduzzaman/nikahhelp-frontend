@@ -205,6 +205,28 @@ export default {
       });
     },
     async verify2fa(payload) {
+
+      // validation for 2fa code
+      if(payload.twoFACode === "") {
+        this.$error({
+          title: "Please enter verification code.",
+          centered: true,
+        });
+        return;
+      } else if(payload.twoFACode.length != 6) {
+        this.$error({
+          title: "Please enter a valid verification code.",
+          centered: true,
+        });
+        return;
+      } else if(payload.twoFACode.match(/^[0-9]+$/) === null) {
+        this.$error({
+          title: "Please enter valid verification code.",
+          centered: true,
+        });
+        return;
+      }
+
       try {
         let response = await axios.post('v1/verify-2fa', payload);
         console.log(response, 'data');
