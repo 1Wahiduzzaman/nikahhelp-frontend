@@ -164,7 +164,7 @@
             :isSmall="true"
             title="DELETE"
             :responsive="false"
-            @onClickButton="handleClickPassword"
+            @onClickButton="handleDeleteAccount"
           />
         </div>
         <div style="border-bottom: none" class="password-details">
@@ -619,6 +619,7 @@ export default {
       }
     },
     handleDeleteAccount() {
+      this.isDeletionModalVisible = true;
       const vm = this;
       console.log(typeof this.confirmPassBeforeDelete, 'type of password');
       let payload = {
@@ -638,7 +639,11 @@ export default {
           ApiService.post("v1/delete-account", payload).then((data) => {
             console.log("Account deleted Succesfully");
             jwtService.destroyTokenAndUser();
-            vm.$router.push("/login");
+            // vm.$router.push("/login");
+            setTimeout(() => vm.$router.go("/login"), 100);
+          }).catch(e =>{
+            console.log(e);
+            vm.$message.error("Password is incorrect");
           });
         },
         onCancel() {
