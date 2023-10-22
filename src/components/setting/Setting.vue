@@ -164,7 +164,7 @@
             :isSmall="true"
             title="DELETE"
             :responsive="false"
-            @onClickButton="handleDeleteAccount"
+            @onClickButton="isDeletionModalVisible = true;"
           />
         </div>
         <div style="border-bottom: none" class="password-details">
@@ -619,9 +619,11 @@ export default {
       }
     },
     handleDeleteAccount() {
-      this.isDeletionModalVisible = true;
       const vm = this;
-      console.log(typeof this.confirmPassBeforeDelete, 'type of password');
+      if(this.confirmPassBeforeDelete.length < 8){
+        this.$message.error("Please enter password with at least 8 characters.");
+        return;
+      }
       let payload = {
         password: this.confirmPassBeforeDelete
       }
@@ -635,7 +637,7 @@ export default {
         async onOk() {
           // console.log('ok clicked indeleteion', this.isDeletionModalVisible)
           // console.log('ok clicked indeleteion');
-          // this.isDeletionModalVisible = false;
+          vm.isDeletionModalVisible = false;
           ApiService.post("v1/delete-account", payload).then((data) => {
             console.log("Account deleted Succesfully");
             jwtService.destroyTokenAndUser();
