@@ -2,8 +2,8 @@
   <div class="signin login-main-container">
     <div class="signin-inner desktop-padding login-header-container">
       <router-link class="logo" to="/"
-        ><img src="@/assets/Icons/Logo/SVG/White Logo.svg" alt="logo" class="mat-logo"
-      /></router-link>
+        ><img src="@/assets/Icons/Logo/SVG/White Logo.svg" alt="logo" class="mat-logo"/>
+      </router-link>
       <h3 id="welcome-back-tag" class="welcome-back-tag">
         <b>Welcome Back</b>
       </h3>
@@ -37,11 +37,24 @@
             Verify
           </button>
 
-          <p class="ms-2 text-nowrap mt-3">
-            <div class="resend-code" @click="handleResend">
-              Resend code?
+          <div class="my-2">
+            <span class="need-help" @click="showHelpInfo=!showHelpInfo">
+              Need Help?
+            </span>
+            <div v-if="showHelpInfo" class="mt-4">
+              <div style="background-color: #3ab549; color: #fff; padding: 8px; border-radius: 10px;">
+                <div class="fs-14 mb-0">
+                  Please wait! Verification code take up to 5 minutes to be sent to your email, If you didn't receive any verification code yet then request a 
+                  <div class="ms-2 text-nowrap mt-1">
+                    <a class="forgot-password" @click="handleResend">
+                      Resend code?
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
-          </p>
+          </div>
+
         </div>
         <!-- <Spinner v-if="isLoading" /> -->
         <p v-else-if="error">
@@ -162,7 +175,8 @@ export default {
         password: [{ required: true, message: "Please input your password" }],
       },
       verifyTwoFactor: false,
-      verifyTwoFactroMsg: ""
+      verifyTwoFactroMsg: "",
+      showHelpInfo: false,
     };
   },
   methods: {
@@ -207,19 +221,19 @@ export default {
     async verify2fa(payload) {
 
       // validation for 2fa code
-      if(payload.twoFACode === "") {
+      if(payload.twoFACode === "" && !payload.isResend) {
         this.$error({
           title: "Please enter verification code.",
           centered: true,
         });
         return;
-      } else if(payload.twoFACode.length != 6) {
+      } else if(payload.twoFACode.length != 6 && !payload.isResend) {
         this.$error({
           title: "Please enter a valid verification code.",
           centered: true,
         });
         return;
-      } else if(payload.twoFACode.match(/^[0-9]+$/) === null) {
+      } else if(payload.twoFACode.match(/^[0-9]+$/) === null && !payload.isResend) {
         this.$error({
           title: "Please enter valid verification code.",
           centered: true,
@@ -335,6 +349,17 @@ export default {
         font-size: 14px;
         margin-top: 5px;
       }
+
+      .need-help {
+        cursor:pointer; 
+        text-decoration:underline; 
+        font-size: 13px; 
+        color: grey;
+      
+        &:hover {
+          color: #000;
+        }
+      }
     }
   }
 }
@@ -399,13 +424,7 @@ export default {
   }
 }
 
-.resend-code {
-  color: #ec1fab;
-  cursor: pointer;
-  &:hover {
-    color: #ec1fab;
-  }
-}
+
 .pb-1px {
   padding-bottom: 1px !important;
 }
