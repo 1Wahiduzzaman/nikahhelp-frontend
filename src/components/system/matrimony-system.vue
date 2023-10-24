@@ -117,6 +117,7 @@ export default {
       // if (data.data.user.status != 3) {
       //   this.logout();
       // }
+      this.$store.commit('setUserInfo', data.data.data.user);
    }).catch(() => {
      this.logout();
    });

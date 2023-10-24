@@ -302,6 +302,7 @@ export default {
     async getUserInfo () {
        let {data} = await ApiService.get("v1/user").then(res => res.data);
        this.userInfo = data;
+       this.$store.commit("setUserInfo", data.user);
        this.profileStatus = this.userInfo.user["account_type"] == 1 && this.userInfo.candidate_information
                   ? this.userInfo.candidate_information.data_input_status == 0
                     ? "In-complete"

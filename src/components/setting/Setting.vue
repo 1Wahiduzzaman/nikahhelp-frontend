@@ -376,6 +376,7 @@ export default {
     async getUserInfo() {
       let { data } = await ApiService.get("v1/user").then((res) => res.data);
       this.userInfo = data;
+      this.$store.commit("setUserInfo", data.user);
     },
 
     checkStatus(index) {

@@ -269,7 +269,7 @@
                     </ul>
                   </template>
                 </a-dropdown>
-                <a-tooltip v-if="loggedUser && parseInt(loggedUser.status) === 3" title="Verified" placement="top">
+                <a-tooltip v-if="(loggedUser && parseInt(loggedUser.status) === 3) && verificationStatus == 3" title="Verified" placement="top">
                   <img src="@/assets/icon/verified_icon.svg" alt="icon" class="verify-icon ml-1" width="14px" />
                 </a-tooltip>
                 <img src="@/assets/icon/non_verified_icon.svg" alt="icon" class="verify-icon ml-1 animate-flicker cursor-pointer" width="14px" v-else @click="verifyPopup" />
@@ -467,6 +467,9 @@ export default {
         return loggedUser;
       }
       return null;
+    },
+    verificationStatus() {
+      return this.$store.getters.userInfo.status;
     },
     activeTeamInfo() {
       return this.teamsOriginal.find((item) => item.team_id == this.activeTeamId);
