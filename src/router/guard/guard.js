@@ -40,7 +40,7 @@ export const InitRoute =  (to, from, next) => {
         return to.name == 'CandidateShortRegistration' ? next() : next({ name: 'CandidateShortRegistration' });
     }
 
-    else if(user.account_type === 1 && user.form_type === 1 && user.data_input_status < 3) {
+    else if(user.account_type === 1 && user.form_type === 1 && user.data_input_status < 6) {
         return to.name == 'CandidateRegistration' ? next() : next({ name: 'CandidateRegistration' });
     }
 
@@ -54,7 +54,7 @@ export const InitRoute =  (to, from, next) => {
     //     return to.name == 'CandidateRegistration' ? next() : next({ name: 'CandidateRegistration' });
     // }
 
-    else if (user.account_type === 1 && user.form_type === 1 && user.data_input_status >= 5 && from.name === 'CandidateRegistration') {
+    else if (user.account_type === 1 && user.form_type === 1 && user.data_input_status > 5 && from.name === 'CandidateRegistration') {
 
         return to.name == 'ManageTeam' ? next() : next({ name: 'ManageTeam' });
     }
