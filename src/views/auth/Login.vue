@@ -400,6 +400,7 @@ export default {
 
 #welcome-back-tag {
   background: -webkit-linear-gradient(white, pink, white, #8debf2);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -434,7 +435,7 @@ export default {
   padding: 0 6px;
   border-radius: 20px;
   font-size: 12px;
-  font-width: 300;
+  font-weight: 300;
 }
 .join-now-btn:hover {
   background: $bg-primary;
