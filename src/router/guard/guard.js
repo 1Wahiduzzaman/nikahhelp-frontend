@@ -19,8 +19,14 @@ export const InitRoute =  (to, from, next) => {
     else if (!token && to.name == 'Home') {
         return next();
     }
+    else if(!token && to.name == 'ForgetPassword') {
+        return next();
+    }
     else if (!token) {
         return to.name == 'Login' ? next() : next({ name: 'Login' });
+    }
+    else if(user && token && to.name == 'ForgetPassword') {
+        return next({name: 'Home'});
     }
     else if(user && token && user.is_verified == 1 && to.name == 'VerifyEmail') {
         return next({ name: 'ManageTeam' });

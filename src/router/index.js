@@ -535,6 +535,7 @@ const AppRouter = new VueRouter({
             name: "ForgetPassword",
             // component: ForgetPassword,
             component: lazyLoadView('auth', 'ForgetPassword'),
+            beforeEnter: InitRoute,
         },
         {
             path: "/password-reset-token-verification/:token",
