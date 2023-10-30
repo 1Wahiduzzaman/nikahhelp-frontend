@@ -38,17 +38,15 @@
           </button>
 
           <div class="my-2">
-            <span class="need-help" @click="showHelpInfo=!showHelpInfo">
-              Need Help?
-            </span>
-            <div v-if="showHelpInfo" class="mt-4">
-              <div style="background-color: #3ab549; color: #fff; padding: 8px; border-radius: 10px;">
-                <div class="fs-14 mb-0">
+            <div class="mt-3">
+              <div style="background-color: #fff; color: #fff; padding: 8px; border-radius: 10px;">
+                <div class="fs-14 mb-0 text-black-50">
                   Please wait! Verification code take up to 5 minutes to be sent to your email, If you didn't receive any verification code yet then request a 
                   <div class="ms-2 text-nowrap mt-1">
-                    <a class="forgot-password" @click="handleResend">
-                      Resend code?
+                    <a v-if="timeLeft == 0" class="forgot-password text-dark" @click="handleResend">
+                      Resend code
                     </a>
+                    <span v-else>resend code in {{ formattedTimeLeft }}</span>
                   </div>
                 </div>
               </div>
@@ -103,7 +101,7 @@
           </button>
 
           <p class="ms-2 text-nowrap mt-3">
-            <router-link to="/forgot-password" class="forgot-password">
+            <router-link to="/forgot-password" class="forgot-password text-black-50">
               Forgot Password?
             </router-link>
           </p>
@@ -176,8 +174,34 @@ export default {
       },
       verifyTwoFactor: false,
       verifyTwoFactroMsg: "",
-      showHelpInfo: false,
+      timePassed: 0,
+      timerInterval: null,
+      timeLimit: 300
     };
+  },
+  computed: {
+    formattedTimeLeft() {
+      const timeLeft = this.timeLeft;
+      const minutes = Math.floor(timeLeft / 60);
+      let seconds = timeLeft % 60;
+
+      if (seconds < 10) {
+        seconds = `0${seconds}`;
+      }
+
+      return `${minutes}:${seconds}`;
+    },
+
+    timeLeft() {
+      return this.timeLimit - this.timePassed;
+    },
+  },
+  watch: {
+    timeLeft(newValue) {
+      if (newValue === 0) {
+        this.onTimesUp();
+      }
+    }
   },
   methods: {
     entered() {
@@ -205,6 +229,8 @@ export default {
               if(this.$store.state.auth.twoFAMessage){
                 this.verifyTwoFactroMsg = this.$store.state.auth.twoFAMessage;
                 this.verifyTwoFactor = true;
+                this.onTimesUp();
+                this.startTimer();
               }
               console.log(response, 'rest');
             });
@@ -217,6 +243,14 @@ export default {
           return false;
         }
       });
+    },
+    // resend btn timer
+    onTimesUp() {
+      clearInterval(this.timerInterval);
+    },
+    startTimer() {
+      this.timePassed = 0;
+      this.timerInterval = setInterval(() => (this.timePassed += 1, console.log(this.timePassed)), 1000);
     },
     async verify2fa(payload) {
 
@@ -249,7 +283,10 @@ export default {
             title: "A new verification code was sent to your email.",
             centered: true,
           });
+          this.onTimesUp();
+          this.startTimer();
         } else if(response.data.message === "Logged in successfully!") {
+          this.onTimesUp();
           const token = response.data.data.token.access_token;
           let data = { token: token };
           JwtService.saveTokenAndUser(data);
@@ -418,9 +455,9 @@ export default {
   margin-bottom: 0px;
 }
 .forgot-password {
-  color: #ec1fab;
+  font-size: 14px;
   &:hover {
-    color: #ec1fab;
+    color: #ec1fab !important;
     border-bottom: 1px solid #ec1fab;
   }
 }
