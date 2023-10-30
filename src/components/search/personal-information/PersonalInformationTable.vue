@@ -12,7 +12,7 @@
         :value="data.screen_name"
       />
       <template v-if="routeName === 'Profile'">
-        <TableRow
+        <!-- <TableRow
           title="Address Line 1"
           textClass="text-subtitle-1"
           :value="contact.address_1"
@@ -26,7 +26,7 @@
           title="City"
           textClass="text-subtitle-1"
           :value="contact.per_permanent_city"
-        />
+        /> -->
 
         <TableRow
           title="Mobile"
