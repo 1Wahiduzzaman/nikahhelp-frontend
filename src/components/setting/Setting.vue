@@ -4,6 +4,7 @@
       title="Change Password"
       :visible="visible"
       :confirm-loading="confirmLoading"
+      width="400px"
       @ok="handleOk"
       @cancel="handleCancel"
     >
@@ -35,6 +36,7 @@
       title="Confirm your Password"
       :visible="isDeletionModalVisible"
       :confirm-loading="confirmLoading"
+      width="400px"
       @ok="handleDeleteAccount"
       @cancel="isDeletionModalVisible = !isDeletionModalVisible"
     >
@@ -91,7 +93,7 @@
               style="width: 20px"
               src="@/assets/icon/account.svg"
               alt="img"
-            />&nbsp; {{ userData.full_name }} <span v-if="userData.accountType == 1">({{ userInfo.candidate_information.screen_name }})</span> <span v-if="userData.accountType == 2">({{ userInfo.representative_information.screen_name }})</span></span
+            />&nbsp; {{ userData.full_name }} <span v-if="userData.account_type == 1">({{ userInfo.candidate_information.screen_name }})</span> <span v-if="userData.account_type == 2">({{ userInfo.representative_information[0].screen_name }})</span></span
           >
           <span>
             <img
@@ -106,7 +108,14 @@
               src="@/assets/icon/home-outline.svg"
               alt="img"
             />
-            &nbsp; {{ userData.address ? userData.address : "Ex:UK,London" }}
+            &nbsp; {{ userData.account_type == 1 ? userData.get_candidate.address_1 : userData.get_representative.address_1 }} &nbsp; <br>
+            <div class="ms-6">
+              &nbsp; {{ userData.account_type == 1 ? userData.get_candidate.address_2 : userData.get_representative.address_2 }} &nbsp; <br>
+              &nbsp; {{ userData.account_type == 1 ? userData.get_candidate.per_permanent_city : userData.get_representative.per_permanent_city }} &nbsp; <br>
+              &nbsp; {{ userData.account_type == 1 ? userInfo.candidate_information.personal.per_permanent_country_name : userData.get_representative.per_permanent_country }} &nbsp; <br>
+            </div>
+
+            <!-- {{ userData.get_candidate.address_2 ? userData.get_candidate.address_2 : "Ex:UK,London" }} -->
           </span
           >
           <span
@@ -115,7 +124,7 @@
               src="@/assets/icon/phone.svg"
               alt="img"
             />&nbsp;{{
-              userData.mobile ? userData.mobile : `Ex:000-000-0000`
+              mobileNumber 
             }}</span
           >
         </div>
@@ -184,7 +193,7 @@
             alt="icon"
             style="width: 200px; height: 230px"
           />
-          <span class="font-weight: bold">Verified</span>
+          <span style="font-weight: bold;">Verified</span>
         </div>
         <div
           v-else-if="
@@ -354,6 +363,9 @@ export default {
     hasUploadedDoc() {
       return (this.userInfo?.candidate_information && this.userInfo?.candidate_information.is_uplaoded_doc == 1) ||
               (this.userInfo?.representative_information.length >= 1 && this.userInfo?.representative_information[0].is_uplaoded_doc == 1)
+    },
+    mobileNumber() {
+      return this.userData.account_type == 1 ? this.userInfo?.candidate_information?.personal?.mobile_number : this.userInfo?.representative_information[0]?.mobile_number
     }
   },
 
@@ -547,6 +559,16 @@ export default {
     },
     async handleOk(e) {
       this.ModalText = "Talking with server ㋡";
+      if(!(this.oldPass.length >= 8)) {
+        this.$message.error("Enter old password first");
+        return;
+      } else if(!(this.newPass.length >= 8)) {
+        this.$message.error("Enter a new pass");
+        return;
+      } else if(!(this.oldPass == this.newPass)){
+        this.$message.error("Passwords don't match");
+        return;
+      }
       this.confirmLoading = true;
       await ApiService.post("v1/change-password", {
         oldpassword: this.oldPass,
