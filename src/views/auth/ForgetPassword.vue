@@ -52,7 +52,7 @@
               <h5 class="fs-18 text-black-50">Retrieve your password here</h5>
               <p class="fs-14 text-black-50">
                 Please enter your registered email address below. You will receive a link
-                to reset your password.
+                to reset your password. <Spinner v-if="isLoading" />
               </p>
               <a-form-model
                 ref="forgetPasswordForm"
@@ -80,7 +80,7 @@
                 to="/login"
                 :class="{ 'flex justify-content-center': message }"
               >
-                &#xab; <span>Sign in</span>
+                &#xab; <span style="display:inline;">Sign in</span>
               </router-link>
               
               <!-- <button
@@ -93,14 +93,15 @@
                 Get Password Reset Link
               </button> -->
               <ButtonComponent
-                    v-if="!message"
-                    class="w-100 connect-button"
-                    backgroundColor="#3ab549"
-                    :isSmall="true"
-                    :isDisabled="disabled"
-                    title="Get Password Reset Link"
-                    :isBlock="true"
-                    @onClickButton="handleSubmit"
+                  v-if="!message"
+                  class="w-100 connect-button"
+                  backgroundColor="#3ab549"
+                  :isSmall="true"
+                  :isDisabled="disabled"
+                  title="Get Password Reset Link"
+                  :isBlock="true"
+                  :responsive="false"
+                  @onClickButton="handleSubmit"
               />
             </div>
           </div>
@@ -153,12 +154,13 @@ export default {
         this.$refs.forgetPasswordForm.validate((valid) => {
           if (valid) {
             this.disabled = true;
+            this.isLoading = true;
             this.$store
               .dispatch("forgetPassword", this.forgetPassword)
               .then((re) => {
                 this.disabled = false;
-                this.message =
-                  "We have sent you a password reset link to your registered email address. This link is valid for 15 mins.";
+                this.message = "We have sent you a password reset link to your registered email address. This link is valid for 15 mins.";
+                this.isLoading = false;
               })
               .catch((r) => {
                 this.disabled = false;
@@ -174,7 +176,6 @@ export default {
       } catch (error) {
         this.error = "There’s no account associated with this email address. Try another email address or create a new account.";
       }
-      this.isLoading = false;
     },
   },
 };
@@ -219,7 +220,7 @@ export default {
     }
     .form {
       background: $bg-white;
-      padding: 20px 10px;
+      padding: 20px;
       border-radius: 12px;
       max-width: 400px;
       display: flex;
@@ -231,6 +232,12 @@ export default {
       .button-container::v-deep {
         width: 100%;
         display: flex;
+        //height: 35px;
+
+        @media (max-width: 576px) {
+          flex-direction: column-reverse;
+          align-items: center;
+        }
         .btn-primary-outlined {
           box-shadow: none !important;
           border: none;
@@ -244,6 +251,9 @@ export default {
             &:hover {
               border-bottom: 1px solid #522e8e;
             }
+          }
+          @media (max-width: 576px) {
+            margin-top: 12px;
           }
         }
         .connect-button {
