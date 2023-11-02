@@ -102,14 +102,23 @@ export default {
   },
   methods: {
     async checkTokenValidity() {
-      let {data} = await ApiService.get(`/v1/password-reset/${this.$route.params.token}`).then(res => res.data);
+      let {data} = await ApiService.get(`/v1/password-reset/${this.$route.params.token}`).then(res => res);
       this.pageLoading = false;
-      this.tokenValid = !!(data && data.accepted);
+      this.tokenValid = !!(data.data && data.data.accepted);
+      this.message = data.message;
+
       if(!this.tokenValid) {
-        const self = this;
-        setTimeout(() => {
-          self.$router.push({ name: 'Login' });
-        }, 2000);
+        const vm = this;
+        this.$error({
+          title: "Error!",
+          content: this.message,
+          center: true,
+          onOk() {
+            setTimeout(() => {
+              vm.$router.push({ name: 'Login' });
+            }, 1000)
+          }
+        });
       }
     },
     async handleSubmit() {

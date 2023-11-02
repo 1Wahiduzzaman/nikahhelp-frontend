@@ -320,8 +320,8 @@
       </a-collapse>
     </div>
     <div class="verification-msg" v-if="candidateDetails &&
-      candidateDetails.is_uplaoded_doc == '1' && (userData.status !== '3' && verificationStatus != '3')
-      ">
+      candidateDetails.is_uplaoded_doc == '1' && verificationStatus != '3'"
+    >
       <div class="identity">
         <img src="@/assets/Verification_Icons/Icon/SVG/Pending.svg" alt="icon" style="width: 200px; height: 230px" />
         <span>In Review</span>
@@ -334,7 +334,7 @@
           card or residence permit issued in European Economic Are (EEA).</span>
       </div>
     </div>
-    <div class="verification-msg" v-if="userData && (userData.status == '3' || verificationStatus == '3')">
+    <div class="verification-msg" v-if="userData && verificationStatus == '3'">
       <div class="identity">
         <img src="@/assets/icon/varified.svg" alt="icon" style="width: 200px; height: 230px" />
         &nbsp;

@@ -269,7 +269,7 @@
                     </ul>
                   </template>
                 </a-dropdown>
-                <a-tooltip v-if="(loggedUser && parseInt(loggedUser.status) === 3) || verificationStatus == '3'" title="Verified" placement="top">
+                <a-tooltip v-if="(loggedUser &&  verificationStatus == '3')" title="Verified" placement="top">
                   <img src="@/assets/icon/verified_icon.svg" alt="icon" class="verify-icon ml-1" width="14px" />
                 </a-tooltip>
                 <img src="@/assets/icon/non_verified_icon.svg" alt="icon" class="verify-icon ml-1 animate-flicker cursor-pointer" width="14px" v-else @click="verifyPopup" />
