@@ -6,6 +6,12 @@ export default {
     // console.log(response);
     localStorage.setItem("userId", response.data.data.user.id);
     localStorage.setItem("userInfo", JSON.stringify(response.data.data.user));
+
+    // update status in localStorage
+    let localStorageUser = JSON.parse(localStorage.getItem("user"));
+    localStorageUser.status = response.data.data.user.status;
+    localStorage.setItem("user", JSON.stringify(localStorageUser));
+
     context.commit("setUserInfo", response.data.data.user);
     context.commit(
       "setCandidateInfo",

@@ -388,6 +388,12 @@ export default {
     async getUserInfo() {
       let { data } = await ApiService.get("v1/user").then((res) => res.data);
       this.userInfo = data;
+      
+      // update status in localStorage
+      let localStorageUser = JSON.parse(localStorage.getItem("user"));
+      localStorageUser.status = data.user.status;
+      localStorage.setItem("user", JSON.stringify(localStorageUser));
+
       this.$store.commit("setUserInfo", data.user);
     },
 

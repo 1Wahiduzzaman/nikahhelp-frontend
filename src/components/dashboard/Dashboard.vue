@@ -300,32 +300,38 @@ export default {
   },
   methods: {
     async getUserInfo () {
-       let {data} = await ApiService.get("v1/user").then(res => res.data);
-       this.userInfo = data;
-       this.$store.commit("setUserInfo", data.user);
-       this.profileStatus = this.userInfo.user["account_type"] == 1 && this.userInfo.candidate_information
-                  ? this.userInfo.candidate_information.data_input_status == 0
-                    ? "In-complete"
-                    : this.userInfo.candidate_information.data_input_status > 5 &&
-                      this.userInfo.candidate_information.is_uplaoded_doc == 1
-                    ? "Fully Completed"
-                    : this.userInfo.candidate_information.data_input_status > 5 &&
-                      this.userInfo.candidate_information.is_uplaoded_doc == 0
-                    ? "Completed Without ID"
-                    : "Partially Completed"
-                  : this.userInfo.user["account_type"] == 2 && this.userInfo.representative_information
-                  ? this.userInfo.representative_information.data_input_status == 0
-                    ? "In-complete"
-                    : this.userInfo.representative_information.data_input_status > 2 &&
-                      this.userInfo.representative_information.is_uplaoded_doc == 1
-                    ? "Fully Completed"
-                    : this.userInfo.representative_information.data_input_status > 2 &&
-                      this.userInfo.representative_information.is_uplaoded_doc == 0
-                    // ? "Completed Without ID"
-                    // : "Partially Completed"
-                    ? "Fully Completed"
-                    : "Fully Completed"
-                  : "In-completed";
+      let {data} = await ApiService.get("v1/user").then(res => res.data);
+      this.userInfo = data;
+      this.$store.commit("setUserInfo", data.user);
+      
+      // update status in localStorage
+      let localStorageUser = JSON.parse(localStorage.getItem("user"));
+      localStorageUser.status = data.user.status;
+      localStorage.setItem("user", JSON.stringify(localStorageUser));
+      
+      this.profileStatus = this.userInfo.user["account_type"] == 1 && this.userInfo.candidate_information
+                ? this.userInfo.candidate_information.data_input_status == 0
+                  ? "In-complete"
+                  : this.userInfo.candidate_information.data_input_status > 5 &&
+                    this.userInfo.candidate_information.is_uplaoded_doc == 1
+                  ? "Fully Completed"
+                  : this.userInfo.candidate_information.data_input_status > 5 &&
+                    this.userInfo.candidate_information.is_uplaoded_doc == 0
+                  ? "Completed Without ID"
+                  : "Partially Completed"
+                : this.userInfo.user["account_type"] == 2 && this.userInfo.representative_information
+                ? this.userInfo.representative_information.data_input_status == 0
+                  ? "In-complete"
+                  : this.userInfo.representative_information.data_input_status > 2 &&
+                    this.userInfo.representative_information.is_uplaoded_doc == 1
+                  ? "Fully Completed"
+                  : this.userInfo.representative_information.data_input_status > 2 &&
+                    this.userInfo.representative_information.is_uplaoded_doc == 0
+                  // ? "Completed Without ID"
+                  // : "Partially Completed"
+                  ? "Fully Completed"
+                  : "Fully Completed"
+                : "In-completed";
       console.log(this.profileStatus);
     },
     async loadTeams() {

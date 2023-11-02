@@ -118,6 +118,12 @@ export default {
       //   this.logout();
       // }
       this.$store.commit('setUserInfo', data.data.data.user);
+
+      // update status in localStorage
+      let localStorageUser = JSON.parse(localStorage.getItem("user"));
+      localStorageUser.status = data.data.data.user.status;
+      localStorage.setItem("user", JSON.stringify(localStorageUser));
+
    }).catch(() => {
      this.logout();
    });
