@@ -41,10 +41,13 @@
             <div class="mt-3">
               <div style="background-color: #fff; color: #fff; padding: 8px; border-radius: 10px;">
                 <div class="fs-14 mb-0 text-black-50">
-                  Please wait! Verification code take up to 5 minutes to be sent to your email, If you didn't receive any verification code yet then request a 
+                  If you didn't receive any verification code yet then please wait! Verification code may take up to 5 minutes to be sent to your email, you can request a 
                   <div class="ms-2 text-nowrap mt-1">
-                    <a v-if="timeLeft == 0" class="forgot-password text-dark" @click="handleResend">
-                      Resend code
+                    <a-icon type="loading" class="mr-2 fs-20" v-if="isResendingCode" />
+                    <a v-if="timeLeft == 0" class="resend-code" @click="handleResend">
+                      <v-else>
+                        Resend code
+                      </v-else>
                     </a>
                     <span v-else>resend code in {{ formattedTimeLeft }}</span>
                   </div>
@@ -176,7 +179,8 @@ export default {
       verifyTwoFactroMsg: "",
       timePassed: 0,
       timerInterval: null,
-      timeLimit: 300
+      timeLimit: 300,
+      isResendingCode: false,
     };
   },
   computed: {
@@ -254,6 +258,10 @@ export default {
     },
     async verify2fa(payload) {
 
+      if(this.isResendingCode) {
+        return;
+      }
+
       // validation for 2fa code
       if(payload.twoFACode === "" && !payload.isResend) {
         this.$error({
@@ -274,13 +282,13 @@ export default {
         });
         return;
       }
-      this.isLoading = true;
+      this.isResendingCode = true;
       try {
         let response = await axios.post('v1/verify-2fa', payload);
         console.log(response, 'data');
         if(response.data.message === "A verification code was sent to your email.") {
           this.$success({
-            title: "A new verification code was sent to your email.",
+            title: "A new verification code was sent to your email, please check your email inbox, spam or junk folder for latest verification code.",
             centered: true,
           });
           this.onTimesUp();
@@ -305,7 +313,7 @@ export default {
           centered: true,
         });
       }
-      this.isLoading = false;
+      this.isResendingCode = false;
     },
     async handleResend() {
       this.signinModel.isResend = true;
@@ -458,6 +466,15 @@ export default {
   font-size: 14px;
   &:hover {
     color: #ec1fab !important;
+    border-bottom: 1px solid #ec1fab;
+  }
+}
+
+.resend-code {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ec1fab !important;
+  &:hover {
     border-bottom: 1px solid #ec1fab;
   }
 }
