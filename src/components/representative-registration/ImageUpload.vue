@@ -32,7 +32,7 @@
                           <div class="img-preview mb-2">
                             <img 
                               v-viewer="{toolbar: false, title: false, navbar: false}"
-                              :src=" avatarSrc ? avatarSrc : imageModel.per_avatar_url + `?token=${token}`" 
+                              :src=" avatarSrc ? avatarSrc : imageModel.per_avatar_url" 
                               class="contain" 
                               v-if="imageModel.per_avatar_url" 
                             />
@@ -298,24 +298,48 @@ export default {
       }
       return true;
     },
-
-    getAvatar(e) {
+    async getAvatar(e) {
       this.loading = true;
+      // let file = e.target.files[0];
       let file = e;
+      console.log(file);
       if (!this.imageSizeCheck(file)) {
         file = "";
         return;
       }
-
-      this.imageModel.per_avatar_url = file;
+      this.imageModel.avatar_image_url = file;
       let formData = new FormData();
-      formData.append("image", this.imageModel.per_avatar_url);
-      this.saveImages(formData, '_per_avatar_url');
+      formData.append("image", this.imageModel.avatar_image_url);
+      // this.saveImage(formData, '_per_avatar_url');
+
+      await axios.post('v1/avatar/image-upload', formData).then(async response => {
+        console.log(response.data);
+        let payload = {
+          per_avatar_url: process.env.VUE_APP_IMAGE.slice(0, -3) + response.data
+        }
+        await axios.post('v1/representative/image/upload', payload).then(response => {
+          console.log(response, payload.per_avatar_url, 'from representative image upload');
+
+          this.$emit("valueChange", {
+            value: {
+              per_avatar_url: payload.per_avatar_url ? payload.per_avatar_url : this.imageModel.per_avatar_url,
+              per_main_image_url: this.imageModel.per_main_image_url,
+            },
+            current: 1,
+          });
+        }).catch(error => {
+          console.log(error);
+        });
+
+      }).catch(error => {
+        console.log(error);
+      });
+
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
         this.avatarSrc = e.target.result;
-        this.loading = false
+        this.loading = false;
       };
     },
     async setAvatar(avatarNo) {
