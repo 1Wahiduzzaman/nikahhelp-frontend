@@ -50,7 +50,7 @@
                   <div class="img-preview mb-2">
                     <img
                       v-viewer="{toolbar: false, title: false}"
-                      :src="avatarSrc ? avatarSrc : imageModel.avatar_image_url + `?token=${token}`"
+                      :src="avatarSrc ? avatarSrc : imageModel.avatar_image_url"
                       class="contain"
                       v-if="imageModel.avatar_image_url"
                     />
@@ -444,7 +444,7 @@ export default {
           console.log(error.message);
         });
     },
-    getAvatar(e) {
+    async getAvatar(e) {
       this.loading = true;
       // let file = e.target.files[0];
       let file = e;
@@ -456,7 +456,32 @@ export default {
       this.imageModel.avatar_image_url = file;
       let formData = new FormData();
       formData.append("image", this.imageModel.avatar_image_url);
-      this.saveImage(formData, '_per_avatar_url');
+      // this.saveImage(formData, '_per_avatar_url');
+
+      await axios.post('v1/avatar/image-upload', formData).then(async response => {
+        console.log(response.data);
+        let payload = {
+          per_avatar_url: process.env.VUE_APP_IMAGE.slice(0, -3) + response.data
+        }
+        await axios.post('v1/candidate/image-upload', payload).then(response => {
+          console.log(response);
+
+          this.$emit("valueChange", {
+            value: {
+              avatar_image_url: payload.per_avatar_url ? payload.per_avatar_url : this.imageModel.avatar_image_url,
+              main_image_url: this.imageModel.main_image_url,
+              additionalImageSrc: this.imageModel.additionalImageSrc,
+            },
+            current: 3,
+          });
+        }).catch(error => {
+          console.log(error);
+        });
+
+      }).catch(error => {
+        console.log(error);
+      });
+
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = (e) => {
