@@ -53,10 +53,10 @@
                             <!-- <input v-if="!imageModel.per_avatar_url" type="file" class="input-image" id="input-avatar-image" name="avatar"
                             @change="getAvatar" /> -->
                           </label>
-                          <a-button type="primary" style="width: 200px; border-radius: 5px;" v-if="imageModel.per_avatar_url"
-                            @click="clearImg('avatar')"
+                          <a-button class="upload-label" v-if="imageModel.per_avatar_url"
+                            @click="showAvatarSelectionMenu=true"
                           >
-                            Remove
+                            Change
                           </a-button>
                           <a-modal 
                             :visible="showAvatarSelectionMenu" 
@@ -112,10 +112,11 @@
                             <input v-if="!imageModel.per_main_image_url" type="file" class="input-image" id="input-main-image" name="mainImage"
                             @change="getMainImage" />
                           </label>
-                          <a-button type="primary" style="width: 200px; border-radius: 5px;" v-if="imageModel.per_main_image_url"
-                            @click="clearImg('main')">
-                            Remove
-                          </a-button>
+                          <label for="input-main-image" class="upload-label" v-if="imageModel.per_main_image_url">
+                            Change
+                            <input v-if="imageModel.per_main_image_url" type="file" class="input-image" id="input-main-image" name="mainImage"
+                            @change="getMainImage" />
+                          </label>
                         </div>
                       </div>
                     </a-col>
@@ -252,40 +253,26 @@ export default {
       });
       console.log(this.images);
     },
-    clearImg(action) {
-      switch (action) {
-        case "main":
-          this.mainImageSrc = "";
-          this.imageModel.per_main_image_url = "";
-          this.deleteImage(1);
-          break;
-        case "avatar":
-          this.avatarSrc = "";
-          this.imageModel.per_avatar_url = "";
-          this.deleteImage(0);
-          this.avatarNo = 0;
-          break;
-      }
-    },
-    async deleteImage(data) {
-      this.$emit('disableNextBtn');
-      await this.$store.dispatch("deleteRepImage", data);
-      let payload = {
-        folder : ""
-      };
-      if(data == 1) {
-        payload.folder = "_per_main_image_url"
-      } else if(data == 0) {
-        payload.folder = "_per_avatar_url"
-      }
-      await this.$store.dispatch("deleteImageDir", payload);
-      this.$emit("valueChange", {
-        value: {
-          ...this.imageModel,
-        },
-        current: 1,
-      });
-    },
+    // this bit code is for deleting image -- not used anymore -- just for reference
+    // async deleteImage(data) {
+    //   this.$emit('disableNextBtn');
+    //   await this.$store.dispatch("deleteRepImage", data);
+    //   let payload = {
+    //     folder : ""
+    //   };
+    //   if(data == 1) {
+    //     payload.folder = "_per_main_image_url"
+    //   } else if(data == 0) {
+    //     payload.folder = "_per_avatar_url"
+    //   }
+    //   await this.$store.dispatch("deleteImageDir", payload);
+    //   this.$emit("valueChange", {
+    //     value: {
+    //       ...this.imageModel,
+    //     },
+    //     current: 1,
+    //   });
+    // },
     imageSizeCheck(file) {
       if (file["size"] > 4223550) {
         this.$error({

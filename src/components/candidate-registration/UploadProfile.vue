@@ -41,12 +41,6 @@
             <div class="row">
               <div class="col-12 col-md-4">
                 <div class="text-center">
-                  <!-- <span
-                    @click="clearImg('avatar')"
-                    class="close-icon"
-                    v-if="imageModel.avatar_image_url"
-                    ><img src="@/assets/icon/close.svg" alt="img"
-                  /></span> -->
                   <div class="img-preview mb-2">
                     <img
                       v-viewer="{toolbar: false, title: false}"
@@ -85,10 +79,10 @@
                   <label for="input-avatar-image" class="upload-label" v-if="!imageModel.avatar_image_url" @click="showAvatarSelectionMenu=true">
                     Upload
                   </label>
-                  <a-button type="primary" style="width: 200px; border-radius: 5px;" v-if="imageModel.avatar_image_url"
-                    @click="clearImg('avatar')"
+                  <a-button class="upload-label" v-if="imageModel.avatar_image_url"
+                    @click="showAvatarSelectionMenu=true"
                   >
-                    Remove
+                    Change
                   </a-button>
                   <a-modal 
                     :visible="showAvatarSelectionMenu" 
@@ -124,12 +118,6 @@
               </div>
               <div class="col-12 col-md-4 mobile-margin">
                 <div class="text-center">
-                  <!-- <span
-                    @click="clearImg('main')"
-                    class="close-icon"
-                    v-if="imageModel.main_image_url"
-                    ><img src="@/assets/icon/close.svg" alt="img"
-                  /></span> -->
                   <div class="img-preview mb-2">
                     <img
                       v-viewer="{toolbar: false, title: false}"
@@ -172,20 +160,15 @@
                     <input v-if="!imageModel.main_image_url" type="file" class="input-image" id="input-main-image" name="mainImage"
                     @change="getMainImage" />
                   </label>
-                  <a-button type="primary" style="width: 200px; border-radius: 5px;" v-if="imageModel.main_image_url"
-                    @click="clearImg('main')">
-                    Remove
-                  </a-button>
+                  <label for="input-main-image" class="upload-label" v-if="imageModel.main_image_url">
+                    Change
+                    <input v-if="imageModel.main_image_url" type="file" class="input-image" id="input-main-image" name="mainImage"
+                    @change="getMainImage" />
+                  </label>
                 </div>
               </div>
               <div class="col-12 col-md-4 mobile-margin">
                 <div class="text-center">
-                  <!-- <span
-                    @click="clearImg('additional')"
-                    class="close-icon"
-                    v-if="imageModel.additionalImageSrc"
-                    ><img src="@/assets/icon/close.svg" alt="img"
-                  /></span> -->
                   <div class="img-preview mb-2">
                     <img
                       v-viewer="{toolbar: false, title: false}"
@@ -230,10 +213,11 @@
                     <input v-if="!imageModel.additionalImageSrc" type="file" class="input-image" id="input-aditional-image" name="mainImage"
                     @change="getAdditionalImage" />
                   </label>
-                  <a-button type="primary" style="width: 200px; border-radius: 5px;" v-if="imageModel.additionalImageSrc"
-                    @click="clearImg('additional')">
-                    Remove
-                  </a-button>
+                  <label for="input-aditional-image" class="upload-label" v-if="imageModel.additionalImageSrc">
+                    Change
+                    <input v-if="imageModel.additionalImageSrc" type="file" class="input-image" id="input-aditional-image" name="mainImage"
+                    @change="getAdditionalImage" />
+                  </label>
                 </div>
               </div>
             </div>
@@ -357,48 +341,6 @@ export default {
         return aNum - bNum;
       });
       console.log(this.images);
-    },
-    clearImg(action) {
-      switch (action) {
-        case "main":
-          this.$emit('disableNextBtn');
-          this.mainImageSrc = "";
-          this.imageModel.main_image_url = "";
-          this.deleteImage(1);
-          break;
-        case "avatar":
-          this.$emit('disableNextBtn');
-          this.avatarSrc = "";
-          this.imageModel.avatar_image_url = "";
-          this.deleteImage(0);
-          this.avatarNo = 0;
-          break;
-        case "additional":
-          this.additionalImageSrc = "";
-          this.imageModel.additionalImageSrc = "";
-          this.deleteImage(9);
-          break;
-      }
-    },
-    async deleteImage(data) {
-      await this.$store.dispatch("deleteImage", data);
-      let payload = {
-        folder : ""
-      };
-      if(data == 1) {
-        payload.folder = "_per_main_image_url"
-      } else if(data == 0) {
-        payload.folder = "_per_avatar_url"
-      } else if(data == 9) {
-        payload.folder = "_additional_image"
-      }
-      await this.$store.dispatch("deleteImageDir", payload);
-      this.$emit("valueChange", {
-        value: {
-          ...this.imageModel,
-        },
-        current: 3,
-      });
     },
     showError(errorMessage) {
       this.$error({

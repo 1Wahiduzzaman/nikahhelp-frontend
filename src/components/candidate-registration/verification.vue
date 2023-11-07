@@ -236,10 +236,11 @@
                     <input v-if="!verification.ver_image_front" type="file" class="input-image" id="upload-front-side"
                       name="avatar" @change="getFrontPage" />
                   </label>
-                  <a-button type="primary" style="width: 185px; border-radius: 5px;" v-if="verification.ver_image_front"
-                    @click="clearImg('font')">
-                    Remove
-                  </a-button>
+                  <label for="upload-front-side" class="upload-label" v-if="verification.ver_image_front">
+                    Change
+                    <input v-if="verification.ver_image_front" type="file" class="input-image" id="upload-front-side"
+                      name="avatar" @change="getFrontPage" />
+                  </label>
                 </div>
               </div>
               <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
@@ -294,10 +295,11 @@
                     <input v-if="!verification.ver_image_back" type="file" class="input-image" id="upload-back-side"
                       name="avatar" @change="getBackPage" />
                   </label>
-                  <a-button type="primary" style="width: 185px; border-radius: 5px;" v-if="verification.ver_image_back"
-                    @click="clearImg('back')">
-                    Remove
-                  </a-button>
+                  <label for="upload-back-side" class="upload-label" v-if="verification.ver_image_back">
+                    Change
+                    <input v-if="verification.ver_image_back" type="file" class="input-image" id="upload-back-side"
+                      name="avatar" @change="getBackPage" />
+                  </label>
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin mobile-help">
@@ -586,28 +588,6 @@ export default {
       this.loading = true;
       this.checkValidation(name);
       this.saveVerificationInfo();
-    },
-    clearImg(action) {
-      switch (action) {
-        case "back":
-          this.$emit('disableNextBtn');
-          this.imageBack = "";
-          this.verification.ver_image_back = "";
-          this.$emit("valueChange", {
-            value: this.verification,
-            current: 4,
-          });
-          break;
-        case "font":
-          this.$emit('disableNextBtn');
-          this.imageFont = "";
-          this.verification.ver_image_front = "";
-          this.$emit("valueChange", {
-            value: this.verification,
-            current: 4,
-          });
-          break;
-      }
     },
   },
 };
