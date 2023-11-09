@@ -254,7 +254,7 @@ export default {
 		},
 		openGallery() {
 			this.viewerImages = [];
-			let images = [this.representativeData.image_upload.per_avatar_url, this.representativeData.image_upload.per_main_image_url]
+			let images = [this.representativeData.image_upload.per_avatar_url, this.representativeData.image_upload.per_main_image_url + `?token=${this.token}`]
 			if (images && images.length > 0) {
 				images.map((i) => this.viewerImages.push(i));
 				this.show();
