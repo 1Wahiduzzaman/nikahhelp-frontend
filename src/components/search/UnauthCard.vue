@@ -14,7 +14,7 @@
     </template>
     <v-img
         height="250"
-        :src="require(`@/assets/avatar/${getRandomAvatar()}`)"
+        :src="candidate.image"
     ></v-img>
 
     <v-card-title>{{ candidate.screen_name }}</v-card-title>
@@ -191,12 +191,7 @@ export default {
     onceMore: true,
     moreText: false,
     modalVisibility: false,
-			avatars: [],
   }),
-  created() {
-		this.importAll(require.context('../../assets/avatar/', true, /\.png$/));
-    
-  },
   methods: {
     ...mapMutations({
       setComponent: 'search/setComponent',
@@ -210,22 +205,6 @@ export default {
       fetchProfileDetail: 'search/fetchProfileDetail',
 
     }),
-    importAll(r) {
-			r.keys().forEach(key => (this.avatars.push({ pathShort: key })));
-			console.log(this.avatars);
-		},
-		getRandomAvatar() {
-			if(this.candidate.per_gender === 'Male') {
-				let random = Math.floor(Math.random() * this.avatars.length / 2);
-				console.log(random, 'random');
-				return this.avatars[random].pathShort.substring(2, this.avatars[random].pathShort.length);
-			} else {
-				let random = Math.floor(Math.random() * (this.avatars.length - (this.avatars.length / 2)) + this.avatars.length / 2);
-				console.log(random, 'random');
-				return this.avatars[random].pathShort.substring(2, this.avatars[random].pathShort.length);
-
-			}
-		},
     onClickButton(eventData) {
       if(eventData.event == 'viewProfileDetail') {
         this.ViewProfileDetail()
