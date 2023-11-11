@@ -168,6 +168,10 @@ export default {
                   this.$error({
                     title: 'There’s no account associated with this email address. Try another email address or create a new account.',
                     center: true,
+
+                    onOk: () => {
+                      this.$router.push('/login');
+                    }
                   });
                 }
               });
