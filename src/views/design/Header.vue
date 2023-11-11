@@ -272,7 +272,12 @@
                 <a-tooltip v-if="(loggedUser &&  verificationStatus == '3')" title="Verified" placement="top">
                   <img src="@/assets/icon/verified_icon.svg" alt="icon" class="verify-icon ml-1" width="14px" />
                 </a-tooltip>
-                <img src="@/assets/icon/non_verified_icon.svg" alt="icon" class="verify-icon ml-1 animate-flicker cursor-pointer" width="14px" v-else @click="verifyPopup" />
+                <a-tooltip v-else-if="(loggedUser &&  verificationStatus == '4')" title="Rejected" placement="top">
+                  <router-link to="/settings"><img src="@/assets/icon/Rejected_Header_Icon.svg" alt="icon" class="verify-icon ml-1" width="14px"/></router-link>
+                </a-tooltip>
+                <a-tooltip v-else title="Rejected" placement="top">
+                  <img src="@/assets/icon/non_verified_icon.svg" alt="icon" class="verify-icon ml-1 animate-flicker cursor-pointer" width="14px" @click="verifyPopup" />
+                </a-tooltip>
 <!--                <span class="role px-2 ml-1 shrink-none">-->
 <!--&lt;!&ndash;                  {{ loggedUser && parseInt(loggedUser.status) === 3 ? 'V' : 'Not verified' }}&ndash;&gt;-->
 <!--                </span>-->

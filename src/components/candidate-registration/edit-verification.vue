@@ -1,6 +1,6 @@
 <template>
   <div id="accordion" class="verificationInfo p-3 rounded">
-    <div v-if="candidateDetails && candidateDetails.is_uplaoded_doc == '0'" class="verification-content"
+    <div v-if="candidateDetails && (candidateDetails.is_uplaoded_doc == '0' || verificationStatus == '4')" class="verification-content"
       style="margin-top: 40px">
       <div class="section-heading heading-text">
         <h5>Verification Information</h5>
@@ -230,10 +230,12 @@
                     <input v-if="!verification.ver_image_front" type="file" class="input-image" id="upload-front-side"
                       name="avatar" @change="getFrontPage" />
                   </label>
-                  <a-button type="primary" style="width: 185px" v-if="verification.ver_image_front"
-                    @click="clearImg('font')">
-                    Remove
-                  </a-button>
+                  <label for="upload-front-side" class="upload-label" v-if="verification.ver_image_front">
+                    Change
+                    <input v-if="verification.ver_image_front" type="file" class="input-image" id="upload-front-side"
+                      name="avatar" @change="getFrontPage" />
+                  </label>
+                  
                 </div>
               </div>
               <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
@@ -281,10 +283,12 @@
                     <input v-if="!verification.ver_image_back" type="file" class="input-image" id="upload-back-side"
                       name="avatar" @change="getBackPage" />
                   </label>
-                  <a-button type="primary" style="width: 185px" v-if="verification.ver_image_back"
-                    @click="clearImg('back')">
-                    Remove
-                  </a-button>
+                  <label for="upload-back-side" class="upload-label" v-if="verification.ver_image_back">
+                    Change
+                    <input v-if="verification.ver_image_back" type="file" class="input-image" id="upload-back-side"
+                      name="avatar" @change="getBackPage" />
+                  </label>
+
                 </div>
               </div>
               <div class="col-12 col-md-6 mobile-margin mobile-help">
@@ -320,7 +324,7 @@
       </a-collapse>
     </div>
     <div class="verification-msg" v-if="candidateDetails &&
-      candidateDetails.is_uplaoded_doc == '1' && verificationStatus != '3'"
+      candidateDetails.is_uplaoded_doc == '1' && (verificationStatus != '3' && verificationStatus !== '4')"
     >
       <div class="identity">
         <img src="@/assets/Verification_Icons/Icon/SVG/Pending.svg" alt="icon" style="width: 200px; height: 230px" />
@@ -356,7 +360,7 @@
 </style>
 <script>
 import FileUploadOne from "@/components/shared/FileUploadOne.vue";
-// import ApiService from "@/services/api.service";
+import ApiService from "@/services/api.service";
 import axios from "axios";
 import vSelect from "vue-select";
 import { VERIFICATION } from "./models/candidate";
@@ -404,6 +408,7 @@ export default {
     };
   },
   created() {
+    this.getUserInfo();
     this.userData = JSON.parse(localStorage.getItem("user"));
     this.getToken();
   },
@@ -414,6 +419,16 @@ export default {
     },
   },
   methods: {
+    async getUserInfo() {
+      let { data } = await ApiService.get("v1/user").then((res) => res.data);
+      
+      // update status in localStorage
+      let localStorageUser = JSON.parse(localStorage.getItem("user"));
+      localStorageUser.status = data.user.status;
+      localStorage.setItem("user", JSON.stringify(localStorageUser));
+
+      this.$store.commit("setUserInfo", data.user);
+    },
     getToken() {
       this.token = JSON.parse(localStorage.getItem("token"));
     },

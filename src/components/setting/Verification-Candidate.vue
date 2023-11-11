@@ -281,6 +281,7 @@
 <script>
 import FileUploadOne from "@/components/shared/FileUploadOne.vue";
 import ApiService from "@/services/api.service";
+import axios from "axios";
 import vSelect from "vue-select";
 import { VERIFICATION } from "../candidate-registration/models/candidate";
 export default {
