@@ -197,7 +197,7 @@
         </div>
         <div
           v-else-if="
-            (!verification && checkStatus('2') && hasUploadedDoc) || (!verification && userInfo.user.account_type === 2)
+            (!verification && checkStatus('2') && hasUploadedDoc) || (!verification && userInfo.user.account_type === 2 && checkStatus('2'))
           "
           class="identity"
         >
@@ -213,18 +213,36 @@
           class="identity"
         >
           <img
-            src="@/assets/rejected.jpg"
+            src="@/assets/Verification_Icons/Icon/SVG/Rejected.svg"
             alt="icon"
             style="width: 200px; height: 230px"
           />
-          <ButtonComponent
+          <!-- <ButtonComponent
             style="width: 150px"
             :isSmall="true"
             title="Resubmit ID"
             :isBlock="true"
             :responsive="false"
             @onClickButton="openVerifyForm"
-          />
+          /> -->
+          <span style="font-weight: bold; margin: 10px 0px; font-size: 1.5rem;">Rejected</span>
+
+          <!-- <span style="font-size: 16px; padding: 30px;">{{  getRejectedNote  }}</span> -->
+          <div class="d-flex flex-column w-100 justify-content-center" style="padding: 20px; font-size: 1rem;">
+            <div class="w-100 py-2 px-4 bg-light rounded">
+              Sorry! your registration form or Verification Document did not
+              comply with MatrimonyAssist <router-link class="router-link" to="/terms_condition">Terms and Conditions.</router-link>
+            </div>
+            <div class="w-100 py-2 px-4 bg-danger rounded text-light"> 
+              Please update and resubmit your informations of <b>{{  getRejectedNote  }}</b>
+              <br>
+              *you can quickly Update and resubmit your All informations from <router-link v-if="userInfo.user.account_type == 1" class="router-link text-light" to="/edit_candidate"><u>Edit Profile</u></router-link>
+              <router-link v-if="userInfo.user.account_type == 2" class="router-link text-light" to="/edit_representative"><u>Edit Profile</u></router-link>
+            </div>
+            <div class="w-100 py-2 px-4 bg-light rounded">
+              If you have any question please contact our <router-link class="router-link" to="/help">Support team</router-link>
+            </div>
+          </div>
         </div>
         <div
           v-else-if="!verification"
@@ -283,7 +301,7 @@
             card or residence permit issued in European Economic Are
             (EEA).</span
           > -->
-          <span>MatrimonyAssist is a platform for genuine and verified users. To prevent fraud and risk, and increase trust and safety, we verify  identity of our users.</span>
+          <span class="text-black-50 font-weight-light">MatrimonyAssist is a platform for genuine and verified users. To prevent fraud and risk, and increase trust and safety, we verify  identity of our users.</span>
         </div>
       </div>
     </div>
@@ -348,6 +366,7 @@ export default {
       userData: null,
       switch1: true,
       showIdentity: true,
+      rejectedNote: ""
     };
   },
 
@@ -356,8 +375,8 @@ export default {
         return  (this.userInfo?.user?.status == 3 &&
               this.userInfo?.candidate_information &&
               this.userInfo?.candidate_information.is_uplaoded_doc == 1) ||
-            (this.userInfo?.user?.status == 3 && this.userInfo?.representative_information.length >= 1 &&
-              (this.userInfo?.representative_information[0].is_uplaoded_doc == 0 || this.userInfo?.representative_information[0].is_uplaoded_doc == 1))
+            (this.userInfo?.user?.status == 3 && this.userInfo?.representative_information?.length >= 1 &&
+              (this.userInfo?.representative_information[0]?.is_uplaoded_doc == 0 || this.userInfo?.representative_information[0]?.is_uplaoded_doc == 1))
          
     },
     hasUploadedDoc() {
@@ -366,11 +385,17 @@ export default {
     },
     mobileNumber() {
       return this.userData.account_type == 1 ? this.userInfo?.candidate_information?.personal?.mobile_number : this.userInfo?.representative_information[0]?.mobile_number
+    },
+    getRejectedNote() {
+      this.fetchRejectedNote();
+      return this.rejectedNote;
     }
   },
 
-  async mounted() {
+  created() {
     this.getUserInfo();
+  },
+  mounted() {
 
     this.userData = JSON.parse(localStorage.getItem("user"));
     if (this.userData && this.userData.account_type === 2) {
@@ -427,6 +452,13 @@ export default {
           },
         };
       }
+    },
+    async fetchRejectedNote() {
+      await ApiService.get("v1/individual-rejected-notes/" + this.userData.id).then(res => {
+        console.log(res.data.data.rejected_notes[0].note, 'rejectedNote.data.data');
+        this.rejectedNote = res.data.data.rejected_notes[res.data.data.rejected_notes.length-1].note;
+        return this.rejectedNote;
+      })
     },
     getVerifyInfo() {
       const userData = JSON.parse(localStorage.getItem("user"));
@@ -753,10 +785,19 @@ export default {
       align-items: center;
       flex-direction: column;
       .identity {
+        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
+        .router-link {
+          color: #0aa3e1;
+          text-decoration: none;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
       }
     }
     .identity-footer {
