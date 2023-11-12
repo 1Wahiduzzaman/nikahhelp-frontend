@@ -193,7 +193,7 @@
             alt="icon"
             style="width: 200px; height: 230px"
           />
-          <span style="font-weight: bold;">Verified</span>
+          <span style="font-weight: bold; font-size: 1.5rem;">Verified</span>
         </div>
         <div
           v-else-if="
@@ -206,7 +206,7 @@
             alt="icon"
             style="width: 200px; height: 230px"
           />
-          <span style="font-weight: bold;">In Review</span>
+          <span style="font-weight: bold; font-size: 1.5rem;">In Review</span>
         </div>
         <div
           v-else-if="!verification && checkStatus('4')"
@@ -757,6 +757,7 @@ export default {
     overflow: auto;
     margin: 5px;
     //border-left: 1px solid #b7b5b5;
+
   }
   .panel-content::v-deep {
     display: flex;
@@ -765,7 +766,7 @@ export default {
     align-items: flex-start;
     &.border-content {
       border-right: 1px solid #ddd;
-      padding-right: 5px;
+      padding: 10px;
     }
     flex-direction: column;
     overflow-y: auto;
@@ -774,6 +775,7 @@ export default {
     //margin: 8px;
     @media (min-width: 320px) and (max-width: 600px) {
       overflow: hidden;
+      border-top: 1px solid #ddd;
       //margin: 8px;
     }
     .content-identity {
