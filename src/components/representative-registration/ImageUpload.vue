@@ -1,9 +1,9 @@
 <template>
   <div class="class">
-    <div v-if="imageModel && !loading" class="upload-profile-image">
-      <Loader :isLoading="loading" />
+    <div v-if="imageModel" class="upload-profile-image">
+      <Loader :isLoading="loading" text="Uploading"/>
 
-      <a-collapse :default-active-key="1" :bordered="false" expand-icon-position="right" v-if="!loading">
+      <a-collapse :default-active-key="1" :bordered="false" expand-icon-position="right">
         <template #expandIcon="props">
           <a-icon type="caret-down" :rotate="props.isActive ? 180 : 0" />
         </template>
@@ -363,7 +363,6 @@ export default {
       );
     },
     getMainImage(e) {
-      this.loading = true;
       let file = e.target.files[0];
       if (!this.imageSizeCheck(file)) {
         file = "";
@@ -377,7 +376,6 @@ export default {
       reader.readAsDataURL(file);
       reader.onload = (e) => {
         this.mainImageSrc = e.target.result;
-        this.loading = false
       };
       console.log(this.mainImageSrc);
     },
@@ -428,7 +426,7 @@ export default {
     },
     async saveImages(data, folder) {
       this.$emit('turnOnBtnLoader');
-
+      this.loading = true;
       await this.$store
         .dispatch("saveRepresentativeImage", {folder: folder, image: data})
         .then(async (data) => {
@@ -474,7 +472,9 @@ export default {
           //   this.showError(errorMessage);
           //   this.loadingButton = false;
           // }
+          this.loading = false;
         }).catch((error) => {
+          this.loading = false;
           this.loadingButton = false;
           console.log(error);
         });
@@ -603,13 +603,18 @@ export default {
     line-height: 32px;
     display: inline-block;
     color: white;
-    background: #8781bd;
-    border: 1px solid #98a0e2;
+    background: $bg-primary;
+    border: 1px solid $bg-primary;
     border-radius: 5px;
     padding: 0 10px;
     text-align: center;
     font-family: Helvetica, Arial, sans-serif;
     cursor: pointer;
+  
+    &:hover {
+      background: #FFF;
+      color: $bg-primary;
+    }
   }
 
   //input[type="file"]::-webkit-file-upload-button {
