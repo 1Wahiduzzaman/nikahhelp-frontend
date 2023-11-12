@@ -1,5 +1,6 @@
 <template>
   <div id="accordion" class="verificationInfo p-3 rounded">
+    <Loader :isLoading="loading" text="Uploading..." />
     <div class="section-heading heading-text">
       <h3>Verification Information</h3>
       <!-- <p>Your Verification Information</p> -->
@@ -184,16 +185,22 @@
               mb</span>
 
             <div class="img-preview mb-2">
-              <span @click="clearImg('font')" class="close-icon" v-if="verification.ver_image_front"><img
-                  src="@/assets/icon/close.svg" alt="img" /></span>
-              <img :src="imageFont ? imageFont : verification.ver_image_front + `?token=${token}`" width="180"
+              <img :src="imageFont ? imageFont : verification.ver_image_front + `?token=${token}`" width="200"
                 height="200" v-if="verification.ver_image_front" />
-              <div class="mt-3">Front Page</div>
               <div class="mt-4" v-if="!verification.ver_image_front">
                 <a-icon type="plus-circle" :style="{ fontSize: '80px', color: '#aaa' }" />
               </div>
             </div>
-            <input type="file" class="input-image" name="avatar" @change="getFrontPage" />
+            <label for="input-front-image" class="upload-label" v-if="!verification.ver_image_front">
+              Upload
+              <input v-if="!verification.ver_image_front" type="file" class="input-image" id="input-front-image" name="frontImage"
+              @change="getFrontPage" />
+            </label>
+            <label for="input-front-image" class="upload-label" v-if="verification.ver_image_front">
+              Change
+              <input v-if="verification.ver_image_front" type="file" class="input-image" id="input-front-image" name="frontImage"
+              @change="getFrontPage" />
+            </label>
           </div>
         </div>
         <div class="col-12 col-md-6 none-padding mobile-margin mobile-help">
@@ -230,17 +237,22 @@
               mb</span>
 
             <div class="img-preview mb-2">
-              <span @click="clearImg('back')" class="close-icon" v-if="verification.ver_image_back"><img
-                  src="@/assets/icon/close.svg" alt="img" /></span>
-              <img :src="imageBack ? imageBack : verification.ver_image_back + `?token=${token}`" width="180"
+              <img :src="imageBack ? imageBack : verification.ver_image_back + `?token=${token}`" width="200"
                 height="200" v-if="verification.ver_image_back" />
-
-              <div class="mt-3">Back Page</div>
               <div class="mt-4" v-if="!verification.ver_image_back">
                 <a-icon type="plus-circle" :style="{ fontSize: '80px', color: '#aaa' }" />
               </div>
             </div>
-            <input type="file" class="input-image" name="avatar" @change="getBackPage" />
+            <label for="input-back-image" class="upload-label" v-if="!verification.ver_image_back">
+              Upload
+              <input v-if="!verification.ver_image_back" type="file" class="input-image" id="input-back-image" name="backImage"
+              @change="getBackPage" />
+            </label>
+            <label for="input-back-image" class="upload-label" v-if="verification.ver_image_back">
+              Change
+              <input v-if="verification.ver_image_back" type="file" class="input-image" id="input-back-image" name="backImage"
+              @change="getBackPage" />
+            </label>
           </div>
         </div>
         <div class="col-12 col-md-6 mobile-margin mobile-help">
@@ -284,6 +296,7 @@ import ApiService from "@/services/api.service";
 import axios from "axios";
 import vSelect from "vue-select";
 import { VERIFICATION } from "../candidate-registration/models/candidate";
+import Loader from '../../plugins/loader/loader.vue';
 export default {
   name: "Verification",
   props: {
@@ -297,6 +310,7 @@ export default {
   components: {
     FileUploadOne,
     vSelect,
+    Loader,
   },
 
   created() {
@@ -328,6 +342,7 @@ export default {
       imageFont: null,
       activeKey: 1,
       token: "",
+      loading: false,
     };
   },
 
@@ -413,6 +428,7 @@ export default {
     // },
     async saveImageVerificationInfo(data, folder) {
       this.$emit('turnOnBtnLoader');
+      this.loading = true;
       await this.$store.dispatch("uploadImages", { folder: folder, image: data }).then(async (data) => {
         console.log(data, 'image response afer saving image');
 
@@ -436,6 +452,7 @@ export default {
             console.log(error);
           });
         }
+        this.loading = false;
       });
     },
     imageSizeCheck(file) {
@@ -537,7 +554,7 @@ img {
 }
 
 .img-preview {
-  width: 180px;
+  width: 200px;
   border: 1px solid $color-secondary;
   border-radius: 5px;
   margin: 0px auto;
@@ -546,25 +563,32 @@ img {
 
 input[type="file"] {
   cursor: pointer;
-  width: 180px;
+  width: 200px;
   height: 34px;
   overflow: hidden;
   border-radius: 5px !important;
+  display: none;
 }
 
-input[type="file"]:before {
-  width: 180px;
+.upload-label {
+  width: 200px;
   height: 32px;
   font-size: 16px;
   line-height: 32px;
-  content: "Upload";
   display: inline-block;
   color: white;
-  background: #8781bd;
-  border: 1px solid #98a0e2;
+  background: $bg-primary;
+  border: 1px solid $bg-primary;
+  border-radius: 5px;
   padding: 0 10px;
   text-align: center;
   font-family: Helvetica, Arial, sans-serif;
+  cursor: pointer;
+
+  &:hover {
+    background: #FFF;
+    color: $bg-primary;
+  }
 }
 
 #checkIcon {
