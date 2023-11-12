@@ -2,7 +2,7 @@
   <div class="overlay-container">
     <v-overlay :opacity="1" :value="isLoading">
       <v-progress-circular :size="100" :width="7" color="purple" indeterminate>
-        Loading...
+        {{ text }}
       </v-progress-circular>
     </v-overlay>
   </div>
@@ -10,7 +10,16 @@
 
 <script>
 export default {
-  props: ["isLoading"],
+  props: {
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
+    text: {
+      type: String,
+      default: "Loading",
+    },
+  },
 };
 </script>
 <style lang="scss">

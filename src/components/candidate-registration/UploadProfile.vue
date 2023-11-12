@@ -5,7 +5,7 @@
       <p class="text-center">Your Profile and Avatar Images</p>
     </div>
 
-    <Loader :isLoading="loading"/>
+    <Loader :isLoading="loading" text="Uploading"/>
     <a-collapse
       accordion
       :activeKey="activeKey"
@@ -419,8 +419,9 @@ export default {
         }).catch(error => {
           console.log(error);
         });
-
+        this.loading = false;
       }).catch(error => {
+        this.loading = false;
         console.log(error);
       });
 
@@ -428,7 +429,6 @@ export default {
       reader.readAsDataURL(file);
       reader.onload = (e) => {
         this.avatarSrc = e.target.result;
-        this.loading = false;
       };
     },
     async setAvatar(avatarNo) {
@@ -465,7 +465,6 @@ export default {
       );
     },
     getMainImage(e) {
-      this.loading = true;
       let file = e.target.files[0];
       if (!this.imageSizeCheck(file)) {
         file = "";
@@ -479,7 +478,6 @@ export default {
       reader.readAsDataURL(file);
       reader.onload = (e) => {
         this.mainImageSrc = e.target.result;
-        this.loading = false;
       };
     },
     getAdditionalImage(e) {
@@ -548,6 +546,7 @@ export default {
     },
     async saveImage(data, folder) {
       this.$emit('turnOnBtnLoader');
+      this.loading = true;
       await this.$store.dispatch("uploadImages", {folder: folder, image: data}).then(async (data) => {
         console.log(data, 'image response afer saving image');
 
@@ -568,6 +567,7 @@ export default {
         if(Object.keys(payload).length > 0) {
           await axios.post('v1/candidate/image-upload', payload).then(response => {
             console.log(response);
+            this.loading = false;
           }).catch(error => {
             console.log(error);
           });
@@ -712,13 +712,18 @@ legend {
     line-height: 32px;
     display: inline-block;
     color: white;
-    background: #8781bd;
-    border: 1px solid #98a0e2;
+    background: $bg-primary;
+    border: 1px solid $bg-primary;
     border-radius: 5px;
     padding: 0 10px;
     text-align: center;
     font-family: Helvetica, Arial, sans-serif;
     cursor: pointer;
+  
+    &:hover {
+      background: #FFF;
+      color: $bg-primary;
+    }
   }
 
 

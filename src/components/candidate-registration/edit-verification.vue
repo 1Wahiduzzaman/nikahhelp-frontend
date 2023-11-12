@@ -1,5 +1,8 @@
 <template>
   <div id="accordion" class="verificationInfo p-3 rounded">
+    <Loader :isLoading="loading" text="Uploading"/>
+    <Loader :isLoading="fetchUserLoading"/>
+
     <div v-if="candidateDetails && (candidateDetails.is_uplaoded_doc == '0' || verificationStatus == '4')" class="verification-content"
       style="margin-top: 40px">
       <div class="section-heading heading-text">
@@ -324,7 +327,7 @@
       </a-collapse>
     </div>
     <div class="verification-msg" v-if="candidateDetails &&
-      candidateDetails.is_uplaoded_doc == '1' && (verificationStatus != '3' && verificationStatus !== '4')"
+      candidateDetails.is_uplaoded_doc == '1' && (verificationStatus != '3' && verificationStatus !== '4') && !fetchUserLoading"
     >
       <div class="identity">
         <img src="@/assets/Verification_Icons/Icon/SVG/Pending.svg" alt="icon" style="width: 200px; height: 230px" />
@@ -364,6 +367,8 @@ import ApiService from "@/services/api.service";
 import axios from "axios";
 import vSelect from "vue-select";
 import { VERIFICATION } from "./models/candidate";
+import Loader from '../../plugins/loader/loader.vue';
+
 export default {
   name: "EditVerification",
   props: {
@@ -377,6 +382,7 @@ export default {
   components: {
     FileUploadOne,
     vSelect,
+    Loader,
   },
   data() {
     return {
@@ -404,6 +410,7 @@ export default {
       imageFont: null,
       activeKey: 1,
       loading: false,
+      fetchUserLoading: false,
       token: "",
     };
   },
@@ -420,6 +427,7 @@ export default {
   },
   methods: {
     async getUserInfo() {
+      this.fetchUserLoading = true;
       let { data } = await ApiService.get("v1/user").then((res) => res.data);
       
       // update status in localStorage
@@ -428,6 +436,7 @@ export default {
       localStorage.setItem("user", JSON.stringify(localStorageUser));
 
       this.$store.commit("setUserInfo", data.user);
+      this.fetchUserLoading = false;
     },
     getToken() {
       this.token = JSON.parse(localStorage.getItem("token"));
@@ -565,6 +574,7 @@ export default {
     // },
     async saveImageVerificationInfo(data, folder) {
       this.$emit('turnOnBtnLoader')
+      this.loading = true;
       await this.$store.dispatch("uploadImages", {folder: folder, image: data}).then(async (data) => {
         console.log(data, 'image response afer saving image');
 
@@ -591,6 +601,7 @@ export default {
             console.log(error);
           });
         }  
+        this.loading = false;
       });
     },
     imageSizeCheck(file) {
@@ -743,19 +754,24 @@ input[type="file"] {
 }
 
 .upload-label {
-  width: 180px;
+  width: 200px;
   height: 32px;
   font-size: 16px;
   line-height: 32px;
   display: inline-block;
   color: white;
-  background: #8781bd;
-  border: 1px solid #98a0e2;
+  background: $bg-primary;
+  border: 1px solid $bg-primary;
   border-radius: 5px;
   padding: 0 10px;
   text-align: center;
   font-family: Helvetica, Arial, sans-serif;
   cursor: pointer;
+
+  &:hover {
+    background: #FFF;
+    color: $bg-primary;
+  }
 }
 
 #checkIcon {

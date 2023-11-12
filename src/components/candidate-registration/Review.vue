@@ -963,6 +963,7 @@
         </div>
       </div>
     </fieldset>
+    <Loader v-else :isLoading="true" />
   </div>
 </template>
 <script>
@@ -971,12 +972,15 @@ import ApiService from "@/services/api.service";
 import TableRow from "@/components/atom/TableRow";
 import FieldsetCard from "@/components/atom/FieldsetCard";
 import { AGES, HEIGHTS, Employment_Statuses } from "@/models/data";
+import Loader from '../../plugins/loader/loader.vue';
+
 export default {
   name: "Review",
   components: {
     RatingComponent,
     TableRow,
     FieldsetCard,
+    Loader
   },
   props: {
     candidateDetails: {
