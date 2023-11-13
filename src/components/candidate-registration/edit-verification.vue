@@ -230,12 +230,12 @@
                   </div>
                   <label for="upload-front-side" class="upload-label" v-if="!verification.ver_image_front">
                     Upload
-                    <input v-if="!verification.ver_image_front" type="file" class="input-image" id="upload-front-side"
+                    <input v-if="!verification.ver_image_front" type="file" accept=".png, .jpeg, .jpg" class="input-image" id="upload-front-side"
                       name="avatar" @change="getFrontPage" />
                   </label>
                   <label for="upload-front-side" class="upload-label" v-if="verification.ver_image_front">
                     Change
-                    <input v-if="verification.ver_image_front" type="file" class="input-image" id="upload-front-side"
+                    <input v-if="verification.ver_image_front" type="file" accept=".png, .jpeg, .jpg" class="input-image" id="upload-front-side"
                       name="avatar" @change="getFrontPage" />
                   </label>
                   
@@ -283,12 +283,12 @@
                   </div>
                   <label for="upload-back-side" class="upload-label" v-if="!verification.ver_image_back">
                     Upload
-                    <input v-if="!verification.ver_image_back" type="file" class="input-image" id="upload-back-side"
+                    <input v-if="!verification.ver_image_back" type="file" accept=".png, .jpeg, .jpg" class="input-image" id="upload-back-side"
                       name="avatar" @change="getBackPage" />
                   </label>
                   <label for="upload-back-side" class="upload-label" v-if="verification.ver_image_back">
                     Change
-                    <input v-if="verification.ver_image_back" type="file" class="input-image" id="upload-back-side"
+                    <input v-if="verification.ver_image_back" type="file" accept=".png, .jpeg, .jpg" class="input-image" id="upload-back-side"
                       name="avatar" @change="getBackPage" />
                   </label>
 

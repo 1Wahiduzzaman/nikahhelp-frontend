@@ -42,6 +42,7 @@
 								Browse
 								<input
 									type="file"
+									accept="image/*"
 									class="input-image"
 									name="avatar"
 									@change="getAvatar"

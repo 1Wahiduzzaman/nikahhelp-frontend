@@ -193,12 +193,12 @@
             </div>
             <label for="input-front-image" class="upload-label" v-if="!verification.ver_image_front">
               Upload
-              <input v-if="!verification.ver_image_front" type="file" class="input-image" id="input-front-image" name="frontImage"
+              <input v-if="!verification.ver_image_front" type="file" accept=".png, .jpeg, .jpg" class="input-image" id="input-front-image" name="frontImage"
               @change="getFrontPage" />
             </label>
             <label for="input-front-image" class="upload-label" v-if="verification.ver_image_front">
               Change
-              <input v-if="verification.ver_image_front" type="file" class="input-image" id="input-front-image" name="frontImage"
+              <input v-if="verification.ver_image_front" type="file" accept=".png, .jpeg, .jpg" class="input-image" id="input-front-image" name="frontImage"
               @change="getFrontPage" />
             </label>
           </div>
@@ -245,12 +245,12 @@
             </div>
             <label for="input-back-image" class="upload-label" v-if="!verification.ver_image_back">
               Upload
-              <input v-if="!verification.ver_image_back" type="file" class="input-image" id="input-back-image" name="backImage"
+              <input v-if="!verification.ver_image_back" type="file" accept=".png, .jpeg, .jpg" class="input-image" id="input-back-image" name="backImage"
               @change="getBackPage" />
             </label>
             <label for="input-back-image" class="upload-label" v-if="verification.ver_image_back">
               Change
-              <input v-if="verification.ver_image_back" type="file" class="input-image" id="input-back-image" name="backImage"
+              <input v-if="verification.ver_image_back" type="file" accept=".png, .jpeg, .jpg" class="input-image" id="input-back-image" name="backImage"
               @change="getBackPage" />
             </label>
           </div>

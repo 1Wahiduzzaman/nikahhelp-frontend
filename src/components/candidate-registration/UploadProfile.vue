@@ -157,12 +157,12 @@
                   </div>
                   <label for="input-main-image" class="upload-label" v-if="!imageModel.main_image_url">
                     Upload
-                    <input v-if="!imageModel.main_image_url" type="file" class="input-image" id="input-main-image" name="mainImage"
+                    <input v-if="!imageModel.main_image_url" type="file" accept=".png, .jpeg, .jpg" class="input-image" id="input-main-image" name="mainImage"
                     @change="getMainImage" />
                   </label>
                   <label for="input-main-image" class="upload-label" v-if="imageModel.main_image_url">
                     Change
-                    <input v-if="imageModel.main_image_url" type="file" class="input-image" id="input-main-image" name="mainImage"
+                    <input v-if="imageModel.main_image_url" type="file" accept=".png, .jpeg, .jpg" class="input-image" id="input-main-image" name="mainImage"
                     @change="getMainImage" />
                   </label>
                 </div>
@@ -210,12 +210,12 @@
                   </div>
                   <label for="input-aditional-image" class="upload-label" v-if="!imageModel.additionalImageSrc">
                     Upload
-                    <input v-if="!imageModel.additionalImageSrc" type="file" class="input-image" id="input-aditional-image" name="mainImage"
+                    <input v-if="!imageModel.additionalImageSrc" type="file" accept=".png, .jpeg, .jpg" class="input-image" id="input-aditional-image" name="mainImage"
                     @change="getAdditionalImage" />
                   </label>
                   <label for="input-aditional-image" class="upload-label" v-if="imageModel.additionalImageSrc">
                     Change
-                    <input v-if="imageModel.additionalImageSrc" type="file" class="input-image" id="input-aditional-image" name="mainImage"
+                    <input v-if="imageModel.additionalImageSrc" type="file" accept=".png, .jpeg, .jpg" class="input-image" id="input-aditional-image" name="mainImage"
                     @change="getAdditionalImage" />
                   </label>
                 </div>
