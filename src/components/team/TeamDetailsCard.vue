@@ -54,7 +54,7 @@
 								<div class="browse-btn">
 									<span class="file-input  btn-file">
 										Browse
-										<input type="file" class="input-image" name="avatar" @change="getAvatar" />
+										<input type="file" accept=".png, .jpeg, .jpg" class="input-image" name="avatar" @change="getAvatar" />
 									</span>
 								</div>
 							</div>

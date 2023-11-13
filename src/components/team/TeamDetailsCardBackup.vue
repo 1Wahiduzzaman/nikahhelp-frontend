@@ -96,6 +96,7 @@
                         type="file"
                         class="input-image"
                         name="avatar"
+                        accept=".png, .jpeg, .jpg"
                         @change="getAvatar"
                     />
 									</span>

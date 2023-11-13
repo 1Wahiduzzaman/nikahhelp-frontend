@@ -109,12 +109,12 @@
                           
                           <label for="input-main-image" class="upload-label" v-if="!imageModel.per_main_image_url">
                             Upload
-                            <input v-if="!imageModel.per_main_image_url" type="file" class="input-image" id="input-main-image" name="mainImage"
+                            <input v-if="!imageModel.per_main_image_url" type="file" accept=".png, .jpeg, .jpg" class="input-image" id="input-main-image" name="mainImage"
                             @change="getMainImage" />
                           </label>
                           <label for="input-main-image" class="upload-label" v-if="imageModel.per_main_image_url">
                             Change
-                            <input v-if="imageModel.per_main_image_url" type="file" class="input-image" id="input-main-image" name="mainImage"
+                            <input v-if="imageModel.per_main_image_url" type="file" accept=".png, .jpeg, .jpg" class="input-image" id="input-main-image" name="mainImage"
                             @change="getMainImage" />
                           </label>
                         </div>
