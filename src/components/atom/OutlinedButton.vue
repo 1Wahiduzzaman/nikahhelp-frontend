@@ -46,10 +46,10 @@ export default {
 .navigate {
     border: 1px solid #6158a7;
     font-size: 12px;
-    height: 27px;
+    min-height: 35px;
     padding: 4px 5px;
     border-radius: 5px;
-    transition: .5s;
+    transition: none;
     &:hover .navigate-name {
         color: white;
     }
