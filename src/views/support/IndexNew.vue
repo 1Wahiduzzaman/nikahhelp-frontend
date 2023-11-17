@@ -2,8 +2,8 @@
     <div>
         <Loader :isLoading="loading || isLoading" />
         <div class="page1" v-if="pageNo == 1">
-            <div class="d-flex justify-content-between p-4">
-                <span class="color-primary" style="font-size: 1.5rem; opacity: .5;">All ticket history</span>
+            <div class="d-flex justify-content-between p-4 all-ticket-sm">
+                <span class="color-primary all-ticket-header" style="font-size: 1.5rem; opacity: .5;">All ticket history</span>
                 <ButtonComponent
                     class="text-large"
                     iconHeight="14px"
@@ -14,7 +14,7 @@
                     @onClickButton="showTicketSubmissionForm = true"
                 />
             </div>
-            <div class="table px-5 py-2">
+            <div class="table px-5 py-2" v-if="getUserTickets.length > 0">
                 <div class="table-header py-2 px-5 mb-3">
                     <span class="header-text p-0">TICKET ID</span>
                     <span class="header-text p-0">LAST UPDATED</span>
@@ -23,13 +23,16 @@
                     <span class="header-text p-0">DETAILS</span>
                 </div>
     
-                <div class="table-item py-2 px-5" v-for="item in getUserTickets.slice().reverse()" :key="item.id" @click="pageNo = 2; showTicketDetails(item);">
+                <div class="table-item py-2 px-5" v-for="item in getUserTickets.slice().reverse()" :key="item.id" @click="goToDetailsPage(item)">
                     <span class="text-black-50 ticket-id">#{{ item.id }}</span>
                     <span class="text-black-50 ticket-time">{{ messageCreatedAt(item) }}</span>
                     <span class="font-weight-bold ticket-status"  :style="{ color: getTicketStatusColor(item) }">{{ ticketStatus(item) }}</span>
                     <span class="text-black-50 ticket-type">{{ item.issue_type }}</span>
                     <span class="text-black-50 ticket-issue">{{ item.issue }}</span>
                 </div>
+            </div>
+            <div v-else class="ticket-empty">
+                <span style="">Ticket history is empty</span>
             </div>
     
             <!-- submit ticket modal -->
@@ -97,7 +100,7 @@
                     <a-button key="back" shape="round" @click="showTicketSubmissionForm=false">
                         Cancel
                     </a-button>
-                    <a-button key="submit" type="primary" shape="round" @click="showTicketSubmissionForm = false; ticketSumbission();">
+                    <a-button key="submit" type="primary" shape="round" @click="ticketSumbission();">
                         Submit
                     </a-button>
                 </template>
@@ -108,7 +111,8 @@
         <!-- page 2 -->
         <div class="page2 p-4 pt-0" v-if="pageNo == 2">
             <!-- top buttons -->
-            <!-- <div class="d-flex justify-content-between">
+            <div class="mobile-back-btn">
+                <span class="color-primary" style="font-size: 1.5rem; opacity: .5;">TIcket</span>
                 <ButtonComponent
                     class="text-large"
                     iconHeight="14px"
@@ -118,15 +122,7 @@
                     icon="/assets/icon/gallery.svg"
                     @onClickButton="pageNo = 1"
                 />
-                <ButtonComponent
-                    class="text-large"
-                    iconHeight="14px"
-                    :isSmall="true"
-                    title="Delete"
-                    :responsive="false"
-                    icon="/assets/icon/gallery.svg"
-                />
-            </div> -->
+            </div>
 
             <!-- ticket details -->
             <div class="ticket-details d-flex flex-column mt-5 pb-2">
@@ -165,6 +161,7 @@
             <!-- bottom buttons -->
             <div class="d-flex justify-content-center mt-5">
                 <ButtonComponent
+                    v-if="currentTicketDetails.resolve == 0"
                     class="text-large mr-3 connect-button"
                     iconHeight="14px"
                     :isSmall="true"
@@ -172,10 +169,11 @@
                     :responsive="false"
                     :backgroundColor="'#3ab549'"
                     :icon="require('@/assets/support_page_icons/tick.svg')"
-                    @onClickButton="pageNo = 1"
+                    @onClickButton="resolve();"
                 />
+                <span v-if="currentTicketDetails.resolve == 1" class="text-success font-weight-bold">Ticket resolved</span>
                 <ButtonComponent
-                    v-if="ticketStatus(currentTicketDetails) == 'Need your reply'"
+                    v-if="ticketStatus(currentTicketDetails) == 'Need your reply' && currentTicketDetails.resolve == 0"
                     class="text-large reply-btn"
                     iconHeight="14px"
                     :wrapperWidth="'150px'"
@@ -225,7 +223,7 @@
                     <a-button key="back" shape="round" @click="showReplyForm=false">
                         Cancel
                     </a-button>
-                    <a-button key="submit" type="primary" shape="round" @click="showReplyForm = false; sendMessage();">
+                    <a-button key="submit" type="primary" shape="round" @click="sendMessage();">
                         Submit
                     </a-button>
                 </template>
@@ -243,12 +241,15 @@
             :cancel-button-props="{ disabled: true }"
         >
             <div>
-                
+                <div class="image-div w-100 d-flex justify-content-center mt-5" v-if="pageNo==2">
+                    <img :src="require('@/assets/Verification_Icons/Icon/SVG/Verified.svg')" alt="" class="m-auto" height="150" widht="150">
+                </div>
+
                 <span class="text-black-50 text-center w-100 mt-5 mb-3" style="font-size: 1.5rem;" v-if="pageNo==1">Your ticket submission is successful</span>
                 <span class="text-black-50 text-center w-100 mt-5 mb-3" style="font-size: 1.5rem;" v-else>Your reply submission is successful</span>
 
-                <div class="image-div w-100 d-flex justify-content-center">
-                    <img src="@/assets/Verification_Icons/Icon/SVG/Verified.svg" alt="" class="m-auto" height="150" widht="150">
+                <div class="image-div w-100 d-flex justify-content-center" v-if="pageNo==1">
+                    <img :src="require('@/assets/Verification_Icons/Icon/SVG/Verified.svg')" alt="" class="m-auto" height="150" widht="150">
                 </div>
 
                 <span class="text-center font-weight-bold w-100 mt-4" style="font-size: 1.5rem; color: rgba(0, 0, 0, .2)" v-if="pageNo==1">Ticket id: #{{ lastSubmittedTicketId }}</span>
@@ -272,13 +273,12 @@
             :cancel-button-props="{ disabled: true }"
         >
             <div>
-                
+                <div class="image-div w-100 d-flex justify-content-center mt-5">
+                    <img :src="require('@/assets/Verification_Icons/Icon/SVG/Rejected.svg')" alt="" class="m-auto" height="150" widht="150">
+                </div>
+
                 <span class="text-black-50 text-center w-100 mt-5 mb-3" style="font-size: 1.5rem;" v-if="pageNo==1">Your ticket submission is unsuccessful</span>
                 <span class="text-black-50 text-center w-100 mt-5 mb-3" style="font-size: 1.5rem;" v-else>Your reply submission is unsuccessful</span>
-
-                <div class="image-div w-100 d-flex justify-content-center">
-                    <img src="@/assets/Verification_Icons/Icon/SVG/Rejected.svg" alt="" class="m-auto" height="150" widht="150">
-                </div>
 
                 <!-- <span class="text-center font-weight-bold w-100 mt-4" style="font-size: 1.5rem; color: rgba(0, 0, 0, .2)">Ticket id: #{{ lastSubmittedTicketId }}</span> -->
             </div>
@@ -289,6 +289,7 @@
                 </a-button>
             </template>
         </a-modal>
+        <span ref="endOfPage"></span>
     </div>
 </template>
 
@@ -368,6 +369,19 @@ export default {
         },
 
         ticketSumbission() {
+            if(this.selectedIssue == 'Select your issue type') {
+                this.$error({
+                    title: 'Error',
+                    content: 'Please select an issue type'
+                });
+                return;
+            } else if(this.issue == '') {
+                this.$error({
+                    title: 'Error',
+                    content: 'Please describe your issue'
+                });
+                return;
+            }
             this.isLoading = true;
             ApiService.post('v1/ticket-submission', {
                 issue_type: this.selectedIssue,
@@ -382,11 +396,13 @@ export default {
                     this.$store.commit('getMyTickets', allTickets);
                     this.lastSubmittedTicketId = submittedTicket.id;
                     this.isLoading = false;
+                    this.showTicketSubmissionForm = false;
                     this.showSubmissionSuccess = true;
 
                 })
                 .catch(e => {
                     this.isLoading = false;
+                    this.showTicketSubmissionForm = false;
                     this.showSubmissionFailed = true;
                     console.log(e);
                 })
@@ -418,6 +434,11 @@ export default {
             return user.full_name;
 
         },
+        goToDetailsPage(item) {
+            this.pageNo = 2;
+            this.showTicketDetails(item);
+            this.$refs.endOfPage.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        },
 
         // for page 2
         showTicketDetails(item) {
@@ -426,6 +447,13 @@ export default {
 
         // send message
         sendMessage() {
+            if(this.message == '') {
+                this.$error({
+                    title: 'Error',
+                    content: 'Please type your message'
+                });
+                return;
+            }
             this.isLoading = true;
             ApiService.post('/v1/send-support-message', {
               message:  this.message,
@@ -435,17 +463,48 @@ export default {
             .then((res) => {
                 this.currentTicketDetails.process_ticket.push(res.data.data);
                 this.isLoading = false;
+                this.showReplyForm = false;
                 this.showSubmissionSuccess = true;
             })
             .catch(()=> {
                 this.isLoading = false;
+                this.showReplyForm = false;
                 this.showSubmissionFailed = true;
             });
         },
 
         resolve() {
+            this.$confirm({
+                title: 'Are you sure?',
+                content: 'This action will mark this ticket as resolved.',
+                okText: 'Yes',
+                cancelText: 'No',
+                onOk: () => {
+                    this.resolveTicket();
+                },
+                onCancel: () => {
+                    console.log('Cancel');
+                },
+            });
+        },
+        resolveTicket() {
+            this.isLoading = true;
             ApiService.post('/v1/resolveTicket', {
-                message_id: this.message
+                ticket_id: this.currentTicketDetails.id
+            }).then(res => {
+                this.currentTicketDetails.resolve = 1;
+                let allTickets = this.getUserTickets;
+                allTickets.forEach((item, index) => {
+                    if(item.id == this.currentTicketDetails.id) {
+                        allTickets[index] = this.currentTicketDetails;
+                    }
+                });
+                this.$store.commit('getMyTickets', allTickets);
+                this.isLoading = false;
+                this.pageNo = 1; 
+            }).catch(e => {
+                console.log(e);
+                this.isLoading = false;
             })
         }
     },
@@ -465,6 +524,21 @@ $primary_dark_1: #120f22;
 $primary_dark_2: #1d1741;
 $primary_dark_3: #291e63;
 
+.page1 {
+    .all-ticket-sm {
+        @media screen and (max-width: 992px) {
+            flex-direction: column-reverse;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 0 !important;
+
+            .all-ticket-header {
+                margin-top: 1rem;
+            }
+        }
+
+    }
+}
 
 .table {
     .table-header {
@@ -559,7 +633,35 @@ $primary_dark_3: #291e63;
     }
 }
 
+.ticket-empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 1.8rem; 
+    color: rgba(0, 0, 0, .3);
+
+    @media  screen and (max-width: 576px) {
+        font-size: 1.5rem !important;
+        left: 25%;
+    }
+
+    @media screen and (max-width: 442px) {
+        font-size: 1.3rem !important;
+        left: 18%;
+    }
+}
+
 .page2::v-deep {
+    .mobile-back-btn {
+        display: none;
+
+        @media screen and (max-width: 992px) {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-bottom: 0 !important;
+        }
+    }
     .ticket-details {
         position: relative;
         border-bottom: 1px solid rgba(0,0,0, .3);
@@ -568,6 +670,14 @@ $primary_dark_3: #291e63;
             position: absolute;
             top: 0;
             right: 0;
+        }
+
+        @media  screen and (max-width: 992px) {
+            margin-top: 0 !important; 
+
+            .back-btn {
+                display: none;
+            }
         }
     }
 
