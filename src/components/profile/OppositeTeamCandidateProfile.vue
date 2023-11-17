@@ -1197,8 +1197,8 @@ export default {
 		color: #fff;
 		border-radius: 20px;
 		font-size: 12px;
-		height: 28px;
-		padding: 4px 5px;
+		min-height: 35px;
+		padding: 6px 5px;
 		border: 1px solid white;
 		box-shadow: 0px 1px 6px #B1aaaa;
 		transition: none !important;
@@ -1212,7 +1212,7 @@ export default {
 		}
 
 		img {
-			margin-bottom: 1px;
+			//margin-bottom: 1px;
 			height: 13px;
 		}
 		&:hover {

@@ -332,7 +332,7 @@ const AppRouter = new VueRouter({
                     path: "/support",
                     name: "Support",
                     // component: Support,
-                    component: lazyLoadView('support', 'Index'),
+                    component: lazyLoadView('support', 'IndexNew'),
 
                 },
                 {
