@@ -19,9 +19,7 @@ export default {
     },
 
     getUserTickets(state) {
-        return state.userTickets.reverse().map((item) => {
-            return {...item, color: item.resolve ? 'warning' : 'danger'}
-        });
+        return state.userTickets;
     },
 
     currentTicketComponents(state) {
