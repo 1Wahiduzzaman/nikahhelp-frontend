@@ -1,11 +1,7 @@
 <template>
-		<v-container>
-			<v-card
-					
-			>
-				<component :is="supportComponent"></component>
-			</v-card>
-		</v-container>
+
+	<component :is="supportComponent"></component>
+
 </template>
 
 <script>
