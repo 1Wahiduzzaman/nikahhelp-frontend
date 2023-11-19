@@ -91,7 +91,8 @@
                             v-model="issue" 
                             row="5"
                             placeholder="Write your issue here" 
-                            class="text-black-50 border rounded w-100 p-2">
+                            class="text-black-50 border rounded w-100 p-2 text-area"
+                        >
                         </textarea>
                     </a-form-model-item>
                 </div>
@@ -112,7 +113,7 @@
         <div class="page2 p-4 pt-0" v-if="pageNo == 2">
             <!-- top buttons -->
             <div class="mobile-back-btn">
-                <span class="color-primary" style="font-size: 1.5rem; opacity: .5;">TIcket</span>
+                <span class="color-primary" style="font-size: 1.5rem; opacity: .5;">Ticket</span>
                 <ButtonComponent
                     class="text-large"
                     iconHeight="14px"
@@ -123,6 +124,10 @@
                     @onClickButton="pageNo = 1"
                 />
             </div>
+            
+            <!-- <span class="d-none">This span is for solving a issue. Without this span the following code doens't render in browser</span> -->
+
+            <span v-if="false">sdfsd</span>
 
             <!-- ticket details -->
             <div class="ticket-details d-flex flex-column mt-5 pb-2">
@@ -140,13 +145,14 @@
                 <span class="text-black-50 p-0" style="font-size: 1rem;">Issue type: <b class="text-dark break-word">{{ currentTicketDetails.issue_type }}</b></span>
             </div>
 
+
             <!-- ticket messages -->
             <div class="ticket-message p-3">
                 <div class="d-flex msg-header text-black-50">
                     <span class="msg-sender py-1 px-2 mb-2">{{ getAuthUser.full_name }}</span>
                     <span class="msg-time py-1 px-2 mb-2">{{ messageCreatedAt(currentTicketDetails) }}</span>
                 </div>
-                <span class="msg-text text-black-50 px-2 py-1 text-break" style="font-size: 1rem;">{{ currentTicketDetails.issue }}</span>
+                <span class="msg-text text-black-50 px-2 py-1 text-break" style="font-size: 1rem;">{{ currentTicketDetails.issue }} sdfs</span>
             </div>
 
             <!-- process messages -->
@@ -214,7 +220,7 @@
                             v-model="message" 
                             row="5"
                             placeholder="Write here.." 
-                            class="text-black-50 border rounded w-100 p-2">
+                            class="text-black-50 border rounded w-100 p-2 text-area">
                         </textarea>
                     </a-form-model-item>
                 </div>
@@ -280,7 +286,6 @@
                 <span class="text-black-50 text-center w-100 mt-5 mb-3" style="font-size: 1.5rem;" v-if="pageNo==1">Your ticket submission is unsuccessful</span>
                 <span class="text-black-50 text-center w-100 mt-5 mb-3" style="font-size: 1.5rem;" v-else>Your reply submission is unsuccessful</span>
 
-                <!-- <span class="text-center font-weight-bold w-100 mt-4" style="font-size: 1.5rem; color: rgba(0, 0, 0, .2)">Ticket id: #{{ lastSubmittedTicketId }}</span> -->
             </div>
 
             <template slot="footer">
@@ -298,10 +303,12 @@ import {format} from "timeago.js";
 import {mapActions, mapGetters} from "vuex";
 import ButtonComponent from "../../components/atom/ButtonComponent.vue";
 import ApiService from '../../services/api.service';
+import Loader from "../../plugins/loader/loader.vue";
 export default {
     name: "Support",
 	components: {
         ButtonComponent,
+        Loader
     },
 	
     data() {
@@ -382,6 +389,7 @@ export default {
                 });
                 return;
             }
+            this.showTicketSubmissionForm = false;
             this.isLoading = true;
             ApiService.post('v1/ticket-submission', {
                 issue_type: this.selectedIssue,
@@ -389,6 +397,7 @@ export default {
                 user: localStorage.getItem('user'),
                 }).then((res) => {
                     let submittedTicket = res.data.data.ticket;
+                    this.issue = '';
                     submittedTicket.process_ticket = [];
                     submittedTicket.resolve = 0;
                     let allTickets = this.getUserTickets;
@@ -396,13 +405,11 @@ export default {
                     this.$store.commit('getMyTickets', allTickets);
                     this.lastSubmittedTicketId = submittedTicket.id;
                     this.isLoading = false;
-                    this.showTicketSubmissionForm = false;
                     this.showSubmissionSuccess = true;
 
                 })
                 .catch(e => {
                     this.isLoading = false;
-                    this.showTicketSubmissionForm = false;
                     this.showSubmissionFailed = true;
                     console.log(e);
                 })
@@ -454,6 +461,7 @@ export default {
                 });
                 return;
             }
+            this.showReplyForm = false;
             this.isLoading = true;
             ApiService.post('/v1/send-support-message', {
               message:  this.message,
@@ -462,13 +470,12 @@ export default {
             })
             .then((res) => {
                 this.currentTicketDetails.process_ticket.push(res.data.data);
+                this.message = '';
                 this.isLoading = false;
-                this.showReplyForm = false;
                 this.showSubmissionSuccess = true;
             })
             .catch(()=> {
                 this.isLoading = false;
-                this.showReplyForm = false;
                 this.showSubmissionFailed = true;
             });
         },
@@ -649,6 +656,11 @@ $primary_dark_3: #291e63;
         font-size: 1.3rem !important;
         left: 18%;
     }
+}
+
+.text-area {
+    line-height: 1.5 !important;
+    min-height: 150px !important;
 }
 
 .page2::v-deep {

@@ -5,13 +5,18 @@ export default {
 
     getTicketFromUsers(state) {
         return state.ticketFromUsers.map(item => {
-           item.user = JSON.parse(item.user);
+            try{
+                item.user = JSON.parse(item.user);
+            } catch(e) {
+                // console.log(e);
+            }
            return item;
-        }).reverse().sort((a, b) => {
-            return a.resolve > b.resolve ? -1 : 1 ;
-        }).map((item) => {
-            return {...item, color: item.resolve ? 'success': 'warning'};
-        });
+        })
+        // .reverse().sort((a, b) => {
+        //     return a.resolve > b.resolve ? -1 : 1 ;
+        // }).map((item) => {
+        //     return {...item, color: item.resolve ? 'success': 'warning'};
+        // });
     },
 
     currentTicket(state) {
