@@ -952,8 +952,8 @@ ul {
     color: #fff;
     border-radius: 20px;
     font-size: 12px;
-    height: 28px;
-    padding: 4px 5px;
+    min-height: 35px;
+		padding: 6px 5px;
     border: 1px solid white;
     box-shadow: 0px 1px 6px #B1aaaa;
     transition: none !important;

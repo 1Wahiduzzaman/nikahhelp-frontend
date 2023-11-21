@@ -63,8 +63,8 @@ export default {
     width: 150px;
     border: 1px solid #6158a7;
     font-size: 12px;
-    height: 27px;
-    padding: 4px 5px;
+    min-height: 35px;
+    padding: 6px 5px;
     border-radius: 5px;
     transition: .5s;
     &:hover .navigate-name {
