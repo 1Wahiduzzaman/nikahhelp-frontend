@@ -47,7 +47,8 @@ export default {
     border: 1px solid #6158a7;
     font-size: 12px;
     min-height: 35px;
-    padding: 4px 5px;
+    min-height: 35px;
+    padding: 6px 5px;
     border-radius: 5px;
     transition: none;
     &:hover .navigate-name {

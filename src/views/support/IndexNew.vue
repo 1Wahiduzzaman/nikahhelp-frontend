@@ -120,7 +120,7 @@
                     :isSmall="true"
                     title="Back"
                     :responsive="false"
-                    icon="/assets/icon/gallery.svg"
+                    icon="/assets/icon/back.svg"
                     @onClickButton="pageNo = 1"
                 />
             </div>
@@ -521,15 +521,6 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600&display=swap');
-$primary: #362787;
-$primary_lite_1: #594e9e;
-$primary_lite_2: #8078b5;
-$primary_lite_3: #a8a3cd;
-$primary_lite_4: #d3d1e6;
-$primary_lite_5: #f4f4f9;
-$primary_dark_1: #120f22;
-$primary_dark_2: #1d1741;
-$primary_dark_3: #291e63;
 
 .page1 {
     .all-ticket-sm {

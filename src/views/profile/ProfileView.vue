@@ -92,7 +92,7 @@ export default {
   data() {
     return {
       activeTeamId: null,
-      teams: [],
+      teams: null,
       isLoading: false,
       user: null,
       candidateInfo: {},
@@ -103,7 +103,9 @@ export default {
       profileId: null,
       candidateProfileInfo: {},
       representativeProfileInfo: {},
-      fullProfileInfo: {},
+      fullProfileInfo: null,
+      alreadyVisited: false,
+      from_team_id: null,
     };
   },
   created() {
@@ -126,6 +128,19 @@ export default {
       // this.checkRepresentativeInTeam();
     }
   },
+  computed: {
+    readyForSiteVisit() {
+      return this.fullProfileInfo !== null && this.teams !== null;
+    },
+  },
+  watch: {
+    readyForSiteVisit() {
+      if(this.readyForSiteVisit && !this.alreadyVisited) {
+        this.siteVisit();
+        this.alreadyVisited = true;
+      }
+    }
+  },
   methods: {
     checkTurnedOnSwitch() {
       this.activeTeamId = JwtService.getTeamIDAppWide();
@@ -136,17 +151,12 @@ export default {
       console.log('this.teams', this.teams)
 
       let activeTeamId = JwtService.getTeamIDAppWide();
-      let from_team = null;
       if(activeTeamId) {
         let activeTeam = this.teams.find((item) => item.team_id == activeTeamId);
         if(activeTeam) {
-          from_team = activeTeam.id;
+          this.from_team_id = activeTeam.id;
         }
       }
-      // let payload = {
-      //   from_team_id: from_team
-      // };
-      // await ApiService.post("v1/site-visit", payload).then(res => res.data);
     },
     async loadUserProfile() {
       this.isLoading = true;
@@ -210,6 +220,18 @@ export default {
         });
         return;
       }
+    },
+    async siteVisit(){
+      if(this.from_team_id == null || this.from_team_id == this.fullProfileInfo.team.id) {
+        return;
+      }
+      let payload = {
+        from_team_id: this.from_team_id,
+        to_team_id: [this.fullProfileInfo.team.id],
+        country: this.user.per_permanent_country_name,
+      };
+      console.log('payload', payload);
+      await ApiService.post("v1/site-visit", payload).then(res => res.data);
     }
   },
 };

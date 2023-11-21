@@ -273,7 +273,8 @@ export default {
       console.log(fromTeamId);
       let payload = {
         "from_team_id": fromTeamId,
-        "to_team_id": teamsArray
+        "to_team_id": teamsArray,
+        'country': this.loggedUser.per_permanent_country_name
       }
       console.log(payload, 'payload from search');
       await ApiService.post('v1/site-visit', payload);

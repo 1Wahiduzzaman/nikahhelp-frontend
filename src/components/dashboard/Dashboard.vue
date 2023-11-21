@@ -9,7 +9,7 @@
              <div class="intro mx-4 mt-4 border-bottom-white">
                <h4 class="color-primary fs-14">Welcome Back!</h4>
                <h6 class="color-primary fs-18 font-weight-bold">{{ getAuthUser ? getAuthUser.full_name : 'N/A' }}</h6>
-               <p class="color-primary fs-14">Last login 26 Jan 2022</p>
+               <p class="color-primary fs-14">Last login {{ lastLogin }}</p>
              </div>
            </div>
            <div class="status-div mt-3">
@@ -29,7 +29,7 @@
              <p class="fs-14 color-primary status">
                Verification Status:
                <span class="font-weight-bolder">{{ userDataFromApi.status == 3 ? 'Verified' : 'Not Verified' }}</span>
-               <router-link to="/settings" class="btn px-2 bg-primary ml-3 color-white profile-btn cursor-pointer fs-12 btn-hover btn-border" v-if="userDataFromApi.status != 3">Upload ID</router-link>
+               <router-link to="/settings" class="btn px-2 bg-primary ml-3 color-white profile-btn cursor-pointer fs-12 btn-hover btn-border upload-btn" v-if="userDataFromApi.status != 3">Upload ID</router-link>
              </p>
            </div>
          </div>
@@ -71,17 +71,26 @@
                </a-tooltip>
              </div>
            </div>
-           <div class="team-members-div mt-3" v-if="activeTeam && activeTeam.team_members && activeTeam.team_members.length > 0">
-             <h4 class="fs-14 text-black-50 text-center">Team members</h4>
+           <div class="team-members-div mt-3 mx-3" v-if="activeTeam && activeTeam.team_members && activeTeam.team_members.length > 0">
+             <h4 class="fs-14 text-black-50 text-center mb-5">Team members</h4>
              <div class="flex justify-content-center align-items-center members">
                <a-tooltip v-for="(member, index) in activeTeam.team_members.filter(item => item.user_id != getAuthUser.id && item.user)" :key="index" class="mr-2" :title="getMemberName(member.user)">
                  <img :src="getImage(member.user)" alt="member" class="team-member-img" />
                </a-tooltip>
              </div>
-             <div class="btn-div flex justify-content-center mt-5" v-if="getCandidate">
-               <v-btn class="profile-btn text-capitalize btn-hover" small :to="{name: 'ProfileView', params: {id: getCandidate}}">View this team's candidate profile</v-btn>
-             </div>
-           </div>
+            </div>
+            <div class="d-flex justify-content-center w-100">
+              <ButtonComponent
+                v-if="getCandidate"
+                class="btn-div mt-3"
+                :isSmall="true"
+                :isBlock="false"
+                :responsive="false"
+                title="View candidate profile"
+                @onClickButton="goToCandidateProfile"
+              />
+            </div>
+
            <div class="subscription-div" v-if="activeTeam">
              <!-- <h4 class="fs-14 text-black-50 text-center">Subscription info</h4> -->
              <div class="subscription-info">
@@ -133,13 +142,46 @@
               <button class="btn btn-chart-type ml-2" :class="{'active-btn': viewType === 2}" @click="toggleProfileViewType(2)">Year</button>
             </div>
           </div>
-          <div class="d-flex flex-column justify-content-center h-75">
-            <highcharts :options="chartOptions"></highcharts>
+          <div class="d-flex flex-column justify-content-center h-100">
+            <highcharts :options="chartOptions" ref="viewsGraph" class="h-50"></highcharts>
+            <div class="p-3 mx-6">
+              <h6 class="chart-heading">Country wise <span class="color-primary">{{ chartOptionsSaved.months.totalCount }}</span> viewed</h6>
+              <!-- <div class="country-wise-view d-flex justify-content-between flex-wrap" style="font-size: 1rem; white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;">
+                <div class="d-flex justify-content-between">
+                  <span class="mr-2">United Kingdom</span>
+                  <span>50</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <span class="mr-2">United Kingdom</span>
+                  <span>50</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <span class="mr-2">United Kingdom</span>
+                  <span>50</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <span class="mr-2">United Kingdom</span>
+                  <span>50</span>
+                </div>
+              </div> -->
+              <div v-if="siteVisitData" class="country-wise-view" style="font-size: 1rem; white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;">
+                <div v-for="(item, index) in siteVisitData.countryWiseViews" :key="index" class="d-flex justify-content-center country-view-item">
+                  <span class="mr-2" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ index ? index : "Others" }}</span>
+                  <span class="font-weight-bold color-primary" style="overflow: hidden;">{{ item }}</span>
+                </div>       
+              </div>
+
+            </div>
+
           </div>
         </div>
         <div class="tips-div mt-4" v-if="false">
           <carousel
-              perPage="1"
+              :perPage="1"
               paginationActiveColor="#522e8e"
               paginationColor="#b7b7b7"
           >
@@ -174,11 +216,13 @@
 import { Carousel, Slide } from "vue-carousel";
 import ApiService from "@/services/api.service";
 import JwtService from "../../services/jwt.service";
+import ButtonComponent from "../atom/ButtonComponent.vue";
 export default {
   name: "Dashboard",
   components: {
     Carousel,
     Slide,
+    ButtonComponent,
   },
   created() {
     this.getUserInfo();
@@ -205,11 +249,12 @@ export default {
       profileGraphs: [],
       chartOptions: {
         chart: {
-          type: 'area'
+          type: 'areaspline'
         },
+        colors: ['#6159A7'],
         xAxis: {
           type: 'month',
-          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Ma', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+          categories: [],
         },
         yAxis: {
           title: {
@@ -244,8 +289,8 @@ export default {
           }
         },
         series: [{
-          name: 'Month',
-          data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+          name: '',
+          data: []
         }],
         legend: {
           enabled: false
@@ -256,6 +301,23 @@ export default {
         credits: {
           enabled: false
         },
+      },
+      chartOptionsSaved: {
+        months: {
+          categories: [],
+          data: [],
+          totalCount: 0
+        },
+        days: {
+          categories: [],
+          data: [],
+          totalCount: 0
+        },
+        weekDays: {
+          categories: [],
+          data: [],
+          totalCount: 0
+        }
       },
       teamActivity: {
         suggestion: '',
@@ -297,6 +359,16 @@ export default {
       }
       return null;
     },
+    lastLogin() {
+      let last_login = JSON.parse(localStorage.getItem('user')).last_login;
+      const date = new Date(last_login);
+      let formattedDate = date.toLocaleDateString('en-UK', {day: 'numeric', month: 'short', year: 'numeric' });
+      formattedDate =  formattedDate.slice(0, 6) + "," + formattedDate.slice(6);
+      // date_obj = datetime.datetime.strptime(last_login, "%Y-%m-%dT%H:%M:%S.%fZ")
+      // new_date_str = date_obj.strftime("%d %b, %Y")
+      // return new_date_str;
+      return formattedDate;
+    }
   },
   methods: {
     async getUserInfo () {
@@ -347,58 +419,121 @@ export default {
         let {data} = await ApiService.get(`v1/site-visit-graph/${teamIntId}`).then(res => res.data);
         this.siteVisitData = data;
       }
-      let today = new Date();
-      let viewsInLastYear = this.siteVisitData.filter(item => (today - new Date(item.updated_at)) <= 31536000000);
-      let viewsInLastMonth = viewsInLastYear.filter(item => (today - new Date(item.updated_at)) <= 2419200000);
-      let viewsInLastWeek = viewsInLastMonth.filter(item => (today - new Date(item.updated_at)) <= 604800000);
+      // let today = new Date();
+      // let viewsInLastYear = this.siteVisitData.filter(item => (today - new Date(item.updated_at)) <= 31536000000);
+      // let viewsInLastMonth = viewsInLastYear.filter(item => (today - new Date(item.updated_at)) <= 2419200000);
+      // let viewsInLastWeek = viewsInLastMonth.filter(item => (today - new Date(item.updated_at)) <= 604800000);
 
-      console.log(viewsInLastYear);
+      console.log(this.siteVisitData);
+      let newArray = [];
       if(this.siteVisitData) {
         if(viewType == 2) {
-          console.log(this.siteisitData, 'site-visit-graph');
-          this.totalCount = viewsInLastYear.length;
-          this.chartOptions.xAxis.categories = ['Jan', 'Feb', 'Mar', 'Apr', 'Ma', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];        
+          if(this.chartOptionsSaved.months.categories.length != 0) {
+            this.chartOptions.xAxis.categories =this.chartOptionsSaved.months.categories;
+            this.chartOptions.series[0].data = this.chartOptionsSaved.months.data;
+            this.totalCount = this.chartOptionsSaved.months.totalCount;
+            return;
+          }
+          console.log('saved not working');
+          let monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Ma', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+          this.chartOptions.series = [
+            {
+              name: 'Year',
+              data: []
+            }
+          ]
+          this.totalCount = 0;
+          this.chartOptions.xAxis.categories = [];
+          for (const key in this.siteVisitData.months) {
+            this.totalCount += this.siteVisitData.months[key];
+            this.chartOptions.xAxis.categories.push(key);
+            this.chartOptions.series[0].data.push(this.siteVisitData.months[key]);
+          }
+
+          let currentMonthIndex = monthNames.indexOf(monthNames[new Date().getMonth()]);
+          newArray = this.chartOptions.xAxis.categories.slice(currentMonthIndex+1).concat(this.chartOptions.xAxis.categories.splice(0, currentMonthIndex)).concat(this.chartOptions.xAxis.categories[0]);
+          this.chartOptions.xAxis.categories = newArray;
+          newArray = this.chartOptions.series[0].data.slice(currentMonthIndex+1).concat(this.chartOptions.series[0].data.splice(0, currentMonthIndex)).concat(this.chartOptions.series[0].data[0]);
+          this.chartOptions.series[0].data = newArray;
+
+          this.chartOptionsSaved.months.categories = this.chartOptions.xAxis.categories;
+          this.chartOptionsSaved.months.data = this.chartOptions.series[0].data;
+          this.chartOptionsSaved.months.totalCount = this.totalCount;
+
+        } else if (viewType == 1) {
+          if(this.chartOptionsSaved.days.categories.length != 0) {
+            this.chartOptions.xAxis.categories =this.chartOptionsSaved.days.categories;
+            this.chartOptions.series[0].data = this.chartOptionsSaved.days.data;
+            this.totalCount = this.chartOptionsSaved.days.totalCount;
+            return;
+          }
+          console.log('saved not working');
+
           this.chartOptions.series = [
             {
               name: 'Month',
-              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+              data: []
             }
-          ];
-          viewsInLastYear.forEach(view => {
-            this.chartOptions.series[0].data[new Date(view.updated_at).getMonth()] += 1;
-          })
-          // this.chartOptions.series = [
-          //   {
-          //     name: 'Month',
-          //     data: views
-          //   }
-          // ];
+          ]
+          this.totalCount = 0;
+          this.chartOptions.xAxis.categories = [];
+          for (const key in this.siteVisitData.days) {
+            if(parseInt(key) > new Date(new Date().getFullYear(), new Date().getMonth(), 0).getDate()) {
+              continue;
+            }
+            this.totalCount += this.siteVisitData.days[key];
+            this.chartOptions.xAxis.categories.push(key);
+            this.chartOptions.series[0].data.push(this.siteVisitData.days[key]);
+          }
 
-        } else if (viewType == 1) {
-          this.totalCount = viewsInLastMonth.length;
-          this.chartOptions.xAxis.categories = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
-          this.chartOptions.series = [
-            {
-              name: 'Day',
-              data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            }
-          ];
-          viewsInLastMonth.forEach(view => {
-            this.chartOptions.series[0].data[new Date(view.updated_at).getDate()-1] += 1;
-          })
+          let currentDayMIndex = this.chartOptions.xAxis.categories.indexOf(new Date().getDate().toString());
+          newArray = this.chartOptions.xAxis.categories.slice(currentDayMIndex+1).concat(this.chartOptions.xAxis.categories.splice(0, currentDayMIndex)).concat(this.chartOptions.xAxis.categories[0]);
+          this.chartOptions.xAxis.categories = newArray;
+
+          newArray = this.chartOptions.series[0].data.slice(currentDayMIndex+1).concat(this.chartOptions.series[0].data.splice(0, currentDayMIndex)).concat(this.chartOptions.series[0].data[0]);
+          this.chartOptions.series[0].data = newArray;
+
+          this.chartOptionsSaved.days.categories = this.chartOptions.xAxis.categories;
+          this.chartOptionsSaved.days.data = this.chartOptions.series[0].data;
+          this.chartOptionsSaved.days.totalCount = this.totalCount;
+
         } else {
-          this.totalCount = viewsInLastWeek.length;
-          this.chartOptions.xAxis.categories = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+          if(this.chartOptionsSaved.weekDays.categories.length != 0) {
+            this.chartOptions.xAxis.categories =this.chartOptionsSaved.weekDays.categories;
+            this.chartOptions.series[0].data = this.chartOptionsSaved.weekDays.data;
+            this.totalCount = this.chartOptionsSaved.weekDays.totalCount;
+            return;
+          }
+          console.log('saved not working');
+
           this.chartOptions.series = [
             {
-              name: 'Day',
-              data: [0, 0, 0, 0, 0, 0, 0]
+              name: 'Days',
+              data: []
             }
-          ];
-          viewsInLastWeek.forEach(view => {
-            this.chartOptions.series[0].data[new Date(view.updated_at).getDay()] += 1;
-          })
+          ]
+          this.totalCount = 0;
+          this.chartOptions.xAxis.categories = [];
+          for (const key in this.siteVisitData.week) {
+            this.totalCount += this.siteVisitData.week[key];
+            this.chartOptions.xAxis.categories.push(key);
+            this.chartOptions.series[0].data.push(this.siteVisitData.week[key]);
+          }
+
+
+          let currentDayIndex = new Date().getDay();
+          newArray = this.chartOptions.xAxis.categories.slice(currentDayIndex+1).concat(this.chartOptions.xAxis.categories.splice(0, currentDayIndex)).concat(this.chartOptions.xAxis.categories[0]);
+          this.chartOptions.xAxis.categories = newArray;
+          newArray = this.chartOptions.series[0].data.slice(currentDayIndex+1).concat(this.chartOptions.series[0].data.splice(0, currentDayIndex)).concat(this.chartOptions.series[0].data[0]);
+          this.chartOptions.series[0].data = newArray;
+
+          this.chartOptionsSaved.weekDays.categories = this.chartOptions.xAxis.categories;
+          this.chartOptionsSaved.weekDays.data = this.chartOptions.series[0].data;
+          this.chartOptionsSaved.weekDays.totalCount = this.totalCount;
         }
+
+        this.$refs.viewsGraph.chart.reflow();
+
       }
     },
     async getTeamActivity() {
@@ -575,6 +710,9 @@ export default {
       }
       return false;
     },
+    goToCandidateProfile() {
+      this.$router.push({name: 'ProfileView', params: {id: this.getCandidate}});
+    }
   },
 }
 </script>
@@ -601,6 +739,7 @@ h4 {
   overflow-y: auto;
   @media (max-width: 767px) {
     height: auto;
+    padding-bottom: 0;
   }
   .user-info-div {
     background: rgba(97, 89, 167, 0.2);
@@ -649,27 +788,34 @@ h4 {
       padding: 10px 20px;
     }
     .team-members-div {
-      padding: 0 20px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0, 0, 0, .2);
+
       .members {
         .team-member-img {
-          width: 50px;
-          height: 50px;
+          width: 60px;
+          height: 60px;
           border-radius: 50%;
         }
       }
-      .btn-div {
-        .profile-btn {
-          background: #6159a7;
-          border-radius: 30px;
-          color: #FFFFFF;
-          width: 100%;
-        }
+    }
+    .btn-div {
+      padding: 8px 10px;
+      .profile-btn {
+        background: #6159a7;
+        border-radius: 30px;
+        color: #FFFFFF;
+        width: 100%;
       }
     }
     .subscription-div {
-      padding: 0 20px;
+      padding: 15px 20px;
       position: absolute;
       bottom: 10px;
+
+      @media  (max-width: 767px) {
+        position: relative;
+      }
 
       .subscription-img {
         width: 20px;
@@ -703,9 +849,15 @@ h4 {
   height: calc(100vh - 100px);
   position: relative;
 
+  @media (max-width: 767px) {
+    height: auto;
+    padding: 8px;
+  }
+
   .overlay-div {
     position: absolute;
     top: 0%;
+    left: 0%;
     z-index: 8;
     height: 100%;
     width: 100%;
@@ -772,15 +924,51 @@ h4 {
   padding-right: 15px !important;
 }
 .chart-heading {
-  font-size: 12px;
-  @media (min-width: 768px) {
-    font-size: 18px;
+  font-size: 18px;
+  @media (max-width: 768px) {
+    text-align: center !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 12px !important;
+    font-size: 12px;
   }
   span {
     font-size: 14px;
     @media (min-width: 768px) {
       font-size: 24px;
     }
+  }
+}
+
+.country-wise-view {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 4px;
+
+  .country-view-item {
+    background: $primary_lite_5;
+    border-radius: 10px;
+    padding: 2px;
+  }
+  
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr) !important;    
+  }
+  @media (min-width: 992px) {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+  @media (max-width: 768px) {
+    font-size: .8rem !important;
+    justify-content: center !important;
+
+    .country-view-item {
+      justify-content: space-between !important;
+      padding: 2px 15px;
+    }
+
   }
 }
 .btn-chart-type {
@@ -792,6 +980,11 @@ h4 {
     border: none;
     outline: none;
     box-shadow: none;
+  }
+}
+.upload-btn {
+  @media (max-width: 768px) {
+    display: none;
   }
 }
 .active-btn {
