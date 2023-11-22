@@ -282,7 +282,12 @@ export default {
         });
         return;
       }
-      this.isResendingCode = true;
+
+      if(payload.isResend == true) {
+        this.isResendingCode = true;
+      } else {
+        this.isLoading = true;
+      }
       try {
         let response = await axios.post('v1/verify-2fa', payload);
         console.log(response, 'data');
@@ -306,6 +311,8 @@ export default {
             router.push({ path: `${router.history._startLocation}`});
           }
         }
+        this.isResendingCode = false;
+        this.isLoading = false;
       } catch (error) {
         console.log(error, 'error');
         this.$error({
@@ -313,7 +320,6 @@ export default {
           centered: true,
         });
       }
-      this.isResendingCode = false;
     },
     async handleResend() {
       this.signinModel.isResend = true;
@@ -459,8 +465,17 @@ export default {
 }
 //}
 
-.ant-form-item {
+.ant-form-item::v-deep {
   margin-bottom: 0px;
+  
+  .ant-input {
+    height: auto !important;
+  }
+
+  input {
+    border: 1px solid #80808057;
+    background: #fafafa;
+  }
 }
 .forgot-password {
   font-size: 14px;

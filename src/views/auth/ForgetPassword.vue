@@ -289,6 +289,18 @@ export default {
     }
   }
 }
+.ant-form-item::v-deep {
+  margin-bottom: 0px;
+  
+  .ant-input {
+    height: auto !important;
+  }
+
+  input {
+    border: 1px solid #80808057;
+    background: #fafafa;
+  }
+}
 .btn-style {
   margin-top: 10px;
   padding-top: 5px;
