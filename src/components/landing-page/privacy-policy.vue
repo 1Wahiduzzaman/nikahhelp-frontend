@@ -235,7 +235,7 @@ if we are under a duty to disclose or share your personal data in order to compl
 
 <script>
 import Footer from "@/components/auth/Footer.vue";
-import LandingPageHeader from "@/components/landing-page/LandingPageHeader.vue";
+import LandingPageHeader from "@/components/auth/Header.vue";
 export default {
   name: "PrivacyPolicy",
   components: {

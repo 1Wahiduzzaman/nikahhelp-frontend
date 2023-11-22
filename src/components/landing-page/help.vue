@@ -237,7 +237,7 @@
 
 <script>
 import Footer from "@/components/auth/Footer.vue";
-import LandingPageHeader from "@/components/landing-page/LandingPageHeader.vue";
+import LandingPageHeader from "@/components/auth/Header.vue";
 import ApiService from "@/services/api.service";
 
 
@@ -614,7 +614,7 @@ button:disabled {
     border: 1px solid $border-primary;
     border-radius: 10px;
     color: white;
-    box-shadow: 0px 1px 6px #787474;
+    box-shadow: 0px 1px 3px #B2aaaa;
 
     &:hover {
       background-color: white;
@@ -724,7 +724,7 @@ button:disabled {
 }
 
 .submit-btn {
-  box-shadow: 0px 1px 6px #787474;
+  box-shadow: 0px 1px 3px #B2aaaa;
 }
 
 @media (max-width: 991px) {
