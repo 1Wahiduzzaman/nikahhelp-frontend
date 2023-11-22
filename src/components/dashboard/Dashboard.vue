@@ -142,30 +142,10 @@
               <button class="btn btn-chart-type ml-2" :class="{'active-btn': viewType === 2}" @click="toggleProfileViewType(2)">Year</button>
             </div>
           </div>
-          <div class="d-flex flex-column justify-content-center h-100">
-            <highcharts :options="chartOptions" ref="viewsGraph" class="h-50"></highcharts>
+          <div class="d-flex flex-column justify-content-center">
+            <highcharts :options="chartOptions" ref="viewsGraph" class="h-50 h-charts"></highcharts>
             <div class="p-3 mx-6">
               <h6 class="chart-heading">Country wise <span class="color-primary">{{ chartOptionsSaved.months.totalCount }}</span> viewed</h6>
-              <!-- <div class="country-wise-view d-flex justify-content-between flex-wrap" style="font-size: 1rem; white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;">
-                <div class="d-flex justify-content-between">
-                  <span class="mr-2">United Kingdom</span>
-                  <span>50</span>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <span class="mr-2">United Kingdom</span>
-                  <span>50</span>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <span class="mr-2">United Kingdom</span>
-                  <span>50</span>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <span class="mr-2">United Kingdom</span>
-                  <span>50</span>
-                </div>
-              </div> -->
               <div v-if="siteVisitData" class="country-wise-view" style="font-size: 1rem; white-space: nowrap;
               overflow: hidden;
               text-overflow: ellipsis;">
@@ -815,6 +795,7 @@ h4 {
 
       @media  (max-width: 767px) {
         position: relative;
+        padding: 40px 20px 10px 20px !important;
       }
 
       .subscription-img {
@@ -939,6 +920,11 @@ h4 {
   }
 }
 
+.h-charts {
+  margin-top: 40px !important;
+  margin-bottom: 40px !important;
+}
+
 .country-wise-view {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
@@ -1001,6 +987,7 @@ h4 {
 }
 .btn-flex {
   display: flex;
+  justify-content: center;
 }
 .team-all {
   padding: 20px;
