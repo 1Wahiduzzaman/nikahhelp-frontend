@@ -311,6 +311,18 @@
                 >
               </a-menu-item>
               <a-divider class="m-0" />
+
+              <a-menu-item>
+                <router-link to="/dashboard">
+                  <img
+                    width="22"
+                    src="@/assets/icon/house-door-fill-primary.svg"
+                    alt="icon"
+                  />
+                  <span class="ml-2">Dashboard</span>
+                </router-link>
+              </a-menu-item>
+
               <a-menu-item class="d-flex align-items-center">
                 <a-dropdown :trigger="['click']" placement="bottomLeft" :getPopupContainer="popupDiv()">
                   <a
