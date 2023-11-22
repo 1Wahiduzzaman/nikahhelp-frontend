@@ -198,7 +198,7 @@ export default {
 }
 
 .btn-connection {
-  box-shadow: 0 1px 6px #b2aaaa;
+  box-shadow: 0px 1px 3px #B2aaaa;
   border: 1px solid white !important;
   background: $bg-primary;
   color: $color-white !important;

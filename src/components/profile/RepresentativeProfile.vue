@@ -366,7 +366,7 @@ legend {
 			  filter: brightness(0) invert(1);
 			}
 			&:hover {
-				box-shadow: 0px 1px 6px #787474;
+				box-shadow: 0px 1px 3px #B2aaaa;
 				border: 1px solid white !important;
 			}
 		  }
