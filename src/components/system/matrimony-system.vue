@@ -125,7 +125,7 @@ export default {
       localStorage.setItem("user", JSON.stringify(localStorageUser));
 
    }).catch(() => {
-     this.logout();
+    //  this.logout();
    });
 
   },
