@@ -63,18 +63,15 @@
 						</v-chip>
 					</v-chip-group>
 				</div>
-				<button
-						@click="setSearchModalVisible"
-						class="btn btn-primary py-2 px-4 advance-btn"
-				>
-					<img
-							src="@/assets/icon/Search Your Match.svg"
-							alt="Icon"
-							height="20px"
-							class="advanceIcon"
-					/>
-					Advanced Search
-				</button>
+
+				<ButtonComponent
+					iconHeight="14px"
+					:isSmall="true"
+					title="Advanced Search"
+					:responsive="false"
+					:icon="require('@/assets/icon/search-love-secondary.svg')"
+					@onClickButton="setSearchModalVisible"
+				/>
 			</div>
 
 			<!-- TODO Advanced Search Button -->
@@ -148,37 +145,38 @@
 				@handleSearch="handleSearch"
 		></un-auth-search-modal> -->
 		<Modal
-        v-model="searchModalVisible"
-        @onCancel="onCancel"
-        :width="400"
-    >
-      <div class="details-modal p-3">
-        <h3 class="fs-18 text-header-black">We have found several matches for you</h3>
-        <p class="fs-14">
-          Register for free and start in no time by exploring MatrimonyAssist with a candidate and rep profile.
-        </p>
-        <p class="fs-14">
-          We request all users on MatrimonyAssist to verify their email and
-          mobile number to help build and maintain trust.
-        </p>
-        <div>
-          <div class="text-center">
-            <a href="/login" class="btn btn-sm btn-brand ml-2 btn-unauth">
-              Sign in
-            </a>
-          </div>
+			class="search-modal"
+			v-model="searchModalVisible"
+			@onCancel="onCancel"
+			:width="400"
+		>
+			<div class="details-modal p-3">
+				<h3 class="fs-18 text-header-black">We have found several matches for you</h3>
+				<p class="fs-14">
+				Register for free and start in no time by exploring MatrimonyAssist with a candidate and rep profile.
+				</p>
+				<p class="fs-14">
+				We request all users on MatrimonyAssist to verify their email and
+				mobile number to help build and maintain trust.
+				</p>
+				<div>
+				<div class="text-center">
+					<a href="/login" class="btn btn-sm btn-brand ml-2 btn-unauth">
+					Sign in
+					</a>
+				</div>
 
-          <div class="text-center">
-            <span class="text-center">or</span>
-          </div>
-          <div class="text-center">
-            <a href="/signup" class="btn btn-sm ml-2 btn-unauth">
-              Join now
-            </a>
-          </div>
-        </div>
-      </div>
-    </Modal>
+				<div class="text-center">
+					<span class="text-center">or</span>
+				</div>
+				<div class="text-center">
+					<a href="/signup" class="btn btn-sm ml-2 btn-unauth">
+					Join now
+					</a>
+				</div>
+				</div>
+			</div>
+		</Modal>
 		<div class="footer-container">
 			<Footer style="margin-top: 50px" />
 		</div>
@@ -193,10 +191,21 @@ import Footer from "@/components/auth/Footer.vue";
 import CandidateGrid from '@/components/search/UnauthCard.vue';
 import Observer from "@/components/atom/Observer";
 import Modal from '@/components/ui/Modal';
+import ButtonComponent from '../../components/atom/ButtonComponent.vue';
 
 
 export default {
+	name: "UnAuthSearch",
 	props: ["url"],
+
+	components: {
+		Footer,
+		CandidateGrid,
+		// UnAuthSearchModal,
+		Observer,
+		Modal,
+		ButtonComponent
+	},
 
 	data() {
 		return {
@@ -222,14 +231,6 @@ export default {
 		};
 		this.landingLoading = true;
 		this.handleSearch(this.url, pagination);
-	},
-
-	components: {
-		Footer,
-		CandidateGrid,
-		// UnAuthSearchModal,
-		Observer,
-		Modal,
 	},
 
 	watch: {
@@ -506,6 +507,13 @@ export default {
 	font-size: 14px;
 }
 
+.search-modal::v-deep {
+	.ant-modal-centered {
+		.ant-modal {
+			vertical-align: inherit !important;
+		}
+	}
+}
 .mt-150 {
 	margin-top: 150px;
 }

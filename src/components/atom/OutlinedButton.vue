@@ -55,7 +55,7 @@ export default {
         color: white;
     }
     &:hover {
-        box-shadow: 0px 1px 6px #787474;
+        box-shadow: 0px 1px 3px #B2aaaa;
         border: 1px solid white;
         background: #6158a7;
     }

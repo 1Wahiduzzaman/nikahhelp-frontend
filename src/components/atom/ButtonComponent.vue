@@ -118,7 +118,7 @@ export default {
     background: #6158a7;
     color: #fff !important;
     border: 1px solid white !important;
-    box-shadow: 0px 1px 6px #B2aaaa;
+    box-shadow: 0px 1px 3px #B2aaaa;
     img {
         filter: brightness(0) invert(1);
     }
@@ -137,7 +137,7 @@ export default {
     &:hover {
         text-transform: 'capitalize';
         border:'1px solid #6158a7';
-        box-shadow: 0px 1px 6px #787474;
+        box-shadow: 0px 1px 3px #B2aaaa;
         border: 1px solid white !important;
         background: #6158a7;
         color: #fff;

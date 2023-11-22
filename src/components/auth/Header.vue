@@ -68,6 +68,7 @@ export default {
   right: 0;
   z-index: 10;
   transition: all 0.5s;
+  background: rgba(0, 0, 0, .4);
 
   .logo {
     width: 200px;
@@ -113,6 +114,9 @@ export default {
 }
 
 .mobile-margin {
+  &:hover {
+    transform: scale(1.1);
+  }
   @media (max-width: 360px) {
     flex-direction: column !important;
   }

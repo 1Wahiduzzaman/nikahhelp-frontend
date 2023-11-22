@@ -86,6 +86,8 @@
       <ButtonComponent
           wrapperWidth="49%"
           iconHeight="14px"
+          backgroundColor="#3ab549"
+          class="connect-button"
           :isSmall="true"
           :responsive="false"
           :title="candidate.is_short_listed ? 'Disconnect' : 'Connect'"
@@ -108,6 +110,7 @@
       <ButtonComponent
           wrapperWidth="49%"
           iconHeight="14px"
+          class="block-button"
           :isSmall="true"
           :responsive="false"
           :title="candidate.is_block_listed ? 'Unblock' : 'Block'"
@@ -371,6 +374,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "@/styles/base/_variables.scss";
+
 .btn-unauth {
   border: 1px solid #3A3092;
   color: #3A3092;
@@ -386,5 +391,39 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.block-button::v-deep {
+  .v-custom:hover {
+    background: #fff !important;
+    color: #d81b60 !important;
+    border: 1px solid #d81b60 !important;
+
+    img {
+      filter: none !important;
+    }
+  }
+}
+.unblock-button::v-deep {
+  .v-custom:hover {
+    background: #fff !important;
+    color: $bg-primary !important;
+    border : 1px solid $bg-primary !important;
+    
+    img {
+      filter: none !important;
+    }
+  }
+}
+
+.connect-button::v-deep {
+  .v-custom:hover {
+    background: #fff !important;
+    color: $bg-success !important;
+    border: 1px solid $bg-success !important;
+
+    img {
+      filter: none !important;
+    }
+  }
 }
 </style>

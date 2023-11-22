@@ -121,7 +121,7 @@ export default {
 .team-btn-primary {
   border: 1px solid $color-white;
   border-radius: 30px !important;
-  box-shadow: 0px 1px 6px #B2aaaa !important;
+  box-shadow: 0px 1px 3px #B2aaaa !important;
 
   &:hover {
     background: #fff !important;
