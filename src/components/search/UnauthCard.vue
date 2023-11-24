@@ -2,7 +2,7 @@
   <v-card
       @click="showDetailRightSide"
       :loading="loading"
-      class="mx-auto"
+      class="mx-auto unauth-card"
       max-width="374"
   >
     <template slot="progress">
@@ -376,6 +376,10 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 
+.unauth-card.v-sheet.v-card:not(.v-sheet--outlined)::v-deep {
+  box-shadow: none !important;
+  border: 2px solid #dddddd78;
+}
 .btn-unauth {
   border: 1px solid #3A3092;
   color: #3A3092;
