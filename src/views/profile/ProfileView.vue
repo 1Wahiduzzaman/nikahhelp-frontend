@@ -92,13 +92,12 @@ export default {
   data() {
     return {
       activeTeamId: null,
-      teams: null,
+      teams: [],
       isLoading: false,
       user: null,
       candidateInfo: {},
       representativeInfo: {},
       is_verified: 1,
-      error: null,
       userProfile: {},
       profileId: null,
       candidateProfileInfo: {},
@@ -168,7 +167,6 @@ export default {
           id,
         };
         const response = await this.$store.dispatch("getUserProfile", payload);
-        console.log(response);
         this.userProfile = response.data.user;
         this.fullProfileInfo = response.data;
         if (response.data.user.account_type == 1) {
@@ -191,11 +189,15 @@ export default {
         // 	this.$router.push("/representative-registration");
         // }
       } catch (error) {
-        this.error = error.message || "Something went wrong";
         //alert(this.error);
         this.$error({
           title: "Error!",
-          content: this.error,
+          content: "Something went wrong! Please reload the page.",
+          center: true,
+
+          onOk: () => {
+            location.reload();
+          },
         });
       }
       this.isLoading = false;
