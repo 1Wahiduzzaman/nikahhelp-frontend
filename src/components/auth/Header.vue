@@ -11,7 +11,7 @@
       </router-link>
       <div class="login">
         <div class="flex">
-          <router-link to="/login" class="d-flex flex-row mobile-margin"
+          <router-link to="/login" class="d-flex flex-row mobile-margin sign-in-btn"
             ><img
               src="@/assets/Icons/sign in.svg"
               alt=""
@@ -68,7 +68,7 @@ export default {
   right: 0;
   z-index: 10;
   transition: all 0.5s;
-  background: rgba(0, 0, 0, .4);
+  background-image: linear-gradient(black, #ffffff00);
 
   .logo {
     width: 200px;
@@ -119,6 +119,12 @@ export default {
   }
   @media (max-width: 360px) {
     flex-direction: column !important;
+  }
+}
+.sign-in-btn {
+  margin-right: 5px !important;
+  @media (max-width: 360px) {
+    margin: 0px !important;
   }
 }
 </style>
