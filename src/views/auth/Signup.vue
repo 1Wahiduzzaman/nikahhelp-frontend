@@ -32,6 +32,7 @@
         <p class="my-6">If you want to join as a matchmaker, you will have to go through a slightly different registration process. Currently this option is only available through direct contact with the MatrimonyAssist Team. </p>
 
         <ButtonComponent
+          minHeight="50px"
           class="btn-join-now"
           :isSmall="false"
           title="Join now"
@@ -341,7 +342,8 @@
                   type="text"
                   class="form-control fs-16"
                   id="first_name"
-                  @change="generateScreenName"
+                  :maxLength="20"
+                  @change="generateScreenName(); trimTheFirstName();"
                   v-model="signupModel.first_name"
                   placeholder="First Name"
                 />
@@ -352,8 +354,9 @@
                 <a-input
                   type="text"
                   class="form-control fs-16"
-                  @change="generateScreenName"
+                  @change="generateScreenName(); trimTheLastName();"
                   id="lastName"
+                  :maxLength="20"
                   v-model="signupModel.last_name"
                   placeholder="Last Name"
                 />
@@ -374,14 +377,9 @@
             </div>
 
             <a-tooltip placement="right" class="fs-12 mb-2">
-              <template v-slot:title>
-                We have made a screen name for you, you can keep it or change to
-                something suitable. Please make sure you choose a screen name
-                wisely as it communicates something about yourself.
-              </template>
               <span class="text-white"
                 >* Please choose a sensible screen name, if you don't wish your
-                real name to appear on search result.</span
+                real name to appear on search result. You can also use your nickname.</span
               >
             </a-tooltip>
             <a-button
@@ -520,8 +518,8 @@
           <p class="mb-0">
             {{ errorMessage }}
           </p>
-          <div class="flex justify-content-center align-items-center">
-            <button @click="resetData" class="mt-2">
+          <div class="flex justify-content-center align-items-center error-div-btns">
+            <!-- <button @click="resetData" class="mt-2">
               <router-link
                 to="/login"
                 class="
@@ -533,9 +531,18 @@
               >
                 Sign in
               </router-link>
-            </button>
+            </button> -->
+            <ButtonComponent
+              minHeight="14px"
+              class="mt-2 ms-2"
+              iconHeight="14px"
+              :isSmall="true"
+              title="Sign in"
+              :responsive="false"
+              @onClickButton="router.push('/login')"
+            />
             <h4 class="fs-16 pt-3 pl-2 pr-1 text-dark">or</h4>
-            <button @click="resetData" class="mt-2">
+            <!-- <button @click="resetData" class="mt-2">
               <router-link
                 to="/signup"
                 class="
@@ -545,14 +552,24 @@
                   join-now-btn
                 "
               >
-                Join now with another email
+                {{  errorMessage == "The email has already been taken." ? "Join now with another email" : "Join now with another screen name" }}
+                
               </router-link>
-            </button>
+            </button> -->
+            <ButtonComponent
+              minHeight="14px"
+              class="mt-2 ms-2"
+              iconHeight="14px"
+              :isSmall="true"
+              :title="errorMessage == 'The email has already been taken.' ? 'Join now with another email' : 'Join now with another screen name'"
+              :responsive="false"
+              @onClickButton="resetData"
+            />
           </div>
         </div>
       </div>
     </div>
-    <Footer class="footer-container" :class="{ 'footer-pos': errorMessage }" />
+    <Footer class="footer-container"/>
   </div>
 </template>
 
@@ -659,7 +676,8 @@ export default {
           { required: true, message: "Enter first name", trigger: "change" },
           {
             min: 3,
-            message: "Use 3 characters or more for your first name",
+            max: 20,
+            message: "Use 3-20 characters for your first name",
             trigger: "blur",
           },
         ],
@@ -672,7 +690,21 @@ export default {
           },
           {
             min: 3,
-            message: "Use 3 characters or more for your last name",
+            max: 20,
+            message: "Use 3-20 characters for your last name",
+            trigger: "blur",
+          },
+        ],
+        screen_name: [
+          {
+            required: true,
+            message: "Enter screen name",
+            trigger: "change",
+          },
+          {
+            min: 8,
+            max: 15,
+            message: "Use 8-15 characters for your screen name",
             trigger: "blur",
           },
         ],
@@ -700,6 +732,22 @@ export default {
         /[^A-Z0-9]/gi,
         ""
       );
+
+      this.signupModel.screen_name = this.signupModel.screen_name.toUpperCase();
+    },
+    trimTheFirstName() {
+      this.signupModel.first_name = this.signupModel.first_name.replace(
+        /[^A-Za-z]/gi,
+        ""
+      );
+      this.signupModel.first_name = this.signupModel.first_name.length > 0 ? this.signupModel.first_name[0] + this.signupModel.first_name.substring(1).toLowerCase() : "";
+    },
+    trimTheLastName() {
+      this.signupModel.last_name = this.signupModel.last_name.replace(
+        /[^A-Za-z]/gi,
+        ""
+      );
+      this.signupModel.last_name = this.signupModel.last_name.length > 0 ? this.signupModel.last_name[0] +  this.signupModel.last_name.substring(1).toLowerCase() : "";
     },
     handleSubmitSignUp() {
       this.$refs.signupFormOne.validate((valid) => {
@@ -800,6 +848,12 @@ export default {
       this.signupModel.account_type = type;
     },
     resetData() {
+      if(this.errorMessage != "The email has already been taken.") {
+        this.showMemberTypeForm = false;
+        this.showSignupForm = false;
+        this.showMemberForm = true;
+        this.signupModel.screen_name = "";
+      }
       this.$store.commit("setErrorMessage", "");
       localStorage.removeItem("token");
       this.isLoading = false;
@@ -904,7 +958,7 @@ $border-width: 2px;
       }
     }
     .signup-inner {
-      max-width: 400px;
+      max-width: 450px;
       margin: 0 auto;
       padding: 10px 15px;
       text-align: center;
@@ -927,7 +981,22 @@ $border-width: 2px;
         border-radius: 8px;
         background-color: #f5f5ff !important;
         border: 1px solid $border-primary !important;
-        //background-color: ;
+        margin-bottom: 20px !important;
+
+        @media (max-width: 768px) {
+          padding: 8px 8px 0 8px !important;
+          height: 200px;
+          .error-div-btns {
+            flex-direction: column !important;
+
+            & > * {
+              margin: 0 !important;
+            }
+            & > :nth-child(2) {
+              padding: 6px 0px !important;
+            }
+          }
+        }
       }
       .logo {
         max-width: 250px;
@@ -1285,11 +1354,6 @@ button.submit {
   @media (min-width: 576px) {
     font-size: 12px;
   }
-}
-.footer-pos {
-  position: fixed;
-  width: 100%;
-  bottom: 0;
 }
 .loaded {
   button.submit {
