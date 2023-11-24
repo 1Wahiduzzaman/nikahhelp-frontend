@@ -319,6 +319,8 @@ export default {
           title: error.response.data.message,
           centered: true,
         });
+        this.isResendingCode = false;
+        this.isLoading = false;
       }
     },
     async handleResend() {
