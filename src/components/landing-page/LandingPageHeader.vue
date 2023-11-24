@@ -20,9 +20,9 @@
           /></a>
         </router-link>
         <form class="login">
-          <div>
-            <router-link to="/login"
-              ><img
+          <div class="flex">
+            <router-link to="/login" class="d-flex flex-row mobile-margin sign-in-btn">
+              <img
                 src="@/assets/Icons/sign in.svg"
                 alt=""
                 class="signinBtnDesign"
@@ -30,8 +30,8 @@
               Sign in
             </router-link>
 
-            <router-link to="/signup"
-              ><img
+            <router-link to="/signup" class="d-flex flex-row mobile-margin ml-2">
+              <img
                 src="@/assets/Icons/join now.svg"
                 alt=""
                 class="signinBtnDesign"
@@ -135,5 +135,20 @@ nav.vue-fixed-header--isFixed {
 }
 .signinBtnDesign {
   height: 15px;
+}
+
+.mobile-margin {
+  &:hover {
+    transform: scale(1.1);
+  }
+  @media (max-width: 360px) {
+    flex-direction: column !important;
+  }
+}
+.sign-in-btn {
+  margin-right: 5px !important;
+  @media (max-width: 360px) {
+    margin: 0px !important;
+  }
 }
 </style>

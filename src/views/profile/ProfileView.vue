@@ -192,12 +192,8 @@ export default {
         //alert(this.error);
         this.$error({
           title: "Error!",
-          content: "Something went wrong! Please reload the page.",
+          content: "Something went wrong! Please try again later.",
           center: true,
-
-          onOk: () => {
-            location.reload();
-          },
         });
       }
       this.isLoading = false;

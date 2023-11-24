@@ -77,9 +77,13 @@ export default {
       }
     }
     else {
-      context.commit("setErrorMessage", {
-        errorMessage: "The email has already been taken.",
-      });
+      for (let key in response.data.data) {
+        let msg = response.data.data[key][0];
+        context.commit("setErrorMessage", {
+          errorMessage: msg,
+        });
+        break;
+      }
     }
 
 
