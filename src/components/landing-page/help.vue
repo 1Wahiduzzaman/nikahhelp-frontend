@@ -237,7 +237,7 @@
 
 <script>
 import Footer from "@/components/auth/Footer.vue";
-import LandingPageHeader from "@/components/auth/Header.vue";
+import LandingPageHeader from "@/components/landing-page/LandingPageHeader.vue";
 import ApiService from "@/services/api.service";
 
 
