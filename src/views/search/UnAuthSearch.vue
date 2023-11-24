@@ -49,7 +49,7 @@
 			<!--					Advanced Search-->
 			<!--				</button>-->
 			<!--			</div>-->
-			<div class="flex justify-content-between align-items-center my-4">
+			<div class="search-container-header flex justify-content-between align-items-center my-4">
 				<h5 class="search-text">Search Results</h5>
 				<div class="unauth-search-check">
 					<v-chip-group>
@@ -65,6 +65,7 @@
 				</div>
 
 				<ButtonComponent
+					class="advance"
 					iconHeight="14px"
 					:isSmall="true"
 					title="Advanced Search"
@@ -343,22 +344,21 @@ export default {
 			width: 100%;
 			margin: 0px;
 		}
-		.search-result {
-			//display: grid;
-			//grid-template-columns: auto auto;
-			//margin: 0 auto;
-			//grid-gap: 20px;
-			//@media (max-width: 1020px) {
-			//	grid-template-columns: none;
-			//}
-			//
-			//@media (max-width: 1243px) {
-			//	grid-template-columns: none;
-			//}
-			//
-			//@media (max-width: 767px) {
-			//	grid-template-columns: none;
-			//}
+
+		@media (max-width: 992px) {
+			.search-container-header {
+				display: flex;
+				flex-direction: column-reverse;
+				margin: 9px !important;
+			}
+			.search-text {
+				margin-bottom: 0px !important;
+				margin-top: 20px !important;
+				color: rgba(0, 0, 0, 0.5) !important;
+			}
+			.unauth-search-check {
+				display: none;
+			}
 		}
 	}
 
