@@ -19,7 +19,7 @@
               instructions.
             </p>
             <p>
-              Wrong email address or didn’t get any email? don’t worry <a href="" class="text-decoration-underline">contact us</a>
+              Wrong email address or didn’t get any email? don’t worry <router-link to="/help" class="contact-us">contact us</router-link>
             </p>
             
 <p class="instruction">
@@ -128,6 +128,12 @@ export default {
     //  width: 100%;
     //  position: fixed;
     //}
+  }
+}
+.contact-us {
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
   }
 }
 .email-box {
