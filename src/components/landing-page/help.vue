@@ -112,7 +112,7 @@
         </div>
 
         <div class="container2 mt-12">
-          <h5>Still need help? Can't find what you're looking for? <span style="text-decoration: underline; cursor: pointer;" @click="showContactForm=true"><a href="#send-us-email-header" id="go-to-contact-form" @click="goToContactForm">Contact the MatrimonyAssist team</a></span></h5>
+          <h5>Still need help? Can't find what you're looking for? <span class="contact-team-link" @click="showContactForm=true"><a href="#send-us-email-header" id="go-to-contact-form" @click="goToContactForm">Contact the MatrimonyAssist team</a></span></h5>
         </div>
       </section>
 
@@ -593,6 +593,17 @@ button:disabled {
   border-radius: 5px;
   background-color: #ffffff;
   padding: 20px;
+
+  .contact-team-link {
+    cursor: pointer;
+    &:hover{
+      text-decoration: underline; 
+    }
+  }
+
+  h5 {
+    font-weight: 100 !important;
+  }
 }
 // FAQ CSS
 
