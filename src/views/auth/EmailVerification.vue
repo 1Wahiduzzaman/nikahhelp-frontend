@@ -1,10 +1,11 @@
 <template>
   <div class="email-verification font-poppins main-container">
-    <header class="header-container">
+    <Loader v-if="isLoading" />
+    <header class="header-container" v-if="!isLoading">
       <a href="/"><img src="@/assets/Icons/Logo/SVG/White Logo.svg" alt="" /></a>
     </header>
 
-    <div class="container-fluid body-container">
+    <div class="container-fluid body-container" v-if="!isLoading">
       <div class="row">
         <div class="col-12 col-md-6 offset-md-3">
           <div class="message">
@@ -39,7 +40,7 @@
         </div>
       </div>
     </div>
-    <div class="footer footer-container">
+    <div class="footer footer-container" v-if="!isLoading">
       <Footer />
     </div>
   </div>
@@ -47,10 +48,12 @@
 
 <script>
 import Footer from "@/components/auth/Footer";
+import Loader from "@/plugins/loader/loader";
 export default {
   name: "EmailVerification",
   components: {
     Footer,
+    Loader,
   },
   data() {
     return {
@@ -69,7 +72,6 @@ export default {
   },
   methods: {
     async loadUser() {
-      this.isLoading = true;
       const token = JSON.parse(localStorage.getItem("token"));
       if (!token) {
         this.$router.push("/login");
@@ -80,6 +82,11 @@ export default {
         this.is_verified = this.user.is_verified;
         if (this.is_verified) {
           this.$router.push("/manageteam");
+          this.isALoading = false;
+        } else {
+          this.isALoading = false;
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
         }
       } catch (error) {
         this.error = error.message || "Something went wrong";
