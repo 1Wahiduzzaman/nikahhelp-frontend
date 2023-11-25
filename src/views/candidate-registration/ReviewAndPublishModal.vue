@@ -174,12 +174,23 @@ export default {
 }
 
 .v-btn-cancel {
-  background-color: #d81b60 !important;
-  color: #fff;
+  background-color: #fff !important;
+  border: 1px solid $color-brand;
+  color: $color-brand;
+
+  &:hover {
+    background-color: $color-brand !important;
+    color: #fff;
+  }
 }
 
 .v-btn-submit {
-  background-color: #6158a7 !important;
+  background-color: $color-success !important;
+  border: 1px solid $color-success;
   color: #fff;
+  &:hover {
+    background-color: #fff !important;
+    color: $color-success;
+  }
 }
 </style>
