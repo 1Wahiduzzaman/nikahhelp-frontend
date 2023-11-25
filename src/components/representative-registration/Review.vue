@@ -25,7 +25,7 @@
           </div>
           <div class="row h-100">
             <div class="col-md-12 mb-3">
-              <div class="card-custom shadow-default personal-height">
+              <div class="card-custom shadow-border personal-height">
                 <ul style="line-height: 160%">
                   <li class="flex-between-start">
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
@@ -99,7 +99,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Address Line 1</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
                         representativeDetails.personal.address_1
                       }}</span></span
                     >
@@ -108,7 +108,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Address Line 2</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
                         representativeDetails.personal.address_2
                       }}</span></span
                     >
@@ -117,7 +117,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >City</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
                         representativeDetails.personal.per_permanent_city
                       }}</span></span
                     >
@@ -157,7 +157,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Email</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
                         representativeDetails.personal.per_email
                       }}</span></span
                     >
@@ -179,7 +179,7 @@
           </div>
           <div class="row">
             <div class="col-md-12 mb-3">
-              <div class="card-custom h-100 shadow-default">
+              <div class="card-custom h-100 shadow-border">
                 <table>
                   <!-- <TableRow
                     title="ID document issuing country"
@@ -297,13 +297,13 @@
           <div class="row">
             <div v-viewer="{movable: false, title: false, scalable: false, rotatable: false}" class="col-12 row my-4">
               <div
-                class="col-md-6,mb-sm-0 mb-2 flex flex-column align-items-center profile-img" 
+                class="col-md-6 mb-sm-0 mb-2 flex flex-column align-items-center img-preview" 
                 v-for="src in [representativeDetails.image_upload.per_avatar_url + `?token=${token}`, representativeDetails.image_upload.per_main_image_url + `?token=${token}`]" 
                 :key="src"
               >
                   <img
                     :src="src"
-                    class="user-image"
+                    class="contain"
                     alt="img"
                     height="250"
                     width="200"
@@ -385,6 +385,10 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+.shadow-border {
+  box-shadow: none !important;
+  border: 2px solid #dddddd78 !important;
+}
 .review-publish {
   .review {
     font-size: 14px;
@@ -414,16 +418,10 @@ export default {
         //opacity: 0.8;
       }
     }
-    .profile-img {
-      border-radius: 5px;
-      //overflow: hidden;
-      //width: 200px;
-      height: 200px;
-      p {
-        font-size: 16px;
-        margin-top: 5px;
-        font-weight: bolder;
-      }
+    .img-preview {
+      width: 200px;
+      height: 207px;
+      margin: 0px auto;
     }
   }
   .ant-input {
@@ -496,16 +494,12 @@ export default {
 .personal-height {
   height: auto;
 }
-.user-image {
-  //width: 200px;
-  //height: 250px;
-  //object-fit: cover;
-  display: block;
-  max-width: 260px;
-  max-height: 170px;
-  width: auto;
-  height: auto;
-  border-radius: 6px;
+.contain {
+  border: 1px solid $color-secondary;
+  border-radius: 5px;
+  height: 100%;
+  width: 220px;
+  object-fit: cover;
 }
 .edit-step {
   width: 20px;

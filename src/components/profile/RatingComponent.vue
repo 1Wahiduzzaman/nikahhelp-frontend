@@ -6,9 +6,9 @@
           <span class="text--secondary">{{ title }}</span>
       </v-col>
       <v-col class="pt-1" cols="12" md="6">
-        <div class="d-sm-none flex justify-space-between align-center">
+        <div class="d-sm-none flex justify-space-between align-center star-div">
           <a-rate disabled class="pl-0" :value="value" />
-          <span style="color: gray; font-size:9px">{{ rate[value] }}</span>
+          <span class="sub-text">{{ rate[value] }}</span>
         </div>
         <div class="d-none d-sm-flex d-md-block justify-space-between text-right">
           <a-rate disabled class="pl-0" :value="value" />
@@ -82,5 +82,21 @@ export default {
   font-size: 13px;
   color: #fff;
   border-radius: 20px
+}
+
+@media (max-width: 575px) {
+  .sub-text {
+    color: gray;
+    font-size: 14px;
+    margin-top: 10px;
+    background: #f4f4f9;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  
+  .star-div {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>

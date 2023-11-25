@@ -187,8 +187,31 @@
             <div class="img-preview mb-2">
               <img :src="imageFont ? imageFont : verification.ver_image_front + `?token=${token}`" width="200"
                 height="200" v-if="verification.ver_image_front" />
-              <div class="mt-4" v-if="!verification.ver_image_front">
-                <a-icon type="plus-circle" :style="{ fontSize: '80px', color: '#aaa' }" />
+              <div
+                class="add-icon"
+                v-if="!verification.ver_image_front"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16.69 16.69"
+                >
+                  <g id="Layer_2" data-name="Layer 2">
+                    <g id="mid_bottom" data-name="mid bottom">
+                      <circle
+                        class="cls-1"
+                        cx="8.34"
+                        cy="8.34"
+                        r="8.34"
+                        fill="#e1e1e1"
+                      />
+                      <path
+                        class="cls-2"
+                        fill="#ffffff"
+                        d="M13.1,7.51H9.18V3.58a.8.8,0,0,0-1.6,0V7.51H3.65a.8.8,0,1,0,0,1.6H7.58V13a.8.8,0,1,0,1.6,0V9.11H13.1a.8.8,0,1,0,0-1.6Z"
+                      />
+                    </g>
+                  </g>
+                </svg>
               </div>
             </div>
             <label for="input-front-image" class="upload-label" v-if="!verification.ver_image_front">
@@ -239,8 +262,31 @@
             <div class="img-preview mb-2">
               <img :src="imageBack ? imageBack : verification.ver_image_back + `?token=${token}`" width="200"
                 height="200" v-if="verification.ver_image_back" />
-              <div class="mt-4" v-if="!verification.ver_image_back">
-                <a-icon type="plus-circle" :style="{ fontSize: '80px', color: '#aaa' }" />
+              <div
+                class="add-icon"
+                v-if="!verification.ver_image_back"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16.69 16.69"
+                >
+                  <g id="Layer_2" data-name="Layer 2">
+                    <g id="mid_bottom" data-name="mid bottom">
+                      <circle
+                        class="cls-1"
+                        cx="8.34"
+                        cy="8.34"
+                        r="8.34"
+                        fill="#e1e1e1"
+                      />
+                      <path
+                        class="cls-2"
+                        fill="#ffffff"
+                        d="M13.1,7.51H9.18V3.58a.8.8,0,0,0-1.6,0V7.51H3.65a.8.8,0,1,0,0,1.6H7.58V13a.8.8,0,1,0,1.6,0V9.11H13.1a.8.8,0,1,0,0-1.6Z"
+                      />
+                    </g>
+                  </g>
+                </svg>
               </div>
             </div>
             <label for="input-back-image" class="upload-label" v-if="!verification.ver_image_back">
@@ -456,6 +502,16 @@ export default {
       });
     },
     imageSizeCheck(file) {
+      const allowedExtensions = ['jpg', 'jpeg', 'png'];
+      const extension = file.name.split('.').pop().toLowerCase();
+      if(!allowedExtensions.includes(extension)) {
+        this.$error({
+          title: "Error!",
+          content: `The file you tried to upload is not a valid image file.`,
+          center: true,
+        });
+        return false;
+      };
       if (file["size"] > 2111775) {
         this.$error({
           title: "Validation Error",
@@ -558,7 +614,7 @@ img {
   border: 1px solid $color-secondary;
   border-radius: 5px;
   margin: 0px auto;
-  height: 200px;
+  height: 135px;;
 }
 
 input[type="file"] {

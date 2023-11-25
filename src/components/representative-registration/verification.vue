@@ -417,6 +417,7 @@
                   <a-input
                     v-model="verification.ver_recommender_title"
                     class="w-100"
+                    :maxLength="20"
                     placeholder="Title"
                     required
                     @blur="onValueChange($event, 'ver_recommender_title')"
@@ -432,6 +433,7 @@
                       <a-input
                         v-model="verification.ver_recommender_first_name"
                         class="w-100 rounded-right"
+                        :maxLength="20"
                         placeholder="First Name"
                         @blur="
                           onValueChange($event, 'ver_recommender_first_name')
@@ -448,6 +450,7 @@
                         v-model="verification.ver_recommender_last_name"
                         class="w-100 rounded-left"
                         placeholder="Last Name"
+                        :maxLength="20"
                         @blur="
                           onValueChange($event, 'ver_recommender_last_name')
                         "
@@ -467,6 +470,7 @@
                     id="ver_recommender_occupation"
                     placeholder="Occupation"
                     v-model="verification.ver_recommender_occupation"
+                    :maxLength="20"
                     label="name"
                     :reduce="(option) => option.name"
                     :options="representativeDetails.occupations"
@@ -483,6 +487,7 @@
                   <a-textarea
                     placeholder="Address"
                     :rows="4"
+                    :maxLength="92"
                     v-model="verification.ver_recommender_address"
                     @blur="onValueChange($event, 'ver_recommender_address')"
                   />
@@ -796,6 +801,16 @@ export default {
         .catch((error) => {});
     },
     imageSizeCheck(file) {
+      const allowedExtensions = ['jpg', 'jpeg', 'png'];
+      const extension = file.name.split('.').pop().toLowerCase();
+      if(!allowedExtensions.includes(extension)) {
+        this.$error({
+          title: "Error!",
+          content: `The file you tried to upload is not a valid image file.`,
+          center: true,
+        });
+        return false;
+      };
       if (file["size"] > 4223550) {
         this.$error({
           title: "Error!",
@@ -934,11 +949,11 @@ img {
   border-radius: 5px;
 }
 .img-preview {
-  width: 180px;
+  width: 200px;
   border: 1px solid $color-secondary;
   border-radius: 5px;
   margin: 0px auto;
-  height: 200px;
+  height: 135px;
 }
 input[type="file"] {
   cursor: pointer;

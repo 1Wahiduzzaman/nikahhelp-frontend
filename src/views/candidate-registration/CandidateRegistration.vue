@@ -15,7 +15,7 @@
           class="d-flex justify-center mb-4 mt-8"
         >
           <template v-slot:activator="{ on, attrs }">
-            <v-icon large  v-bind="attrs" v-on="on" class="question-mark" color="#6159a7">
+            <v-icon :size="getWindowWidth() <= 400 ? '25px' : '30px'"  v-bind="attrs" v-on="on" class="question-mark" color="#6159a7">
               mdi-help-circle
             </v-icon>
           </template>
@@ -53,47 +53,56 @@
   
               <v-card-actions class="justify-content-between">
                 <div>
-                  <v-btn
+                  <a-button
                     rounded="true"
-                    color="#E51F76"
-                    class="text-white"
+                    type="danger"
+                    color="#E51F76 px-2"
                     @click="playTutorial = !playTutorial"
                   >
-                    <span v-if="!playTutorial">Watch tutorial</span>
-                    <span v-else>Close tutorial</span>
-                  </v-btn>
+                    <span v-if="!playTutorial">
+                      <span class="px-2" v-if="getWindowWidth() <= 435"> <a-icon type="play-circle" /> </span> 
+                      <span v-else>Watch tutorial</span> 
+                    </span>
+                    <span v-else>
+                      <span class="px-2" v-if="getWindowWidth() <= 435"> <a-icon type="close" /> </span> 
+                      <span v-else>Close tutorial</span>
+                    </span>
+                  </a-button>
                   <v-card-actions></v-card-actions>
                 </div>
                 
                 <div>
-                  <v-btn
+                  <a-button
                     v-if="currentGuide > 0 && currentGuide <= 5 "
                     @click="changeContentPrev"
+                    type="primary"
                     rounded="true"
                     color="#6159a7"
-                    class="mr-2 text-white"
+                    class="mr-2"
                   >
-                    prev
-                  </v-btn>
-                  <v-btn
+                    <span class="px-2" v-if="getWindowWidth() <= 435"> <a-icon class="prev-icon-color" type="caret-left" /> </span> 
+                    <span v-else>Prev</span> 
+                  </a-button>
+                  <a-button
                     v-if="currentGuide <= 4"
                     @click="changeContent"
+                    type="primary"
                     rounded="true"
                     color="#6159a7"
-                    class="text-white"
                   >
-                    next
-                  </v-btn>
+                    <span class="px-2" v-if="getWindowWidth() <= 435"> <a-icon class="prev-icon-color" type="caret-right" /> </span> 
+                    <span v-else>Next</span> 
+                  </a-button>
     
-                  <v-btn
+                  <a-button
                     v-if="currentGuide === 5"
                     @click="goToFirstGuide(); dialog.value=false;"
+                    type="primary"
                     rounded="true"
                     color="#3ab549"
-                    class="text-white"
                   >
-                    finish
-                  </v-btn>
+                    Finish
+                  </a-button>
                   <v-card-actions></v-card-actions>
                 </div>
               </v-card-actions>
@@ -243,10 +252,12 @@
           v-if="current == steps.length - 1"
           type="primary"
           shape="round"
+          class="rev-sub-btn"
           style="float: right; margin-top: 12px; margin-right: -10px"
           @click="openDialog"
         >
-          Review and Submit
+          <span v-if="getWindowWidth() <= 435">Submit</span> 
+          <span v-else>Review and Submit</span>
         </a-button>
         <a-button
           v-if="current > 0"
@@ -255,7 +266,8 @@
           class="mt-3"
           @click="prev"
         >
-          Previous
+          <span v-if="getWindowWidth() <= 435"> <a-icon class="prev-icon-color" type="caret-left" /> </span> 
+          <span v-else>Previous</span>
         </a-button>
 
         <a-button
@@ -1076,6 +1088,9 @@ export default {
       this.current--;
       this.checkExistData();
     },
+    getWindowWidth() {
+      return window.innerWidth;
+    },
   },
 };
 </script>
@@ -1194,6 +1209,9 @@ export default {
 .bottom-padding {
   padding: 0 2rem;
   
+  .prev-icon-color {
+    color: $color-secondary !important;
+  }
   @media(max-width: 992px){
       margin-bottom: 2rem;
   }
@@ -1270,4 +1288,22 @@ export default {
     margin-left: 0;
   }
 }
+.rev-sub-btn {
+  color: #fff;
+  background-color: $color-success;
+  border: 1px solid $border-success;
+  border-radius: 20px;
+  &:hover,
+  &:active {
+      background-color: $color-white;
+      border: 1px solid $border-success;
+      // opacity: 0.9;
+      color: $color-success;
+  }
+}
+.anticon {
+  vertical-align: middle !important;
+}
+
+
 </style>

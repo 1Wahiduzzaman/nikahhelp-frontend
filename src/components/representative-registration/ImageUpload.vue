@@ -37,8 +37,31 @@
                               v-if="imageModel.per_avatar_url" 
                             />
                             <div class="mt-3" v-if="!imageModel.per_avatar_url">Avatar Image</div>
-                            <div class="mt-4" v-if="!imageModel.per_avatar_url">
-                              <a-icon type="plus-circle" :style="{ fontSize: '80px', color: '#aaa' }" />
+                            <div
+                              class="add-icon"
+                              v-if="!imageModel.per_avatar_url"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 16.69 16.69"
+                              >
+                                <g id="Layer_2" data-name="Layer 2">
+                                  <g id="mid_bottom" data-name="mid bottom">
+                                    <circle
+                                      class="cls-1"
+                                      cx="8.34"
+                                      cy="8.34"
+                                      r="8.34"
+                                      fill="#e1e1e1"
+                                    />
+                                    <path
+                                      class="cls-2"
+                                      fill="#ffffff"
+                                      d="M13.1,7.51H9.18V3.58a.8.8,0,0,0-1.6,0V7.51H3.65a.8.8,0,1,0,0,1.6H7.58V13a.8.8,0,1,0,1.6,0V9.11H13.1a.8.8,0,1,0,0-1.6Z"
+                                    />
+                                  </g>
+                                </g>
+                              </svg>
                             </div>
                           </div>
                           <!-- <input
@@ -71,7 +94,7 @@
                               <div class="" v-for="image in images" :key="image.pathShort">
                                 <img 
                                   :ref="image.pathShort.substring(2, image.pathShort.length-4)" 
-                                  class="circle contain" 
+                                  class="circle avatar-contain" 
                                   :src="require(`@/assets/avatar/${image.pathShort.substring(2, image.pathShort.length)}`)"
                                   @click="avatarNo = image.pathShort.substring(2, image.pathShort.length-4); setAvatar(avatarNo)"
                                 >
@@ -102,8 +125,31 @@
                               v-if="imageModel.per_main_image_url" 
                             />
                             <div class="mt-3" v-if="!imageModel.per_main_image_url">Main Profile Image</div>
-                            <div class="mt-4" v-if="!imageModel.per_main_image_url">
-                              <a-icon type="plus-circle" :style="{ fontSize: '80px', color: '#aaa' }" />
+                            <div
+                              class="add-icon"
+                              v-if="!imageModel.per_main_image_url"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 16.69 16.69"
+                              >
+                                <g id="Layer_2" data-name="Layer 2">
+                                  <g id="mid_bottom" data-name="mid bottom">
+                                    <circle
+                                      class="cls-1"
+                                      cx="8.34"
+                                      cy="8.34"
+                                      r="8.34"
+                                      fill="#e1e1e1"
+                                    />
+                                    <path
+                                      class="cls-2"
+                                      fill="#ffffff"
+                                      d="M13.1,7.51H9.18V3.58a.8.8,0,0,0-1.6,0V7.51H3.65a.8.8,0,1,0,0,1.6H7.58V13a.8.8,0,1,0,1.6,0V9.11H13.1a.8.8,0,1,0,0-1.6Z"
+                                    />
+                                  </g>
+                                </g>
+                              </svg>
                             </div>
                           </div>
                           
@@ -274,6 +320,16 @@ export default {
     //   });
     // },
     imageSizeCheck(file) {
+      const allowedExtensions = ['jpg', 'jpeg', 'png'];
+      const extension = file.name.split('.').pop().toLowerCase();
+      if(!allowedExtensions.includes(extension)) {
+        this.$error({
+          title: "Error!",
+          content: `The file you tried to upload is not a valid image file.`,
+          center: true,
+        });
+        return false;
+      };
       if (file["size"] > 4223550) {
         this.$error({
           title: "Error!",
@@ -499,7 +555,10 @@ export default {
 }
 .contain {
   // height: 123px;
-  // width: 220px;
+  width: 220px;
+  object-fit: cover;
+}
+.avatar-contain {
   object-fit: cover;
 }
 
@@ -581,7 +640,7 @@ export default {
 
   .img-preview {
     width: 200px;
-    height: 200px;
+    height: 135px;
     border: 1px solid $color-secondary;
     border-radius: 5px;
     margin: 0px auto;

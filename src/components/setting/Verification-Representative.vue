@@ -456,6 +456,16 @@ export default {
       });
     },
     imageSizeCheck(file) {
+      const allowedExtensions = ['jpg', 'jpeg', 'png'];
+      const extension = file.name.split('.').pop().toLowerCase();
+      if(!allowedExtensions.includes(extension)) {
+        this.$error({
+          title: "Error!",
+          content: `The file you tried to upload is not a valid image file.`,
+          center: true,
+        });
+        return false;
+      };
       if (file["size"] > 2111775) {
         this.$error({
           title: "Validation Error",
@@ -558,11 +568,11 @@ img {
 }
 
 .img-preview {
-  width: 180px;
+  width: 200px;
   border: 1px solid $color-secondary;
   border-radius: 5px;
   margin: 0px auto;
-  height: 200px;
+  height: 135px;
 }
 
 input[type="file"] {

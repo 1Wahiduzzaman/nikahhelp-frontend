@@ -135,7 +135,8 @@ export default {
     margin: 20px 0px 10px 0px;
   }
   button {
-    background-color: $color-secondary;
+    border: 1px solid $color-primary;
+    background-color: $color-primary;
     padding: 0px 20px;
     color: white;
   }
@@ -156,7 +157,8 @@ export default {
   height: 36px;
   border-radius: 60px;
   &:hover {
-    background-color: $color-primary;
+    background-color: #fff;
+    color: $color-primary;
   }
 }
 .congo-text {
@@ -187,13 +189,24 @@ export default {
 }
 
 .v-btn-cancel {
-  background-color: #d81b60 !important;
-  color: #fff;
+  background-color: #fff !important;
+  border: 1px solid $color-brand;
+  color: $color-brand;
+
+  &:hover {
+    background-color: $color-brand !important;
+    color: #fff;
+  }
 }
 
 .v-btn-submit {
-  background-color: #6158a7 !important;
+  background-color: $color-success !important;
+  border: 1px solid $color-success;
   color: #fff;
+  &:hover {
+    background-color: #fff !important;
+    color: $color-success;
+  }
 }
 </style>
 

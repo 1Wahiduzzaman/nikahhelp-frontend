@@ -1013,6 +1013,7 @@
                 <a-input
                   @blur="onValueChange($event, 'contact', 'address_1')"
                   id="address_1"
+                  :maxLength="46"
                   v-model="personalInformation.contact.address_1"
                   placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
                 />
@@ -1066,7 +1067,7 @@
                   @blur="onValueChange($event, 'contact', 'address_2')"
                   id="address_2"
                   :rows="3"
-                  :maxLength="200"
+                  :maxLength="46"
                   v-model="personalInformation.contact.address_2"
                   placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
                 />
@@ -1123,6 +1124,7 @@
                   @blur="onValueChange($event, 'contact', 'per_permanent_city')"
                   id="per_permanent_city"
                   type="text"
+                  :maxLength="30"
                   v-model="personalInformation.contact.per_permanent_city"
                   placeholder="City"
                 />
@@ -2517,6 +2519,17 @@ export default {
         .catch((error) => {});
     },
     imageSizeCheck(file) {
+      const allowedExtensions = ['jpg', 'jpeg', 'png'];
+      const extension = file.name.split('.').pop().toLowerCase();
+      if(!allowedExtensions.includes(extension)) {
+        this.$error({
+          title: "Error!",
+          content: `The file you tried to upload is not a valid image file.`,
+          center: true,
+        });
+        return false;
+      };
+      
       if (file["size"] > 5279437.5) {
         this.$error({
           title: "Validation Error",

@@ -324,6 +324,7 @@
               <a-form-model-item ref="address_1" prop="address_1">
                 <a-input
                   @blur="onValueChange($event, 'address_1', 'contact')"
+                  :maxLength="46"
                   v-model="personalInformation.personal.address_1"
                   placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
                 />
@@ -370,6 +371,7 @@
               <a-form-model-item ref="address_2" prop="address_2">
                 <a-input
                   @blur="onValueChange($event, 'address_2', 'contact')"
+                  :maxLength="46"
                   v-model="personalInformation.personal.address_2"
                   placeholder="e.g. 267 West George St, Glasgow,Scotland,United Kingdom G2 1BP"
                 />
@@ -421,6 +423,7 @@
                   @blur="onValueChange($event, 'per_permanent_city', 'contact')"
                   v-model="personalInformation.personal.per_permanent_city"
                   placeholder="city"
+                  maxLength="30"
                 />
               </a-form-model-item>
             </div>

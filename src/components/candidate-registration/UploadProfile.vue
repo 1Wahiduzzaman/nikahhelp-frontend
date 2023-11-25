@@ -50,7 +50,7 @@
                     />
                     <div class="mt-3" v-if="!imageModel.avatar_image_url">Avatar Image</div>
                     <div
-                      class="mt-4 add-icon"
+                      class="add-icon"
                       v-if="!imageModel.avatar_image_url"
                     >
                       <svg
@@ -129,7 +129,7 @@
                     />
                     <div class="mt-3" v-if="!imageModel.main_image_url">Main Profile Image</div>
                     <div
-                      class="mt-4 add-icon"
+                      class="add-icon"
                       v-if="!imageModel.main_image_url"
                     >
                       <svg
@@ -182,7 +182,7 @@
                     />
                     <div class="mt-3" v-if="!imageModel.additionalImageSrc">Additional Image</div>
                     <div
-                      class="mt-4 add-icon"
+                      class="add-icon"
                       v-if="!imageModel.additionalImageSrc"
                     >
                       <svg
@@ -350,6 +350,16 @@ export default {
       });
     },
     imageSizeCheck(file) {
+      const allowedExtensions = ['jpg', 'jpeg', 'png'];
+      const extension = file.name.split('.').pop().toLowerCase();
+      if(!allowedExtensions.includes(extension)) {
+        this.$error({
+          title: "Error!",
+          content: `The file you tried to upload is not a valid image file.`,
+          center: true,
+        });
+        return false;
+      };
       if (file["size"] > 4223550) {
         this.$error({
           title: "Error!",
@@ -691,7 +701,7 @@ legend {
   }
   .img-preview {
     width: 200px;
-    height: 200px;
+    height: 135px;
     border: 1px solid $color-secondary;
     border-radius: 5px;
     margin: 0px auto;

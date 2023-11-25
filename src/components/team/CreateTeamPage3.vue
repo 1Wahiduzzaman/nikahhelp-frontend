@@ -100,6 +100,16 @@ export default {
 	},
 	methods: {
 		imageSizeCheck(file) {
+			const allowedExtensions = ['jpg', 'jpeg', 'png'];
+			const extension = file.name.split('.').pop().toLowerCase();
+			if(!allowedExtensions.includes(extension)) {
+				this.$error({
+				title: "Error!",
+				content: `The file you tried to upload is not a valid image file.`,
+				center: true,
+				});
+				return false;
+			};
 			if (file["size"] > 2111775) {
 				this.$error({
 					title: "Validation Error",
