@@ -134,8 +134,8 @@ body {
     background-position: right 12px center;
     height: 34px;
     border-radius: 24px;
-    border-color: rgba(0, 0, 0, 0.65);
-    color: rgba(0, 0, 0);
+    border-color: rgba(0, 0, 0, 0.3);
+    color: rgba(0, 0, 0, .8);
 }
 
 // end css for custom select
@@ -260,14 +260,21 @@ body {
 }
 .style-chooser .vs__search::placeholder {
     color: black !important;
-    background-color: #e6e6e6;
+    background-color: #fff;
     border-radius: 20px;
     padding: 5px;
 }
+.style-chooser .vs__search, .vs_search:focus {
+    padding: 0 15px !important;
+}
+.nationality-select .vs__search, .vs_search:focus {
+    padding: 0 15px !important;
+}
+
 .style-chooser .vs__dropdown-toggle {
     cursor: pointer;
     background: white;
-    border: 1px solid grey;
+    border: 1px solid rgba(0, 0, 0, .3);
     border-radius: 20px;
     height: 35px;
     color: #e6e6e6;
@@ -312,7 +319,7 @@ body {
 }
 .nationality-select .vs__dropdown-toggle {
     background: white;
-    border: 1px solid grey;
+    border: 1px solid rgba(0, 0, 0, .3);
     border-radius: 20px;
     color: #e6e6e6;
 }
@@ -334,7 +341,7 @@ body {
 }
 .nationality-select .vs__search::placeholder {
     color: black;
-    background-color: #e6e6e6;
+    background-color: #fff;
     border-radius: 4px;
     padding: 5px;
 }
@@ -362,14 +369,14 @@ body {
     }
     .style-chooser .vs__search::placeholder {
         color: black !important;
-        background-color: #e6e6e6;
+        background-color: #fff;
         border-radius: 20px;
         padding: 5px;
     }
     .style-chooser .vs__dropdown-toggle {
         cursor: pointer;
         background: white;
-        border: 1px solid grey;
+        border: 1px solid rgba(0, 0, 0, .3);
         border-radius: 20px;
         height: 35px;
         color: #e6e6e6;
@@ -425,7 +432,7 @@ body {
     }
     .nationality-select .vs__dropdown-toggle {
         background: white;
-        border: 1px solid grey;
+        border: 1px solid rgba(0, 0, 0, .3);
         border-radius: 20px;
         color: #e6e6e6;
     }
@@ -447,7 +454,7 @@ body {
     }
     .nationality-select .vs__search::placeholder {
         color: black;
-        background-color: #e6e6e6;
+        background-color: #fff;
         border-radius: 4px;
         padding: 5px;
     }
@@ -486,14 +493,14 @@ body {
     }
     .style-chooser .vs__search::placeholder {
         color: black !important;
-        background-color: #e6e6e6;
+        background-color: #fff;
         border-radius: 20px;
         padding: 5px;
     }
     .style-chooser .vs__dropdown-toggle {
         cursor: pointer;
         background: white;
-        border: 1px solid grey;
+        border: 1px solid rgba(0, 0, 0, .3);
         border-radius: 20px;
         height: 35px;
         color: #e6e6e6;
@@ -535,7 +542,7 @@ body {
     }
     .nationality-select .vs__dropdown-toggle {
         background: white;
-        border: 1px solid grey;
+        border: 1px solid rgba(0, 0, 0, .3);
         border-radius: 20px;
         color: #e6e6e6;
     }
@@ -557,7 +564,7 @@ body {
     }
     .nationality-select .vs__search::placeholder {
         color: black;
-        background-color: #e6e6e6;
+        background-color: #fff;
         border-radius: 4px;
         padding: 5px;
     }
