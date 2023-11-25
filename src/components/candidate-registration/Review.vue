@@ -21,8 +21,8 @@
             />
           </div>
           <div class="row">
-            <div class="col-md-8 mb-3" style="padding-right: 8px !important;">
-              <div class="card-custom h-100 shadow-default card-personal">
+            <div class="col-md-8" style="padding-right: 8px !important;">
+              <div class="card-custom h-100 shadow-border card-personal">
                 <ul class="personal-ul">
                   <!-- Age -->
                   <li class="flex-between-start">
@@ -237,8 +237,8 @@
               </div>
             </div>
             <!-- Other Requirments -->
-            <div class="col-md-4 mb-3">
-              <div class="card-custom h-100 shadow-default text--disabled">
+            <div class="col-md-4">
+              <div class="card-custom h-100 shadow-border text--disabled">
                 <h4 class="text--disabled text-subtitle-1">
                   What I'm looking for
                 </h4>
@@ -254,8 +254,8 @@
                 /> -->
               </div>
             </div>
-            <div class="col-md-12 mb-3">
-              <div class="card-custom text-start shadow-default">
+            <div class="col-md-12">
+              <div class="card-custom text-start shadow-border">
                 <h4 class="text--disabled text-subtitle-1">
                   Other requirements
                 </h4>
@@ -265,8 +265,8 @@
               </div>
             </div>
             <!-- Rating unit -->
-            <div class="col-md-12 mb-3">
-              <div class="card-custom h-100 shadow-default">
+            <div class="col-md-12">
+              <div class="card-custom h-100 shadow-border">
                 <h5>More about preferred partner</h5>
                 <p>How Important following characters are to me</p>
                 <hr />
@@ -382,8 +382,8 @@
             />
           </div>
           <div class="row h-100">
-            <div class="col-md-8 mb-3" style="padding-right: 8px !important;">
-              <div class="card-custom shadow-default card-personal h-100">
+            <div class="col-md-8" style="padding-right: 8px !important;">
+              <div class="card-custom shadow-border card-personal h-100">
                 <ul class="personal-ul">
                   <li class="flex-between-start">
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
@@ -546,7 +546,7 @@
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
                       >Address Line 1 (private)</span
                     ><span class="flex-60 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
                         candidateData.contact.address_1
                       }}</span></span
                     >
@@ -555,7 +555,7 @@
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
                       >Address Line 2 (private)</span
                     ><span class="flex-60 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
                         candidateData.contact.address_2
                       }}</span></span
                     >
@@ -564,7 +564,7 @@
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
                       >City</span
                     ><span class="flex-60 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
                         candidateData.contact.per_permanent_city
                       }}</span></span
                     >
@@ -600,7 +600,7 @@
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
                       >Email (private)</span
                     ><span class="flex-60 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
                         candidateData.contact.per_email
                       }}</span></span
                     >
@@ -608,8 +608,8 @@
                 </ul>
               </div>
             </div>
-            <div class="col-md-4 mb-3">
-              <div class="card-custom shadow-default h-100">
+            <div class="col-md-4">
+              <div class="card-custom shadow-border h-100">
                 <FieldsetCard
                   title="Marital Status"
                   :info="candidateData.personal.per_marital_status"
@@ -667,7 +667,7 @@
               </div>
             </div>
             <!-- <div class="col-md-12 mb-3">
-							<div class="card-custom shadow-default">
+							<div class="card-custom shadow-border">
 								<h4>A little bit about me</h4>
 								<p class="mb-0">
 									{{ candidateData.personal.per_about }}
@@ -675,8 +675,8 @@
 							</div>
 						</div> -->
 
-            <div class="col-md-12 mb-3">
-              <div class="card-custom shadow-default">
+            <div class="col-md-12">
+              <div class="card-custom shadow-border">
                 <h4 class="text--disabled text-subtitle-1">
                   A little bit about me
                 </h4>
@@ -686,8 +686,8 @@
               </div>
             </div>
 
-            <div class="col-md-12 mb-3">
-              <div class="card-custom shadow-default">
+            <div class="col-md-12">
+              <div class="card-custom shadow-border">
                 <h4 class="text--disabled text-subtitle-1">
                   Additional Information
                 </h4>
@@ -714,8 +714,8 @@
             />
           </div>
           <div class="row">
-            <div class="col-md-8 mb-3" style="padding-right: 8px !important;">
-              <div class="card-custom h-100 shadow-default">
+            <div class="col-md-8" style="padding-right: 8px !important;">
+              <div class="card-custom h-100 shadow-border">
                 <table>
                   <TableRow
                     title="Father's Profession"
@@ -781,8 +781,8 @@
                 </ul> -->
               </div>
             </div>
-            <div class="col-md-4 mb-3">
-              <div class="card-custom h-100 shadow-default">
+            <div class="col-md-4">
+              <div class="card-custom h-100 shadow-border">
                 <h4 class="text--disabled text-subtitle-1">About My Family</h4>
                 <p class="text--secondary text-subtitle-1">
                   {{ candidateData.family.family_info }}
@@ -802,8 +802,8 @@
             />
           </div>
           <div class="row">
-            <div class="col-md-12 mb-3">
-              <div class="card-custom h-100 shadow-default">
+            <div class="col-md-12">
+              <div class="card-custom h-100 shadow-border">
                 <table>
                   <TableRow
                     title="ID document issuing country"
@@ -844,18 +844,16 @@
                 <p class="text-center">Back Side</p>
               </div>
             </div> -->
-            <div v-viewer="{movable: false, title: false, scalable: false, rotatable: false}" class="col-12 row my-4 ms-1">
+            <div v-viewer="{movable: false, title: false, scalable: false, rotatable: false}" class="col-12 row my-1 ms-1">
               <div
-                class="col-md-6 mb-sm-0 mb-2 flex flex-column align-items-center profile-img" 
+                class="col-md-6 mb-sm-0 mb-2 flex flex-column align-items-center img-preview" 
                 v-for="src in [candidateData.verification.ver_image_front + `?token=${token}`, candidateData.verification.ver_image_back + `?token=${token}`]" 
                 :key="src"
               >
                   <img
                     :src="src"
-                    class="user-image"
+                    class="contain"
                     alt="img"
-                    height="250"
-                    width="200"
                     style="cursor: pointer;"
                   />
                   <p class="text-center" v-if="src == candidateData.verification.ver_image_front">Front side</p>
@@ -876,18 +874,16 @@
             />
           </div>
           <div class="row">
-            <div v-viewer="{movable: false, title: false, scalable: false, rotatable: false}" class="col-12 row my-4 ms-1">
+            <div v-viewer="{movable: false, title: false, scalable: false, rotatable: false}" class="col-12 row my-1 ms-1">
               <div
-                class="col-md-4 mb-sm-0 mb-2 flex flex-column align-items-center profile-img" 
+                class="col-md-4 mb-sm-0 mb-2 flex flex-column align-items-center img-preview" 
                 v-for="src in [candidateData.personal.per_avatar_url + `?token=${token}`, candidateData.personal.per_main_image_url + `?token=${token}`, candidateData.other_images + `?token=${token}`]" 
                 :key="src"
               >
                   <img
                     :src="src"
-                    class="user-image"
+                    class="contain"
                     alt="img"
-                    height="250"
-                    width="200"
                     style="cursor: pointer;"
                     v-if="src != null"
                   />
@@ -908,7 +904,7 @@
             </div>
 
             <div class="col-12">
-              <div class="card-custom shadow-default">
+              <div class="card-custom shadow-border">
                 <h4>Image setting</h4>
                 <div class="d-flex align-items-baseline">
                   <a-icon
@@ -1046,6 +1042,10 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+.shadow-border {
+  box-shadow: none !important;
+  border: 2px solid #dddddd78 !important;
+}
 .contain {
   height: 100%;
   width: 220px;
@@ -1080,16 +1080,10 @@ export default {
         //opacity: 0.8;
       }
     }
-    .profile-img {
-      border-radius: 5px;
-      //overflow: hidden;
-      //width: 200px;
-      height: 200px;
-      p {
-        font-size: 16px;
-        margin-top: 5px;
-        font-weight: bolder;
-      }
+    .img-preview {
+      width: 200px;
+      height: 170px;
+      margin: 0px auto;
     }
   }
   .ant-input {
@@ -1162,15 +1156,12 @@ export default {
 .personal-height {
   height: auto;
 }
-.user-image {
-  //width: 100%;
-  //height: 300px;
-  display: block;
-  max-width: 260px;
-  max-height: 170px;
-  width: auto;
-  height: auto;
-  border-radius: 6px;
+.contain {
+  //height: 123px;
+  border: 1px solid $color-secondary;
+  border-radius: 5px;
+  width: 220px;
+  object-fit: cover;
 }
 .edit-step {
   width: 20px;

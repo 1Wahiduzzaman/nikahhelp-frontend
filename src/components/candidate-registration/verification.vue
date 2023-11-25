@@ -219,10 +219,33 @@
 
                   <div class="img-preview mb-2">
                     <img v-viewer :src="imageFont ? imageFont : verification.ver_image_front + `?token=${token}`
-                      " width="180" height="200" v-if="verification.ver_image_front" />
+                      " class="contain" v-if="verification.ver_image_front" />
                     <div class="mt-3">Front Page</div>
-                    <div class="mt-4" v-if="!verification.ver_image_front">
-                      <a-icon type="plus-circle" :style="{ fontSize: '80px', color: '#aaa' }" />
+                    <div
+                      class="add-icon"
+                      v-if="!verification.ver_image_front"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16.69 16.69"
+                      >
+                        <g id="Layer_2" data-name="Layer 2">
+                          <g id="mid_bottom" data-name="mid bottom">
+                            <circle
+                              class="cls-1"
+                              cx="8.34"
+                              cy="8.34"
+                              r="8.34"
+                              fill="#e1e1e1"
+                            />
+                            <path
+                              class="cls-2"
+                              fill="#ffffff"
+                              d="M13.1,7.51H9.18V3.58a.8.8,0,0,0-1.6,0V7.51H3.65a.8.8,0,1,0,0,1.6H7.58V13a.8.8,0,1,0,1.6,0V9.11H13.1a.8.8,0,1,0,0-1.6Z"
+                            />
+                          </g>
+                        </g>
+                      </svg>
                     </div>
                   </div>
                   <!-- <input
@@ -277,11 +300,34 @@
 
                   <div class="img-preview mb-2">
                     <img v-viewer :src="imageBack ? imageBack : verification.ver_image_back + `?token=${token}`"
-                      width="180" height="200" v-if="verification.ver_image_back" />
+                    class="contain" v-if="verification.ver_image_back" />
 
                     <div class="mt-3">Back Page</div>
-                    <div class="mt-4" v-if="!verification.ver_image_back">
-                      <a-icon type="plus-circle" :style="{ fontSize: '80px', color: '#aaa' }" />
+                    <div
+                      class="add-icon"
+                      v-if="!verification.ver_image_back"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 16.69 16.69"
+                      >
+                        <g id="Layer_2" data-name="Layer 2">
+                          <g id="mid_bottom" data-name="mid bottom">
+                            <circle
+                              class="cls-1"
+                              cx="8.34"
+                              cy="8.34"
+                              r="8.34"
+                              fill="#e1e1e1"
+                            />
+                            <path
+                              class="cls-2"
+                              fill="#ffffff"
+                              d="M13.1,7.51H9.18V3.58a.8.8,0,0,0-1.6,0V7.51H3.65a.8.8,0,1,0,0,1.6H7.58V13a.8.8,0,1,0,1.6,0V9.11H13.1a.8.8,0,1,0,0-1.6Z"
+                            />
+                          </g>
+                        </g>
+                      </svg>
                     </div>
                   </div>
                   <!-- <input
@@ -635,14 +681,15 @@ export default {
 
 img {
   border-radius: 5px;
+  height: 100%;
 }
 
 .img-preview {
-  width: 180px;
+  width: 200px;
   border: 1px solid $color-secondary;
   border-radius: 5px;
   margin: 0px auto;
-  height: 200px;
+  height: 135px;
 }
 
 input[type="file"] {
@@ -673,6 +720,12 @@ input[type="file"] {
     background: #FFF;
     color: $bg-primary;
   }
+}
+
+.contain {
+  //height: 123px;
+  width: 220px;
+  object-fit: cover;
 }
 
 #checkIcon {
@@ -710,6 +763,13 @@ input[type="file"] {
 
 .instruction-title {
   font-size: 14px;
+}
+
+.add-icon {
+  svg {
+    width: 60px;
+    margin-top: 10px;
+  }
 }
 
 @media (min-width: 768px) {

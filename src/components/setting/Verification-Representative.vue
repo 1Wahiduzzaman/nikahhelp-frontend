@@ -558,11 +558,11 @@ img {
 }
 
 .img-preview {
-  width: 180px;
+  width: 200px;
   border: 1px solid $color-secondary;
   border-radius: 5px;
   margin: 0px auto;
-  height: 200px;
+  height: 135px;
 }
 
 input[type="file"] {

@@ -15,7 +15,7 @@
           class="d-flex justify-center mb-4 mt-8"
         >
           <template v-slot:activator="{ on, attrs }">
-            <v-icon large  v-bind="attrs" v-on="on" class="question-mark" color="#6159a7">
+            <v-icon :size="getWindowWidth() <= 400 ? '25px' : '30px'"  v-bind="attrs" v-on="on" class="question-mark" color="#6159a7">
               mdi-help-circle
             </v-icon>
           </template>
@@ -243,10 +243,12 @@
           v-if="current == steps.length - 1"
           type="primary"
           shape="round"
+          class="rev-sub-btn"
           style="float: right; margin-top: 12px; margin-right: -10px"
           @click="openDialog"
         >
-          Review and Submit
+          <span v-if="getWindowWidth() <= 435">Submit</span> 
+          <span v-else>Review and Submit</span>
         </a-button>
         <a-button
           v-if="current > 0"
@@ -255,7 +257,8 @@
           class="mt-3"
           @click="prev"
         >
-          Previous
+          <span v-if="getWindowWidth() <= 435"> <a-icon class="prev-icon-color" type="caret-left" /> </span> 
+          <span v-else>Previous</span>
         </a-button>
 
         <a-button
@@ -1076,6 +1079,9 @@ export default {
       this.current--;
       this.checkExistData();
     },
+    getWindowWidth() {
+      return window.innerWidth;
+    },
   },
 };
 </script>
@@ -1194,6 +1200,9 @@ export default {
 .bottom-padding {
   padding: 0 2rem;
   
+  .prev-icon-color {
+    color: $color-secondary !important;
+  }
   @media(max-width: 992px){
       margin-bottom: 2rem;
   }
@@ -1268,6 +1277,19 @@ export default {
   margin-left: -16px;
   @media (min-width: 992px) {
     margin-left: 0;
+  }
+}
+.rev-sub-btn {
+  color: #fff;
+  background-color: $color-success;
+  border: 1px solid $border-success;
+  border-radius: 20px;
+  &:hover,
+  &:active {
+      background-color: $color-white;
+      border: 1px solid $border-success;
+      // opacity: 0.9;
+      color: $color-success;
   }
 }
 </style>

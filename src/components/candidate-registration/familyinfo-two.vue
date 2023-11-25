@@ -55,6 +55,7 @@
                   @blur="onValueChange($event, 'father_profession')"
                   id="father_profession"
                   class="style-chooser"
+                  :maxLength="20"
                   placeholder="write your father's profession"
                   v-model="familyInformation.father_profession"
                 />
@@ -109,6 +110,7 @@
                   @blur="onValueChange($event, 'mother_profession')"
                   id="mother_profession"
                   class="style-chooser"
+                  :maxLength="20"
                   placeholder="write your mother's profession"
                   v-model="familyInformation.mother_profession"
                 />
