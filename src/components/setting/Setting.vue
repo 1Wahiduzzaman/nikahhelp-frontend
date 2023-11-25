@@ -230,7 +230,7 @@
           <!-- <span style="font-size: 16px; padding: 30px;">{{  getRejectedNote  }}</span> -->
           <div class="d-flex flex-column w-100 justify-content-center" style="padding: 20px; font-size: 1rem;">
             <div class="w-100 py-2 px-4 bg-light rounded">
-              Sorry! your registration form or Verification Document did not
+              Sorry! your profile information or Verification Document did not
               comply with MatrimonyAssist <router-link class="router-link" to="/terms_condition">Terms and Conditions.</router-link>
             </div>
             <div class="w-100 py-2 px-4 bg-danger rounded text-light"> 
@@ -249,7 +249,7 @@
           class="identity"
         >
           <img
-            src="@/assets/icon/account-circle.svg"
+            src="@/assets/help_guide_pics/Verify_your_ID.svg"
             alt="icon"
             style="width: 200px; height: 230px"
           />
