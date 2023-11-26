@@ -533,4 +533,8 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
     }
   }
 }
+.v-sheet.v-card:not(.v-sheet--outlined)::v-deep {
+  box-shadow: none !important;
+  border: 2px solid #dddddd78;
+}
 </style>
