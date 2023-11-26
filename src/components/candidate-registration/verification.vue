@@ -649,6 +649,7 @@ export default {
       this.loading = true;
       this.checkValidation(name);
       this.saveVerificationInfo();
+      this.loading = false;
     },
   },
 };

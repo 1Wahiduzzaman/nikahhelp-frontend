@@ -1875,7 +1875,7 @@ export default {
           ? this.preferenceData.pre_partner_religion_id.toString()
           : null,
         pre_ethnicities: this.preferenceData.pre_ethnicities
-          ? this.preferenceData.pre_ethnicities.join(",")
+          ? this.preferenceData.pre_ethnicities.join(", ")
           : null,
         pre_partner_comes_from: this.preferenceData.preferred_countries.map(
           (c, index) => {

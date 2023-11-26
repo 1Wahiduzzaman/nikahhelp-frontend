@@ -1543,7 +1543,7 @@ export default {
             ? this.personalInformation.more_about.per_smoker.toString()
             : "",
           per_things_enjoy: this.personalInformation.more_about.per_things_enjoy
-            ? this.personalInformation.more_about.per_things_enjoy.join(",")
+            ? this.personalInformation.more_about.per_things_enjoy.join(", ")
             : this.personalInformation.more_about.per_things_enjoy,
           per_hobbies_interests: this.personalInformation.more_about
             .per_hobbies_interests
@@ -1553,11 +1553,11 @@ export default {
             : this.personalInformation.more_about.per_hobbies_interests,
           per_language_speak: this.personalInformation.more_about
             .per_language_speak
-            ? this.personalInformation.more_about.per_language_speak.join(",")
+            ? this.personalInformation.more_about.per_language_speak.join(", ")
             : this.personalInformation.more_about.per_language_speak,
           per_thankfull_for: this.personalInformation.more_about
             .per_thankfull_for
-            ? this.personalInformation.more_about.per_thankfull_for.join(",")
+            ? this.personalInformation.more_about.per_thankfull_for.join(", ")
             : this.personalInformation.more_about.per_thankfull_for,
           per_food_cuisine_like: this.personalInformation.more_about
             .per_food_cuisine_like
