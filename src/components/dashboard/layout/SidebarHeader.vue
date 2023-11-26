@@ -6,7 +6,7 @@
                 <p class="color-primary m-0 f-10 border-b">Back</p>
             </div>
         </button>
-        <p class="text-gray-100 ml-4 text-white f-14 m-0">Search Manager</p>
+        <p class="text-gray-100 mr-4 text-white f-14 m-0">Search Manager</p>
     </div>
 </template>
 
