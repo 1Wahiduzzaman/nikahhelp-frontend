@@ -241,236 +241,236 @@ export const HEIGHTS = [
 
   {
     value: 1,
-    name: '4F 0" or 122 cm',
+    name: '4ft 0" or 122 cm',
     label:
-      '<p class="m-0">4F 0"or 123 cm</p>',
+      '<p class="m-0">4ft 0"or 123 cm</p>',
     serialNo: 1
   },
   {
     value: 2,
-    name: '4F 1" or 124 cm',
+    name: '4ft 1" or 124 cm',
     label:
-      '<p class="m-0">4F 1" or 124 cm',
+      '<p class="m-0">4ft 1" or 124 cm',
     serialNo: 2
   },
   {
     value: 3,
-    name: '4F 2" or 127 cm',
+    name: '4ft 2" or 127 cm',
     label:
-      '<p class="m-0">4F 2" or 127 cm</p>',
+      '<p class="m-0">4ft 2" or 127 cm</p>',
     serialNo: 3
   },
   {
     value: 4,
-    name: '4F 3" or 130 cm',
+    name: '4ft 3" or 130 cm',
     label:
-      '<p class="m-0">4F 3" or 130 cm</p>',
+      '<p class="m-0">4ft 3" or 130 cm</p>',
 
     serialNo: 4
   },
   {
     value: 5,
-    name: '4F 4" or 132cm',
+    name: '4ft 4" or 132cm',
     label:
-      '<p class="m-0">4F 4" or 132 cm</p>',
+      '<p class="m-0">4ft 4" or 132 cm</p>',
     serialNo: 5
   },
   {
     value: 6,
-    name: '4F 5" or 133 cm',
+    name: '4ft 5" or 133 cm',
     label:
-      '<p class="m-0">4F 5" or 135 cm</p>',
+      '<p class="m-0">4ft 5" or 135 cm</p>',
     serialNo: 6
   },
 
   {
     value: 7,
-    name: '4F 6" or 137 cm',
+    name: '4ft 6" or 137 cm',
     label:
-      '<p class="m-0">4F 6" or 137 cm</p>',
+      '<p class="m-0">4ft 6" or 137 cm</p>',
     serialNo: 7
   },
   {
     value: 8,
-    name: '4F 7" or 140 cm',
+    name: '4ft 7" or 140 cm',
     label:
-      '<p class="m-0">4F 7" or 140 cm</p>',
+      '<p class="m-0">4ft 7" or 140 cm</p>',
     serialNo: 8
   },
   {
     value: 9,
-    name: '4F 8" or 142 cm',
+    name: '4ft 8" or 142 cm',
     label:
-      '<p class="m-0">4F 8" or 142 cm</p>',
+      '<p class="m-0">4ft 8" or 142 cm</p>',
     serialNo: 9
   },
   {
     value: 10,
-    name: '4F 9" or 145 cm',
+    name: '4ft 9" or 145 cm',
     label:
-      '<p class="m-0">4F 9" or 145 cm</p>',
+      '<p class="m-0">4ft 9" or 145 cm</p>',
     serialNo: 10
   },
   {
     value: 11,
-    name: '4F 10" or 147 cm',
+    name: '4ft 10" or 147 cm',
     label:
-      '<p class="m-0">4F 10" or 147 cm</p>',
+      '<p class="m-0">4ft 10" or 147 cm</p>',
     serialNo: 11
   },
   {
     value: 12,
-    name: '4F 11" or 150 cm',
+    name: '4ft 11" or 150 cm',
     label:
-      '<p class="m-0">4F 11" or 150 cm</p>',
+      '<p class="m-0">4ft 11" or 150 cm</p>',
     serialNo: 12
   },
   {
     value: 13,
-    name: '5F 0" or 152 cm',
+    name: '5ft 0" or 152 cm',
     label:
-      '<p class="m-0">5F 0" or 152 cm</p>',
+      '<p class="m-0">5ft 0" or 152 cm</p>',
     serialNo: 13
   },
   {
     value: 14,
-    name: '5F 1" or 155 cm',
+    name: '5ft 1" or 155 cm',
     label:
-      '<p class="m-0">5F 1" or 155 cm</p>',
+      '<p class="m-0">5ft 1" or 155 cm</p>',
     serialNo: 14
   },
   {
     value: 15,
-    name: '5F 2" or 157 cm',
+    name: '5ft 2" or 157 cm',
     label:
-      '<p class="m-0">5F 2" or 157 cm</p>',
+      '<p class="m-0">5ft 2" or 157 cm</p>',
     serialNo: 15
   },
   {
     value: 16,
-    name: '5F 3" or 160 cm',
+    name: '5ft 3" or 160 cm',
     label:
-      '<p class="m-0">5F 3" or 160 cm</p>',
+      '<p class="m-0">5ft 3" or 160 cm</p>',
     serialNo: 16
   },
   {
     value: 17,
-    name: '5F 4" or 163 cm',
+    name: '5ft 4" or 163 cm',
     label:
-      '<p class="m-0">5F 4" or 163 cm</p>',
+      '<p class="m-0">5ft 4" or 163 cm</p>',
     serialNo: 17
   },
   {
     value: 18,
-    name: '5F 5" or 165 cm',
+    name: '5ft 5" or 165 cm',
     label:
-      '<p class="m-0">5F 5" or 165 cm</p>',
+      '<p class="m-0">5ft 5" or 165 cm</p>',
     serialNo: 18
   },
   {
     value: 19,
-    name: '5F 6" or 168 cm',
+    name: '5ft 6" or 168 cm',
     label:
-      '<p class="m-0">5F 6" or 168 cm</p>',
+      '<p class="m-0">5ft 6" or 168 cm</p>',
     serialNo: 19
   },
   {
     value: 20,
-    name: '5F 7" or 170 cm',
+    name: '5ft 7" or 170 cm',
     label:
-      '<p class="m-0">5F 7" or 170 cm</p>',
+      '<p class="m-0">5ft 7" or 170 cm</p>',
     serialNo: 20
   },
   {
     value: 21,
-    name: '5F 8" or 173 cm',
+    name: '5ft 8" or 173 cm',
     label:
-      '<p class="m-0">5F 8" or 173 cm</p>',
+      '<p class="m-0">5ft 8" or 173 cm</p>',
     serialNo: 21
   },
   {
     value: 22,
-    name: '5F 9" or 175 cm',
+    name: '5ft 9" or 175 cm',
     label:
-      '<p class="m-0">5F 9" or 175 cm</p>',
+      '<p class="m-0">5ft 9" or 175 cm</p>',
     serialNo: 22
   },
   {
     value: 23,
-    name: '5F 10" or 178 cm',
+    name: '5ft 10" or 178 cm',
     label:
-      '<p class="m-0">5F 10" or 178 cm</p>',
+      '<p class="m-0">5ft 10" or 178 cm</p>',
     serialNo: 23
   },
   {
     value: 24,
-    name: '5F 11" or 180 cm',
+    name: '5ft 11" or 180 cm',
     label:
-      '<p class="m-0">5F 11" or 180 cm</p>',
+      '<p class="m-0">5ft 11" or 180 cm</p>',
     serialNo: 24
   },
   {
     value: 25,
-    name: '6F 0" or 183',
+    name: '6ft 0" or 183',
     label:
-      '<p class="m-0">6F 0" or 183 cm</p>',
+      '<p class="m-0">6ft 0" or 183 cm</p>',
     serialNo: 25
   },
   {
     value: 26,
-    name: '6F 1" or 185 cm',
+    name: '6ft 1" or 185 cm',
     label:
-      '<p class="m-0">6F 1" or 185 cm</p>',
+      '<p class="m-0">6ft 1" or 185 cm</p>',
     serialNo: 26
   },
   {
     value: 27,
-    name: '6F 2" or 188 cm',
+    name: '6ft 2" or 188 cm',
     label:
-      '<p class="m-0">6F 2" or 188 cm</p>',
+      '<p class="m-0">6ft 2" or 188 cm</p>',
     serialNo: 27
   },
   {
     value: 28,
-    name: '6F 3" or 190 cm',
+    name: '6ft 3" or 190 cm',
     label:
-      '<p class="m-0">6F 3" or 190 cm</p>',
+      '<p class="m-0">6ft 3" or 190 cm</p>',
     serialNo: 28
   },
   {
     value: 29,
-    name: '6F 4" or 193 cm',
+    name: '6ft 4" or 193 cm',
     label:
-      '<p class="m-0">6F 4" or 193 cm</p>',
+      '<p class="m-0">6ft 4" or 193 cm</p>',
 
     serialNo: 29
   },
   {
     value: 30,
-    name: '6F 5" or 196 cm',
+    name: '6ft 5" or 196 cm',
     label:
-      '<p class="m-0">6F 5" or 196 cm</p>',
+      '<p class="m-0">6ft 5" or 196 cm</p>',
     serialNo: 30
   },
   {
     value: 31,
-    name: '6F 6" or 198 cm',
+    name: '6ft 6" or 198 cm',
     label:
-      '<p class="m-0">6F 6" or 198 cm</p>',
+      '<p class="m-0">6ft 6" or 198 cm</p>',
     serialNo: 31
   },
   {
     value: 32,
-    name: '6F 7" or 201 cm',
+    name: '6ft 7" or 201 cm',
     label:
-      '<p class="m-0">6F 7" or 201 cm</p>',
+      '<p class="m-0">6ft 7" or 201 cm</p>',
     serialNo: 32
   },
   {
     value: 33,
-    name: '6F 8" or 203 cm',
+    name: '6ft 8" or 203 cm',
     label:
-      '<p class="m-0">6F 8" or 203 cm</p>',
+      '<p class="m-0">6ft 8" or 203 cm</p>',
     serialNo: 33
   },
 
