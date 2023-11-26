@@ -598,7 +598,7 @@ export default {
               response.data.data.user.preference.pre_partner_religion_id[0],
             pre_ethnicities: !response.data.data.user.preference.pre_ethnicities
               ? undefined
-              : response.data.data.user.preference.pre_ethnicities.split(","),
+              : response.data.data.user.preference.pre_ethnicities.split(", "),
             pre_preferred_divorcee:
               response.data.data.user.preference.pre_preferred_divorcee == 0 ||
               !response.data.data.user.preference.pre_preferred_divorcee
