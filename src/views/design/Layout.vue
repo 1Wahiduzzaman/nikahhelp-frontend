@@ -9,7 +9,7 @@
     >
       <a-layout-sider
         :style="{ overflow: 'hidden auto' }"
-        class="bg-white shadow-sidebar sidebar-height"
+        class="bg-white shadow-border sidebar-height sidebar-trigger"
         v-model="collapsed"
         :trigger="null"
         collapsible
@@ -208,7 +208,28 @@ export default {
     height: calc(100vh - 70px);
   }
 }
-.shadow-sidebar {
-  box-shadow: 0 0 10px 6px rgb(0 0 0 / 12%);
+.shadow-border {
+  box-shadow: none !important;
+  border-right: 2px solid #dddddd78 !important;
+}
+
+.sidebar-trigger::v-deep {
+  .d-sidebar {
+    .trigger {
+      background: #fff !important;
+      color: #6159a7 !important;
+      box-sizing: border-box;
+      cursor: pointer;
+      box-shadow: none !important;
+      border: 2px solid #dddddd78 !important;
+      border-right: 0px !important;
+      
+      &:hover {
+        color: #fff !important;
+        background: #6159a7 !important;
+        border: none !important;
+      }
+    }
+  }
 }
 </style>
