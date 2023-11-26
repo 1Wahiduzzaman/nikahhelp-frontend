@@ -1,9 +1,28 @@
 <template>
 	<div>
-		<h4 class="text-xl-h3 text-h4 font-weight-bold text--disabled mb-2">
+		<div v-if="getWindowWidth() <=  575">
+			<div class="d-flex justify-content-between">
+				<h5 class="text-xl-h3 text-h4 font-weight-bold text--disabled mb-2">
+					{{isSearched ? 'Results' : 'Suggestion'}}
+				</h5>
+				<ButtonComponent
+					class="mobile-margin"
+					iconHeight="14px"
+					:isSmall="true"
+					:responsive="false"
+					title=""
+					:icon="require('@/assets/icon/search-love-secondary.svg')"
+					@onClickButton="handleSerachClicked"
+				/>
+			</div>
+			<span class="text--secondary text-h6">
+				{{ pagination.total_items ? pagination.total_items : 0 }} Matches for you
+			</span>
+		</div>
+		<h4 v-else class="text-xl-h3 text-h4 font-weight-bold text--disabled mb-2">
 			{{isSearched ? 'Search Results' : 'Suggestion'}}
 		</h4>
-		<span v-if="isSearched" class="text--secondary text-h6">
+		<span v-if="isSearched && getWindowWidth() > 575" class="text--secondary text-h6">
 			Matches for your requirements: {{ pagination.total_items ? pagination.total_items : 0 }} results
 		</span>
 		<!-- <div class="query-tag flex flex-wrap justify-end align-center my-4">
@@ -38,6 +57,7 @@
 
 <script>
 import CandidateGrid from '@/components/search/NewCandidateCard.vue';
+import ButtonComponent from '../atom/ButtonComponent.vue';
 // import Tag from '@/components/atom/Tag'
 import {mapGetters, mapMutations} from 'vuex';
 
@@ -45,6 +65,7 @@ export default {
 	name: 'CandidateProfiles',
 	components: {
 		CandidateGrid,
+		ButtonComponent,
 		// Tag
 	},
 	data: () => ({
@@ -87,7 +108,14 @@ export default {
 			this.clearProfiles();
 			this.setProfiles(profiles);
 
-		}
+		},
+		handleSerachClicked() {
+			this.$emit('searchBtnClicked');
+		},
+		getWindowWidth() {
+			return window.innerWidth;
+		},
+
 	}
 };
 </script>
@@ -105,6 +133,11 @@ export default {
 		&:hover {
 			color: $border-danger;
 		}
+	}
+}
+.mobile-margin::v-deep {
+	img {
+		margin: 0px 10px !important;
 	}
 }
 </style>

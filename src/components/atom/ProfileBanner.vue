@@ -14,8 +14,8 @@
         <v-img
             style="border: 2px solid white; margin-top: -74px; background-size: cover;"
             class="white--text align-end rounded mx-auto"
-            max-width="150px"
-            max-height="150px"
+            width="250"
+            height="168.75"
             :src="image"
         >
             <!-- <v-card-title>Top 10 Australian beaches</v-card-title> -->

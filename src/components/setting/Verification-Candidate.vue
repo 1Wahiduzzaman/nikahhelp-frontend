@@ -185,8 +185,7 @@
               mb</span>
 
             <div class="img-preview mb-2">
-              <img :src="imageFont ? imageFont : verification.ver_image_front + `?token=${token}`" width="200"
-                height="200" v-if="verification.ver_image_front" />
+              <img :src="imageFont ? imageFont : verification.ver_image_front + `?token=${token}`" v-if="verification.ver_image_front" />
               <div
                 class="add-icon"
                 v-if="!verification.ver_image_front"
@@ -260,8 +259,7 @@
               mb</span>
 
             <div class="img-preview mb-2">
-              <img :src="imageBack ? imageBack : verification.ver_image_back + `?token=${token}`" width="200"
-                height="200" v-if="verification.ver_image_back" />
+              <img :src="imageBack ? imageBack : verification.ver_image_back + `?token=${token}`" v-if="verification.ver_image_back" />
               <div
                 class="add-icon"
                 v-if="!verification.ver_image_back"
@@ -429,7 +427,27 @@ export default {
       this.$refs.verification.validate((valid) => {
         if (valid) {
           this.activeKey = null;
-          this.saveCandidateUploadDoc();
+          const {
+            ver_country,
+            ver_document_type,
+            ver_image_back,
+            ver_image_front,
+          } = this.verification;
+          const isComplete = Object.values({
+            ver_country,
+            ver_document_type,
+            ver_image_back,
+            ver_image_front,
+          }).every((x) => x !== undefined && x !== null && x !== "");
+          if (isComplete) {
+            this.saveCandidateUploadDoc();
+          } else {
+            this.$error({
+              title: "Validation Error",
+              content: "Please fill all the required fields",
+              center: true,
+            });
+          }
         } else {
           setTimeout(() => {
             const el = document.querySelector(".has-error:first-of-type");
@@ -650,6 +668,17 @@ input[type="file"] {
 #checkIcon {
   height: 18px;
   margin-right: 5px;
+}
+
+.add-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  svg {
+    width: 60px;
+    margin-top: 10px;
+  }
 }
 
 input[type="file"]::-webkit-file-upload-button {

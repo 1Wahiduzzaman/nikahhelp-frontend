@@ -309,7 +309,7 @@
                     width="200"
                     style="cursor: pointer;"
                   />
-                  <p class="text-center" v-if="src == representativeDetails.image_upload.per_avatar_url">Avatar</p>
+                  <p class="text-center" v-if="src == representativeDetails.image_upload.per_avatar_url + `?token=${token}`">Avatar</p>
                   <p class="text-center" v-else>Main Image</p>
               </div>
             </div>
