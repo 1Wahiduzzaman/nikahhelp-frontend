@@ -3,7 +3,7 @@
     <Loader v-if="isLoading" :isLoading="isLoading" />
     <div v-else>
       <TeamOffRedirection v-if="redirection" />
-      <MainHeader @toggleCollapse="toggleCollapse" />
+      <MainHeader :collapsed="collapsed" @toggleCollapse="toggleCollapse" />
       <a-layout
         id="layout"
         style="background-color: #fff"
@@ -15,7 +15,7 @@
             overflowY: 'auto',
             overflowX: 'hidden',
           }"
-          class="bg-white shadow-sidebar"
+          class="bg-white shadow-border sidebar-trigger"
           v-model="collapsed"
           :trigger="null"
           collapsible
@@ -27,12 +27,14 @@
           <Sidebar
             :collapsed="collapsed"
             @collapseSideBar="collapsed = !collapsed"
+            :searchBtnClicked="searchBtnClicked"
           >
             <template v-slot:search>
               <SimpleSearch
                 ref="simpleSearch"
                 @switchComponent="switchComponent"
                 :user="loggedUser"
+                @searchBtnClicked="closeSearchSidebar"
                 
               >
               <template v-slot:button="{ clickBtn }">
@@ -41,7 +43,7 @@
 									:block="true"
 									:responsive="false"
 									title="Search"
-									icon="/assets/icon/search-love-secondary.svg"
+									:icon="require('@/assets/icon/search-love-primary.svg')"
 									customEvent="handleSearch"
 									@onClickButton="clickBtn"
                   ref="btnsearch"
@@ -72,6 +74,7 @@
                   @switchComponent="switchComponent"
                   @navigateProfile="navigateProfile"
                   @socketNotification="socketNotification"
+                  @searchBtnClicked="toggleSearchBtnClick"
                   v-bind:is="currentTabComponent"
                 >
                 </component>
@@ -145,6 +148,7 @@ export default {
       collapsed: false,
       componentName: "CandidateProfiles",
       redirection: false,
+      isSearchBtnClicked: false,
     };
   },
 
@@ -191,6 +195,9 @@ export default {
     },
     teamsOriginal() {
       return this.$store.state.team?.team_list
+    },
+    searchBtnClicked() {
+      return this.isSearchBtnClicked;
     }
   },
   methods: {
@@ -389,7 +396,22 @@ export default {
             this.fetchInitialCandidate()
           }
         }
-    }
+    },
+    toggleSearchBtnClick() {
+      this.isSearchBtnClicked = !this.isSearchBtnClicked;
+      this.collapsed = false;
+      console.log('successfully clicked advacesearch')
+    },
+    closeSearchSidebar() {
+      if(getWindowWidth() <= 575){
+        this.isSearchBtnClicked = false;
+        this.collapsed = true;
+        console.log('successfully closed searchsidebar')
+      }
+    },
+    getWindowWidth() {
+      return window.innerWidth;
+    },
   },
   created() {
     console.log(JwtService.getTeamIDAppWide(), '>>>>>>>>>>>>>>>>>>>>..')
@@ -493,7 +515,28 @@ export default {
     }
   }
 }
-.shadow-sidebar {
-  box-shadow: 0 0 10px 6px rgb(0 0 0 / 12%);
+.shadow-border {
+  box-shadow: none !important;
+  border-right: 2px solid #dddddd78 !important;
+}
+.sidebar-trigger::v-deep {
+  .d-sidebar {
+    .trigger {
+      top: 2% !important;
+      background: #fff !important;
+      color: #6159a7 !important;
+      box-sizing: border-box;
+      cursor: pointer;
+      box-shadow: none !important;
+      border: 2px solid #dddddd78 !important;
+      border-right: 0px !important;
+      
+      &:hover {
+        color: #fff !important;
+        background: #6159a7 !important;
+        border: none !important;
+      }
+    }
+  }
 }
 </style>

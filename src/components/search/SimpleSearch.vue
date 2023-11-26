@@ -610,6 +610,7 @@ export default {
 		},
 
 		async handleSearch() {
+			this.$emit('searchBtnClicked');
 			if(this.isFetching) return;
 			this.setComponent('addComponent')
             this.$emit('switchComponent', 'CandidateProfiles')

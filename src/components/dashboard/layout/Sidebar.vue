@@ -16,7 +16,7 @@
               <router-link to="/search"
                 ><img
                   class="mr-3"
-                  src="@/assets/icon/search-love-secondary.svg"
+                  src="@/assets/icon/search-love-primary.svg"
                   alt="icon"
                 />Search Your Match
               </router-link>
@@ -197,6 +197,12 @@ export default {
   data: () => ({
     showMenu: true,
   }),
+  watch: {
+    isSearchBtnClicked() {
+      this.showMenu = true;
+      console.log(this.showMenu, "showMenu from sidebar")
+    },
+  },
   computed: {
     path() {
       return this.$route.name;
@@ -215,10 +221,14 @@ export default {
         count = count + item && item.last_group_message && item.last_message.seen == 0 ? 1 : 0;
       });
       return count;
+    },
+    isSearchBtnClicked() {
+      return this.searchBtnClicked;
     }
   },
   props: {
     collapsed: Boolean,
+    searchBtnClicked: Boolean,
   },
   methods: {
     // goToChat(){
