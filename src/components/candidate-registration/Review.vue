@@ -21,29 +21,29 @@
             />
           </div>
           <div class="row">
-            <div class="col-md-8" style="padding-right: 8px !important;">
+            <div class="col-md-12" style="padding-right: 8px !important;">
               <div class="card-custom h-100 shadow-border card-personal">
                 <ul class="personal-ul">
                   <!-- Age -->
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Age</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:
                       <span class="ml-3 text--secondary text-subtitle-1">
-                        {{ candidateData.preference.pre_partner_age_min }}
+                        {{ candidateData.preference.pre_partner_age_min }}y 
                         to
-                        {{ candidateData.preference.pre_partner_age_max }}
-                        years</span
+                        {{ candidateData.preference.pre_partner_age_max }}y
+                        </span
                       ></span
                     >
                   </li>
                   <!-- Height -->
 
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Height</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">
                         {{ getHeight(candidateData.preference.pre_height_min) }}
                         to
@@ -55,11 +55,11 @@
                   <!-- Preferred countries and cities -->
                   <li class="flex-between-start">
                     <a-tooltip title="Country and city preferred">
-                      <span class="flex-40 px-2 text--disabled text-subtitle-1">
+                      <span class="flex-30 px-2 text--disabled text-subtitle-1">
                         Preferred Country
                       </span>
                     </a-tooltip>
-                    <span class="flex-60 px-2 d-inherit">
+                    <span class="flex-70 px-2 d-inherit">
                       :
                       <span
                         v-if="
@@ -77,13 +77,13 @@
                         "
                         class="ml-3 text--secondary text-subtitle-1"
                       >
-                        <div
+                        <span
                           v-for="country in candidateData.preference
                             .preferred_countries"
                           :key="country.id"
                         >
-                          {{ country.name }}
-                        </div>
+                          {{ country.name + ' ' }}
+                        </span>
                       </span>
                     </span>
                   </li>
@@ -91,11 +91,11 @@
                   <!-- Bloked countries and cities -->
                   <li class="flex-between-start">
                     <a-tooltip title="Country and city Blocked">
-                      <span class="flex-40 px-2 text--disabled text-subtitle-1">
+                      <span class="flex-30 px-2 text--disabled text-subtitle-1">
                         Not Preferred Country
                       </span>
                     </a-tooltip>
-                    <span class="flex-60 px-2 d-inherit">
+                    <span class="flex-70 px-2 d-inherit">
                       :
                       <span
                         v-if="
@@ -124,9 +124,9 @@
 
                   <!-- Religion -->
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Religion</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1"
                         > {{ candidateData.preference.pre_partner_religion_id[0] }} </span
                       ></span
@@ -135,9 +135,9 @@
 
                   <!-- Ethnicities -->
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Ethnicities</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.preference.pre_ethnicities
                       }}</span></span
@@ -146,18 +146,18 @@
 
                   <!-- Nationality -->
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Nationality</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">
                         <div v-if="candidateData.preference.preferred_nationality.length > 0">
-                          <div
-                            v-for="nationality in candidateData.preference
+                          <span
+                            v-for="(nationality, index) in candidateData.preference
                               .preferred_nationality"
                             :key="nationality.id"
                           >
-                            {{ nationality.name }}
-                          </div>
+                            {{ index == candidateData.preference.preferred_nationality.length -1  ? nationality.name : nationality.name + ',&nbsp;' }}
+                          </span>
                         </div>
                         <div v-else>
                           Don't Mind
@@ -166,21 +166,51 @@
                     >
                   </li>
 
+                  <!-- Education -->
+                  <li
+                    class="flex-between-start"
+                  >
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Education</span
+                    ><span class="flex-70 px-2 d-inherit"
+                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                        candidateData.preference.pre_study_level
+                      }}</span></span
+                    >
+                  </li>
+
                   <!-- Employment Status -->
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Employment Status</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.preference.pre_employment_status
                       }}</span></span
                     >
                   </li>
 
+                  <!-- Occupation -->
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Ocupation</span
+                    ><span class="flex-70 px-2 d-inherit"
+                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                        <span
+                          v-for="(occupation, index) in candidateData.preference
+                            .pre_occupation"
+                          :key="occupation.id"
+                        >
+                          {{ index == candidateData.preference.pre_occupation.length - 1 ?  occupation : occupation + ',&nbsp;' }}
+                        </span></span
+                      ></span
+                    >
+                  </li>
+
+                  <li class="flex-between-start">
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Accept a divorcee</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.preference.pre_preferred_divorcee == 1
                           ? "Yes"
@@ -203,41 +233,11 @@
                       }}</span></span
                     >
                   </li>
-
-                  <li
-                    v-if="candidateData.preference.pre_preferred_divorcee == 1"
-                    class="flex-between-start"
-                  >
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
-                      >Education</span
-                    ><span class="flex-60 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
-                        candidateData.preference.pre_study_level
-                      }}</span></span
-                    >
-                  </li>
-
-                  <!-- Occupation -->
-                  <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
-                      >Ocupation</span
-                    ><span class="flex-60 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">
-                        <div
-                          v-for="occupuation in candidateData.preference
-                            .pre_occupation"
-                          :key="occupuation.id"
-                        >
-                          {{ occupuation }}
-                        </div></span
-                      ></span
-                    >
-                  </li>
                 </ul>
               </div>
             </div>
             <!-- Other Requirments -->
-            <div class="col-md-4">
+            <div class="col-md-12">
               <div class="card-custom h-100 shadow-border text--disabled">
                 <h4 class="text--disabled text-subtitle-1">
                   What I'm looking for
@@ -267,8 +267,8 @@
             <!-- Rating unit -->
             <div class="col-md-12">
               <div class="card-custom h-100 shadow-border">
-                <h5>More about preferred partner</h5>
-                <p>How Important following characters are to me</p>
+                <h5 class="text--disabled">More about preferred partner</h5>
+                <p class="text--disabled">How Important following characters are to me</p>
                 <hr />
                 <!-- Character -->
                 <!-- <rating-component
@@ -382,13 +382,13 @@
             />
           </div>
           <div class="row h-100">
-            <div class="col-md-8" style="padding-right: 8px !important;">
+            <div class="col-md-12" style="padding-right: 8px !important;">
               <div class="card-custom shadow-border card-personal h-100">
                 <ul class="personal-ul">
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Name</span
-                    ><span class="flex-60 px-2"
+                    ><span class="flex-70 px-2"
                       >:<span class="ml-3 text--secondary text-subtitle-1">
                         {{ candidateData.first_name }}
                         {{ candidateData.last_name }}
@@ -396,18 +396,18 @@
                     </span>
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Screen Name</span
-                    ><span class="flex-60 px-2"
+                    ><span class="flex-70 px-2"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.screen_name
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Gender</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span
                         class="ml-3 text--secondary text-subtitle-1"
                         v-if="candidateData.personal.per_gender == 1"
@@ -423,18 +423,18 @@
                     </span>
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Date of Birth (private)</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">
                         {{ candidateData.personal.dob }}
                       </span>
                     </span>
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Height</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">
                         <span
                           v-html="
@@ -457,24 +457,15 @@
                     </span>
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
-                      >Employment Status</span
-                    ><span class="flex-60 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">
-                        {{ candidateData.personal.per_employment_status }}</span
-                      ></span
-                    >
-                  </li>
-                  <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Religion</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">
                         <!-- {{
-													$store.state.candidateInfo.religion_options[
-														candidateData.personal.per_religion_id
-													].name
-												}} -->
+                          $store.state.candidateInfo.religion_options[
+                            candidateData.personal.per_religion_id
+                          ].name
+                        }} -->
                         {{
                           candidateDetails.religions.find(
                             (x) =>
@@ -491,27 +482,54 @@
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Education</span
+                    ><span class="flex-70 px-2 d-inherit"
+                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                        {{ candidateData.personal.per_education_level }}</span
+                      ></span
+                    >
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Employment Status</span
+                    ><span class="flex-70 px-2 d-inherit"
+                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                        {{ candidateData.personal.per_employment_status }}</span
+                      ></span
+                    >
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Occupation</span
+                    ><span class="flex-70 px-2 d-inherit"
+                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                        {{ candidateData.essential.per_occupation }}</span
+                      ></span
+                    >
+                  </li>
+                  <li class="flex-between-start">
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Ethnicity</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.personal.per_ethnicity
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Mother Tongue</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.personal.per_mother_tongue
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Nationality</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateDetails.countries.find(
                           (c) => c.id === candidateData.personal.per_nationality
@@ -525,81 +543,90 @@
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Country of Birth</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.personal.per_country_of_birth
                       }}</span></span
                     >
                   </li>
                   <!-- <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Current Residance</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.personal.per_current_residence
                       }}</span></span
                     >
                   </li> -->
+                  <li class="flex-between-start" v-if="candidateData.general.per_health_condition">
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
+                      >Health Condition</span
+                    ><span class="flex-70 px-2 d-inherit"
+                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
+                        candidateData.general.per_health_condition
+                      }}</span></span
+                    >
+                  </li>
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Address Line 1 (private)</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
                         candidateData.contact.address_1
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Address Line 2 (private)</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
                         candidateData.contact.address_2
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >City</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
                         candidateData.contact.per_permanent_city
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Post Code (private)</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.contact.per_permanent_post_code
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Country</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">{{
                         candidateData.contact.per_permanent_country_name
                       }}</span></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Mobile No (private)</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-subtitle-1">
                         {{ candidateData.contact.mobile_number }}</span
                       ></span
                     >
                   </li>
                   <li class="flex-between-start">
-                    <span class="flex-40 px-2 text--disabled text-subtitle-1"
+                    <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Email (private)</span
-                    ><span class="flex-60 px-2 d-inherit"
+                    ><span class="flex-70 px-2 d-inherit"
                       >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
                         candidateData.contact.per_email
                       }}</span></span
@@ -608,8 +635,9 @@
                 </ul>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
               <div class="card-custom shadow-border h-100">
+                <span class="text--disabled pb-2" style="font-size: 1.1rem;">More about me</span>
                 <FieldsetCard
                   title="Marital Status"
                   :info="candidateData.personal.per_marital_status"
@@ -634,7 +662,7 @@
                   class="mt-3"
                   title="Smoker"
                   :info="
-                    candidateData.personal.per_smoker == true ? 'Yes' : 'No'
+                    candidateData.more_about.per_smoker == 1 ? 'Yes' : candidateData.more_about.per_smoker == 2 ? 'No' : 'Former Smoker'
                   "
                 />
                 <FieldsetCard
@@ -647,22 +675,27 @@
                   class="mt-3"
                   title="My Hobbies & Interests"
                   :info="candidateData.personal.per_hobbies_interests"
+                  />
+                <FieldsetCard
+                  class="mt-3"
+                  title="Things I Enjoy"
+                  :info="candidateData.personal.per_things_enjoy"
                 />
                 <FieldsetCard
                   class="mt-3"
                   title="Food & Cuisine I like"
                   :info="candidateData.personal.per_food_cuisine_like"
                 />
-                <FieldsetCard
-                  class="mt-3"
-                  title="Things I Enjoy"
-                  :info="candidateData.personal.per_things_enjoy"
-                />
 
                 <FieldsetCard
                   class="mt-3"
                   title="I am Thankfull for"
                   :info="candidateData.personal.per_thankfull_for"
+                />
+                <FieldsetCard
+                  class="mt-3"
+                  title="How I Improve Myself"
+                  :info="getPerImproveMyself(candidateData.more_about.per_improve_myself)"
                 />
               </div>
             </div>
@@ -714,7 +747,7 @@
             />
           </div>
           <div class="row">
-            <div class="col-md-8" style="padding-right: 8px !important;">
+            <div class="col-md-12" style="padding-right: 8px !important;">
               <div class="card-custom h-100 shadow-border">
                 <table>
                   <TableRow
@@ -732,13 +765,13 @@
                     textClass="text-subtitle-1"
                     :value="candidateData.family.siblings_desc"
                   />
-                  <a-tooltip title="Ancestral home same as country of birth?">
-                    <TableRow
-                      title="Ancestral home"
-                      textClass="text-subtitle-1"
-                      :value="candidateData.family.country_of_origin"
-                    />
-                  </a-tooltip>
+
+                  <TableRow
+                    title="Ancestral home same as country of birth?"
+                    textClass="text-subtitle-1"
+                    :value="candidateData.family.country_of_origin"
+                  />
+
                 </table>
                 <!-- <ul style="line-height: 160%">
                   
@@ -781,7 +814,7 @@
                 </ul> -->
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
               <div class="card-custom h-100 shadow-border">
                 <h4 class="text--disabled text-subtitle-1">About My Family</h4>
                 <p class="text--secondary text-subtitle-1">
@@ -854,10 +887,11 @@
                     :src="src"
                     class="contain"
                     alt="img"
+                    height="170"
                     style="cursor: pointer;"
                   />
-                  <p class="text-center" v-if="src == candidateData.verification.ver_image_front">Front side</p>
-                  <p class="text-center" v-if="src == candidateData.verification.ver_image_back">Back side</p>
+                  <p class="text-center" v-if="src == candidateData.verification.ver_image_front + `?token=${token}`">Front side</p>
+                  <p class="text-center" v-if="src == candidateData.verification.ver_image_back + `?token=${token}`">Back side</p>
               </div>
             </div>
           </div>
@@ -896,9 +930,9 @@
                     width="200"
                     style="cursor: pointer;"
                   />
-                  <p class="text-center" v-if="src == candidateData.personal.per_avatar_url">Avatar</p>
-                  <p class="text-center" v-if="src == candidateData.personal.per_main_image_url">Main Image</p>
-                  <p class="text-center" v-if="src == candidateData.other_images && src != null">Other Images</p>
+                  <p class="text-center" v-if="src == candidateData.personal.per_avatar_url + `?token=${token}`">Avatar</p>
+                  <p class="text-center" v-if="src == candidateData.personal.per_main_image_url + `?token=${token}`">Main Image</p>
+                  <p class="text-center" v-if="src == candidateData.other_images + `?token=${token}` && src != null">Other Images</p>
                   <p class="text-center" v-if="src == null">No image provided</p>
               </div>
             </div>
@@ -1027,13 +1061,19 @@ export default {
           // },
         };
       } catch (error) {
-        alert(this.error);
       }
     },
 
     getHeight(val) {
       let h = this.heightTV.find((x) => x.value === val);
       return h ? h.name : "";
+    },
+    getPerImproveMyself(val) {
+      let improvements = "";
+      val.forEach((element) => {
+        improvements += this.candidateDetails.improveMyselfThings[element].label + " <br> ";
+      });
+      return improvements;
     },
   },
   computed: {},
@@ -1082,7 +1122,7 @@ export default {
     }
     .img-preview {
       width: 200px;
-      height: 170px;
+      height: 207px;
       margin: 0px auto;
     }
   }
