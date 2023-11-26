@@ -2,7 +2,7 @@
     <div>
         <fieldset>
             <legend class="text--disabled text-subtitle-2 px-1">{{ title }}</legend>
-            <div style="text-transform: capitalize" class="text-center text--secondary text-subtitle-1">{{ info }}</div>
+            <div v-html="info" style="text-transform: capitalize" class="text-center text--secondary text-subtitle-1"></div>
         </fieldset>
     </div>
 </template>
