@@ -26,12 +26,12 @@
           <div class="row h-100">
             <div class="col-md-12 mb-3">
               <div class="card-custom shadow-border personal-height">
-                <ul style="line-height: 160%">
+                <ul class="personal-ul" style="line-height: 160%">
                   <li class="flex-between-start">
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Name</span
-                    ><span class="flex-70 px-2"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                    ><span class="flex-70 px-2 d-inherit"
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">
                         {{ representativeDetails.first_name }}
                         {{ representativeDetails.last_name }}
                       </span>
@@ -40,8 +40,8 @@
                   <li class="flex-between-start">
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Screen Name</span
-                    ><span class="flex-70 px-2"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                    ><span class="flex-70 px-2 d-inherit"
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">{{
                         representativeDetails.screen_name
                       }}</span></span
                     >
@@ -50,7 +50,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Gender</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">{{
                         representativeDetails.essential.per_gender_text
                       }}</span></span
                     >
@@ -59,9 +59,9 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Date of Birth</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span
+                      ><span class="d-none d-sm-table-cell">:</span> <span
                         class="
-                          ml-3
+                          left-margin
                           text--secondary
                           text-subtitle-1
                           text--secondary
@@ -77,7 +77,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Occupation</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">{{
                         representativeDetails.essential.per_occupation
                       }}</span></span
                     >
@@ -87,7 +87,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Current Residance</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1"
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1"
                         >{{
                           representativeDetails.personal
                             .per_current_residence_country
@@ -99,7 +99,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Address Line 1</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-break text-subtitle-1">{{
                         representativeDetails.personal.address_1
                       }}</span></span
                     >
@@ -108,7 +108,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Address Line 2</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-break text-subtitle-1">{{
                         representativeDetails.personal.address_2
                       }}</span></span
                     >
@@ -117,7 +117,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >City</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-break text-subtitle-1">{{
                         representativeDetails.personal.per_permanent_city
                       }}</span></span
                     >
@@ -126,7 +126,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Post Code</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">{{
                         representativeDetails.personal.per_permanent_post_code
                       }}</span></span
                     >
@@ -135,7 +135,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Country</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1"
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1"
                         >{{
                           representativeDetails.personal
                             .per_permanent_country
@@ -148,7 +148,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Mobile No</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">
                         {{ representativeDetails.personal.mobile_number }}</span
                       ></span
                     >
@@ -157,7 +157,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Email</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-break text-subtitle-1">{{
                         representativeDetails.personal.per_email
                       }}</span></span
                     >
@@ -389,6 +389,26 @@ export default {
   box-shadow: none !important;
   border: 2px solid #dddddd78 !important;
 }
+.left-margin {
+  margin-left: 12px !important;
+  @media (max-width: 600px) {
+    margin-left: 0px !important;
+  }
+}
+.flex-between-start {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  @media (max-width: 600px) {
+    flex-direction: column !important;
+    margin-bottom: 10px !important;
+  }
+}
+.personal-ul {
+  line-height: 160%;
+  padding-left: 0;
+}
 .review-publish {
   .review {
     font-size: 14px;
@@ -422,6 +442,9 @@ export default {
       width: 200px;
       height: 100%;
       margin: 0px auto;
+      @media (max-width: 447px) {
+        height: auto !important;
+      }
     }
   }
   .ant-input {
@@ -511,6 +534,27 @@ export default {
   }
   .personal-height {
     height: 390px
+  }
+}
+.card-custom::v-deep {
+  .v-list-item__content {
+    padding: 0 !important;
+  }
+  .v-list-item__subtitle {
+    font-family: "Roboto", sans-serif !important;
+    line-height: 1.7 !important;
+    letter-spacing: 0.009375em;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    color: rgba(0,0,0,.38) !important;
+  }
+  .v-list-item__title {
+    font-family: "Roboto", sans-serif !important;
+    line-height: 1.7 !important;
+    letter-spacing: 0.009375em;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    color: rgba(0,0,0,.6) !important;
   }
 }
 </style>
