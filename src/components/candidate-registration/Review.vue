@@ -1071,7 +1071,7 @@ export default {
     getPerImproveMyself(val) {
       let improvements = "";
       val.forEach((element) => {
-        improvements += this.candidateDetails.improveMyselfThings[element].label + " <br> ";
+        improvements += this.candidateDetails.improveMyselfThings[element-1].label + " <br> ";
       });
       return improvements;
     },
