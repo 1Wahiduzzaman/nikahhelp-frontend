@@ -4,58 +4,10 @@
         class="mx-auto"
         width="317"
     >
-        <div class="pt-3 px-5">
-            <p class="text-subtitle-1 mb-2 text--secondary">This Profile Overview</p>
-            <hr>
-            <table>
-                <TableRow 
-                    title="Name"
-                    :value="profile.first_name + ' ' + profile.last_name"
-                />
-                <TableRow 
-                    title="Age"
-                    :value="profile.per_age + ' Years'"
-                />
-                <TableRow 
-                    title="Height"
-                    :value="getHeightPersonal"
-                />
-                <TableRow 
-                    title="Nationality"
-                    :value="profile.per_nationality"
-                />
-                <TableRow 
-                    title="Ethnicity"
-                    :value="profile.per_ethnicity"
-                />
-                <TableRow 
-                    title="Country of Birth"
-                    :value="personal.per_country_of_birth"
-                />
-                <TableRow 
-                    title="Current Residence"
-                    :value="personal.per_current_residence"
-                />
-                <TableRow 
-                    title="Education"
-                    :value="personal.per_education_level"
-                />
-                <TableRow 
-                    title="Profession"
-                />
-                
-                <!-- <template v-for="(item, i) in infoArr" >
-                    <tr :key="i" v-if="item != 'first_name' && item != 'last_name' && item != 'image'">
-                        <td style="width: 140px">{{ item }}</td>
-                        <td style="width: 10px">:</td>
-                        <td>{{ profile[item]}} </td>
-                    </tr>
-                </template> -->
-            </table>
-
-             <p class="text-subtitle-1 mb-2 text--secondary mt-4">This Profile Partner Preference</p>
-             <hr>
-             <table> 
+        <div class="pt-3 pl-2 pr-1">
+            <p class="text-subtitle-1 mb-2 text--secondary">This Profile Partener Preferences</p>
+            <hr style="margin: 5px 0px !important;">
+             <table class="partner-prefs"> 
                 <TableRow 
                     title="Age"
                     :value="profile.preference.pre_partner_age_min + ' to ' + profile.preference.pre_partner_age_max"
@@ -65,8 +17,12 @@
                     :value="getMinHeight + ' to ' + getMaxHeight"
                 />
                 <TableRow 
-                    title="Country & Cities Preferred"
+                    title="Preferred country"
                     :value="getCountry()"
+                />
+                <TableRow 
+                    title="Not Preferred country"
+                    :value="getBlockedCountry()"
                 />
                 <TableRow 
                     title="Religion"
@@ -81,11 +37,20 @@
                     :value="getNationality()"
                 />
                 <TableRow 
-                    title="Education"
-                    :value="preference.pre_study_level"
+                title="Education"
+                :value="preference.pre_study_level"
                 />
                 <TableRow 
-                    title="Profession"
+                    title="Accept Divorcee?"
+                    :value="preference.pre_preferred_divorcee == 1 ? 'Yes' : 'NO'"
+                />
+                <TableRow 
+                    v-if="preference.pre_preferred_divorcee == 1"
+                    title="Accept Divorcee with children?"
+                    :value="preference.pre_preferred_divorcee_child == 1 ? 'Yes' : 'NO'"
+                />
+                <TableRow 
+                    title="Occupation"
                     :value="getProfession()"
                 />
                 <!-- <tr>
@@ -152,13 +117,9 @@ export default {
     },
     methods: {
         getCountry() {
-            let cityArr = [];
-            if(this.profile.preference.preferred_cities.length) {
-                this.profile.preference.preferred_cities.map(city => {
-                    cityArr.push(city.name)
-                })
-            }
-            return cityArr.join(', ')
+            return this.preference.preferred_countries.length > 0
+                ? this.preference.preferred_countries.map((c) => c.name).join(", ")
+                : "None";
         },
         getNationality() {
             let cityArr = [];
@@ -176,11 +137,49 @@ export default {
             return ''
         },
         getReligion() {
-            if(this.preference.pre_partner_religion.length) {
-                return this.preference.pre_partner_religion.join(', ')
+            if(this.profile.preference.pre_partner_religion_id.length) {
+                return this.profile.preference.pre_partner_religion_id.join(', ')
             }
-            return ''
-        }
+            return 'None'
+        },
+        getBlockedCountry() {
+            return  this.profile.preference.bloked_countries.length > 0
+                ? this.profile.preference.bloked_countries.map((c) => c.name).join(", ")
+                : "None";
+        },
     }
 }
 </script>
+<style scoped lang="scss">
+@import "@/styles/base/_variables.scss";
+.v-sheet.v-card:not(.v-sheet--outlined)::v-deep {
+    box-shadow: none !important;
+    border: 2px solid #dddddd78 !important;
+}
+
+.partner-prefs::v-deep {
+    tr > div {
+        padding-bottom: 5px !important;
+    }
+    .v-list-item__subtitle {
+        margin-bottom: 10px !important;
+    }
+    .v-list-item__title {
+        color: rgba(0, 0, 0, 0.7) !important;
+    }
+
+    .v-list-item--two-line {
+        margin-right: 0px !important;
+        padding-left: 12px !important;
+        padding-bottom: 5px !important;
+        padding-right: 0px !important;
+        border-radius: 10px;
+        background: $primary_lite_5;
+
+        .v-list-item__content {
+            margin: 0px !important;
+            padding: 0px !important;
+        }
+    }
+}
+</style>
