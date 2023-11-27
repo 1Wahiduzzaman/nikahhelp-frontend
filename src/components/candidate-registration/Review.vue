@@ -887,7 +887,6 @@
                     :src="src"
                     class="contain"
                     alt="img"
-                    height="170"
                     style="cursor: pointer;"
                   />
                   <p class="text-center" v-if="src == candidateData.verification.ver_image_front + `?token=${token}`">Front side</p>
@@ -1087,7 +1086,7 @@ export default {
   border: 2px solid #dddddd78 !important;
 }
 .contain {
-  height: 100%;
+  height: 135px;
   width: 220px;
   object-fit: cover;
 }
@@ -1122,7 +1121,7 @@ export default {
     }
     .img-preview {
       width: 200px;
-      height: 207px;
+      height: 100%;
       margin: 0px auto;
     }
   }
@@ -1221,5 +1220,11 @@ export default {
 .personal-ul {
   line-height: 160%;
   padding-left: 0;
+}
+.v-list-item__subtitle::v-deep {
+  color: rgba(0,0,0,.38) !important;
+}
+.v-list-item__title::v-deep {
+  color: rgba(0,0,0,.6) !important;
 }
 </style>

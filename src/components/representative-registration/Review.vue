@@ -420,7 +420,7 @@ export default {
     }
     .img-preview {
       width: 200px;
-      height: 207px;
+      height: 100%;
       margin: 0px auto;
     }
   }
@@ -497,7 +497,7 @@ export default {
 .contain {
   border: 1px solid $color-secondary;
   border-radius: 5px;
-  height: 100%;
+  height: 135px;
   width: 220px;
   object-fit: cover;
 }
