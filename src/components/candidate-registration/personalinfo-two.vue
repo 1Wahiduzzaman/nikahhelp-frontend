@@ -10,6 +10,7 @@
       :activeKey="activeKey"
       :bordered="false"
       expand-icon-position="right"
+      style="background-color: #f6f5fb;"
     >
       <template #expandIcon="props">
         <a-icon type="caret-down" :rotate="props.isActive ? 180 : 0" />
@@ -43,7 +44,7 @@
               <a-form-model-item ref="per_gender" prop="per_gender">
                 <v-select
                   :disabled="activeRouteName !== 'CandidateRegistration'"
-                  :clearable="false"
+                  :clearable="true"
                   class="style-chooser"
                   @input="onValueChange($event, 'essential', 'per_gender')"
                   id="per_gender"
@@ -162,7 +163,7 @@
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_height" prop="per_height">
                 <v-select
-                  :clearable="false"
+                  :clearable="true"
                   class="style-chooser"
                   @input="onValueChange($event, 'essential', 'per_height')"
                   id="per_height"
@@ -222,7 +223,7 @@
                 <v-select
                   :calculate-position="withPopper"
                   append-to-body
-                  :clearable="false"
+                  :clearable="true"
                   class="style-chooser"
                   @input="onValueChange($event, 'essential', 'per_religion_id')"
                   id="per_religion_id"
@@ -282,7 +283,7 @@
                 prop="per_education_level_id"
               >
                 <v-select
-                  :clearable="false"
+                  :clearable="true"
                   class="style-chooser"
                   @input="
                     onValueChange($event, 'essential', 'per_education_level_id')
@@ -345,7 +346,7 @@
                 prop="per_employment_status"
               >
                 <v-select
-                  :clearable="false"
+                  :clearable="true"
                   class="style-chooser"
                   @input="
                     onValueChange($event, 'essential', 'per_employment_status')
@@ -407,7 +408,7 @@
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_occupation" prop="per_occupation">
                 <v-select
-                  :clearable="false"
+                  :clearable="true"
                   class="style-chooser"
                   @input="onValueChange($event, 'essential', 'per_occupation')"
                   id="per_occupation"
@@ -495,7 +496,7 @@
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_ethnicity" prop="per_ethnicity">
                 <v-select
-                  :clearable="false"
+                  :clearable="true"
                   class="style-chooser"
                   @input="onValueChange($event, 'general', 'per_ethnicity')"
                   id="per_ethnicity"
@@ -580,7 +581,7 @@
                 prop="per_mother_tongue"
               >
                 <v-select
-                  :clearable="false"
+                  :clearable="true"
                   class="style-chooser"
                   @input="onValueChange($event, 'general', 'per_mother_tongue')"
                   id="per_mother_tongue"
@@ -637,7 +638,7 @@
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_nationality" prop="per_nationality">
                 <v-select
-                  :clearable="false"
+                  :clearable="true"
                   class="style-chooser"
                   @input="onValueChange($event, 'general', 'per_nationality')"
                   id="per_nationality"
@@ -698,7 +699,7 @@
                 prop="per_country_of_birth"
               >
                 <v-select
-                  :clearable="false"
+                  :clearable="true"
                   class="style-chooser"
                   @input="
                     onValueChange($event, 'general', 'per_country_of_birth')
@@ -861,7 +862,7 @@
                     prop="per_current_residence_country"
                   >
                     <v-select
-                      :clearable="false"
+                      :clearable="true"
                       class="style-chooser"
                       @input="onCountryChange($event, 'contact', 'residence')"
                       id="per_current_residence_country"
@@ -911,7 +912,7 @@
                     prop="per_current_residence_city"
                   >
                     <v-select
-                      :clearable="false"
+                      :clearable="true"
                       :loading="loading"
                       class="style-chooser"
                       @input="
@@ -1172,7 +1173,7 @@
                 prop="per_permanent_post_code"
               >
                 <!-- <v-select
-                  :clearable="false"
+                  :clearable="true"
                   :filterable="false"
                   @search="onSearch"
                    :reduce="(option) => option.place_name"
@@ -1246,7 +1247,7 @@
                     prop="per_permanent_country"
                   >
                     <v-select
-                      :clearable="false"
+                      :clearable="true"
                       class="style-chooser"
                       @input="onCountryChange($event, 'contact', 'permanant')"
                       id="per_permanent_country"
@@ -1318,7 +1319,8 @@
                 :validCharactersOnly="true"
                 v-model="personalInformation.contact.mobile_number"
                 placeholder="Mobile Number"
-                  class="style-chooser"
+                class="style-chooser"
+                style="background: #fff;"
               ></vue-tel-input>
               
               <span class="error-number" v-if="!isValidNumber"
@@ -1452,7 +1454,7 @@
                 prop="per_marital_status"
               >
                 <v-select
-                  :clearable="false"
+                  :clearable="true"
                   class="style-chooser"
                   @input="
                     onValueChange($event, 'more_about', 'per_marital_status')
@@ -1535,7 +1537,7 @@
                 prop="per_currently_living_with"
               >
                 <v-select
-                  :clearable="false"
+                  :clearable="true"
                   class="style-chooser"
                   @input="
                     onValueChange(
@@ -1622,7 +1624,7 @@
                 prop="per_willing_to_relocate"
               >
                 <v-select
-                  :clearable="false"
+                  :clearable="true"
                   class="style-chooser"
                   @input="
                     onValueChange(
@@ -1698,7 +1700,7 @@
             <div class="col-12 col-md-6 mobile-margin">
               <a-form-model-item ref="per_smoker" prop="per_smoker">
                 <v-select
-                  :clearable="false"
+                  :clearable="true"
                   class="style-chooser"
                   @input="onValueChange($event, 'more_about', 'per_smoker')"
                   id="per_smoker"
@@ -1771,7 +1773,7 @@
                 <v-select
                   required
                   id="per_language_speak"
-                  :clearable="false"
+                  :clearable="true"
                   :multiple="true"
                   class="nationality-select"
                   @input="
@@ -1841,7 +1843,7 @@
               >
                 <v-select
                   id="per_hobbies_interests"
-                  :clearable="false"
+                  :clearable="true"
                   :multiple="true"
                   class="nationality-select"
                   @input="
@@ -1908,7 +1910,7 @@
               <a-form-model-item ref="per_things_enjoy" prop="per_things_enjoy">
                 <v-select
                   id="per_things_enjoy"
-                  :clearable="false"
+                  :clearable="true"
                   :multiple="true"
                   class="nationality-select"
                   @input="
@@ -1975,7 +1977,7 @@
               >
                 <v-select
                   id="per_food_cuisine_like"
-                  :clearable="false"
+                  :clearable="true"
                   :multiple="true"
                   class="nationality-select"
                   @input="
@@ -2045,7 +2047,7 @@
               >
                 <v-select
                   id="per_things_enjoy"
-                  :clearable="false"
+                  :clearable="true"
                   :multiple="true"
                   @change="
                     $v.personalInformation.more_about.per_thankfull_for.$touch()
@@ -2124,7 +2126,7 @@
               >
                 <v-select
                   id="per_improve_myself"
-                  :clearable="false"
+                  :clearable="true"
                   :multiple="true"
                   class="nationality-select"
                   @input="
