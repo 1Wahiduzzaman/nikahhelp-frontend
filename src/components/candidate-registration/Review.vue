@@ -1221,10 +1221,12 @@ export default {
   line-height: 160%;
   padding-left: 0;
 }
-.v-list-item__subtitle::v-deep {
-  color: rgba(0,0,0,.38) !important;
+.card-custom::v-deep {
+  .v-list-item__subtitle {
+    color: rgba(0,0,0,.38) !important;
+  }
+  .v-list-item__title {
+    color: rgba(0,0,0,.6) !important;
 }
-.v-list-item__title::v-deep {
-  color: rgba(0,0,0,.6) !important;
 }
 </style>
