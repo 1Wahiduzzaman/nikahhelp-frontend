@@ -27,10 +27,10 @@
                   <!-- Age -->
                   <li class="flex-between-start">
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
-                      >Age</span
+                    >Age</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:
-                      <span class="ml-3 text--secondary text-subtitle-1">
+                      > <span class="d-none d-sm-table-cell">:</span> 
+                      <span class="left-margin text--secondary text-subtitle-1">
                         {{ candidateData.preference.pre_partner_age_min }}y 
                         to
                         {{ candidateData.preference.pre_partner_age_max }}y
@@ -44,7 +44,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Height</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">
                         {{ getHeight(candidateData.preference.pre_height_min) }}
                         to
                         {{ getHeight(candidateData.preference.pre_height_max) }}
@@ -60,13 +60,13 @@
                       </span>
                     </a-tooltip>
                     <span class="flex-70 px-2 d-inherit">
-                      :
+                      <span class="d-none d-sm-table-cell">:</span> 
                       <span
                         v-if="
                           candidateData.preference.preferred_countries
                             .length === 0
                         "
-                        class="ml-3 text--secondary text-subtitle-1"
+                        class="left-margin text--secondary text-subtitle-1"
                       >
                         None
                       </span>
@@ -75,7 +75,7 @@
                           candidateData.preference.preferred_countries.length >
                           0
                         "
-                        class="ml-3 text--secondary text-subtitle-1"
+                        class="left-margin text--secondary text-subtitle-1"
                       >
                         <span
                           v-for="country in candidateData.preference
@@ -96,12 +96,12 @@
                       </span>
                     </a-tooltip>
                     <span class="flex-70 px-2 d-inherit">
-                      :
+                      <span class="d-none d-sm-table-cell">:</span> 
                       <span
                         v-if="
                           candidateData.preference.bloked_countries.length === 0
                         "
-                        class="ml-3 text--secondary text-subtitle-1"
+                        class="left-margin text--secondary text-subtitle-1"
                       >
                         None
                       </span>
@@ -109,7 +109,7 @@
                         v-if="
                           candidateData.preference.bloked_countries.length > 0
                         "
-                        class="ml-3 text--secondary text-subtitle-1"
+                        class="left-margin text--secondary text-subtitle-1"
                       >
                         <div
                           v-for="country in candidateData.preference
@@ -127,7 +127,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Religion</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1"
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1"
                         > {{ candidateData.preference.pre_partner_religion_id[0] }} </span
                       ></span
                     >
@@ -138,7 +138,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Ethnicities</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">{{
                         candidateData.preference.pre_ethnicities
                       }}</span></span
                     >
@@ -149,7 +149,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Nationality</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">
                         <div v-if="candidateData.preference.preferred_nationality.length > 0">
                           <span
                             v-for="(nationality, index) in candidateData.preference
@@ -173,7 +173,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Education</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">{{
                         candidateData.preference.pre_study_level
                       }}</span></span
                     >
@@ -184,7 +184,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Employment Status</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">{{
                         candidateData.preference.pre_employment_status
                       }}</span></span
                     >
@@ -195,7 +195,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Ocupation</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">
                         <span
                           v-for="(occupation, index) in candidateData.preference
                             .pre_occupation"
@@ -211,7 +211,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Accept a divorcee</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">{{
                         candidateData.preference.pre_preferred_divorcee == 1
                           ? "Yes"
                           : "No"
@@ -225,7 +225,7 @@
                     <span class="flex-40 px-2 text--disabled text-subtitle-1"
                       >Accept a divorcee with children?</span
                     ><span class="flex-60 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">{{
                         candidateData.preference.pre_preferred_divorcee_child ==
                         1
                           ? "Yes"
@@ -388,8 +388,8 @@
                   <li class="flex-between-start">
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Name</span
-                    ><span class="flex-70 px-2"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                    ><span class="flex-70 px-2 d-inherit"
+                      ><span class="d-none d-sm-table-cell">:</span><span class="left-margin text--secondary text-subtitle-1">
                         {{ candidateData.first_name }}
                         {{ candidateData.last_name }}
                       </span>
@@ -398,8 +398,8 @@
                   <li class="flex-between-start">
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Screen Name</span
-                    ><span class="flex-70 px-2"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                    ><span class="flex-70 px-2 d-inherit"
+                      ><span class="d-none d-sm-table-cell">:</span><span class="left-margin text--secondary text-subtitle-1">{{
                         candidateData.screen_name
                       }}</span></span
                     >
@@ -408,14 +408,14 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Gender</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span
-                        class="ml-3 text--secondary text-subtitle-1"
+                      ><span class="d-none d-sm-table-cell">:</span> <span
+                        class="left-margin text--secondary text-subtitle-1"
                         v-if="candidateData.personal.per_gender == 1"
                       >
                         Male
                       </span>
                       <span
-                        class="ml-3 text--secondary text-subtitle-1"
+                        class="left-margin text--secondary text-subtitle-1"
                         v-if="candidateData.personal.per_gender == 2"
                       >
                         Female
@@ -426,7 +426,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Date of Birth (private)</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">
                         {{ candidateData.personal.dob }}
                       </span>
                     </span>
@@ -435,7 +435,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Height</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">
                         <span
                           v-html="
                             `${
@@ -460,7 +460,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Religion</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">
                         <!-- {{
                           $store.state.candidateInfo.religion_options[
                             candidateData.personal.per_religion_id
@@ -485,7 +485,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Education</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">
                         {{ candidateData.personal.per_education_level }}</span
                       ></span
                     >
@@ -494,7 +494,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Employment Status</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">
                         {{ candidateData.personal.per_employment_status }}</span
                       ></span
                     >
@@ -503,7 +503,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Occupation</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">
                         {{ candidateData.essential.per_occupation }}</span
                       ></span
                     >
@@ -512,7 +512,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Ethnicity</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">{{
                         candidateData.personal.per_ethnicity
                       }}</span></span
                     >
@@ -521,7 +521,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Mother Tongue</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">{{
                         candidateData.personal.per_mother_tongue
                       }}</span></span
                     >
@@ -530,7 +530,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Nationality</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">{{
                         candidateDetails.countries.find(
                           (c) => c.id === candidateData.personal.per_nationality
                         )
@@ -546,7 +546,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Country of Birth</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">{{
                         candidateData.personal.per_country_of_birth
                       }}</span></span
                     >
@@ -555,7 +555,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Current Residance</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      >:<span class="left-margin text--secondary text-subtitle-1">{{
                         candidateData.personal.per_current_residence
                       }}</span></span
                     >
@@ -564,7 +564,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Health Condition</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-break text-subtitle-1">{{
                         candidateData.general.per_health_condition
                       }}</span></span
                     >
@@ -573,7 +573,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Address Line 1 (private)</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-break text-subtitle-1">{{
                         candidateData.contact.address_1
                       }}</span></span
                     >
@@ -582,7 +582,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Address Line 2 (private)</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-break text-subtitle-1">{{
                         candidateData.contact.address_2
                       }}</span></span
                     >
@@ -591,7 +591,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >City</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-break text-subtitle-1">{{
                         candidateData.contact.per_permanent_city
                       }}</span></span
                     >
@@ -600,7 +600,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Post Code (private)</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">{{
                         candidateData.contact.per_permanent_post_code
                       }}</span></span
                     >
@@ -609,7 +609,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Country</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">{{
                         candidateData.contact.per_permanent_country_name
                       }}</span></span
                     >
@@ -618,7 +618,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Mobile No (private)</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-subtitle-1">
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-subtitle-1">
                         {{ candidateData.contact.mobile_number }}</span
                       ></span
                     >
@@ -627,7 +627,7 @@
                     <span class="flex-30 px-2 text--disabled text-subtitle-1"
                       >Email (private)</span
                     ><span class="flex-70 px-2 d-inherit"
-                      >:<span class="ml-3 text--secondary text-break text-subtitle-1">{{
+                      ><span class="d-none d-sm-table-cell">:</span> <span class="left-margin text--secondary text-break text-subtitle-1">{{
                         candidateData.contact.per_email
                       }}</span></span
                     >
@@ -780,7 +780,7 @@
                     <span class="flex-60 px-2 text--disabled text-subtitle-1"
                       >Father's Profession</span
                     ><span class="flex-60 px-2 d-inherit"
-                      >:<span class="ml-3">{{
+                      >:<span class="left-margin">{{
                         candidateData.family.father_profession
                       }}</span></span
                     >
@@ -789,7 +789,7 @@
                     <span class="flex-60 px-2 text--disabled text-subtitle-1"
                       >Mother's Profession</span
                     ><span class="flex-60 px-2 d-inherit"
-                      >:<span class="ml-3">{{
+                      >:<span class="left-margin">{{
                         candidateData.family.mother_profession
                       }}</span></span
                     >
@@ -806,7 +806,7 @@
                     <span class="flex-60 px-2 text--disabled text-subtitle-1"
                       >Country Of origin</span
                     ><span class="flex-60 px-2 d-inherit"
-                      >:<span class="ml-3">{{
+                      >:<span class="left-margin">{{
                         candidateData.family.country_of_origin
                       }}</span></span
                     >
@@ -887,7 +887,6 @@
                     :src="src"
                     class="contain"
                     alt="img"
-                    height="170"
                     style="cursor: pointer;"
                   />
                   <p class="text-center" v-if="src == candidateData.verification.ver_image_front + `?token=${token}`">Front side</p>
@@ -1086,8 +1085,24 @@ export default {
   box-shadow: none !important;
   border: 2px solid #dddddd78 !important;
 }
+.left-margin {
+  margin-left: 12px !important;
+  @media (max-width: 600px) {
+    margin-left: 0px !important;
+  }
+}
+.flex-between-start {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  @media (max-width: 600px) {
+    flex-direction: column !important;
+    margin-bottom: 10px !important;
+  }
+}
 .contain {
-  height: 100%;
+  height: 135px;
   width: 220px;
   object-fit: cover;
 }
@@ -1122,8 +1137,11 @@ export default {
     }
     .img-preview {
       width: 200px;
-      height: 207px;
+      height: 100%;
       margin: 0px auto;
+      @media (max-width: 447px) {
+        height: auto !important;
+      }
     }
   }
   .ant-input {
@@ -1221,5 +1239,23 @@ export default {
 .personal-ul {
   line-height: 160%;
   padding-left: 0;
+}
+.card-custom::v-deep {
+  .v-list-item__subtitle {
+    font-family: "Roboto", sans-serif !important;
+    line-height: 1.7 !important;
+    letter-spacing: 0.009375em;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    color: rgba(0,0,0,.38) !important;
+  }
+  .v-list-item__title {
+    font-family: "Roboto", sans-serif !important;
+    line-height: 1.7 !important;
+    letter-spacing: 0.009375em;
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    color: rgba(0,0,0,.6) !important;
+  }
 }
 </style>
