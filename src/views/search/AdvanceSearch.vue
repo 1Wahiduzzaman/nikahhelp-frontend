@@ -497,7 +497,6 @@ export default {
   .main-content-1 {
     width: calc(100% - 350px);
     margin: 10px 5px 10px 15px;
-    height: calc(100vh - 10px);
     @media (max-width: 1024px) {
       width: calc(100% - 25px);
     }
@@ -508,7 +507,9 @@ export default {
     @media (max-width: 600px) {
       width: calc(100% - 25px);
     }
-    height: 100vh;
+    @media (max-width: 575px) {
+      display: none !important;
+    }
     .profile-overview {
       padding: 10px;
       height: 100%;

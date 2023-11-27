@@ -10,7 +10,8 @@
       @change="changeActivekey"
       :bordered="false"
       expand-icon-position="right"
-    >
+      style="background-color: #f6f5fb;"
+      >
       <template #expandIcon="props">
         <a-icon type="caret-down" :rotate="props.isActive ? 180 : 0" />
       </template>

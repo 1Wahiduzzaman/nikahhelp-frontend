@@ -6,6 +6,7 @@
       :bordered="false"
       @change="onChangePanel"
       expand-icon-position="right"
+      style="background-color: #f6f5fb;"
     >
       <template #expandIcon="props">
         <a-icon type="caret-down" :rotate="props.isActive ? 180 : 0" />
@@ -582,6 +583,7 @@
                   :validCharactersOnly="true"
                   class="style-chooser"
                   placeholder="Mobile Number"
+                  style="background-color: #fff;"
                 ></vue-tel-input>
                 <span class="error-number" v-if="!isValidNumber"
                   >Please write a valid mobile number</span

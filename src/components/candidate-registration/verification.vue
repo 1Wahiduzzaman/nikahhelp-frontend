@@ -1,13 +1,13 @@
 <template>
   <div id="accordion" class="verificationInfo p-3 rounded">
     <loader :isLoading="loading" text="Uploading..." />
-    <div v-if="userData" class="verification-content" style="margin-top: 40px">
-      <div class="section-heading heading-text">
-        <h5>Verification Information</h5>
-        <!-- <p>Your Verification Information</p> -->
+    <div v-if="userData" class="verification-content">
+      <div class="section-heading heading-text text-center">
+        <h5 class="text-center">Verification Information</h5>
+        <p class="text-center">Upload your verification documents</p>
       </div>
       <a-collapse default-active-key="1" @change="changeActivekey" :activeKey="activeKey" :bordered="false"
-        expand-icon-position="right">
+        expand-icon-position="right" style="background-color: #f6f5fb;">
         <template #expandIcon="props">
           <a-icon type="caret-down" :rotate="props.isActive ? 180 : 0" />
         </template>
