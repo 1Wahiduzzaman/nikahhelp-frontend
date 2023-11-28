@@ -395,14 +395,16 @@ export default {
   }
 }
 .team-container::v-deep {
-  margin-left: 6px !important;
+  margin-left: 7px !important;
+  padding: 0px !important;
 
   .team-card {
     margin-bottom: 0px;
   }
 
   .col-lg-6, .col-xl-3 {
-    padding: 8px !important;
+    padding: 12px 8px 0px 8px !important;
+    
   }
 }
 </style>

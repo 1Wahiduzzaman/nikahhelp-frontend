@@ -1,8 +1,8 @@
 <template>
     <div class="col-md-12 mb-3">
         <div class="card-custom h-100 shadow-default">
-        <h5>More about preferred partner</h5>
-        <p>How Important following characters are to me</p>
+        <h5 class="text--disabled">More about preferred partner</h5>
+        <p class="text--disabled">How Important following characters are to me</p>
         <hr />
         <!-- Character -->
         <rating-component

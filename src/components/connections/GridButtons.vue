@@ -70,7 +70,7 @@
     <div v-if="type == 'Request received'">
       <div class="flex flex-wrap justify-space-between px-4">
         <v-btn
-            class="text-capitalize btn-connection color-primary"
+            class="text-capitalize connect-button btn-connection color-primary"
             style="width: 49%"
             rounded
             small
@@ -86,7 +86,7 @@
         </v-btn>
 
         <v-btn
-            class="text-capitalize btn-connection color-primary"
+            class="text-capitalize block-button btn-connection color-primary"
             style="width: 49%"
             rounded
             small
@@ -138,7 +138,7 @@
     <div v-if="type == 'Request sent'">
       <div class="flex flex-wrap justify-space-between px-4">
         <v-btn
-            class="text-capitalize btn-connection color-primary"
+            class="text-capitalize btn-connection block-button color-primary"
             style="width: 49%"
             rounded
             outlined
@@ -203,7 +203,7 @@
         >
           <div class="flex justify-center align-center">
             <!-- <a-icon type="cross" class="mr-2" /> -->
-            <img src="/assets/icon/connect-s.svg" alt="" height="14px" class="mr-2">
+            <img :src="require('@/assets/icon/connection_success.svg')" alt="" height="14px" class="mr-2">
             Connect
           </div>
         </v-btn>
@@ -257,7 +257,7 @@
         >
           <div class="flex justify-center align-center">
             <!-- <a-icon type="cross" class="mr-2" /> -->
-            <img src="/assets/icon/connect-s.svg" alt="" height="14px" class="mr-2">
+            <img :src="require('@/assets/icon/connection_success.svg')" alt="" height="14px" class="mr-2">
             Connect
           </div>
         </v-btn>
@@ -395,6 +395,10 @@ export default {
   img {
     filter: none !important;
   }
+}
+
+.v-btn:not(.v-btn--round).v-size--small::v-deep {
+  height: 35px !important;
 }
 
 </style>

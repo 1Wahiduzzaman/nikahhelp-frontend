@@ -187,7 +187,7 @@
         :isSmall="true"
         :responsive="false"
         :title="item.is_connect ? 'Disconnect' : 'Connect'"
-        icon="/assets/icon/connect-s.svg"
+        icon="/assets/icon/connection_success.svg"
         :customEvent="item.is_connect ? 'removeConnection' : 'addConnection'"
         :backgroundColor="item.is_connect ? '' : '#3ab549'"
         @onClickButton="actionConnection"

@@ -242,7 +242,7 @@
                 <h4 class="text--disabled text-subtitle-1">
                   What I'm looking for
                 </h4>
-                <p class="text--secondary text-subtitle-1">
+                <p class="text--secondary text-subtitle-1 text-break">
                   {{ candidateData.preference.pre_description }}
                 </p>
                 <!-- <a-textarea
@@ -259,7 +259,7 @@
                 <h4 class="text--disabled text-subtitle-1">
                   Other requirements
                 </h4>
-                <p class="text--secondary text-subtitle-1">
+                <p class="text--secondary text-subtitle-1 text-break">
                   {{ candidateData.preference.pre_other_preference }}
                 </p>
               </div>
@@ -713,7 +713,7 @@
                 <h4 class="text--disabled text-subtitle-1">
                   A little bit about me
                 </h4>
-                <p class="mb-0 text--secondary text-subtitle-1">
+                <p class="mb-0 text--secondary text-subtitle-1 text-break">
                   {{ candidateData.personal.per_about }}
                 </p>
               </div>
@@ -724,7 +724,7 @@
                 <h4 class="text--disabled text-subtitle-1">
                   Additional Information
                 </h4>
-                <p class="mb-0 text--secondary text-subtitle-1">
+                <p class="mb-0 text--secondary text-subtitle-1 text-break">
                   {{ candidateData.more_about.per_additional_info_text }}
                 </p>
                 <div class="mt-3 color-primary">
@@ -817,7 +817,7 @@
             <div class="col-md-12">
               <div class="card-custom h-100 shadow-border">
                 <h4 class="text--disabled text-subtitle-1">About My Family</h4>
-                <p class="text--secondary text-subtitle-1">
+                <p class="text--secondary text-subtitle-1 text-break">
                   {{ candidateData.family.family_info }}
                 </p>
               </div>
@@ -1098,7 +1098,7 @@ export default {
 
   @media (max-width: 600px) {
     flex-direction: column !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 24px !important;
   }
 }
 .contain {

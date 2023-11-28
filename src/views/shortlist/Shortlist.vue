@@ -783,7 +783,7 @@ export default {
   .main-content-1::v-deep {
     width: 100%;
     //margin: 4px 10px 20px;
-    padding: 10px;
+    padding: 12px 15px 12px 15px;
     //margin-left: 260px;
     //margin-right: -800px;
     //@media (max-width: 1024px) {
@@ -867,5 +867,9 @@ export default {
 /* .slide-fade-leave-active below version 2.1.8 */ {
   transform: translatey(-288px);
   opacity: 0;
+}
+.v-sheet.v-card:not(.v-sheet--outlined)::v-deep {
+  box-shadow: none !important;
+  border: 2px solid #dddddd78;
 }
 </style>

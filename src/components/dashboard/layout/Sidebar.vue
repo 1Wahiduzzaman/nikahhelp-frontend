@@ -266,7 +266,7 @@ export default {
 .sidebar-trigger {
   display: none;
 }
-@media (min-width: 576px) {
+@media (min-width: 767px) {
   .sidebar-trigger {
     display: flex;
   }

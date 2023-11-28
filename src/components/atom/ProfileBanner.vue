@@ -20,7 +20,7 @@
         >
             <!-- <v-card-title>Top 10 Australian beaches</v-card-title> -->
         </v-img>
-        <div class="text-center">
+        <div class="text-center mt-5 mb-3">
             <span class="text-h5 font-weight-bold text--secondary">{{name}} </span>   
         </div>
     </div>
