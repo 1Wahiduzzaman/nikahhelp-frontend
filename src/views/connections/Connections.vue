@@ -52,7 +52,7 @@
               <v-tabs 
                 color="indigo accent-4" 
                 active-class="active-v-tab" 
-                class="w-full d-flex justify-content-between support-tab ml-sm-3"
+                class="w-full d-flex justify-content-between support-tab"
                 :vertical="$vuetify.breakpoint.name === 'xs'" 
                 :grow="$vuetify.breakpoint.name === 'xs'"
                 v-if="$vuetify.breakpoint.name !== 'xs'"
@@ -116,11 +116,11 @@
                 </v-tabs>
               </transition>
 
-              <v-tabs-items v-model="tab" class="mt-4">
+              <v-tabs-items v-model="tab" class="tab-items mt-4">
                 <v-tab-item value="tab-1">
                   <div class="row px-3 tab-margin-top">
                     <div
-                        class="col-12 col-md-4 col-xl-3 px-2 py-0"
+                        class="col-12 col-md-6 col-xl-3"
                         v-for="(connection, connecIndex) in getFilteredConnections"
                         :key="connecIndex"
                     >
@@ -147,7 +147,7 @@
                 <v-tab-item value="tab-2">
                   <div class="row px-3 tab-margin-top">
                     <div
-                        class="col-12 col-md-4 col-xl-3 px-2 py-0"
+                        class="col-12 col-md-6 col-xl-3"
                         v-for="(connection, connecIndex) in getFilteredConnections"
                         :key="connecIndex"
                     >
@@ -173,7 +173,7 @@
                 <v-tab-item value="tab-3">
                   <div class="row px-3 tab-margin-top">
                     <div
-                        class="col-12 col-md-4 col-xl-3 px-2 py-0"
+                        class="col-12 col-md-6 col-xl-3"
                         v-for="(connection, connecIndex) in getFilteredConnections"
                         :key="connecIndex"
                     >
@@ -199,7 +199,7 @@
                 <v-tab-item value="tab-4">
                   <div class="row px-3 tab-margin-top">
                     <div
-                        class="col-12 col-md-4 col-xl-3 px-2 py-0"
+                        class="col-12 col-md-6 col-xl-3"
                         v-for="(connection, connecIndex) in getFilteredConnections"
                         :key="connecIndex"
                     >
@@ -225,7 +225,7 @@
                 <v-tab-item value="tab-5">
                   <div class="row px-3 tab-margin-top">
                     <div
-                        class="col-12 col-md-4 col-xl-3 px-2 py-0"
+                        class="col-12 col-md-6 col-xl-3"
                         v-for="(connection, connecIndex) in getFilteredConnections"
                         :key="connecIndex"
                     >
@@ -251,7 +251,7 @@
                 <v-tab-item value="tab-6">
                   <div class="row px-3 tab-margin-top">
                     <div
-                        class="col-12 col-md-4 col-xl-3 px-2 py-0"
+                        class="col-12 col-md-6 col-xl-3"
                         v-for="(connection, connecIndex) in getFilteredConnections"
                         :key="connecIndex"
                     >
@@ -387,7 +387,7 @@
           <div class="col-12 col-xl-3 d-none">
             <!-- Connection Status -->
             <div class="main-content-2">
-              <div class="shadow-default connection-status p-3">
+              <div class="connection-status p-3">
                 <p class="fs-18 text-center">Connection Status</p>
                 <hr />
                 <!-- Connection stats -->
@@ -1070,11 +1070,21 @@ export default {
 .main-content-1::v-deep {
   width: 100%;
   //margin: 4px 0 20px;
-  padding: 10px;
+  padding: 12px 15px 12px 15px;
   //margin-left: 260px;
   //@media (max-width: 1024px) {
   //  width: calc(100% - 270px);
   //}
+
+  .tab-items {
+    .col-12, .col-md-4, .col-xl-3 {
+      margin: 0px !important;
+      padding: 5px !important;
+    }
+  }
+  .v-window {
+    overflow: inherit !important;
+  }
   .connection-filter-button {
     border-radius: 5px; 
     background: #6159a7; 
