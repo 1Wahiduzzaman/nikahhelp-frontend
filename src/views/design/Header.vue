@@ -1,5 +1,5 @@
 <template>
-  <header class="header-container bg-secondary shadow-default radius-none px-4">
+  <header class="header-container bg-secondary shadow-default radius-none pr-4">
     <div
       class="header-content d-flex align-items-center justify-content-between"
     >
@@ -18,7 +18,7 @@
         style="align-self: center;"
       >
         <div>
-          <ul class="header-nav-icons d-none d-sm-flex">
+          <ul class="header-nav-icons d-flex">
             <li class="nav-item shrink-none">
                 
               </li>
@@ -285,7 +285,7 @@
             </div>
           </div>
         </div>
-        <div class="d-sm-none">
+        <div class=" d-md-none">
           <a-dropdown :trigger="['click']">
             <svg
               @click="(e) => e.preventDefault()"
@@ -663,15 +663,23 @@ export default {
 }
 .header-nav-icons .nav-item {
   position: relative;
-
   &:hover {
     transform: scale(1.3);
+  }
+
+  @media (max-width: 767px) {
+    display: none;
+    &:hover {
+      transform: scale(1);
+    }
   }
 }
 .mobile-menu {
   width: 100%;
+  margin-left: -3px;
   @media (min-width: 768px) {
     width: auto;
+    margin-left: 0px;
   }
 }
 .menu-icon-alt {
@@ -792,9 +800,11 @@ export default {
 .header-container {
   padding-top: 10px;
   padding-bottom: 10px;
+  margin: auto 0px !important;
   @media (min-width: 768px) {
     padding-top: 0;
     padding-bottom: 0;
+    padding-left: 1.5rem !important;
   }
 }
 @keyframes flickerAnimation {
