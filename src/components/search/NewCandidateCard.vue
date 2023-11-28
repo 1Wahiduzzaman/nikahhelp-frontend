@@ -77,7 +77,7 @@
         :isSmall="true"
         :responsive="false"
         :title="connectionTitle"
-        icon="/assets/icon/connect-s.svg"
+        icon="/assets/icon/connection_success.svg"
         :customEvent="candidate.is_connect ? 'removeConnection' : 'addConnection'"
         :backgroundColor="candidate.is_connect ? '' : '#3ab549'"
         @onClickButton="onClickButton"
@@ -474,7 +474,7 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         this.fetchCandidate()
         this.$emit('switchComponent')
         setTimeout(() => {
-          this.setComponent('RightSidebar')
+          this.setComponent('RightSideCandidateDetail')
         }, 10)
         document.getElementById('topper').click()
       },
