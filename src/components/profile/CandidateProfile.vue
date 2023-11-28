@@ -5,7 +5,6 @@
         <Loader v-if="isLoading" :isLoading="isLoading" />
         <div v-else>
           <ProfileBanner
-            class="px-2 mt-2"
             :name="candidateData.first_name + ' ' + candidateData.last_name"
             :image="
               candidateData.personal.per_main_image_url
@@ -15,7 +14,7 @@
           />
           <v-container fluid>
             <v-row>
-              <v-col cols="12">
+              <v-col cols="12 px-0">
                 <div class="d-flex justify-content-between align-items-center buttons-div">
                   <OutlinedButton
                     class="mobile-margin w-auto buttons-lg"
@@ -44,8 +43,8 @@
                     class="mobile-margin"
                     iconHeight="14px"
                     :isSmall="true"
-                    title="EditProfile"
-                    icon="/assets/icon/edit_step.svg"
+                    title="Edit Profile"
+                    :icon="require('@/assets/icon/edit_icon.svg')"
                     customEvent="editProfile"
                     :isBlock="true"
                     :responsive="false"
@@ -56,7 +55,7 @@
                     iconHeight="14px"
                     :isSmall="true"
                     title="View as public"
-                    icon="/assets/icon/edit_step.svg"
+                    :icon="require('@/assets/icon/visibility_icon.svg')"
                     customEvent="viewAsPublic"
                     :isBlock="true"
                     :responsive="false"
@@ -69,30 +68,29 @@
                     @onClickCopyText="onClickCopyText"
                   />
                   <OutlinedButton
-                    class="mobile-margin w-auto buttons-md"
-                    style="margin-bottom: 0px !important;"
+                    class="mobile-margin w-auto buttons-md team-info-sm"
                     name="Team Info"
                     customEvent="onClickTeamDetail"
                     @onClickTeamDetail="onClickTeamDetail"
                   />
 
-                  <div class="text-center custom-divider mb-2"><hr style="margin: 6px auto; width: 250px;"></div>
+                  <div class="text-center custom-divider mb-2"><hr style="width: 250px;"></div>
 
-                  <div class="d-flex">
+                  <div class="d-flex mobile-margin">
                     <a
-                      class="navigate mobile-margin"
+                      class="navigate w-100"
                       href="#family-information"
                     >
-                      <div class="navigate-name text-center">
+                      <div class="navigate-name text-center ">
                         Family Info
                         <img src="/assets/icon/navigate-bottom.svg" alt="">
                       </div>
                     </a>
                   </div>
 
-                  <div class="d-flex">
+                  <div class="d-flex mobile-margin">
                     <a
-                      class="navigate mobile-margin"
+                      class="navigate w-100"
                       href="#my-partner-pref"
                     >
                       <div class="navigate-name text-center">
@@ -119,23 +117,22 @@
           </v-container>
           <v-container fluid>
             <v-row>
-              <v-col cols="12">
+              <v-col cols="12" class="px-0">
                 <fieldset class="">
                   <legend class="ml-8 px-1">
                     <span>Personal Information</span>
                   </legend>
-                  <v-container fluid class="pt-0 px-5">
+                  <v-container fluid class="pt-0 px-5 info-div">
                     <v-row dense>
-                      <v-col class="pt-1" cols="12" md="8">
+                      <v-col class="pt-1" cols="12">
                         <PersonalInformationTable :data="candidateData" />
                       </v-col>
                       <v-col
                         ref="family-information"
                         class="pt-1"
                         cols="12"
-                        md="4"
                       >
-                        <MoreAbout :data="candidateData" />
+                        <MoreAbout :data="candidateData" l/>
                       </v-col>
                       <v-col class="pt-1" cols="12">
                         <CardInfo
@@ -176,12 +173,12 @@
                   <legend class="ml-8 bg-white px-1">
                     <span>Family Information</span>
                   </legend>
-                  <v-container fluid class="pt-0 px-5">
+                  <v-container fluid class="pt-0 px-5 info-div">
                     <v-row dense>
-                      <v-col class="pt-1 mb-5" cols="12" md="7">
+                      <v-col class="pt-1 mb-5" cols="12">
                         <FamilyInfoTable :data="candidateData" />
                       </v-col>
-                      <v-col class="pt-1 mb-5" cols="12" md="5">
+                      <v-col class="pt-1 mb-5" cols="12">
                         <CardInfo :detail="candidateData.family.family_info" />
                       </v-col>
                     </v-row>
@@ -191,9 +188,9 @@
                   <legend id="my-partner-pref" class="ml-8 bg-white px-1">
                     <span>My partner preference</span>
                   </legend>
-                  <v-container fluid class="pt-0 px-5">
+                  <v-container fluid class="pt-0 px-5 info-div">
                     <v-row dense>
-                      <v-col class="pt-1" cols="12" md="7">
+                      <v-col class="pt-1" cols="12">
                         <MyPrefTable
                           :preference="candidateData.preference"
                           :countries="
@@ -201,7 +198,7 @@
                           "
                         />
                       </v-col>
-                      <v-col class="pt-1" cols="12" md="5">
+                      <v-col class="pt-1" cols="12">
                         <CardInfo
                           title="What I'm Looking for"
                           :detail="candidateData.preference.pre_description"
@@ -217,8 +214,8 @@
                       </v-col>
                       <v-col class="pt-1" cols="12">
                         <v-card class="px-3 py-5">
-                          <h5>More about preferred partner</h5>
-                          <p>How Important following characters are to me</p>
+                          <h5 class="text--disabled">More about preferred partner</h5>
+                          <p class="text--disabled">How Important following characters are to me</p>
                           <!-- Character -->
                           <!-- <rating-component
                                   title="Strength of character from a moral point of view"
@@ -438,9 +435,6 @@
             </div>
 
 						<template slot="footer">
-							<a-button key="back" shape="round" @click="showTeamInfo=false">
-							Cancel
-							</a-button>
 							<a-button key="submit" type="primary" shape="round" @click="showTeamInfo = false">
 							Ok
 							</a-button>
@@ -923,23 +917,36 @@ ul {
     min-width: 155px;
   }
 
-  @media(max-width: 1400px) {
+  @media(max-width: 600px) {
     flex-direction: column;
 
     .mobile-margin {
-			margin-bottom: 6px !important;
+			margin-bottom: 12px !important;
 			min-width: 250px !important;
 		}
+    .team-info-sm {
+      margin-bottom: 0px !important;
+    }
+  }
+
+  @media (min-width: 601px) {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    .mobile-margin {
+      margin-bottom: 12px !important;
+    }
   }
 
   .mobile-margin {
     min-width: 155px;
+    width: 13% !important;
   }
 
   .custom-divider {
     margin: 3px 0px !important;
     
-    @media (min-width: 1400px) {
+    @media (min-width: 600px) {
       display: none;
     }
 
@@ -953,7 +960,7 @@ ul {
     border-radius: 20px;
     font-size: 12px;
     min-height: 35px;
-		padding: 6px 5px;
+		padding: 7px 5px;
     border: 1px solid white;
     box-shadow: 0px 1px 3px #B1aaaa;
     transition: none !important;
@@ -996,5 +1003,27 @@ ul {
 		  display: none !important;
 		}
 	}
+}
+.info-div::v-deep {
+  .v-list-item__subtitle {
+      font-family: "Roboto", sans-serif !important;
+      line-height: 1.7 !important;
+      letter-spacing: 0.009375em;
+      font-size: 1rem !important;
+      font-weight: 400 !important;
+      color: rgba(0,0,0,.38) !important;
+  }
+  .v-list-item__title {
+      font-family: "Roboto", sans-serif !important;
+      line-height: 1.7 !important;
+      letter-spacing: 0.009375em;
+      font-size: 1rem !important;
+      font-weight: 400 !important;
+      color: rgba(0,0,0,.6) !important;
+  }
+}
+.v-sheet.v-card:not(.v-sheet--outlined)::v-deep {
+  box-shadow: none !important;
+  border: 2px solid #dddddd78;
 }
 </style>

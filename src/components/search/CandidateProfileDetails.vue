@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div style="height: 20px" class="top flex justify-space-between mt-2 align-center">
+        <div style="height: 20px" class=" flex justify-space-between mt-2 align-center">
             <v-btn
-                class="d-none d-md-block mt-1 text-capitalize default-btn"
+                class="mt-1 text-capitalize default-btn"
                 rounded
                 color="#6158a7"
                 dark
@@ -10,83 +10,40 @@
             >
                 <div class="flex justify-center align-center">
                     <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-left-solid.svg" alt="">
-                    Back
-                </div>
-            </v-btn>
-            <v-btn
-                class="mt-1 z-9 d-block d-md-none text-capitalize default-btn"
-                rounded
-                absolute
-                small
-                color="#6158a7"
-                dark
-                @click="loadSearchResultComponent"
-            >
-                <div class="flex justify-center align-center">
-                    <img style="height: 13px; margin-right: 4px;" src="/assets/icon/back.svg" alt="">
+                    <span class="d-none d-md-block">Back</span>
                 </div>
             </v-btn>
 
-            <v-btn-toggle rounded dense class="d-none d-md-block">
+            <div class="prev-next-btns">
                 <v-btn
-                    style="border: 1px solid #6159a7 !important;"
+                    style="border-radius: 20px 0px 0px 20px !important;"
                     class="mt-1 text-capitalize mr-1 default-btn"
-                    color="deep-purple darken-3"
+                    color="#6158a7"
+                    dark
                     @click="$emit('navigateProfile', {userId: profileDetails.user_id, type: 'previous'})"
                 >
                     <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-left-solid.svg" alt="">
                 </v-btn>
                 <v-btn
-                    style="border: 1px solid #6159a7 !important"
+                    style="border-radius: 0 20px 20px 0 !important;"
                     class="mt-1 text-capitalize default-btn"
-                    rounded
-                    color="deep-purple darken-3"
+                    color="#6158a7"
+                    dark
                     @click="$emit('navigateProfile', {userId: profileDetails.user_id, type: 'next'})"
                 >
                     <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-right-solid.svg" alt="">
                 </v-btn>
-            </v-btn-toggle>
+            </div>
         </div>
         
-        <!-- mobile profile next button -->
-        <div class="d-block d-md-none px-3">
-            <v-btn
-                class="mt-1 text-capitalize z-9 default-btn"
-                rounded
-                small
-                absolute
-                bottom
-                color="#6158a7"
-                @click="$emit('navigateProfile', {userId: profileDetails.user_id, type: 'previous'})"
-            >
-                <div class="flex justify-center align-center">
-                    <img style="height: 13px; margin-right: 4px;" src="/assets/icon/chevron-left-solid.svg" alt="">
-                    
-                </div>
-            </v-btn>
-             <v-btn
-                class="mt-1 text-capitalize z-9 default-btn"
-                rounded
-                small
-                absolute
-                bottom
-                right
-                color="#6158a7"
-                @click="$emit('navigateProfile', {userId: profileDetails.user_id, type: 'next'})"
-            >
-                <div class="flex justify-center align-center">
-                    <img style="height: 13px;" src="/assets/icon/chevron-right-solid.svg" alt="">
-                </div>
-            </v-btn>
-        </div>
-        <!-- end mobile profile next button -->
+
         <ProfileBanner
             class="mt-5"
             :name="profileDetails.first_name + ' ' + profileDetails.last_name"
             :image="
             profileDetails.personal.per_main_image_url
                 ? profileDetails.personal.per_main_image_url + `?token=${token}`
-                : avatarSrc
+                : profileDetails.personal.per_avatar_url + `?token=${token}`
             "
         />
 
@@ -103,11 +60,12 @@
                 @onClickButton="onClickButton"
             />
             <ButtonComponent
-                class="connect-button mobile-margin"
+                :class="{'mobile-margin' : true, 'block-button' : getConnectionTitleAndAction[4] == 'block-button', 'connect-button' : getConnectionTitleAndAction[4] == 'connect-button'}"
+                :backgroundColor="getConnectionTitleAndAction[3]"
                 iconHeight="14px"
                 :isSmall="true"
-                :title="profile.is_connect ? 'Cancel' : 'Connect'"
-                icon="/assets/icon/connect-s.svg"
+                :title="profile.is_connect != null ? getConnectionTitleAndAction[0] : 'Connect'"
+                :icon="getConnectionTitleAndAction[2]"
                 :customEvent="profile.is_connect ? 'cancelRequest' : 'addConnection'"
                 :responsive="false"
                 @onClickButton="onClickButton"
@@ -133,7 +91,7 @@
                 @onClickButton="onClickButton"
             />
             <ButtonComponent
-                class="block-button mobile-margin"
+                :class="{'block-button': !profile.is_block_listed, 'mobile-margin' : true}"
                 iconHeight="14px"
                 :isSmall="true"
                 :responsive="false"
@@ -189,11 +147,20 @@ export default {
         ...mapGetters({
             profileDetails:'search/getProfileDetails',
             profile: 'search/getSelectedProfileInfo'
-        }) 
+        }),
+        getConnectionTitleAndAction() {
+            if(this.profile.is_connect == null) {
+                return ['Connect', 'addConnection', '/assets/icon/connection_success.svg', '#3ab549', 'connect-button'];
+            }
+            if(this.profile.is_connect == true) {
+                return ['Cancel', 'declineRequest', '/assets/icon/connection_success.svg', '#d81b60', 'block-button']
+            }
+        },
     },
     methods: {
         ...mapMutations({
-            setComponent: 'search/setComponent'
+            setComponent: 'search/setComponent',
+            setLoading: 'search/setLoading',
         }),
         ...mapActions({
             connectToCandidate: 'search/connectCandidate',
@@ -273,6 +240,7 @@ export default {
                     content: res.message,
                     centered: true,
                 });
+                this.profile.is_connect = true;
             } catch (e) {
                 if(e.response) {
                     this.showError(e.response.data.message)
@@ -291,11 +259,12 @@ export default {
                 data.connection_status = '2';
             }
 
-            this.innerLoading = true;
+            this.setLoading(true);
             const response = this.$store.dispatch("respondToRequest", data);
             response
                 .then((data) => {
-                    this.innerLoading = false;
+                    this.setLoading(false);
+
 
                     this.profile.is_connect = null;
                     const vm = this;
@@ -303,10 +272,11 @@ export default {
                         title: "Success",
                         content: data.message,
                     });
+                    this.profile.is_connect = null;
                 })
                 .catch((error) => {
                     console.log(error);
-                    this.innerLoading = false;
+                    this.setLoading(false);
                     this.$error({
                         title: 'Something went wrong',
                         center: true,
@@ -452,10 +422,14 @@ export default {
             this.$emit('switchComponent', 'CandidateProfiles')
         },
         openGallery() {
-            this.images= [];
-            let images = this.profileDetails.other_images
-            if(images.length > 0) {
-                images.map(i => this.images.push(i.image_path));
+            this.images= [this.profileDetails.other_images + `?token=${this.token}`];
+            if(this.profileDetails.personal.per_main_image_url) {
+                this.images.push(this.profileDetails.personal.per_main_image_url + `?token=${this.token}`);
+            }
+            if(this.profileDetails.personal.per_avatar_url) {
+                this.images.push(this.profileDetails.personal.per_avatar_url + `?token=${this.token}`);
+            }
+            if(this.images.length > 0) {
                 this.show();
             } else {
                 this.$error({
@@ -490,12 +464,13 @@ export default {
 }
 
 .buttons-div::v-deep {
-	@media (max-width: 1400px) {
+	@media (max-width: 1355px) {
 		flex-direction: column;
 
 		.mobile-margin {
 			margin-bottom: 6px !important;
 			min-width: 250px !important;
+            width: 100% !important;
 		}
 	}
 	.mobile-margin {
@@ -531,6 +506,12 @@ export default {
     }
 }
 
+.prev-next-btns::v-deep {
+    .v-btn:not(.v-btn--round).v-size--default {
+        min-width: 40px !important;
+    }
+}
+
 .default-btn {
     img {
         filter: brightness(0) invert(1) !important;
@@ -545,6 +526,10 @@ export default {
         filter: None !important;
     }
 
+}
+
+.mobile-margin {
+    width: 19% !important;
 }
 
 </style>

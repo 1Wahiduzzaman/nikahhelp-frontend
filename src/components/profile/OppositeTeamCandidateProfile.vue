@@ -5,7 +5,6 @@
 			<v-row >
 				<v-col cols="12">
 					<ProfileBanner
-						class="px-2 mt-2"
 						:name="candidateData.first_name + ' ' + candidateData.last_name"
 						:image="
 						candidateData.personal.per_avatar_url
@@ -23,13 +22,13 @@
 						</div>
 						<div class="buttons-div flex justify-content-between align-items-center">
 							<OutlinedButton
-								class="mobile-margin w-auto buttons-lg"
+								class="mobile-margin buttons-lg"
 								:name="copyProfileText"
 								customEvent="onClickCopyText"
 								@onClickCopyText="onClickCopyText"
 							/>
 							<OutlinedButton 
-								class="mobile-margin w-auto buttons-lg"
+								class="mobile-margin buttons-lg"
 								name="Team Info"
 								customEvent="onClickTeamDetail"
 								@onClickTeamDetail="onClickTeamDetail"
@@ -42,6 +41,7 @@
 								title="Gallery"
 								customEvent="openGallery"
 								:responsive="false"
+								:isBlock="true"
 								icon="/assets/icon/gallery.svg"
 								@onClickButton="onClickButton"
 							/>
@@ -111,22 +111,21 @@
 							/> -->
 							<!-- <Scroller /> -->
 							<OutlinedButton
-								class="mobile-margin w-auto buttons-md"
+								class="mobile-margin buttons-md"
 								:name="copyProfileText"
 								customEvent="onClickCopyText"
 								@onClickCopyText="onClickCopyText"
 							/>
 							<OutlinedButton 
-								class="mobile-margin w-auto buttons-md"
-								style="margin-bottom: 0px !important;"
+								class="mobile-margin buttons-md team-info-sm"
 								name="Team Info"
 								customEvent="onClickTeamDetail"
 								@onClickTeamDetail="onClickTeamDetail"
 							/>
-							<div class="text-center custom-divider mb-2"><hr style="margin: 6px auto; width: 250px;"></div>
-							<div class="d-flex">
+							<div class="text-center custom-divider mb-2"><hr style="width: 250px;"></div>
+							<div class="d-flex mobile-margin">
 								<a
-								  class="navigate mobile-margin"
+								  class="navigate w-100"
 								  href="#family-information"
 								>
 								  <div class="navigate-name text-center">
@@ -136,9 +135,9 @@
 								</a>
 							</div>
 		
-							<div class="d-flex">
+							<div class="d-flex mobile-margin">
 								<a
-									class="navigate mobile-margin"
+									class="navigate w-100"
 									href="#my-partner-pref"
 								>
 									<div class="navigate-name text-center">
@@ -156,12 +155,12 @@
 								<v-col cols="12">
 									<fieldset class="">
 										<legend class="ml-8 px-1"><span>Personal Information</span></legend>
-										<v-container fluid class="pt-0 px-5">
+										<v-container fluid class="pt-0 px-5 info-div">
 											<v-row dense>
-												<v-col class="pt-1" cols="12" md="8">
+												<v-col class="pt-1" cols="12">
 													<PersonalInformationTable :data="candidateInfo"/>
 												</v-col>
-												<v-col ref="family-information" class="pt-1" cols="12" md="4">
+												<v-col ref="family-information" class="pt-1" cols="12">
 													<MoreAbout 
 														:data="candidateData"
 													/>
@@ -200,12 +199,12 @@
 									</fieldset>
 									<fieldset style="width:100%" id="family-information" class="-mt-15">
 									<legend class="ml-8 bg-white px-1"><span>Family Information</span></legend>
-									<v-container fluid class="pt-0 px-5">
+									<v-container fluid class="pt-0 px-5 info-div">
 										<v-row dense>
-											<v-col class="pt-1 mb-5" cols="12" md="7">
+											<v-col class="pt-1 mb-5" cols="12">
 												<FamilyInfoTable :data="candidateData"/>
 											</v-col>
-											<v-col class="pt-1 mb-5" cols="12" md="5">
+											<v-col class="pt-1 mb-5" cols="12">
 												<CardInfo :detail="candidateData.family.family_info"/>
 											</v-col>
 										</v-row>
@@ -213,15 +212,15 @@
 									</fieldset>
 									<fieldset class="-mt-15">
 										<legend id="my-partner-pref" class="ml-8 bg-white px-1"><span>My partner preference</span></legend>
-										<v-container fluid class="pt-0 px-5">
+										<v-container fluid class="pt-0 px-5 info-div">
 											<v-row dense>
-												<v-col class="pt-1" cols="12" md="7">
+												<v-col class="pt-1" cols="12">
 													<MyPrefTable
 														:preference="candidateData.preference"
 														:countries="candidateData.preference.preferred_countries"
 													/>
 												</v-col>
-												<v-col class="pt-1" cols="12" md="5">
+												<v-col class="pt-1" cols="12">
 													<CardInfo
 														title="What I'm Looking for"
 														:detail="candidateData.preference.pre_description"
@@ -233,10 +232,10 @@
 														:detail="candidateData.preference.pre_other_preference"
 													/>
 												</v-col>
-												<v-col class="pt-1" cols="12">
+												<v-col class="pt-1 info-div" cols="12">
 													<v-card class="px-3 py-5">
-													<h5>More about preferred partner</h5>
-													<p>How Important following characters are to me</p>
+													<h5 class="text--disabled">More about preferred partner</h5>
+													<p class="text--disabled">How Important following characters are to me</p>
 													<!-- Character -->
 													<!-- <rating-component
 														title="Strength of character from a moral point of view"
@@ -391,10 +390,7 @@
 						</div>
 
 						<template slot="footer">
-							<a-button key="back" shape="round" @click="showTeamInfo=false">
-							Cancel
-							</a-button>
-							<a-button key="submit" type="primary" shape="round" @click="showProfileTeamOverview = false">
+							<a-button key="submit" type="primary" shape="round" @click="showTeamInfo = false">
 							Ok
 							</a-button>
 						</template>
@@ -515,7 +511,7 @@ export default {
 			// returns title, action, icon, color, class
 			console.log('getconnecijsdnfldjskl')
 			if(this.connectionStatus == null || this.connectionStatus.length === 0) {
-				return ['Connect', 'addConnection', '/assets/icon/connect-s.svg', '#3ab549', 'connect-button'];
+				return ['Connect', 'addConnection', '/assets/icon/connection_success.svg', '#3ab549', 'connect-button'];
 			} else {
 				let connection = this.connectionStatus[0];
 				if(connection.connection_status === "1") {
@@ -531,7 +527,7 @@ export default {
 						return ['Accept', 'acceptRequest', '/assets/icon/check.svg', '#3ab549', 'connect-button']
 					}
 				} else {
-					return ['Connect', 'addConnection', '/assets/icon/connect-s.svg', '#3ab549', 'connect-button'];
+					return ['Connect', 'addConnection', '/assets/icon/connection_success.svg', '#3ab549', 'connect-button'];
 				}
 			}
 		},
@@ -1137,16 +1133,31 @@ export default {
 }
 
 .buttons-div::v-deep {
-	@media (max-width: 1500px) {
+	@media (max-width: 600px) {
 		flex-direction: column;
 
 		.mobile-margin {
-			margin-bottom: 6px !important;
+			margin-bottom: 12px !important;
 			min-width: 250px !important;
+			width: 100% !important;
+		}
+
+		.team-info-sm {
+			margin-bottom: 0px !important;
+		}
+	}
+
+	@media (min-width: 601px) {
+		flex-direction: row !important;
+		flex-wrap: wrap !important;
+		align-items: center !important;
+		.mobile-margin {
+			margin-bottom: 12px !important;
 		}
 	}
 	.mobile-margin {
 		min-width: 120px;
+		width: 10% !important;
 	}
 	.block-button {
 		.v-custom:hover {
@@ -1184,7 +1195,7 @@ export default {
 	.custom-divider {
 		margin: 3px 0px !important;
 		
-		@media (min-width: 1400px) {
+		@media (min-width: 600px) {
 		  display: none;
 		}
 
@@ -1198,7 +1209,7 @@ export default {
 		border-radius: 20px;
 		font-size: 12px;
 		min-height: 35px;
-		padding: 6px 5px;
+		padding: 7px 5px;
 		border: 1px solid white;
 		box-shadow: 0px 1px 3px #B1aaaa;
 		transition: none !important;
@@ -1422,4 +1433,27 @@ legend {
 .bg-white {
     background: white;
 }
+
+.info-div::v-deep {
+	.v-list-item__subtitle {
+		font-family: "Roboto", sans-serif !important;
+		line-height: 1.7 !important;
+		letter-spacing: 0.009375em;
+		font-size: 1rem !important;
+		font-weight: 400 !important;
+		color: rgba(0,0,0,.38) !important;
+	}
+	.v-list-item__title {
+		font-family: "Roboto", sans-serif !important;
+		line-height: 1.7 !important;
+		letter-spacing: 0.009375em;
+		font-size: 1rem !important;
+		font-weight: 400 !important;
+		color: rgba(0,0,0,.6) !important;
+	}
+}
+.v-sheet.v-card:not(.v-sheet--outlined)::v-deep {
+	box-shadow: none !important;
+	border: 2px solid #dddddd78;
+}	
 </style>
