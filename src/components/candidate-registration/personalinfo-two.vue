@@ -3029,6 +3029,13 @@ input[type="file"] {
 .vue-tel-input {
   border-radius: 20px;
   height: 35px;
+}
 
+.json-format {
+  .span2 {
+    @media (max-width: 767px) {
+      display: none !important;
+    }
+  }
 }
 </style>
