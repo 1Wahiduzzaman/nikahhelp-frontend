@@ -10,7 +10,7 @@
 						</div>
 
 						<!-- Age Slider -->
-						<div class="mt-2 px-3">
+						<div class="mt-2 pl-2">
 							<label for="" class="search-label">Age:</label>
 							<SelectGroup
 								style="margin-left: 5px;"
@@ -24,7 +24,7 @@
 								:values="[min_age, max_age]"
 							/>
 						</div>
-						<div class="mt-2 px-3">
+						<div class="mt-2 pl-2">
 							<label for="" class="search-label">Height:</label>
 							<SelectGroup
 								style="margin-left: 5px;"
