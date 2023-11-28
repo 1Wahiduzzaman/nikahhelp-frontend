@@ -131,7 +131,9 @@ export default {
 	padding: 10px 8px;
 	border-radius: 10px;
 	background-color: #ffffff;
-	box-shadow: 0px 0px 10px 1px rgba(63, 6, 17, 0.3);
+	// box-shadow: 0px 0px 10px 1px rgba(63, 6, 17, 0.3);
+	box-shadow: none !important;
+	border: 2px solid #dddddd78;
 	text-align: center;
 	
 	.join-button {
