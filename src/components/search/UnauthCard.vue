@@ -345,7 +345,7 @@ export default {
       this.$emit('switchComponent')
       document.getElementById('topper').click()
       setTimeout(() => {
-        this.setComponent('RightSidebar')
+        this.setComponent('RightSideCandidateDetail')
       }, 10)
     },
     reserve () {
