@@ -496,7 +496,7 @@ export default {
   }
   .main-content-1 {
     width: calc(100% - 350px);
-    margin: 10px 5px 10px 15px;
+    margin: 12px 5px 12px 15px;
     @media (max-width: 1024px) {
       width: calc(100% - 25px);
     }
