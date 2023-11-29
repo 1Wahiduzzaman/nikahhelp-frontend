@@ -4,7 +4,7 @@
       <Loader v-if="isLoading" :isLoading="isLoading" />
       <div class="row" v-else>
         <TeamOffRedirection v-if="redirection" />
-        <div class="col-12">
+        <div class="col-12 chat-col-12">
           <div class="chat-wrapper my-2">
             <div class="chat-left"
                  :class="{'chat-hide': conversationTitle}">
@@ -1354,7 +1354,7 @@ export default {
              const messages = document.getElementById('chat-messages');
         const messagesid = document.getElementById('messagesid');
         messages.scrollTop = messagesid.offsetTop - 10;
-        })
+        }, 1000)
     },
     append(emoji) {
       this.msg_text += emoji
@@ -1407,14 +1407,18 @@ export default {
     display: table;
   }
 }
-
+.chat-col-12 {
+  padding: 12px 15px !important;
+}
 .chat-wrapper {
   margin: auto;
   padding: 20px 20px 20px 0px;
   width: 100%;
   border-radius: 10px;
   background-color: #ffffff;
-  box-shadow: 0px 0px 10px 1px rgba(63, 6, 17, 0.3);
+  //box-shadow: 0px 0px 10px 1px rgba(63, 6, 17, 0.3);
+  box-shadow: none !important;
+  border: 2px solid #dddddd78 !important;
   @media (max-width: 991px) {
     padding: 10px;
   }
