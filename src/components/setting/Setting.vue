@@ -53,11 +53,11 @@
           <h4 style="margin-bottom: 0px;">Contact Details</h4>
           <ButtonComponent
             class="mr-1"
-            iconHeight="20px"
+            iconHeight="14px"
             :isSmall="true"
             title="EDIT"
             :responsive="false"
-            :icon="require('@/assets/icon/pencil.svg')"
+            :icon="require('@/assets/icon/edit_icon.svg')"
             @onClickButton="openDialog"
           />
           <!-- <v-tooltip bottom color="warning">
@@ -261,7 +261,8 @@
             Verify
           </v-btn> -->
           <ButtonComponent
-            style="width: 150px"
+            class="verify-button"
+            style="width: 150px;"
             :isSmall="true"
             title="Verify"
             :isBlock="true"
@@ -736,11 +737,10 @@ export default {
   justify-content: space-around;
   height: calc(100vh - 90px);
   overflow: hidden;
-  border: 2px solid #ddd;
+  border: 2px solid #dddddd78;
   border-radius: 15px;
   background: #ffffff 0% 0% no-repeat padding-box;
-  box-shadow: 0px 10px 30px #fff;
-  margin: 10px;
+  margin: 12px 15px !important;
   opacity: 1;
   @media (min-width: 320px) and (max-width: 600px) {
     flex-direction: column;
@@ -792,6 +792,12 @@ export default {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
+        .verify-button {
+          .v-btn__content {
+            font-size: 1rem !important;
+          }
+        }
 
         .router-link {
           color: #0aa3e1;

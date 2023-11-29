@@ -2,7 +2,7 @@
   <div class="notification-list">
     <div class="d-flex align-items-center">
 <!--      <span class="online-icon"></span>-->
-      <img class="avatar" width="45" height="45" :src="item.image ? item.image : avatarSrc" alt="image"/>
+      <img class="avatar" width="45" height="45" :src="item.image ? item.image + `?token=${token}` : avatarSrc" alt="image"/>
 
       <div class="content">
         <h4>{{ getName }}</h4>
@@ -27,7 +27,11 @@ export default {
   data() {
     return {
       avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
+      token: ''
     }
+  },
+  created() {
+    this.token = JSON.parse(localStorage.getItem('token'));
   },
   computed: {
     getName() {

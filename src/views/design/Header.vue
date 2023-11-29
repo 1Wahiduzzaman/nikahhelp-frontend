@@ -75,7 +75,7 @@
               </a-dropdown>
             </li>
             <li class="nav-item shrink-none">
-              <a-dropdown :trigger="['click']" placement="bottomRight">
+              <a-dropdown :trigger="['click']" placement="bottomRight" >
                 <a
                   class="nav-link"
                   aria-current="page"
@@ -119,7 +119,7 @@
                 </a>
                 <template v-slot:overlay>
                   <NotificationPopup
-                    count="29"
+                    :count="29"
                     :items="chats"
                     :use-for="'chat'"
                   />
@@ -273,10 +273,13 @@
                   <img src="@/assets/icon/verified_icon.svg" alt="icon" class="verify-icon ml-1" width="14px" />
                 </a-tooltip>
                 <a-tooltip v-else-if="(loggedUser &&  verificationStatus == '4')" title="Rejected" placement="top">
-                  <router-link to="/settings"><img src="@/assets/icon/Rejected_Header_Icon.svg" alt="icon" class="verify-icon ml-1" width="14px"/></router-link>
+                  <router-link to="/settings"><img src="@/assets/icon/Rejected_Header_Icon.svg" alt="icon" class="verify-icon ml-1 cursor-pointer" width="14px"/></router-link>
                 </a-tooltip>
-                <a-tooltip v-else title="Rejected" placement="top">
-                  <img src="@/assets/icon/non_verified_icon.svg" alt="icon" class="verify-icon ml-1 animate-flicker cursor-pointer" width="14px" @click="verifyPopup" />
+                <a-tooltip v-else-if="(loggedUser &&  verificationStatus == '2' && loggedUser.get_candidate.is_uplaoded_doc == 0)" title="Upload Id" placement="top">
+                  <img src="@/assets/icon/upload_id.svg" alt="icon" class="verify-icon ml-1 animate-flicker cursor-pointer" width="14px" @click="verifyPopup"/>
+                </a-tooltip>
+                <a-tooltip v-else title="Pending" placement="top">
+                  <router-link to="/settings"><img src="@/assets/icon/non_verified_icon.svg" alt="icon" class="verify-icon ml-1 cursor-pointer" width="14px"/></router-link>
                 </a-tooltip>
 <!--                <span class="role px-2 ml-1 shrink-none">-->
 <!--&lt;!&ndash;                  {{ loggedUser && parseInt(loggedUser.status) === 3 ? 'V' : 'Not verified' }}&ndash;&gt;-->
@@ -305,7 +308,8 @@
 
             <a-menu slot="overlay" style="min-width: 320px">
               <a-menu-item @click="$emit('toggleCollapse')">
-                <img width="22" src="@/assets/Icons/form.svg" alt="icon" />
+                <!-- <img width="22" src="@/assets/Icons/form.svg" alt="icon" /> -->
+                <a-icon style="color: #522e8e" :type="!collapsed ? 'caret-left' : 'caret-right'"></a-icon>
                 <span class="ml-2"
                   >{{ collapsed ? "Open" : "Close" }} left sidebar</span
                 >
@@ -323,7 +327,7 @@
                 </router-link>
               </a-menu-item>
 
-              <a-menu-item class="d-flex align-items-center">
+              <a-menu-item>
                 <a-dropdown :trigger="['click']" placement="bottomLeft" :getPopupContainer="popupDiv()">
                   <a
                       class="nav-link"
@@ -340,7 +344,7 @@
                   </a>
                   <template v-slot:overlay>
                     <NotificationPopup
-                        count="29"
+                        :count="29"
                         :items="teamsForHeader"
                         :use-for="'team'"
                     />
@@ -413,7 +417,7 @@
                   </a>
                   <template v-slot:overlay>
                     <NotificationPopup
-                        count="29"
+                        :count="29"
                         :items="chats"
                         :use-for="'chat'"
                     />

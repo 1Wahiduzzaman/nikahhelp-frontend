@@ -1235,6 +1235,10 @@ h3 {
     }
   }
 
+  .v-btn__content {
+    font-size: 1rem !important;
+  }
+
   @media (max-width: 768px) {
     width: 100%;
   }

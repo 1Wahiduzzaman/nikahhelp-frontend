@@ -26,7 +26,7 @@
           :data-source="[{title: 'user one'}]"
           style="border-bottom: 1px solid rgb(235, 235, 235);"
       >
-        <a-list-item slot="renderItem" slot-scope="item" class="notification-item" :class="{'notification-seen' : itemObj.seen}">
+        <a-list-item slot="renderItem" slot-scope="item" class="notification-item" :class="{'notification-seen' : itemObj.seen, 'notification-unseen' : !itemObj.seen}">
           <slot name="item" :item="item">
             <component :is="componentName" :item="itemObj" :index="index"></component>
           </slot>
@@ -214,6 +214,9 @@ export default {
 
   .notification-seen {
     background-color: #fff;
+  }
+  .notification-unseen {
+    padding-left: 8px !important;
   }
 }
 

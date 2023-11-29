@@ -77,7 +77,7 @@
         :isSmall="true"
         :responsive="false"
         :title="connectionTitle"
-        icon="/assets/icon/connection_success.svg"
+        icon="/assets/icon/connect-s.svg"
         :customEvent="candidate.is_connect ? 'removeConnection' : 'addConnection'"
         :backgroundColor="candidate.is_connect ? '' : '#3ab549'"
         @onClickButton="onClickButton"

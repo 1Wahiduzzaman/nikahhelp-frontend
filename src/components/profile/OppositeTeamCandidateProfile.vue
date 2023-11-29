@@ -511,7 +511,7 @@ export default {
 			// returns title, action, icon, color, class
 			console.log('getconnecijsdnfldjskl')
 			if(this.connectionStatus == null || this.connectionStatus.length === 0) {
-				return ['Connect', 'addConnection', '/assets/icon/connection_success.svg', '#3ab549', 'connect-button'];
+				return ['Connect', 'addConnection', '/assets/icon/connect-s.svg', '#3ab549', 'connect-button'];
 			} else {
 				let connection = this.connectionStatus[0];
 				if(connection.connection_status === "1") {
@@ -527,7 +527,7 @@ export default {
 						return ['Accept', 'acceptRequest', '/assets/icon/check.svg', '#3ab549', 'connect-button']
 					}
 				} else {
-					return ['Connect', 'addConnection', '/assets/icon/connection_success.svg', '#3ab549', 'connect-button'];
+					return ['Connect', 'addConnection', '/assets/icon/connect-s.svg', '#3ab549', 'connect-button'];
 				}
 			}
 		},

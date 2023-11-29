@@ -33,7 +33,7 @@
             <v-card-text class="d-flex flex-column align-center"> <!-- style="min-height:350px" -->
               <div class="d-flex justify-center w-100">
 
-                <v-container class="d-flex justify-center">
+                <v-container v-if="!playTutorial" class="d-flex justify-center">
                   <v-img
                     max-height="150"
                     max-width="150"
@@ -42,8 +42,10 @@
                   ></v-img>
                 </v-container>
               </div>
-              <div class="text-center my-2"><h5>{{ contentTitle }}</h5></div>
-              <div class="text-center">{{ contentGuidance }}</div>
+              <div v-if="!playTutorial" class="text-center my-2"><h5>{{ contentTitle }}</h5></div>
+              <div v-if="!playTutorial" class="text-center">{{ contentGuidance }}</div>
+              <iframe v-if="playTutorial && dialog.value" style="z-index:5;" width="560" height="315" src="https://www.youtube-nocookie.com/embed/jFA6llSVbsU?rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              <div style="position: absolute; top: 40%;"><span v-if="playTutorial" class="ant-spin-loader"><a-spin /></span></div>
             </v-card-text>
             
             <!-- <v-divider light></v-divider> -->
@@ -116,10 +118,27 @@
 import ApiService from '@/services/api.service';
 import InstantNotification from "../notification/InstantNotification";
 import { mapActions } from 'vuex';
+import JwtService from "../../services/jwt.service";
 export default {
   components: {
     InstantNotification,
     Layout: () => import("@/views/design/Layout"),
+  },
+
+  data() {
+    return {
+      imageSrc: require('@/assets/Icons/MA logo for start modal.svg'),
+      contentTitle: 'Welcome to MatrimonyAssist',
+      contentGuidance: "Here you can create team, invite family and friends, shortlist potential candidates and connect and chat with respective teams.",
+      currentGuide: 0,
+      // imageSrc: require('@/assets/help_guide_pics/Join_or_create_a_team.svg'),
+      prevcount: 0,
+      dialog: false,
+      playTutorial: false,
+      // notifications: [],
+      // chatHistory: [],
+      // active_team_id: null
+    };
   },
 
   created() {
@@ -139,6 +158,35 @@ export default {
     //  this.logout();
    });
 
+    this.active_team_id = JwtService.getTeamIDAppWide();
+    if(this.active_team_id) {
+      this.loadChatHistory();
+      this.loadTeamChat();
+      this.loadShortListedCandidates();
+    }
+
+
+  },
+
+  mounted() {
+    let loggedUser = JSON.parse(localStorage.getItem('user'));
+    if (loggedUser) {
+      this.$socket.emit('ping', {user_id: loggedUser.id});
+
+      this.sockets.subscribe('ping_success', function (res) {
+        if (res && res.online_users) {
+          this.$store.state.chat.online_users = res.online_users;
+        }
+      });
+
+      this.sockets.subscribe('receive_message', function (res) {
+        if(res && !res.support) {
+          // this.$store.state.chat.chats.unshift(res);
+          this.loadChatHistory();
+          this.loadTeamChat();
+        }
+      });
+    }
   },
 
  
@@ -224,22 +272,112 @@ export default {
       this.imageSrc = require('@/assets/Icons/MA logo for start modal.svg');
       this.contentTitle = 'Welcome to MatrimonyAssist';
       this.contentGuidance = "Here you can create team, invite family and friends, shortlist potential candidates and connect and chat with respective teams."
-    }
-  },
+    },
+    async loadChatHistory() {
+      try {
+        let {data} = await ApiService.get('/v1/chat-history').then(res => res.data);
+        this.$store.state.chat.chats = this.processChatHistoryResponse(data);
+      } catch (e) {
+        console.error(e);
+        // this.$store.dispatch('logout');
+      }
+    },
 
-  data() {
-    return {
-      imageSrc: require('@/assets/Icons/MA logo for start modal.svg'),
-      contentTitle: 'Welcome to MatrimonyAssist',
-      contentGuidance: "Here you can create team, invite family and friends, shortlist potential candidates and connect and chat with respective teams.",
-      currentGuide: 0,
-      // imageSrc: require('@/assets/help_guide_pics/Join_or_create_a_team.svg'),
-      prevcount: 0,
-      dialog: false,
-      // notifications: [],
-      // chatHistory: [],
-      // active_team_id: null
-    };
+    processChatHistoryResponse(data) {
+      let singleChat = data.single_chat.map( item => {
+        return {
+          label: 'Team member',
+          state: 'seen',
+          name: item.user?.full_name || 'user name',
+          logo: item.user?.avatar,
+          user_id: item.user.id,
+          other_mate_id: item.user_id,
+          typing_status: 0,
+          typing_text: '',
+          message: item.last_message?.body
+        }
+      });
+
+      let privateChat = data.private_chat.map(item => {
+        return {
+          label: 'Private chat',
+          state: 'seen',
+          name: item.private_receiver_data?.full_name || 'user name',
+          logo: item.private_receiver_data?.avatar,
+          to_team_id: item.to_team_id,
+          from_team_id: item.from_team_id,
+          private_receiver_id: item.receiver,
+          team_private_chat_id: item.id,
+          other_mate_id: item.receiver,
+          typing_status: 0,
+          typing_text: '',
+          message: item.last_private_message?.body
+        }
+      });
+
+      let lastGroupMsg = data.last_group_msg ? [{
+        label: 'Group chat',
+        state: 'Typing...',
+        name: data.last_group_msg.team.name,
+        logo: data.last_group_msg.team.logo,
+        typing_status: 0,
+        typing_text: '',
+        message: data.last_group_message?.body
+      }] : []
+
+      let connectedMsg = data.connected_team_msgs.map(item => {
+        item.label = 'Connected Team';
+        item.typing_status = 0;
+        item.typing_text = '';
+        item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
+        item.is_friend = item.team_private_chat ? item.team_private_chat.is_friend : 0;
+        return item;
+      });
+
+      return [...lastGroupMsg, ...connectedMsg, ...singleChat, ...privateChat];
+    },
+    async loadTeamChat() {
+      try {
+        let {data} = await ApiService.get(`/v1/team-chat?team_id=${this.active_team_id}`).then(res => res.data);
+        if (data && data.team_members) {
+          this.$store.state.chat.teamMembers = data.team_members.map( item => {
+            return item.user_id.toString();
+          });
+        }
+        this.processTeamChatResponse(data);
+      } catch (e) {
+        console.error(e);
+        // this.$store.dispatch('logout');
+      }
+    },
+    processTeamChatResponse(data) {
+      // let group = pick(data, ['id', 'name', 'logo']);
+      this.$store.state.chat.activeTeam = data.id;
+      let group = data;
+      group.message = data.last_group_message?.body
+      group.label = 'Group chat';
+      group.state = 'Typing...';
+      group.typing_status = 0;
+      group.typing_text = '';
+
+      return [group, data.team_members.map(item => {
+        return {
+          label: 'Team member',
+          user_id: item.user_id,
+          state: 'seen',
+          name: item.user?.full_name || 'user name',
+          logo: item.user?.avatar,
+          other_mate_id: item.user_id,
+          typing_status: 0,
+          typing_text: '',
+          message: item.last_message?.body
+        }
+      })];
+    },
+    async loadShortListedCandidates() {
+      let {data} = await ApiService.get('/v1/short-listed-candidates').then(res => res.data);
+      this.$store.state.shortList.shortlistedItems = data;
+    }
   },
   // methods: {
   //   async loadChatHistory() {
@@ -395,7 +533,7 @@ export default {
 
   @media (max-width: 575px) {
     top: 13px;
-    right: 35px;
+    right: 50px;
     height: 0;
     width: 0;
   }
