@@ -4,7 +4,7 @@
       <Loader v-if="isLoading" :isLoading="isLoading" />
       <div v-else>
         <div class="main-content-wrapper">
-          <div class="main-content-1 px-4">
+          <div class="main-content-1">
             <div
               class="
                 flex
@@ -188,7 +188,8 @@ export default {
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
 .main-content-wrapper {
-  margin-top: 8px;
+  margin-top: 0px !important;
+  padding: 12px 15px 12px 15px; 
   .side-bar {
     max-width: 250px;
   }
@@ -225,13 +226,6 @@ export default {
 
   .main-content-1 {
     flex: 0 0 100%;
-    h4 {
-      padding-top: 10px;
-      padding-left: 8px;
-      // @media (max-width: 321px) {
-      // 	padding-left: 5px;
-      // }
-    }
   }
   // .main-content-2 {
   // 	margin: 15px;
