@@ -1,12 +1,12 @@
 <template>
-  <div class="notification-list pr-2">
+  <div class="notification-list px-2">
     <div class="flex">
       <h4 class="active-team-text" v-if="index == 0 && turnOn && team_id">Active Team</h4>
       <h4 class="active-team-text" v-if="(index == 1 && !turnOn && team_id) || (index == 0 && !team_id)">Other Teams</h4>
       <span class="active-icon ml-2" v-if="index == 0 && turnOn"></span>
     </div>
     <div class="d-flex">
-      <img class="avatar" width="45" height="45" :src="item.logo"
+      <img class="avatar" width="45" height="45" :src="item.logo + `?token=${token}`"
            alt="">
       <div class="content">
         <h4 class="mt-1">{{ item.name }}</h4>
@@ -54,7 +54,8 @@ export default {
   data() {
     return {
       turnOn: false,
-      team_id: null
+      team_id: null,
+      token: JwtService.getToken(),
     }
   },
   computed: {
