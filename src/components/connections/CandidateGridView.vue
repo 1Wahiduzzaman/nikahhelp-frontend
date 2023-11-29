@@ -1,5 +1,5 @@
 <template>
-  <div class="m-sm-2 my-sm-1 my-2 flip-card" :class="{'flip-card-toggle': rotated}">
+  <div class="flip-card">
     <div class="flip-card-inner">
       <div class="flip-card-front ">
 <!--        <div class="col-12" id="flex-container">-->
@@ -169,9 +169,6 @@
                 <span class="fw-600">Request Date</span><br> {{ dateFromDateTime(connection.requested_at) }}
 
                 <template slot="footer">
-                  <a-button key="back" shape="round" @click="showProfileConnectionOverview=false">
-                    Cancel
-                  </a-button>
                   <a-button key="submit" type="primary" shape="round" @click="showProfileConnectionOverview = false">
                     Ok
                   </a-button>
@@ -187,30 +184,6 @@
                 :responsive="false"
                 @onClickButton="showProfileTeamOverview = true"
               />
-
-              <a-modal 
-                :visible="showProfileTeamOverview" 
-                :closable="true"
-                title="This Profile Connection Overview" 
-                @ok="showProfileTeamOverview = false" 
-                @cancel="showProfileTeamOverview = false" 
-                :ok-button-props="{ disabled: true }"
-                :cancel-button-props="{ disabled: true }"
-                >
-                <span class="fw-600">Team Name</span> <br> {{ connection.to_team_name }} <br><br>
-                <span class="fw-600">Team Members</span> <br> {{ connection.total_teamMember }} <br><br>
-                <span class="fw-600">Team Creation Date</span><br> {{ dateFromDateTime(connection.team_created_date) }} <br><br>
-                <span class="fw-600">Team Created By</span><br> {{ connection.team_created_by }}
-
-                <template slot="footer">
-                  <a-button key="back" shape="round" @click="showProfileTeamOverview=false">
-                    Cancel
-                  </a-button>
-                  <a-button key="submit" type="primary" shape="round" @click="showProfileTeamOverview = false">
-                    Ok
-                  </a-button>
-                </template>
-              </a-modal>
             </div>
             <div>
               <ButtonComponent
@@ -255,9 +228,10 @@
 <!--             'connected-bg': type == 'connected',-->
 <!--             'request-received-bg': type == 'Request received',-->
 <!--             'request-sent-bg': type == 'Request send',}"></div>-->
-    <div class="position-absolute icon-rotate-box cursor-pointer" @click="rotated = !rotated" :class="{'invert-filter': rotated}">
+    <div class="position-absolute icon-rotate-box cursor-pointer" @click="showProfileConnectionOverview = true">
 <!--      <a-icon type="rollback" class="rotate-icon" size="large" />-->
-      <img src="@/assets/icon/flip_icon.svg" alt="icon" class="flip-icon" />
+      <!-- <img src="@/assets/icon/flip_icon.svg" alt="icon" class="flip-icon" /> -->
+      <a-icon type="history" :style="{ fontSize: '16px' }"/>
     </div>
   </div>
 </template>
@@ -886,14 +860,8 @@ export default {
   height: 512px;
 }
 .icon-rotate-box {
-  left: 12px;
-  top: 6px;
-  @media (min-width: 1600px) {
-    left: 16px;
-  }
-  @media (min-width: 1800px) {
-    left: 28px;
-  }
+  top: 273px;
+  right: 4%;
 }
 .invert-filter {
   filter: invert(1);
@@ -931,5 +899,9 @@ export default {
 }
 .flip-icon {
   width: 16px;
+}
+.v-sheet.v-card:not(.v-sheet--outlined)::v-deep {
+  box-shadow: none !important;
+  border: 2px solid #dddddd78;
 }
 </style>
