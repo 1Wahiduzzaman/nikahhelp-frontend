@@ -150,10 +150,10 @@ export default {
         }),
         getConnectionTitleAndAction() {
             if(this.profile.is_connect == null) {
-                return ['Connect', 'addConnection', '/assets/icon/connection_success.svg', '#3ab549', 'connect-button'];
+                return ['Connect', 'addConnection', '/assets/icon/connect-s.svg', '#3ab549', 'connect-button'];
             }
             if(this.profile.is_connect == true) {
-                return ['Cancel', 'declineRequest', '/assets/icon/connection_success.svg', '#d81b60', 'block-button']
+                return ['Cancel', 'declineRequest', '/assets/icon/connect-s.svg', '#d81b60', 'block-button']
             }
         },
     },

@@ -203,7 +203,7 @@
         >
           <div class="flex justify-center align-center">
             <!-- <a-icon type="cross" class="mr-2" /> -->
-            <img :src="require('@/assets/icon/connection_success.svg')" alt="" height="14px" class="mr-2">
+            <img src="/assets/icon/connect-s.svg" alt="" height="14px" class="mr-2">
             Connect
           </div>
         </v-btn>
@@ -257,7 +257,7 @@
         >
           <div class="flex justify-center align-center">
             <!-- <a-icon type="cross" class="mr-2" /> -->
-            <img :src="require('@/assets/icon/connection_success.svg')" alt="" height="14px" class="mr-2">
+            <img src="/assets/icon/connect-s.svg" alt="" height="14px" class="mr-2">
             Connect
           </div>
         </v-btn>

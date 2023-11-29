@@ -40,7 +40,7 @@
               <router-link to="/connections" class="flex align-items-center">
                 <img
                   class="mr-3"
-                  src="@/assets/icon/connection-secondary.svg"
+                  src="/assets/icon/connect-s-primary.svg"
                   alt="icon"
                 />
                 <span class="mb-0">Connection</span>
