@@ -15,34 +15,22 @@
       </div>
       <div class="box" v-if="step === 1">
         <a-row class="mt-2 px-4">
-          <a-col class="text-center" :span="24">
-            <div class="d-flex align-items-center justify-content-center">
-              <div class="cursor-pointer image-plus background-img" @click="imageModal = true" :style="{ backgroundImage: 'url(' + logoBobUrl + ')' }">
-                <h4 class="fs-33 d-flex justify-content-center align-items-center text-white">+</h4>
-              </div>
-              <h4 class="fs-14 color-gray ml-2 add-team-image cursor-pointer mt-2" @click="imageModal = true">Add a team image</h4>
-            </div>
-            <span class="text-danger fs-12" v-if="in_progress && !file">Please upload team logo</span>
-          </a-col>
-          <a-col :span="24" class="mt-2">
-            <label for="team-name" class="input-label fs-10">Team name:</label>
+          <a-col :span="24" class="my-2">
             <a-input
                 v-model="team.name"
                 size="large"
-                id="team-name"
                 class="team-name-input"
                 placeholder="Team name"
                 autoComplete="nope"
+                :maxLength="20"
             />
             <span class="text-danger mt-2 ml-2" v-if="in_progress && !team.name">Team name required</span>
           </a-col>
-          <a-col class="mt-2" :span="24">
-            <label for="team-description" class="input-label fs-10">Team description:</label>
-            <a-textarea
-                id="team-description"
+          <a-col class="my-2" :span="24">
+            <a-input
                 class="team-description team-name-input resize-none fs-16"
                 placeholder="Team description"
-                :auto-size="{ minRows: 3, maxRows: 5 }"
+                :auto-size="{ minRows: 1, maxRows: 1 }"
                 v-model="team.description"
                 @input="in_progress = true"
                 :maxLength="80"
@@ -74,8 +62,8 @@
             <span class="text-danger mt-2 ml-2 fs-12" v-if="team.password && team.confirm_password && team.password !== team.confirm_password">Password doesn't match.</span>
             <span v-if="team.confirm_password && team.confirm_password.length !== 4" class="fs-12 text-danger ml-2">Password must be 4 digits</span>
           </a-col> -->
-          <a-col class="mt-2" :span="24">
-            <label for="" class="input-label fs-10">Type team password:</label>
+          <a-col class="my-2" :span="24">
+            <label for="" class="input-label text-center w-100 fs-16 mb-2">Set pin for this team:</label>
             <div class="d-flex justify-content-around">
               <input v-for="i in 4" ref="teamPassword" :key="i" type="password" class="password-input-box text-center" maxlength="1" @keydown.prevent="handlePasswordInput($event, i, 'teamPassword')">
               <div 
@@ -89,61 +77,52 @@
             </div>
             <span class="fs-12 text-danger ml-2 fs-12" v-if="showPasswordError">Password must be a number</span>
           </a-col>
-          <a-col class="mt-2" :span="24">
-            <label for="" class="input-label  fs-10">Re-type team password:</label>
-            <div class="d-flex justify-content-around">
-              <input v-for="i in 4" ref="reTeamPassword" :key="i" type="password" class="password-input-box text-center" maxlength="1" @keydown.prevent="handlePasswordInput($event, i, 'reTeamPassword')">
-              <div 
-                class="password-input-box d-flex justify-content-center align-items-center" 
-                style="cursor: pointer; background-color: #6159a7;"
-                @click="showRePassword =! showRePassword; handleShowPassword('reTeamPassword');"
-              >
-                <v-icon color="#fff" v-if="!showRePassword" small>mdi-eye-outline</v-icon>
-                <v-icon color="#fff" v-else small>mdi-eye-off-outline</v-icon>
+          <a-col class="my-2" :span="24">
+            <label for="" class="input-label text-center w-100 fs-16 mb-2">You are joining this team as a:</label>
+            <a-select
+                size="large"
+                placeholder="Add as a"
+                class="fs-16 member-add mr-2"
+                v-model="addAs"
+                style="width: 100%"
+            >
+              <a-select-option value="Candidate" v-if="!joinedAsCandidate"> Candidate </a-select-option>
+              <a-select-option value="Representative"> Representative </a-select-option>
+              <!--                    <a-select-option value="Candidate" v-if="addAs == 'Candidate' || teamCount <= 0"> Candidate </a-select-option>-->
+              <!--                    <a-select-option value="Representative" v-if="addAs == 'Representative' || teamCount <= 0"> Representative </a-select-option>-->
+              <!--                    <a-select-option value="Match Maker"> Match Maker </a-select-option>-->
+            </a-select>
+          </a-col>
+          <a-col class="my-2" :span="24" v-if="addAs != 'Candidate'">
+
+            <a-select
+                size="large"
+                placeholder="Relationship with candidate"
+                class="fs-16 member-add"
+                v-model="selfRole.relationship"
+                :disabled="addAs == 'Candidate'"
+                style="width: 100%"
+            >
+              <!--                    <a-select-option value="Candidate" v-if="addAs == 'Candidate'"> Candidate </a-select-option>-->
+              <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
+            </a-select>
+
+          </a-col>
+          <a-col class="text-center mt-8" :span="24">
+            <div class="d-flex flex-column align-items-center justify-content-center">
+              <div class="cursor-pointer image-plus background-img" @click="uploadFile()" :style="{ backgroundImage: 'url(' + logoBobUrl + ')' }">
+                <h4 v-if="!file" class="fs-33 d-flex justify-content-center align-items-center text-white">+</h4>
               </div>
+              <h4 class="fs-14 color-gray ml-2 add-team-image cursor-pointer mt-2" @click="uploadFile()">Add a team image</h4>
             </div>
-            <span class="text-danger mt-2 ml-2 fs-12" v-if="team.password && team.confirm_password && team.password !== team.confirm_password">Password doesn't match.</span>
-            <span class="fs-12 text-danger ml-2 fs-12" v-if="showPasswordError">Password must be a number</span>
-          </a-col>
-          <a-col class="mt-2" :span="24">
-            <a-tooltip style="width:100%;">
-              <template slot="title">
-                Joining as
-              </template>
-              <label for="" class="input-label  fs-10">Joining as:</label>
-              <a-select
-                  size="large"
-                  placeholder="Add as a"
-                  class="fs-16 member-add mr-2"
-                  v-model="addAs"
-                  style="width: 100%"
-              >
-                <a-select-option value="Candidate" v-if="!joinedAsCandidate"> Candidate </a-select-option>
-                <a-select-option value="Representative"> Representative </a-select-option>
-                <!--                    <a-select-option value="Candidate" v-if="addAs == 'Candidate' || teamCount <= 0"> Candidate </a-select-option>-->
-                <!--                    <a-select-option value="Representative" v-if="addAs == 'Representative' || teamCount <= 0"> Representative </a-select-option>-->
-                <!--                    <a-select-option value="Match Maker"> Match Maker </a-select-option>-->
-              </a-select>
-            </a-tooltip>
-          </a-col>
-          <a-col class="mt-2" :span="24" v-if="addAs != 'Candidate'">
-            <a-tooltip style="width:100%;">
-              <template slot="title">
-                Relationship with candidate
-              </template>
-              <label for="" class="input-label  fs-10">Relationship with candidate:</label>
-              <a-select
-                  size="large"
-                  placeholder="Relationship with candidate"
-                  class="fs-16 member-add"
-                  v-model="selfRole.relationship"
-                  :disabled="addAs == 'Candidate'"
-                  style="width: 100%"
-              >
-                <!--                    <a-select-option value="Candidate" v-if="addAs == 'Candidate'"> Candidate </a-select-option>-->
-                <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>
-              </a-select>
-            </a-tooltip>
+            <span class="text-danger fs-12" v-if="in_progress && !file">Please upload team logo</span>
+            <input
+              type="file"
+              ref="file"
+              style="display: none"
+              accept="image/*"
+              @change="onChangeFileSet($event)"
+            />
           </a-col>
         </a-row>
         <div class="position-absolute footer-cancel-btn">
@@ -156,38 +135,6 @@
       <CreateAddMember :team="team" :file="file" v-if="step === 2" @cancel_button="$emit('cancel_button')" @goNext="goNextStep" @loadTeams="loadTeams" @socketNotification="socketNotification" />
       <TeamCreateSuccess v-if="step === 3" :team="team" />
     </div>
-    <a-modal v-model="imageModal" @ok="hideImageModal">
-      <template slot="footer">
-        <a-button key="back" @click="hideImageModal">
-          Cancel
-        </a-button>
-        <a-button key="back2" type="primary" @click="hideImageModal">
-          Ok
-        </a-button>
-      </template>
-      <div class="text-center">
-        <img :src="logoBobUrl" v-if="logoBobUrl" alt="info image" class="bob-logo" />
-        <img src="../../assets/info-img.png" v-else alt="info image" />
-        <p class="mt-2">
-          You can <!--choose an avatar or <br>--> browse an image from local drive
-        </p>
-        <div class="d-flex justify-content-center">
-          <!-- <a-button type="primary" class="bg-brand br-20">
-            Avatar
-          </a-button> -->
-          <a-button type="primary" class="bg-primary br-20" @click="uploadFile()">
-            Browse
-          </a-button>
-          <input
-              type="file"
-              ref="file"
-              style="display: none"
-              accept="image/*"
-              @change="onChangeFileSet($event)"
-          />
-        </div>
-      </div>
-    </a-modal>
   </div>
 </template>
 
@@ -205,16 +152,13 @@ export default {
 			isLoading: false,
 			user: {},
 			is_verified: 1,
-      imageModal: false,
       step: 1,
       team: {
         name: '',
         description: '',
         password: '',
-        confirm_password: ''
       },
       showPassword: false,
-      showRePassword: false,
       showPasswordError: false,
       in_progress: false,
       file: '',
@@ -228,9 +172,8 @@ export default {
   computed: {
     checkDisability() {
       if(this.team.name && this.team.description &&
-          this.team.password && this.team.confirm_password &&
-          this.team.password.length === 4 && this.team.confirm_password.length === 4 &&
-          this.team.password === this.team.confirm_password && this.file) {
+          this.team.password &&
+          this.team.password.length === 4 && this.file) {
         return false;
       }
       return true;
@@ -266,9 +209,6 @@ export default {
     },
     onConfirmClick(event) {
       this.$emit("toggleToTeamPassword");
-    },
-    hideImageModal() {
-      this.imageModal = false;
     },
 		validate() {
 			let validation_status = true;
@@ -579,7 +519,8 @@ export default {
     padding: 10px 8px;
     border-radius: 10px;
     background-color: #ffffff;
-    box-shadow: 0px 0px 10px 1px rgba(63, 6, 17, 0.3);
+    box-shadow: none !important;
+    border: 2px solid #dddddd78;
     .ant-card-body {
       padding: 0;
     }
@@ -1036,15 +977,17 @@ export default {
   height: 40px;
   //width: 100px;
   width: 40px;
-  border: 1px solid #8f8f8f;
   border-radius: 5px;
-
-  &:hover {
-    border-color: #b7deff;
-  }
   
 }
-.add-team-image:hover {
-  color: $color-brand;
+.add-team-image {
+  color: rgba(0,0,0,0.5) !important;
+  &:hover {
+    color: $color-brand !important;
+  }
+}
+.team-description {
+  min-height: 40px !important;
+  max-height: 40px !important;
 }
 </style>
