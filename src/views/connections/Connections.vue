@@ -68,7 +68,7 @@
                 <v-tabs 
                   color="indigo accent-4" 
                   active-class="active-v-tab" 
-                  class="w-full d-flex justify-content-between support-tab ml-sm-3 mt-2 mobile-v-tabs"
+                  class="w-full2 d-flex justify-content-between support-tab ml-sm-3 mt-2 mobile-v-tabs"
                   :vertical="$vuetify.breakpoint.name === 'xs'" 
                   :grow="$vuetify.breakpoint.name === 'xs'"
                   v-model="tab"
@@ -1181,6 +1181,11 @@ export default {
 }
 .opacity-60 {
   opacity: 0.6;
+}
+.w-full2 {
+  width: calc(100% - 30px) !important;
+  margin: auto !important;
+  margin-top: 8px !important;
 }
 .opacity-100 {
   opacity: 1;

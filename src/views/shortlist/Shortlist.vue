@@ -30,7 +30,7 @@
             <v-tabs 
               color="indigo accent-4" 
               active-class="active-v-tab" 
-              class="w-full d-flex justify-content-between support-tab mt-2 mobile-v-tabs" 
+              class="w-full2 d-flex justify-content-between support-tab mt-2 mobile-v-tabs" 
               :vertical="$vuetify.breakpoint.name === 'xs'" 
               :grow="$vuetify.breakpoint.name === 'xs'"
               v-if="showVTabs"
@@ -381,6 +381,7 @@ import Candidate from "@/components/shortlist/Candidate.vue";
 import CandidateGrid from "../../components/shortlist/CandidateGrid";
 import ApiService from '@/services/api.service';
 import TeamOffRedirection from "../../components/redirection/TeamOffRedirection";
+import Notification from '@/common/notification';
 export default {
   name: "Shortlist",
   components: {
@@ -777,6 +778,12 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
+
+.w-full2 {
+  width: calc(100% - 30px) !important;
+  margin: auto !important;
+  margin-top: 8px !important;
+}
 .shortlist-content-wrapper {
   flex-wrap: wrap;
   margin-top: 4px;
