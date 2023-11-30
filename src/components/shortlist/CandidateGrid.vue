@@ -2,6 +2,8 @@
   <v-card
       class="mx-auto shadow-default shortlist-card"
   >
+    <Loader v-if="isLoading" :isLoading="isLoading" />
+
     <template slot="progress">
       <v-progress-linear
           color="deep-purple"
@@ -256,6 +258,7 @@ export default {
     return {
       avatarSrc: "https://www.w3schools.com/w3images/avatar2.png",
       token: '',
+      isLoading: false,
     }
   },
   created() {
@@ -393,16 +396,30 @@ export default {
         return;
       }
 
-      ApiService.post(`/v1/store-block-list`, { user_id: this.item.user_id })
+      const vm = this;
+      this.$confirm({
+        title: "Are you sure?",
+        content: "Do you want to block this candidate?",
+        okText: "Yes",
+        okType: "danger",
+        cancelText: "No",
+        onOk() {
+          ApiService.post(`/v1/store-block-list`, { user_id: vm.item.user_id })
           .then(res => {
-            this.$emit("loadList");
+            vm.$emit("loadList");
 
-            let notifyObject = this.selfTeamNotifyData();
+            let notifyObject = vm.selfTeamNotifyData();
             notifyObject.title = "blocked a candidate";
-            this.socketNotification(notifyObject);
+            vm.socketNotification(notifyObject);
           }).catch(e => {
-        console.log(e);
+            console.log(e);
+          });
+        },
+        onCancel() {
+          console.log("Cancel");
+        },
       });
+      
     },
     actionConnection() {
       let myTeamId = JwtService.getTeamIDAppWide();
@@ -427,6 +444,7 @@ export default {
           return;
         }
 
+        this.isLoading = true;
         let payload = {
           from_team_id: myTeamId,
           to_team_id: this.item.team_id
@@ -444,9 +462,11 @@ export default {
                 team_id: this.item.team.team_id
               };
               this.$emit("socketNotification", payload);
+              this.isLoading = false;
             }).catch(e => {
-          console.log(e);
-        });
+              console.log(e);
+              this.isLoading = false;
+            });
       } else {
         //
       }
