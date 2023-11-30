@@ -148,7 +148,7 @@
             @click="$emit('declineRequest')"
         >
           <div class="flex justify-center align-center">
-            <a-icon type="cross" class="mr-2" />
+            <a-icon type="close" class="mr-2" />
             Cancel
           </div>
         </v-btn>
