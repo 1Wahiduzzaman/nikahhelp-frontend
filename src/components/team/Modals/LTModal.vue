@@ -63,7 +63,7 @@
 			<div v-if="phase == 2">
 				<div class="text-center" style="padding-bottom: 15px">
 					<span style="font-size: 26px; font-weight: bold">
-						Type your team password
+						Type your team pin
 					</span>
 				</div>
 
@@ -71,7 +71,7 @@
 					<div class="justify-content-center">
 						<div class="d-flex justify-content-center">
 							<div style="width: 250px; margin-top: 20px; margin-bottom: 20px">
-								<a-input-password placeholder="Type Here" v-model="password" />
+								<a-input-password placeholder="Type your team pin" v-model="password" />
 							</div>
 						</div>
 					</div>
@@ -176,10 +176,17 @@ export default {
 		handleOk(e) {
 			console.log(this.isOwnerAdmin);
 			console.log("Clicked Ok");
+			if(isNaN(this.password) || this.password.length > 4) {
+				this.$error({
+					title: "Error!",
+					content: "Pin must be 4 characters long and can only contain digits.",
+				});
+				return;
+			}
 			if (this.password.length == 0) {
 				this.$error({
 					title: "Error!",
-					content: "Please enter a password to procceed",
+					content: "Please enter a pin to procceed",
 				});
 				//this.$message.error("Please enter a password to procceed");
 				return;
@@ -207,7 +214,7 @@ export default {
 				//this.$message.error("You have entered an wrong password")
 				this.$error({
 					title: "Error!",
-					content: "You have entered an wrong password",
+					content: "You have entered a wrong pin",
 				});
 			}
 		},
