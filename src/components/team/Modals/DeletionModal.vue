@@ -54,7 +54,7 @@
         <span class="fs-12 text-danger ml-2 fs-12" v-if="showPasswordError">Password must be a number</span>
       </div>
 
-      <p class="font-weight-bold" style="margin-top: 10px; margin-bottom: 5px">
+      <!-- <p class="font-weight-bold" style="margin-top: 10px; margin-bottom: 5px">
         Please Describe Reason for Deletion
       </p>
       <a-textarea
@@ -67,7 +67,7 @@
         placeholder="Reason Detail"
         :auto-size="{ minRows: 2, maxRows: 6 }"
         v-model="deletionReasonDetail"
-      />
+      /> -->
 
       <template slot="footer">
         <a-button key="back" shape="round" @click="handleCancel">
