@@ -231,8 +231,8 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
           this.ViewProfileDetail()
           return
         }
-        let userInfo = JSON.parse(localStorage.getItem("userInfo"))
-        if(userInfo.status != 3) {
+        let userInfo = JSON.parse(localStorage.getItem("user"))
+        if(userInfo.status != '3') {
           this.showError('Your account is not verified')
           return
         }
@@ -441,23 +441,36 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
           this.showError("This candidate has no team")
            return;
         }
-        let data = {
-          url: url,
-          actionType: actionType,
-          value: value,
-          payload: {
-            //block_by: JwtService.getUserId(),
-            user_id: this.candidate.user_id
-          }
-        }
-        try {
-          await this.blockACandidate(data)
-        } catch (e) {
-          if(e.response) {
-            this.showError(e.response.data.message)
-          }
-        }
-        
+        const vm = this;
+        this.$confirm({
+          title: "Are you sure?",
+          content: actionType == 'post' ? "Do you want to block this candidate?" : "Do you want to unblock this candidate?",
+          okText: "Yes",
+          okType: "danger",
+          cancelText: "No",
+          async onOk() {
+            let data = {
+              url: url,
+              actionType: actionType,
+              value: value,
+              payload: {
+                //block_by: JwtService.getUserId(),
+                user_id: vm.candidate.user_id
+              }
+            }
+            try {
+              await vm.blockACandidate(data)
+            } catch (e) {
+              if(e.response) {
+                vm.showError(e.response.data.message)
+              }
+            }
+          
+          },
+          onCancel() {
+            console.log("Cancel");
+          },
+        })        
       },
       showError(message) {
         this.$error({

@@ -653,7 +653,7 @@ export default {
 				// } 
 				
 			} catch(err) {
-
+				this.setLoading(false);
 				console.log(err.response.status)
 				if (err.response.status === 404) {
                   this.clearProfiles()

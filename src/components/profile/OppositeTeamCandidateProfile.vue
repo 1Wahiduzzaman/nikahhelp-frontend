@@ -1045,28 +1045,42 @@ export default {
                 this.showError("You don't have permission.")
                 return
             }
-            let data = {
-                url: url,
-                actionType: actionType,
-                value: value,
-                payload: {
-                    //block_by: JwtService.getUserId(),
-                    user_id: this.candidateData.user_id
-                }
-            }
-            try {
-                let res = await this.blockACandidate(data)
-				if(res.status == "SUCCESS") {
-					if(this.connectionStatus && this.connectionStatus.length > 0 && data.actionType == 'post') {
-						await this.disconnectTeam();
+			const vm = this;
+			this.$confirm({
+				title: "Are you sure?",
+				content: actionType == 'post' ? "Do you want to block this candidate?" : "Do you want to unblock this candidate?",
+				okText: "Yes",
+				okType: "danger",
+				cancelText: "No",
+				async onOk() {
+				
+					let data = {
+						url: url,
+						actionType: actionType,
+						value: value,
+						payload: {
+							//block_by: JwtService.getUserId(),
+							user_id: vm.candidateData.user_id
+						}
 					}
-					this.$emit('onFetchUserInfo')
-				}
-            } catch (e) {
-                if(e.response) {
-                    this.showError(e.response.data.message)
-                }
-            }  
+					try {
+						let res = await vm.blockACandidate(data)
+						if(res.status == "SUCCESS") {
+							if(vm.connectionStatus && vm.connectionStatus.length > 0 && data.actionType == 'post') {
+								await vm.disconnectTeam();
+							}
+							vm.$emit('onFetchUserInfo')
+						}
+					} catch (e) {
+						if(e.response) {
+							vm.showError(e.response.data.message)
+						}
+					}  
+				},
+				onCancel() {
+					console.log("Cancel");
+				},
+			});
         },
         showError(message) {
             this.$error({

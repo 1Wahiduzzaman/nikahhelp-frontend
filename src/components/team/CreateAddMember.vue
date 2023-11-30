@@ -1,76 +1,12 @@
 <template>
   <div class="mt-4 box">
-      <div class="px-4">
-      <h4 style="font-size: 12px !important; color: #aaaaaa;">Team ID: #{{ team.team_id.substring(0,8) }}</h4>
-      <!-- <div class="d-flex align-items-center">
-        <h4 class="fs-12">To activate team add a member</h4>
-        <a-icon type="info-circle" class="ml-2 fs-12" />
-      </div> -->
-    </div>
-<!--    <div class="dropdowns d-flex mt-4 justify-content-center">-->
-<!--      <a-tooltip-->
-<!--          placement="top"-->
-<!--          title="Member role will"-->
-<!--      >-->
-<!--        <a-select-->
-<!--            placeholder="Role"-->
-<!--            class="fs-10 w-20 brleft-20"-->
-<!--            v-model="invitationObject.role"-->
-<!--            :disabled="invitationObject.invitation_link"-->
-<!--        >-->
-<!--          &lt;!&ndash;         <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>&ndash;&gt;-->
-<!--          <a-select-option value="Admin"> Admin </a-select-option>-->
-<!--          <a-select-option value="Member"> Member </a-select-option>-->
-<!--        </a-select>-->
-<!--      </a-tooltip>-->
-
-<!--      <a-tooltip-->
-<!--          placement="top"-->
-<!--          title="Member role will"-->
-<!--      >-->
-<!--        <a-select-->
-<!--            placeholder="Add as a"-->
-<!--            class="ml-1 fs-10 w-20 none-radius"-->
-<!--            v-model="invitationObject.add_as_a"-->
-<!--            :disabled="invitationObject.invitation_link"-->
-<!--        >-->
-<!--          <a-select-option value="Candidate" v-if="team.add_as_a != 'Candidate'"> Candidate </a-select-option>-->
-<!--          <a-select-option value="Representative" v-if="team.add_as_a != 'Representative'"> Representative </a-select-option>-->
-<!--          &lt;!&ndash;        <a-select-option value="Match Maker"> Match Maker </a-select-option>&ndash;&gt;-->
-<!--        </a-select>-->
-<!--      </a-tooltip>-->
-
-<!--      <a-tooltip-->
-<!--          placement="top"-->
-<!--          title="Member role will"-->
-<!--      >-->
-<!--        <a-select-->
-<!--            placeholder="Relationship"-->
-<!--            class="ml-1 fs-10 w-20 none-radius"-->
-<!--            v-model="invitationObject.relationship"-->
-<!--            :disabled="invitationObject.invitation_link"-->
-<!--        >-->
-<!--          <a-select-option v-for="(relation, index) in relationships" :key="index" :value="relation"> {{ relation }} </a-select-option>-->
-<!--        </a-select>-->
-<!--      </a-tooltip>-->
-
-<!--      <a-button v-if="!clickedInviteNow"-->
-<!--                class="ml-1 confirm-button fs-10 br-20 bright-20"-->
-<!--                @click="goNextStep()"-->
-<!--                :disabled="!invitationObject.role || !invitationObject.add_as_a || !invitationObject.relationship">Invite now</a-button>-->
-
-<!--      <a-dropdown class="confirm-button right-br-20 w-20 fs-10 dropdown-button" v-if="clickedInviteNow">-->
-<!--        <a-menu slot="overlay">-->
-<!--          <a-menu-item key="1" @click="toggleMemberbox()">Invite Now </a-menu-item>-->
-<!--          <a-menu-item key="2" @click="deleteInvitation()">Remove </a-menu-item>-->
-<!--        </a-menu>-->
-<!--        <a-button class="ml-1 fs-10"> Invite Now</a-button>-->
-<!--      </a-dropdown>-->
-<!--    </div>-->
-
+    
     <div class="px-4" style="margin-top:180px;">
-      <h6 style="color: #aaaaaa;">Now you can add member to your team</h6>
-      <button class="btn add-member" @click="toggleAddMemberbox()" :disabled="isSuccess">
+      <div class="w-100 text-center mt-2">
+        <h4 style="font-size: 25px !important; color: #aaaaaa;">Team ID: #{{ team.team_id.substring(0,8) }}</h4>
+      </div>
+      <h6 class="mb-2" style="color: #aaaaaa;">Now you can add member to your team</h6>
+      <button class="btn create-button" @click="toggleAddMemberbox()" :disabled="isSuccess">
         Add member
       </button>
     </div>
@@ -80,7 +16,7 @@
         <a-button class="cancel-button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
       </div>
       <div class="position-absolute footer-conf-btn">
-        <a-button class="confirm-button float-right" @click="saveAndContinue()" :loading="loading">Save & Continue</a-button>
+        <a-button class="confirm-button float-right" @click="saveAndContinue()" :loading="loading">Skip & Continue</a-button>
       </div>
     </div>
     <InviteMember :team="team"
@@ -321,26 +257,20 @@ export default {
 .w-23 {
   width: 23%;
 }
-.add-member {
+.create-button {
   display: flex;
   justify-content: center;
-  width: 100%;
-  background: $bg-success;
+  background-color: $bg-success;
   color: #FFFFFF;
-  border-radius: 30px;
   border: 1px solid #FFFFFF;
+  border-radius: 20px;
+  width: 60%;
+  margin: auto;
   &:hover {
-    background: #FFFFFF;
+    background-color: #FFFFFF;
     color: $bg-success;
     border: 1px solid $bg-success;
   }
-  &:focus {
-    outline: none;
-    box-shadow: none;
-  }
-  img {
-    width: 20px;
-    margin-right: 10px;
-  }
 }
+
 </style>

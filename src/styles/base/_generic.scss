@@ -768,14 +768,14 @@ div[data-unique="second_one"] >  .ant-select-selection{
     font-weight: bold;
 }
 .confirm-button {
-    color: #6158a7;
-    border-radius: 20px;
-    border: 1px solid #6158a7;
+    background-color: #6158a7;
+    color: #FFFFFF;
+    border: 1px solid #fff;
 }
 .confirm-button:hover {
-    background-color: #6158a7;
-    color: #FFFFFF !important;
-    border: none;
+    color: #6158a7 !important;
+    border-radius: 20px;
+    border: 1px solid #6158a7;
 }
 .cancel-button {
     color: $color-brand;

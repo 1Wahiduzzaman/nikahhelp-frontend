@@ -74,7 +74,7 @@
           class="text-capitalize btn-connection color-primary"
           style="width:47%"
           rounded
-          small
+          block
           outlined
           color=""
           dark
@@ -85,7 +85,7 @@
           Unblock
         </div>
       </v-btn>
-      <v-btn
+      <!-- <v-btn
           class="text-capitalize btn-connection color-primary"
           style="width:47%"
           rounded
@@ -98,7 +98,7 @@
           <img style="height: 13px; margin-right: 4px;" src="@/assets/icon/block-secondary.svg" alt="">
           Report
         </div>
-      </v-btn>
+      </v-btn> -->
     </div>
     <div class="px-4 pb-4">
       <v-btn
@@ -190,12 +190,6 @@ export default {
 
 <style scoped lang="scss">
 @import "@/styles/base/_variables.scss";
-.blocked-card {
-  max-width: 300px;
-  @media (min-width: 1200px) {
-    max-width: 374px;
-  }
-}
 
 .btn-connection {
   box-shadow: 0px 1px 3px #B2aaaa;
@@ -219,5 +213,8 @@ export default {
     }
   }
 }
-
+.v-sheet.v-card:not(.v-sheet--outlined)::v-deep {
+  box-shadow: none !important;
+  border: 2px solid #dddddd78;
+}
 </style>

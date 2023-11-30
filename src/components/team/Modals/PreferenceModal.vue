@@ -22,24 +22,17 @@
     >
       <h6 slot="title">Team Preferences</h6>
       <span style="font-size: 14px; font-weight: bold">
-        Change team password?
+        Change team pin?
       </span>
-      <span style="font-size: 12px"
-        >It's a good idea to use a strong password that you are not using
-        elsewhere</span
-      >
       <br />
       <br />
 
       <div class="justify-content-end">
         <div class="d-flex mobile-column justify-content-end">
-          <span
-            class="align-bottom"
-            >Present</span
-          >
+
           <div class="input-w">
             <a-input-password
-              placeholder="Enter Team Password"
+              placeholder="Enter current pin"
               v-model="old_password"
             />
           </div>
@@ -48,13 +41,10 @@
 
       <div class="justify-content-end mt-2">
         <div class="d-flex mobile-column justify-content-end">
-          <span
-            class="align-bottom"
-            >New</span
-          >
+
           <div class="input-w">
             <a-input-password
-              placeholder="Enter Team Password"
+              placeholder="Enter new pin"
               v-model="new_password"
             />
           </div>
@@ -62,22 +52,19 @@
       </div>
       <div class="justify-content-end mt-2">
         <div class="d-flex mobile-column justify-content-end">
-          <span
-            class="align-bottom"
-            >Re-type New</span
-          >
+
           <div class="input-w">
             <a-input-password
-              placeholder="Enter Team Password"
+              placeholder="Confirm new pin"
               v-model="re_password"
             />
           </div>
         </div>
       </div>
 
-      <a-divider />
+      <!-- <a-divider /> -->
 
-      <div class="d-flex justify-content-start">
+      <!-- <div class="d-flex justify-content-start">
         <span style="font-size: 14px; font-weight: bold; padding-right: 20px">
           Change team Visibility
         </span>
@@ -100,7 +87,7 @@
           >Some information may still be visible to others, such as team members
           name in other messagelist and message team members sent.</span
         >
-      </div>
+      </div> -->
       <template slot="footer">
         <a-button key="back" shape="round" @click="handleCancel">
           Cancel
@@ -137,13 +124,27 @@
       },
       handleOk(e) {
         console.log('Clicked Ok');
-        if (this.new_password == this.re_password) {
+        if(this.new_password == '' || this.re_password == '' || this.old_password == '') {
+          this.$message.error('Please fill all the fields.');
+        }
+        else if (this.new_password.length < 4 || this.re_password.length < 4 || this.old_password.length < 4) {
+          this.$message.error('Pin must be at least 4 characters long.');
+        }
+        else if (this.new_password.length > 4 || this.re_password.length > 4 || this.old_password.length > 4) {
+          this.$message.error('Pin must be 4 characters long.');
+        }
+        else if(!isNaN(this.new_password) || !isNaN(this.re_password) || !isNaN(this.old_password)) {
+          this.$message.error('Pin must be a number.');
+        }
+        else if (this.new_password == this.re_password) {
           console.log('emitting');
           this.$emit('handleOk', {
             old_password: this.old_password,
             new_password: this.new_password,
             team_visiblity: this.computed_teamVisibility,
           });
+        } else {
+          this.$message.error('New pin and re-type new pin does not match');
         }
         this.old_password = '';
         this.new_password = '';
