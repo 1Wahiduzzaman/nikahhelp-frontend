@@ -29,81 +29,121 @@
 				</a-col>
 			</a-row>
       <div class="text-center pt-2 px-4">
-        <button class="btn btn-block check-invite" @click="getTheTeamInvitationInfo" :disabled="!invitationLink || isLoading">Check Link</button>
+        <button class="btn btn-block check-invite mb-8" @click="getTheTeamInvitationInfo" :disabled="!invitationLink || isLoading">Check Link</button>
       </div>
       <div v-if="!isLoading">
         <div v-if="team" class="mt-4 px-4 invite-info-box">
           <div v-if="!notValidLink">
             <div v-if="!isJoined">
-              <h4 class="invited-respresent color-primary fs-20">Congratulations you're joining as a <b class="font-weight-bold text-uppercase">{{ team.user_type }}</b></h4>
+              <div class="p-3" style="border-radius: 14px; background: #3ab549;">
+                <h4 class="invited-respresent fs-16 text-center text-white">Congratulations you're joining as a </h4>
+                <span class="font-weight-bold text-uppercase text-center w-100 fs-18 text-white">{{ team.user_type }}</span>
+              </div>
 
               <div class="invite-info py-4">
                 <div class="d-flex">
                   <div class="d-flex justify-content-between align-items-center col-50">
-                    <h6 class="fs-14">Invited by</h6>
+                    <h6 class="fs-14 text--disabled">Invited by</h6>
                     <span style="margin-top: -6px">:</span>
                   </div>
-                  <h6 class="ml-2 fs-14">{{ team && team.team && team.team.created_by ? team.team.created_by.full_name : '' }}</h6>
+                  <h6 class="ml-2 fs-14 text-break text--secondary">{{ team && team.team && team.team.created_by ? team.team.created_by.full_name : '' }}</h6>
                 </div>
                 <div class="d-flex">
                   <div class="d-flex justify-content-between align-items-center col-50">
-                    <h6 class="fs-14">Team name</h6>
+                    <h6 class="fs-14 text--disabled">Team name</h6>
                     <span style="margin-top: -6px">:</span>
                   </div>
-                  <h6 class="ml-2 fs-14">{{ team && team.team ? team.team.name : '' }}</h6>
+                  <h6 class="ml-2 fs-14 text--secondary">{{ team && team.team ? team.team.name : '' }}</h6>
                 </div>
                 <div class="d-flex">
                   <div class="d-flex justify-content-between align-items-center col-50">
-                    <h6 class="fs-14">Total team member</h6>
+                    <h6 class="fs-14 text--disabled">Total team member</h6>
                     <span style="margin-top: -9px">:</span>
                   </div>
-                  <h6 class="ml-2 fs-14">{{ team && team.team ? team.team.member_count : '' }}</h6>
+                  <h6 class="ml-2 fs-14 text--secondary">{{ team && team.team ? team.team.member_count : '' }}</h6>
                 </div>
                 <div class="d-flex">
                   <div class="d-flex justify-content-between align-items-center col-50">
-                    <h6 class="fs-14">Role</h6>
+                    <h6 class="fs-14 text--disabled">Role</h6>
                     <span style="margin-top: -6px">:</span>
                   </div>
-                  <h6 class="ml-2 fs-14">{{ team.role }}</h6>
+                  <h6 class="ml-2 fs-14 text--secondary">{{ team.role }}</h6>
                 </div>
                 <div class="d-flex">
                   <div class="d-flex justify-content-between align-items-center col-50">
-                    <h6 class="fs-14">Relationship</h6>
+                    <h6 class="fs-14 text--disabled">Relationship</h6>
                     <span style="margin-top: -6px">:</span>
                   </div>
-                  <h6 class="ml-2 fs-14">{{ team.relationship }}</h6>
+                  <h6 class="ml-2 fs-14 text--secondary">{{ team.relationship }}</h6>
                 </div>
                 <div class="d-flex">
                   <div class="d-flex justify-content-between align-items-center col-50">
-                    <h6 class="fs-14">Team create date</h6>
+                    <h6 class="fs-14 text--disabled">Team create date</h6>
                     <span style="margin-top: -6px">:</span>
                   </div>
-                  <h6 class="ml-2 fs-14">{{ team && team.team ? formateDate(team.team.created_at) : '' }}</h6>
+                  <h6 class="ml-2 fs-14 text--secondary">{{ team && team.team ? formateDate(team.team.created_at) : '' }}</h6>
                 </div>
+              </div>
+              <div class="mt-5 px-4" v-if="!success">
+                <h4 class="fs-18 color-primary">Team Password</h4>
+                <a-row class="mt-1">
+                  <a-col :span="24" class="mt-4">
+                    <div class="d-flex justify-content-around">
+                      <input v-for="i in 4" ref="teamPassword" :key="i" type="password" class="password-input-box text-center" maxlength="1" @keydown.prevent="handlePasswordInput($event, i, 'teamPassword')">
+                      <div 
+                        class="password-input-box d-flex justify-content-center align-items-center" 
+                        style="cursor: pointer; background-color: #6159a7;"
+                        @click="showPassword =! showPassword; handleShowPassword('teamPassword');"
+                      >
+                        <v-icon color="#fff" v-if="!showPassword" small>mdi-eye-outline</v-icon>
+                        <v-icon color="#fff" v-else small>mdi-eye-off-outline</v-icon>
+                      </div>
+                    </div>
+                    <span class="fs-12 text-danger ml-2 fs-12" v-if="showPasswordError">Password must be a number</span>
+                  </a-col>
+                </a-row>
               </div>
             </div>
             <div v-else class="flex justify-content-center align-items-center">
-              <h4 class="invited-respresent fs-18 color-primary">You are already a member of this team</h4>
+              <div class="p-3" style="border-radius: 14px; background: #dc3545;">
+                <h4 class="invited-respresent fs-18 text-center text-white">You are already a member of this team</h4>
+              </div>
             </div>
           </div>
           <div v-else>
-            <h4 class="invited-respresent color-primary fs-20" v-if="notValidLink"> You do not have permission to join by using this link</h4>
+            <!-- <h4 class="invited-respresent color-primary fs-20" v-if="notValidLink"></h4> -->
+            <div class="p-3" style="border-radius: 14px; background: #dc3545;">
+              <h4 class="invited-respresent fs-16 text-center text-white" v-if="notValidLink">You do not have permission to join by using this link1</h4>
+            </div>
+          </div>
+    
+          <div class="d-flex flex-column align-items-center justify-content-center mt-5" v-if="success">
+            <div class="success-box">
+              <a-icon type="check" class="fs-24 text-white d-flex align-items-center justify-content-center py-2" />
+            </div>
+            <h4 class="fs-20 mt-3">Done</h4>
+            <p class="fs-14">You've joined successfully</p>
           </div>
         </div>
         <div v-else class="px-4 flex justify-content-center align-items-center mt-4">
-          <h6 class="text-danger" v-if="invalidCode">Code is not valid. Please try again</h6>
-          <h6 class="text-danger" v-if="notValidLink">You do not have permission to join by using this link</h6>
+          <div class="p-3" style="border-radius: 14px; background: #dc3545;" v-if="invalidCode || notValidLink">
+            <h4 class="invited-respresent fs-16 text-center text-white" v-if="invalidCode">Code is not valid. Please try again</h4>
+            <h6 class="invited-respresent fs-16 text-center text-white" v-if="notValidLink">You do not have permission to join by using this link2</h6>
+          </div>
         </div>
       </div>
       <div v-else class="flex justify-content-center align-items-center mt-5">
 <!--        <a-icon type="loading" v-if="isLoading" />-->
         <loading-spinner class="mt-5" />
       </div>
-      <div class="position-absolute footer-cancel-btn">
-        <a-button class="back-button cancel-button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
+      <div class="position-absolute footer-cancel-btn" v-if="!success">
+        <a-button class="cancel-button float-left" v-on:click="$emit('cancel_button')">Back</a-button>
       </div>
-      <div class="position-absolute footer-conf-btn">
-        <a-button class="confirm-button float-right" @click="onConfirmClick">Confirm</a-button>
+      <div class="position-absolute footer-conf-btn" v-if="!success">
+        <a-button class="confirm-button float-right" @click="onConfirmClick" :loading="loading">Confirm</a-button>
+      </div>
+      <div class="position-absolute footer-conf-btn" v-if="success">
+        <a-button class="confirm-button float-right" @click="closeSuccess">Ok</a-button>
       </div>
 		</div>
 	</div>
@@ -115,6 +155,8 @@ import LoadingSpinner from "../ui/LoadingSpinner";
 export default {
 	name: "ManageTeam",
 	components: {LoadingSpinner},
+
+
 	data() {
 		return {
 			isLoading: false,
@@ -125,7 +167,11 @@ export default {
       loading: false,
       invalidCode: false,
       isJoined: false,
-      notValidLink: false
+      notValidLink: false,
+			invitationPassword: "",
+			success: false,
+			showPassword: false,
+			showPasswordError: false,
 		};
 	},
 	created() {
@@ -139,11 +185,6 @@ export default {
 		window: () => window,
 	},
 	methods: {
-		/*      cancel_button(){
-          this.$emit('cancel_button_click');
-      },
-
-  */ 
     onSearch() {
 			console.log("search clicked");
 		},
@@ -157,29 +198,6 @@ export default {
         }
       );
     },
-		onConfirmClick(event) {
-      if(this.invitationLink && this.team) {
-        let payload = this.team.team;
-        payload.invitation_link = this.invitationLink;
-        payload.role = this.team.role;
-        this.$emit("toggleToTeamPassword", payload);
-      }
-			// if (this.invitationLink.length > 0) {
-			// 	console.log("Coming here");
-			// 	this.$router.push({
-			// 		name: "Join Team Password",
-			// 		params: { invitationLink: this.invitationLink },
-			// 	});
-			// } else if (this.invitationLink.length == 0) {
-			// 	console.log("Coming There");
-			// 	//this.$message.error("Please fill up invitation link");
-			// 	this.$error({
-			// 		title: "Invitation Link is empty",
-			// 		content: "Please paste team invitation link",
-			// 		centered: true,
-			// 	});
-			// }
-		},
     formateDate(date) {
       if (date == null || date == undefined) {
         return "  Not Exist";
@@ -195,6 +213,7 @@ export default {
       return [year, month, day].join("/");
     },
     async getTheTeamInvitationInfo() {
+      this.team = null;
       let originalLink = this.invitationLink.split('?invitation=');
       let link = this.invitationLink;
       if (originalLink.length > 1) {
@@ -203,8 +222,10 @@ export default {
       this.isLoading = true;
       await ApiService.get(`/v1/team-invitation-information/${link}`).then(res => {
         this.loading = false;
-        this.notValidLink = false;
-        if (res && res.data) {
+        console.log('insie request')
+        if (res && res.data && res.data.data) {
+          this.invalidCode = false;
+          console.log("this is inside the team invitation information")
           this.team = {};
           this.isLoading = false;
           let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -218,6 +239,7 @@ export default {
 
           if(((res.data.data.email && loggedUser.email == res.data.data.email) || !res.data.data.email)) {
             this.team = res.data.data;
+            this.team.invitation_link = link;
           } else {
             if(!this.isJoined) {
               this.notValidLink = true;
@@ -239,8 +261,11 @@ export default {
           // this.notValidLink = true;
         }
         if(!this.team) {
+          console.log('invalid')
+          this.isLoading = false;
           this.invalidCode = true;
           this.isJoined = false;
+          this.notValidLink = false;
           // this.$confirm({
           //   icon: "check-circle",
           //   title: "Code is not valid!",
@@ -253,8 +278,98 @@ export default {
         this.invalidCode = true;
         this.isJoined = false;
         this.isLoading = false;
+        this.notValidLink = false;
       });
-    }
+      this.isLoading = false;
+    },
+
+    async onConfirmClick() {
+			if (this.invitationPassword.length > 0) {
+				if(this.team.team.password.toString() === this.invitationPassword.toString()) {
+					this.loading = true;
+
+
+
+					let payload = {
+						team_id: this.team.team_id,
+						invitation_link: this.team.link,
+						team_password: this.invitationPassword
+					};
+
+					const self = this
+					await ApiService.post("v1/join-team-by-invitation", payload).then((res) => {
+						this.loading = false;
+						if(res && res.data && res.data.data) {
+							let receivers = this.team.team.team_members.map(opt => opt.user_id);
+							let socketData = {
+								receivers: receivers,
+								team_id: this.team.id,
+								title: `joined ${this.team.team.name} team as ${this.team.team.role}`,
+								team_temp_name: this.team.team.name
+							};
+							self.$emit("socketNotification", socketData);
+							self.success = true;
+							self.$success({
+								title: "Success",
+								content: "Successfully joined to the team",
+								onOk() {
+									// setTimeout(() => self.$emit("loadTeams"), 100);
+									setTimeout(() => {
+										self.$emit("loadTeams");
+										self.$emit("cancel_button");
+									}, 1000);
+								},
+							});
+            }
+          }).catch((e) => {
+            console.log(e);
+          });
+        } else {
+            this.$error({
+              title: "Password does not match",
+              center: true,
+            });
+        }
+			}
+		},
+    closeSuccess() {
+        this.$emit('cancel_button');
+    },
+		handlePasswordInput(e, i, passwordType){
+			let allowedChars = '1234567890';
+			if(e.key === "Backspace") {
+				if(this.$refs[passwordType][i-1].value) {
+					this.$refs[passwordType][i-1].value = "";
+				} else if(i >= 2) {
+					this.$refs[passwordType][i-2].focus();
+				}
+			} else if (allowedChars.includes(e.key)) {
+				this.$refs[passwordType][i-1].value = e.key;
+				if(i < 4) {
+					this.$refs[passwordType][i].focus();
+				}
+			} else if(!allowedChars.includes(e.key)){
+				this.showPasswordError = true;
+				setTimeout(() => {
+					this.showPasswordError = false;
+				}, 1500);
+			}
+
+			let isPasswordCompleted = this.$refs[passwordType].every(element => element.value !== "");
+			if(isPasswordCompleted) {
+				if(passwordType === 'teamPassword'){
+					this.invitationPassword = "";
+					this.$refs[passwordType].forEach(element => {
+						this.invitationPassword += element.value;
+					});
+				}
+			}
+		},
+		handleShowPassword(passwordType) {
+			this.$refs[passwordType].forEach(element => {
+				element.type = element.type == 'text' ? 'password' : 'text';
+			})
+		},
 	},
 };
 </script>
@@ -333,7 +448,8 @@ export default {
   padding: 10px 8px;
   border-radius: 10px;
   background-color: #ffffff;
-  box-shadow: 0px 0px 10px 1px rgba(63, 6, 17, 0.3);
+  box-shadow: none !important;
+  border: 2px solid #dddddd78;
   .ant-card-body {
     padding: 0;
   }
@@ -781,18 +897,31 @@ export default {
   }
 }
 .footer-cancel-btn {
-  bottom: 50px;
+  bottom: 20px;
   left: 32px;
   .button {
     border-radius: 16px;
   }
 }
 .footer-conf-btn {
-  bottom: 50px;
+  bottom: 20px;
   right: 32px;
   .button {
     border-radius: 16px;
   }
 }
 // end css for team-card
+
+.password-input-box {
+	height: 40px;
+	//width: 100px;
+	width: 40px;
+	border: 1px solid #8f8f8f;
+	border-radius: 5px;
+  
+	&:hover {
+	  border-color: #b7deff;
+	}
+	
+}
 </style>

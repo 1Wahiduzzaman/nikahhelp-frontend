@@ -60,18 +60,9 @@
             <JoinTeam
               v-if="joinTeamShow"
               style="padding: 8px 8px;"
-              @cancel_button="
-                joinCreateTeamShow = true;
-                joinTeamShow = false;
-              "
-              @toggleToTeamPassword="toggleToTeamPassword"
-            />
-            <JoinTeamPassword
-              v-if="joinTeamPassword"
-              style="padding: 8px 8px;"
-              :team="joinTeamInfo"
-              @cancel_button="cancelJoinButton()"
+
               @loadTeams="loadTeams"
+              @cancel_button="joinCreateTeamShow = true; joinTeamShow = false; cancelJoinButton()"
               @socketNotification="socketNotification"
             />
             <CreateTeamPage1
@@ -97,7 +88,6 @@ import JoinTeam from "@/components/team/JoinTeam.vue";
 import CreateTeamPage1 from "@/components/team/CreateTeamPage1.vue";
 import JoinCreateTeam from "@/components/team/JoinCreateTeam.vue";
 import TeamDetailsCard from "@/components/team/TeamDetailsCard.vue";
-import JoinTeamPassword from "@/components/team/JoinTeamPassword.vue";
 import Layout from "@/views/design/Layout";
 import Banner from "@/components/team/Banner.vue";
 import Notification from "@/common/notification.js";
@@ -111,7 +101,6 @@ export default {
     JoinCreateTeam,
     CreateTeamPage1,
     TeamDetailsCard,
-    JoinTeamPassword,
   },
   sockets: {
     connect: function () {
@@ -133,7 +122,6 @@ export default {
       joinCreateTeamShow: true,
       createTeamPassword: false,
       welcomeModal: false,
-      joinTeamPassword: false,
       joinTeamInfo: null,
       relationsShip: 'Father',
       teams: []
@@ -263,7 +251,7 @@ export default {
         //   .dispatch("getTeams")
         //   .then((data) => {
         //     this.teams = data.data.data;
-			  //     this.isLoading = false;
+              //     this.isLoading = false;
         //     if(this.teams.length <= 0) {
         //       this.welcomeModal = true;
         //     }
@@ -293,12 +281,6 @@ export default {
     hideWelcomeModal() {
       this.welcomeModal = false;
     },
-    toggleToTeamPassword(teamInfo) {
-      this.joinTeamInfo = teamInfo;
-      this.joinTeamPassword = true;
-      this.joinCreateTeamShow = false;
-      this.joinTeamShow = false;
-    },
     cancelCreateTeamPage() {
       this.joinCreateTeamShow = true;
       this.createTeamShow = false;
@@ -306,7 +288,6 @@ export default {
     },
     cancelJoinButton() {
       this.joinTeamShow = false;
-      this.joinTeamPassword = false;
       this.joinCreateTeamShow = true;
       this.loadTeams();
     },

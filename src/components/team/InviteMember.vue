@@ -6,6 +6,7 @@
       <div class="d-flex px-4">
         <h4 class="fs-14 text-white invite-txt">Send team invitation</h4>
       </div>
+
       <div class="px-4 mt-2 position-relative">
         <div class="position-relative flex flex-column">
           <label for="" style="color:#fff; margin: 0px 2px;">Role:</label>
@@ -19,7 +20,6 @@
                 v-model="invitationObject.role"
                 :disabled="invitationObject.add_as_a == 'Candidate'"
             >
-<!--              <a-select-option value="Owner+Admin"> Owner Admin </a-select-option>-->
               <a-select-option value="Admin"> Admin </a-select-option>
               <a-select-option value="Member"> Member </a-select-option>
             </a-select>
@@ -46,16 +46,6 @@
               placement="top"
               title="Relationship with candidate is"
           >
-<!--            <a-select-->
-<!--                placeholder="Relationship"-->
-<!--                class="mt-2 fs-14 mb-2"-->
-<!--                v-model="invitationObject.relationship"-->
-<!--                :disabled="invitationObject.add_as_a == 'Candidate'"-->
-<!--                v-if="from === 'details-card'"-->
-<!--            >-->
-<!--              <a-select-option value="Candidate" v-if="invitationObject.add_as_a == 'Candidate'"> Candidate </a-select-option>-->
-<!--              <a-select-option v-for="(relation, index) in relationships" v-else :key="index" :value="relation"> {{ relation }} </a-select-option>-->
-<!--            </a-select>-->
             <a-select
                 placeholder="Relationship"
                 class="fs-14"
@@ -67,24 +57,27 @@
           </a-tooltip>
           
           <button class="btn invitation-link-btn btn-block btn-sm py-2 mb-2 mt-4" @click="generateLink" v-if="!showUserBox" :disabled="isLoading || isSuccess"><a-icon class="mr-2" type="loading" v-if="isLoading" /> Generate Invitation Link</button>
+
           <p class="text-center text-white m-0" v-if="!showUserBox">or</p>
+
           <button class="btn attach-link-btn btn-sm py-2 mb-2 mt-2" @click="showUserBox = true" v-if="!showUserBox">Attach a registered user</button>
-<!--          <button class="btn attach-link-btn btn-sm py-2 mt-2" @click="removeAttachedUser()" v-if="showUserBox">Remove attached user</button>-->
         </div>
 
         <div class="mt-1" v-if="showUserBox">
-<!--          <h6 class="text-white fs-14">Attach a user to this invitation</h6>-->
           <label for="" style="color:#fff; margin: 0px 2px;">Email:</label>
+
           <a-input ref="userNameInput" class="mt-1" placeholder="Search email or user ID" v-model="user_email" @input="searchMember()" medium>
-            <a-icon slot="suffix" type="loading" style="color: rgba(0,0,0,.45)" v-if="searchLoading" />
-            <a-icon slot="suffix" type="close" style="color: rgba(0,0,0,.45); cursor:pointer;" @click="showUserBox=false; removeAttachedUser();" v-if="!searchLoading" />
+            <a-icon slot="suffix" type="loading" style="color: rgba(0,0,0,.45)" v-if="requestSent != 0" />
+            <a-icon slot="suffix" type="close" style="color: rgba(0,0,0,.45); cursor:pointer;" @click="showUserBox=false; removeAttachedUser();" v-if="requestSent == 0" />
           </a-input>
+          
         </div>
-<!--        <span class="text-white fs-12 fw-500 ml-2">Invited/Suggested/Searched user</span>-->
+
       </div>
       <div class="suggestion-box mt-4 px-4" :class="{'details-suggestion-card': from === 'details-card'}">
-        <div class="user d-flex position-relative mb-2" v-if="userObj && userObj.user">
-          <img src="https://picsum.photos/200" alt="avatar" class="user-avatar" />
+        <div class="user d-flex position-relative cursor-pointer mb-2" v-if="userObj && userObj.user" @click="attached=!attached">
+          <img :src="userObj.user.account_type == 1 ? userObj.candidate_information.personal.per_main_image_url + `?token=${token}` : userObj.representative_information.image_upload.per_main_image_url +  `?token=${token}`" alt="avatar" class="user-avatar" />
+
           <div class="d-flex justify-content-between align-items-center ml-2">
             <div class="short-info">
               <h4 class="fs-14 text-white fw-700">{{ userObj.user && userObj.user.full_name ? userObj.user.full_name : 'N/A' }}</h4>
@@ -92,14 +85,12 @@
             </div>
             <button class="btn btn-sent position-absolute text-white cursor-default" v-if="userObj.invitation_status == 2">Joined</button>
             <button class="btn btn-sent btn-outline-secondary position-absolute text-white cursor-default" v-if="userObj.invitation_status == 1">Sent</button>
-<!--            <button class="btn btn-success position-absolute" :disabled="isSuccess"-->
-<!--                    v-if="userObj.invitation_status == 0" @click="attachUser()">-->
-<!--              {{ userObj && userObj.user && userObj.user.email == invitationObject.email ? 'Invited' : 'Invite' }}-->
-<!--            </button>-->
             <a-checkbox class="position-absolute btn-sent" @change="attachUser" v-model="attached" v-if="userObj.invitation_status == 0"></a-checkbox>
           </div>
+
         </div>
-        <button class="btn invitation-link-btn btn-block btn-sm py-2" @click="generateLink" v-if="showUserBox" :disabled="isLoading || isSuccess"><a-icon type="loading" v-if="isLoading" /> Generate Invitation Link</button>
+        
+        <button class="btn invitation-link-btn btn-block btn-sm py-2" @click="generateLink" v-if="showUserBox" :disabled="isLoading || isSuccess || !attached"><a-icon class="mr-2" type="loading" v-if="isLoading" /> Generate Invitation Link</button>
       </div>
       <div class="link-box px-4 position-absolute w-full" :class="{'link-box-empty': !showUserBox}">
         <div class="w-full mt-2">
@@ -136,7 +127,6 @@ export default {
       showUserBox: false,
       isLoading: false,
       isSuccess: false,
-      searchLoading: false,
       attached: false,
       invitationObject: {
         role: undefined,
@@ -148,7 +138,12 @@ export default {
         memberBox: false,
         email: null
       },
+      requestSent: 0,
+      token: ''
     }
+  },
+  created() {
+    this.token = JSON.parse(localStorage.getItem('token'));
   },
   methods: {
     socketNotification(payload) {
@@ -171,7 +166,7 @@ export default {
       }
     },
     async searchMember() {
-      this.searchLoading = true;
+      this.requestSent++;
       await ApiService.post(`/v1/user-info`, {
         email: this.user_email,
         team_id: this.team.id
@@ -179,12 +174,14 @@ export default {
         this.invitationObject.email = null;
         this.attached = false;
         this.userObj = response.data.data;
-        this.searchLoading = false;
+        this.requestSent--;
       }).catch(e => {
+        console.log('error', e)
         this.userObj = {};
-        this.searchLoading = false;
         this.invitationObject.email = null;
         this.attached = false;
+        this.requestSent--;
+
       });
     },
     inviteMember() {
