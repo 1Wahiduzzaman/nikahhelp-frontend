@@ -139,6 +139,30 @@
           Save & Back
         </a-button>
       </div>
+
+      <a-modal 
+        :visible="showEditWarning" 
+        :closable="true"
+        title="Alert!!" 
+        @ok="showEditWarning = false" 
+
+        :ok-button-props="{ disabled: true }"
+        :cancel-button-props="{ disabled: true }"
+        v-if="showEditWarning"
+      >
+        <div class="m-3">
+          Editing some fields may change you verfication status.
+        </div>
+
+        <template slot="footer">
+          <a-button key="back" shape="round" @click="showEditWarning=false">
+            Ok
+          </a-button>
+          <!-- <a-button key="submit" type="primary" shape="round" @click="showProfileTeamOverview = false">
+          Ok
+          </a-button> -->
+        </template>
+      </a-modal>
       <br /><br /><br /><br /><br />
     </div>
   </div>
@@ -223,6 +247,7 @@ export default {
         "Image Upload",
         "Verification",
       ],
+      showEditWarning: true
     };
   },
   methods: {
@@ -406,7 +431,7 @@ export default {
               response.data.data.user.preference.pre_partner_religion_id[0],
             pre_ethnicities: !response.data.data.user.preference.pre_ethnicities
               ? undefined
-              : response.data.data.user.preference.pre_ethnicities.split(","),
+              : response.data.data.user.preference.pre_ethnicities.split(", "),
             pre_preferred_divorcee:
               response.data.data.user.preference.pre_preferred_divorcee == 0 ||
               !response.data.data.user.preference.pre_preferred_divorcee
