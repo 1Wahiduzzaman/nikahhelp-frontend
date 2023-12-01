@@ -25,7 +25,7 @@
 			<div class="team-card-header">
 				<!-- Team Info with ID -->
 				<div class="left">
-					<a-tooltip placement="bottom" :title="teamData.team_id">
+					<a-tooltip placement="bottom" :title="teamData.team_id.split('-')[0]">
 						<div class="status active" :title="teamData.team_id">
 							Team {{ index + 1 }}
 							<span class="green" v-if="turnOn"></span>
@@ -1138,9 +1138,9 @@ export default {
 			});
 		},
 		async checkCurrentUser() {
-			await this.$store.dispatch("getUser");
+			// await this.$store.dispatch("getUser");
 			let userData = this.$store.getters.userInfo;
-			// console.log(userData);
+			console.log(userData, 'check current user');
 			console.log(userData.id);
 			this.teamData.team_members.map((_member) => {
 				if (_member.user_id == userData.id) {
@@ -1166,14 +1166,14 @@ export default {
 				});
 				return;
 			}
-			if (deletionReasonDetail.length == 0 && deletionReasonType.length == 0) {
-				// this.$message.error("Please Enter Deletion Reason and Type Properly");
-				this.$error({
-					title: "Error",
-					content: "Please Enter Deletion Reason and Type Properly",
-				});
-				return;
-			}
+			// if (deletionReasonDetail.length == 0 && deletionReasonType.length == 0) {
+			// 	// this.$message.error("Please Enter Deletion Reason and Type Properly");
+			// 	this.$error({
+			// 		title: "Error",
+			// 		content: "Please Enter Deletion Reason and Type Properly",
+			// 	});
+			// 	return;
+			// }
 			if (!this.isOwnerAdmin) {
 				// this.$message.error("You don't have rights to delete this team");
 				this.$error({
@@ -1777,6 +1777,7 @@ export default {
 
 .red-hover:hover {
 	background-color: blue !important;
+	color: #fff !important;
 }
 
 //css for custom invitation links
