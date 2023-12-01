@@ -50,45 +50,6 @@ export default {
     CandidateProfile,
     RepresentativeProfile,
   },
-  computed: {
-    loggedUser() {
-      let loggedUser = JSON.parse(localStorage.getItem("user"));
-      if (loggedUser) {
-        return loggedUser;
-      }
-      return null;
-    },
-    activeTeamInfo() {
-      return this.teams.find((item) => item.team_id == this.activeTeamId);
-    },
-    teamRole() {
-      let team = this.activeTeamInfo;
-      let loggedUser = this.loggedUser;
-      if (team && loggedUser && team.team_members) {
-        let member = team.team_members.find(
-          (item) => item.user_id == loggedUser.id
-        );
-        if (member) {
-          return member.role.replace("+", " & ");
-        }
-      }
-      return "N/A";
-    },
-    isRepresentativeInTeam() {
-      if(this.representativeProfileInfo.user_id) {
-        if(this.getAllTeamMembers().includes(this.representativeProfileInfo.user_id)) {
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return false;
-      }
-    },
-    isMemberInTeam() {
-      return this.getAllTeamMembers().includes(parseInt(this.profileId));
-    }
-  },
   data() {
     return {
       activeTeamId: null,
@@ -128,10 +89,48 @@ export default {
     }
   },
   computed: {
+    loggedUser() {
+      let loggedUser = JSON.parse(localStorage.getItem("user"));
+      if (loggedUser) {
+        return loggedUser;
+      }
+      return null;
+    },
+    activeTeamInfo() {
+      return this.teams.find((item) => item.team_id == this.activeTeamId);
+    },
+    teamRole() {
+      let team = this.activeTeamInfo;
+      let loggedUser = this.loggedUser;
+      if (team && loggedUser && team.team_members) {
+        let member = team.team_members.find(
+          (item) => item.user_id == loggedUser.id
+        );
+        if (member) {
+          return member.role.replace("+", " & ");
+        }
+      }
+      return "N/A";
+    },
+    isRepresentativeInTeam() {
+      if(this.representativeProfileInfo.user_id) {
+        if(this.getAllTeamMembers().includes(this.representativeProfileInfo.user_id)) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    },
+    isMemberInTeam() {
+      return this.getAllTeamMembers().includes(parseInt(this.profileId));
+    },
     readyForSiteVisit() {
       return this.fullProfileInfo !== null && this.teams !== null;
     },
   },
+  
   watch: {
     readyForSiteVisit() {
       if(this.readyForSiteVisit && !this.alreadyVisited) {
