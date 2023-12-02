@@ -56,7 +56,7 @@
                 title="Gallery"
                 customEvent="openGallery"
                 :responsive="false"
-                icon="/assets/icon/gallery.svg"
+                :icon="require('@/assets/icon/gallery.svg')"
                 @onClickButton="onClickButton"
             />
             <ButtonComponent

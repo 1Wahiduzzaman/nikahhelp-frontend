@@ -248,11 +248,21 @@ export default {
 
 <style scoped lang="scss">
 .main-content-wrapper {
-  margin-top: 0;
   width: 100%;
+  margin: 0px !important;
   .block-main-content {
+    padding: 12px 15px !important;
     width: 100%;
-    margin: 4px 10px 20px;
+    height: 100%;
+    .row {
+      margin: 0px !important;
+    }
+
+
+    .col-12, .col-md-4, .col-xl-3 {
+      margin: 0px !important;
+      padding: 5px 5px 5px 5px !important;
+    }
   }
 }
 </style>

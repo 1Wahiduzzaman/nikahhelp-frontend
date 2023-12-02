@@ -94,7 +94,7 @@
       </div>
       <div class="link-box px-4 position-absolute w-full" :class="{'link-box-empty': !showUserBox}">
         <div class="w-full mt-2">
-          <input type="text" class="form-control invite-link text-white fs-12 py-5" id="copyInput" :value="invitationObject.visible_invitation_link" disabled />
+          <input type="text" class="form-control invite-link text-white fs-12 py-5" :class="{'animate-flicker' : flicker}" id="copyInput" :value="invitationObject.visible_invitation_link" disabled />
           <button class="copy-button position-absolute px-2" @click="copyToken">{{ copyBtnText }}</button>
         </div>
         <p class="fs-10 text-white mt-2">Send this link through email or any messaging platform <br> Only one member can use this link once</p>
@@ -144,6 +144,11 @@ export default {
   },
   created() {
     this.token = JSON.parse(localStorage.getItem('token'));
+  },
+  computed: {
+    flicker() {
+      return this.invitationObject.visible_invitation_link != '';
+    }
   },
   methods: {
     socketNotification(payload) {
@@ -511,5 +516,32 @@ export default {
 .link-box-empty {
   //bottom: -136px !important;
   bottom: 0;
+}
+
+@keyframes flickerAnimation {
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-o-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-moz-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+@-webkit-keyframes flickerAnimation{
+  0%   { opacity:1; }
+  50%  { opacity:0; }
+  100% { opacity:1; }
+}
+.animate-flicker {
+  -webkit-animation: flickerAnimation 1s infinite;
+  -moz-animation: flickerAnimation 1s infinite;
+  -o-animation: flickerAnimation 1s infinite;
+  animation: flickerAnimation 1s infinite;
 }
 </style>

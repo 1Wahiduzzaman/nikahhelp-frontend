@@ -33,7 +33,7 @@
                     iconHeight="14px"
                     :isSmall="true"
                     title="Gallery"
-                    icon="/assets/icon/gallery.svg"
+                    :icon="require('@/assets/icon/gallery.svg')"
                     customEvent="openGallery"
                     :isBlock="true"
                     :responsive="false"

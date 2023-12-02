@@ -132,6 +132,10 @@ export default {
 
 .btn-block-50 {
   width: 50%;
+
+  @media (max-width: 768px) {
+    width: auto;
+  }
 }
 .check-icon {
   width: 100px;

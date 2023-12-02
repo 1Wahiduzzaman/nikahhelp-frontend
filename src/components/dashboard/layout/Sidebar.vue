@@ -25,7 +25,7 @@
               <router-link to="/manageteam" class="flex align-items-center">
                 <img
                   class="mr-3"
-                  src="@/assets/icon/group-fill-secondary.svg"
+                  src="@/assets/icon/manage_team.svg"
                   alt="icon"
                 />
                 <span class="mb-0">Manage Team</span>
@@ -79,7 +79,7 @@
               <router-link to="/chat-window" class="flex align-items-center">
                 <img
                   class="mr-3"
-                  src="@/assets/icon/chat-dots-fill-secondary.svg"
+                  src="@/assets/icon/chat.svg"
                   alt="icon"
                 />
                 <span class="mb-0">Chat</span>
@@ -103,7 +103,7 @@
               <router-link to="/profile"
                 ><img
                   class="mr-3"
-                  src="@/assets/icon/person-fill-secondary.svg"
+                  src="@/assets/icon/profile.svg"
                   alt="icon"
                 />Profile
               </router-link>
@@ -112,7 +112,7 @@
               <router-link to="/subscription"
                 ><img
                   class="mr-3"
-                  src="@/assets/icon/subscription-secondary.svg"
+                  src="@/assets/icon/subscription.svg"
                   alt="icon"
                 />Subscription
               </router-link>

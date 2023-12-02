@@ -1,14 +1,13 @@
 <template>
-    <div class="container-fluid" style="padding-top: 0px;">
-      <div style="margin-bottom: 5px; padding-right: 1000px"></div>
+    <div class="container-fluid main-container">
       <Loader v-if="isLoading" :isLoading="isLoading" />
       <div class="row" v-else>
         <TeamOffRedirection v-if="redirection" />
-        <div class="col-12 chat-col-12">
-          <div class="chat-wrapper my-2">
+        <div class="col-12">
+          <div class="chat-wrapper">
             <div class="chat-left"
                  :class="{'chat-hide': conversationTitle}">
-              <div class="chat-category">
+              <div class="chat-category mb-3">
                 <nav>
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-link"
@@ -399,6 +398,7 @@ export default {
       newMessage: false,
       token: "",
       search: '',
+      isLoading: false,
     }
   },
 
@@ -596,8 +596,10 @@ export default {
       }
       this.loadPageData();
     },
-    loadPageData() {
-      this.loadTeamChat();
+    async loadPageData() {
+      this.isLoading = true;
+      await this.loadTeamChat();
+      this.isLoading = false;
       this.loadChatHistory();
       this.loadConnectedGroup();
       this.getPrivateRequests();
@@ -1370,6 +1372,19 @@ export default {
   width: 100% !important;
 }
 
+.main-container {
+  padding: 12px 15px !important;
+  margin: 0px !important;
+
+  .row {
+    margin: 0px !important;
+  }
+
+  .col-12 {
+    padding: 0px !important;
+  
+  }
+}
 @media (min-width: 1200px) {
   .container, .container-lg, .container-md, .container-sm, .container-xl {
     max-width: 100%;
@@ -1407,9 +1422,6 @@ export default {
     display: table;
   }
 }
-.chat-col-12 {
-  padding: 12px 15px !important;
-}
 .chat-wrapper {
   margin: auto;
   padding: 20px 20px 20px 0px;
@@ -1419,6 +1431,7 @@ export default {
   //box-shadow: 0px 0px 10px 1px rgba(63, 6, 17, 0.3);
   box-shadow: none !important;
   border: 2px solid #dddddd78 !important;
+  height: calc(100vh - 92px) !important;
   @media (max-width: 991px) {
     padding: 10px;
   }
@@ -1438,6 +1451,7 @@ export default {
     max-width: 100%;
     padding-right: 5px;
     //min-height: 600px;
+    height: 100%;
     //height: calc(100vh - 195px);
     border-right: 2px solid #e5e5e5;
     @media (max-width: 913px) {
