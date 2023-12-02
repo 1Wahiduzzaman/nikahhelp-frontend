@@ -10,7 +10,7 @@
         :isSmall="true"
         title="Back"
         :responsive="false"
-        icon="/assets/icon/gallery.svg"
+        :icon="require('@/assets/icon/gallery.svg')"
         @onClickButton="goBackToTickets"
       />
     </div>
