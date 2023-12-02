@@ -16,7 +16,7 @@
 							iconHeight="14px"
 							:isSmall="true"
 							title="EditProfile"
-							icon="/assets/icon/edit_step.svg"
+							:icon="require('@/assets/icon/edit_icon.svg')"
 							customEvent="editProfile"
 							:isBlock="false"
 							@onClickButton="onClickButton"
@@ -25,7 +25,7 @@
 							iconHeight="14px"
 							:isSmall="true"
 							title="Gallery"
-							icon="/assets/icon/gallery.svg"
+							:icon="require('@/assets/icon/gallery.svg')"
 							customEvent="openGallery"
 							:isBlock="true"
 							:responsive="false"
@@ -90,7 +90,7 @@
 				<v-col cols="12">
 					<fieldset class="">
 						<legend class="ml-8 px-1"><span>Personal Information</span></legend>
-						<v-container fluid class="pt-0 px-5">
+						<v-container fluid class="pt-0 px-5 info-div">
 							<v-row dense>
 								<v-col class="pt-1" cols="12">
 									<v-card class="p-3" style="height: 100%">
@@ -155,7 +155,7 @@
 				<v-col cols="12">
 					<fieldset class="">
 						<legend class="ml-8 px-1"><span>Verification & reference</span></legend>
-						<v-container fluid class="pt-0 px-5">
+						<v-container fluid class="pt-0 px-5 info-div">
 							<v-row dense>
 								<v-col class="pt-1" cols="12">
 									<v-card class="p-3" style="height: 100%">
@@ -426,5 +426,27 @@ legend {
 			background: $bg-white;
 		}
 	}
+}
+.info-div::v-deep {
+	.v-list-item__subtitle {
+		font-family: "Roboto", sans-serif !important;
+		line-height: 1.7 !important;
+		letter-spacing: 0.009375em;
+		font-size: 1rem !important;
+		font-weight: 400 !important;
+		color: rgba(0,0,0,.38) !important;
+	}
+	.v-list-item__title {
+		font-family: "Roboto", sans-serif !important;
+		line-height: 1.7 !important;
+		letter-spacing: 0.009375em;
+		font-size: 1rem !important;
+		font-weight: 400 !important;
+		color: rgba(0,0,0,.6) !important;
+	}
+}
+.v-sheet.v-card:not(.v-sheet--outlined)::v-deep {
+	box-shadow: none !important;
+	border: 2px solid #dddddd78;
 }
 </style>
