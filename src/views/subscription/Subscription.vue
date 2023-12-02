@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="h-100">
     <Loader v-if="isLoading" :isLoading="isLoading" />
-    <div v-else>
+    <div class="h-100" v-else>
       <!-- Heading -->
       <div class="section-header text-center heading-text px-2 font-poppins" v-if="false">
         <h4 class="heading color-primary font-weight-bolder">
@@ -27,7 +27,7 @@
               class="
                 custom-card
                 card-1
-                shadow-default
+                shadow-border
                 background-design-cardfooter
                 br-10
                 position-relative
@@ -51,7 +51,9 @@
                     justify-content-center
                     border-bottom
                     mb-5
+                    bg-brand-gradient-opacity
                   "
+                  style="border-radius: 12px;"
                   :class="{
                     'bg-brand-gradient':
                       choosedPlan && choosedPlan.id == plan.id,
@@ -70,7 +72,7 @@
                   <div v-else style="height: 24px; width: 24px; background: #fff; margin-right: 16px; border-radius: 36% / 36%;
                   box-shadow: inset 0 0 0 1.5px #bbbbc1;"></div>
                   <h4
-                    class="duration"
+                    class="duration text-white"
                     :class="{
                       selected: choosedPlan && choosedPlan.id == plan.id,
                     }"
@@ -105,7 +107,7 @@
               class="
                 custom-card
                 card-2
-                shadow-default
+                shadow-border
                 background-design-middle
                 height-1
               "
@@ -175,9 +177,9 @@
               class="
                 custom-card
                 card-3
-                shadow-default
+                shadow-border
                 background-design-rightcard
-                height-2
+                height-1
               "
             >
               <h1 class="px-4 text-white pt-2 fs-24 text-center">
@@ -189,7 +191,7 @@
                   class="w-100 custom-select fs-18"
                   v-model="teamSelected"
                   @change="setActiveTeam"
-                  style="cursor: pointer;"
+                  style="cursor: pointer; height: 40px !important;"
                 >
                   <option
                     v-for="(team, teamIndex) in teams"
@@ -340,16 +342,13 @@
                   @click="handleContinue"
                   class="
                     btn
-                    bg-success
                     btn-payment
                     w-100
-                    text-white
                     d-flex
                     align-items-center
                     justify-content-center
                     br-10
                   "
-                  style="width: 90% !important; margin: 1rem auto;   position: absolute; bottom: 1rem; right: 5%;"
                 >
                   Continue to payment
                   <a-icon type="arrow-right" class="ml-2 mt-1" />
@@ -372,10 +371,10 @@
       </div>
 
       <!-- small screen -->
-      <div class="subscription-details container-fluid mt-4 font-poppins mobile-view">
+      <div class="subscription-details-mobile  container-fluid mt-4 font-poppins mobile-view">
         <div class="row">
           <div
-            class="col-12 col-md-4 col-xl-4 font-poppins px-2 py-0"
+            class="col-12 col-md-4 col-xl-4 font-poppins py-0"
             :class="{ 'mobile-block': activeStep !== 1 }"
           >
             <!-- Card 1 -->
@@ -383,7 +382,7 @@
               class="
                 custom-card
                 card-1
-                shadow-default
+                shadow-border
                 background-design-cardfooter
                 br-10
                 position-relative
@@ -407,7 +406,9 @@
                     justify-content-center
                     border-bottom
                     mb-5
+                    bg-brand-gradient-opacity
                   "
+                  style="border-radius: 12px;"
                   :class="{
                     'bg-brand-gradient':
                       choosedPlan && choosedPlan.id == plan.id,
@@ -434,7 +435,7 @@
                     "
                   ></div>
                   <h4
-                    class="duration"
+                    class="duration text-white"
                     :class="{
                       selected: choosedPlan && choosedPlan.id == plan.id,
                     }"
@@ -479,7 +480,7 @@
               class="
                 custom-card
                 card-2
-                shadow-default
+                shadow-border
                 background-design-middle
                 height-1
               "
@@ -532,7 +533,14 @@
                   :responsive="false"
                   @onClickButton="nextStep(1)"
                 /> -->
-              <button class="mt-2 text-button w-25" style="color: #6159a7" @click="nextStep(1)">Back</button>
+                <ButtonComponent
+                  class="mt-2 w-50 mr-1 sub-back-btn"
+                  :isSmall="true"
+                  minHeight="35px"
+                  title="Back"
+                  :responsive="false"
+                  @onClickButton="nextStep(2)"
+                />
   
               <ButtonComponent
                 class="mt-2 w-75"
@@ -555,9 +563,8 @@
               class="
                 custom-card
                 card-3
-                shadow-default
+                shadow-border
                 background-design-rightcard
-                height-2
               "
             >
               <h1 class="px-4 text-white pt-2 fs-24 text-center">
@@ -657,72 +664,77 @@
               </div>
 
               <div class="mt-1">
-                <div
-                  class="
-                    d-flex
-                    align-items-center
-                    justify-content-between
-                    bg-white
-                    px-4
-                    cursor-pointer
-                  "
-                  @click="setContentType('subscription')"
-                >
-                  <h4 class="fs-14 pt-1">
-                    This team's last subscription details
-                  </h4>
-                  <!--                  <a-icon-->
-                  <!--                    type="up"-->
-                  <!--                    :class="{ 'rotate-180': contentShow == 'subscription' }"-->
-                  <!--                  />-->
-                </div>
-                <div class="px-4 d-block mt-1" style="overflow-y: auto;">
-                  <small class="text-white">{{
-                    teamSelected &&
-                    teamSelected.last_subscription &&
-                    teamSelected.last_subscription.created_at
-                      ? messageCreatedAt(
-                          teamSelected.last_subscription.created_at
-                        )
-                      : ""
-                  }}</small>
-                  <h4 class="fs-12 text-white mt-2">
-                    Subscribed
-                    <b
-                      >{{
-                        teamSelected &&
-                        teamSelected.last_subscription &&
-                        teamSelected.last_subscription.plans
-                          ? teamSelected.last_subscription.plans.title
-                          : ""
-                      }}
-                      </b
-                    >
-                    by -
-                    <b>{{
-                      teamSelected &&
-                      teamSelected.last_subscription &&
-                      teamSelected.last_subscription.user
-                        ? teamSelected.last_subscription.user.full_name
-                        : ""
-                    }}</b>
-                  </h4>
-                  <small class="text-white"
-                    >Team Expire period extended to the date of -
-                    {{
-                      teamSelected && teamSelected.subscription_expire_at
-                        ? formateDate(teamSelected.subscription_expire_at)
-                        : ""
-                    }}</small
-                  >
+                
+                <div class="accordion mb-4" id="accordionExample">
+                  <div>
+                    <div id="headingOne">
+                      <h2 class="mb-0">
+                        <button class="w-100" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          <div data-v-715648c5="" class="
+                            d-flex
+                            align-items-center
+                            justify-content-between
+                            bg-white
+                            px-4
+                            cursor-pointer
+                          "><h4 data-v-715648c5="" class="fs-14 pt-1">Last team's subscription details <a-icon type="down" /></h4>
+                        </div>
+                        </button>
+                      </h2>
+                    </div>
+                
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                      <div class="team-details mt-2 d-block text-white pb-2">
+                        <div class="px-4 d-block mt-1" style="overflow-y: auto;">
+                          <small class="text-white">{{
+                            teamSelected &&
+                            teamSelected.last_subscription &&
+                            teamSelected.last_subscription.created_at
+                              ? messageCreatedAt(
+                                  teamSelected.last_subscription.created_at
+                                )
+                              : ""
+                          }}</small>
+                          <h4 class="fs-12 text-white mt-2">
+                            Subscribed
+                            <b
+                              >{{
+                                teamSelected &&
+                                teamSelected.last_subscription &&
+                                teamSelected.last_subscription.plans
+                                  ? teamSelected.last_subscription.plans.title
+                                  : ""
+                              }}
+                              </b
+                            >
+                            by -
+                            <b>{{
+                              teamSelected &&
+                              teamSelected.last_subscription &&
+                              teamSelected.last_subscription.user
+                                ? teamSelected.last_subscription.user.full_name
+                                : ""
+                            }}</b>
+                          </h4>
+                          <small class="text-white"
+                            >Team Expire period extended to the date of -
+                            {{
+                              teamSelected && teamSelected.subscription_expire_at
+                                ? formateDate(teamSelected.subscription_expire_at)
+                                : ""
+                            }}</small
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
             
             <div class="flex">
               <ButtonComponent
-                class="mt-2 w-50 mr-1"
-                backgroundColor="#fa4942"
+                class="mt-2 w-50 mr-1 sub-back-btn"
                 :isSmall="true"
                 minHeight="35px"
                 title="Back"
@@ -730,7 +742,7 @@
                 @onClickButton="nextStep(2)"
               />
               <ButtonComponent
-                class="mt-2 w-50"
+                class="mt-2 w-50 sub-cont-btn"
                 backgroundColor="#3ab549"
                 :isSmall="true"
                 minHeight="35px"
@@ -780,7 +792,7 @@ export default {
       user: {},
       is_verified: 1,
       error: null,
-      amount: 0.0,
+      amount: 9.99,
       savedAmount: 0.0,
       teams: [],
       teamSelected: null,
@@ -793,10 +805,10 @@ export default {
       descriptions: ["Plan 1", "Plan 2", "Plan 3", "Plan 4"],
     };
   },
-  created() {
+  async created() {
     //this.loadUser();
-    this.loadPlans();
-    this.loadTeams();
+    await this.loadPlans();
+    await this.loadTeams();
     this.getSelectedTeam();
     this.initialInfoModal();
   },
@@ -857,12 +869,14 @@ export default {
       this.contentShow = type;
     },
     async loadPlans() {
+      this.isLoading = true;
       let { data } = await ApiService.get("/v1/package-list").then(
         (res) => res.data
       );
       if (data) {
         this.plans = data;
       }
+      this.isLoading = false;
     },
     async loadTeams() {
       await this.$store.dispatch("getTeams");
@@ -1317,6 +1331,10 @@ export default {
     #e02076
   ) !important;
 }
+
+.bg-brand-gradient-opacity {
+  background-image: linear-gradient(to right top, #522e8e80, #602d8d80, #6e2b8c80, #7a2a8a80, #85288880, #91278780, #9d258580, #a8248380, #b7218180, #c51f7e80, #d31f7b80, #e0207680);
+}
 .bg-primary-gradient {
   //background-image: linear-gradient(
   //  to top right,
@@ -1352,9 +1370,22 @@ export default {
   transform: rotate(180deg);
 }
 .btn-payment {
-  border: 2px solid $color-white;
-  outline-style: solid;
-  outline-color: #cfcece;
+  width: 90% !important; 
+  margin: 1rem auto;   
+  position: absolute; 
+  bottom: 1rem; 
+  right: 5%;
+  height: 50px;
+  background: #fff;
+  border: 1px solid $color-success;
+  border-radius: 30px;
+  color: $color-success;
+  font-size: 1.2rem;
+
+  &:hover {
+    background-color: $color-success !important;
+    color: #fff !important;
+  }
 }
 .price-tag {
   font-size: 24px;
@@ -1388,7 +1419,7 @@ export default {
 }
 .height-1 {
   //height: 450px;
-  height: calc(95vh - 90px);
+  height: calc(100vh - 92px);
 }
 .height-2 {
   //height: 510px;
@@ -1435,10 +1466,34 @@ export default {
     color: #ffffff;
   }
 }
-@media (min-width: 768px) {
-  .subscription-details {
-    padding: 0 20px;
+
+.subscription-details {
+  padding: 12px 15px !important;
+  margin: 0px !important;
+  height: 100%;
+
+  .row {
+    margin: 0px !important;
+
+    .col-12, .col-md-4, col-xl-4 {
+      padding: 0px 5px !important;
+    }
   }
+}
+.subscription-details-mobile {
+  padding: 12px 8px !important;
+  margin: 0px !important;
+  height: 100%;
+
+  .row {
+    margin: 0px !important;
+
+    .col-12, .col-md-4, col-xl-4 {
+      padding: 0px 0px !important;
+    }
+  }
+}
+@media (min-width: 768px) {
   .desktop-py {
     padding: 16px 0 0 0;
   }
@@ -1472,15 +1527,7 @@ export default {
 }
 
 @media (max-width: 768px) {
-  .background-design-cardfooter {
-    margin-top: 4px;
-  }
-  .background-design-middle {
-    margin-top: 4px;
-  }
-  .background-design-rightcard {
-    margin-top: 4px;
-  }
+
   //.height-2 {
   //  //height: 450px;
   //  height: 85vh;
@@ -1537,5 +1584,29 @@ export default {
   border: none !important;
   outline: none !important;
   box-shadow: none;
+}
+
+.shadow-border {
+  box-shadow: none !important;
+  border: 2px solid #dddddd78 !important;
+  border-radius: 10px !important;
+}
+
+.sub-back-btn::v-deep {
+  width: 30% !important;
+  .v-btn {
+    background-color: #fff !important;
+    color: #6159a7 !important;
+    border: 1px solid #6159a7 !important;
+    box-shadow: none !important;
+  }
+} 
+.sub-cont-btn {
+  width: 70% !important;
+}
+.mobile-view::v-deep {
+  .v-btn {
+    font-size: 1rem !important;
+  }
 }
 </style>

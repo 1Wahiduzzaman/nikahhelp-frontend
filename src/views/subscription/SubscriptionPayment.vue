@@ -1,11 +1,11 @@
 <template>
   <div>
     <div>
-      <div v-if="desktopView" class="container-fluid mt-5 section-padding-payment">
+      <div v-if="desktopView" class="container-fluid section-padding-payment">
         <div class="d-flex flex-mb-direction">
-          <div class="w-d-50 bg-1 col-flex position-relative shadow-default"
+          <div class="w-d-50 bg-1 col-flex position-relative shadow-border"
             :class="{'mobile-block': activeStep !== 1, 'custom-height': cardStat}"
-            style="height: 85vh; min-height: 680px;"
+            style="height: calc(100vh - 92px); min-height: 680px;"
           >
             <div class="div-1">
               <div class="section-heading">
@@ -31,7 +31,7 @@
               <button class="btn btn-danger next-payemnt-screen btn-block py-2 br-30 only-mobile mt-3" v-if="agree" @click="paymentScreen()">Back </button>
             </div>
           </div>
-          <div class="w-d-50 desktop-non-margin col-flex shadow-default border-right position-relative"
+          <div class="w-d-50 desktop-non-margin col-flex shadow-border border-right position-relative"
                :class="{'mobile-block': activeStep !== 2, 'mobile-mode': activeStep === 2}">
             <div class="div-2 desktop-pl">
               <div class="section-heading"
@@ -126,7 +126,7 @@
 
       <div v-if="!desktopView" class="container-fluid mt-2 section-padding-payment">
         <div class="d-flex flex-mb-direction">
-          <div class="w-d-50 bg-1 col-flex position-relative shadow-default"
+          <div class="w-d-50 bg-1 col-flex position-relative shadow-border"
             :class="{'mobile-block': activeStep !== 1, 'custom-height': cardStat}"
             style="height: 90vh; max-height: 560px;"
           >
@@ -160,7 +160,7 @@
               </div>
             </div>
           </div>
-          <div class="w-d-50 desktop-non-margin col-flex shadow-default border-right position-relative"
+          <div class="w-d-50 desktop-non-margin col-flex shadow-border border-right position-relative"
                :class="{'mobile-block': activeStep !== 2, 'mobile-mode': activeStep === 2}">
             <div class="div-2 desktop-pl">
               <div class="section-heading"
@@ -245,7 +245,7 @@
             </div>
             <div class="position-absolute buttons-position">
               <div class="d-flex">
-                <button class="btn bg-danger px-4 py-2 text-white br-20 w-full" @click="nextStep(1); successfulPage = false; agree = false">Back</button>
+                <button class="btn sub-back-btn px-4 py-2 text-white br-20 w-full" style="height: 38px; width: 70% !important; margin: auto;" @click="nextStep(1); successfulPage = false; agree = false">Back</button>
               </div>
             </div>
           </div>
@@ -339,12 +339,14 @@ export default {
     },
     setPaymentMethod(paymentMethod) {
       this.agree = true;
+      console.log('payment method', paymentMethod, this.agree);
       this.successfulPage = true;
       this.cardStat = paymentMethod;
-      let myDeviceWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-      if(myDeviceWidth >= 768) {
-        this.activeStep = 2;
-      }
+      // let myDeviceWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+      // if(myDeviceWidth >= 768) {
+      //   this.activeStep = 2;
+      // }
+      this.activeStep = 2;
     },
     cartScreen() {
       this.activeStep = 2;
@@ -662,13 +664,19 @@ export default {
 }
 
 .agree-button {
-  border: 2px solid $color-white;
-  outline-style: solid;
-  outline-color: #cfcece;
+  border: 1px solid $color-success;
   font-size: 16px;
+  height: 50px;
   margin-top: 46px;
   @media (max-width: 768px) {
     margin-top: 0px !important;
+    height: 38px !important;
+  }
+
+  &:hover {
+    background: $color-white !important;
+    color: $color-success !important;
+    border: 1px solid $color-success !important;
   }
 }
 
@@ -889,7 +897,16 @@ export default {
     }
   }
 }
+.sub-back-btn::v-deep {
+  width: 100% !important;
 
+  background-color: #fff !important;
+  color: #6159a7 !important;
+  border: 1px solid #6159a7 !important;
+  box-shadow: none !important;
+  border-radius: 30px !important;
+
+} 
 .details {
   margin-top: 30px;
   @media (max-width: 768px) {
@@ -936,7 +953,7 @@ export default {
 
 @media (min-width: 768px) {
   .validate-text {
-    color: #000000;
+    color: rgba(0, 0, 0, 0.65);
     padding-bottom: 0;
   }
   .desktop-non-margin {
@@ -963,9 +980,9 @@ export default {
   .buttons-position {
     display: none;
   }
-  //.section-padding-payment {
-  //  padding: 0 1.5rem;
-  //}
+  .section-padding-payment {
+    padding: 12px 15px !important;
+  }
   .heading-title-payment {
     font-size: 30px;
   }
@@ -1024,5 +1041,11 @@ export default {
   p {
     margin-bottom: 0px !important;
   }
+}
+
+.shadow-border {
+  box-shadow: none !important;
+  border: 2px solid #dddddd78 !important;
+  border-radius: 10px !important;
 }
 </style>
