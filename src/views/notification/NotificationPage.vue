@@ -24,25 +24,9 @@
                   flex-wrap
                 "
               >
-                <v-btn
-                  rounded
-                  color="primary"
-                  dark
-                  small
-                  @click="notiType = 'all'"
-                >
-                  All
-                </v-btn>
-                <v-btn
-                  rounded
-                  color="error"
-                  dark
-                  class="ml-2"
-                  small
-                  @click="notiType = 0"
-                >
-                  Unread
-                </v-btn>
+                <button class="confirm-button px-4" style="height: 35px; border-radius: 20px" @click="notiType = 'all'">All</button>
+                <button class="cancel-button px-4 ml-2" style="height: 35px; border-radius: 20px" @click="notiType = 0">Unread</button>
+
 <!--                <v-btn rounded color="success" dark class="ml-2 read-btn" small @click="markAllAsRead()">-->
 <!--                  <a-icon type="check" color="success" class="pr-2" />-->
 <!--                  Mark all as read-->
@@ -285,6 +269,16 @@ export default {
   margin-top: 6px;
   @media (min-width: 768px) {
     margin-top: 0;
+  }
+}
+.cancel-button {
+  background-color: $color-danger;
+  color: #fff;
+  border: 1px solid $color-danger;
+  
+  &:hover {
+    background-color: #fff !important;
+    color: $color-danger !important;
   }
 }
 </style>
