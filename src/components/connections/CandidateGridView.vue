@@ -96,12 +96,12 @@
           </v-card-title>
 
           <div class="px-4">
-            <ul class="desc-list">
+            <ul class="desc-list p-0">
               <!-- Team -->
               <li class="flex-between-start">
                 <span class="flex-30 label-text">Team</span>
                 <span class="flex-70">:
-                    <span class="ml-1 team-link cursor-pointer" @click="rotated = !rotated">{{ getTeamName() }}
+                    <span class="ml-1 team-link cursor-pointer text-break" @click="rotated = !rotated">{{ getTeamName() }}
                     </span>
                 </span>
               </li>
