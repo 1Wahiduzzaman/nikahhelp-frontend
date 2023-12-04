@@ -142,7 +142,9 @@
                           {{ conversationTitle }}
                         </a-tooltip>
                       </div>
-                      <div class="last-chat" v-if="chat_type == 'team'">Active now {{ getTeamOnlineUsers() > 0 ? getTeamOnlineUsers() : '' }}</div>
+                      <a-tooltip :title="chatheadopen ? getTeamOnlineUsersNames : ''">
+                        <div class="last-chat">Active now {{ getTeamOnlineUsers() > 0 ? getTeamOnlineUsers() : '' }}</div>
+                      </a-tooltip>
                     </div>
                   </div>
                 </div>
@@ -427,7 +429,44 @@ export default {
       }
       return [];
     },
-
+    getTeamOnlineUsersNames() {
+      let onlineUsersNames = [];
+      if(this.chatTab == 'Team') {
+        let onlineUsers = this.online_users.filter(item => this.teamMembers.includes(item));
+        if(onlineUsers.length > 0) {
+          onlineUsersNames = this.chatheadopen?.team_members?.filter(item => onlineUsers.includes(item.user_id.toString())).map(item => {
+            return item.user.full_name;
+          });
+        }
+        console.log(onlineUsers, onlineUsersNames, 'onlineUsersNames');
+        return onlineUsersNames.join(', ');
+      } else if(this.chatTab == 'Connected') {
+        console.log('connected chattab names')
+        let online_members = [];
+        this.chatheadopen?.to_team?.team_members?.forEach(item => {
+          if(this.online_users.includes((item.user_id).toString())) {
+            online_members.push(item.user_id);
+          }
+        });
+        this.chatheadopen?.from_team?.team_members?.forEach(item => {
+          if(this.online_users.includes((item.user_id).toString())) {
+            online_members.push(item.user_id);
+          }
+        });
+        console.log('online_members names', online_members);
+        if(online_members.length > 0) {
+          onlineUsersNames = this.chatheadopen?.to_team?.team_members?.filter(item => online_members.includes(item.user_id)).map(item => {
+            return item.user.full_name;
+          });
+          console.log(onlineUsersNames, 'onlineUsersNames 1');
+          onlineUsersNames = onlineUsersNames.concat(this.chatheadopen?.from_team?.team_members?.filter(item => online_members.includes(item.user_id)).map(item => {
+            return item.user.full_name;
+          }));
+        }
+        console.log(onlineUsersNames, 'onlineUsersNames 2');
+        return onlineUsersNames.join(', ');
+      }
+    },
     totalUnreadCount: function () {
       return this.$store.state.chat.unread_records.length;
     },
@@ -516,6 +555,8 @@ export default {
   },
 
   mounted() {
+    console.log('mounted chatwindwo');
+    this.$socket.connect();
     let loggedUser = JSON.parse(localStorage.getItem('user'));
     if (loggedUser) {
       this.$socket.emit('ping', {user_id: loggedUser.id});
@@ -535,6 +576,7 @@ export default {
 
 
       this.sockets.subscribe('lis_typing', function (res) {
+        console.log('typing', res);
         if(res.team_id) {
           if(this.chatHistory.length > 0) {
             this.chatHistory[0].typing_status = res.status;
@@ -577,6 +619,7 @@ export default {
       },
     },
   },
+
   methods: {
     getToken() {
       this.token = JSON.parse(localStorage.getItem("token"));
@@ -640,7 +683,23 @@ export default {
       return false;
     },
     getTeamOnlineUsers() {
-      return this.teamMembers.length - 1;
+      if(this.chatTab == 'Team') {
+        return this.online_users.filter(item => this.teamMembers.includes(item)).length;
+      } else if(this.chatTab == 'Connected') {
+        let online_members = [];
+        this.chatheadopen?.to_team?.team_members?.forEach(item => {
+          if(this.online_users.includes((item.user_id).toString())) {
+            online_members.push(item.user_id);
+          }
+        });
+        this.chatheadopen?.from_team?.team_members?.forEach(item => {
+          if(this.online_users.includes((item.user_id).toString())) {
+            online_members.push(item.user_id);
+          }
+        });
+        console.log('online_members', online_members);
+        return online_members.length;
+      }
     },
     onlineTeam(item) {
       let team_members = [];
@@ -1218,6 +1277,7 @@ export default {
       await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
     },
     notifyKeyboardStatus() {
+
       let loggedUser = JSON.parse(localStorage.getItem('user'));
       this.chatheadopen.message.seen = 1;
       let data = {
@@ -1227,6 +1287,7 @@ export default {
         typer: loggedUser,
         team_connection_id: this.chatheadopen.id
       };
+
       if(data.type === 'Group chat') {
         data.members = this.teamMembers;
         data.team_id = this.activeTeam;
@@ -1248,6 +1309,7 @@ export default {
           members.splice(ownIndex, 1);
         }
         data.typer_name = loggedUser.full_name;
+        data.members = members;
       } else {
         data.to = this.chatheadopen.other_mate_id.toString();
         data.typer_name = '';
@@ -1263,13 +1325,23 @@ export default {
       }
 
       if(data.team_id || data.type == 'Connected Team') {
-        this.teamMembers.forEach(item => {
+        data.members.forEach(item => {
           if(item != loggedUser.id) {
             data.to = item.toString();
+            console.log('data --1', data);
             this.$socket.emit('typing', data);
           }
         });
+        // this.teamMembers.forEach(item => {
+        //   if(item != loggedUser.id) {
+        //     data.to = item.toString();
+        //     console.log('data --1', data);
+        //     this.$socket.emit('typing', data);
+        //   }
+        // });
       } else {
+        console.log('data --2', data);
+
         this.$socket.emit('typing', data);
       }
     },
