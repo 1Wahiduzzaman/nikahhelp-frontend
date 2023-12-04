@@ -9,7 +9,7 @@
       <div class="content">
         <span class="label">{{ item.label }}</span>
         <h4 class="mt-1 fs-14">{{ getTeamName }}</h4>
-<!--        <p class="mb-0 text-margin">{{ item.message && item.message.body ? messageStr(item.message.body) : '' }}</p>-->
+       <p class="mb-0 text-margin">{{ item.message && item.message.body ? messageStr(item.message.body) : '' }}</p>
       </div>
       <span class="online-icon" v-if="online.from_team_id === item.to_team_id"></span>
 
@@ -72,7 +72,7 @@ export default {
   },
   computed: {
     ifOnline() {
-      if(this.item.label === 'Group chat') {
+      if(this.item.label === 'Connected Team') {
         return this.onlineTeam();
       } else if(this.item.label == 'Team member' || this.item.label == 'Private chat') {
         return this.onlineUser();
@@ -111,14 +111,21 @@ export default {
     onlineTeam() {
       let team_members = [];
       let loggedUser = JSON.parse(localStorage.getItem('user'));
-      if(this.item && this.teamMembers && this.teamMembers.length > 0) {
-        team_members = this.teamMembers.map(i => {
-          if(loggedUser.id != i) {
-            return parseInt(i);
-          }
+      console.log('logged user', loggedUser)
+      // if(this.item && this.teamMembers && this.teamMembers.length > 0) {
+      //   team_members = this.teamMembers.map(i => {
+      //     if(loggedUser.id != i) {
+      //       return parseInt(i);
+      //     }
+      //   });
+      // }
+      if(this.item && this.item.to_team && this.item.to_team.team_members && this.item.to_team.team_members.length > 0) {
+        this.item.to_team.team_members.forEach((item) => {
+          team_members.push(item.user.id);
         });
       }
       let online = this.online_users.find(item => team_members.includes(parseInt(item)));
+      console.log(online, team_members, 'team members in connected team');
       if(online) {
         return true;
       } else {
