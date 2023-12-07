@@ -3,15 +3,15 @@
     <div class="flex position-relative">
       <div class="avatar-area">
         <img class="avatar" width="45" height="45"
-             :src="getTeamImage" alt="">
+            :src="getTeamImage" alt="">
         <span :class="{'online-icon-avatar': ifOnline}"></span>
       </div>
       <div class="content">
         <span class="label">{{ item.label }}</span>
         <h4 class="mt-1 fs-14">{{ getTeamName }}</h4>
-       <p class="mb-0 text-margin">{{ item.message && item.message.body ? messageStr(item.message.body) : '' }}</p>
+      <p class="mb-0 text-margin">{{ messageStr(computedLastMsg) }}</p>
       </div>
-      <span class="online-icon" v-if="online.from_team_id === item.to_team_id"></span>
+      <span class="online-icon" v-if="online.team_connection_id == item.id"></span>
 
       <a-dropdown v-if="item.is_friend == 0">
         <a class="ant-dropdown-link dropdown-box" @click="e => e.preventDefault()">
@@ -59,16 +59,30 @@ export default {
 
     },
 	  online: {
-			type: Boolean
+			type: Boolean | Object,
 	  }
   },
   data () {
     return {
       token: "",
+      lastMsg: null,
     }
   },
   created(){
     this.token = JSON.parse(localStorage.getItem('token'));
+  },
+  watch: {
+    online: {
+      handler: function (val, oldVal) {
+        console.log(val, oldVal, 'online');
+        if (val) {
+          this.lastMsg = val;
+        } else {
+          this.lastMsg = oldVal;
+        }
+      },
+      // deep: true
+    }
   },
   computed: {
     ifOnline() {
@@ -92,7 +106,11 @@ export default {
       } else {
         return this.item.from_team && this.item.from_team.logo ? this.item.from_team.logo + `?token=${this.token}` : require('../../assets/info-img.png');
       }
+    },
+    computedLastMsg() {
+      return this.lastMsg ? this.lastMsg.team_connection_id == this.item.id ? this.lastMsg.message :  this.item.message && this.item.message.body ? this.item.message.body : '' : this.item.message && this.item.message.body ? this.item.message.body : '';
     }
+
   },
   methods: {
     messageCreatedAt(time) {
