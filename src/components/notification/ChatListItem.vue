@@ -9,7 +9,8 @@
       <div class="content">
         <span class="label">{{ item.label }}</span>
         <h4 class="mt-1 fs-14">{{ item.name }}</h4>
-        <p class="mb-0 text-margin">{{ item.message && item.message.body ? messageStr(item.message.body) : '' }}</p>
+        <!-- <p class="mb-0 text-margin">{{ item.message && item.message.body ? messageStr(item.message.body) : '' }}</p> -->
+        <p class="mb-0 text-margin">{{ lastMsg ? messageStr(lastMsg.body) : item.message && item.message.body ? messageStr(item.message.body) : '' }}</p>
       </div>
       <span class="online-icon" v-if="newMessages"></span>
       <a-dropdown v-if="status == 'connected'">
@@ -28,7 +29,8 @@
     </div>
     <div class="flex chat-bottom-place justify-content-between">
       <div class="date pb-2">{{ item.typing_text }}</div>
-      <div class="date pb-2">{{ item.message ? messageCreatedAt(item.message.created_at) : '' }}</div>
+      <!-- <div class="date pb-2">{{ item.message ? messageCreatedAt(item.message.created_at) : '' }}</div> -->
+      <div class="date pb-2">{{ lastMsg ? messageCreatedAt(lastMsg.created_at) : item.message ? messageCreatedAt(item.message.created_at) : '' }}</div>
     </div>
   </div>
 </template>
@@ -58,6 +60,10 @@ export default {
     },
     newMessages: {
       type: Boolean,
+      required: false
+    },
+    lastMsg: {
+      type: Object,
       required: false
     }
   },
