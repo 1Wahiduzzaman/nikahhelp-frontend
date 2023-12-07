@@ -72,11 +72,12 @@
                          v-for="item in teamChat"
                          :key="item.team_id"
                          :class="{'selected-chat': chatheadopen == item}"
-                         @click="getIndividualChat(item, item)"
+                         @click="getIndividualChat(item, item); newMessage=false"
                     >
                       <ChatListItem
                           :item="item"
                           :status="'team'"
+                          :lastMsg="lastTeamMsg"
                           :online_users="online_users"
                           :teamMembers="teamMembers"
                           :newMessages="newMessage"
@@ -268,7 +269,7 @@
                               </emoji-picker>
                             </div>
                           </a-tooltip>
-                          <textarea class="regular-input" name="message" id="" cols="30" rows="4" placeholder="Enter message..."
+                          <textarea class="regular-input" name="message" id=""  rows="4" placeholder="Enter message..."
                                     v-model="msg_text" @keydown.enter.exact.prevent="sendMsg($event)" @keyup="notifyKeyboardStatus"></textarea>
                           <div class="position-absolute msgbox-right">
                             <div class="flex">
@@ -278,12 +279,12 @@
                                 </template>
                                 <button v-if="false"><img src="../../assets/icon/microphone.png" alt="icon" class="mr-2 microphone" /></button>
                               </a-tooltip>
-                              <a-tooltip>
+                              <!-- <a-tooltip>
                                 <template slot="title">
                                   Coming soon
                                 </template>
                                 <button><a-icon type="file-image" class="color-primary" /></button>
-                              </a-tooltip>
+                              </a-tooltip> -->
                             </div>
                           </div>
                         </div>
@@ -300,7 +301,7 @@
                                 </g>
                               </svg>
                             </div>
-                            <div>
+                            <div class="send-text">
                               Send
                             </div>
                           </div>
@@ -356,11 +357,12 @@ export default {
         updated_at: data.updated_at,
         body: data.body,
       };
-      this.chats = [...this.chats, recieveMessage];
-      this.newMessage = true;
       if (this.chatTab === 'Connected') {
         this.connectedTeamChats = [...this.connectedTeamChats, recieveMessage];
 				this.notify = data;
+      } else {
+        this.chats = [...this.chats, recieveMessage];
+        this.newMessage = true;
       }
     },
   },
@@ -535,6 +537,10 @@ export default {
 
     chatFilter() {
       return this.chatTab === 'Connected' ? this.connectedTeamChats : this.chats;
+    },
+
+    lastTeamMsg() {
+      return this.chats[this.chats.length - 1];
     }
   },
 
@@ -2532,13 +2538,18 @@ export default {
               line-height: 28px;
               @media (max-width: 767px) {
                 min-width: auto;
+
+                .send-text {
+                  display: none;
+                }
               }
+              //@media (max-width: 767px) {
+                //  display: none;
+                //}
 
               svg {
                 width: 18px;
                 float: left;
-                margin-top: -2px;
-                margin-left: 3px;
 
                 .cls-1 {
                   fill: #fff;
@@ -2546,10 +2557,6 @@ export default {
 
                 .cls-2 {
                   fill: #8983be;
-                }
-
-                @media (max-width: 767px) {
-                  display: none;
                 }
               }
             }
@@ -2607,6 +2614,13 @@ export default {
   flex-direction: row-reverse;
   margin-left: auto;
   width: 50%;
+}
+
+@media (max-width: 600px) {
+  .chat-message-left,
+  .chat-message-right {
+    width: 100%;
+  }
 }
 .msg-right-created-at {
   bottom: -4px;
@@ -2816,7 +2830,7 @@ export default {
 }
 
 .regular-input {
-  padding: 0.5rem 1rem;
+  padding: .5rem .5rem .5rem 2rem !important;
   border-radius: 3px;
   border: 1px solid #ccc;
   width: 20rem;
