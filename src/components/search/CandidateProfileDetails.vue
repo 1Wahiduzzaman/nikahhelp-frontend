@@ -170,7 +170,7 @@ export default {
         }),
         onClickButton(eventData) {
             if(eventData.event == 'openGallery') this.openGallery();
-            let userInfo = JSON.parse(localStorage.getItem("userInfo"))
+            let userInfo = JSON.parse(localStorage.getItem("user"))
             if(userInfo.status != 3) {
                 this.showError('Your account is not verified')
                 return
