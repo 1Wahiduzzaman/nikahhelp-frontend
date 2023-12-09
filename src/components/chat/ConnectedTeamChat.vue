@@ -76,7 +76,9 @@ export default {
       handler: function (val, oldVal) {
         console.log(val, oldVal, 'online');
         if (val) {
-          this.lastMsg = val;
+          if(val.team_connection_id == this.item.id) {
+            this.lastMsg = val;
+          }
         } else {
           this.lastMsg = oldVal;
         }
