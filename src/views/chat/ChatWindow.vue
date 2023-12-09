@@ -350,7 +350,7 @@ export default {
     },
 
     receive_message(data) {
-      console.log(data);
+      console.log(data, 'data from socket receive_message');
       const recieveMessage = {
         sender: data.senderInfo,
         created_at: data.created_at,
@@ -358,11 +358,16 @@ export default {
         body: data.body,
       };
       if (this.chatTab === 'Connected') {
-        this.connectedTeamChats = [...this.connectedTeamChats, recieveMessage];
-				this.notify = data;
+        if(!data.team_id) {
+          recieveMessage.team_connection_id = data.team_connection_id;
+          this.connectedTeamChats = [...this.connectedTeamChats, recieveMessage];
+          this.notify = data;
+        }
       } else {
-        this.chats = [...this.chats, recieveMessage];
-        this.newMessage = true;
+        if(data.team_id) {
+          this.chats = [...this.chats, recieveMessage];
+          this.newMessage = true;
+        }
       }
     },
   },
@@ -455,17 +460,16 @@ export default {
             online_members.push(item.user_id);
           }
         });
-        console.log('online_members names', online_members);
+
         if(online_members.length > 0) {
           onlineUsersNames = this.chatheadopen?.to_team?.team_members?.filter(item => online_members.includes(item.user_id)).map(item => {
             return item.user.full_name;
           });
-          console.log(onlineUsersNames, 'onlineUsersNames 1');
           onlineUsersNames = onlineUsersNames.concat(this.chatheadopen?.from_team?.team_members?.filter(item => online_members.includes(item.user_id)).map(item => {
             return item.user.full_name;
           }));
         }
-        console.log(onlineUsersNames, 'onlineUsersNames 2');
+
         return onlineUsersNames.join(', ');
       }
     },
@@ -536,7 +540,13 @@ export default {
     },
 
     chatFilter() {
-      return this.chatTab === 'Connected' ? this.connectedTeamChats : this.chats;
+      return this.chatTab === 'Connected' ? this.connectedTeamChats.filter(item => {
+        if(item.team_connection_id) {
+          return item.team_connection_id == this.chatheadopen.id;
+        } else {
+          return item
+        }
+      }) : this.chats;
     },
 
     lastTeamMsg() {
@@ -703,7 +713,7 @@ export default {
             online_members.push(item.user_id);
           }
         });
-        console.log('online_members', online_members);
+
         return online_members.length;
       }
     },
