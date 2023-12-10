@@ -1243,13 +1243,14 @@ export default {
       teamMembers.splice(selfIndex, 1);
       this.msg_text = '';
       this.notifyKeyboardStatus();
-      await ApiService.post(`/v1/send-message-team-to-team`, payload).then(res => res.data);
       this.chatheadopen.message = {
         body: payload.body,
         created_at: payload.created_at,
         sender: loggedUser,
         sender_id: loggedUser.id
       };
+      this.notify = this.chatheadopen.message;
+      await ApiService.post(`/v1/send-message-team-to-team`, payload).then(res => res.data);
     },
     async sendPrivateMessage() {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -1441,9 +1442,9 @@ export default {
 
     scrollBottom() {
         setTimeout(() => {
-             const messages = document.getElementById('chat-messages');
-        const messagesid = document.getElementById('messagesid');
-        messages.scrollTop = messagesid.offsetTop - 10;
+          const messages = document.getElementById('chat-messages');
+          const messagesid = document.getElementById('messagesid');
+          messages.scrollTop = messagesid.offsetTop - 10;
         }, 1000)
     },
     append(emoji) {
