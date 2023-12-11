@@ -88,7 +88,7 @@
                   </div>
                   <div v-if="chatTab == 'Connected'" class="tab-pane fade" :class="{'show active': chatTab == 'Connected'}">
                     <div class="chat-item"
-                         v-for="item in connectedTeam"
+                         v-for="item in computedConnectedTeam"
                          :key="item.team_id"
                          :class="{'selected-chat': chatheadopen == item}"
                          @click="getConnectedTeamChatHistory(item)"
@@ -360,6 +360,17 @@ export default {
       if (this.chatTab === 'Connected') {
         if(!data.team_id) {
           recieveMessage.team_connection_id = data.team_connection_id;
+          recieveMessage.id = data.msg_id;
+          recieveMessage.team_chat_id = data.team_chat_id;
+          if(this.connectedTeam) {
+            this.connectedTeam = this.connectedTeam.map(item => {
+              if(item.id == data.team_connection_id) {
+                item.message.id = data.msg_id;
+                item.message.body = data.body;
+              }
+              return item;
+            });
+          }
           this.connectedTeamChats = [...this.connectedTeamChats, recieveMessage];
           this.notify = data;
         }
@@ -551,6 +562,9 @@ export default {
 
     lastTeamMsg() {
       return this.chats[this.chats.length - 1];
+    },
+    computedConnectedTeam() {
+      return this.connectedTeam;
     }
   },
 
@@ -822,6 +836,8 @@ export default {
           team_id: 1
         };
         let {data} = await ApiService.post('/v1/connection-list-chat', payload).then(res => res.data);
+        let last_seen_data = await ApiService.get('/v1/connected-team-last-seen').then(res => res.data.data);
+        console.log(last_seen_data, 'data datea data dfas ');
         this.connectedTeam = data.map(item => {
           item.label = 'Connected Team';
           item.typing_status = 0;
@@ -829,6 +845,12 @@ export default {
           item.logo = this.getConnectedTeamInfo(item) ? this.getConnectedTeamInfo(item).logo : '';
           item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
           item.is_friend = item.team_private_chat ? item.team_private_chat.is_friend : 0;
+
+          let lastSeen = last_seen_data.find(i => i.team_chat_id == item.team_chat.id);
+          if(lastSeen) {
+            item.last_seen_msg_id = lastSeen.last_seen_msg_id;
+          }
+
           return item;
         });
 
@@ -972,7 +994,6 @@ export default {
     },
     async getConnectedTeamChatHistory(item) {
 			this.notify = false;
-	    this.connectedTeamChats = [];
       this.fromChatItem = 'connected-team';
       this.chat_type = 'Connected-team';
       this.inConnectedChat = true;
@@ -989,10 +1010,47 @@ export default {
       this.chatheadopen = item;
       this.chatheadopen.message.seen = 1;
 
+
+      // update last seen msg id
+      let payload = {};
+      let new_msg_from_socket = false;   // we are supposing that we have new msg from socket if we are in connected team chat
+      for(let i = this.connectedTeamChats.length -1; i >=0; i--) {
+        if(this.connectedTeamChats[i].team_connection_id == this.chatheadopen.id) {
+          new_msg_from_socket = true;
+          payload = {
+            team_chat_id: this.connectedTeamChats[i].team_chat_id,
+            last_seen_msg_id: this.connectedTeamChats[i].id,
+          }
+          break;
+        }
+      }
+      if(!new_msg_from_socket) {
+        payload = {
+          team_chat_id: this.chatheadopen.message?.team_chat_id,
+          last_seen_msg_id: this.chatheadopen.message?.id,
+        }
+      }
+      
+
+      console.log('connected team chat history', this.connectedTeam);
+      this.connectedTeam = this.connectedTeam.map(item => {
+        if(item.id == this.chatheadopen.id) {
+          item.last_seen_msg_id = this.chatheadopen.message?.id;
+        }
+        return item;
+      });
+      console.log('connected team chat history after', this.connectedTeam);
+
+
+      await ApiService.post('/v1/connected-team-last-seen', payload).then(res => res.data).catch(err => console.log(err));
+
       this.processChatConnectedImage();
 
+
+      // get new connected team chat history
+	    this.connectedTeamChats = [];
       let url = 'connected-team-chat-history';
-      let payload = {
+      payload = {
         to_team_id: to_team_id
       };
       let {data} = await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
@@ -1199,6 +1257,7 @@ export default {
       if(selfIndex >= 0) {
         teamMembers.splice(selfIndex, 1);
       }
+
       let to_team_id = null;
       if(this.chatheadopen.from_team_id == this.activeTeam) {
         this.conversationTitle = this.chatheadopen.to_team ? this.chatheadopen.to_team.name : 'N/A';
@@ -1236,21 +1295,47 @@ export default {
         team_connection_id: teamConnectionId,
       };
       payload.target_opened_chat = payload.to_team_id;
-      this.$socket.emit('send_message_in_group', payload);
-
-
+      
+      
       this.connectedTeamChats.push(payload);
-      teamMembers.splice(selfIndex, 1);
+
       this.msg_text = '';
       this.notifyKeyboardStatus();
+      
+      let data = await ApiService.post(`/v1/send-message-team-to-team`, payload).then(res => res.data.data);
+      payload.msg_id = data.id;
+      payload.team_chat_id = data.team_chat_id;
+      console.log("receivers while sending msg", teamMembers);
+
+      this.$socket.emit('send_message_in_group', payload);
+
       this.chatheadopen.message = {
         body: payload.body,
         created_at: payload.created_at,
         sender: loggedUser,
-        sender_id: loggedUser.id
+        sender_id: loggedUser.id,
+        team_connection_id: payload.team_connection_id,
+        message: payload.body,
       };
+
       this.notify = this.chatheadopen.message;
-      await ApiService.post(`/v1/send-message-team-to-team`, payload).then(res => res.data);
+
+      this.connectedTeam = this.connectedTeam.map(item => {
+        if(item.id == this.chatheadopen.id) {
+          item.last_seen_msg_id = data.id;
+          item.message.id = data.id;
+        }
+        return item;
+      });
+
+      payload = {
+        team_chat_id: data.team_chat_id,
+        last_seen_msg_id: data.id
+      }
+
+      await ApiService.post('/v1/connected-team-last-seen', payload).then(res => res.data).catch(err => console.log(err));
+      
+
     },
     async sendPrivateMessage() {
       let loggedUser = JSON.parse(localStorage.getItem('user'));

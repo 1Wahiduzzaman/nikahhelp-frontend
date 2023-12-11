@@ -9,7 +9,7 @@
       <div class="content">
         <span class="label">{{ item.label }}</span>
         <h4 class="mt-1 fs-14">{{ getTeamName }}</h4>
-      <p class="mb-0 text-margin">{{ messageStr(computedLastMsg) }}</p>
+      <p class="mb-0 text-margin" :class="{'font-weight-bold': !alreadySeen }">{{ messageStr(computedLastMsg) }}</p>
       </div>
       <span class="online-icon" v-if="online.team_connection_id == item.id"></span>
 
@@ -111,6 +111,13 @@ export default {
     },
     computedLastMsg() {
       return this.lastMsg ? this.lastMsg.team_connection_id == this.item.id ? this.lastMsg.message :  this.item.message && this.item.message.body ? this.item.message.body : '' : this.item.message && this.item.message.body ? this.item.message.body : '';
+    },
+    alreadySeen() {
+      console.log(this.item.message, this.item.last_seen_msg_id, 'already seen');
+      if(this.item.message && this.item.message.id && this.item.last_seen_msg_id && this.item.message.id == this.item.last_seen_msg_id) {
+        return true;
+      }
+      return false;
     }
 
   },
