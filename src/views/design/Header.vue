@@ -275,7 +275,7 @@
                 <a-tooltip v-else-if="(loggedUser &&  verificationStatus == '4')" title="Rejected" placement="top">
                   <router-link to="/settings"><img src="@/assets/icon/Rejected_Header_Icon.svg" alt="icon" class="verify-icon ml-1 cursor-pointer" width="14px"/></router-link>
                 </a-tooltip>
-                <a-tooltip v-else-if="(loggedUser &&  verificationStatus == '2' && loggedUser.get_candidate.is_uplaoded_doc == 0)" title="Upload Id" placement="top">
+                <a-tooltip v-else-if="(loggedUser &&  verificationStatus == '2' && uploadDocStatus == 0)" title="Upload Id" placement="top">
                   <img src="@/assets/icon/upload_id.svg" alt="icon" class="verify-icon ml-1 animate-flicker cursor-pointer" width="14px" @click="verifyPopup"/>
                 </a-tooltip>
                 <a-tooltip v-else title="Pending" placement="top">
@@ -491,6 +491,9 @@ export default {
     },
     verificationStatus() {
       return this.$store.getters.userInfo.status;
+    },
+    uploadDocStatus() {
+      return this.$store.getters.userInfo.is_uplaoded_doc;
     },
     activeTeamInfo() {
       return this.teamsOriginal.find((item) => item.team_id == this.activeTeamId);

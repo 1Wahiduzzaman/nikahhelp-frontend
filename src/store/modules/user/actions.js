@@ -7,20 +7,23 @@ export default {
     localStorage.setItem("userId", response.data.data.user.id);
     localStorage.setItem("userInfo", JSON.stringify(response.data.data.user));
 
-    // update status in localStorage
-    let localStorageUser = JSON.parse(localStorage.getItem("user"));
-    localStorageUser.status = response.data.data.user.status;
-    localStorage.setItem("user", JSON.stringify(localStorageUser));
+    // // update status in localStorage
+    // let localStorageUser = JSON.parse(localStorage.getItem("user"));
+    // localStorageUser.status = response.data.data.user.status;
+    // localStorageUser.get_candidate.is_uplaoded_doc = data.data.candidate_information ? data.data.candidate_information.is_uplaoded_doc : localStorageUser.get_candidate.is_uplaoded_doc;
 
-    context.commit("setUserInfo", response.data.data.user);
-    context.commit(
-      "setCandidateInfo",
-      response.data.data.candidate_information
-    );
-    context.commit(
-      "setRepresentativeInfo",
-      response.data.data.representative_information[0]
-    );
+    // localStorage.setItem("user", JSON.stringify(localStorageUser));
+
+    // context.commit("setUserInfo", response.data.data.user);
+    // context.commit(
+    //   "setCandidateInfo",
+    //   response.data.data.candidate_information
+    // );
+    // context.commit(
+    //   "setRepresentativeInfo",
+    //   response.data.data.representative_information[0]
+    // )
+    context.dispatch("saveUserInfo", response.data.data);
     try {
       let account_type = response.data.data.user.account_type;
       let data_input_status = 0;
@@ -140,4 +143,18 @@ export default {
         });
     });
   },
+
+  saveUserInfo(context, payload) {
+    let localStorageUser = JSON.parse(localStorage.getItem("user"));
+    localStorageUser.status = payload.user.status;
+    localStorageUser.per_main_image_url = payload.user.per_main_image_url;
+    localStorageUser.is_uplaoded_doc = payload.user.is_uplaoded_doc;
+    localStorage.setItem("user", JSON.stringify(localStorageUser));
+
+    // let userInfo = 
+
+    context.commit("setUserInfo", localStorageUser);
+    context.commit("setCandidateInfo", payload.candidate_information);
+    context.commit("setRepresentativeInfo", payload.representative_information);
+  }
 };
