@@ -10,9 +10,10 @@
               <div class="chat-category mb-3">
                 <nav>
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-link"
+                    <a class="nav-link position-relative w-50"
                        :class="{'active': chatTab == 'Team'}">
-                      <div class="category-item"
+                       <span class="online-icon position-absolute" v-if="newMessage"></span>
+                      <div class="category-item w-100"
                            @click="setChatTab('Team')">
                            <a>
                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.02 31.17" style="margin-top:3px">
@@ -27,8 +28,9 @@
                               </a>
                             </div>
                           </a>
-                          <a class="nav-link" :class="{'active': chatTab == 'Connected'}">
-                            <div class="category-item" @click="setChatTab('Connected')">
+                          <a class="nav-link position-relative w-50" :class="{'active': chatTab == 'Connected'}">
+                            <span class="online-icon position-absolute" v-if="notify"></span>
+                            <div class="category-item w-100" @click="setChatTab('Connected')">
                               <a>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.52 39.16" style="margin-top:3px">
                                   <g id="Layer_2" data-name="Layer 2">
@@ -69,7 +71,7 @@
                 <div class="tab-content">
                   <div v-if="chatTab == 'Team'" class="tab-pane fade" :class="{'show active': chatTab == 'Team'}">
                     <div class="chat-item"
-                         v-for="item in teamChat"
+                         v-for="item in computedTeamChat"
                          :key="item.team_id"
                          :class="{'selected-chat': chatheadopen == item}"
                          @click="getIndividualChat(item, item); newMessage=false"
@@ -81,6 +83,7 @@
                           :online_users="online_users"
                           :teamMembers="teamMembers"
                           :newMessages="newMessage"
+                          :key="item.id"
                           action
                           class="w-full pr-3 cursor-pointer"
                       />
@@ -132,7 +135,7 @@
               <div class="header clearfix">
                 <div class="left">
                   <div class="top">
-                    <h4 class="cursor-pointer btn-mobile-back" @click="backToTabList()">&#8592;</h4>
+                    <h4 class="cursor-pointer btn-mobile-back" @click="backToTabList()"><a-icon type="arrow-left" /></h4>
                     <div class="item-img conv-head-logo">
                       <img :src="chatheadopen.logo ? chatheadopen.logo + `?token=${token}` : getImage()" alt="info image">
                     </div>
@@ -269,7 +272,7 @@
                               </emoji-picker>
                             </div>
                           </a-tooltip>
-                          <textarea class="regular-input" name="message" id=""  rows="4" placeholder="Enter message..."
+                          <textarea class="regular-input" name="message" id=""  rows="4" placeholder="Type message..."
                                     v-model="msg_text" @keydown.enter.exact.prevent="sendMsg($event)" @keyup="notifyKeyboardStatus"></textarea>
                           <div class="position-absolute msgbox-right">
                             <div class="flex">
@@ -357,6 +360,9 @@ export default {
         updated_at: data.updated_at,
         body: data.body,
       };
+      if(data.label == 'Connected') {
+        this.notify = data;
+      }
       if (this.chatTab === 'Connected') {
         if(!data.team_id) {
           recieveMessage.team_connection_id = data.team_connection_id;
@@ -376,6 +382,14 @@ export default {
         }
       } else {
         if(data.team_id) {
+          recieveMessage.id = data.msg_id;
+          if(this.teamChat) {
+            this.teamChat = this.teamChat.map(item => {
+                item.message.id = data.msg_id;
+                item.message.body = data.body;
+              return item;
+            });
+          }
           this.chats = [...this.chats, recieveMessage];
           this.newMessage = true;
         }
@@ -565,7 +579,11 @@ export default {
     },
     computedConnectedTeam() {
       return this.connectedTeam;
-    }
+    },
+    computedTeamChat() {
+      return this.teamChat;
+    },
+
   },
 
   // directives: {
@@ -819,6 +837,8 @@ export default {
     async loadTeamChat() {
       try {
         let {data} = await ApiService.get(`/v1/team-chat?team_id=${this.active_team_id}`).then(res => res.data);
+        let last_seen_data = await ApiService.get('/v1/own-team-last-seen').then(res => res.data.data);
+
         if (data && data.team_members) {
           this.teamMembers = map(data.team_members, item => {
             return item.user_id.toString();
@@ -826,6 +846,10 @@ export default {
         }
         this.teamChat = this.processTeamChatResponse(data);
         this.teamChat = this.teamChat.filter(e => e.id !== undefined);
+        this.teamChat = this.teamChat.map(item => {
+          item.last_seen_msg_id = last_seen_data.last_seen_msg_id;
+          return item;
+        });
       } catch (e) {
         console.error(e);
       }
@@ -991,6 +1015,15 @@ export default {
       this.processChatConnectedImage();
       this.chats = [];
       this.chats = await this.loadIndividualChatHistory(payload);
+
+      let payload2 = {
+        team_id: this.activeTeam,
+        last_seen_msg_id: this.chats.length > 0 ? this.chats[this.chats.length - 1].id : null
+      }
+
+      this.teamChat[0].last_seen_msg_id = payload2.last_seen_msg_id;
+
+      await ApiService.post('/v1/own-team-last-seen', payload2).then(res => res.data).catch(err => console.log(err));
     },
     async getConnectedTeamChatHistory(item) {
 			this.notify = false;
@@ -1014,7 +1047,7 @@ export default {
       // update last seen msg id
       let payload = {};
       let new_msg_from_socket = false;   // we are supposing that we have new msg from socket if we are in connected team chat
-      for(let i = this.connectedTeamChats.length -1; i >=0; i--) {
+      for(let i = this.connectedTeamChats.length -1; i >= 0; i--) {
         if(this.connectedTeamChats[i].team_connection_id == this.chatheadopen.id) {
           new_msg_from_socket = true;
           payload = {
@@ -1229,7 +1262,32 @@ export default {
         this.chatheadopen.message.senderId = loggedUser.id.toString();
         this.chatheadopen.message.senderInfo = loggedUser;
         this.chatheadopen.message.sender = loggedUser;
+
+        // let us suppose that we will only send messages to group
+        this.chats.push(payload);
+        payload.sender = loggedUser.id.toString();
+        this.msg_text = '';
+        this.notifyKeyboardStatus();
+        let data = await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
+
+        
+        payload.msg_id = data.data.id;
+        payload.team_id = this.activeTeam;
         this.$socket.emit('send_message_in_group', payload);
+
+        this.teamChat = this.teamChat.map(item => {
+            item.last_seen_msg_id = data.data.id;
+            item.message.id = data.data.id;
+          return item;
+        });
+
+        payload = {
+          last_seen_msg_id: data.data.id,
+          team_id: this.activeTeam
+        }
+
+        await ApiService.post('/v1/own-team-last-seen', payload).then(res => res.data).catch(err => console.log(err));
+
       }
 
       if(!this.chatheadopen.message || this.chatheadopen.message == null) {
@@ -1240,12 +1298,12 @@ export default {
         };
       }
 
-
-      this.chats.push(payload);
-      payload.sender = loggedUser.id.toString();
-      this.msg_text = '';
-      this.notifyKeyboardStatus();
-      await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
+      // commented out for now, we are supposing all the message will be group message. (no one-to-one msg now)
+      // this.chats.push(payload);
+      // payload.sender = loggedUser.id.toString();
+      // this.msg_text = '';
+      // this.notifyKeyboardStatus();
+      // await ApiService.post(`/v1/${url}`, payload).then(res => res.data);
     },
     async sendConnectedTeamMessage() {
       let loggedUser = JSON.parse(localStorage.getItem('user'));
@@ -1418,7 +1476,7 @@ export default {
       }
       if(this.msg_text && this.msg_text.length > 0) {
         data.status = 1;
-        data.text = 'Typing';
+        data.text = 'Typing...';
       } else {
         data.status = 0;
         data.text = '';
@@ -1941,6 +1999,7 @@ export default {
         margin: 5px 0px 0px 0px;
 
         .top {
+          position: relative;
           display: flex;
 
           .item-img {
@@ -2127,7 +2186,7 @@ export default {
 
       .left {
         float: left;
-        min-width: 277px;
+        min-width: 300px;
 
         .top {
           display: flex;
@@ -2557,11 +2616,12 @@ export default {
               width: 100%;
 
               input {
+                overflow-y: scroll;
                 height: 36px;
                 width: 100%;
                 border: 0;
                 padding: 7px 54px 7px 40px;
-                border-radius: 18px;
+                border-radius: 5px;
                 background-color: #eceaf5;
                 resize: none;
                 //v-on:keyup.enter="sendMsg($event)"
@@ -2847,6 +2907,17 @@ export default {
     min-height: calc(100vh - 250px);
   }
 }
+
+.online-icon {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  display: block;
+  background-color: #e42076;
+  margin: 10px;
+  border-radius: 50%;
+  box-shadow: 0px 0px 4px 2px #e775a7;
+}
 .chat-messages {
   display: flex;
   flex-direction: column;
@@ -2896,8 +2967,15 @@ export default {
 }
 .btn-mobile-back {
   margin-left: -20px;
-  @media (min-width: 576px) {
-    display: none;
+
+  @media (min-width: 992px) {
+    display: none !important;
+  }
+
+  @media (min-width: 577px) {
+    position: absolute;
+    top: 6px;
+    left: -6px;
   }
 }
 .conv-head-logo {
@@ -2914,8 +2992,8 @@ export default {
     }
   }
   @media (min-width: 576px) {
-    width: 50px;
-    height: 50px;
+    width: 50px !important;
+    height: 50px !important;
   }
 
   
@@ -2926,7 +3004,7 @@ export default {
 }
 
 .regular-input {
-  padding: .5rem .5rem .5rem 2rem !important;
+  padding: .5rem .5rem .5rem 2.3rem !important;
   border-radius: 3px;
   border: 1px solid #ccc;
   width: 20rem;

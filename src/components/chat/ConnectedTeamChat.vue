@@ -11,9 +11,9 @@
         <h4 class="mt-1 fs-14">{{ getTeamName }}</h4>
       <p class="mb-0 text-margin" :class="{'font-weight-bold': !alreadySeen }">{{ messageStr(computedLastMsg) }}</p>
       </div>
-      <span class="online-icon" v-if="online.team_connection_id == item.id"></span>
+      <span class="online-icon" v-if="online.team_connection_id == item.id || !alreadySeen"></span>
 
-      <a-dropdown v-if="item.is_friend == 0">
+      <!-- <a-dropdown v-if="item.is_friend == 0">
         <a class="ant-dropdown-link dropdown-box" @click="e => e.preventDefault()">
           <a-icon type="more" class="fs-28 font-weight-bolder br-50 bg-c9 color-primary icon-30"/>
         </a>
@@ -22,7 +22,7 @@
             <a class="fs-12 color-primary">Request Private Chat</a>
           </a-menu-item>
         </a-menu>
-      </a-dropdown>
+      </a-dropdown> -->
     </div>
     <div class="flex chat-bottom-place justify-content-between">
       <div class="date pb-2">{{ item.typing_text }}</div>
@@ -227,7 +227,7 @@ export default {
 
 <style lang="scss" scoped>
 .text-margin {
-  margin-top: -8px;
+  margin-top: 0px;
 }
 .icon-30 {
   height: 30px;

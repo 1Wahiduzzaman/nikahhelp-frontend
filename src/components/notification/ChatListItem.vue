@@ -10,9 +10,9 @@
         <span class="label">{{ item.label }}</span>
         <h4 class="mt-1 fs-14">{{ item.name }}</h4>
         <!-- <p class="mb-0 text-margin">{{ item.message && item.message.body ? messageStr(item.message.body) : '' }}</p> -->
-        <p class="mb-0 text-margin">{{ lastMsg ? messageStr(lastMsg.body) : item.message && item.message.body ? messageStr(item.message.body) : '' }}</p>
+        <p class="mb-0 text-margin" :class="{'font-weight-bold': !alreadySeen }">{{ lastMsg ? messageStr(lastMsg.body) : item.message && item.message.body ? messageStr(item.message.body) : '' }}</p>
       </div>
-      <span class="online-icon" v-if="newMessages"></span>
+      <span class="online-icon" v-if="newMessages || !alreadySeen"></span>
       <a-dropdown v-if="status == 'connected'">
         <a class="ant-dropdown-link dropdown-box" @click="e => e.preventDefault()">
           <a-icon type="more" class="fs-28 font-weight-bolder br-50 bg-c9 color-primary icon-30"/>
@@ -77,15 +77,16 @@ export default {
     this.token = JSON.parse(localStorage.getItem('token'));
   },
   computed: {
-   
-
     loggedUser() {
       return JSON.parse(localStorage.getItem('user')) ?? null;
-    }
-  },
-  watch: {
-    item: function(newVal, oldVal) {
-      console.log(newVal, oldVal)
+    },
+    alreadySeen() {
+      if(this.item.message.id == this.item.last_seen_msg_id || this.item.last_seen_msg_id == this.lastMsg?.id) {
+        console.log(this.item.message, this.item.last_seen_msg_id, 'already seen true');
+        return true;
+      }
+      console.log(this.item.message, this.item.last_seen_msg_id, 'already seen false');
+      return false;
     }
   },
   methods: {
@@ -149,7 +150,7 @@ export default {
 
 <style lang="scss" scoped>
 .text-margin {
-  margin-top: -8px;
+  margin-top: 0px;
 }
 .icon-30 {
   height: 30px;
