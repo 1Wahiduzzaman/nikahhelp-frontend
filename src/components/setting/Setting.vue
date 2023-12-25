@@ -108,11 +108,11 @@
               src="@/assets/icon/home-outline.svg"
               alt="img"
             />
-            &nbsp; {{ userData.account_type == 1 ? userData.get_candidate.address_1 : userData.get_representative.address_1 }} &nbsp; <br>
+            &nbsp; {{ getAddressLine1 }} &nbsp; <br>
             <div class="ms-6">
-              &nbsp; {{ userData.account_type == 1 ? userData.get_candidate.address_2 : userData.get_representative.address_2 }} &nbsp; <br>
-              &nbsp; {{ userData.account_type == 1 ? userData.get_candidate.per_permanent_city : userData.get_representative.per_permanent_city }} &nbsp; <br>
-              &nbsp; {{ userData.account_type == 1 ? userInfo.candidate_information.personal.per_permanent_country_name : userData.get_representative.per_permanent_country }} &nbsp; <br>
+              &nbsp; {{ getAddressLine2 }} &nbsp; <br>
+              &nbsp; {{ getCity }} &nbsp; <br>
+              &nbsp; {{ getCountry }} &nbsp; <br>
             </div>
 
             <!-- {{ userData.get_candidate.address_2 ? userData.get_candidate.address_2 : "Ex:UK,London" }} -->
@@ -387,6 +387,18 @@ export default {
     mobileNumber() {
       return this.userData.account_type == 1 ? this.userInfo?.candidate_information?.personal?.mobile_number : this.userInfo?.representative_information[0]?.mobile_number
     },
+    getAddressLine1() {
+      return this.$store.getters.userInfo.account_type == 1 ?  this.$store.getters.candidateInfo.personal.address_1 : this.$store.getters.representativeInfo[0].address_1;
+    },
+    getAddressLine2() {
+      return this.$store.getters.userInfo.account_type == 1 ?  this.$store.getters.candidateInfo.personal.address_2 : this.$store.getters.representativeInfo[0].address_2;
+    },
+    getCity() {
+      return this.$store.getters.userInfo.account_type == 1 ?  this.$store.getters.candidateInfo.personal.per_permanent_city : this.$store.getters.representativeInfo[0].per_permanent_city;
+    },
+    getCountry() {
+      return this.$store.getters.userInfo.account_type == 1 ?  this.$store.getters.candidateInfo.personal.per_permanent_country_name : this.$store.getters.representativeInfo[0].per_permanent_country;
+    },
     getRejectedNote() {
       this.fetchRejectedNote();
       return this.rejectedNote;
@@ -415,12 +427,7 @@ export default {
       let { data } = await ApiService.get("v1/user").then((res) => res.data);
       this.userInfo = data;
       
-      // update status in localStorage
-      let localStorageUser = JSON.parse(localStorage.getItem("user"));
-      localStorageUser.status = data.user.status;
-      localStorage.setItem("user", JSON.stringify(localStorageUser));
-
-      this.$store.commit("setUserInfo", data.user);
+      this.$store.dispatch("saveUserInfo", data);
     },
 
     checkStatus(index) {
