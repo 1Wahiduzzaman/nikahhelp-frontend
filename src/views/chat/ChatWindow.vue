@@ -12,7 +12,7 @@
                   <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="nav-link position-relative w-50"
                        :class="{'active': chatTab == 'Team'}">
-                       <span class="online-icon position-absolute" v-if="newMessage"></span>
+                       <span class="online-icon position-absolute" v-if="newMessage || unseenInGroupMsg"></span>
                       <div class="category-item w-100"
                            @click="setChatTab('Team')">
                            <a>
@@ -29,7 +29,7 @@
                             </div>
                           </a>
                           <a class="nav-link position-relative w-50" :class="{'active': chatTab == 'Connected'}">
-                            <span class="online-icon position-absolute" v-if="notify"></span>
+                            <span class="online-icon position-absolute" v-if="notify || unseenInConnectedMsg"></span>
                             <div class="category-item w-100" @click="setChatTab('Connected')">
                               <a>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42.52 39.16" style="margin-top:3px">
@@ -201,7 +201,8 @@
                         <div class="text-right">
                           <img :src="getAuthUser && getAuthUser.per_main_image_url ? getAuthUser.per_main_image_url + `?token=${token}` : getImage()" class="rounded-circle mr-1" alt="" width="40" height="40">
                         </div>
-                        <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-break text-white br-10" v-html="item.body">
+                        <div class="flex-shrink-1 py-2 px-3 mr-3 bg-me text-break text-white br-10" >
+                          {{ item.body}}
                         </div>
                         <div class="text-muted small text-nowrap px-3 mt-2 position-absolute msg-right-created-at">
                           {{ messageCreatedAt(item.created_at) }}<span>, Me</span>
@@ -214,7 +215,8 @@
                         <div class="text-left">
                           <img :src="getConversationUserImage(item.sender.id)" class="rounded-circle mr-1" width="40" height="40">
                         </div>
-                        <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 text-break br-10" v-html="item.body">
+                        <div class="flex-shrink-1 bg-light py-2 px-3 ml-3 text-break br-10">
+                          {{ item.body }}
                         </div>
                         <div class="text-muted small text-nowrap px-3 mt-2 position-absolute msg-left-created-at">
                           {{ messageCreatedAt(item.created_at) }}<span>, {{ item.sender ? item.sender.full_name : '' }}</span>
@@ -448,9 +450,8 @@ export default {
     chatFilter: 'scrollBottom',
 
     chatTab(value) {
-        console.log(value);
-            this.chatheadopen = null;
-            this.loadPageData();
+      this.chatheadopen = null;
+      this.loadPageData();
     }
   },
 
@@ -470,10 +471,8 @@ export default {
             return item.user.full_name;
           });
         }
-        console.log(onlineUsers, onlineUsersNames, 'onlineUsersNames');
         return onlineUsersNames.join(', ');
       } else if(this.chatTab == 'Connected') {
-        console.log('connected chattab names')
         let online_members = [];
         this.chatheadopen?.to_team?.team_members?.forEach(item => {
           if(this.online_users.includes((item.user_id).toString())) {
@@ -583,7 +582,24 @@ export default {
     computedTeamChat() {
       return this.teamChat;
     },
-
+    unseenInGroupMsg() {
+      return this.$store.state.chat.chats[0].message.id != this.$store.state.chat.chats[0].last_seen_msg_id;
+    },
+    unseenInConnectedMsg() {
+      for(let i = 1; i < this.$store.state.chat.chats.length; i++) {
+        if(this.$store.state.chat.chats[i].label != 'Group chat' && this.$store.state.chat.chats[i].message.id != this.$store.state.chat.chats[i].last_seen_msg_id) {
+          return true;
+        }
+      }
+      return false;
+    },
+    routerParams() {
+      if(this.$route.params.connection_id) {
+        this.setChatTab('Connected');
+      } else {
+        this.setChatTab('Team');
+      }
+    }
   },
 
   // directives: {
@@ -596,14 +612,15 @@ export default {
 
   created() {
     this.getActiveTeamId();
-    if(this.$route.query.connection_id) {
-      this.setChatTab('Connected');
-    };
+    console.log("this.$route.query.connection_id", this.$route.query.connection_id)
+    // if(this.$route.params.connection_id) {
+    //   this.setChatTab('Connected');
+    // };
+    this.routerParams();
     this.getToken();
   },
 
   mounted() {
-    console.log('mounted chatwindwo');
     this.$socket.connect();
     let loggedUser = JSON.parse(localStorage.getItem('user'));
     if (loggedUser) {
@@ -624,7 +641,6 @@ export default {
 
 
       this.sockets.subscribe('lis_typing', function (res) {
-        console.log('typing', res);
         if(res.team_id) {
           if(this.chatHistory.length > 0) {
             this.chatHistory[0].typing_status = res.status;
@@ -861,7 +877,6 @@ export default {
         };
         let {data} = await ApiService.post('/v1/connection-list-chat', payload).then(res => res.data);
         let last_seen_data = await ApiService.get('/v1/connected-team-last-seen').then(res => res.data.data);
-        console.log(last_seen_data, 'data datea data dfas ');
         this.connectedTeam = data.map(item => {
           item.label = 'Connected Team';
           item.typing_status = 0;
@@ -1024,6 +1039,14 @@ export default {
       this.teamChat[0].last_seen_msg_id = payload2.last_seen_msg_id;
 
       await ApiService.post('/v1/own-team-last-seen', payload2).then(res => res.data).catch(err => console.log(err));
+      this.$store.state.chat.chats = this.$store.state.chat.chats.map(item => {
+        if(item.label == 'Group chat') {
+          item.message.body = this.chats[this.chats.length - 1].body;
+          item.message.id = payload2.last_seen_msg_id;
+          item.last_seen_msg_id = payload2.last_seen_msg_id;
+        }
+        return item;
+      }) 
     },
     async getConnectedTeamChatHistory(item) {
 			this.notify = false;
@@ -1065,17 +1088,23 @@ export default {
       }
       
 
-      console.log('connected team chat history', this.connectedTeam);
       this.connectedTeam = this.connectedTeam.map(item => {
         if(item.id == this.chatheadopen.id) {
           item.last_seen_msg_id = this.chatheadopen.message?.id;
         }
         return item;
       });
-      console.log('connected team chat history after', this.connectedTeam);
+
 
 
       await ApiService.post('/v1/connected-team-last-seen', payload).then(res => res.data).catch(err => console.log(err));
+      this.$store.state.chat.chats = this.$store.state.chat.chats.map(item => {
+        if(item.message.team_chat_id == payload.team_chat_id) {
+          item.message.id = payload.last_seen_msg_id;
+          item.last_seen_msg_id = payload.last_seen_msg_id;
+        }
+        return item;
+      })
 
       this.processChatConnectedImage();
 
@@ -1287,6 +1316,14 @@ export default {
         }
 
         await ApiService.post('/v1/own-team-last-seen', payload).then(res => res.data).catch(err => console.log(err));
+        this.$store.state.chat.chats = this.$store.state.chat.chats.map(item => {
+          if(item.label == 'Group chat') {
+            item.message.body = this.chats[this.chats.length - 1].body;
+            item.message.id = payload.last_seen_msg_id;
+            item.last_seen_msg_id = payload.last_seen_msg_id;
+          }
+          return item;
+        }) 
 
       }
 
@@ -1363,7 +1400,6 @@ export default {
       let data = await ApiService.post(`/v1/send-message-team-to-team`, payload).then(res => res.data.data);
       payload.msg_id = data.id;
       payload.team_chat_id = data.team_chat_id;
-      console.log("receivers while sending msg", teamMembers);
 
       this.$socket.emit('send_message_in_group', payload);
 
@@ -1392,6 +1428,14 @@ export default {
       }
 
       await ApiService.post('/v1/connected-team-last-seen', payload).then(res => res.data).catch(err => console.log(err));
+      this.$store.state.chat.chats = this.$store.state.chat.chats.map(item => {
+        if(item.message.team_chat_id == payload.team_chat_id) {
+          item.message.body = this.connectedTeamChats[this.connectedTeamChats.length - 1].body;
+          item.message.id = this.chatheadopen.message?.id;
+          item.last_seen_msg_id = this.chatheadopen.message?.id;
+        }
+        return item;
+      })
       
 
     },
@@ -1488,20 +1532,10 @@ export default {
         data.members.forEach(item => {
           if(item != loggedUser.id) {
             data.to = item.toString();
-            console.log('data --1', data);
             this.$socket.emit('typing', data);
           }
         });
-        // this.teamMembers.forEach(item => {
-        //   if(item != loggedUser.id) {
-        //     data.to = item.toString();
-        //     console.log('data --1', data);
-        //     this.$socket.emit('typing', data);
-        //   }
-        // });
       } else {
-        console.log('data --2', data);
-
         this.$socket.emit('typing', data);
       }
     },
