@@ -42,6 +42,7 @@
           item-layout="horizontal"
           :data-source="[{title: 'user one'}]"
           style="border-bottom: 1px solid rgb(235, 235, 235);"
+          @click="openChatWindow(itemObj.label == 'Connected Team' ? 'connected' : 'group')"
       >
         <a-list-item slot="renderItem" slot-scope="item">
           <slot name="item" :item="item">
@@ -53,6 +54,7 @@
                 :online_users="getOnlineUsers"
                 :teamMembers="getTeamMembers"
                 :activeTeam="getActiveTeam"
+                :online="false"
                 action
                 class="w-full pr-3 cursor-pointer"
                 style="min-width: 300px"
@@ -167,8 +169,15 @@ export default {
       return this.$store.state.chat.online_users;
     }
   },
-  created() {
-
+  methods: {
+    openChatWindow(type) {
+      this.$router.push({
+        name: 'ChatWindow',
+        params: {
+          connection_id: type == 'connected' ? true : false,
+        }
+      })
+    }
   }
 }
 </script>

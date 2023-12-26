@@ -563,9 +563,12 @@ export default {
     unseenChat() {
       let count = 0;
       this.$store.state.chat.chats.forEach(item => {
-        count = count + item && item.message && item.message.seen == 0 ? 1 : 0;
-        count = count + item && item.last_message && item.last_message.seen == 0 ? 1 : 0;
-        count = count + item && item.last_group_message && item.last_message.seen == 0 ? 1 : 0;
+        // count = count + item && item.message && item.message.seen == 0 ? 1 : 0;
+        // count = count + item && item.last_message && item.last_message.seen == 0 ? 1 : 0;
+        // count = count + item && item.last_group_message && item.last_message.seen == 0 ? 1 : 0;
+        if(item && item.last_seen_msg_id && item.message.id != item.last_seen_msg_id) {
+          count++;
+        }
       });
       return count;
     },

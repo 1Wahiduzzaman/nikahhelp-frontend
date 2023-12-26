@@ -156,7 +156,7 @@ export default {
     this.active_team_id = JwtService.getTeamIDAppWide();
     if(this.active_team_id) {
       this.loadChatHistory();
-      this.loadTeamChat();
+      // this.loadTeamChat();
       this.loadShortListedCandidates();
     }
 
@@ -177,8 +177,20 @@ export default {
       this.sockets.subscribe('receive_message', function (res) {
         if(res && !res.support) {
           // this.$store.state.chat.chats.unshift(res);
-          this.loadChatHistory();
-          this.loadTeamChat();
+          // this.loadChatHistory();
+          // this.loadTeamChat();
+          console.log(res);
+          this.$store.state.chat.messages.push(res);
+          if(res.label == "Group Message") {
+            this.$store.state.chat.chats[0].message.body = res.message;
+            this.$store.state.chat.chats[0].message.id = res.msg_id;
+          } else {
+            let index = this.$store.state.chat.chats.findIndex(item => item.message.team_chat_id == res.team_chat_id);
+            if(index != -1) {
+              this.$store.state.chat.chats[index].message.body = res.message;
+              this.$store.state.chat.chats[index].message.id = res.msg_id;
+            }
+          }
         }
       });
     }
@@ -272,6 +284,19 @@ export default {
       try {
         let {data} = await ApiService.get('/v1/chat-history').then(res => res.data);
         this.$store.state.chat.chats = this.processChatHistoryResponse(data);
+
+        let ownTeamLastSeen = await ApiService.get('/v1/own-team-last-seen').then(res => res.data.data);
+        this.$store.state.chat.chats[0].last_seen_msg_id = ownTeamLastSeen.last_seen_msg_id;
+
+        let candidateLastSeen = await ApiService.get('/v1/connected-team-last-seen').then(res => res.data.data);
+
+        this.$store.state.chat.chats = this.$store.state.chat.chats.map(item => {
+          if(item.label == 'Connected Team') {
+            let lastSeen = candidateLastSeen.find( lastSeenItem => lastSeenItem.team_chat_id == item.message.team_chat_id);
+            item.last_seen_msg_id = lastSeen ? lastSeen.last_seen_msg_id : 0;
+          }
+          return item;
+        });
       } catch (e) {
         console.error(e);
         // this.$store.dispatch('logout');
@@ -317,14 +342,17 @@ export default {
         logo: data.last_group_msg.team.logo,
         typing_status: 0,
         typing_text: '',
-        message: data.last_group_message?.body
+        message: {
+          body: data.last_group_msg?.body,
+          id: data.last_group_msg.id,
+        }
       }] : []
 
       let connectedMsg = data.connected_team_msgs.map(item => {
         item.label = 'Connected Team';
         item.typing_status = 0;
         item.typing_text = '';
-        item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
+        item.message = item.last_message ? item.last_message : {};
         item.is_friend = item.team_private_chat ? item.team_private_chat.is_friend : 0;
         return item;
       });
