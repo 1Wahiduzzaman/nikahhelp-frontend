@@ -595,9 +595,9 @@ export default {
     },
     routerParams() {
       if(this.$route.params.connection_id) {
-        this.setChatTab('Connected');
+        return true;
       } else {
-        this.setChatTab('Team');
+        return false;
       }
     }
   },
@@ -613,10 +613,11 @@ export default {
   created() {
     this.getActiveTeamId();
     console.log("this.$route.query.connection_id", this.$route.query.connection_id)
-    // if(this.$route.params.connection_id) {
-    //   this.setChatTab('Connected');
-    // };
-    this.routerParams();
+    if(this.routerParams) {
+      this.setChatTab('Connected');
+    }else {
+      this.setChatTab('Team');
+    };
     this.getToken();
   },
 
@@ -1152,8 +1153,8 @@ export default {
         this.chatheadopen.from_team.team_members.forEach(member => {
           let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url + `?token=${this.token}` : '';
 					let repPhoto = member && member.user && member.user.representative_info ? member.user.representative_info.per_main_image_url + `?token=${this.token}` : '';
-
           if (!member.user.candidate_info) {
+            console.log(repPhoto, 'rep phpoto')
 						this.chatListedImage.push({
 							user_id: member.user_id,
 							logo: repPhoto
@@ -1169,10 +1170,18 @@ export default {
 
         this.chatheadopen.to_team.team_members.forEach(member => {
           let candidateLogo = member && member.user && member.user.candidate_info ? member.user.candidate_info.per_main_image_url + `?token=${this.token}` : '';
-          this.chatListedImage.push({
-            user_id: member.user_id,
-            logo: candidateLogo
-          });
+					let repPhoto = member && member.user && member.user.representative_info ? member.user.representative_info.per_main_image_url + `?token=${this.token}` : '';
+          if(!member.user.candidate_info) {
+            this.chatListedImage.push({
+              user_id: member.user_id,
+              logo: repPhoto
+            });
+          } else {
+            this.chatListedImage.push({
+              user_id: member.user_id,
+              logo: candidateLogo
+            });
+          }
         });
       } else if(this.chatheadopen.label == 'Private chat') {
         this.chatListedImage.push({
@@ -1949,7 +1958,6 @@ export default {
                       width: 100%;
                       border-bottom: 2px solid #6059a7;
                       height: 3px;
-                      background-color: red;
                       position: absolute;
                       left: 0;
                       bottom: -10px;
@@ -2668,11 +2676,11 @@ export default {
                 width: 100%;
                 border: 0;
                 padding: 7px 54px 7px 40px;
-                border-radius: 18px;
+                border-radius: 8px;
                 background-color: #eceaf5;
                 resize: none;
                 max-height: 70px;
-                overflow-y: hidden;
+                overflow-y: auto;
                 @media (max-width: 767px) {
                   padding-left: 32px;
                 }
@@ -2957,12 +2965,12 @@ export default {
   flex-direction: column;
   overflow-y: auto;
   //max-height: 540px;
-  max-height: calc(100vh - 370px);
+  max-height: calc(100vh - 310px);
   @media (min-width: 410px) {
-    max-height: calc(100vh - 350px);
+    max-height: calc(100vh - 320px);
   }
   @media (min-width: 576px) {
-    max-height: calc(100vh - 350px);
+    max-height: calc(100vh - 320px);
   }
   @media (min-width: 768px) {
     max-height: calc(100vh - 350px);
