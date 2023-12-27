@@ -464,7 +464,7 @@ export default {
       }
     },
     gotoChat() {
-      this.$router.push({ name: 'ChatWindow', query: { connection_id: this.connection.connection_id } });
+      this.$router.push({ name: 'ChatWindow', query: { connection_id: this.connection.connection_id }, params: { connection_id: this.connection.connection_id } });
     }
   }
 }
