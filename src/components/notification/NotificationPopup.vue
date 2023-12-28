@@ -171,12 +171,14 @@ export default {
   },
   methods: {
     openChatWindow(type) {
-      this.$router.push({
-        name: 'ChatWindow',
-        params: {
-          connection_id: type == 'connected' ? true : false,
-        }
-      })
+      if(this.$route.name != 'ChatWindow'){
+        this.$router.push({
+          name: 'ChatWindow',
+          params: {
+            connection_id: type == 'connected' ? true : false,
+          }
+        })
+      }
     }
   }
 }
