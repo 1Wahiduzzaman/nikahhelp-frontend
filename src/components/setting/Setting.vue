@@ -611,8 +611,11 @@ export default {
       } else if(!(this.newPass.length >= 8)) {
         this.$message.error("Enter a new pass");
         return;
-      } else if(!(this.oldPass == this.newPass)){
+      } else if(!(this.retypePass == this.newPass)){
         this.$message.error("Passwords don't match");
+        return;
+      } else if(this.newPass == this.oldPass) {
+        this.$message.error("New password can't be same as old password");
         return;
       }
       this.confirmLoading = true;
