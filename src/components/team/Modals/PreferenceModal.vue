@@ -133,7 +133,7 @@
         else if (this.new_password.length > 4 || this.re_password.length > 4 || this.old_password.length > 4) {
           this.$message.error('Pin must be 4 characters long.');
         }
-        else if(!isNaN(this.new_password) || !isNaN(this.re_password) || !isNaN(this.old_password)) {
+        else if(isNaN(this.new_password) || isNaN(this.re_password) || isNaN(this.old_password)) {
           this.$message.error('Pin must be a number.');
         }
         else if (this.new_password == this.re_password) {
