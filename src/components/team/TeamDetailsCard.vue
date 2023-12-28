@@ -53,7 +53,7 @@
 								</div>
 								<div class="browse-btn">
 									<span class="file-input  btn-file">
-										Browse
+										Change
 										<input type="file" accept=".png, .jpeg, .jpg" class="input-image" name="avatar" @change="getAvatar" />
 									</span>
 								</div>
@@ -151,9 +151,7 @@
 						:cancel-button-props="{ disabled: true }">
 						<span class="fw-600">Team</span> <br> {{ teamData.name }} <br><br>
 						<span class="fw-600">Description</span> <br> {{ teamData.description }} <br><br>
-						<span class="fw-600">Team created by</span><br>
-						<span class="text-truncate"> {{ teamData && teamData.created_by ? teamData.created_by.full_name : ''
-						}}</span>
+
 
 						<template slot="footer">
 							<a-button key="submit" type="primary" shape="round" @click="showTeamInfo = false">
@@ -189,12 +187,7 @@
 							/>
 						</button> -->
 					</div>
-					<!-- Team Created By -->
-					<div class="creator" style="max-width: 150px;">
-						Team Created by
-						<span class="fw-600 text-truncate"> {{ teamData && teamData.created_by ?
-							teamData.created_by.full_name : '' }}</span>
-					</div>
+
 					<!-- Message Button for team -->
 					<!-- <div class="creator">
 						<button
@@ -457,7 +450,6 @@
 							<span class="ml-2">{{ teamData.subscription_expire_at ? 'Renew Subscription' : 'Subscription'
 							}}</span></a>
 					</div>
-					<p>Team Creation Date : {{ formateDate(teamData.created_at) }}</p>
 					<p class="text-success" v-if="!subTextShow">
 						Subscription Expire :
 						{{ formateDate(teamData.subscription_expire_at) }}
@@ -466,6 +458,10 @@
 						Subscription Expire :
 						{{ formateDate(teamData.subscription_expire_at) }}
 					</p>
+					<p>Team Creation Date : {{ formateDate(teamData.created_at) }}</p>
+					<p class="text-truncate">Team created by : <span> {{ teamData && teamData.created_by ? teamData.created_by.full_name : ''
+					}}</span></p>
+					
 				</div>
 				<!--				<div class="right d-subs-dk">-->
 				<!--          <a-tooltip-->
@@ -1028,7 +1024,7 @@ export default {
 				.catch((error) => {
 					console.log(error);
 					console.log(error.response);
-					this.$message.error("Something went wrong");
+					this.$message.error(error.response.data.message);
 					this.showModalPreference = false;
 				});
 			//After fail and success we need to reun This
@@ -2417,9 +2413,16 @@ export default {
 }
 
 .btn-file {
-	background: $bg-secondary !important;
+	background: $bg-primary !important;
 	color: white !important;
 	cursor: pointer !important;
+	border: 1px solid $bg-primary !important;
+	height: 30px;
+	line-height: 2;
+	&:hover {
+		background: #fff !important;
+		color: $bg-primary !important;
+	}
 }
 
 .break-long-words {
