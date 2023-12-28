@@ -311,7 +311,7 @@
                 <!-- <img width="22" src="@/assets/Icons/form.svg" alt="icon" /> -->
                 <a-icon style="color: #522e8e" :type="!collapsed ? 'caret-left' : 'caret-right'"></a-icon>
                 <span class="ml-2"
-                  >{{ collapsed ? "Open" : "Close" }} left sidebar</span
+                  >{{ collapsed ? "Open" : "Close" }} Menu</span
                 >
               </a-menu-item>
               <a-divider class="m-0" />
