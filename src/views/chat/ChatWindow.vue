@@ -294,7 +294,7 @@
                           </div>
                         </div>
                         <button class="btn btn-primary btn-submit js-msg-send" @click="sendMsg">
-                          <div class="flex">
+                          <div class="flex w-100 h-100  justify-content-center align-items-center">
                             <div class="flex">
                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.68 18.77">
                                 <g id="Layer_2" data-name="Layer 2">
@@ -375,6 +375,7 @@ export default {
               if(item.id == data.team_connection_id) {
                 item.message.id = data.msg_id;
                 item.message.body = data.body;
+                item.message.team_chat_id = data.team_chat_id;
               }
               return item;
             });
@@ -387,8 +388,9 @@ export default {
           recieveMessage.id = data.msg_id;
           if(this.teamChat) {
             this.teamChat = this.teamChat.map(item => {
-                item.message.id = data.msg_id;
-                item.message.body = data.body;
+              item.message.id = data.msg_id;
+              item.message.body = data.body;
+              item.message.team_id = data.team_id;
               return item;
             });
           }
@@ -566,7 +568,7 @@ export default {
     chatFilter() {
       return this.chatTab === 'Connected' ? this.connectedTeamChats.filter(item => {
         if(item.team_connection_id) {
-          return item.team_connection_id == this.chatheadopen.id;
+          return item.team_connection_id == this.chatheadopen?.id;
         } else {
           return item
         }
@@ -583,7 +585,16 @@ export default {
       return this.teamChat;
     },
     unseenInGroupMsg() {
-      return this.$store.state.chat.chats[0].message.id != this.$store.state.chat.chats[0].last_seen_msg_id;
+      if(this.$store.state.chat.chats.length > 0) {
+        let index = this.$store.state.chat.chats.findIndex(item => item.label = 'Group chat');
+        if(index != -1) {
+          return this.$store.state.chat.chats[index].message.id != this.$store.state.chat.chats[index].last_seen_msg_id;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
     },
     unseenInConnectedMsg() {
       for(let i = 1; i < this.$store.state.chat.chats.length; i++) {
@@ -883,10 +894,10 @@ export default {
           item.typing_status = 0;
           item.typing_text = '';
           item.logo = this.getConnectedTeamInfo(item) ? this.getConnectedTeamInfo(item).logo : '';
-          item.message = item.team_chat && item.team_chat.last_message ? item.team_chat.last_message : {};
+          item.message = item.team_chat && item.team_chat?.last_message ? item.team_chat.last_message : {};
           item.is_friend = item.team_private_chat ? item.team_private_chat.is_friend : 0;
 
-          let lastSeen = last_seen_data.find(i => i.team_chat_id == item.team_chat.id);
+          let lastSeen = last_seen_data.find(i => i.team_chat_id == item.team_chat?.id);
           if(lastSeen) {
             item.last_seen_msg_id = lastSeen.last_seen_msg_id;
           }
@@ -1034,7 +1045,7 @@ export default {
 
       let payload2 = {
         team_id: this.activeTeam,
-        last_seen_msg_id: this.chats.length > 0 ? this.chats[this.chats.length - 1].id : null
+        last_seen_msg_id: this.chats.length > 0 ? this.chats[this.chats.length - 1]?.id : null
       }
 
       this.teamChat[0].last_seen_msg_id = payload2.last_seen_msg_id;

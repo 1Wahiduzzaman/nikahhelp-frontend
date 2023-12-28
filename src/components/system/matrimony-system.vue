@@ -174,7 +174,7 @@ export default {
         }
       });
 
-      this.sockets.subscribe('receive_message', function (res) {
+      this.sockets.subscribe('receive_message', async function (res) {
         if(res && !res.support) {
           // this.$store.state.chat.chats.unshift(res);
           // this.loadChatHistory();
@@ -182,14 +182,48 @@ export default {
           console.log(res);
           this.$store.state.chat.messages.push(res);
           if(res.label == "Group Message") {
-            this.$store.state.chat.chats[0].message.body = res.message;
-            this.$store.state.chat.chats[0].message.id = res.msg_id;
-          } else {
-            let index = this.$store.state.chat.chats.findIndex(item => item.message.team_chat_id == res.team_chat_id);
-            if(index != -1) {
-              this.$store.state.chat.chats[index].message.body = res.message;
-              this.$store.state.chat.chats[index].message.id = res.msg_id;
+            if(this.$store.state.chat.chats.length > 0) {
+              let index = this.$store.state.chat.chats.findIndex(item => item.label == 'Group chat');
+              if(index != -1) {
+                this.$store.state.chat.chats[index].message.body = res.message;
+                this.$store.state.chat.chats[index].message.id = res.msg_id;
+              }
+            } else {
+              this.$store.state.chat.chats.push({
+                label: 'Group chat',
+                state: 'Typing...',
+                name: res.conv_title,
+                logo: res.logo,
+                typing_status: 0,
+                typing_text: '',
+                message: {
+                  body: res.message,
+                  id: res.msg_id,
+                }
+              });
             }
+          } else {
+            if(this.$store.state.chat.chats.length > 0) {
+              let index = this.$store.state.chat.chats.findIndex(item => item?.message?.team_chat_id == res.team_chat_id);
+              if(index != -1) {
+                this.$store.state.chat.chats[index].message.body = res.message;
+                this.$store.state.chat.chats[index].message.id = res.msg_id;
+              } else {
+                await this.loadChatHistory();
+                index = this.$store.state.chat.chats.findIndex(item => item?.message.team_chat_id == res.team_chat_id);
+                if(index != -1) {
+                  this.$store.state.chat.chats[index].message.body = res.message;
+                  this.$store.state.chat.chats[index].message.id = res.msg_id;
+                }
+              }
+            } else {
+                await this.loadChatHistory();
+                let index = this.$store.state.chat.chats.findIndex(item => item?.message.team_chat_id == res.team_chat_id);
+                if(index != -1) {
+                  this.$store.state.chat.chats[index].message.body = res.message;
+                  this.$store.state.chat.chats[index].message.id = res.msg_id;
+                }
+              }
           }
         }
       });
@@ -286,7 +320,10 @@ export default {
         this.$store.state.chat.chats = this.processChatHistoryResponse(data);
 
         let ownTeamLastSeen = await ApiService.get('/v1/own-team-last-seen').then(res => res.data.data);
-        this.$store.state.chat.chats[0].last_seen_msg_id = ownTeamLastSeen.last_seen_msg_id;
+        let index = this.$store.state.chat.chats.findIndex(item => item.label == 'Group chat');
+        if(index != -1) {
+          this.$store.state.chat.chats[index].last_seen_msg_id = ownTeamLastSeen.last_seen_msg_id;
+        }
 
         let candidateLastSeen = await ApiService.get('/v1/connected-team-last-seen').then(res => res.data.data);
 
