@@ -3,7 +3,7 @@
     <a-icon type="bell" theme="filled" color="primary" class="color-primary fs-24" size="large" />
     <div class="flex flex-column ml-2">
       <h4 class="border-bottom pb-2 fs-14 pr-2"><strong class="fs-16">{{ notification.team_temp_name }}</strong> has new notification</h4>
-      <h4 class="pb-2 fs-14"><b>{{ notification && notification.sender && notification.sender.full_name ? notification.sender.full_name : '' }}</b> {{ notification.title }}</h4>
+      <h4 class="pb-2 fs-14"><b>{{ notification && notification.sender && notification.team_id && notification.sender.full_name ? notification.sender.full_name : '' }}</b> {{ notification.title }}</h4>
       <!--        <p class="instant-notification-text">-->
       <!--          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard-->
       <!--          dummy text ever since the 1500s-->
