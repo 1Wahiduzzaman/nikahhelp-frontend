@@ -33,8 +33,8 @@
           <v-btn
             :loading="loading"
             v-if="userStatus < 3 && dataInputStatus > 2"
+
             class="mr-2"
-            :class="statusBtnColor"
             @click="updateUserVerifyOrReject('verified')"
             small
             style="background-color: rgb(42 205 100); color: #fff"
@@ -460,6 +460,8 @@ import ApiService from "@/services/api.service";
 // import JwtService from "@/services/jwt.service";
 // import { AGES, HEIGHTS, Employment_Statuses } from "@/models/data";
 import TableRow from "@/components/atom/TableRow";
+import Notification from "@/common/notification.js";
+
 export default {
   name: "RepresentativeReview",
   components: {
@@ -499,7 +501,21 @@ export default {
     this.getDocumentInfo();
   },
   methods: {
-    
+    socketNotification(payload) {
+      console.log('socketNotification from candidate profile review')
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.sender = loggedUser.id;
+      Notification.storeNotification(payload);
+      payload.created_at = new Date();
+      payload.seen = 0;
+      payload.sender = loggedUser;
+      if(payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map(item => {
+          return item.toString();
+        });
+        this.$socket.emit('notification', payload);
+      }
+    },
     getUserStatus(status) {
       return this.statusArr.find((i) => i.key == status).name;
     },
@@ -553,14 +569,30 @@ export default {
         note: note,
       };
       this.cancelLoading = true;
+      this.cancel(null);
+      this.loadingReject = true;
       await this.$store
         .dispatch("updateUserVerifyOrReject", data)
         .then((data) => {
           this.cancelLoading = false;
+          this.loadingReject = false;
           console.log(data, "rejected");
           if (data.status == 4) {
             this.representativeDetails.user.status = 4;
           }
+
+          // send notification 
+          let receivers = [this.representativeDetails.user.id];
+          console.log(receivers, "receivers")
+          let payload = {
+            receivers: receivers,
+            title: `Your id has been rejected`,
+            description: note,
+          };
+          console.log('before sending notification', payload);
+          this.socketNotification(payload);
+          console.log('after sending notification');
+
           // this.items = this.items.filter(
           //   (item) => item.id !== this.selectedItem.id
           // );
@@ -569,7 +601,6 @@ export default {
           //   loggedUser.status = "4";
           //   localStorage.setItem("user", JSON.stringify(loggedUser));
           // }
-          this.cancel(null);
         })
         .catch((error) => {
           this.cancelLoading = false;
@@ -590,6 +621,12 @@ export default {
           this.loadingReinstate = true;
           break;
       }
+
+      let notificationText = {
+        verified: "approved",
+        suspend: "suspended",
+        deleted: "deleted",
+      }
       const data = {
         id: this.$route.params.user_id,
         status: status,
@@ -599,6 +636,19 @@ export default {
         .then((data) => {
           if (data.status) {
             this.representativeDetails.user.status = data.status;
+          }
+
+          // send notification
+          if(status != 'completed') {
+            let receivers = [this.representativeDetails.user.id];
+            console.log(receivers, "receivers")
+            let payload = {
+              receivers: receivers,
+              title: `Your id has been ` + notificationText[status],
+            };
+            console.log('before sending notification', payload);
+            this.socketNotification(payload);
+            console.log('after sending notification');
           }
         })
         .catch((error) => {})
