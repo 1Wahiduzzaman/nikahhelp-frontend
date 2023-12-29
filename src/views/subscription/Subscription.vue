@@ -19,8 +19,9 @@
       <div class="subscription-details container-fluid mt-4 font-poppins desktop-view">
         <div class="row" :class="{ 'mobile-section': activeStep > 1 }">
           <div
-            class="col-12 col-md-4 col-xl-4 font-poppins px-2"
+            class="col-12 col-md-4 col-xl-4 font-poppins pl-0 pr-2"
             :class="{ 'mobile-block': activeStep !== 1 }"
+            style="padding-left: 0px !important;"
           >
             <!-- Card 1 -->
             <div
@@ -539,7 +540,7 @@
                   minHeight="35px"
                   title="Back"
                   :responsive="false"
-                  @onClickButton="nextStep(2)"
+                  @onClickButton="nextStep(1)"
                 />
   
               <ButtonComponent
@@ -1475,7 +1476,7 @@ export default {
   .row {
     margin: 0px !important;
 
-    .col-12, .col-md-4, col-xl-4 {
+    .col-12, .col-md-4, .col-xl-4 {
       padding: 0px 5px !important;
     }
   }

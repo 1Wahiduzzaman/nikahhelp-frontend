@@ -829,7 +829,7 @@ export default {
           };
           console.log('before sending notification', payload);
           this.socketNotification(payload);
-          console.log('after sending notification')
+          console.log('after sending notification');
         })
         .catch((error) => {
           this.cancelLoading = false;
@@ -867,6 +867,12 @@ export default {
           this.loadingReinstate = true;
           break;
       }
+
+      let notificationText = {
+        verified: "approved",
+        suspend: "suspended",
+        deleted: "deleted",
+      }
       const data = {
         id: this.$route.params.user_id,
         status: status == "reinstate" ? "completed" : status,
@@ -877,8 +883,22 @@ export default {
           if (data.status) {
             this.candidateData.user.status = data.status;
           }
+
+          // send notification
+          if(status != 'reinstate') {
+            let receivers = [this.candidateData.user.id];
+            console.log(receivers, "receivers")
+            let payload = {
+              receivers: receivers,
+              title: `Your id has been ` + notificationText[status],
+            };
+            console.log('before sending notification', payload);
+            this.socketNotification(payload);
+            console.log('after sending notification');
+          }
+
         })
-        .catch((error) => { })
+        .catch((error) => { console.log(error, 'errro in updateveryorreject') })
         .finally(() => {
           this.loading = false;
           this.loadingDelete = false;

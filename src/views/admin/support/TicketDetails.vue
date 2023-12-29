@@ -128,6 +128,8 @@ import { mapActions, mapGetters } from "vuex";
 import ButtonComponent from "../../../components/atom/ButtonComponent.vue";
 import Loader from "../../../plugins/loader/loader.vue";
 import ApiService from '../../../services/api.service';
+import Notification from "@/common/notification.js";
+
 export default {
 	name: "TicketDetails",
   components: {
@@ -157,6 +159,21 @@ export default {
 			'goToMessages',
 			'resolveTicket'
 		]),
+    socketNotification(payload) {
+      console.log('socketNotification from candidate profile review')
+      let loggedUser = JSON.parse(localStorage.getItem('user'));
+      payload.sender = loggedUser.id;
+      Notification.storeNotification(payload);
+      payload.created_at = new Date();
+      payload.seen = 0;
+      payload.sender = loggedUser;
+      if(payload && payload.receivers.length > 0) {
+        payload.receivers = payload.receivers.map(item => {
+          return item.toString();
+        });
+        this.$socket.emit('notification', payload);
+      }
+    },
     messageCreatedAt(item) {
       if(item?.process_ticket?.length > 0) {
         let time = item.process_ticket[item.process_ticket.length-1].created_at;
@@ -219,6 +236,18 @@ export default {
         this.currentTicket.process_ticket.push(res.data.data);
         this.isLoading = false;
         this.showSubmissionSuccess = true;
+
+        // send socket notification
+        let receivers = [this.currentTicket.user_id];
+          console.log(receivers, "receivers")
+          let payload = {
+            receivers: receivers,
+            title: `You have response in your ticket #${this.currentTicket.id}`,
+          };
+          console.log('before sending notification', payload);
+          this.socketNotification(payload);
+          console.log('after sending notification');
+
       }).catch(e => {
         this.isLoading = false;
         this.showSubmissionFailed = true;
@@ -234,6 +263,18 @@ export default {
         onOk: () => {
           this.isLoading = true;
           this.resolveTicket(this.currentTicket.id);
+
+          // send socket notification
+          let receivers = [this.currentTicket.user_id];
+            console.log(receivers, "receivers")
+            let payload = {
+              receivers: receivers,
+              title: `You ticket #${this.currentTicket.id} has been resolved`,
+            };
+            console.log('before sending notification', payload);
+            this.socketNotification(payload);
+            console.log('after sending notification');
+
         },
         onCancel: () => {
           console.log('Cancel');

@@ -335,6 +335,7 @@ export default {
   },
   beforeDestroy() {
     this.$store.state.auth.errorMessage = null;
+    clearInterval(this.timerInterval);
   },
 };
 </script>
