@@ -56,7 +56,7 @@
 
 			<div class="table-item py-2 px-5" v-for="ticket in getTicketFromUsers" :key="ticket.id" @click="goToTicket(ticket.id)">
 				<span class="text-black-50 ticket-id">#{{ ticket.id }}</span>
-				<img class="ticket-img" :src="ticket.user.get_candidate.per_main_image_url + `?token=${token}`" height="30">
+				<img class="ticket-img" :src="ticket.user.get_candidate ? ticket.user.get_candidate.per_main_image_url  + `?token=${token}` : ticket.user.get_representative.per_main_image_url + `?token=${token}`" height="30">
 				<span class="text-black-50 ticket-username">{{ ticket.user.full_name }}</span>
 				<span class="text-black-50 ticket-type">{{ ticket.issue_type }}</span>
                 <span class="text-black-50 ticket-issue">{{ ticket.issue }}</span>
