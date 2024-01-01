@@ -238,6 +238,12 @@ const AppRouter = new VueRouter({
 
             },
             {
+                path: "system-notification",
+                // component: SystemAdmin,
+                component: lazyLoadView('admin', 'system-notification'),
+
+            },
+            {
                 path: "matrimony-users",
                 // component: UsersList,
                 component: lazyLoadView('admin', 'user-list'),

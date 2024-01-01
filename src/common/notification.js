@@ -27,4 +27,19 @@ export default {
         });
         return payload;
     },
+
+    storeAdminNotification: function (payload) {
+        if(payload && payload.sender && payload.receivers && payload.receivers.length > 0) {
+            let loggedUser = JSON.parse(localStorage.getItem('user'));
+            payload.sender = loggedUser.id;
+        }
+        ApiService.post("v1/admin/send-notification", payload)
+            .then((data) => {
+                console.log(data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        return payload;
+    }
 }
