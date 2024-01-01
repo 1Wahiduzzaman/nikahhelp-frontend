@@ -13,7 +13,7 @@
               Someone must be searching for you
             </h2> -->
             <h3 class="color-white" style="margin-bottom: 12px; font-family: 'Elsie Swash Caps'; font-weight: 500 !important;">
-              The first friends and family based matromonial introduction service
+              The first friends and family based matrimonial introduction service
             </h3>
             <!-- <p id="p-tag font-poppins">
               Benefit from their collective wisdom & experience

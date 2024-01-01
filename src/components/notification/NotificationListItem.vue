@@ -42,6 +42,14 @@ export default {
             this.item.seen = 1;
             ApiService.get(`/v1/seen-notification/${this.item.id}`);
         }
+        let notificationTitle = this.item.title.toLowerCase();
+        if((notificationTitle.includes('rejected') || notificationTitle.includes('suspended') || notificationTitle.includes('deleted')) && this.$router.currentRoute.name != 'Settings') {
+            this.$router.push({ name: 'Settings' });
+        } else if(notificationTitle.includes('connect') && this.$router.currentRoute.name != 'Connections') {
+            this.$router.push({ name: 'Connections' });
+        } else if(notificationTitle.include('teamlist') && this.$router.currentRoute.name != 'Shortlist') {
+            this.$router.push({ name: 'Shortlist' });
+        }
       }
     }
 }

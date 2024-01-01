@@ -304,7 +304,7 @@ export default {
 							let socketData = {
 								receivers: receivers,
 								team_id: this.team.id,
-								title: `joined ${this.team.team.name} team as ${this.team.team.role}`,
+								title: `joined ${this.team.team.name} team as ${this.team.role}`,
 								team_temp_name: this.team.team.name
 							};
 							self.$emit("socketNotification", socketData);

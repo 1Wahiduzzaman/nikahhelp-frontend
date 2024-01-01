@@ -797,7 +797,7 @@ export default {
 							let receivers = this.teamData.team_members.filter(item => item.user_id != loggedUser.id).map(opt => opt.user_id);
 							let payload = {
 								receivers: receivers,
-								title: `changed ${this.teamData.name} team information`,
+								title: `updated team ${this.teamData.name}'s information`,
 								team_temp_name: this.teamData.name,
 								team_id: this.teamData.id
 							};

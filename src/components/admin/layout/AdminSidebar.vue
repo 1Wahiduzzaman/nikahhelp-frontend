@@ -87,6 +87,16 @@
           <span class="mb-0">System Admin</span>
         </router-link>
       </li>
+      <li class="list-item">
+        <router-link to="/admin/system-notification" class="d-flex align-items-center">
+          <img
+            class="mr-3"
+            src="@/assets/icon/connection-secondary.svg"
+            alt="icon"
+          />
+          <span class="mb-0">System Notification</span>
+        </router-link>
+      </li>
     </ul>
     <!-- <ul class="links" v-show="!collapsed">
       <li><a href="#">Help</a></li>
