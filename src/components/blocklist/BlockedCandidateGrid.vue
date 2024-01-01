@@ -122,7 +122,7 @@
 <script>
 import ApiService from '@/services/api.service';
 import Notification from "@/common/notification.js";
-// import JwtService from "@/services/jwt.service";
+import JwtService from "@/services/jwt.service";
 export default {
   name: "BlockedCandidateGrid",
   props: ['item', 'candidateBlockIds', 'teamBlockedIds'],
@@ -158,6 +158,19 @@ export default {
         this.$socket.emit('notification', payload);
       }
     },
+    selfTeamMembers() {
+      const teamId = JwtService.getTeamIDAppWide();
+      let activeTeam = this.$store.state.team.team_list.find(team => team.team_id == teamId);
+      if(activeTeam) {
+        let loggedUser = JSON.parse(localStorage.getItem('user'));
+        let teamMembers = [];
+        activeTeam.team_members.filter(item => item.user_id !== loggedUser.id).forEach(item => {
+          teamMembers.push(item.user_id)
+        });
+        return teamMembers;
+      }
+      return [];
+    },
     prepareNotifyData() {
       // const teamId = JwtService.getTeamIDAppWide();
       let teamMembers = this.item.team_members_id;
@@ -178,7 +191,16 @@ export default {
     unblockAction() {
       if(this.item.candidate_list) {
         ApiService.delete(`/v1/unblock-by-candidate?user_id=${this.item.user_id}`).then(res => {
+          // send notification
+          let payload = {
+            receivers: [...this.selfTeamMembers()],
+            title: `unblocked ${this.item.first_name + ' ' + this.item.last_name}.`,
+            team_temp_name: null,
+            team_id: this.item.team_id
+          };
+          this.socketNotification(payload);
           this.$emit("loadList");
+
         }).catch(e => {
           console.log(e);
         });
