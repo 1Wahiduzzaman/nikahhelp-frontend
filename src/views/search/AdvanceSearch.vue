@@ -114,6 +114,7 @@ import { createModalMixin, openModalRoute } from "@/plugins/modal/modal.mixin";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import TeamOffRedirection from "../../components/redirection/TeamOffRedirection";
 import ApiService from '../../services/api.service';
+import Notification from "@/common/notification.js";
 
 export default {
   name: "AdvanceSearch",
@@ -258,6 +259,22 @@ export default {
         );
         if(res.data.data.length) {
           this.sendSiteVisitData(res.data.data);
+
+          // send notification
+          let receivers = [];
+
+          res.data.data.forEach(item => {
+            receivers.push(item.user_id);
+          });
+          
+          console.log(receivers, "receivers")
+          let payload = {
+            receivers: receivers,
+            title: `A person from ${this.loggedUser.per_permanent_country_name} has visited your profile`,
+          };
+          console.log('before sending notification', payload);
+          this.socketNotification(payload);
+          console.log('after sending notification');
         }
         this.setLoading(false);
         if (res == undefined) {

@@ -275,6 +275,19 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
           this.removeFromTeamList();
         }
       },
+      selfTeamMembers() {
+        const teamId = JwtService.getTeamIDAppWide();
+        let activeTeam = this.$store.state.team.team_list.find(team => team.team_id == teamId);
+        if(activeTeam) {
+          let loggedUser = JSON.parse(localStorage.getItem('user'));
+          let teamMembers = [];
+          activeTeam.team_members.filter(item => item.user_id !== loggedUser.id).forEach(item => {
+            teamMembers.push(item.user_id)
+          });
+          return teamMembers;
+        }
+        return [];
+      },
       shortList() {
         console.log('short list')
       },
@@ -308,8 +321,8 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
             centered: true,
           });
           let payload = {
-            receivers: [this.candidate.user_id],
-            title: `sent you a new team connection request`,
+            receivers: [...this.candidate.team?.members_id, ...this.selfTeamMembers()],
+            title: `sent ${this.candidate.first_name + ' ' + this.candidate.last_name} a new team connection request`,
             team_temp_name: null,
             team_id: this.candidate.team_id
           };
@@ -368,9 +381,13 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         }
         try {
           await this.teamListedCandidate(data)
-          let notifyObject = this.selfTeamNotifyData();
-          notifyObject.title = "add a candidate to teamlist";
-          this.socketNotification(notifyObject);
+          let payload = {
+            receivers: [...this.selfTeamMembers()],
+            title: `teamlisted ${this.candidate.first_name + ' ' + this.candidate.last_name}.`,
+            team_temp_name: null,
+            team_id: this.candidate.team_id
+          };
+          this.$emit("socketNotification", payload);
         } catch (e) {
           if(e.response) {
             this.showError(e.response.data.message)
@@ -409,9 +426,13 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
         }
         try {
           await this.teamListCandidate(data)
-          let notifyObject = this.selfTeamNotifyData();
-          notifyObject.title = "deleted a candidate from teamlist";
-          this.socketNotification(notifyObject);
+          let payload = {
+            receivers: [...this.selfTeamMembers()],
+            title: `removed ${this.candidate.first_name + ' ' + this.candidate.last_name} from teamlist.`,
+            team_temp_name: null,
+            team_id: this.candidate.team_id
+          };
+          this.$emit("socketNotification", payload);
         } catch (e) {
           if(e.response) {
             this.showError(e.response.data.message)
@@ -460,6 +481,15 @@ import ButtonComponent from '@/components/atom/ButtonComponent'
             }
             try {
               await vm.blockACandidate(data)
+
+              let payload = {
+                receivers: vm.selfTeamMembers(),
+                title: `blocked ${vm.candidate.first_name + ' ' + vm.candidate.last_name}.`,
+                team_temp_name: null,
+                team_id: vm.candidate.team_id
+              };
+              vm.$emit("socketNotification", payload);
+              vm.$emit('removeCandidateFromResult', vm.candidate.user_id);
             } catch (e) {
               if(e.response) {
                 vm.showError(e.response.data.message)
