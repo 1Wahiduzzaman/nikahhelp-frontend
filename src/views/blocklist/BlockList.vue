@@ -14,7 +14,7 @@
             </div>
           </div>
           <div v-else class="flex justify-content-center align-items-center mt-10">
-            <h4 class="fs-24">No user in block list</h4>
+            <h4 class="fs-24 text--disabled">No user in block list</h4>
           </div>
 
 <!--          <v-tabs color="indigo accent-4" class="w-full d-flex justify-content-between support-tab">-->
