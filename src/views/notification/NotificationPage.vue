@@ -14,7 +14,7 @@
                 align-items-center
               "
             >
-              <h4 class="d-sm-none d-md-block">All Notifications</h4>
+              <h4 class="d-sm-none d-md-block text--disabled">All Notifications</h4>
               <div
                 class="
                   flex
@@ -24,8 +24,8 @@
                   flex-wrap
                 "
               >
-                <button class="confirm-button px-4" style="height: 35px; border-radius: 20px" @click="notiType = 'all'">All</button>
-                <button class="cancel-button px-4 ml-2" style="height: 35px; border-radius: 20px" @click="notiType = 0">Unread</button>
+                <span class="all-button px-4" style="height: 35px; border-radius: 20px" @click="notiType = 'all'">All</span>
+                <span class="unread-button px-4 ml-2" style="height: 35px; border-radius: 20px" @click="notiType = 0">Unread</span>
 
 <!--                <v-btn rounded color="success" dark class="ml-2 read-btn" small @click="markAllAsRead()">-->
 <!--                  <a-icon type="check" color="success" class="pr-2" />-->
@@ -271,14 +271,19 @@ export default {
     margin-top: 0;
   }
 }
-.cancel-button {
-  background-color: $color-danger;
-  color: #fff;
-  border: 1px solid $color-danger;
-  
+.all-button {
+  color: $bg-primary;
+  cursor: pointer;
   &:hover {
-    background-color: #fff !important;
-    color: $color-danger !important;
+    text-decoration: underline;
+  }
+}
+
+.unread-button {
+  color: $bg-brand;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
   }
 }
 </style>

@@ -1,9 +1,9 @@
 <template>
 	<div class="border-bottom pt-4 position-relative notification-box cursor-pointer" @click="toggleReadStatus()">
 		<div class="flex flex-div px-2">
-      <img :src="avatarSrc" alt="avatar" class="user-circle-img">
+      <img width="30" height="30" src="@/assets/icon/bell-fill-primary.svg" alt="avatar" >
       <div class="flex flex-column ml-2">
-        <h4 class="notification-headline py-2"><strong>{{ notification && notification.sender && notification.sender.full_name ? notification.sender.full_name : '' }}</strong> {{ notification.title }}</h4>
+        <span class="notification-headline py-2"><strong>{{ notification && notification.sender && notification.team_id && notification.sender.full_name ? notification.sender.full_name : '' }}</strong> {{ notification.title }}</span>
 <!--        <p class="notification-text">-->
 <!--          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard-->
 <!--        </p>-->

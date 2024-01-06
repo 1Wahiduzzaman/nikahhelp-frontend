@@ -1,7 +1,7 @@
 <template>
     <div class="notification-list pr-2 position-relative w-full" :style="{'pl-2' : item.seen == 0}" @click="clickOnNotification()">
         <div class="d-flex align-items-center" style="height: 45px;">
-            <!-- <img class="avatar" width="45" height="45" :src="avatarSrc" alt="icon"> -->
+            <img width="30" height="30" src="@/assets/icon/bell-fill-primary.svg" alt="icon">
             <div class="content pr-3">
                 <p class="mb-0"><strong>{{ item && item.sender && item.sender.full_name && item.team_id ? item.sender.full_name : '' }}</strong> {{ item.title }} </p>
             </div>
@@ -69,11 +69,6 @@ export default {
             box-shadow: 0px 0px 4px 2px #e775a7;
             position: absolute;
             right: 0;
-        }
-
-        .avatar {
-            border-radius: 50%;
-            border: 2px solid #e9e9e9
         }
 
         .content {

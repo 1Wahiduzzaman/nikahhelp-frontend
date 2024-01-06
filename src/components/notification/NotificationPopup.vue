@@ -6,13 +6,7 @@
     <div>
       <div class="dropdownNotify-title py-2 d-flex align-items-center justify-content-between">
         <strong class="text-capitalize">{{ label }}</strong>
-        <ButtonComponent
-          v-if="label == 'notification'"
-          :isSmall="true"
-          title="Mark all as read"
-          :responsive="false"
-          @onClickButton="markAllAsRead"
-        />
+        <span class="mark-all-btn" v-if="label == 'notification'" @click="markAllAsRead">Mark all as read</span>
         <!--                <span v-if="count > 0" class="ml-2 count">{{ count }}</span>-->
       </div>
     </div>
@@ -185,6 +179,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/styles/base/_variables.scss";
 .notification-wrapper {
   padding: 10px;
   background-color: #fff;
@@ -242,5 +237,15 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.mark-all-btn {
+  font-size: 12px;
+  color: $bg-secondary;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 </style>
