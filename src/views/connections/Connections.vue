@@ -833,8 +833,8 @@ export default {
         .catch((error) => {
           console.log(error);
           this.$error({
-            title: 'Something went wrong',
-            content: error.response.data.message,
+            title: 'You do not have permission',
+            content: 'You are not an admin. ' + error.response.data.message,
             center: true,
           })
           this.innerLoading = false;
@@ -870,8 +870,8 @@ export default {
         .catch((error) => {
           console.log(error.response.data.message);
           this.$error({
-            title: 'Something went wrong',
-            content: error.response.data.message,
+            title: 'You do not have permission',
+            content: 'You are not an admin. ' + error.response.data.message,
             center: true,
           })
           this.innerLoading = false;
@@ -904,8 +904,8 @@ export default {
           console.log(error);
           this.innerLoading = false;
           this.$error({
-            title: 'Something went wrong',
-            content: error.response.data.message,
+            title: 'You do not have persmission',
+            content: 'You are not an admin. ' + error.response.data.message,
             center: true,
           });
 
@@ -977,8 +977,8 @@ export default {
             });
           } catch(error) {
             vm.$error({
-              title: 'Something went wrong',
-              content: error.response.data.message.slice(0, -1) + " or to block team.",
+              title: 'You do not have permission',
+              content: 'You are not an admin. ' + error.response.data.message,
               center: true,
             });
             vm.innerLoading = false;
@@ -989,8 +989,8 @@ export default {
             await vm.$store.dispatch("blockCandidate", payload);
           } catch(error) {
             vm.$error({
-              title: 'Something went wrong',
-              content: error.response.data.message,
+              title: 'You do not have permission',
+              content: 'You are not an admin. ' + error.response.data.message,
               center: true,
 
             });
