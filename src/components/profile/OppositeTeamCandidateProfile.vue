@@ -464,6 +464,7 @@ export default {
 			// declineButton: false,
 			connectionStatus: null,
 			token: "",
+			loggedUser: null,
 		};
 	},
 	created() {
@@ -471,6 +472,7 @@ export default {
 		this.token = JSON.parse(localStorage.getItem('token'));
 		// this.connectionStatus = this.candidateData.status.is_connect;
 		this.fetchConnectionStatus();
+		this.loggeduser = JSON.parse(localStorage.getItem('user'));
 	},
 
 	computed: {
@@ -773,12 +775,15 @@ export default {
 				});
 
 				this.isLoading = false;
-            } catch (e) {
-				console.log(e, 'error')
+            } catch (error) {
+				console.log(error);
+				await this.fetchConnectionStatus();
 				this.isLoading = false;
-                if(e.response) {
-                    this.showError(e.response.data.message)
-                }
+				this.$error({
+					title: 'You do not have permission',
+					content: 'You are not an admin. ' + error.response.data.message,
+					center: true,
+				});
             }
             
         },
@@ -811,8 +816,8 @@ export default {
 				await this.fetchConnectionStatus();
 				this.isLoading = false;
 				this.$error({
-					title: 'Something went wrong',
-					content: error.response.data.message,
+					title: 'You do not have permission',
+					content: 'You are not an admin. ' + error.response.data.message,
 					center: true,
 				});
             };
@@ -842,7 +847,8 @@ export default {
 				await this.fetchConnectionStatus();
 				this.isLoading = false;
 				this.$error({
-					title: 'Something went wrong',
+					title: 'You do not have permission',
+					content: 'You are not an admin. ' + error.response.data.message,
 					center: true,
 				});
 			};
@@ -880,7 +886,8 @@ export default {
 				await this.fetchConnectionStatus();
 				this.isLoading = false;
 				this.$error({
-					title: 'Something went wrong',
+					title: 'You do not have permission',
+					content: 'You are not an admin. ' + error.response.data.message,
 					center: true,
 				});
 			};
@@ -888,16 +895,16 @@ export default {
 
         async addShortList() {
             let data = {
-            url: `v1/short-listed-candidates/store?shortlisted_by=${JwtService.getUserId()}&user_id=${this.candidateData.user_id}`,
+            url: `v1/short-listed-candidates/store?shortlisted_by=${this.loggeduser.id}&user_id=${this.candidateData.user_id}`,
                 value: true,
                 actionType: 'post',
                 user_id: this.candidateData.user_id,
                 params: {
-                    shortlisted_by: JwtService.getUserId(),
+                    shortlisted_by: this.loggeduser.id,
                     user_id: this.candidateData.user_id
                 },
                 payload: {
-                    shortlisted_by: JwtService.getUserId(),
+                    shortlisted_by: this.loggeduser.id,
                     user_id: this.candidateData.user_id
                 }
             }
@@ -1064,7 +1071,7 @@ export default {
 						}
 					}
 					try {
-						let res = await vm.blockACandidate(data)
+						let res = await vm.blockACandidate(data);
 						if(res.status == "SUCCESS") {
 							if(vm.connectionStatus && vm.connectionStatus.length > 0 && data.actionType == 'post') {
 								await vm.disconnectTeam();

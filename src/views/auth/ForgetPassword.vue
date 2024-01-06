@@ -73,6 +73,10 @@
             <p v-if="message" class="message">
               {{ message }}
             </p>
+            <div class="d-flex justify-content-center mb-2">
+              <div id="g-recaptcha"></div>  
+            </div>
+
             <div class="button-container">
               <router-link
                 role="button"
@@ -92,16 +96,18 @@
               >
                 Get Password Reset Link
               </button> -->
+              
               <ButtonComponent
-                  v-if="!message"
-                  class="w-100 connect-button"
-                  backgroundColor="#3ab549"
-                  :isSmall="true"
-                  :isDisabled="disabled"
-                  title="Get Password Reset Link"
-                  :isBlock="true"
-                  :responsive="false"
-                  @onClickButton="handleSubmit"
+                v-if="!message"
+                class="w-100 connect-button"
+                :backgroundColor="reCaptchaNotCompleted ? '#dfdfdf' : '#3ab549'"
+                :isSmall="true"
+                :isDisabled="reCaptchaNotCompleted"
+                title="Get Password Reset Link"
+                :isBlock="true"
+                :responsive="false"
+                @onClickButton="handleSubmit"
+                :style="{'cursor': reCaptchaNotCompleted ? 'not-allowed' : 'pointer'}"
               />
             </div>
           </div>
@@ -133,7 +139,7 @@ export default {
       error: null,
       formIsValid: true,
       message: null,
-      disabled: false,
+      disabled: true,
       rules: {
         email: [
           {
@@ -146,15 +152,56 @@ export default {
           },
         ],
       },
+      reCaptchaNotCompleted: true,
     };
   },
+  created() {
+    this.initializeReCaptcha();
+    window.enableSubmitButton = this.enableSubmitButton;
+  },
   methods: {
+    initializeReCaptcha() {
+      const recaptchaScript = document.createElement("script");
+      recaptchaScript.setAttribute(
+        "src",
+        "https://www.google.com/recaptcha/api.js"
+      );
+      document.head.appendChild(recaptchaScript);
+  
+      let checkInterval = setInterval(function () {
+        if (grecaptcha !== undefined) {
+          clearInterval(checkInterval);
+          console.log('recaptcha is ready');
+          grecaptcha.ready(function () {
+            grecaptcha.render("g-recaptcha", {
+              sitekey: "6LcfI0ojAAAAAIUgZwZrXgDriDRSgKBYeKzmqMo6",
+              callback: "enableSubmitButton"
+            });
+          });
+        }
+        console.log('rener completed outside');
+      }, 500);
+    },
+
+    enableSubmitButton(response) {
+      console.log('enablesubmit button called', response);
+      this.reCaptchaNotCompleted = false;
+    },
     async handleSubmit() {
       try {
         this.$refs.forgetPasswordForm.validate((valid) => {
           if (valid) {
             this.disabled = true;
             this.isLoading = true;
+            if(this.reCaptchaNotCompleted) {
+              this.$error({
+                title: 'Please complete the reCaptcha',
+                center: true,
+              });
+              this.disabled = true;
+              this.isLoading = false;
+              return;
+            }
             this.$store
               .dispatch("forgetPassword", this.forgetPassword)
               .then((re) => {

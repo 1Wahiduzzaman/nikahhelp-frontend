@@ -101,7 +101,7 @@
               <li class="flex-between-start">
                 <span class="flex-30 label-text">Team</span>
                 <span class="flex-70">:
-                    <span class="ml-1 team-link cursor-pointer text-break" @click="rotated = !rotated">{{ getTeamName() }}
+                    <span class="ml-1 team-link cursor-pointer text-break" @click="showTeamInfo = true">{{ getTeamName() }}
                     </span>
                 </span>
               </li>
@@ -129,6 +129,39 @@
                 </span>
               </li>
             </ul>
+            <a-modal 
+              :visible="showTeamInfo" 
+              :closable="true"
+              title="Team Info" 
+              @ok="showTeamInfo = false" 
+              @cancel="showTeamInfo = false" 
+              :ok-button-props="{ disabled: true }"
+              :cancel-button-props="{ disabled: true }"
+            >
+              <div class="row">
+                <div class="col-12 col-md-6 d-flex justify-conent-center align-items-center">
+                  <v-img
+                    style="border: 2px solid white; background-size: cover;"
+                    class="white--text align-end rounded mx-auto"
+                    max-width="150px"
+                    max-height="150px"
+                    :src="connection.team_logo + `?token=${token}`"
+                  ></v-img>
+                </div>
+                <div class="col-12 col-md-6">
+                  <span class="fw-600">Team Name</span> <br> {{ connection.to_team_name }} <br><br>
+                  <span class="fw-600">Team Members</span> <br> {{ connection.total_teamMember }} <br><br>
+                  <span class="fw-600">Team Creation Date</span><br> {{ dateFromTimeStamp(connection.team_created_date) }} <br><br>
+                  <span class="fw-600">Team Created By</span><br> {{ connection.team_created_by }}
+                </div>
+              </div>
+        
+              <template slot="footer">
+                <a-button key="submit" type="primary" shape="round" @click="showTeamInfo = false">
+                Ok
+                </a-button>
+              </template>
+            </a-modal>
           </div>
           <v-divider class="mx-4"></v-divider>
 
@@ -197,6 +230,7 @@
             </div>
           </div>
 
+
 <!--          <table class="table table-borderless overview-table">-->
 <!--            <tr>-->
 <!--              <td class="td-60">Team name</td>-->
@@ -223,15 +257,8 @@
       </div>
     </div>
 
-<!--    <div class="position-absolute candidate-top-right-corner"-->
-<!--         :class="{-->
-<!--             'connected-bg': type == 'connected',-->
-<!--             'request-received-bg': type == 'Request received',-->
-<!--             'request-sent-bg': type == 'Request send',}"></div>-->
     <div class="position-absolute icon-rotate-box cursor-pointer" @click="showProfileConnectionOverview = true">
-<!--      <a-icon type="rollback" class="rotate-icon" size="large" />-->
-      <!-- <img src="@/assets/icon/flip_icon.svg" alt="icon" class="flip-icon" /> -->
-      <a-icon type="history" :style="{ fontSize: '16px' }"/>
+    <a-icon type="history" :style="{ fontSize: '16px' }"/>
     </div>
   </div>
 </template>
@@ -255,6 +282,7 @@ export default {
       conversations: [],
       type: this.connection.connection_type,
       rotated: false,
+      showTeamInfo: false,
       showProfileConnectionOverview: false,
       showProfileTeamOverview: false,
       token: ""
@@ -383,7 +411,8 @@ export default {
     },
     block() {
       let notifyObject = this.prepareNotifyData();
-      notifyObject.title = `block your connection request`;
+      notifyObject.title = `blocked ${this.connection.candidateInfo.first_name}`;
+      notifyObject.receivers = [...this.connection.from_team_members]
 
       this.$emit(
           "block-candidate",
@@ -824,11 +853,9 @@ export default {
 }
 .team-link {
   color: $color-primary;
-  border-bottom: 1px solid $border-primary;
-}
-.team-link:hover {
-  color: $color-brand;
-  border-bottom: 1px solid $border-brand;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 .flip-card {
   background-color: #FFFFFF;

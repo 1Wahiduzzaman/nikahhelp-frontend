@@ -409,7 +409,7 @@ export default {
             vm.$emit("loadList");
 
             let notifyObject = vm.selfTeamNotifyData();
-            notifyObject.title = "blocked a candidate";
+            notifyObject.title = `blocked ${vm.getName}`;
             vm.socketNotification(notifyObject);
           }).catch(e => {
             console.log(e);
